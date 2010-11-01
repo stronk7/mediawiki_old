@@ -39,6 +39,20 @@ $messages['bs'] = array(
 	'groupssidebar-desc' => 'Ovo proširenje omoguće administratorima stranice da uključe elemente sa alatne trake za određene grupe korisnika',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'groupssidebar-desc' => "Aquesta extensió permet als administradors del lloc incloure elements a la barra lateral per a grups específics d'usuaris",
+);
+
+/** Czech (Česky)
+ * @author Reaperman
+ */
+$messages['cs'] = array(
+	'groupssidebar-desc' => 'Tato extenze umožňuje správcům přidávat do postranního panelu prvky jen pro určité uživatelské skupiny',
+);
+
 /** German (Deutsch)
  * @author Imre
  */
@@ -58,6 +72,13 @@ $messages['dsb'] = array(
  */
 $messages['es'] = array(
 	'groupssidebar-desc' => 'Esta extensión posibilita a los administradores del sitio a incluir elementos en la barra lateral para grupos de usuarios específicos',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'groupssidebar-desc' => 'Luzapen honi esker, guneko administratzaileek alboko barrako elementuak gehitu ditzazkete lankide talde zehazt bati',
 );
 
 /** Finnish (Suomi)
@@ -116,6 +137,13 @@ $messages['id'] = array(
 	'groupssidebar-desc' => 'Memungkinkan admin situs untuk menyediakan bilah sisi spesifik per kelompok pengguna',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'groupssidebar-desc' => 'Questa estensione permette agli amministratori del sito di inserire nella barra laterale (sidebar) elementi specifici a seconda dei gruppi utente',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -123,7 +151,7 @@ $messages['ja'] = array(
 	'groupssidebar-desc' => 'この拡張機能は、サイト管理者が特定の利用者グループ向けにサイドバー項目を加えることができるようにする',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -141,7 +169,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'groupssidebar-desc' => 'Ова проширување им овозможува на администраторите на веб-страниците да вклучат елементи во страничните ленти за поедини кориснички групи',
+	'groupssidebar-desc' => 'Овој додаток им овозможува на администраторите на мрежните места да вклучат елементи во страничните ленти за поедини кориснички групи',
 );
 
 /** Dutch (Nederlands)
@@ -214,11 +242,30 @@ $messages['ru'] = array(
 	'groupssidebar-desc' => 'Это расширение позволяет администраторам сайта включать элементы боковой панели для определённых групп участников',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'groupssidebar-desc' => 'Ова екстензија омогућава администраторима сајта да укључе сајдбар елементе за одређене корисничке групе',
+);
+
+/** Serbian Latin ekavian (Srpski (latinica)) */
+$messages['sr-el'] = array(
+	'groupssidebar-desc' => 'Ova ekstenzija omogućava administratorima sajta da uključe sajdbar elemente za određene korisničke grupe',
+);
+
 /** Swedish (Svenska)
  * @author Boivie
  */
 $messages['sv'] = array(
 	'groupssidebar-desc' => 'Detta programtillägg möjliggör för sajtadministratörer att inkludera element till sidokolumnen för specifika användargrupper',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'groupssidebar-desc' => 'Nagpapagana ang dugtong na ito sa mga tagapangasiwa ng sityo na makapagsali ng mga sangkap na panggilid na bareta para sa tiyak na mga pangkat ng tagagamit',
 );
 
 /** Turkish (Türkçe)
