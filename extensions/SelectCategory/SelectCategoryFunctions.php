@@ -1,13 +1,16 @@
 <?php
 
-# Implementation of the SelectCategory extension, an extension of the
-# edit box of MediaWiki to provide an easy way to add category links
-# to a specific page.
-
-# @addtogroup Extensions
-# @author Leon Weber <leon@leonweber.de> & Manuel Schneider <manuel.schneider@wikimedia.ch>
-# @copyright © 2006 by Leon Weber & Manuel Schneider
-# @licence GNU General Public Licence 2.0 or later
+/**
+ * Implementation of the SelectCategory extension, an extension of the
+ * edit box of MediaWiki to provide an easy way to add category links
+ * to a specific page.
+ *
+ * @file
+ * @ingroup Extensions
+ * @author Leon Weber <leon@leonweber.de> & Manuel Schneider <manuel.schneider@wikimedia.ch>
+ * @copyright Â© 2006 by Leon Weber & Manuel Schneider
+ * @licence GNU General Public Licence 2.0 or later
+ */
 
 if( !defined( 'MEDIAWIKI' ) ) {
   echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
@@ -15,12 +18,14 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 ## Entry point for the hook and main worker function for editing the page:
-function fnSelectCategoryShowHook( $m_isUpload = false, &$m_pageObj ) {
+function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 
   # check if we should do anything or sleep
   if ( fnSelectCategoryCheckConditions( $m_isUpload, $m_pageObj ) ) {
     # Register CSS file for our select box:
-    global $wgOut, $wgScriptPath;
+    global $wgOut, $wgScriptPath, $wgUser, $wgTitle;
+    global $wgSelectCategoryMaxLevel;
+    
     $wgOut->addLink(
       array(
         'rel'  => 'stylesheet',
@@ -29,6 +34,8 @@ function fnSelectCategoryShowHook( $m_isUpload = false, &$m_pageObj ) {
       )
     );
 
+    $m_skin =& $wgUser->getSkin();
+              
     # Get all categories from wiki:
     $m_allCats = fnSelectCategoryGetAllCategories();
     # Load system messages:
@@ -55,36 +62,50 @@ function fnSelectCategoryShowHook( $m_isUpload = false, &$m_pageObj ) {
     $m_pageObj->$m_place .= "<!-- SelectCategory begin -->\n";
     # Print the select box:
     $m_pageObj->$m_place .= "\n$m_textBefore";
-#    # First come up with the JavaScript version of the select boxes:
-#    $m_pageObj->$m_place .= "<script type=\"text/javascript\" src=\"'/extensions/SelectCategory/SelectCategory.js\"></script>\n";
-#    # Then the "old-style" select box for those without JavaScript:
-#    $m_pageObj->$m_place .= "<noscript>\n";
-#    $m_pageObj->$m_place .= "</noscript>\n";
 
-    $m_pageObj->$m_place .= "<ul id='SelectCategoryList'>";
+    # Begin list output, use <div> to enable custom formatting
+    $m_pageObj->$m_place .= '<div id="SelectCategoryList">';
     foreach( $m_allCats as $m_cat => $m_depth ) {
       $checked = '';
-
-      if (isset($m_pageCats[$m_cat])) {
-        $checked = "checked='checked'";
+      # See if the category was already added, so check it
+      if( isset( $m_pageCats[$m_cat] ) ) {
+        $checked = 'checked="checked"';
       }
-
+      # Clean HTML Output:
       $category =  htmlspecialchars( $m_cat );
 
-      # Indent subcategories
-      $indention = '';
-      for ($i = 0; $i < $m_depth; $i++) {
-        $indention .= '&nbsp;&nbsp;';
+      # Calculate indention of subcategories
+      $indention = 0;
+      for( $i = 0; $i <= $m_depth; $i++ ) {
+        $indention = 15 * $i;
+        # Collapse subcategories after reaching the configured MaxLevel
+        if( $i > $wgSelectCategoryMaxLevel ) {
+          $display = 'display:none;';
+        } else {
+          $display = '';
+        }
+        # Check if we have reached the MaxLevel [-] or not [+]
+        if( $i == $wgSelectCategoryMaxLevel ) {
+          $sign = '[+]';
+        } else {
+#          $sign = '[−]';
+        }
+        # Check if there are more subcategories
+#        if( $m_allCats[] > $m_depth )
       }
-
-      $m_pageObj->$m_place .= "
-        <li>
-          $indention<input type='checkbox' name='SelectCategoryList[]'
-            value='$category' class='checkbox' $checked />
-          $category
-        </li>";
-    }
-    $m_pageObj->$m_place .= '</ul>';
+      # Clean names for text output
+      $title = str_replace( '_', ' ', $category );
+      $m_title = $wgTitle->newFromText( $category, NS_CATEGORY );
+      # Output the actual checkboxes, indented
+      $m_pageObj->$m_place .= '
+        <div id="sc_'.$category.'" style="'.$display.'">
+          <span style="padding-left:'.$indention.'px; width:10px; overflow:hidden;">'.$sign.'</span>
+          <input type="checkbox" name="SelectCategoryList[]" value="'.$category.'" class="checkbox" '.$checked.' />
+          '.$m_skin->link( $m_title, $title ).'
+        </div>';
+    } # End walking through cats (foreach)
+    # End of list output
+    $m_pageObj->$m_place .= '</div>';
 
     # Print localised help string:
     $m_pageObj->$m_place .= "<!-- SelectCategory end -->\n";
@@ -95,7 +116,7 @@ function fnSelectCategoryShowHook( $m_isUpload = false, &$m_pageObj ) {
 }
 
 ## Entry point for the hook and main worker function for saving the page:
-function fnSelectCategorySaveHook( $m_isUpload, &$m_pageObj ) {
+function fnSelectCategorySaveHook( $m_isUpload, $m_pageObj ) {
   global $wgContLang;
   global $wgTitle;
 
@@ -107,7 +128,7 @@ function fnSelectCategorySaveHook( $m_isUpload, &$m_pageObj ) {
 
     # default sort key is page name with stripped namespace name,
     # otherwise sorting is ugly.
-    if ($wgTitle->getNamespace() == NS_MAIN) {
+    if( $wgTitle->getNamespace() == NS_MAIN ) {
       $default_sortkey = "";
     } else {
       $default_sortkey = "|{{PAGENAME}}";
@@ -191,10 +212,14 @@ function fnSelectCategoryGetChildren( $m_root, $m_depth = 1 ) {
   $m_tblPage = $m_dbObj->tableName( 'page' );
 
   # The normal query to get all children of a given root category:
-  $m_sql = "  SELECT tmpSelectCatPage.page_title AS title
-      FROM $m_tblCatLink AS tmpSelectCat
-      LEFT JOIN $m_tblPage AS tmpSelectCatPage ON tmpSelectCat.cl_from = tmpSelectCatPage.page_id
-      WHERE tmpSelectCat.cl_to LIKE " . $m_dbObj->addQuotes( $m_root ) . " AND tmpSelectCatPage.page_namespace = 14";
+  $m_sql = '
+    SELECT tmpSelectCatPage.page_title AS title
+    FROM '.$m_tblCatLink.' AS tmpSelectCat
+    LEFT JOIN '.$m_tblPage.' AS tmpSelectCatPage 
+      ON tmpSelectCat.cl_from = tmpSelectCatPage.page_id
+    WHERE tmpSelectCat.cl_to LIKE '.$m_dbObj->addQuotes( $m_root ).' 
+      AND tmpSelectCatPage.page_namespace = 14
+    ORDER BY tmpSelectCatPage.page_title ASC;';
   # Run the query:
   $m_res = $m_dbObj->query( $m_sql, __METHOD__ );
   # Process the resulting rows:
@@ -259,7 +284,7 @@ function fnSelectCategoryGetPageCategories( $m_pageObj ) {
 }
 
 # Function that checks if we meet the run conditions of the extension
-function fnSelectCategoryCheckConditions ($m_isUpload, &$m_pageObj ) {
+function fnSelectCategoryCheckConditions ($m_isUpload, $m_pageObj ) {
   global $wgSelectCategoryNamespaces;
   global $wgSelectCategoryEnableSubpages;
   global $wgTitle;
@@ -274,7 +299,7 @@ function fnSelectCategoryCheckConditions ($m_isUpload, &$m_pageObj ) {
   }
 
   $ns = $wgTitle->getNamespace();
-  if (array_key_exists ($ns, $wgSelectCategoryNamespaces)) {
+  if( array_key_exists( $ns, $wgSelectCategoryNamespaces ) ) {
     $enabledForNamespace = $wgSelectCategoryNamespaces[$ns];
   } else {
     $enabledForNamespace = false;
