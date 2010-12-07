@@ -1,0 +1,5 @@
+Once you have downloaded the code, place the 'Push' directory within your MediaWiki 'extensions' directory.
+Then add the following code to your LocalSettings.php file:
+
+# Push
+require_once( "$IP/extensions/Push/Push.php" );
