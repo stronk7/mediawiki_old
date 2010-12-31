@@ -1272,3 +1272,14 @@ m-lb-a01.isp.t-ipnet.de
 s-lb-a01.isp.t-ipnet.de
 do-lb-a01.isp.t-ipnet.de
 
+# websense.net security proxy service
+# Source: email, reverse DNS
+85.115.52.180
+85.115.54.180
+85.115.60.180
+85.115.58.180
+208.87.233.180
+208.87.234.180
+116.50.57.180
+116.50.58.180
+
