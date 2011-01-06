@@ -217,7 +217,7 @@ class SpecialFundraiserStatistics extends SpecialPage {
 	/* Private Functions */
 	
 	private function query( $type, $start, $end ) {
-		global $wgMemc, $egFundraiserStatisticsMinimum, $egFundraiserStatisticsMaximum;
+		global $wgMemc, $egFundraiserStatisticsMinimum, $egFundraiserStatisticsMaximum, $egFundraiserStatisticsCacheTimeout;
 		
 		$key = wfMemcKey( 'fundraiserstatistics', $type, $start, $end );
 		$cache = $wgMemc->get( $key );
@@ -309,8 +309,7 @@ class SpecialFundraiserStatistics extends SpecialPage {
 				break;
 		}
 		if ( isset( $result ) ) {
-			// Cache invalidates once per minute
-			$wgMemc->set( $key, $result, 60 );
+			$wgMemc->set( $key, $result, $egFundraiserStatisticsCacheTimeout );
 			return $result;
 		}
 		return null;

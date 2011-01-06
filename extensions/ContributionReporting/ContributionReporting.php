@@ -96,6 +96,9 @@ $egFundraiserStatisticsFundraisers = array(
 $egFundraiserStatisticsMinimum = 1;
 $egFundraiserStatisticsMaximum = 10000;
 
+// Cache timeout for fundraiser statistics, in seconds
+$egFundraiserStatisticsCacheTimeout = 300; // 5 minutes
+
 
 
 $wgContributionTrackingStatisticsViewWeeks = 3;
