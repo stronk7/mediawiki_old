@@ -11,6 +11,7 @@ $( document ).ready( function() {
 	// Add toolbar module
 	// FIXME: Make config object retrievable for reusers
 	// TODO: Implement .wikiEditor( 'remove' )
+	var fileNamespace = mediaWiki.config.get( 'wgFormattedNamespaces' )[6];
 	$( '#wpTextbox1' ).wikiEditor( 'addModule', { 'toolbar': {
 		// Main section
 		'main': {
@@ -153,8 +154,7 @@ $( document ).ready( function() {
 							'action': {
 								'type': 'encapsulate',
 								'options': {
-									// FIXME: Why the hell was this done this way?
-									'preMsg': [ 'wikieditor-toolbar-tool-file-pre', '[[' ],
+									'pre': '[[' + fileNamespace + ':',
 									'periMsg': 'wikieditor-toolbar-tool-file-example',
 									'post': "]]"
 								}
@@ -162,6 +162,7 @@ $( document ).ready( function() {
 						},
 						'reference': {
 							'labelMsg': 'wikieditor-toolbar-tool-reference',
+							'filters': [ 'body.ns-subject' ],
 							'type': 'button',
 							'offset': [2, -1798],
 							'icon': 'insert-reference.png',
@@ -411,7 +412,9 @@ $( document ).ready( function() {
 								'type': 'encapsulate',
 								'options': {
 									'pre': "<gallery>\n",
-									'periMsg': 'wikieditor-toolbar-tool-gallery-example',
+									'periMsg': [
+										'wikieditor-toolbar-tool-gallery-example', fileNamespace
+									],
 									'post': "\n</gallery>",
 									'ownline': true
 								}
@@ -910,7 +913,7 @@ $( document ).ready( function() {
 					'rows': [
 						{
 							'description': { 'htmlMsg': 'wikieditor-toolbar-help-content-file-description' },
-							'syntax': { 'htmlMsg': 'wikieditor-toolbar-help-content-file-syntax' },
+							'syntax': { 'htmlMsg': [ 'wikieditor-toolbar-help-content-file-syntax', fileNamespace ] },
 							'result': { 'htmlMsg': [ 'wikieditor-toolbar-help-content-file-result', stylepath ] }
 						}
 					]
