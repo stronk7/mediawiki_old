@@ -131,8 +131,12 @@ class FlaggedArticle extends Article {
 		if ( !( $flags & FR_MASTER ) && $this->pendingRevs !== null ) {
 			return $this->pendingRevs;
 		}
+		$srev = $this->getStableRev( $flags );
+		if ( !$srev ) {
+			return 0; // none
+		}
 		$count = null;
-		$sRevId = $this->getStable( $flags );
+		$sRevId = $srev->getRevId();
 		# Try the cache...
 		$key = wfMemcKey( 'flaggedrevs', 'countPending', $this->getId() );
 		if ( !( $flags & FR_MASTER ) ) {
@@ -149,11 +153,12 @@ class FlaggedArticle extends Article {
 		}
 		# Otherwise, fetch result from DB as needed...
 		if ( is_null( $count ) ) {
-			$db = ( $flags & FR_MASTER )
-				? wfGetDB( DB_MASTER )
-				: wfGetDB( DB_SLAVE );
+			$db = ( $flags & FR_MASTER ) ?
+				wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+			$srevTS = $db->timestamp( $srev->getRevTimestamp() );
 			$count = $db->selectField( 'revision', 'COUNT(*)',
-				array( 'rev_page' => $this->getId(), 'rev_id > ' . (int)$sRevId ),
+				array( 'rev_page' => $this->getId(),
+					'rev_timestamp > ' . $db->addQuotes( $srevTS ) ), // bug 15515
 				__METHOD__ );
 			# Save result to cache...
 			$data = FlaggedRevs::makeMemcObj( "{$sRevId}-{$count}" );
@@ -210,6 +215,14 @@ class FlaggedArticle extends Article {
 	}
 
 	/**
+	 * Are template/file changes and ONLY template/file changes pending?
+	 * @return bool
+	 */
+	public function onlyTemplatesOrFilesPending() {
+		return ( !$this->revsArePending() && !$this->stableVersionIsSynced() );
+	}
+
+	/**
 	 * Is this page less open than the site defaults?
 	 * @return bool
 	 */
@@ -262,21 +275,18 @@ class FlaggedArticle extends Article {
 	/**
 	 * Get the stable revision
 	 * @param int $flags
-	 * @return mixed (FlaggedRevision/false)
+	 * @return mixed (FlaggedRevision/null)
 	 */
 	public function getStableRev( $flags = 0 ) {
 		# Cached results available?
-		if ( !( $flags & FR_MASTER ) && $this->stableRev !== null ) {
+		if ( $this->stableRev == null || ( $flags & FR_MASTER ) ) {
+			$srev = FlaggedRevision::newFromStable( $this->getTitle(), $flags );
+			$this->stableRev = $srev ? $srev : false; // false => "found nothing"
+		}
+        if ( $this->stableRev ) {
 			return $this->stableRev;
 		}
-		# Do we have one?
-		$srev = FlaggedRevision::newFromStable( $this->getTitle(), $flags );
-		if ( $srev ) {
-			$this->stableRev = $srev;
-		} else {
-			$this->stableRev = false;
-		}
-        return $this->stableRev;
+		return null;
 	}
 
 	/**
