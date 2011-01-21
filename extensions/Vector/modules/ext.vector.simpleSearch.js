@@ -93,7 +93,7 @@ $( document ).ready( function() {
 		special: {
 			render: function( query ) {
 				if ( $(this).children().size() == 0  ) {
-					$(this).show()
+					$(this).show();
 					$label = $( '<div />' )
 						.addClass( 'special-label' )
 						.text( mediaWiki.msg( 'vector-simplesearch-containing' ) )
