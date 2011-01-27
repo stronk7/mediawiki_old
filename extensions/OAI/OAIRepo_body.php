@@ -877,7 +877,7 @@ class WikiOAIRecord extends OAIRecord {
 			array( 'img_name' => $this->_row->page_title ),
 			$fname );
 		if( $imageRow ) {
-			$url = Image::imageUrl( $imageRow->img_name );
+			$url = wfFindFile( $imageRow->img_name )->getUrl();
 
 			if( $url{0} == '/' ) {
 				global $wgServer;
