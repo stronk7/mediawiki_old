@@ -383,7 +383,8 @@ class Player {
 		if ($thumbname) $thumbimg = wfFindFile( $thumbname );
 
 		if ($thumbimg && $thumbimg->exists()) {
-			$tni = $thumbimg->getThumbnail( $this->width, $this->height );
+
+			$tni = $thumbimg->transform( array( 'width' => $this->width, 'height' => $this->height ), 0 );
 			if ($tni) $thumbstyle = 'background-image:url('.$tni->getUrl().'); background-position:center; background-repeat:no-repeat; text-decoration:none;';
 		}
 

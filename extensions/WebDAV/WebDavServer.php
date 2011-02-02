@@ -605,7 +605,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 		$entryCondition = null;
 		foreach ( $entryConditions as $path => $revisionCondition ) {
 			if ( !empty( $path ) ) {
-				$pathCondition = '(page_title = ' . $dbr->addQuotes( $path ) . ' OR page_title LIKE \'' . $dbr->escapeLike( $path ) . '/%\')';
+				$pathCondition = '(page_title = ' . $dbr->addQuotes( $path ) . ' OR page_title ' . $dbr->buildLike( $path . '/', $dbr->anyString() ) . ')';
 
 				if ( !empty( $revisionCondition ) ) {
 					$revisionCondition = ' AND ' . $revisionCondition;

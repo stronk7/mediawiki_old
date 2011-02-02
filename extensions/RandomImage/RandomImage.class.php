@@ -82,9 +82,7 @@ class RandomImage {
 	 * @return bool
 	 */
 	protected function imageExists( $title ) {
-		$file = function_exists( 'wfFindFile' )
-			? wfFindFile( $title )
-			: new Image( $title );
+		$file = wfFindFile( $title );
 		return is_object( $file ) && $file->exists();
 	}
 	

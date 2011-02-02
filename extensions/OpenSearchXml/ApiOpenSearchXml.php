@@ -31,6 +31,8 @@
  */
 class ApiOpenSearchXml extends ApiOpenSearch {
 
+	private $mSeen;
+
 	public function getCustomPrinter() {
 		$format = $this->validateFormat();
 		$printer = $this->getMain()->createPrinterByName( $format );
@@ -103,7 +105,7 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			$item['Description']['*'] = $extract;
 			$item['Url']['*'] = $title->getFullUrl();
 			if( $image ) {
-				$thumb = $image->getThumbnail( 50, 50, false );
+				$thumb = $image->transform( array( 'width' => 50, 'height' => 50 ), 0 );
 				$item['Image'] = array(
 					'source' => wfExpandUrl( $thumb->getUrl() ),
 					//alt
@@ -125,7 +127,11 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			return $title;
 		}
 	}
-	
+
+	/**
+	 * @param  $title Title
+	 * @return bool
+	 */
 	protected function _seen( $title ) {
 		$name = $title->getPrefixedText();
 		if( isset( $this->mSeen[$name] ) ) {
@@ -317,7 +323,12 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		}
 		return '';
 	}
-	
+
+	/**
+	 * @param  $title Title
+	 * @param  $fromText
+	 * @return File
+	 */
 	protected function getBadge( $title, $fromText ) {
 		if( $title->getNamespace() == NS_IMAGE ) {
 			$image = wfFindFile( $title );

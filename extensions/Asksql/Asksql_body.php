@@ -85,14 +85,23 @@ class SqlQueryForm {
 	function doSubmit() {
 		global $wgOut, $wgUser, $wgServer, $wgScript, $wgLang, $wgContLang;
 		global $wgDBserver, $wgDBsqluser, $wgDBsqlpassword, $wgDBname, $wgSqlTimeout;
+		global $wgDBtype;
 
 		# Use a limit, folks!
 		$this->query = trim( $this->query );
 		if ( preg_match( '/^SELECT/i', $this->query )
-			and !preg_match( '/LIMIT/i', $this->query ) ) {
+			&& !preg_match( '/LIMIT/i', $this->query ) ) {
 			$this->query .= ' LIMIT 100';
 		}
-		$conn = Database::newFromParams( $wgDBserver, $wgDBsqluser, $wgDBsqlpassword, $wgDBname );
+
+		$conn = DatabaseBase::newFromType( $wgDBtype,
+			array(
+			     'host' => $wgDBserver,
+			     'user' => $wgDBsqluser,
+			     'password' => $wgDBsqlpassword,
+			     'dbname' => $wgDBname
+			)
+		);
 
 		$this->logQuery( $this->query );
 
@@ -118,7 +127,7 @@ class SqlQueryForm {
 			}
 
 			$a = array();
-			while ( $s = $conn->fetchObject( $res ) ) {
+			foreach ( $res as $s ) {
 				array_push( $a, $s );
 			}
 			$conn->freeResult( $res );

@@ -141,7 +141,7 @@ class ExtTransliterator  {
 			array( 'page_title', 'page_id' ),
 			array(
 				'page_namespace' => NS_MEDIAWIKI,
-				'page_title LIKE \'' . $dbr->escapeLike( self::getMapPagePrefix() ) . '%\''
+				'page_title ' . $dbr->buildLike( self::getMapPagePrefix(), $dbr->anyString() )
 			),
 			__METHOD__
 		);

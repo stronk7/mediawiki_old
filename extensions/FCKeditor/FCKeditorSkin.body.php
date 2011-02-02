@@ -20,7 +20,7 @@ class FCKeditorSkin {
 	function makeImageLinkObj( $nt, $label, $alt, $align = '', $params = array(), $framed = false,
 	$thumb = false, $manual_thumb = '', $valign = '' ) {
 		$orginal = $nt->getText();
-		$img = new Image( $nt );
+		$img = wfFindFile( $nt );
 		$imgName = $img->getName();
 		$found = $img->getURL();
 
@@ -119,7 +119,7 @@ class FCKeditorSkin {
 	 */
 	function makeImageLink2( Title $nt, $file, $frameParams = array(), $handlerParams = array() ) {
 		$orginal = $nt->getText();
-		$img = new Image( $nt );
+		$img = wfFindFile( $nt );
 		$imgName = $img->getName();
 		$found = $img->getURL();
 

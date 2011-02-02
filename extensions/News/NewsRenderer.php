@@ -640,7 +640,7 @@ class NewsRenderer {
 			$image = false;
 		}
 
-		$thumb = $image ? $image->getThumbnail(80, 16) : null;
+		$thumb = $image ? $image->transform( array( 'width' => 80, 'height' => 16 ), 0 ) : null;
 		if ($image && !$thumb) $thumb = $image;
 		$iconurl = $thumb ? $thumb->getUrl() : null;
 

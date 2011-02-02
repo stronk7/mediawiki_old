@@ -205,7 +205,8 @@ class SmoothGalleryParser {
 
 		// Create a thumbnail the same size as our gallery so that
 		// full images fit correctly
-		$full_thumb_obj = $img_obj->getThumbnail( $this->argumentArray["width"], $this->argumentArray["height"] );
+
+		$full_thumb_obj = $img_obj->transform( array( 'width' => $this->argumentArray["width"], 'height' => $this->argumentArray["height"] ), 0 );
 		if ( !is_null( $full_thumb_obj ) ) {
 			$full_thumb = $full_thumb_obj->getUrl();
 		} else {
@@ -225,7 +226,7 @@ class SmoothGalleryParser {
 			// We are going to show a carousel to the user; we need
 			// to make icon thumbnails
 			// $thumb_obj = $img_obj->getThumbnail( 120, 120 ); //would be nice to reuse images already loaded...
-			$thumb_obj = $img_obj->getThumbnail( $wgSmoothGalleryThumbWidth, $wgSmoothGalleryThumbHeight );
+			$thumb_obj = $img_obj->transform( array( 'width' => $wgSmoothGalleryThumbWidth, 'height' => $wgSmoothGalleryThumbHeight ), 0 );
 			if ( $thumb_obj ) {
 				$icon_thumb = $thumb_obj->getUrl();
 			}

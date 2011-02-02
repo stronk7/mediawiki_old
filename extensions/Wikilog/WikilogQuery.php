@@ -674,8 +674,7 @@ class WikilogCommentQuery
 		if ( $this->mItem !== null ) {
 			$q_conds['wlc_post'] = $this->mItem->getID();
 			if ( $this->mThread ) {
-				$thread = $db->escapeLike( $this->mThread );
-				$q_conds[] = "wlc_thread LIKE '{$thread}/%'";
+				$q_conds[] = "wlc_thread " . $db->buildLike( $this->mThread . '/', $db->anyString() );
 			}
 		} elseif ( $this->mWikilog !== null ) {
 			$join_wlp = true;

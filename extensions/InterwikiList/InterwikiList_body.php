@@ -42,7 +42,7 @@ class InterwikiList extends SpecialPage {
 
 		$conds = array();
 		if ( !is_null( $prefix ) ) {
-			$conds[] = "iw_prefix LIKE " . $dbr->addQuotes( $dbr->escapeLike( $prefix ) . "%" );
+			$conds[] = "iw_prefix " . $dbr->buildLike( $prefix, $dbr->anyString() );
 		}
 
 		$results = $dbr->select( 'interwiki', array( 'iw_prefix', 'iw_url' ), $conds );

@@ -112,12 +112,13 @@ class SpecialIndexPager extends AlphabeticPager {
 			$indexconds[] = 'in_title' . $operator . $this->mDb->addQuotes( $offset );
 		}	
 		$ns = $this->mSearchTitle->getNamespace();
-		$like = $this->mDb->escapeLike( $this->mSearchTitle->getDBkey() ) . '%';
+
+		$like = $this->mDb->buildLike( $this->mSearchTitle->getDBkey(), $this->mDb->anyString() );
 		
 		$pageconds[] = "page_namespace = $ns";
-		$pageconds[] = "page_title LIKE '$like'";
+		$pageconds[] = "page_title " . $like;
 		$indexconds[] = "in_namespace = $ns";
-		$indexconds[] = "in_title LIKE '$like'";
+		$indexconds[] = "in_title " . $like;
 		
 		
 		$pagequery = $this->mDb->selectSQLText( 'page', 

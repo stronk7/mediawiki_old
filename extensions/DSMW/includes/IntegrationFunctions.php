@@ -207,7 +207,6 @@ function logootIntegrate( $operations, $article ) {
     $indexNS = 0;
     wfDebugLog( 'p2p', ' - function logootIntegrate : ' . $article );
     $dbr = wfGetDB( DB_SLAVE );
-    $dbr->immediateBegin();
     if ( is_string( $article ) ) {
         // if there is a space in the title, repalce by '_'
         $article = str_replace( " ", "_", $article );
@@ -296,7 +295,6 @@ function logootIntegrate( $operations, $article ) {
  */
 function logootIntegrateAtt( $article, $edit ) {
     $dbr = wfGetDB( DB_SLAVE );
-    $dbr->immediateBegin();
     $title = Title::newFromText( $article );
     $lastRevision = Revision::loadFromTitle( $dbr, $title );
     

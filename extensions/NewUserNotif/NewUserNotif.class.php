@@ -37,13 +37,13 @@ class NewUserNotifier {
 	 * Send email to external addresses
 	 */
 	private function sendExternalMails() {
-		global $wgNewUserNotifEmailTargets, $wgNewUserNotifSenderParam, $wgNewUserNotifSenderSubjParam;
+		global $wgNewUserNotifEmailTargets, $wgSitename;
 		foreach( $wgNewUserNotifEmailTargets as $target ) {
 			UserMailer::send(
 				new MailAddress( $target ),
 				new MailAddress( $this->sender ),
-				$this->makeMessage( $target, $this->user, 'newusernotifsubj', $wgNewUserNotifSenderSubjParam),
-				$this->makeMessage( $target, $this->user, 'newusernotifbody', $wgNewUserNotifSenderParam)
+				wfMsgForContent( 'newusernotifsubj', $wgSitename ),
+				$this->makeMessage( $target, $this->user )
 			);
 		}
 	}
@@ -52,13 +52,13 @@ class NewUserNotifier {
 	 * Send email to users
 	 */
 	private function sendInternalMails() {
-		global $wgNewUserNotifTargets, $wgNewUserNotifSenderParam, $wgNewUserNotifSenderSubjParam;
+		global $wgNewUserNotifTargets, $wgSitename;
 		foreach( $wgNewUserNotifTargets as $userSpec ) {
 			$user = $this->makeUser( $userSpec );
 			if( $user instanceof User && $user->isEmailConfirmed() ) {
 				$user->sendMail(
-					$this->makeMessage( $user->getName(), $this->user, 'newusernotifsubj', $wgNewUserNotifSenderSubjParam ),
-					$this->makeMessage( $user->getName(), $this->user, 'newusernotifbody', $wgNewUserNotifSenderParam ),
+					wfMsgForContent( 'newusernotifsubj', $wgSitename ),
+					$this->makeMessage( $user->getName(), $this->user ),
 					$this->sender
 				);
 			}
@@ -80,18 +80,22 @@ class NewUserNotifier {
 	}
 
 	/**
-	 * Build a notification email message (body and subject)
+	 * Build a notification email
 	 *
-	 * @param string $recipient Name of the new user notification email recipient
-	 * @param User $user User (object) created for new user
-	 * @param string $msgId Localised Message Identifier
-	 * @param string $parmArr Array of Strings eval'd to pass parameters to message	
-	 * @return string
+	 * @param string $recipient Name of the recipient
+	 * @param User $user User that was created
 	 */
-	private function makeMessage( $recipient, $user, $msgId, $parmArr) {
-		global $wgSitename,$wgContLang;
-		eval( "\$retval = wfMsgForContent('".$msgId."',".implode(",",$parmArr).");" );
-		return ($retval);
+	private function makeMessage( $recipient, $user ) {
+		global $wgSitename, $wgContLang;
+		return wfMsgForContent(
+			'newusernotifbody',
+			$recipient,
+			$user->getName(),
+			$wgSitename,
+			$wgContLang->timeAndDate( wfTimestampNow() ),
+			$wgContLang->date( wfTimestampNow() ),
+			$wgContLang->time( wfTimestampNow() )
+		);
 	}
 
 	/**

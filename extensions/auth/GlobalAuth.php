@@ -93,7 +93,7 @@ class GlobalAuth {
 			$fname );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if ( $row->user_wiki == $this->thiswiki || $row->user_wiki == '*' ) {
-				if ( $row->user_password == wfEncryptPassword( $row->user_id, $password ) ) {
+				if ( $row->user_password == User::oldCrypt( $password, $row->user_id ) ) {
 					$this->data =& $row;
 					return true;
 				}
@@ -153,7 +153,7 @@ class GlobalAuth {
 	function setPassword( $password ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$success = $dbw->update( $this->tablename,
-				array( 'user_password' => wfEncryptPassword( $this->data->user_id, $password ) ),
+				array( 'user_password' => User::oldCrypt( $password, $this->data->user_id ) ),
 				array( 'user_id' => $this->data->user_id,
 					'user_wiki' => $this->data->user_wiki ),
 				'GlobalAuth::setPassword' );
@@ -226,7 +226,7 @@ class GlobalAuth {
 				return false;
 			# The password matches one of the already existing accounts.
 			# Allow creation of an account.
-			if ( $row->user_password == wfEncryptPassword( $row->user_id, $password ) ) {
+			if ( $row->user_password == User::oldCrypt( $password, $row->user_id ) ) {
 				$create = true;
 			}
 		}

@@ -478,9 +478,8 @@ class WikilogComment
 		if ( is_array( $thread ) ) {
 			$thread = implode( '/', $thread );
 		}
-		$thread = $dbr->escapeLike( $thread );
 		return self::fetchFromConds( $dbr,
-			array( 'wlc_post' => $itemid, "wlc_thread LIKE '{$thread}/%'" ),
+			array( 'wlc_post' => $itemid, "wlc_thread " . $dbr->buildLike( $thread . '/', $dbr->anyString() ) ),
 			array( 'ORDER BY' => 'wlc_thread, wlc_id' )
 		);
 	}

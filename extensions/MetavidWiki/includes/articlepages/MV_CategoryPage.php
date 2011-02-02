@@ -96,7 +96,7 @@ class MvCategoryViewer extends CategoryViewer {
 	}
 	function addMVThumb( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		if ( $this->showGallery ) {
-			$image = new MV_Image( $title );
+			$image = wfFindFile( $title );
 			if ( $this->flip ) {
 				$this->gallery->insert( $image );
 			} else {
