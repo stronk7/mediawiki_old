@@ -87,28 +87,6 @@ class ClickTrackingHooks {
 	}
 
 	/**
-	 * Get the number of revisions a user has made since a given time
-	 *
-	 * @param $ts beginning timestamp
-	 * @return number of revsions this user has made
-	 */
-	public static function getEditCountSince( $ts ) {
-		global $wgUser;
-
-		// Convert to just the day
-		$time = gmdate( 'Y-m-d', wfTimestamp( TS_UNIX, $ts ) );
-		$dbr = wfGetDB( DB_SLAVE );
-		$edits = $dbr->selectField(
-			'user_daily_contribs',
-			'SUM(contribs)',
-			array( 'user_id' => $wgUser->getId(), 'day >= ' . $dbr->addQuotes( $time ) ),
-			__METHOD__
-		);
-		// User hasn't made any edits in whatever amount of time
-		return $edits == null ? 0 : $edits;
-	}
-
-	/**
 	 * Get event ID from name
 	 *
 	 * @param $event_name String: name of the event to get

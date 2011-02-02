@@ -28,3 +28,30 @@ $wgExtensionMessagesFiles['UserDailyContribs'] = dirname( __FILE__ ) . '/UserDai
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'UserDailyContribsHooks::loadExtensionSchemaUpdates';
 $wgHooks['ArticleSaveComplete'][] = 'UserDailyContribsHooks::articleSaveComplete';
 $wgHooks['ParserTestTables'][] = 'UserDailyContribsHooks::parserTestTables';
+
+/**
+ * Get the number of revisions a user has made since a given time
+ *
+ * @param $time beginning timestamp
+ * @return number of revsions this user has made
+ */
+function getUserEditCountSince( $time = null, User $user = null ) {
+	global $wgUser;
+	
+	// Fallback on current user
+	if ( is_null( $user ) ) {
+		$user = $wgUser;
+	}
+	// Round time down to a whole day
+	$time = gmdate( 'Y-m-d', wfTimestamp( TS_UNIX, $time ) );
+	// Query the user contribs table
+	$dbr = wfGetDB( DB_SLAVE );
+	$edits = $dbr->selectField(
+		'user_daily_contribs',
+		'SUM(contribs)',
+		array( 'user_id' => $user->getId(), 'day >= ' . $dbr->addQuotes( $time ) ),
+		__METHOD__
+	);
+	// Return edit count as an integer
+	return is_null( $edits ) ? 0 : (integer) $edits;
+}

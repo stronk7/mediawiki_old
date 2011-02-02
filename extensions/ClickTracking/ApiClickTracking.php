@@ -39,13 +39,13 @@ class ApiClickTracking extends ApiBase {
 		$isLoggedIn = $wgUser->isLoggedIn();
 		$now = time();
 		$granularity1 = $isLoggedIn ?
-			ClickTrackingHooks::getEditCountSince( $now - $wgClickTrackContribGranularity1 ) : 0;
+			getUserEditCountSince( $now - $wgClickTrackContribGranularity1 ) : 0;
 
 		$granularity2 = $isLoggedIn ?
-			ClickTrackingHooks::getEditCountSince( $now - $wgClickTrackContribGranularity2 ) : 0;
+			getUserEditCountSince( $now - $wgClickTrackContribGranularity2 ) : 0;
 
 		$granularity3 = $isLoggedIn ?
-			ClickTrackingHooks::getEditCountSince( $now - $wgClickTrackContribGranularity3 ) : 0;
+			getUserEditCountSince( $now - $wgClickTrackContribGranularity3 ) : 0;
 
 		ClickTrackingHooks::trackEvent(
 			$sessionId,  // randomly generated session ID
