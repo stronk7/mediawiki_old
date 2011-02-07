@@ -19,6 +19,9 @@ class VectorHooks {
 					'section' => 'rendering/advancedrendering',
 				),
 			),
+			'requirements' => array(
+				'vector-collapsiblenav' => true,
+			),
 			'configurations' => array(
 				'wgCollapsibleNavBucketTest',
 				'wgCollapsibleNavForceNewVersion',
@@ -36,6 +39,9 @@ class VectorHooks {
 					'label-message' => 'vector-editwarning-preference',
 					'section' => 'editing/advancedediting',
 				),
+			),
+			'requirements' => array(
+				'useeditwarning' => true,
 			),
 			'modules' => array( 'ext.vector.editWarning' ),
 		),
