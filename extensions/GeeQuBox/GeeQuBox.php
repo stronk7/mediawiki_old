@@ -88,6 +88,13 @@ class GeeQuBox {
 			. $eDir . 'js/jquery.lightbox-0.5.min.js"></script>' . PHP_EOL );
 		self::$_page->addExtensionStyle( $eDir . '/css/jquery.lightbox-0.5.css', 'screen' );
 		self::$_page->addInlineScript('$j(document).ready(function(){
+			$j("div.gallerybox").each(function(el){
+                                var _a = $j("div.thumb a", this);
+                                var title = _a.attr("title");
+                                var caption = $j("div.gallerytext >  p", this).text();
+                                if ( caption != "" )
+                                        _a.attr("title", title + caption);
+                        });
 			$j("div.gallerybox a.image").lightBox({
 				imageLoading: 	"'. $eDir .'images/lightbox-ico-loading.gif",
 				imageBtnClose:	"'. $eDir .'images/lightbox-btn-close.gif",
