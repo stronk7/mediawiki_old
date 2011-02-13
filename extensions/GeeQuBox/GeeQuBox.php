@@ -47,7 +47,7 @@ function wfGeeQuBoxLanguageGetMagic( &$magicWords, $langCode = 'en' ) {
  */
 class GeeQuBox {
 
-	private $_page;
+	private static $_page;
 	private $_hasGallery;
 
 	public function gqbAddLightBox( $page ) { 
@@ -55,7 +55,7 @@ class GeeQuBox {
 			return false;
 
 		try {
-			$this->_page = $page;
+			self::$_page = $page;
 			$this->_gqbReplaceHref( $page );
 			$this->_gqbAddScripts( $page );
 			return true;
@@ -83,10 +83,11 @@ class GeeQuBox {
 		global $wgExtensionAssetsPath;
 
 		$eDir = $wgExtensionAssetsPath .'/GeeQuBox/';
-		$this->_page->includeJQuery();
-		$this->_page->addScript( '<script type="text/javascript" src="'. $eDir .'js/jquery.lightbox-0.5.min.js"></script>' . PHP_EOL );
-		$this->_page->addExtensionStyle( $eDir . '/css/jquery.lightbox-0.5.css', 'screen' );
-		$this->_page->addInlineScript('$j(document).ready(function(){
+		self::$_page->includeJQuery();
+		self::$_page->addScript( '<script type="text/javascript" src="' 
+			. $eDir . 'js/jquery.lightbox-0.5.min.js"></script>' . PHP_EOL );
+		self::$_page->addExtensionStyle( $eDir . '/css/jquery.lightbox-0.5.css', 'screen' );
+		self::$_page->addInlineScript('$j(document).ready(function(){
 			$j("div.gallerybox a.image").lightBox({
 				imageLoading: 	"'. $eDir .'images/lightbox-ico-loading.gif",
 				imageBtnClose:	"'. $eDir .'images/lightbox-btn-close.gif",
@@ -113,12 +114,11 @@ class GeeQuBox {
 	 * approach but there doesn't seem to be an alternative approach.)
 	 */
 	private function _gqbReplaceHref() {
-		$page = $this->_page->getHTML();
 		$pattern = '~href="/wiki/([^"]+)"\s*class="image"~';	
-		$replaced = preg_replace_callback($pattern,'self::_gqbReplaceMatches',$page);
+		$replaced = preg_replace_callback($pattern,'self::_gqbReplaceMatches',self::$_page->getHTML());
 
-		$this->_page->clearHTML();
-		$this->_page->addHTML( $replaced );
+		self::$_page->clearHTML();
+		self::$_page->addHTML( $replaced );
 	}
 
 	private static function _gqbReplaceMatches( $matches ) {
@@ -127,9 +127,10 @@ class GeeQuBox {
 	        $image = wfFindFile( $titleObj, false, false, true );
         	$realwidth = (Integer) $image->getWidth();
 	        $width = ( $realwidth > $wgGqbDefaultWidth ) ? $wgGqbDefaultWidth : $realwidth;
-		// do not create a thumbnail when the image is smaller than the default width requested
 		$iPath = ( $realwidth < $wgGqbDefaultWidth ) ? $image->getURL() : $image->createThumb($width);
-		return 'href="'. $iPath .'" class="image"';	// $image->getURL()
+		$title = self::$_page->parse( "'''[[:" . $titleObj->getFullText() . "|" . $titleObj->getText() . "]]'''" );
+
+                return 'href="'. $iPath .'" title="'. htmlspecialchars( $title )  .'" class="image"';
 	}
 
 	/*
