@@ -30,10 +30,21 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
       array(
         'rel'  => 'stylesheet',
         'type' => 'text/css',
-        'href' => "$wgScriptPath/extensions/SelectCategory/SelectCategory.css"
+        'href' => $wgScriptPath.'/extensions/SelectCategory/SelectCategory.css'
       )
     );
-
+    $wgOut->addLink(
+      array(
+        'rel'  => 'stylesheet',
+        'type' => 'text/css',
+        'href' => $wgScriptPath.'/extensions/SelectCategory/jquery.treeview.css'
+      )
+    );
+    $wgOut->addScript( '<script src="'.$wgScriptPath.'/extensions/SelectCategory/jquery.treeview.js" type="text/javascript"></script>' );
+    $wgOut->addScript( '<script src="'.$wgScriptPath.'/extensions/SelectCategory/SelectCategory.js" type="text/javascript"></script>' );
+    
+    $m_skin =& $wgUser->getSkin();
+              
     $m_skin =& $wgUser->getSkin();
               
     # Get all categories from wiki:
@@ -64,7 +75,8 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     $m_pageObj->$m_place .= "\n$m_textBefore";
 
     # Begin list output, use <div> to enable custom formatting
-    $m_pageObj->$m_place .= '<div id="SelectCategoryList">';
+    $m_level = 0;
+    $m_pageObj->$m_place .= '<ul id="SelectCategoryList">';
     foreach( $m_allCats as $m_cat => $m_depth ) {
       $checked = '';
       # See if the category was already added, so check it
@@ -74,38 +86,35 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
       # Clean HTML Output:
       $category =  htmlspecialchars( $m_cat );
 
-      # Calculate indention of subcategories
-      $indention = 0;
-      for( $i = 0; $i <= $m_depth; $i++ ) {
-        $indention = 15 * $i;
+      # iterate through levels and adjust divs accordingly
+      while( $m_level < $m_depth ) {
         # Collapse subcategories after reaching the configured MaxLevel
-        if( $i > $wgSelectCategoryMaxLevel ) {
-          $display = 'display:none;';
+        if( $m_level >= ( $wgSelectCategoryMaxLevel - 1 ) ) {
+          $m_class = 'display:none;';
         } else {
-          $display = '';
+          $m_class = 'display:block;';
         }
-        # Check if we have reached the MaxLevel [-] or not [+]
-        if( $i == $wgSelectCategoryMaxLevel ) {
-          $sign = '[+]';
-        } else {
-#          $sign = '[−]';
-        }
-        # Check if there are more subcategories
-#        if( $m_allCats[] > $m_depth )
+        $m_pageObj->$m_place .= '<ul style="'.$m_class.'">'."\n";
+        $m_level++;
+      }
+      if( $m_level == $m_depth ) $m_pageObj->$m_place .= '</li>'."\n";
+      while( $m_level > $m_depth ) {
+        $m_pageObj->$m_place .= '</ul></li>'."\n";
+        $m_level--;
       }
       # Clean names for text output
       $title = str_replace( '_', ' ', $category );
       $m_title = $wgTitle->newFromText( $category, NS_CATEGORY );
       # Output the actual checkboxes, indented
-      $m_pageObj->$m_place .= '
-        <div id="sc_'.$category.'" style="'.$display.'">
-          <span style="padding-left:'.$indention.'px; width:10px; overflow:hidden;">'.$sign.'</span>
-          <input type="checkbox" name="SelectCategoryList[]" value="'.$category.'" class="checkbox" '.$checked.' />
-          '.$m_skin->link( $m_title, $title ).'
-        </div>';
+      $m_pageObj->$m_place .= '<li><input type="checkbox" name="SelectCategoryList[]" value="'.$category.'" class="checkbox" '.$checked.' />'.$m_skin->link( $m_title, $title )."\n";
+      # set id for next level
+      $m_level_id = 'sc_'.$m_cat;
     } # End walking through cats (foreach)
-    # End of list output
-    $m_pageObj->$m_place .= '</div>';
+    # End of list output - close all remaining divs
+    while( $m_level > -1 ) {
+      $m_pageObj->$m_place .= '</li></ul>'."\n";
+      $m_level--;
+    }
 
     # Print localised help string:
     $m_pageObj->$m_place .= "<!-- SelectCategory end -->\n";
