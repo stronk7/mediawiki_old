@@ -107,7 +107,8 @@ class PagesWithoutScansQuery extends QueryPage {
 		$dt = $this->disambiguation_templates( $dbr );
 		$disambiguation_pages = "( SELECT page_id FROM $page LEFT JOIN $templatelinks ON page_id=tl_from WHERE page_namespace=" . NS_MAIN . " AND " . $dt . " )";
 
-		$sql = 	"SELECT page_namespace as namespace,
+		$sql = "SELECT 'PagesWithoutScans' as type,
+				page_namespace as namespace,
 				page_title as title,
 				page_len AS value
 			FROM $page $forceindex
