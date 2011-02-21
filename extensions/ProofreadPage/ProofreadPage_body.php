@@ -1462,7 +1462,7 @@ var prp_default_footer = \"" . Xml::escapeJsString( wfMsgGetKey( 'proofreadpage_
 				$res = $dbr->select(
 					array( 'pr_index', 'page' ),
 					array( 'pr_count', 'pr_q0', 'pr_q1', 'pr_q2', 'pr_q3', 'pr_q4' ),
-					array( "page_title='$indextitle'", "page_namespace=$index_ns_index" ),
+					array( 'page_title' => $indextitle, 'page_namespace' => $index_ns_index ),
 					__METHOD__,
 					null,
 					array( 'page' => array( 'LEFT JOIN', 'page_id=pr_page_id' ) )
