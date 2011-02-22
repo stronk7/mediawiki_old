@@ -99,7 +99,8 @@ class GeeQuBox {
 				imageLoading: 	"'. $eDir .'images/lightbox-ico-loading.gif",
 				imageBtnClose:	"'. $eDir .'images/lightbox-btn-close.gif",
 				imageBtnPrev:	"'. $eDir .'images/lightbox-btn-prev.gif",
-				imageBtnNext:	"'. $eDir .'images/lightbox-btn-next.gif"
+				imageBtnNext:	"'. $eDir .'images/lightbox-btn-next.gif",
+                                imageBlank:     "'. $eDir .'images/lightbox-blank.gif"
 			});
 		})');
 		/* See _gqbreplaceHref()
