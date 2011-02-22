@@ -175,6 +175,7 @@ class UploadQrCodeJob extends Job {
 	 * @return boolean status of file "upload"
 	 */
 	public function run() {
+		global $wgOut;
 
 		$mUpload = new UploadFromFile();
 		$mUpload->initialize( $this->_dstFileName, $this->_tmpName, null );	// we don't know the filesize, how could we?
