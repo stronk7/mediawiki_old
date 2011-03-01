@@ -184,14 +184,24 @@ class Preferences {
 			);
 		}
 
+		/// Realname hack - declare globals
+		global $wgRealNamesPreventEdition, $wgEmailPreventEdition, $wgSignaturesDisabled;
+		/// Realname hack - end
+
 		// Actually changeable stuff
 		global $wgAuth;
 		$defaultPreferences['realname'] = array(
-			'type' => $wgAuth->allowPropChange( 'realname' ) ? 'text' : 'info',
+			/// Realname hack - Prevent realname edition
+			/// Realname hack - commented:'type' => $wgAuth->allowPropChange( 'realname' ) ? 'text' : 'info',
+			'type' => $wgAuth->allowPropChange( 'realname' ) && empty($wgRealNamesPreventEdition) ? 'text' : 'info',
+			/// Realname hack - end
 			'default' => $user->getRealName(),
 			'section' => 'personal/info',
 			'label-message' => 'yourrealname',
-			'help-message' => 'prefs-help-realname',
+			/// Realname hack - Prevent realname edition
+			/// Realname hack - commented:'help-message' => 'prefs-help-realname',
+			'help-message' => $wgAuth->allowPropChange( 'realname' ) ? '' : 'prefs-help-realname',
+			/// Realname hack - end
 		);
 
 		$defaultPreferences['gender'] = array(
@@ -295,6 +305,9 @@ class Preferences {
 
 		global $wgMaxSigChars, $wgOut, $wgParser;
 
+	/// Realname hack - prevent the signature section completely
+	if (empty($wgSignaturesDisabled)) {
+	/// Realname hack - end
 		// show a preview of the old signature first
 		$oldsigWikiText = $wgParser->preSaveTransform( "~~~", new Title , $user, new ParserOptions );
 		$oldsigHTML = $wgOut->parseInline( $oldsigWikiText );
@@ -319,7 +332,10 @@ class Preferences {
 			'help-message' => 'prefs-help-signature', // show general help about signature at the bottom of the section
 			'section' => 'personal/signature'
 		);
-
+	/// Realname hack - prevent the signature section completely
+	}
+	/// Realname hack - end
+				
 		## Email stuff
 
 		global $wgEnableEmail;
@@ -327,7 +343,10 @@ class Preferences {
 			global $wgEmailConfirmToEdit;
 
 			$defaultPreferences['emailaddress'] = array(
-				'type' => $wgAuth->allowPropChange( 'emailaddress' ) ? 'email' : 'info',
+				/// Realname hack - Prevent realname edition
+				/// Realname hack - commented:'type' => $wgAuth->allowPropChange( 'emailaddress' ) ? 'email' : 'info',
+				'type' => $wgAuth->allowPropChange( 'emailaddress' ) && empty($wgEmailPreventEdition) ? 'email' : 'info',
+				/// Realname hack - end
 				'default' => $user->getEmail(),
 				'section' => 'personal/email',
 				'label-message' => 'youremail',
@@ -1268,7 +1287,14 @@ class Preferences {
 			'emailaddress',
 		);
 
-		if ( $wgEnableEmail ) {
+		/// Realname hack - declare globals
+		global $wgRealNamesPreventEdition, $wgEmailPreventEdition, $wgSignaturesDisabled;
+		/// Realname hack - end
+
+		/// Realname hack - prevent emailaddress modifications
+		/// Realname hack - commented:if ( $wgEnableEmail ) {
+		if( $wgEnableEmail && empty($wgEmailPreventEdition) ) {
+		/// Realname hack - end
 			$newaddr = $formData['emailaddress'];
 			$oldaddr = $wgUser->getEmail();
 			if ( ( $newaddr != '' ) && ( $newaddr != $oldaddr ) ) {
@@ -1298,7 +1324,10 @@ class Preferences {
 
 		// Fortunately, the realname field is MUCH simpler
 		global $wgHiddenPrefs;
-		if ( !in_array( 'realname', $wgHiddenPrefs ) ) {
+		/// Realname hack - prevent realname modifications
+		/// Realname hack - commented:if ( !in_array( 'realname', $wgHiddenPrefs ) ) {
+		if ( !in_array( 'realname', $wgHiddenPrefs ) && empty($wgRealNamesPreventEdition) ) {
+		/// Realname hack - end
 			$realName = $formData['realname'];
 			$wgUser->setRealName( $realName );
 		}

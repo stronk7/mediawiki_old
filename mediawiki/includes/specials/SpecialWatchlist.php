@@ -29,6 +29,9 @@
 function wfSpecialWatchlist( $par ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest;
 	global $wgRCShowWatchingUsers, $wgEnotifWatchlist, $wgShowUpdatedMarker;
+	/// Realname hack - declare global
+	global $wgRealNamesEverywhere;
+	/// Realname hack - end
 	
 	// Add feed links
 	$wlToken = $wgUser->getOption( 'watchlisttoken' );
@@ -68,7 +71,10 @@ function wfSpecialWatchlist( $par ) {
 
 	$wgOut->setPageTitle( wfMsg( 'watchlist' ) );
 
-	$sub  = wfMsgExt( 'watchlistfor2', array( 'parseinline', 'replaceafter' ), $wgUser->getName(), WatchlistEditor::buildTools( $wgUser->getSkin() ) );
+	/// Realname hack - show realusername if needed
+	/// Realname hack - commented:$sub  = wfMsgExt( 'watchlistfor2', array( 'parseinline', 'replaceafter' ), $wgUser->getName(), WatchlistEditor::buildTools( $wgUser->getSkin() ) );
+	$sub  = wfMsgExt( 'watchlistfor2', array( 'parseinline', 'replaceafter' ), empty($wgRealNamesEverywhere) ? $wgUser->getName() : $wgUser->getRealName(), WatchlistEditor::buildTools( $wgUser->getSkin() ) );
+	/// Realname hack - end
 	$wgOut->setSubtitle( $sub );
 
 	if( ( $mode = WatchlistEditor::getMode( $wgRequest, $par ) ) !== false ) {

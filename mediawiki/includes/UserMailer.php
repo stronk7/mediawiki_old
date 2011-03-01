@@ -502,7 +502,11 @@ class EmailNotification {
 		# global configuration level.
 		$editor = $this->editor;
 		$name    = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
-		$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
+		/// Realname hack - use $wgEmailAdminName instead of harcoded 'WikiAdmin'
+		/// Realname hack - commented:$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
+		global $wgEmailAdminName;
+		$adminAddress = new MailAddress( $wgPasswordSender, $wgEmailAdminName);
+		/// Realname hack - end
 		$editorAddress = new MailAddress( $editor );
 		if ( $wgEnotifRevealEditorAddress
 		    && ( $editor->getEmail() != '' )

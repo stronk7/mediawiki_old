@@ -26,6 +26,9 @@
  */
 function wfSpecialNewimages( $par, $specialPage ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode;
+	/// Realname hack - declare global
+	global $wgRealNamesEverywhere;
+	/// Realname hack - end
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );
@@ -141,6 +144,10 @@ function wfSpecialNewimages( $par, $specialPage ) {
 
 		$name = $s->img_name;
 		$ut = $s->img_user_text;
+
+		/// Realname hack - fetching user real name if necessary
+		$ut = empty($wgRealNamesEverywhere) ? $ut : User::whoIsReal($s->img_user);
+		/// Realname hack - end
 
 		$nt = Title::newFromText( $name, NS_FILE );
 		$ul = $sk->link( Title::makeTitle( NS_USER, $ut ), $ut );

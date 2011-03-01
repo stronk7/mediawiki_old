@@ -180,19 +180,41 @@ class SpecialContributions extends SpecialPage {
 	 */
 	protected function contributionsSub( $nt, $id ) {
 		global $wgSysopUserBans, $wgLang, $wgUser, $wgOut;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 
 		$sk = $wgUser->getSkin();
 
-		if ( $id === null ) {
-			$user = htmlspecialchars( $nt->getText() );
+		/// Realname hack - show realusername if needed
+		$realUserName = empty($wgRealNamesEverywhere) ? $nt->getText() : User::whoIsReal($id);
+		if (!empty($realUserName)) {
+			$nnt = Title::makeTitleSafe( NS_USER, $realUserName );
 		} else {
-			$user = $sk->link( $nt, htmlspecialchars( $nt->getText() ) );
+			$nnt = $nt;
+		}
+		/// Realname hack - end
+
+		if ( $id === null ) {
+			/// Realname hack - show realusername if needed
+			/// Realname hack - commented:$user = htmlspecialchars( $nt->getText() );
+			$user = htmlspecialchars( $nnt->getText() );
+			/// Realname hack - end
+		} else {
+			/// Realname hack - show realusername if needed
+			/// Realname hack - commented:$user = $sk->link( $nt, htmlspecialchars( $nt->getText() ) );
+			$user = $sk->link( $nnt, htmlspecialchars( $nnt->getText() ) );
+			/// Realname hack - end
 		}
 		$userObj = User::newFromName( $nt->getText(), /* check for username validity not needed */ false );
 		$talk = $nt->getTalkPage();
 		if( $talk ) {
 			# Talk page link
-			$tools[] = $sk->link( $talk, wfMsgHtml( 'sp-contributions-talk' ) );
+			/// Realname hack - show realusername if needed
+			/// Realname hack - commented:$tools[] = $sk->link( $talk, wfMsgHtml( 'sp-contributions-talk' ) );
+			$ntalk = $nnt->getTalkPage();
+			$tools[] = $sk->link( $ntalk, wfMsgHtml( 'sp-contributions-talk' ) );
+			/// Realname hack - end
 			if( ( $id !== null && $wgSysopUserBans ) || ( $id === null && IP::isIPAddress( $nt->getText() ) ) ) {
 				if( $wgUser->isAllowed( 'block' ) ) { # Block / Change block / Unblock links
 					if ( $userObj->isBlocked() ) {

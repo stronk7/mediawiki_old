@@ -71,6 +71,9 @@ class UsersPager extends AlphabeticPager {
 
 	function getQueryInfo() {
 		global $wgUser;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 		$dbr = wfGetDB( DB_SLAVE );
 		$conds = array();
 		// Don't show hidden names
@@ -111,6 +114,26 @@ class UsersPager extends AlphabeticPager {
 			'options' => array('GROUP BY' => $this->creationSort ? 'user_id' : 'user_name'),
 			'conds' => $conds
 		);
+		/// Realname hack - change query to get user_real_name
+		if (!empty($wgRealNamesEverywhere)) {
+			$conds[] = "user_real_name != ''";
+			$query = array(
+				'tables' => " $user $useIndex LEFT JOIN $user_groups ON user_id=ug_user
+					LEFT JOIN $ipblocks ON user_id=ipb_user AND ipb_deleted=1 AND ipb_auto=0 ",
+				'fields' => array(
+					$this->creationSort ? 'MAX(user_real_name) AS user_name' : 'user_real_name AS user_name',
+					$this->creationSort ? 'user_id' : 'MAX(user_id) AS user_id',
+					'MAX(user_editcount) AS edits',
+					'COUNT(ug_group) AS numgroups',
+					'MAX(ug_group) AS singlegroup', // the usergroup if there is only one
+					'MIN(user_registration) AS creation',
+					'MAX(ipb_deleted) AS ipb_deleted' // block/hide status
+				),
+				'options' => array('GROUP BY' => $this->creationSort ? 'user_id' : 'user_name'),
+				'conds' => $conds
+			);
+		}
+		/// Realname hack - end
 
 		wfRunHooks( 'SpecialListusersQueryInfo', array( $this, &$query ) );
 		return $query;
