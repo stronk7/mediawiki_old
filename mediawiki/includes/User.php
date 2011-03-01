@@ -385,6 +385,14 @@ class User {
 		return $u;
 	}
 
+	/// Realname hack - get user from real name factory method.
+	static function newFromRealName( $realname ) {
+		$dbr =& wfGetDB( DB_SLAVE );
+		$name = $dbr->selectField( 'user', 'user_name', array( 'user_real_name' => $realname) );
+		return self::newFromName( empty($name) ? $realname : $name ) ; // Delegate
+	}
+	/// Realname hack - end
+
 	/**
 	 * Factory method to fetch whichever user has a given email confirmation code.
 	 * This code is generated when an account is created or its e-mail address
@@ -498,6 +506,24 @@ class User {
 
 		return $result;
 	}
+
+	/// Realname hack - get id given one real name
+	static function idFromRealName( $name ) {
+		$nt = Title::newFromText( $name );
+		if( is_null( $nt ) ) {
+			# Illegal name
+			return null;
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_real_name' => $nt->getText() ), __METHOD__ );
+
+		if ( $s === false ) {
+			return 0;
+		} else {
+			return $s->user_id;
+		}
+	}
+	/// Realname hack - end
 
 	/**
 	 * Reset the cache used in idFromName(). For use in tests.
@@ -2093,7 +2119,11 @@ class User {
 		if ( !$this->isItemLoaded( 'realname' ) ) {
 			$this->load();
 		}
-
+		/// Realname hack - return Name in case RealName is empty
+		if (empty($this->mRealName)) {
+		    return $this->getName();
+		}
+		/// Realname hack - end
 		return $this->mRealName;
 	}
 
@@ -3047,7 +3077,14 @@ class User {
 	 * @return Title: User's personal page title
 	 */
 	public function getUserPage() {
-		return Title::makeTitle( NS_USER, $this->getName() );
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
+
+		/// Realname hack - fetch User Realname page
+		/// Realname hack - commented:return Title::makeTitle( NS_USER, $this->getName() );
+		return Title::makeTitle( NS_USER, empty($wgRealNamesEverywhere) ? $this->getName() : $this->getRealName());
+		/// Realname hack - end
 	}
 
 	/**

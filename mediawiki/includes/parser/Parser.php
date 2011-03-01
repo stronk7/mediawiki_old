@@ -4231,8 +4231,14 @@ class Parser {
 	 */
 	function getUserSig( &$user, $nickname = false, $fancySig = null ) {
 		global $wgMaxSigChars;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 
-		$username = $user->getName();
+		/// Realname hack - use real names everywhere
+		/// Realname hack - commented:$username = $user->getName();
+		$username = empty($wgRealNamesEverywhere) ? $user->getName(): $user->getRealName();
+		/// Realname hack - end
 
 		# If not given, retrieve from the user object.
 		if ( $nickname === false )

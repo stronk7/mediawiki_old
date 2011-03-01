@@ -915,6 +915,10 @@ class Linker {
 	 * @private
 	 */
 	static function userLink( $userId, $userText ) {
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		$userText = !empty($wgRealNamesEverywhere) ? User::whoIsReal($userId) : $userText;
+		/// Realname hack - end
 		if ( $userId == 0 ) {
 			$page = SpecialPage::getTitleFor( 'Contributions', $userText );
 		} else {
@@ -938,12 +942,19 @@ class Linker {
 		$userId, $userText, $redContribsWhenNoEdits = false, $flags = 0, $edits = null
 	) {
 		global $wgUser, $wgDisableAnonTalk, $wgLang;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		$realUserName = !empty($wgRealNamesEverywhere) ? User::whoIsReal($userId) : $userText;
+		/// Realname hack - end
 		$talkable = !( $wgDisableAnonTalk && 0 == $userId );
 		$blockable = !$flags & self::TOOL_LINKS_NOBLOCK;
 
 		$items = array();
 		if ( $talkable ) {
-			$items[] = self::userTalkLink( $userId, $userText );
+			/// Realname hack - talk page uses realname
+			/// Realname hack - commented:$items[] = self::userTalkLink( $userId, $userText );
+			$items[] = self::userTalkLink( $userId, $realUserName );
+			/// Realname hack - end
 		}
 		if ( $userId ) {
 			// check if the user has an edit

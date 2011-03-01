@@ -210,6 +210,9 @@ class SpecialContributions extends SpecialPage {
 	 */
 	protected function contributionsSub( $nt, $id ) {
 		global $wgLang, $wgUser, $wgOut;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 
 		$sk = $this->getSkin();
 
@@ -219,6 +222,12 @@ class SpecialContributions extends SpecialPage {
 			$user = $sk->link( $nt, htmlspecialchars( $nt->getText() ) );
 		}
 		$userObj = User::newFromName( $nt->getText(), /* check for username validity not needed */ false );
+		/// Realname hack - use realname if specified
+		if (!empty($wgRealNamesEverywhere)) {
+			$nt = Title::makeTitleSafe( NS_USER, $userObj->getRealName());
+			$user = $sk->link( $nt, htmlspecialchars( $nt->getText() ) );
+		}
+		/// Realname hack - end
 		$talk = $nt->getTalkPage();
 		if( $talk ) {
 			$tools = self::getUserLinks( $nt, $talk, $userObj, $wgUser );

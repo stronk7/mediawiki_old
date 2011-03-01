@@ -68,11 +68,13 @@ class SpecialWatchlist extends SpecialPage {
 
 		$this->setHeaders();
 		$this->outputHeader();
-
 		$sub = wfMsgExt(
 			'watchlistfor2',
 			array( 'parseinline', 'replaceafter' ),
-			$user->getName(),
+			/// Realname hack - show realusername if needed
+			/// Realname hack - commented:$user->getName(),
+			empty($wgRealNamesEverywhere) ? $user->getName() : $user->getRealName(),
+			/// Realname hack - end
 			SpecialEditWatchlist::buildTools( $this->getSkin() )
 		);
 		$output->setSubtitle( $sub );

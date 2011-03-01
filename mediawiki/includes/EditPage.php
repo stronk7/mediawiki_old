@@ -775,6 +775,9 @@ class EditPage {
 	 */
 	protected function showIntro() {
 		global $wgOut, $wgUser;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 		if ( $this->suppressIntro ) {
 			return;
 		}
@@ -791,7 +794,10 @@ class EditPage {
 		if ( $namespace == NS_USER || $namespace == NS_USER_TALK ) {
 			$parts = explode( '/', $this->mTitle->getText(), 2 );
 			$username = $parts[0];
-			$user = User::newFromName( $username, false /* allow IP users*/ );
+			/// Realname hack - fetch User Realname page
+			/// Realname hack - commented:$user = User::newFromName( $username, false /* allow IP users*/ );
+			$user = empty($wgRealNamesEverywhere) ? User::newFromName( $username, false ) : User::newFromRealName( $username);
+			/// Realname hack - end
 			$ip = User::isIP( $username );
 			if ( !$user->isLoggedIn() && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n$1\n</div>",

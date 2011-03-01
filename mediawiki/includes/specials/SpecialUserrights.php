@@ -415,6 +415,9 @@ class UserrightsPage extends SpecialPage {
 	 */
 	protected function showEditUserGroupsForm( $user, $groups ) {
 		global $wgOut, $wgUser, $wgLang, $wgRequest;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 
 		$list = array();
 		foreach( $groups as $group ) {
@@ -445,7 +448,10 @@ class UserrightsPage extends SpecialPage {
 			Html::hidden( 'wpEditToken', $wgUser->editToken( $this->mTarget ) ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-editusergroup' ) ) .
-			wfMsgExt( 'editinguser', array( 'parse' ), wfEscapeWikiText( $user->getName() ) ) .
+			/// Realname hack - use real name
+			/// Realname hack - commented:wfMsgExt( 'editinguser', array( 'parse' ), wfEscapeWikiText( $user->getName() ) ) .
+			wfMsgExt( 'editinguser', array( 'parse' ), wfEscapeWikiText( !empty($wgRealNamesEverywhere) ? $user->getRealName() : $user->getName() ) ) .
+			/// Realname hack - end
 			wfMsgExt( 'userrights-groups-help', array( 'parse' ) ) .
 			$grouplist .
 			Xml::tags( 'p', null, $this->groupCheckboxes( $groups ) ) .

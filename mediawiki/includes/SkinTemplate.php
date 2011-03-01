@@ -171,6 +171,9 @@ class SkinTemplate extends Skin {
 		$this->iscontent = ( $this->getTitle()->getNamespace() != NS_SPECIAL );
 		$this->iseditable = ( $this->iscontent and !( $action == 'edit' or $action == 'submit' ) );
 		$this->username = $wgUser->getName();
+		/// Realname hack - fetch RealName
+		$this->userrealname = $wgUser->getRealName();
+		/// Realname hack - end
 
 		if ( $wgUser->isLoggedIn() || $this->showIPinHeader() ) {
 
@@ -578,6 +581,9 @@ class SkinTemplate extends Skin {
 	 */
 	protected function buildPersonalUrls( OutputPage $out ) {
 		global $wgRequest;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 
 		$title = $out->getTitle();
 		$pageurl = $title->getLocalURL();
@@ -603,7 +609,10 @@ class SkinTemplate extends Skin {
 		$returnto = wfArrayToCGI( $a );
 		if( $this->loggedin ) {
 			$personal_urls['userpage'] = array(
-				'text' => $this->username,
+				/// Realname hack - show realusername if needed
+				/// Realname hack - commented:'text' => $this->username,
+				'text' => empty($wgRealNamesEverywhere) ? $this->username : $this->userrealname,
+				/// Realname hack - end
 				'href' => &$this->userpageUrlDetails['href'],
 				'class' => $this->userpageUrlDetails['exists'] ? false : 'new',
 				'active' => ( $this->userpageUrlDetails['href'] == $pageurl )
@@ -833,6 +842,9 @@ class SkinTemplate extends Skin {
 	protected function buildContentNavigationUrls( OutputPage $out ) {
 		global $wgContLang, $wgLang, $wgUser, $wgRequest;
 		global $wgDisableLangConversion;
+		/// Promote edition hack - declare global
+		global $wgPromoteEdition;
+		/// Promote edition hack - end
 
 		wfProfileIn( __METHOD__ );
 
@@ -944,6 +956,21 @@ class SkinTemplate extends Skin {
 				}
 			// Checks if the page has some kind of viewable content
 			} elseif ( $title->hasSourceText() && $userCanRead ) {
+				/// Promote edition hack - promote edition button if possible, sending to login page
+				/// don't apply it to protected pages (they won't show the "edit" tab. MDLSITE-498
+				if (!empty($wgPromoteEdition) && !$title->isProtected()) {
+					$istalk = $title->isTalkPage();
+					$istalkclass = $istalk?' istalk':'';
+					$content_navigation['views']['edit'] = array(
+						'class' => ( ( ( $action == 'edit' or $action == 'submit' ) and $section != 'new' ) ? 'selected' : '' ) . $istalkclass,
+						'text' => $title->exists()
+							? wfMsg( 'edit' )
+							: wfMsg( 'create' ),
+						'href' => self::makeSpecialUrl( 'Userlogin', 'returnto=' . $title->getText() ),
+						'primary' => true, // don't collapse this in vector
+					);
+				}
+				/// Promote edition hack - end
 				// Adds view source view link
 				$content_navigation['views']['viewsource'] = array(
 					'class' => ( $onPage && $action == 'edit' ) ? 'selected' : false,
@@ -1175,6 +1202,9 @@ class SkinTemplate extends Skin {
 	protected function buildNavUrls( OutputPage $out ) {
 		global $wgUseTrackbacks, $wgUser, $wgRequest;
 		global $wgUploadNavigationUrl;
+		/// Realname hack - declare global
+		global $wgRealNamesEverywhere;
+		/// Realname hack - end
 
 		wfProfileIn( __METHOD__ );
 
@@ -1243,6 +1273,11 @@ class SkinTemplate extends Skin {
 			$id = $user->getID();
 			$ip = $user->isAnon();
 			$rootUser = $user->getName();
+			/// Realname hack - fetch real name if needed
+			if (!empty($wgRealNamesEverywhere)) {
+				$rootUser = $user->getRealName();
+			}
+			/// Realname hack - end
 		} else {
 			$id = 0;
 			$ip = false;
@@ -1250,8 +1285,14 @@ class SkinTemplate extends Skin {
 		}
 
 		if( $id || $ip ) { # both anons and non-anons have contribs list
+			/// Realname hack - always use username for user contributions, logs, block user, email
+			$username = User::newFromId($id)->getName();
+			/// Realname hack - end
 			$nav_urls['contributions'] = array(
-				'href' => self::makeSpecialUrlSubpage( 'Contributions', $rootUser )
+				/// Realname hack - always use username for user contributions, instead of title
+				/// Realname hack - commented:'href' => self::makeSpecialUrlSubpage( 'Contributions', $rootUser )
+				'href' => self::makeSpecialUrlSubpage( 'Contributions', $username )
+				/// Realname hack - end
 			);
 
 			if( $id ) {
@@ -1259,7 +1300,10 @@ class SkinTemplate extends Skin {
 				$nav_urls['log'] = array(
 					'href' => $logPage->getLocalUrl(
 						array(
-							'user' => $rootUser
+							/// Realname hack - always use username for logs, instead of title
+							/// Realname hack - commented:'user' => $rootUser
+							'user' => $username
+							/// Realname hack - end
 						)
 					)
 				);
@@ -1269,7 +1313,10 @@ class SkinTemplate extends Skin {
 
 			if ( $wgUser->isAllowed( 'block' ) ) {
 				$nav_urls['blockip'] = array(
-					'href' => self::makeSpecialUrlSubpage( 'Block', $rootUser )
+					/// Realname hack - always use username for block user, instead of title
+					/// Realname hack - commented:'href' => self::makeSpecialUrlSubpage( 'Block', $rootUser )
+					'href' => self::makeSpecialUrlSubpage( 'Blockip', $username )
+					/// Realname hack - end
 				);
 			} else {
 				$nav_urls['blockip'] = false;
@@ -1282,7 +1329,10 @@ class SkinTemplate extends Skin {
 		$nav_urls['emailuser'] = false;
 		if( $this->showEmailUser( $id ) ) {
 			$nav_urls['emailuser'] = array(
-				'href' => self::makeSpecialUrlSubpage( 'Emailuser', $rootUser )
+				/// Realname hack - always use username for email user, instead of title
+				/// Realname hack - commented:'href' => self::makeSpecialUrlSubpage( 'Emailuser', $rootUser )
+				'href' => self::makeSpecialUrlSubpage( 'Emailuser', $username )
+				/// Realname hack - end
 			);
 		}
 		wfProfileOut( __METHOD__ );

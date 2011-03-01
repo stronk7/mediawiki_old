@@ -539,7 +539,11 @@ class EmailNotification {
 		# Reveal the page editor's address as REPLY-TO address only if
 		# the user has not opted-out and the option is enabled at the
 		# global configuration level.
-		$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
+		/// Realname hack - use $wgEmailAdminName instead of harcoded 'WikiAdmin'
+		/// Realname hack - commented:$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
+		global $wgEmailAdminName;
+		$adminAddress = new MailAddress( $wgPasswordSender, $wgEmailAdminName);
+		/// Realname hack - end
 		if ( $wgEnotifRevealEditorAddress
 			&& ( $this->editor->getEmail() != '' )
 			&& $this->editor->getOption( 'enotifrevealaddr' ) )
