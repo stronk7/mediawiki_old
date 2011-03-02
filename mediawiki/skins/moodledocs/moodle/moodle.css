@@ -1,0 +1,162 @@
+.rowAlternate {
+  background-color: #eeeee0;
+}
+.clearfix {
+  display: block;
+}
+#page {
+  width: 96%;
+  margin: 16px auto;
+  padding: 0;
+  color: #444;
+  background: #FFF url(pix/header_stripe_grad.jpg) no-repeat left top;
+}
+body {
+  background: #FFF url(pix/background_grd_1.jpg) repeat-x left top;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+#moodlelogo {
+  background: url(pix/header_stripe_grad_2.jpg) no-repeat right top;
+  padding-left:2em;
+  height: 2.5em;
+}
+#moodlelogo img.logo {
+  border: 0;
+  padding-top: 0.5em;
+}
+#moodlesitelink {
+  text-align: center;
+  padding-top: 1em;
+}
+.accesshide {
+  position:absolute;
+  top:-100000px;
+  left:10px;
+  font-weight:normal;
+  font-size:1em;
+}
+
+.breadcrumb ul {
+  padding:0;
+  margin:0;
+  text-indent:0;
+  list-style:none;
+}
+
+.breadcrumb li {
+  display:inline;
+  font-size: 84%;
+}
+
+/* @group navbar */
+.navbar {
+  clear: both;
+  width: 100%;
+  padding: 0; 
+  margin: 0;
+  min-height: 2.1em;
+  border-style: none;
+  border-bottom: 0.1em solid #FFE39D;
+  z-index: 0;
+  background: #FFFCF6 url(pix/navbar_bg.jpg) repeat-x left top;
+}
+#site-index .navbar,
+#my-index .navbar {
+  border-top: 0.16em solid #e4af5f;
+}
+.navbar .breadcrumb {
+  float:left;
+  margin: 0.4em 0 0.1em 18px;
+} 
+.navbar .breadcrumb a {
+  text-decoration: none;
+} 
+.navbar .navbutton {
+  margin: 2px 12px 2px 0;
+}
+
+.arrow,
+.breadcrumb .arrow {
+  font-family: Arial,Helvetica,Courier,sans-serif;
+}
+.arrow.sep,
+.breadcrumb .arrow.sep {
+  color: #ffcb44;
+  font-size: 93%;
+}
+.navigation select {
+  background-color: #FFFFFF;
+}
+.navigation optgroup {
+  background-color: #EEEEEE;
+}
+.navigation optgroup option {
+  background-color: #FFFFFF;
+}
+/* @end */
+
+#p-logo {
+  top: 7.9em;
+  left:3%;
+}
+
+#p-logo img {
+  display: none;
+}
+
+#p-navbar {
+  top: 8em;
+  left:3%;
+  display:none;
+}
+
+#p-cactions {
+  top: 11.5em;
+  margin-left:2.5%;
+  width: 72%;
+}
+
+#globalWrapper {
+  background: none;
+}
+
+div#content {
+  margin-top: 4.3em;
+}
+
+div#column-one {
+  padding-top: 4.3em;
+}
+
+a:visited {
+   color: #0063DC;
+}
+
+table.nicetable {
+  border: 1px solid #999999;
+  border-collapse: collapse;
+}
+
+table.nicetable th,
+table.nicetable td {
+  border: 1px solid #999999;
+  padding: 0.3em 0.5em;
+  text-align: left;
+}
+
+table.nicetable th {
+  background:transparent url(../gradient.gif) repeat scroll left top;
+  background-color: #DDDDDD;
+}
+
+h3 {
+  font-size:120%;
+}
+
+h4 {
+  font-size:105%;
+}
+
+h5 {
+  font-style:italic;
+}
