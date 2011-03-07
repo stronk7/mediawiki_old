@@ -626,7 +626,7 @@ class WikilogParserOutput
 class WikilogParserCache
 	extends ParserCache
 {
-	public static function &singleton() {
+	public static function singleton() {
 		static $instance;
 		if ( !isset( $instance ) ) {
 			global $parserMemc;
@@ -635,7 +635,7 @@ class WikilogParserCache
 		return $instance;
 	}
 
-	public function getKey( &$article, $popts ) {
+	public function getKey( $article, $popts ) {
 		if ( $popts instanceof User )	// API change in MediaWiki 1.15.
 			$popts = ParserOptions::newFromUser( $popts );
 

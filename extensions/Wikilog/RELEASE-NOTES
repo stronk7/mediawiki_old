@@ -1,5 +1,17 @@
 = Wikilog release notes =
 
+== Wikilog 1.1.1 ==
+
+=== General notes ===
+
+This is a bugfix release for the 1.1.x branch of Wikilog.
+
+=== Bug fixes ===
+
+* (mw:bug 27904) Fixed method signature compatibility with Mw1.16 for
+  WikilogParserCache.
+
+
 == Wikilog 1.1.0 ==
 
 Aug 8, 2010
