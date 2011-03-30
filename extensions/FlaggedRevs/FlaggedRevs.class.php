@@ -361,8 +361,8 @@ class FlaggedRevs {
 	 * @return string
 	 */
 	public static function styleUrlPath() {
-		global $wgFlaggedRevsStylePath, $wgScriptPath;
-		return str_replace( '$wgScriptPath', $wgScriptPath, $wgFlaggedRevsStylePath );
+		global $wgFlaggedRevsStylePath, $wgExtensionAssetsPath;
+		return str_replace( '$wgExtensionAssetsPath', $wgExtensionAssetsPath, $wgFlaggedRevsStylePath );
 	}
 
 	# ################ Permission functions #################	

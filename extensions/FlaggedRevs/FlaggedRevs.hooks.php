@@ -145,9 +145,9 @@ class FlaggedRevsHooks {
 			'Watchlist', 'Recentchanges', 'Contributions', 'Recentchangeslinked' );
 		foreach ( $spPages as $key ) {
 			if ( $title->isSpecial( $key ) ) {
-				global $wgScriptPath, $wgFlaggedRevsStylePath, $wgFlaggedRevStyleVersion;
-				$stylePath = str_replace( '$wgScriptPath',
-					$wgScriptPath, $wgFlaggedRevsStylePath );
+				global $wgExtensionAssetsPath, $wgFlaggedRevsStylePath, $wgFlaggedRevStyleVersion;
+				$stylePath = str_replace( '$wgExtensionAssetsPath',
+					$wgExtensionAssetsPath, $wgFlaggedRevsStylePath );
 				$encCssFile = htmlspecialchars( "$stylePath/flaggedrevs.css?" .
 					$wgFlaggedRevStyleVersion );
 				$out->addExtensionStyle( $encCssFile );

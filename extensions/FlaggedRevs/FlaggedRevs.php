@@ -205,8 +205,8 @@ $wgAddGroups['bureaucrat'][] = 'reviewer';
 $wgRemoveGroups['bureaucrat'][] = 'reviewer';
 
 # URL location for flaggedrevs.css and flaggedrevs.js
-# Use a literal $wgScriptPath as a placeholder for the runtime value of $wgScriptPath
-$wgFlaggedRevsStylePath = '$wgScriptPath/extensions/FlaggedRevs/client';
+# Use a literal $wgExtensionAssetsPath as a placeholder for the runtime value of $wgExtensionAssetsPath
+$wgFlaggedRevsStylePath = '$wgExtensionAssetsPath/FlaggedRevs/client';
 
 # How far the logs for overseeing quality revisions and depreciations go
 $wgFlaggedRevsOversightAge = 30 * 24 * 3600;
@@ -250,7 +250,7 @@ $wgAvailableRights[] = 'movestable';
 $wgAvailableRights[] = 'stablesettings';
 
 # Bump this number every time you change flaggedrevs.css/flaggedrevs.js
-$wgFlaggedRevStyleVersion = 85;
+$wgFlaggedRevStyleVersion = 87;
 
 $wgExtensionFunctions[] = 'efLoadFlaggedRevs';
 

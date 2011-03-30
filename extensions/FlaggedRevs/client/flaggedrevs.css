@@ -38,6 +38,10 @@ table.flaggedrevs_viewnotice {
 	width: 100%;
 	clear: both;
 }
+.rtl table.flaggedrevs_editnotice,
+.rtl table.flaggedrevs_viewnotice {
+	text-align: right;
+}
 
 div.flaggedrevs_diffnotice,
 div.flaggedrevs_preview {
