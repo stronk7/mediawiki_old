@@ -162,7 +162,9 @@ $4',
 	'codereview-email-body3' => 'User "$1" changed the status of $2.
 
 Old Status: $3
-New Status: $4',
+New Status: $4
+
+Full URL: $5',
 
 	'codereview-email-subj4' => '[$1 $2]: New comment added, and revision status changed',
 	'codereview-email-body4' => 'User "$1" changed the status of $2.
@@ -205,6 +207,7 @@ $6',
 	'right-codereview-set-status' => 'Change revisions status',
 	'right-codereview-signoff' => 'Sign off on revisions',
 	'right-codereview-link-user' => 'Link authors to wiki users',
+	'right-codereview-associate' => 'Manage revision associations',
 
 	'specialpages-group-developer' => 'Developer tools',
 );

@@ -16,10 +16,15 @@ function pr_image_url( requested_width ) {
 		// enforce quantization: width must be multiple of 100px
 		var width = 100 * Math.round( requested_width / 100 );
 		// compare to the width of the image
-		width = Math.min( width, proofreadPageWidth );
-		self.DisplayWidth = width;
-		self.DisplayHeight = width * proofreadPageHeight / proofreadPageWidth;
-		return proofreadPageThumbURL.replace( '##WIDTH##', '' + width );
+		if( width < proofreadPageWidth ) {
+			self.DisplayWidth = width;
+			self.DisplayHeight = width * proofreadPageHeight / proofreadPageWidth;
+			return proofreadPageThumbURL.replace( '##WIDTH##', '' + width );
+		} else {
+			self.DisplayWidth = proofreadPageWidth;
+			self.DisplayHeight = proofreadPageHeight;
+			return proofreadPageURL;
+		}
 	}
 }
 
@@ -893,12 +898,8 @@ function pr_init() {
 	}
 
 	// add CSS classes to the container div
-	var c = document.getElementById( 'pagequality' );
-	if( c ) {
-		c = c.nextSibling;
-		if( c.className == 'pagetext' ) {
-			c.className += ' ' + self.proofreadPageCss;
-		}
+	if( self.proofreadPageCss) {
+		$( 'div.pagetext' ).addClass( self.proofreadPageCss );
 	}
 }
 
@@ -947,7 +948,7 @@ function pr_add_quality_buttons() {
 	if( !proofreadPageAddButtons ) {
 		f.innerHTML =
 			' <input type="hidden" name="wpProofreader" value="' + escapeQuotesHTML( self.proofreadpage_username ) + '">' +
-			'<input type="hidden" name="quality" value="' + escapeQuotesHTML( self.proofreadpage_quality ) + '" >';
+			'<input type="hidden" name="quality" value="' + escapeQuotesHTML( self.proofreadpage_quality +'' ) + '" >';
 		return;
 	}
 

@@ -24,8 +24,7 @@ class ReaderFeedbackHooks {
 		// Add CSS
 		$wgOut->addExtensionStyle( $encCssFile );
 		// Add JS
-		$head = "<script type=\"$wgJsMimeType\" src=\"$encJsFile\"></script>\n";
-		$wgOut->addHeadItem( 'ReaderFeedback', $head );
+		$wgOut->addScriptFile( "$stylepath/readerfeedback.js?$wgFeedbackStyleVersion" );
 
 		return true;
 	}

@@ -357,19 +357,24 @@ var prp_default_footer = \"" . Xml::escapeJsString( wfMsgGetKey( 'proofreadpage_
 			$height = $image->getHeight();
 			if ( $m[2] ) {
 				$thumbName = $image->thumbName( array( 'width' => '##WIDTH##', 'page' => $m[3] ) );
+				$thumbURL = $image->getThumbUrl( $thumbName );
+				$thumbURL = str_replace( '%23', '#', $thumbURL );
+				$fullURL = str_replace( '##WIDTH##', "$width", $thumbURL );
 			} else {
 				$thumbName = $image->thumbName( array( 'width' => '##WIDTH##' ) );
+				$thumbURL = $image->getThumbUrl( $thumbName );
+				$thumbURL = str_replace( '%23', '#', $thumbURL );
+				$fullURL = $image->getURL();
 			}
-			$thumbURL = $image->getThumbUrl( $thumbName );
-			$thumbURL = str_replace( '%23', '#', $thumbURL );
 			$scan_link = Html::element( 'a', 
-						    array( 'href' => str_replace( '##WIDTH##', "$width", $thumbURL ), 
+						    array( 'href' => $fullURL, 
 							   'title' =>  wfMsg( 'proofreadpage_image' ) ), 
 						    wfMsg( 'proofreadpage_image' ) );
 		} else {
 			$width = 0;
 			$height = 0;
 			$thumbURL = '';
+			$fullURL = '';
 			$scan_link = '';
 		}
 
@@ -388,6 +393,7 @@ var prp_default_footer = \"" . Xml::escapeJsString( wfMsgGetKey( 'proofreadpage_
 			'proofreadPageHeight' => intval( $height ),
 			'proofreadPageEditWidth' => $edit_width,
 			'proofreadPageThumbURL' => $thumbURL,
+			'proofreadPageURL' => $fullURL,
 			'proofreadPageIsEdit' => intval( $isEdit ),
 			'proofreadPageIndexLink' => $index_link,
 			'proofreadPageNextLink' => $next_link,
@@ -601,10 +607,10 @@ var prp_default_footer = \"" . Xml::escapeJsString( wfMsgGetKey( 'proofreadpage_
 		$view = ( $i - $offset );
 		switch( $mode ) {
 		case 'highroman':
-			$view = toRoman( $view );
+			$view = $this->toRoman( $view );
 			break;
 		case 'roman':
-			$view = strtolower( toRoman( $view ) );
+			$view = strtolower( $this->toRoman( $view ) );
 			break;
 		case 'normal':
 			$view = '' . $view;
@@ -857,11 +863,9 @@ var prp_default_footer = \"" . Xml::escapeJsString( wfMsgGetKey( 'proofreadpage_
 				if( !$is_q0 ) {
 					$out .= '<span>{{:MediaWiki:Proofreadpage_pagenum_template|page=' . $text . "|num=$pagenum}}</span>";
 				}
-				if( $args["$i"] != null ) {
-					$out .= '{{#lst:' . $text . '|' . $args["$i"] . '}}';
-				} elseif( $page == $from && $args['fromsection'] ) {
+				if( $page == $from_page && $args['fromsection'] ) {
 					$out .= '{{#lst:' . $text . '|' . $args['fromsection'] . '}}';
-				} elseif( $page == $to && $args['tosection'] ) {
+				} elseif( $page == $to_page && $args['tosection'] ) {
 					$out .= '{{#lst:' . $text . '|' . $args['tosection'] . '}}';
 				} else {
 					$out .= '{{:' . $text . '}}';
@@ -941,7 +945,7 @@ var prp_default_footer = \"" . Xml::escapeJsString( wfMsgGetKey( 'proofreadpage_
 		}
 
 		// wrap the output in a div, to prevent the parser from inserting pararaphs
-		$out = "<div>$out</div>";
+		$out = "<div>\n$out\n</div>";
 		$out = $parser->recursiveTagParse( $out );
 		return $out;
 	}

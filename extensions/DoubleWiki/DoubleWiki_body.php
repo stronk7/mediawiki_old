@@ -35,11 +35,15 @@ class DoubleWiki {
 	/*
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
-	function addMatchingTags ( &$text, $lang ) { 
-		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n<p>([^<]*?)<\/p>\n<\/div>/is"; 
-		if( ! preg_match( $pattern, $text, $m ) ) return ;
+	function addMatchingTags ( &$text, $lang ) {
+		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
+		$m = array();
+		if ( ! preg_match( $pattern, $text, $m ) ) {
+			return;
+		}
 		$text = str_replace( $m[1], '', $text );
-		$line_pattern = "/\s*([^:\n]*?)\s*:\s*([^:\n]*?)\s*\n/i"; 
+		$line_pattern = '/\s*([^:\n]*?)\s*=\s*([^:\n]*?)\s*\n/i';
+		$items = array();
 		preg_match_all( $line_pattern, $m[1], $items, PREG_SET_ORDER );
 		foreach( $items as $n => $i ) {
 			$text = str_replace( $i[1], "<span id=\"dw-$n\" title=\"{$i[2]}\"/>".$i[1], $text );
@@ -121,7 +125,8 @@ class DoubleWiki {
 		$left_chunk = '';
 		$right_chunk = ''; 
 
-		for ( $i=0 ; $i < count($left_slices) ; $i++ ) {
+		$leftSliceCount = count( $left_slices );
+		for ( $i=0 ; $i < $leftSliceCount; $i++ ) {
 
 			// some slices might be empty
 			if( $left_slices[$i] == '' ) {
@@ -167,7 +172,8 @@ class DoubleWiki {
 
 				$left_chunk  = '';
 				$right_chunk = '';
-				for($l=0; $l < count( $left_bits ) ; $l++ ) {
+				$leftBitCount = count( $left_bits );
+				for($l=0; $l < $leftBitCount ; $l++ ) {
 					$body .= 
 					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" lang=\"{$left_lang}\">"
 					  ."<div style=\"width:35em; margin:0px auto\">\n".$left_bits[$l]."</div>"
@@ -201,7 +207,8 @@ class DoubleWiki {
 		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER);
 		$counter = 0;
 		$out = '';
-		for($i=0; $i < count($m); $i++){
+		$matchCount = count( $m );
+		for( $i = 0; $i < $matchCount; $i++ ){
 			$t = $m[$i][0];
 			if( substr( $t, 0, 2) != "</" ) {
 				$counter++;
@@ -251,7 +258,8 @@ class DoubleWiki {
 		for( $i=0 ; $i < $n ; $i++) {
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
 			$counter = 0;
-			for($k=0 ; $k < count($m) ; $k++) {
+			$matchCount = count( $m );
+			for($k=0 ; $k < $matchCount ; $k++) {
 				$t = $m[$k];
 				if( substr( $t[0], 0, 2) != "</" ) {
 					$counter++;

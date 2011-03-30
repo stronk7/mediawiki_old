@@ -1,11 +1,5 @@
 /* JavaScript for SimpleSearch extension */
 
-// XXX: Disable mwsuggest.js's effect on searchInput 
-if ( typeof os_autoload_inputs !== 'undefined' && os_autoload_forms !== 'undefined' ) {
-	os_autoload_inputs = [];
-	os_autoload_forms = [];
-}
-
 $( document ).ready( function() {
 	
 	// Compatibility map
@@ -32,6 +26,11 @@ $( document ).ready( function() {
 	};
 	if ( !$.client.test( map ) ) {
 		return true;
+	}
+	
+	// Disable MWSuggest if loaded
+	if ( window.os_MWSuggestDisable ) {
+		window.os_MWSuggestDisable();
 	}
 	
 	// Placeholder text for SimpleSearch box
