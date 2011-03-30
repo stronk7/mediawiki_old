@@ -88,12 +88,14 @@ class ReaderFeedback {
 	 */
 	public static function getAverageRating( $article, $tag, $forUpdate=false ) {
 		global $wgFeedbackAge;
-		$cutoff_unixtime = time() - $wgFeedbackAge;
 		$db = $forUpdate ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+		$cutoff_unixtime = time() - $wgFeedbackAge;
+		// rfh_date is always MW format on all dbms
+		$encCutoff = $db->addQuotes( wfTimestamp( TS_MW, $cutoff_unixtime ) );
 		$row = $db->selectRow( 'reader_feedback_history', 
 			array('SUM(rfh_total)/SUM(rfh_count) AS ave, SUM(rfh_count) AS count'),
 			array( 'rfh_page_id' => $article->getId(), 'rfh_tag' => $tag,
-				"rfh_date >= {$cutoff_unixtime}" ),
+				"rfh_date >= {$encCutoff}" ),
 			__METHOD__ );
 		$data = $row && $row->count ?
 			array($row->ave,$row->count) : array(0,0);

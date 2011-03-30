@@ -642,7 +642,7 @@ class RevisionReviewForm
 	 */
 	public static function buildQuickReview(
 		User $user, FlaggedArticle $article, Revision $rev,
-		$refId = 0, $topNotice = '', $templateIDs, $imageSHA1Keys
+		$refId = 0, $topNotice = '', array $templateIDs = null, array $imageSHA1Keys = null
 	) {
 		global $wgOut, $wgParser, $wgEnableParserCache;
 		$id = $rev->getId();
@@ -735,7 +735,7 @@ class RevisionReviewForm
 		}
 
 		# Do we need to get inclusion IDs from parser output?
-		if ( !$templateIDs || !$imageSHA1Keys ) {
+		if ( $templateIDs === null || $imageSHA1Keys === null ) {
 			$pOutput = false;
 			# Current version: try parser cache
 			if ( $rev->isCurrent() ) {

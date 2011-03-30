@@ -49,4 +49,19 @@
 			}
 		);
 	};
+	
+	/**
+	 * Rewrites a URL to one that runs through the ClickTracking API module
+	 * which registers the event and redirects to the real URL
+	 * @param {string} url URL to redirect to
+	 * @param {string} id Event identifier
+	 */
+	$.trackActionURL = function( url, id ) {
+		return mediaWiki.config.get( 'wgScriptPath' ) + '/api.php?' + $.param( {
+			'action': 'clicktracking',
+			'eventid': id,
+			'token': $.cookie( 'clicktracking-session' ),
+			'redirectto': url
+		} );
+	}
 } )( jQuery );

@@ -59,6 +59,7 @@ $wgAutoloadClasses['WikiEditorHooks'] = dirname( __FILE__ ) . '/WikiEditor.hooks
 $wgExtensionMessagesFiles['WikiEditor'] = dirname( __FILE__ ) . '/WikiEditor.i18n.php';
 $wgHooks['EditPage::showEditForm:initial'][] = 'WikiEditorHooks::editPageShowEditFormInitial';
 $wgHooks['GetPreferences'][] = 'WikiEditorHooks::getPreferences';
+$wgHooks['ResourceLoaderGetConfigVars'][] = 'WikiEditorHooks::resourceLoaderGetConfigVars';
 $wgHooks['MakeGlobalVariablesScript'][] = 'WikiEditorHooks::makeGlobalVariablesScript';
 
 $wikiEditorTpl = array(
@@ -319,6 +320,7 @@ $wgResourceModules += array(
 			'wikieditor-toolbar-tool-link-empty',
 			'wikieditor-toolbar-tool-file',
 			'wikieditor-toolbar-tool-file-example',
+			'wikieditor-toolbar-tool-file-pre',
 			'wikieditor-toolbar-tool-reference',
 			'wikieditor-toolbar-tool-reference-title',
 			'wikieditor-toolbar-tool-reference-cancel',

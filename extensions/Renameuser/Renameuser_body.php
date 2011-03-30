@@ -63,8 +63,7 @@ class SpecialRenameuser extends SpecialPage {
 			wfRunHooks( 'RenameUserWarning', array( $oun, $nun, &$warnings ) );
 		}
 
-		$wgOut->addHTML( "
-			<!-- Current contributions limit is " . RENAMEUSER_CONTRIBLIMIT . " -->" .
+		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl(), 'id' => 'renameuser' ) ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', null, wfMsg( 'renameuser' ) ) .
@@ -250,20 +249,6 @@ class SpecialRenameuser extends SpecialPage {
 
 		// Always get the edits count, it will be used for the log message
 		$contribs = User::edits( $uid );
-
-		// Check edit count
-		if ( !$wgUser->isAllowed( 'siteadmin' ) ) {
-			if ( RENAMEUSER_CONTRIBLIMIT != 0 && $contribs > RENAMEUSER_CONTRIBLIMIT ) {
-				$wgOut->addWikiText( "<div class=\"errorbox\">" .
-					wfMsg( 'renameusererrortoomany',
-						$oldusername->getText(),
-						$wgLang->formatNum( $contribs ),
-						$wgLang->formatNum( RENAMEUSER_CONTRIBLIMIT )
-					)
-				 . "</div>" );
-				return;
-			}
-		}
 
 		// Give other affected extensions a chance to validate or abort
 		if ( !wfRunHooks( 'RenameUserAbort', array( $uid, $oldusername->getText(), $newusername->getText() ) ) ) {
@@ -544,13 +529,12 @@ class RenameuserSQL {
 			}
 			$dbw->freeResult( $res );
 		}
-		// @FIXME: batchInsert() commits per 50 jobs,
-		// which sucks if the DB is rolled-back...
+
 		if ( count( $jobs ) > 0 ) {
-			Job::batchInsert( $jobs );
+			Job::safeBatchInsert( $jobs ); // don't commit yet
 		}
 
-		// Commit the transaction (though batchInsert() above commits)
+		// Commit the transaction
 		$dbw->commit();
 
 		// Delete from memcached again to make sure

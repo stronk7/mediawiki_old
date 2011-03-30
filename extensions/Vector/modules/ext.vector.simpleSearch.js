@@ -78,8 +78,9 @@ $( document ).ready( function() {
 			positionFromLeft: $( 'body' ).is( '.rtl' ),
 			highlightInput: true
 		} )
-		.bind( 'paste cut', function( e ) {
-			// make sure paste and cut events from the mouse trigger the keypress handler and cause the suggestions to update
+		.bind( 'paste cut drop', function( e ) {
+			// make sure paste and cut events from the mouse and drag&drop events
+			// trigger the keypress handler and cause the suggestions to update
 			$( this ).trigger( 'keypress' );
 		} );
 	// Special suggestions functionality for skin-provided search box

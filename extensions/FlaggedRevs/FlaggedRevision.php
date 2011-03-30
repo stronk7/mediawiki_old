@@ -675,7 +675,7 @@ class FlaggedRevision {
 	 *	  (b) Current file exists and the "version used" was non-existing (created)
 	 *    (c) Current file doesn't exist and the "version used" existed (deleted)
 	 *
-	 * @param string $noForeign Using 'noForeign' skips new non-local file versions (bug 15748)
+	 * @param string $noForeign Using 'noForeign' skips foreign file updates (bug 15748)
 	 * @return Array of (file title, MW file timestamp in reviewed version) tuples
 	 */
 	public function findPendingFileChanges( $noForeign = false ) {
@@ -720,18 +720,23 @@ class FlaggedRevision {
 			} else {
 				$tsStable = $reviewedTS;
 			}
-			# Compare to current...
+			# Compare this version to the current version and check for things
+			# that would make the stable version unsynced with the draft...
 			$file = wfFindFile( $title ); // current file version
 			if ( $file ) { // file exists
-                if ( $noForeign === 'noForeign' && !$file->isLocal() ) {
-                    $updated = !$tsStable; // created (ignore new versions)
-                } else {
-                    $updated = ( $file->getTimestamp() > $tsStable ); // edited/created
-                }
-                $deleted = false;
+				if ( $noForeign === 'noForeign' && !$file->isLocal() ) {
+					# Avoid counting edits to Commons files, which can effect
+					# many pages, as there is no expedient way to review them.
+					$updated = !$tsStable; // created (ignore new versions)
+				} else {
+					$updated = ( $file->getTimestamp() > $tsStable ); // edited/created
+				}
+				$deleted = $tsStable // included file deleted after review
+					&& $file->getTimestamp() != $tsStable
+					&& !wfFindFile( $title, array( 'time' => $tsStable ) );
 			} else { // file doesn't exists
 				$updated = false;
-                $deleted = (bool)$tsStable; // later deleted
+				$deleted = (bool)$tsStable; // included file deleted after review
 			}
 			if ( $deleted || $updated ) {
 				$fileChanges[] = array( $title, $tsStable );

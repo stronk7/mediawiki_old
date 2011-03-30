@@ -232,7 +232,7 @@ class WikiEditorHooks {
 	 * 
 	 * Adds enabled/disabled switches for WikiEditor modules
 	 */
-	public static function makeGlobalVariablesScript( &$vars ) {
+	public static function resourceLoaderGetConfigVars( &$vars ) {
 		global $wgWikiEditorFeatures;
 		
 		$configurations = array();
@@ -250,6 +250,19 @@ class WikiEditorHooks {
 		if ( count( $configurations ) ) {
 			$vars = array_merge( $vars, $configurations );
 		}
+		return true;
+	}
+	
+	public static function makeGlobalVariablesScript( &$vars ) {
+		global $wgWikiEditorFeatures;
+		
+		// Build and export old-style wgWikiEditorEnabledModules object for back compat
+		$enabledModules = array();
+		foreach ( self::$features as $name => $feature ) {
+			$enabledModules[$name] = self::isEnabled( $name );
+		}
+		
+		$vars['wgWikiEditorEnabledModules'] = $enabledModules;
 		return true;
 	}
 }

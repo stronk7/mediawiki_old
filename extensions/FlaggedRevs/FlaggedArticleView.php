@@ -656,9 +656,9 @@ class FlaggedArticleView {
 
 	// Get fancy redirect arrow and link HTML
 	protected function getRedirectHtml( $text ) {
-		$rTarget = $this->article->followRedirectText( $text );
-		if ( $rTarget ) {
-			return $this->article->viewRedirect( $rTarget );
+		$rTargets = Title::newFromRedirectArray( $text );
+		if ( $rTargets ) {
+			return $this->article->viewRedirect( $rTargets );
 		}
 		return '';
 	}

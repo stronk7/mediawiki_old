@@ -48,6 +48,7 @@ $wgExtensionMessagesFiles['Vector'] = dirname( __FILE__ ) . '/Vector.i18n.php';
 $wgHooks['BeforePageDisplay'][] = 'VectorHooks::beforePageDisplay';
 $wgHooks['GetPreferences'][] = 'VectorHooks::getPreferences';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VectorHooks::makeGlobalVariablesScript';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VectorHooks::makeGlobalVariablesScript';
 
 $vectorResourceTemplate = array(
 	'localBasePath' => dirname( __FILE__ ) . '/modules',

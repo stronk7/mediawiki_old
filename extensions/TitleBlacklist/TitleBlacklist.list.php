@@ -28,7 +28,6 @@ class TitleBlacklist {
 		//Try to find something in the cache
 		$cachedBlacklist = $wgMemc->get( wfMemcKey( "title_blacklist_entries" ) );
 		if( is_array( $cachedBlacklist ) && count( $cachedBlacklist ) > 0 && ( $cachedBlacklist[0]->getFormatVersion() == self::VERSION ) ) {
-			
 			$this->mBlacklist = $cachedBlacklist;
 			wfProfileOut( __METHOD__ );
 			return;
@@ -105,7 +104,7 @@ class TitleBlacklist {
 
 		return '';
 	}
-	
+
 	/**
 	 * Parse blacklist from a string
 	 *
@@ -116,8 +115,7 @@ class TitleBlacklist {
 		wfProfileIn( __METHOD__ );
 		$lines = preg_split( "/\r?\n/", $list );
 		$result = array();
-		foreach ( $lines as $line )
-		{
+		foreach ( $lines as $line ) {
 			$line = TitleBlacklistEntry :: newFromString( $line );
 			if ( $line ) {
 				$result[] = $line;
@@ -147,7 +145,7 @@ class TitleBlacklist {
 	}
 
 	/**
-	 * Check whether the blacklist restricts 
+	 * Check whether the blacklist restricts
 	 * performing a specific action on the given Title
 	 *
 	 * @param $title Title to check
@@ -161,18 +159,18 @@ class TitleBlacklist {
 		}
 		$blacklist = $this->getBlacklist();
 		foreach ( $blacklist as $item ) {
-			if( !$item->matches( $title, $action ) ) {
+			if( $item->matches( $title, $action ) ) {
 				if( $this->isWhitelisted( $title, $action ) ) {
 					return false;
 				}
-				return $item;
+				return $item; // "returning true"
 			}
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Check whether it has been explicitly whitelisted that the 
+	 * Check whether it has been explicitly whitelisted that the
 	 * current User may perform a specific action on the given Title
 	 *
 	 * @param $title Title to check
@@ -186,13 +184,13 @@ class TitleBlacklist {
 		}
 		$whitelist = $this->getWhitelist();
 		foreach( $whitelist as $item ) {
-			if( !$item->matches( $title, $action ) ) {
+			if( $item->matches( $title, $action ) ) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Get the current blacklist
 	 *
@@ -204,7 +202,7 @@ class TitleBlacklist {
 		}
 		return $this->mBlacklist;
 	}
-	
+
 	/*
 	 * Get the current whitelist
 	 *
@@ -216,7 +214,7 @@ class TitleBlacklist {
 		}
 		return $this->mWhitelist;
 	}
-	
+
 	/**
 	 * Get the text of a blacklist source via HTTP
 	 *
@@ -236,7 +234,7 @@ class TitleBlacklist {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Invalidate the blacklist cache
 	 */
@@ -256,13 +254,14 @@ class TitleBlacklist {
 		foreach( $blacklist as $e ) {
 			wfSuppressWarnings();
 			$regex = $e->getRegex();
-			if( preg_match( "/{$regex}/u", '' ) === false )
+			if( preg_match( "/{$regex}/u", '' ) === false ) {
 				$badEntries[] = $e->getRaw();
+			}
 			wfRestoreWarnings();
 		}
 		return $badEntries;
 	}
-	
+
 	/**
 	 * Inidcates whether user can override blacklist on certain action.
 	 * 
@@ -306,7 +305,8 @@ class TitleBlacklistEntry {
 	 *
 	 * @param $title Title to check
 	 * @param $action %Action to check
-	 * @return TRUE if the user can; otherwise FALSE
+	 * @return TRUE if the the regex matches the title, and is not overridden
+	 * else false if it doesn't match (or was overridden)
 	 */
 	public function matches( $title, $action ) {
 		wfSuppressWarnings();
@@ -314,24 +314,24 @@ class TitleBlacklistEntry {
 		wfRestoreWarnings();
 		if( $match ) {
 			if( isset( $this->mParams['autoconfirmed'] ) && $user->isAllowed( 'autoconfirmed' ) ) {
-				return true;
+				return false;
 			}
 			if( isset( $this->mParams['moveonly'] ) && $action != 'move' ) {
-				return true;
+				return false;
 			}
 			if( isset( $this->mParams['newaccountonly'] ) && $action != 'new-account' ) {
-				return true;
+				return false;
 			}
 			if( !isset( $this->mParams['noedit'] ) && $action == 'edit' ) {
-				return true;
+				return false;
 			}
 			if ( isset( $this->mParams['reupload'] ) && $action == 'upload' ) {
 				// Special:Upload also checks 'create' permissions when not reuploading
-				return true;
+				return false;
 			}
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
