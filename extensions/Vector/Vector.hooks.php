@@ -134,7 +134,7 @@ class VectorHooks {
 	 * 
 	 * Adds enabled/disabled switches for Vector modules
 	 */
-	public static function makeGlobalVariablesScript( &$vars ) {
+	public static function resourceLoaderGetConfigVars( &$vars ) {
 		global $wgVectorFeatures;
 		
 		// Build and export old-style wgVectorEnabledModules object for back compat
