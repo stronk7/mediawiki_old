@@ -137,27 +137,6 @@ class VectorHooks {
 	public static function makeGlobalVariablesScript( &$vars ) {
 		global $wgVectorFeatures;
 		
-		$configurations = array();
-		foreach ( self::$features as $name => $feature ) {
-			if (
-				isset( $feature['configurations'] ) &&
-				( !isset( $wgVectorFeatures[$name] ) || self::isEnabled( $name ) )
-			) {
-				foreach ( $feature['configurations'] as $configuration ) {
-					global $$configuration;
-					$configurations[$configuration] = $$configuration;
-				}
-			}
-		}
-		if ( count( $configurations ) ) {
-			$vars = array_merge( $vars, $configurations );
-		}
-		return true;
-	}
-	
-	public static function makeGlobalVariablesScript( &$vars ) {
-		global $wgVectorFeatures;
-		
 		// Build and export old-style wgVectorEnabledModules object for back compat
 		$enabledModules = array();
 		foreach ( self::$features as $name => $feature ) {
