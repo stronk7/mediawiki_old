@@ -138,11 +138,11 @@ class SpecialInstall extends SpecialPage {
 			"<option value='tag'$tagSelected>" . htmlspecialchars( wfMsg( 'search-tag' ) ) . '</option>'
 		);
 		
-		$searchHtml .= '&nbsp;&nbsp;';
+		$searchHtml .= '&#160;&#160;';
 		
 		$searchHtml .= Html::input( 'filtervalue', $value );
 		
-		$searchHtml .= '&nbsp;&nbsp;';
+		$searchHtml .= '&#160;&#160;';
 		
 		$searchHtml .= Html::input(
 			'',

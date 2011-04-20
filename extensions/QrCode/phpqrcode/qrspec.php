@@ -490,7 +490,7 @@
             if ($binary_mode) {
             
                     foreach ($frame as &$frameLine) {
-                        $frameLine = join('<span class="m">&nbsp;&nbsp;</span>', explode('0', $frameLine));
+                        $frameLine = join('<span class="m">&#160;&#160;</span>', explode('0', $frameLine));
                         $frameLine = join('&#9608;&#9608;', explode('1', $frameLine));
                     }
                     
@@ -499,23 +499,23 @@
                     .m { background-color: white; }
                 </style>
                 <?php
-                    echo '<pre><tt><br/ ><br/ ><br/ >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                    echo join("<br/ >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $frame);
+                    echo '<pre><tt><br/ ><br/ ><br/ >&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
+                    echo join("<br/ >&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;", $frame);
                     echo '</tt></pre><br/ ><br/ ><br/ ><br/ ><br/ ><br/ >';
             
             } else {
             
                 foreach ($frame as &$frameLine) {
-                    $frameLine = join('<span class="m">&nbsp;</span>',  explode("\xc0", $frameLine));
+                    $frameLine = join('<span class="m">&#160;</span>',  explode("\xc0", $frameLine));
                     $frameLine = join('<span class="m">&#9618;</span>', explode("\xc1", $frameLine));
-                    $frameLine = join('<span class="p">&nbsp;</span>',  explode("\xa0", $frameLine));
+                    $frameLine = join('<span class="p">&#160;</span>',  explode("\xa0", $frameLine));
                     $frameLine = join('<span class="p">&#9618;</span>', explode("\xa1", $frameLine));
                     $frameLine = join('<span class="s">&#9671;</span>', explode("\x84", $frameLine)); //format 0
                     $frameLine = join('<span class="s">&#9670;</span>', explode("\x85", $frameLine)); //format 1
                     $frameLine = join('<span class="x">&#9762;</span>', explode("\x81", $frameLine)); //special bit
-                    $frameLine = join('<span class="c">&nbsp;</span>',  explode("\x90", $frameLine)); //clock 0
+                    $frameLine = join('<span class="c">&#160;</span>',  explode("\x90", $frameLine)); //clock 0
                     $frameLine = join('<span class="c">&#9719;</span>', explode("\x91", $frameLine)); //clock 1
-                    $frameLine = join('<span class="f">&nbsp;</span>',  explode("\x88", $frameLine)); //version
+                    $frameLine = join('<span class="f">&#160;</span>',  explode("\x88", $frameLine)); //version
                     $frameLine = join('<span class="f">&#9618;</span>', explode("\x89", $frameLine)); //version
                     $frameLine = join('&#9830;', explode("\x01", $frameLine));
                     $frameLine = join('&#8901;', explode("\0", $frameLine));

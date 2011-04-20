@@ -154,7 +154,7 @@ The first column presents the content of the  '''initial state''' of the page.
 |   valign='top' | <span  style='color: red;'><em><del>line deleted</del></em></span>
 |   valign='top' | <span  style='c/home/mullejea/Bureau/www/mediawiki-1.14.0/extensions/DSMW/tests/p2pTest3.php:258olor: red;'><em><del>line deleted</del></em></span>
 |   valign='top' | <span  style='color: red;'><em><del>line deleted</del></em></span>
-|   valign='top' | <ul><li>DSMW server1 and server2 delete the &ldquo;initial_line&rdquo;
+|   valign='top' | <ul><li>DSMW server1 and server2 delete the “initial_line”
 </li></ul>
 |}
 

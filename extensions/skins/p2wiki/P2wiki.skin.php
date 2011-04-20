@@ -317,7 +317,7 @@ class P2wikiTemplate extends QuickTemplate {
 				<!-- /dataAfterContent -->
 				<?php endif; ?>
 			</div>
-			<div class="bottom_of_entry">&nbsp;</div>
+			<div class="bottom_of_entry">&#160;</div>
 			<div class="visualClear"></div>
 		</div>
 		

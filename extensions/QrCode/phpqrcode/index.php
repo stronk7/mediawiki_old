@@ -73,19 +73,19 @@
     
     //config form
     echo '<form action="index.php" method="post">
-        Data:&nbsp;<input name="data" value="'.(isset($_REQUEST['data'])?htmlspecialchars($_REQUEST['data']):'PHP QR Code :)').'" />&nbsp;
-        ECC:&nbsp;<select name="level">
+        Data:&#160;<input name="data" value="'.(isset($_REQUEST['data'])?htmlspecialchars($_REQUEST['data']):'PHP QR Code :)').'" />&#160;
+        ECC:&#160;<select name="level">
             <option value="L"'.(($errorCorrectionLevel=='L')?' selected':'').'>L - smallest</option>
             <option value="M"'.(($errorCorrectionLevel=='M')?' selected':'').'>M</option>
             <option value="Q"'.(($errorCorrectionLevel=='Q')?' selected':'').'>Q</option>
             <option value="H"'.(($errorCorrectionLevel=='H')?' selected':'').'>H - best</option>
-        </select>&nbsp;
-        Size:&nbsp;<select name="size">';
+        </select>&#160;
+        Size:&#160;<select name="size">';
         
     for($i=1;$i<=10;$i++)
         echo '<option value="'.$i.'"'.(($matrixPointSize==$i)?' selected':'').'>'.$i.'</option>';
         
-    echo '</select>&nbsp;
+    echo '</select>&#160;
         <input type="submit" value="GENERATE"></form><hr/>';
         
     // benchmark

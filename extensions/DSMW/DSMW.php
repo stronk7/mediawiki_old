@@ -103,15 +103,15 @@ $wgHooks['UploadComplete'][] = 'DSMWHooks::onUploadComplete';
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'other'][] = array(
     'path' => __FILE__,
-    'name' => 'Distributed&nbsp;Semantic&nbsp;MediaWiki',
+    'name' => 'Distributed&#160;Semantic&#160;MediaWiki',
     'version' => DSMW_VERSION,
     'author' => array(
-		'[http://www.loria.fr/~mullejea Jean&ndash;Philippe&nbsp;Muller]',
-		'[http://www.loria.fr/~molli Pascal&nbsp;Molli]',
-		'[http://www.loria.fr/~skaf Hala&nbsp;Skaf&ndash;Molli]',
-		'[http://www.loria.fr/~canals Gérôme&nbsp;Canals]',
-		'[http://www.loria.fr/~rahalcha Charbel&nbsp;Rahal]',
-		'[http://www.loria.fr/~weiss Stéphane&nbsp;Weiss]',
+		'[http://www.loria.fr/~mullejea Jean–Philippe&#160;Muller]',
+		'[http://www.loria.fr/~molli Pascal&#160;Molli]',
+		'[http://www.loria.fr/~skaf Hala&#160;Skaf–Molli]',
+		'[http://www.loria.fr/~canals Gérôme&#160;Canals]',
+		'[http://www.loria.fr/~rahalcha Charbel&#160;Rahal]',
+		'[http://www.loria.fr/~weiss Stéphane&#160;Weiss]',
 		'[http://m3p.gforge.inria.fr/pmwiki/pmwiki.php?n=Site.Team others]'
 	),
     'url' => 'http://www.dsmw.org',

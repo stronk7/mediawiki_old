@@ -897,9 +897,9 @@ class SPARQLEndpoint extends SpecialPage {
 			<input type="text" name="filtervocaburl" size="48" />
             </td></tr>
             <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>&#160;</td>
+            <td>&#160;</td>
+            <td>&#160;</td>
             <td>
             <span style="font-family: arial, helvetica, sans-serif; font-size: 10px; color: #777">Example: http://xmlns.com/foaf/spec/index.rdf</span>
             </td></tr>

@@ -160,7 +160,7 @@ class SpecialEmailPage extends SpecialPage {
 		$wgOut->addHTML( "<tr><td colspan=\"2\" align=\"right\">" );
 		$wgOut->addHTML( Xml::element( 'input', array( 'type' => 'hidden', 'name' => 'ea-title', 'value' => $this->title ) ) );
 		$wgOut->addHTML( Xml::element( 'input', array( 'id' => 'ea-show', 'type' => 'submit', 'name' => 'ea-show', 'value' => wfMsg( 'ea-show' ) ) ) );
-		$wgOut->addHTML( "&nbsp;&nbsp;" );
+		$wgOut->addHTML( "&#160;&#160;" );
 		$wgOut->addHTML( Xml::element( 'input', array( 'type' => 'submit', 'name' => 'ea-send', 'value' => wfMsg( 'ea-send' ) ) ) . '&#160;' );
 		$wgOut->addHTML( "</td></tr>" );
 

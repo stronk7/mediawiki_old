@@ -309,11 +309,11 @@ $output .= '    <td align="center" title="Local patches">[' . $countPulledPatch 
 </table>
 </FORM>
 <div id="pullstatus" style="display: none; width: 100%; clear: both;" >
-<a name="PULL_Progress_:" id="PULL_Progress_:"></a><h2> <span class="mw-headline"> PULL Progress&nbsp;: </span></h2>
+<a name="PULL_Progress_:" id="PULL_Progress_:"></a><h2> <span class="mw-headline"> PULL Progress&#160;: </span></h2>
 <div id="statepull" ></div><br />
 </div>
 <div id="pushstatus" style="display: none; width: 100%; clear: both;" >
-<a name="PUSH_Progress_:" id="PUSH_Progress_:"></a><h2> <span class="mw-headline"> PUSH Progress&nbsp;: </span></h2>
+<a name="PUSH_Progress_:" id="PUSH_Progress_:"></a><h2> <span class="mw-headline"> PUSH Progress&#160;: </span></h2>
 <div id="statepush" ></div><br />
 </div>
 ';

@@ -844,7 +844,7 @@ to be loaded else "allow_url_fopen" set to "On"' );
                 foreach ( $props as $property ) {
 
                     if ( $property->isUserDefined() ) { // user defined property
-                        $property->setCaption( preg_replace( '/[ ]/u', '&nbsp;', $property->getWikiValue(), 2 ) );
+                        $property->setCaption( preg_replace( '/[ ]/u', '&#160;', $property->getWikiValue(), 2 ) );
 
                         if ( $property->getWikiPageValue() != null ) {
                             $obj = $property->getWikiPageValue();
