@@ -28,7 +28,7 @@ $(document).ready( function() {
 				$( this ).hide();
 				// add the placeholder
 				$( '<span class="placeholder" style="display:none;"></span>' ).insertAfter( this );
-				$( this ).remove().prependTo( target ).data( 'collapsibleTabsSettings', data );
+				$( this ).detach().prependTo( target ).data( 'collapsibleTabsSettings', data );
 				$( this ).attr( 'style', 'display:list-item;' );
 				//$.collapsibleTabs.getSettings( $( $.collapsibleTabs.getSettings( $( ele ) ).expandedContainer ) )
 				//	.shifting = false;
@@ -65,13 +65,13 @@ $(document).ready( function() {
 		var $target = $( data.expandedContainer ).find( 'span.placeholder:first' );
 		var expandedWidth = data.expandedWidth;
 		$moving.css( "position", "relative" ).css( ( rtl ? 'right' : 'left' ), 0 ).css( 'width', '1px' );
-		$target.replaceWith( $moving.remove().css( 'width', '1px' ).data( 'collapsibleTabsSettings', data )
-			.animate( { width: expandedWidth+"px" }, "normal", function() {
+		$target.replaceWith( $moving.detach().css( 'width', '1px' ).data( 'collapsibleTabsSettings', data )
+			.animate( { width: expandedWidth+"px" }, "normal", function( ) {
 				$( this ).attr( 'style', 'display:block;' );
 				//$.collapsibleTabs.getSettings( $( $.collapsibleTabs.getSettings( $( ele ) ).expandedContainer ) )
 				//	.shifting = false;
 				// Do the above, except with guards for JS errors
-				var data = $.collapsibleTabs.getSettings( $( ele ) );
+				var data = $.collapsibleTabs.getSettings( $( this ) );
 				if ( !data ) {
 					return;
 				}
