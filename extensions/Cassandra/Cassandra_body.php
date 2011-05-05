@@ -1,4 +1,7 @@
 <?php
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit;
+}
 
 global $wgThriftRoot, $wgAutoloadClasses;
 $GLOBALS['THRIFT_ROOT'] = $wgThriftRoot;

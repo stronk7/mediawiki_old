@@ -1,12 +1,12 @@
 <?php
 
-global $IP;
-
-require_once( "$IP/extensions/SemanticMediaWiki/includes/storage/SMW_SQLStore2.php" );
-
 if ( !defined( 'MEDIAWIKI' ) ) {
     die( 'Not a valid entry point.' );
 }
+
+global $IP;
+
+require_once( "$IP/extensions/SemanticMediaWiki/includes/storage/SMW_SQLStore2.php" );
 
 /**
  * SMWARC2Store extends SMWSQLStore2 and forwards all update/delete to ARC2 via SPARQL+

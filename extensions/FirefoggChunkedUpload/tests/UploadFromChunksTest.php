@@ -1,4 +1,7 @@
 <?php
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit;
+}
 
 global $IP;
 require_once( "$IP/maintenance/tests/ApiSetup.php" );

@@ -28,7 +28,7 @@
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
 To install the CreateRedirect extension, put the following line in LocalSettings.php:
-require_once( "$IP/extensions/CreateRedirect/CreateRedirect.php" );
+require_once( "\$IP/extensions/CreateRedirect/CreateRedirect.php" );
 EOT;
 	exit( 1 );
 }
