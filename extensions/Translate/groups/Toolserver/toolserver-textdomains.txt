@@ -1,0 +1,29 @@
+CommonsHelper 2
+optional = checkusage, commonshelper2
+ignored = title, tusc, standard_language, standard_project
+
+General
+optional = colon-separator, dateformat
+
+GetWikiAPI
+ignored = title
+
+Jarry
+
+Krinkle
+
+Monuments API
+
+OrphanTalk2
+optional = label-wiki
+
+Recent Anonymous Activity
+
+SVG Translate
+optional = format-filename-example, format-fullurl-example
+
+Toolserver Intuition - Core
+id = tsint-core
+prefix = tsintuition- | 
+file = Tsintuition.i18n.php
+ignored = title

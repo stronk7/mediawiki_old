@@ -1,0 +1,27 @@
+These is the install file for the ArrayExtension extension.
+	
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:ArrayExtension
+Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/ArrayExtension/INSTALL?view=co
+
+
+== Download ==
+
+You can download a snapshot of the ArrayExtension via the Wikimedia extension distributor at
+https://secure.wikimedia.org/wikipedia/mediawiki/wiki/Special:ExtensionDistributor/ArrayExtension
+
+You can also get the code directly from SVN. Tags can be obtained via
+
+ svn checkout <nowiki>http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/ArrayExtension/REL_version</nowiki>
+
+Where 'version' is the version number of the tag, such as 0_1 (see the [http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/ArrayExtension/ available tags]).
+The latest code can be obtained from trunk:
+
+ svn checkout <nowiki>http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ArrayExtension/</nowiki>
+
+== Installation ==
+
+Once you have downloaded the code, place the ''ArrayExtension'' directory within your
+MediaWiki 'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+# ArrayExtension
+require_once( "$IP/extensions/ArrayExtension/ArrayExtension.php" );

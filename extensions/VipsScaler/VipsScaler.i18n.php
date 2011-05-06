@@ -1,0 +1,196 @@
+<?php
+/**
+ * Internationalisation file for extension VipsScaler.
+ *
+ * @file
+ * @ingroup Extensions
+ */
+ 
+$messages = array();
+
+$messages['en'] = array( 
+	'vipsscaler-desc' => 'Create thumbnails using VIPS' 
+);
+
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'vipsscaler-desc' => '{{desc}}',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'vipsscaler-desc' => 'Skep duimnaels met behulp van VIPS.',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'vipsscaler-desc' => 'Стварае мініятуры з дапамогай VIPS',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'vipsscaler-desc' => 'Krouiñ a ra munudoù en ur ober gant VIPS',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'vipsscaler-desc' => 'Pravljenje smanjenog pregleda koristeći VIPS',
+);
+
+/** German (Deutsch)
+ * @author Kghbln
+ */
+$messages['de'] = array(
+	'vipsscaler-desc' => 'Ermöglicht das Erstellen von Miniaturansichten mit VIPS',
+);
+
+/** French (Français)
+ * @author IAlex
+ */
+$messages['fr'] = array(
+	'vipsscaler-desc' => "Créer des miniatures à l'aide de VIPS",
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'vipsscaler-desc' => 'Crear miniaturas utilizando VIPS',
+);
+
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'vipsscaler-desc' => 'יצירות תמונות ממוזערות באמצעות VIPS',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'vipsscaler-desc' => 'Přehladowe wobrazki z pomocu VIPS wutworić',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'vipsscaler-desc' => 'Crear miniaturas con VIPS',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author IvanLanin
+ */
+$messages['id'] = array(
+	'vipsscaler-desc' => 'Membuat gambar mini dengan menggunakan VIPS',
+);
+
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'vipsscaler-desc' => 'Crea miniature utilizzando VIPS',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'vipsscaler-desc' => 'Minibeldsche met <i lang="en">VIPS</i> maache.',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'vipsscaler-desc' => 'Miniaturbiller mat VIPS maachen',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'vipsscaler-desc' => 'Создавање на минијатури со VIPS',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'vipsscaler-desc' => 'Miniaturen van bestanden aanmaken met VIPS',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'vipsscaler-desc' => 'Opprett miniatyrbilder med VIPS',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'vipsscaler-desc' => 'Crea miniadure an dovrand VIPS',
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'vipsscaler-desc' => 'Criar miniaturas usando VIPS',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'vipsscaler-desc' => 'Ccreje le miniature ausanne VIPS',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'vipsscaler-desc' => 'Создаёт миниатюры с помощью VIPS',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'vipsscaler-desc' => 'Ustvari sličice z VIPS',
+);
+
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'vipsscaler-desc' => 'Прављење умањених приказа слика користећи VIPS',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'vipsscaler-desc' => 'VIPSని ఉపయోగించి నఖచిత్రాలను తయారుచేయండి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'vipsscaler-desc' => 'Lumikha ng mga kagyat na ginagamit ang VIPS',
+);
+

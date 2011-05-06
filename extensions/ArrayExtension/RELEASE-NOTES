@@ -1,0 +1,82 @@
+ Changelog:
+ ==========
+ * January 24, 2011 version 1.3.2
+    - New public class methods for creating and removing arrays. Good for use by other extensions.
+    - VERSION constant added to ArrayExtension class 
+ * July 20, 2010 version 1.3.1
+	- Removed critical bug. Some kind of "Superglobal" Arrays on page imports and job queue jobs. Values were passed from one page to another page. 
+
+ * July 5, 2010 version 1.3
+	- update arrayunion and arraydiff, fixed heavy bug (gaps between array indexes doing some serious trouble in other arrayfunctions like arraysearch)
+ 	- array function #arraysearcharray added
+	- #arraysearch code cleanup, search parameter is optional now, searching for empty elements is possible now
+	- advanced check for regular expressions in #arraysearch, #arraydefine and #arraysearcharray
+	  Pivate function isValidRegEx() added
+	- #arraymerge bug fixed: Php message in case of non existant seccond array
+	- now using preg_quote in arraydefine when using a non regular expression delimiter
+	- some minor code changes and cleanup
+ 
+ * January 23, 2010 version 1.2.4
+    - update arraydefine, add more parameter for combining print with arraydefine
+
+ * July 16, 2009 version 1.2.3
+    - update arrayunique,  fixed bug (empty string should be eliminated in array after arrayunique)
+
+ * July 16, 2009 version 1.2.2
+    - update arrayunique,  fixed bug (zero mistakenly eliminated in array after arrayunique)
+    - rename key=>arrayid, should not affect any existing users
+    - rename validate_array_by_name to validate_array_by_arrayid
+    - add "asc" as option of arraysort    
+
+ * May 03, 2009 version 1.2.1
+   - update arraydefine by adding options:  "unique";  sort=( "desc", "asce", "random", "reverse"), and print=( "list" ). Options are diliminated by comma, e.g. "unique, sort=desc,print=list". 
+   - fixed bug in arrayslice (offset can be greater than array size): if offset is no less than array size, empty array will be returned, if offset if no greater than negative array size, a new array with all elements will be returned
+   - update arrayindex by adding print option when (i) the array is not defined; (ii) the index is not valid in the specified array: e.g. "default=bad array"
+ * April 24, 2009 version 1.2
+ 
+   - fixed a bug in  arrayslice,   (offset=0)
+   - clean up code, added two private functions, validate_array_index, validate_array_offset, validate_array_by_arrayid; rename some parameters key=> new_key,  differentiate offset and index
+ * April 18, 2009 version 1.1.6
+   - fixed a bug in arraymerge and arrayslice,  
+ * Mar 17, 2009 version 1.1.5
+   - update #arraysort, add "reverse" option, http://us3.php.net/manual/en/function.array-reverse.php
+   - update #arrayreset, add option to reset a selection of arrays
+ * Feb 23, 2009 version 1.1.4
+   - fixed #arraysearch, better recognize perl patterns identified by starting with "/", http://www.perl.com/doc/manual/html/pod/perlre.html
+ * Feb 23, 2009 version 1.1.3
+   - fixed #arraysearch, "Warning: Missing argument 4..."
+ * Feb 9, 2009 version 1.1.2
+    - update #arraysearch, now support offset and preg regular expression
+ * Feb 8, 2009 version 1.1.1
+    - update #arrayprint, now wiki links, parser functions and templates properly parsed. This enables foreach loop call.
+    - update #arraysearch, now allows customized output upon found/non-found by specifying additional parameters
+ * Feb 5, 2009 version 1.1
+    - update #arraydefine: replacing  'explode' by 'preg_split', 
+           and we now allow delimitors to  be (i) a string; or (ii) a perl regular expressnion pattern, sourrounded by '/', e.g. '/..blah.../'
+    - update #arrayprint, change parameters from "prefix","suffix" to a "template", 
+           and users can replace a substring in the template with array value, similar to arraymap in semantic forms
+    - update #arrayunique,  empty elements will be removed
+    - update #arraysort: adding "random" option to make the array of values in random order
+    - add #arrayreset to free all defined arrays for memory saving
+    - add #arrayslice to return an array bounded by start_index and length.
+    - add  #arraysearch. now we can return the index of the first occurence of an element, return -1 if not found
+    - remove #arraymember,  obsoleted by #arraysearch
+    - remove #arraypush, obsoleted by #arraydefine and #arraymerge
+    - remove #arraypop, obsoleted by  #arrayslice    
+    - add safty check code to avoid unset parameters
+    
+ * Feb 1, 2009 version 1.0.3 
+    - fixed bug on arrayunique,   php array_unique only make values unique, but the array index was not updated.  (arraydefine is also affected)
+ * Jan 28, 2009 version 1.0.2 
+    - changed arraypop  (add one parameter to support multiple pop)
+    - added arrayindex (return an array element at index)
+ * Jan 27, 2009  version 1.0.1 
+    - changed arraydefine (allow defining empty array)
+    
+    
+ -------------------------------------------
+ the following fuctions are obsoleted
+    #arraypush   (replaced by arraymerge)
+    #arraypop    (replaced by arrayslice)
+    #arraymember (replaced by arraysearch)
+ -------------------------------------------
