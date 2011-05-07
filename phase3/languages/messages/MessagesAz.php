@@ -30,8 +30,8 @@ $namespaceNames = array(
 	NS_PROJECT_TALK     => '$1_müzakirəsi',
 	NS_FILE             => 'Şəkil',
 	NS_FILE_TALK        => 'Şəkil_müzakirəsi',
-	NS_MEDIAWIKI        => 'MediyaViki',
-	NS_MEDIAWIKI_TALK   => 'MediyaViki_müzakirəsi',
+	NS_MEDIAWIKI        => 'MediaWiki',
+	NS_MEDIAWIKI_TALK   => 'MediaWiki_müzakirəsi',
 	NS_TEMPLATE         => 'Şablon',
 	NS_TEMPLATE_TALK    => 'Şablon_müzakirəsi',
 	NS_HELP             => 'Kömək',
@@ -41,27 +41,29 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
-	'Mediya'      => NS_MEDIA,
+	'Mediya'                 => NS_MEDIA,
+	'MediyaViki'             => NS_MEDIAWIKI,
+	'MediyaViki_müzakirəsi'  => NS_MEDIAWIKI_TALK,
 );
 
 $specialPageAliases = array(
-	'CreateAccount'             => array( 'HesabAç' ),
-	'Preferences'               => array( 'Nizamlamalar' ),
-	'Recentchanges'             => array( 'SonDəyişikliklər' ),
-	'Statistics'                => array( 'Statistika' ),
-	'Shortpages'                => array( 'QısaSəhifələr' ),
-	'Longpages'                 => array( 'UzunSəhifələr' ),
-	'Newpages'                  => array( 'YeniSəhifələr' ),
+	'Activeusers'               => array( 'Aktivİstifadəçilər' ),
 	'Allpages'                  => array( 'BütünSəhifələr' ),
-	'Specialpages'              => array( 'XüsusiSəhifələr' ),
 	'Contributions'             => array( 'Fəaliyyətlər' ),
-	'Version'                   => array( 'Versiya' ),
-	'Undelete'                  => array( 'Pozma' ),
+	'CreateAccount'             => array( 'HesabAç' ),
+	'Longpages'                 => array( 'UzunSəhifələr' ),
+	'Mycontributions'           => array( 'MənimFəaliyyətlərim' ),
 	'Mypage'                    => array( 'MənimSəhifəm' ),
 	'Mytalk'                    => array( 'MənimDanışıqlarım' ),
-	'Mycontributions'           => array( 'MənimFəaliyyətlərim' ),
+	'Newpages'                  => array( 'YeniSəhifələr' ),
+	'Preferences'               => array( 'Nizamlamalar' ),
+	'Recentchanges'             => array( 'SonDəyişikliklər' ),
 	'Search'                    => array( 'Axtar' ),
-	'Activeusers'               => array( 'Aktivİstifadəçilər' ),
+	'Shortpages'                => array( 'QısaSəhifələr' ),
+	'Specialpages'              => array( 'XüsusiSəhifələr' ),
+	'Statistics'                => array( 'Statistika' ),
+	'Undelete'                  => array( 'Pozma' ),
+	'Version'                   => array( 'Versiya' ),
 );
 
 $magicWords = array(
