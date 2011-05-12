@@ -48,7 +48,6 @@ function sendRequest(q,e) {
 
 	strQueryR = strQuery.replace(/\>|\</g,"");
 	if ( strQueryR != strQuery ) {
-//		alert("Removing invalid characters '<', '>', or '|'." );
 		strQuery = strQueryR;
 		q.value = strQueryR;
 	}
@@ -57,12 +56,46 @@ function sendRequest(q,e) {
 	if ( strQuery.toString() != csQuery.toString() ) {
 		strQuery = strQuery.replace(/ /g,"_");
 		csQuery = strQuery;
-		sajax_debug_mode = false;
-		sajax_do_call( "fnCategorizeAjax", [ strQuery ], ajaxResponse );
+		$.getJSON("api.php?action=query&format=json&list=categorize&catstrquery="+strQuery,
+		function(data) {
+			var resultDiv = document.getElementById('searchResults');
+			displayType = document.getElementById('txtCSDisplayType').name;
+			resultDiv.innerHTML = '';
+			resultDiv.style.display = 'block';
+			if (!data) {resultDiv.style.display = 'none'; } // TODO
+			else{
+				resultDiv.style.visibility = 'visible';
+				wideResult = false;
+				$.each(data.query.categorize, function(i,item){
+					if ( displayType != 'Cloud' ) {
+						var result=document.createElement("p");
+					}
+					else {
+						var result=document.createElement("span");
+					}
+					result.name = item.replace(/_/g," ");
+					csWord = result.name;
+					
+					csHTML = '<span class="csSelect">' + csWord.substr(0, csQuery.length) + '</span>' + csWord.substr(csQuery.length) + " ";
+					result.innerHTML = csHTML;
+					result.onmouseover = highlight;
+					result.onmouseout = unHighlight;
+					result.onmousedown = selectEntry;
+					result.title = 'Click here to add category to the category list!';
+					result.className="cs";
+					resultDiv.style.lineHeight='1';
+					resultDiv.appendChild(result);  
+				});
+			}
+	
+	
+		});
+		
+		
 	}
 }
 // WAIT FOR SERVER RESPONSE AND DISPLAY SUGGESTIONS    
-ajaxResponse = function handleResponse(response) { 
+ajaxResponse = function handleResponse(response) {
 	resultSet = response.responseText;
 	var resultDiv = document.getElementById('searchResults');
 	displayType = document.getElementById('txtCSDisplayType').name;
