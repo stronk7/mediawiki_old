@@ -3,7 +3,7 @@
 	background-color: #FFFFFF;
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFF), color-stop(1, #E8F2F8));
 	background-image: -moz-linear-gradient(top, #FFF, #E8F2F8);
-	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr=#FFF, endColorstr=#E8F2F8);
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr=#FFFFFF, endColorstr=#E8F2F8);
 	max-height: 550px;
 	padding: 5px;
 	margin: 0px 0px 15px 0px;
@@ -59,7 +59,9 @@ table#xtable{
 table#xtable th{
 	width:1%;
 }
-
+table#xtable td{
+    line-height:25px;
+}
 /* Categorize Mediawiki Extension
  *
  * @author Andreas Rindler (mediawiki at jenandi dot com) and Thomas Fauré (faure dot thomas at gmail dot com)
