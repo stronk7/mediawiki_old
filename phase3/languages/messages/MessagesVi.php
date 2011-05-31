@@ -412,7 +412,7 @@ $messages = array(
 'category-file-count-limited'    => '{{PLURAL:$1|Tập tin|$1 tập tin}} sau nằm trong thể loại hiện hành.',
 'listingcontinuesabbrev'         => 'tiếp',
 'index-category'                 => 'Trang được ghi chỉ mục',
-'noindex-category'               => 'Trang không ghi chỉ mục',
+'noindex-category'               => 'Trang không hiển thị trong bộ máy tìm kiếm',
 'broken-file-category'           => 'Trang nhúng tập tin không tồn tại',
 
 'mainpagetext'      => "'''MediaWiki đã được cài đặt thành công.'''",
@@ -533,7 +533,7 @@ $1',
 'aboutpage'            => 'Project:Giới thiệu',
 'copyright'            => 'Bản quyền $1.',
 'copyrightpage'        => '{{ns:project}}:Bản quyền',
-'currentevents'        => 'Thời sự',
+'currentevents'        => 'Tin tức',
 'currentevents-url'    => 'Project:Thời sự',
 'disclaimers'          => 'Phủ nhận',
 'disclaimerpage'       => 'Project:Phủ nhận chung',
@@ -1649,7 +1649,7 @@ Xem [[Special:NewFiles|trang trưng bày các tập tin mới]] để xem trực
 'illegalfilename'             => 'Tên tập tin “$1” có chứa ký tự không được phép dùng cho tựa trang. Xin hãy đổi tên và tải lên lại.',
 'badfilename'                 => 'Tên tập tin đã được đổi thành “$1”.',
 'filetype-mime-mismatch'      => 'Phần mở rộng của tập tin (“.$1”) không phù hợp kiểu MIME được nhận ra ($2).',
-'filetype-badmime'            => 'Không thể tải lên các tập tin có định dạng MIME “$1”.',
+'filetype-badmime'            => 'Không thể tải lên các tập tin có kiểu MIME “$1”.',
 'filetype-bad-ie-mime'        => 'Không thể tải tập tin này lên vì Internet Explorer sẽ nhận diện tập tin này là “$1”, một định dạng tập tin tiềm ẩn nguy hiểm và không được cho phép.',
 'filetype-unwanted-type'      => "'''“.$1”''' là định dạng tập tin không được trông đợi.
 {{PLURAL:$3|Loại|Những loại}} tập tin thích hợp hơn là $2.",
@@ -1898,8 +1898,8 @@ Lời miêu tả tại [$2 trang mô tả tập tin] tại đấy được hiể
 
 # MIME search
 'mimesearch'         => 'Tìm kiếm theo định dạng',
-'mimesearch-summary' => 'Trang này có khả năng lọc tập tin theo định dạng MIME. Đầu vào: contenttype/subtype, v.d. <tt>image/jpeg</tt>.',
-'mimetype'           => 'Định dạng MIME:',
+'mimesearch-summary' => 'Trang này có khả năng lọc tập tin theo kiểu MIME. Đầu vào: kiểu-nội-dung/kiểu-phụ, v.d. <tt>image/jpeg</tt>.',
+'mimetype'           => 'Kiểu MIME:',
 'download'           => 'tải về',
 
 # Unwatched pages
@@ -2232,10 +2232,13 @@ Bạn cũng có thể thiết lập lại việc nhắc nhở cho tất cả cá
               Hệ thống báo tin {{SITENAME}} thân thiện của bạn
 
 --
-Để thay đổi các thiết lập danh sách theo dõi, mời xem
+Để thay đổi các thiết lập thư điện tử thông báo, mời xem:
+{{fullurl:{{#special:Preferences}}}}
+
+Để thay đổi các thiết lập danh sách theo dõi, mời xem:
 {{fullurl:{{#special:Watchlist}}/edit}}
 
-Để xóa trang ra khỏi danh sách theo dõi của bạn, mời xem
+Để xóa trang ra khỏi danh sách theo dõi của bạn, mời xem:
 $UNWATCHURL
 
 Phản hồi và cần sự hỗ trợ:
@@ -2649,7 +2652,7 @@ Trong những trường hợp đó, bạn phải di chuyển hoặc hợp nhất
 'movepagebtn'                  => 'Di chuyển trang',
 'pagemovedsub'                 => 'Di chuyển thành công',
 'movepage-moved'               => "'''“$1” đã được di chuyển đến “$2”'''",
-'movepage-moved-redirect'      => 'Đã tạo trang chuyển hướng.',
+'movepage-moved-redirect'      => 'Đã tạo trang đổi hướng.',
 'movepage-moved-noredirect'    => 'Chức năng tạo trang chuyển hướng đã bị tắt.',
 'articleexists'                => 'Đã có một trang với tên đó, hoặc tên bạn chọn không hợp lệ.
 Xin hãy chọn tên khác.',
@@ -2665,7 +2668,7 @@ Xin hãy chọn tên khác.',
 'movepage-max-pages'           => 'Đã có tối đa $1 {{PLURAL:$1|trang|trang}} đã di chuyển và không tự động di chuyển thêm được nữa.',
 '1movedto2'                    => '[[$1]] đổi thành [[$2]]',
 '1movedto2_redir'              => '[[$1]] đổi thành [[$2]] qua đổi hướng',
-'move-redirect-suppressed'     => 'đã tắt chuyển hướng',
+'move-redirect-suppressed'     => 'đã tắt đổi hướng',
 'movelogpage'                  => 'Nhật trình di chuyển',
 'movelogpagetext'              => 'Dưới đây là danh sách các trang đã được di chuyển.',
 'movesubpage'                  => '{{PLURAL:$1|Trang con|Các trang con}}',
@@ -2826,7 +2829,7 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'tooltip-n-mainpage'              => 'Đi đến Trang Chính',
 'tooltip-n-mainpage-description'  => 'Xem trang chính',
 'tooltip-n-portal'                => 'Giới thiệu dự án, cách sử dụng và tìm kiếm thông tin ở đây',
-'tooltip-n-currentevents'         => 'Các trang có liên quan đến thời sự',
+'tooltip-n-currentevents'         => 'Các trang có liên quan đến tin tức',
 'tooltip-n-recentchanges'         => 'Danh sách các thay đổi gần đây',
 'tooltip-n-randompage'            => 'Xem trang ngẫu nhiên',
 'tooltip-n-help'                  => 'Nơi tìm hiểu thêm cách dùng.',
@@ -2972,8 +2975,8 @@ Nếu thực thi nó máy tính của bạn có thể bị tiếm quyền.",
 'imagemaxsize'           => "Giới hạn cỡ hình:<br />''(trên trang miêu tả tập tin)''",
 'thumbsize'              => 'Cỡ hình thu nhỏ:',
 'widthheightpage'        => '$1×$2, $3 {{PLURAL:$3|trang|trang}}',
-'file-info'              => 'kích thước tập tin: $1, định dạng MIME: $2',
-'file-info-size'         => '$1×$2 điểm ảnh, kích thước: $3, định dạng MIME: $4',
+'file-info'              => 'kích thước tập tin: $1, kiểu MIME: $2',
+'file-info-size'         => '$1 × $2 điểm ảnh, kích thước tập tin: $3, kiểu MIME: $4',
 'file-nohires'           => '<small>Không có độ phân giải cao hơn.</small>',
 'svg-long-desc'          => 'tập tin SVG, $1 × $2 điểm ảnh trên danh nghĩa, kích thước: $3',
 'show-big-image'         => 'Độ phân giải tối đa',
@@ -3718,7 +3721,7 @@ Hãy ghi vào tên tập tin, không bao gồm tiền tố “{{ns:file}}:”.',
 'fileduplicatesearch-legend'    => 'Tìm kiếm tập tin trùng lắp',
 'fileduplicatesearch-filename'  => 'Tên tập tin:',
 'fileduplicatesearch-submit'    => 'Tìm kiếm',
-'fileduplicatesearch-info'      => '$1×$2 điểm ảnh<br />Kích thước tập tin: $3<br />Định dạng MIME: $4',
+'fileduplicatesearch-info'      => '$1 × $2 điểm ảnh<br />Kích thước tập tin: $3<br />Kiểu MIME: $4',
 'fileduplicatesearch-result-1'  => 'Không có bản sao y hệt với tập tin “$1”.',
 'fileduplicatesearch-result-n'  => 'Có {{PLURAL:$2|1 bản sao|$2 bản sao}} y hệt với tập tin “$1”.',
 'fileduplicatesearch-noresults' => 'Không tìm thấy tập tin nào tên “$1”.',

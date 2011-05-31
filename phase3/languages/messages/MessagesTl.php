@@ -431,6 +431,8 @@ Tingnan ang [[Special:Version|pahina ng bersyon]].',
 'page-rss-feed'           => '"$1" kargang RSS',
 'page-atom-feed'          => '"$1" kargang Atom',
 'red-link-title'          => '$1 (hindi umiiral ang pahina)',
+'sort-descending'         => 'Pagsunud-sunurin na bumababa',
+'sort-ascending'          => 'Pagsunud-sunurin na tumataas',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Pahina',

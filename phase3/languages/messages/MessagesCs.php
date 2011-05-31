@@ -645,6 +645,8 @@ $1',
 'page-rss-feed'           => 'RSS kanál stránky „$1“',
 'page-atom-feed'          => 'Atom kanál stránky „$1“',
 'red-link-title'          => '$1 (stránka neexistuje)',
+'sort-descending'         => 'Seřadit sestupně',
+'sort-ascending'          => 'Seřadit vzestupně',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Stránka',
@@ -856,7 +858,7 @@ Možná jste si již úspěšně heslo změnili, nebo jste si vyžádali nové d
 
 # Special:PasswordReset
 'passwordreset'                => 'Reset hesla',
-'passwordreset-text'           => 'Pro obdržení e-mailu s detaily vašeho účtu vyplňte tento formulář.',
+'passwordreset-text'           => 'Pro obdržení e-mailu s připomenutím detailů vašeho účtu vyplňte tento formulář.',
 'passwordreset-legend'         => 'Znovu nastavit heslo',
 'passwordreset-disabled'       => 'Znovunastavení hesla je na této wiki zakázáno.',
 'passwordreset-pretext'        => '{{PLURAL:$1||Zadejte jeden z údajů níže}}',
@@ -2269,11 +2271,15 @@ Uživatele, který změnu provedl, můžete kontaktovat:
 e-mailem: $PAGEEDITOR_EMAIL
 na wiki: $PAGEEDITOR_WIKI
 
-Dokud stránku nenavštívíte, nebudou vám zasílána další oznámení o změnách této stránky, případně si můžete vynulovat příznaky ve svém seznamu sledovaných stránek.
+Dokud stránku nenavštívíte, nebudou vám zasílána další oznámení o změnách této stránky.
+Případně si můžete vynulovat příznaky ve svém seznamu sledovaných stránek.
 
 	S pozdravem váš zasílač hlášení {{grammar:2sg|{{SITENAME}}}}
 
 --
+Změnit nastavení e-mailových oznámení můžete na
+{{fullurl:{{#special:Preferences}}}}
+
 Nastavení sledovaných stránek může změnit na
 {{fullurl:Special:Watchlist/edit}}
 
@@ -3174,8 +3180,11 @@ Obsahuje pouze seznam s odrážkami (řádka začíná s *). První odkaz na ř�
 'exif-objectname'                  => 'Krátký název',
 'exif-specialinstructions'         => 'Zvláštní pokyny',
 'exif-headline'                    => 'Nadpis',
+'exif-credit'                      => 'Zdroj/poskytovatel',
 'exif-source'                      => 'Zdroj',
+'exif-editstatus'                  => 'Redakční stav obrázku',
 'exif-urgency'                     => 'Spěšnost',
+'exif-fixtureidentifier'           => 'Název pořadu',
 'exif-locationdest'                => 'Zobrazené místo',
 'exif-locationdestcode'            => 'Kód zobrazeného místa',
 'exif-objectcycle'                 => 'Denní doba, pro kterou je soubor určen',
@@ -3187,6 +3196,7 @@ Obsahuje pouze seznam s odrážkami (řádka začíná s *). První odkaz na ř�
 'exif-iimsupplementalcategory'     => 'Doplňkové kategorie',
 'exif-datetimeexpires'             => 'Nepoužívat po',
 'exif-datetimereleased'            => 'K použití od',
+'exif-originaltransmissionref'     => 'Kód pro dohledání původního přenosu',
 'exif-identifier'                  => 'Identifikátor',
 'exif-lens'                        => 'Použitý objektiv',
 'exif-serialnumber'                => 'Sériové číslo přístroje',
@@ -3195,11 +3205,14 @@ Obsahuje pouze seznam s odrážkami (řádka začíná s *). První odkaz na ř�
 'exif-datetimemetadata'            => 'Datum poslední úpravy metadat',
 'exif-nickname'                    => 'Neformální název obrázku',
 'exif-rating'                      => 'Hodnocení (1–5)',
+'exif-rightscertificate'           => 'Certifikát řízení práv',
 'exif-copyrighted'                 => 'Stav autorských práv',
 'exif-copyrightowner'              => 'Držitel autorských práv',
 'exif-usageterms'                  => 'Podmínky užití',
+'exif-webstatement'                => 'Online informace o autorských právech',
 'exif-originaldocumentid'          => 'Unikátní ID původního dokumentu',
 'exif-licenseurl'                  => 'URL licence',
+'exif-morepermissionsurl'          => 'Informace o jiném licencování',
 'exif-attributionurl'              => 'Pokud užíváte toto dílo, uveďte odkaz',
 'exif-preferredattributionname'    => 'Pokud užíváte toto dílo, uveďte jako autora',
 'exif-pngfilecomment'              => 'Poznámky ze souboru PNG',
@@ -3218,6 +3231,7 @@ Obsahuje pouze seznam s odrážkami (řádka začíná s *). První odkaz na ř�
 # EXIF attributes
 'exif-compression-1' => 'Nekomprimovaný',
 
+'exif-copyrighted-true'  => 'Chráněno autorským právem',
 'exif-copyrighted-false' => 'Volné dílo',
 
 'exif-unknowndate' => 'neznámé datum',
@@ -3387,6 +3401,7 @@ Obsahuje pouze seznam s odrážkami (řádka začíná s *). První odkaz na ř�
 'exif-ycbcrpositioning-2' => 'U sebe',
 
 'exif-dc-contributor' => 'Přispěvatelé',
+'exif-dc-coverage'    => 'Místní nebo časový rozsah média',
 'exif-dc-date'        => 'Datum (data)',
 'exif-dc-publisher'   => 'Vydavatel',
 'exif-dc-relation'    => 'Související média',

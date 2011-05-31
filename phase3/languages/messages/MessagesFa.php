@@ -722,6 +722,8 @@ $1',
 'feed-atom'               => 'اتم',
 'feed-rss'                => 'آراس‌اس',
 'red-link-title'          => '$1 (صفحه وجود ندارد)',
+'sort-descending'         => 'مرتب‌سازی نزولی',
+'sort-ascending'          => 'مرتب‌سازی صعودی',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'مقاله',
@@ -2259,7 +2261,7 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 
 # Special:Log/newusers
 'newuserlogpage'              => 'سیاههٔ ایجاد کاربر',
-'newuserlogpagetext'          => 'این سیاهه‌ای از نامهای کاربریِ تازه‌ساخته‌شده است',
+'newuserlogpagetext'          => 'این سیاهه‌ای از نام‌های کاربری تازه‌ساخته‌شده است.',
 'newuserlog-byemail'          => 'گذرواژه با پست الکترونیکی ارسال شد',
 'newuserlog-create-entry'     => 'کاربر جدید',
 'newuserlog-create2-entry'    => 'حساب کاربری جدید $1 را ایجاد کرد',
@@ -2362,14 +2364,14 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 'enotif_newpagetext'           => 'این یک صفحهٔ تازه‌است.',
 'enotif_impersonal_salutation' => 'کاربر {{SITENAME}}',
 'changed'                      => 'تغییر یافته',
-'created'                      => 'ایجاد شد',
+'created'                      => 'ایجاد شده',
 'enotif_subject'               => 'صفحهٔ «$PAGETITLE» {{SITENAME}} به دست $PAGEEDITOR $CHANGEDORCREATED‌است.',
 'enotif_lastvisited'           => 'برای دیدن همهٔ تغییرات از آخرین باری که سر زده‌اید $1 را ببینید.',
 'enotif_lastdiff'              => 'برای نمایش این تغییر $1 را ببینید.',
 'enotif_anon_editor'           => 'کاربر ناشناس $1',
 'enotif_body'                  => '$WATCHINGUSERNAME گرامی،
 
-صفحهٔ «$PAGETITLE» {{SITENAME}} در $PAGEEDITDATE به دست $PAGEEDITOR $CHANGEDORCREATED است. برای دیدن نسخهٔ کنونی به $PAGETITLE_URL بروید.
+صفحهٔ «$PAGETITLE» {{SITENAME}} در $PAGEEDITDATE به‌دست $PAGEEDITOR $CHANGEDORCREATED است. برای دیدن نسخهٔ کنونی $PAGETITLE_URL را ببینید.
 
 $NEWPAGE
 
@@ -2382,17 +2384,17 @@ $NEWPAGE
 تا هنگامی که به صفحه سر نزده‌اید، در صورت رخ‌دادنِ احتمالیِ تغییراتِ بیشتر، اعلانیه‌ای برای شما فرستاده نخواهد شد.
 شما همچنین می‌توانید در صفحهٔ پی‌گیری‌های خود پرچم‌های مربوط به آگاهی‌رسانی پستی را صفر کنید.
 
-خاکسار شما،
-
-سامانهٔ آگاهی‌رسانی  {{SITENAME}}.
+             دوستدار شما، سامانهٔ آگاهی‌رسانی {{SITENAME}}
 
 --
+برای تغییر تنظیمات فهرست آگاهی‌رسانی رایانامه‌ای شما به {{fullurl:{{#special:Watchlist}}/edit}} بروید.
+
 برای تغییر تنظیمات فهرست پی‌گیری‌هایتان به {{fullurl:{{#special:Watchlist}}/edit}} بروید.
 
 برای حذف صفحه از فهرصت پی‌گیری‌هایتان به $UNWATCHURL بروید.
 
 بازخورد و کمک بیشتر:
-{{fullurl:{{ns:help}}:Contents}}',
+{{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
 'deletepage'             => 'حذف صفحه',
@@ -2698,8 +2700,10 @@ $1',
 'autoblocker'                     => 'به طور خودکار بسته شد چون آی‌پی شما به تازگی توسط کاربر «[[User:$1|$1]]» استفاده شده‌است.
 دلیل قطع دسترسی $1 چنین است: «$2»',
 'blocklogpage'                    => 'سیاههٔ_بسته‌شدن‌ها',
-'blocklog-showlog'                => 'دسترسی این کاربر قبلاً بسته شده‌است. سیاههٔ قطع دسترسی در زیر نمایش یافته است:',
-'blocklog-showsuppresslog'        => 'دسترسی این کاربر قبلاً بسته شده و این کاربر پنهان شده‌است. سیاههٔ قطع دسترسی در زیر نمایش یافته است:',
+'blocklog-showlog'                => 'دسترسی این کاربر در گذشته بسته شده‌است.
+سیاههٔ قطع دسترسی در زیر نمایش یافته است:',
+'blocklog-showsuppresslog'        => 'دسترسی این کاربر قبلاً بسته شده و این کاربر پنهان شده‌است.
+سیاههٔ قطع دسترسی در زیر نمایش یافته است:',
 'blocklogentry'                   => '«[[$1]]» را $2 بست $3',
 'reblock-logentry'                => 'تنظیم‌های قطع دسترسی [[$1]] را تغییر داد به پایان قطع دسترسی در $2 $3',
 'blocklogtext'                    => 'این سیاهه‌ای از اعمال بستن و باز کردن کاربرها است.
@@ -2707,7 +2711,7 @@ $1',
 برای فهرست محرومیت‌ها و بسته‌شدن‌های عملیاتی در لحظهٔ حاضر، به [[Special:BlockList|فهرست آی‌پی‌های بسته]] مراجعه کنید.',
 'unblocklogentry'                 => '«$1» را باز کرد',
 'block-log-flags-anononly'        => 'فقط کاربران گمنام',
-'block-log-flags-nocreate'        => 'قابلیت ایجاد حساب غیرفعال شد.',
+'block-log-flags-nocreate'        => 'قابلیت ایجاد حساب غیرفعال شد',
 'block-log-flags-noautoblock'     => 'قطع دسترسی خودکار غیرفعال شد',
 'block-log-flags-noemail'         => 'پست الکترونیکی مسدود شد',
 'block-log-flags-nousertalk'      => 'صفحهٔ بحث خود را نمی‌تواند ویرایش کند',
@@ -3041,10 +3045,10 @@ $1',
 'nocredits'        => 'اطلاعات سازندگان این صفحه موجود نیست.',
 
 # Spam protection
-'spamprotectiontitle' => 'پالایه هرزنگاری‌ها',
+'spamprotectiontitle' => 'پالایهٔ هرزنگاری‌ها',
 'spamprotectiontext'  => 'از ذخیره کردن صفحه توسط صافی هرزنگاری‌ها جلوگیری شد.
 معمولاً این اتفاق زمانی می‌افتد که متن جدید صفحه، حاوی پیوندی به یک نشانی وب خارجی باشد.',
-'spamprotectionmatch' => 'متن زیر چیزی‌است که پالایه هرزه‌نگاری ما را به کارانداخت: $1',
+'spamprotectionmatch' => 'متن زیر چیزی‌است که پالایهٔ هرزه‌نگاری ما را به کارانداخت: $1',
 'spambot_username'    => 'هرزه‌تمیزکارِ مدیاویکی',
 'spam_reverting'      => 'واگردانی به آخرین نسخه‌ای که پیوندی به $1 ندارد.',
 'spam_blanking'       => 'تمام نسخه‌ها حاوی پیوند به $1 بود، در حال خالی کردن',
@@ -3084,7 +3088,7 @@ $1',
 'patrol-log-header'    => 'این سیاهه‌ای از ویرایش‌های گشت‌خورده است.',
 'patrol-log-line'      => 'به $1 از $2 برچسب گشت زد $3',
 'patrol-log-auto'      => '(خودکار)',
-'patrol-log-diff'      => 'نسخه $1',
+'patrol-log-diff'      => 'نسخهٔ $1',
 'log-show-hide-patrol' => 'سیاههٔ گشت‌زنی $1',
 
 # Image deletion

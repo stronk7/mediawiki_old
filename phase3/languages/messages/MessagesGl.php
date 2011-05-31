@@ -628,7 +628,7 @@ Non esqueza personalizar as súas [[Special:Preferences|preferencias de {{SITENA
 'externaldberror'            => 'Ou ben se produciu un erro da base de datos na autenticación externa ou ben non se lle permite actualizar a súa conta externa.',
 'login'                      => 'Acceder ao sistema',
 'nav-login-createaccount'    => 'Rexistro',
-'loginprompt'                => "Debe habilitar as ''cookies'' para acceder a {{SITENAME}}.",
+'loginprompt'                => 'Debe habilitar as cookies para acceder a {{SITENAME}}.',
 'userlogin'                  => 'Rexistro',
 'userloginnocreate'          => 'Rexistro',
 'logout'                     => 'Saír ao anonimato',
@@ -800,7 +800,7 @@ Contrasinal temporal: $2',
 'showpreview'                      => 'Mostrar a vista previa',
 'showlivepreview'                  => 'Vista previa',
 'showdiff'                         => 'Mostrar os cambios',
-'anoneditwarning'                  => "'''Aviso:''' non accedeu ao sistema.
+'anoneditwarning'                  => "'''Aviso:''' Non accedeu ao sistema.
 O seu enderezo IP quedará rexistrado no historial de revisións desta páxina.",
 'anonpreviewwarning'               => "''Non accedeu ao sistema. Se garda a páxina, o seu enderezo IP quedará rexistrado no historial de edicións.''",
 'missingsummary'                   => "'''Aviso:''' esqueceu incluír o texto do campo resumo.
@@ -1180,8 +1180,8 @@ Asegúrese de que esta modificación da páxina mantén a continuidade históric
 'compareselectedversions'  => 'Comparar as versións seleccionadas',
 'showhideselectedversions' => 'Mostrar/Agochar as versións seleccionadas',
 'editundo'                 => 'desfacer',
-'diff-multi'               => '(Non se {{PLURAL:$1|mostra unha revisión|mostran $1 revisións}} do historial {{PLURAL:$2|feita por un usuario|feitas por $2 usuarios}}.)',
-'diff-multi-manyusers'     => '(Non se {{PLURAL:$1|mostra unha revisión|mostran $1 revisións}} do historial {{PLURAL:$2|feita por máis dun usuario|feitas por máis de $2 usuarios}}.)',
+'diff-multi'               => '(Non se {{PLURAL:$1|mostra unha revisión|mostran $1 revisións}} do historial {{PLURAL:$1|feita|feitas}} por {{PLURAL:$2|un usuario|$2 usuarios}}.)',
+'diff-multi-manyusers'     => '(Non se {{PLURAL:$1|mostra unha revisión|mostran $1 revisións}} do historial {{PLURAL:$1|feita|feitas}} por máis {{PLURAL:$2|dun usuario|de $2 usuarios}}.)',
 
 # Search results
 'searchresults'                    => 'Resultados da procura',
@@ -1834,6 +1834,7 @@ A descrición da [$2 páxina de descrición do ficheiro] móstrase a continuaci�
 'uploadnewversion-linktext' => 'Cargar unha nova versión deste ficheiro',
 'shared-repo-from'          => 'de $1',
 'shared-repo'               => 'repositorio compartido',
+'filepage.css'              => '/** O CSS que se coloque aquí será incluído na páxina de descrición do ficheiro, así como nos wikis de clientes estranxeiros */',
 
 # File reversion
 'filerevert'                => 'Desfacer $1',
@@ -2202,6 +2203,10 @@ Pode borrar os indicadores de aviso de notificación para o conxunto das páxina
              O sistema de aviso de {{SITENAME}}
 
 --
+Para cambiar as notificacións por correo electrónico, visite
+{{fullurl:{{#special:Preferences}}}}
+
+
 Para cambiar a súa lista de vixilancia, visite
 {{fullurl:{{#special:Watchlist}}/edit}}
 
@@ -2838,30 +2843,39 @@ Gárdeo no seu disco duro e cárgueo aquí.',
 'tooltip-summary'                 => 'Escriba un breve resumo',
 
 # Stylesheets
-'common.css'      => '/** O CSS que se coloque aquí será aplicado a todas as aparencias */',
-'standard.css'    => '/* O CSS que se coloque aquí afectará a quen use a aparencia Clásica */',
-'nostalgia.css'   => '/* O CSS que se coloque aquí afectará a quen use a aparencia Morriña */',
-'cologneblue.css' => '/* O CSS que se coloque aquí afectará a quen use a aparencia Azul colonial */',
-'monobook.css'    => '/* O CSS que se coloque aquí afectará a quen use a aparencia Monobook */',
-'myskin.css'      => '/* O CSS que se coloque aquí afectará a quen use a aparencia A miña aparencia */',
-'chick.css'       => '/* O CSS que se coloque aquí afectará a quen use a aparencia Parrulo */',
-'simple.css'      => '/* O CSS que se coloque aquí afectará a quen use a aparencia Sinxela */',
-'modern.css'      => '/* O CSS que se coloque aquí afectará a quen use a aparencia Moderna */',
-'vector.css'      => '/* O CSS que se coloque aquí afectará a quen use a aparencia Vector */',
-'print.css'       => '/* O CSS que se coloque aquí afectará ás impresións */',
-'handheld.css'    => '/* O CSS que se coloque aquí afectará aos dispositivos móbiles baseados na aparencia configurada en $wgHandheldStyle */',
+'common.css'              => '/** O CSS que se coloque aquí será aplicado a todas as aparencias */',
+'standard.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Clásica */',
+'nostalgia.css'           => '/* O CSS que se coloque aquí afectará a quen use a aparencia Morriña */',
+'cologneblue.css'         => '/* O CSS que se coloque aquí afectará a quen use a aparencia Azul colonial */',
+'monobook.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Monobook */',
+'myskin.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia A miña aparencia */',
+'chick.css'               => '/* O CSS que se coloque aquí afectará a quen use a aparencia Parrulo */',
+'simple.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia Sinxela */',
+'modern.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia Moderna */',
+'vector.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia Vector */',
+'print.css'               => '/* O CSS que se coloque aquí afectará ás impresións */',
+'handheld.css'            => '/* O CSS que se coloque aquí afectará aos dispositivos móbiles baseados na aparencia configurada en $wgHandheldStyle */',
+'noscript.css'            => '/* O CSS que se coloque aquí afectará aos usuarios co JavaScript desactivado */',
+'group-autoconfirmed.css' => '/* O CSS que se coloque aquí afectará soamente aos usuarios autoconfirmados */',
+'group-bot.css'           => '/* O CSS que se coloque aquí afectará soamente aos bots */',
+'group-sysop.css'         => '/* O CSS que se coloque aquí afectará soamente aos administradores */',
+'group-bureaucrat.css'    => '/* O CSS que se coloque aquí afectará soamente aos burócratas */',
 
 # Scripts
-'common.js'      => '/* Calquera JavaScript que haxa aquí será cargado para todos os usuarios en cada páxina que vexan. */',
-'standard.js'    => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Clásica */',
-'nostalgia.js'   => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Morriña */',
-'cologneblue.js' => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Azul colonial */',
-'monobook.js'    => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia MonoBook */',
-'myskin.js'      => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia A miña aparencia */',
-'chick.js'       => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Parrulo */',
-'simple.js'      => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Sinxela */',
-'modern.js'      => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Moderna */',
-'vector.js'      => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Vector */',
+'common.js'              => '/* Calquera JavaScript que haxa aquí será cargado para todos os usuarios en cada páxina que vexan. */',
+'standard.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Clásica */',
+'nostalgia.js'           => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Morriña */',
+'cologneblue.js'         => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Azul colonial */',
+'monobook.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia MonoBook */',
+'myskin.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia A miña aparencia */',
+'chick.js'               => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Parrulo */',
+'simple.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Sinxela */',
+'modern.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Moderna */',
+'vector.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Vector */',
+'group-autoconfirmed.js' => '/* Calquera JavaScript que haxa aquí será cargado soamente para os usuarios autoconfirmados */',
+'group-bot.js'           => '/* Calquera JavaScript que haxa aquí será cargado soamente para os bots */',
+'group-sysop.js'         => '/* Calquera JavaScript que haxa aquí será cargado soamente para os administradores */',
+'group-bureaucrat.js'    => '/* Calquera JavaScript que haxa aquí será cargado soamente para os burócratas */',
 
 # Metadata
 'nodublincore'      => 'A opción de metadatos RDF do Dublin Core está desactivada neste servidor.',

@@ -502,6 +502,8 @@ $1",
 'page-rss-feed'           => '"$1" RSS-voer',
 'page-atom-feed'          => '"$1" Atom-voer',
 'red-link-title'          => '$1 (bladsy bestaan nie)',
+'sort-descending'         => 'Sorteer aflopend',
+'sort-ascending'          => 'Sorteer oplopend',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Bladsy',
@@ -730,6 +732,7 @@ U het moontlik reeds u wagwoord gewysig of 'n nuwe tydelike wagwoord aangevra.",
 'passwordreset-emailtitle'   => 'Gebruiker se details op {{site name}}',
 'passwordreset-emailelement' => 'Gebruikersnaam: $1
 Tydelike wagwoord: $2',
+'passwordreset-emailsent'    => "'n E-pos ter herhindering is gestuur.",
 
 # Edit page toolbar
 'bold_sample'     => 'Vetgedrukte teks',
@@ -1681,22 +1684,23 @@ As daar steeds probleme is, kontak 'n [[Special:ListUsers/sysop|administrateur]]
 'uploadstash-refresh'  => 'Verfris die lys van lêers',
 
 # img_auth script messages
-'img-auth-accessdenied' => 'Toegang geweier',
-'img-auth-nopathinfo'   => 'PATH_INFO word vermis.
+'img-auth-accessdenied'     => 'Toegang geweier',
+'img-auth-nopathinfo'       => 'PATH_INFO word vermis.
 U bediener is nie ingestel om hierdie inligting deur te stuur nie.
 Miskien gebruik dit CGI, waartydens img_auth nie ondersteun word nie.
 Sien http://www.mediawiki.org/wiki/Manual:Image_Authorization vir meer inligting.',
-'img-auth-notindir'     => 'Die aangevraagde pad is nie die ingestelde oplaaigids nie.',
-'img-auth-badtitle'     => 'Dit was nie moontlik om \'n geldige bladsynaam van "$1" te maak nie.',
-'img-auth-nologinnWL'   => 'U is nie aangeteken en "$1" is nie op die witlys nie.',
-'img-auth-nofile'       => 'Lêer "$1" bestaan nie.',
-'img-auth-isdir'        => 'U probeer om toegang na gids "$1" te kry.
+'img-auth-notindir'         => 'Die aangevraagde pad is nie die ingestelde oplaaigids nie.',
+'img-auth-badtitle'         => 'Dit was nie moontlik om \'n geldige bladsynaam van "$1" te maak nie.',
+'img-auth-nologinnWL'       => 'U is nie aangeteken en "$1" is nie op die witlys nie.',
+'img-auth-nofile'           => 'Lêer "$1" bestaan nie.',
+'img-auth-isdir'            => 'U probeer om toegang na gids "$1" te kry.
 Slegs toegang tot lêers word toegelaat.',
-'img-auth-streaming'    => 'Besig met die stoom van "$1".',
-'img-auth-public'       => "Die doel van img_auth.php is die afvoer van lêers vanaf 'n privaat wiki.
+'img-auth-streaming'        => 'Besig met die stoom van "$1".',
+'img-auth-public'           => "Die doel van img_auth.php is die afvoer van lêers vanaf 'n privaat wiki.
 Hierdie wiki is opgestel as 'n publieke wiki.
 Vir veiligheidsredes is img_auth.php gedeaktiveer.",
-'img-auth-noread'       => 'Gebruiker het nie toegang om "$1" te lees nie.',
+'img-auth-noread'           => 'Gebruiker het nie toegang om "$1" te lees nie.',
+'img-auth-bad-query-string' => 'Die URL het \'n ongeldige navraagstring ("query string").',
 
 # HTTP errors
 'http-invalid-url'      => 'Ongeldige URL: $1',
@@ -2058,6 +2062,8 @@ Daar kan [[{{MediaWiki:Listgrouprights-helppage}}|extra inligting]] oor individu
 'noemailtext'          => "Hierdie gebruiker het nie 'n geldige e-posadres gespesifiseer nie.",
 'nowikiemailtitle'     => 'Geen E-pos toegelaat nie',
 'nowikiemailtext'      => 'Hierdie gebruiker wil geen e-pos van andere gebruikers ontvang nie.',
+'emailnotarget'        => 'Nie-bestaande of ongeldige gebruikernaam vir ontvanger.',
+'emailtarget'          => 'Verskaf ontvanger se gebruikersnaam',
 'emailusername'        => 'Gebruikernaam:',
 'emailusernamesubmit'  => 'Dien in',
 'email-legend'         => "Stuur 'n E-pos na 'n ander gebruiker van {{SITENAME}}",
@@ -2427,6 +2433,9 @@ Sien die [[Special:IPBlockList|IP-bloklys]] vir 'n oorsig van blokkerings.",
 'blocklist'                       => 'Geblokkeerde gebruikers',
 'ipblocklist'                     => 'Geblokkeerde IP-adresse en gebruikers',
 'ipblocklist-legend'              => "Soek 'n geblokkeerde gebruiker",
+'blocklist-userblocks'            => 'Versteek geblokkeerde gebruikers',
+'blocklist-tempblocks'            => 'Versteek tydelike blokkades',
+'blocklist-addressblocks'         => 'Versteek blokkades met een IP-adres',
 'blocklist-timestamp'             => 'Tydstip',
 'blocklist-target'                => 'Doel',
 'blocklist-expiry'                => 'Verval',
@@ -3028,6 +3037,11 @@ Ander velde sal versteek wees.
 'exif-gpsdifferential'             => 'Differensiële GPS-korreksie',
 'exif-jpegfilecomment'             => 'Opmerking in JPEG-lêer',
 'exif-keywords'                    => 'Sleutelwoorde',
+'exif-worldregiondest'             => 'Wêrelddeel getoon',
+'exif-countrydest'                 => 'Land getoon',
+'exif-countrycodedest'             => 'Kode vir die land getoon',
+'exif-provinceorstatedest'         => 'Provinsie of staat getoon',
+'exif-citydest'                    => 'Stad getoon',
 'exif-objectname'                  => 'Kort titel',
 'exif-specialinstructions'         => 'Spesiale instruksies',
 'exif-headline'                    => 'Opskrif',
@@ -3056,10 +3070,14 @@ Ander velde sal versteek wees.
 'exif-contentwarning'              => 'Waarskuwing oor inhoud',
 'exif-giffilecomment'              => 'Opmerking in GIF-lêer',
 'exif-intellectualgenre'           => 'Tipe item',
+'exif-event'                       => 'Gebeurtenis uitgebeeld',
+'exif-organisationinimage'         => 'Organisasie uitgebeeld',
+'exif-personinimage'               => 'Persoon uitgebeeld',
 
 # EXIF attributes
 'exif-compression-1' => 'Ongekompakteerd',
 
+'exif-copyrighted-true'  => 'Onder kopiereg',
 'exif-copyrighted-false' => 'Publieke Domein',
 
 'exif-unknowndate' => 'Datum onbekend',
@@ -3140,6 +3158,8 @@ Ander velde sal versteek wees.
 'exif-sensingmethod-5' => 'Kleurvolgende gebiedssensor',
 'exif-sensingmethod-7' => 'Drielynige sensor',
 'exif-sensingmethod-8' => 'Kleurvolgende lynsensor',
+
+'exif-filesource-3' => 'Digitale fotokamera',
 
 'exif-scenetype-1' => "'n Direk gefotografeerde beeld",
 

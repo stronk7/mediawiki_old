@@ -695,6 +695,8 @@ $1',
 'page-atom-feed'          => '„$1“ Атом довод',
 'feed-atom'               => 'Атом',
 'red-link-title'          => '$1 (страница не постоји)',
+'sort-descending'         => 'Поређај опадајуће',
+'sort-ascending'          => 'Поређај растуће',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Чланак',
@@ -2366,23 +2368,25 @@ $1',
 'enotif_body'                  => 'Поштовани $WATCHINGUSERNAME,
 
 
-Страница $PAGETITLE на викију {{SITENAME}} је $CHANGEDORCREATED дана $PAGEEDITDATE од стране $PAGEEDITOR.
-Погледајте $PAGETITLE_URL за текућу измену.
+Страница $PAGETITLE на викију {{SITENAME}} је $CHANGEDORCREATED дана $PAGEEDITDATE од стране {{GENDER:$PAGEEDITOR|корисника|кориснице|корисника}} $PAGEEDITOR. Погледајте $PAGETITLE_URL за текућу измену.
 
 $NEWPAGE
 
-Сажетак уредника: $PAGESUMMARY $PAGEMINOREDIT
+Сажетак: $PAGESUMMARY $PAGEMINOREDIT
 
-Контактирајте уредника:
+Контакт:
 е-адреса: $PAGEEDITOR_EMAIL
 вики: $PAGEEDITOR_WIKI
 
 Неће бити других обавештења у случају даљих измена уколико не посетите ову страницу.
-Можете и поништити поставке обавештења за све странице у вашем списку надгледања.
+Можете и да поништите поставке обавештења за све странице у вашем списку надгледања.
 
-             Срдачан поздрав, {{SITENAME}}
+Срдачан поздрав, {{SITENAME}}
 
 --
+Да бисте променили поставке у вези с е-обавештењима, посетите
+{{fullurl:{{#special:Preferences}}}}
+
 Да бисте променили поставке у вези са списком надгледања, посетите
 {{fullurl:{{#special:Watchlist}}/edit}}
 

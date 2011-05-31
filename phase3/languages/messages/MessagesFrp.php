@@ -1205,7 +1205,7 @@ $1",
 'pagehist'                    => 'Historico de la pâge',
 'deletedhist'                 => 'Historico suprimâ',
 'revdelete-content'           => 'contegnu',
-'revdelete-summary'           => 'rèsumâ de changement',
+'revdelete-summary'           => 'rèsumâ du changement',
 'revdelete-uname'             => 'nom d’utilisator',
 'revdelete-restricted'        => 'at aplicâ les rèstriccions ux administrators',
 'revdelete-unrestricted'      => 'rèstriccions enlevâs por los administrators',
@@ -1452,7 +1452,7 @@ Ceta enformacion serat publica.',
 'prefs-help-email'              => 'L’adrèce èlèctronica est u chouèx, mas el est nècèssèra por tornar inicialisar voutron mot de pâssa, se vos vegnéd a l’oubliar.',
 'prefs-help-email-others'       => 'Vos porriâd asse-ben chouèsir de lèssiér los ôtros sè veriér vers vos sur voutra pâge utilisator ou ben de discussion sen que seye nècèssèro de dèvouèlar voutra identitât.',
 'prefs-help-email-required'     => 'Una adrèce èlèctronica est nècèssèra.',
-'prefs-info'                    => 'Enformacion de bâsa',
+'prefs-info'                    => 'Enformacions de bâsa',
 'prefs-i18n'                    => 'Entèrnacionalisacion',
 'prefs-signature'               => 'Signatura',
 'prefs-dateformat'              => 'Format de les dâtes',
@@ -2311,6 +2311,9 @@ Vos pouede asse-ben tornar inicialisar los drapéls de notificacion por totes le
              Voutron sistèmo de notificacion de {{SITENAME}}
 
 --
+Por changiér los paramètres de notificacion per mèssageria èlèctronica, visitâd
+{{fullurl:{{#special:Preferences}}}}
+
 Por changiér los paramètres de voutra lista de survelyence, visitâd
 {{fullurl:{{#special:Watchlist}}/edit}}
 
@@ -2767,7 +2770,7 @@ Nen volyéd chouèsir un ôtro.',
 'movelogpagetext'              => 'Vê-que la lista de totes les pâges renomâs ou dèplaciês.',
 'movesubpage'                  => 'Sot-pâge{{PLURAL:$1||s}}',
 'movesubpagetext'              => 'Cela pâge at $1 {{PLURAL:$1|sot-pâge montrâ|sot-pâges montrâs}} ce-desot.',
-'movenosubpage'                => 'Cela pâge at gins de sot-pâge.',
+'movenosubpage'                => 'Ceta pâge at gins de sot-pâge.',
 'movereason'                   => 'Rêson :',
 'revertmove'                   => 'rètablir',
 'delete_and_move'              => 'Suprimar et renomar',
@@ -3489,7 +3492,7 @@ Los ôtros champs seront cachiês per dèfôt.
 'exif-dc-coverage'    => 'Portâ espaciâla ou ben temporèla du mèdia',
 'exif-dc-date'        => 'Dâta(/-es)',
 'exif-dc-publisher'   => 'Èditor',
-'exif-dc-relation'    => 'Mèdies liyês',
+'exif-dc-relation'    => 'Mèdias liyês',
 'exif-dc-rights'      => 'Drêts',
 'exif-dc-source'      => 'Mèdia sôrsa',
 'exif-dc-type'        => 'Tipo de mèdia',

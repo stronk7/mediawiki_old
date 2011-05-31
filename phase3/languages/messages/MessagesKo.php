@@ -9,9 +9,11 @@
  *
  * @author Albamhandae
  * @author Chanhee
+ * @author Cwt96
  * @author Devunt
  * @author Ficell
  * @author Gapo
+ * @author Gjue
  * @author IRTC1015
  * @author ITurtle
  * @author Klutzy
@@ -296,7 +298,7 @@ $dateFormats = array(
 
 $messages = array(
 # User preference toggles
-'tog-underline'               => '링크에 밑줄치기:',
+'tog-underline'               => '링크 걸기:',
 'tog-highlightbroken'         => '없는 문서로 연결된 링크를 <a href="" class="new">이렇게</a> 보이기 (선택하지 않으면 이렇게<a href="" class="internal">?</a> 보임)',
 'tog-justify'                 => '문단 정렬하기',
 'tog-hideminor'               => '사소한 편집을 최근 바뀜에서 숨기기',
@@ -452,7 +454,7 @@ $messages = array(
 'qbpageinfo'     => '문서 정보',
 'qbmyoptions'    => '내 문서',
 'qbspecialpages' => '특수 문서',
-'faq'            => 'FAQ',
+'faq'            => '자주 묻는 질문',
 'faqpage'        => 'Project:FAQ',
 
 # Vector skin
@@ -799,10 +801,29 @@ $2',
 'resetpass-temp-password'   => '임시 비밀번호:',
 
 # Special:PasswordReset
-'passwordreset'          => '암호 재설정',
-'passwordreset-text'     => '이메일을 입력하여 알림을 받으세요.',
-'passwordreset-legend'   => '암호 초기화',
-'passwordreset-disabled' => '위키 암호 초기화가 중단 되었습니다.',
+'passwordreset'                => '암호 재설정',
+'passwordreset-text'           => '이메일을 입력하여 알림을 받으세요.',
+'passwordreset-legend'         => '암호 초기화',
+'passwordreset-disabled'       => '위키 암호 초기화가 중단 되었습니다.',
+'passwordreset-pretext'        => '{{PLURAL:$1||아래에 한 가지 정보를 입력해주십시오}}',
+'passwordreset-username'       => '계정 이름:',
+'passwordreset-email'          => '이메일 주소:',
+'passwordreset-emailtitle'     => '{{SITENAME}} 계정 상세 정보',
+'passwordreset-emailtext-ip'   => 'IP 주소 $1을 사용하는 누군가(아마도 당신이), {{SITENAME}} ($4)의 비밀번호 찾기를 요청하였습니다. 이 이메일 주소와 연관된 계정의 목록입니다:
+
+$2
+
+이 {{PLURAL:$3|임시 비밀번호}}의 효력은 $5일 후 만료됩니다.
+이 비밀번호로 로그인한 후 비밀번호를 변경하십시오. 만약 당신이 아닌 다른 사람이 요청하였거나, 원래의 비밀번호를 기억해냈다면, 이 메시지를 무시하고 이전의 비밀번호를 계속 사용할 수 있습니다.',
+'passwordreset-emailtext-user' => '{{SITENAME}} ($4)의 사용자 $1이 비밀번호 찾기를 요청하였습니다. 이 이메일 주소와 연관된 계정의 목록입니다:
+
+$2
+
+이 {{PLURAL:$3|임시 비밀번호}}의 효력은 $5일 후 만료됩니다.
+이 비밀번호로 로그인한 후 비밀번호를 변경하십시오. 만약 당신이 아닌 다른 사람이 요청하였거나, 원래의 비밀번호를 기억해냈다면, 이 메시지를 무시하고 이전의 비밀번호를 계속 사용할 수 있습니다.',
+'passwordreset-emailelement'   => '계정 이름: $1
+임시 비밀번호: $2',
+'passwordreset-emailsent'      => '비밀번호 찾기 이메일을 보냈습니다.',
 
 # Edit page toolbar
 'bold_sample'     => '굵은 글씨',
@@ -1744,20 +1765,21 @@ $1',
 'uploadstash-refresh'  => '파일 목록을 새로고침',
 
 # img_auth script messages
-'img-auth-accessdenied' => '접근 거부됨',
-'img-auth-nopathinfo'   => 'PATH_INFO 가 빠졌습니다.
+'img-auth-accessdenied'     => '접근 거부됨',
+'img-auth-nopathinfo'       => 'PATH_INFO 가 빠졌습니다.
 서버에 이 정보가 설정되어 있지 않습니다.
 CGI 기반이거나 img_auth 를 지원하지 않을 수 있습니다.
 http://www.mediawiki.org/wiki/Manual:Image_Authorization 를 참고하세요.',
-'img-auth-notindir'     => '요청한 경로가 설정한 업로드 디렉토리에 없습니다.',
-'img-auth-badtitle'     => '"$1"에서 바른 제목을 만들 수 없습니다.',
-'img-auth-nologinnWL'   => '당신은 로그인하지 않았으며 "$1" 파일은 화이트리스트에 존재하지 않습니다.',
-'img-auth-nofile'       => '"$1" 파일이 없습니다.',
-'img-auth-isdir'        => '"$1" 디렉토리에 접근을 시도했습니다.
+'img-auth-notindir'         => '요청한 경로가 설정한 업로드 디렉토리에 없습니다.',
+'img-auth-badtitle'         => '"$1"에서 바른 제목을 만들 수 없습니다.',
+'img-auth-nologinnWL'       => '당신은 로그인하지 않았으며 "$1" 파일은 화이트리스트에 존재하지 않습니다.',
+'img-auth-nofile'           => '"$1" 파일이 없습니다.',
+'img-auth-isdir'            => '"$1" 디렉토리에 접근을 시도했습니다.
 파일에만 접근할 수 있습니다.',
-'img-auth-streaming'    => '‘$1’ 파일을 전송하는 중입니다.',
-'img-auth-public'       => 'img_auth.php는 개인 위키 파일을 외부 사이트로 전송하는 기능입니다. 이 기능은 기본적으로 공개적인 위키에서 사용하도록 설계되어 있으며, 보안적인 문제로 기본적으로 img_auth.php 기능은 비활성화되어 있습니다.',
-'img-auth-noread'       => '‘$1’ 파일을 볼 권한이 없습니다.',
+'img-auth-streaming'        => '‘$1’ 파일을 전송하는 중입니다.',
+'img-auth-public'           => 'img_auth.php는 개인 위키 파일을 외부 사이트로 전송하는 기능입니다. 이 기능은 기본적으로 공개적인 위키에서 사용하도록 설계되어 있으며, 보안적인 문제로 기본적으로 img_auth.php 기능은 비활성화되어 있습니다.',
+'img-auth-noread'           => '‘$1’ 파일을 볼 권한이 없습니다.',
+'img-auth-bad-query-string' => 'URL에 잘못된 쿼리 문자열이 있습니다.',
 
 # HTTP errors
 'http-invalid-url'      => '잘못된 URL: $1',
@@ -2119,6 +2141,10 @@ URL이 맞고 해당 웹사이트가 작동하는지 확인해주세요.',
 'noemailtext'          => '이 사용자는 올바른 이메일 주소를 입력하지 않았습니다.',
 'nowikiemailtitle'     => '이메일이 허용되지 않음',
 'nowikiemailtext'      => '이 사용자는 다른 사용자로부터의 이메일을 받지 않도록 설정하였습니다.',
+'emailnotarget'        => '수신자로 없는 사용자를 지정하였거나 계정 이름이 잘못되었습니다.',
+'emailtarget'          => '수신자 계정명 입력',
+'emailusername'        => '계정 이름:',
+'emailusernamesubmit'  => '확인',
 'email-legend'         => '{{SITENAME}}의 다른 사용자에게 이메일을 보내기',
 'emailfrom'            => '이메일 발신자:',
 'emailto'              => '수신자:',
@@ -2198,6 +2224,9 @@ $NEWPAGE
              {{SITENAME}} 알림 시스템
 
 --
+이메일 알림 설정을 바꾸시려면 이곳을 방문해주세요:
+{{fullurl:{{#special:Preferences}}}}
+
 주시문서 설정을 바꾸려면 다음을 사용하세요:
 {{fullurl:{{#special:Watchlist}}/edit}}
 
@@ -2425,6 +2454,7 @@ $1',
 'whatlinkshere-filters'    => '필터',
 
 # Block/unblock
+'autoblockid'                     => '자동 차단 #$1',
 'block'                           => '사용자 차단',
 'unblock'                         => '사용자 차단 해제',
 'blockip'                         => '사용자 차단',
@@ -2463,6 +2493,7 @@ $1',
 'blockipsuccesssub'               => '차단 완료',
 'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] 사용자가 차단되었습니다. 차단된 사용자 목록은 [[Special:IPBlockList|여기]]에서 볼 수 있습니다.',
 'ipb-blockingself'                => '자기 자신을 차단하려고 합니다. 정말로 실행할까요?',
+'ipb-confirmhideuser'             => '당신은 사용자를 차단하면서 "계정 숨기기" 설정을 선택했습니다. 이로써 모든 기록에서 이 사용자의 계정 이름을 숨기게 됩니다. 정말로 계정을 숨기시겠습니까?',
 'ipb-edit-dropdown'               => '차단 이유 목록 편집하기',
 'ipb-unblock-addr'                => '$1 차단 해제하기',
 'ipb-unblock'                     => '사용자/IP 주소 차단 해제하기',
@@ -2472,10 +2503,19 @@ $1',
 'unblockiptext'                   => '아래의 양식에 차단 해제하려는 IP 주소나 사용자 이름을 입력하세요.',
 'ipusubmit'                       => '차단 해제',
 'unblocked'                       => '[[User:$1|$1]] 사용자 차단 해제됨',
+'unblocked-range'                 => '$1 대역이 차단 해제되었습니다.',
 'unblocked-id'                    => '차단 $1 해제됨',
 'blocklist'                       => '차단된 사용자 목록',
 'ipblocklist'                     => '현재 차단된 IP 주소/사용자 이름',
 'ipblocklist-legend'              => '차단 중인 사용자 찾기',
+'blocklist-userblocks'            => '계정에 대한 차단 숨기기',
+'blocklist-tempblocks'            => '기한이 정해진 차단을 숨기기',
+'blocklist-addressblocks'         => '당일 IP 차단을 숨기기',
+'blocklist-timestamp'             => '날짜/시각',
+'blocklist-target'                => '차단 대상',
+'blocklist-expiry'                => '차단 기한',
+'blocklist-by'                    => '차단한 관리자',
+'blocklist-params'                => '차단 설정',
 'blocklist-reason'                => '이유',
 'ipblocklist-submit'              => '찾기',
 'ipblocklist-localblock'          => '로컬 차단',
@@ -2516,6 +2556,7 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 'ipb_already_blocked'             => '"$1" 사용자는 이미 차단됨',
 'ipb-needreblock'                 => '$1 사용자는 이미 차단되었습니다. 차단 설정을 바꾸시겠습니까?',
 'ipb-otherblocks-header'          => '다른 {{PLURAL:$1|}}차단 기록',
+'unblock-hideuser'                => '이 계정 이름이 숨겨져 있기 때문에 이 사용자를 차단 해제할 수 없습니다.',
 'ipb_cant_unblock'                => '오류: 차단 ID $1이(가) 존재하지 않습니다.
 이미 차단 해제되었을 수 있습니다.',
 'ipb_blocked_as_range'            => '오류: IP 주소 $1은 직접 차단되지 않았기 때문에 차단 해제할 수 없습니다.
@@ -2713,7 +2754,8 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 'import-interwiki-namespace' => '새 이름공간:',
 'import-upload-filename'     => '파일 이름:',
 'import-comment'             => '이유:',
-'importtext'                 => '원본 위키에서 [[Special:Export|내보내기]] 기능을 사용해 파일을 내려받아서 여기에 올려주세요.',
+'importtext'                 => '원본 위키에서 [[Special:Export|내보내기]] 기능을 사용해 파일을 내려받으십시오.
+그리고 당신의 컴퓨터에 저장해 둔 후 여기에 올려주세요.',
 'importstart'                => '문서를 가져오는 중...',
 'import-revision-count'      => '판 $1개',
 'importnopages'              => '가져올 문서가 없습니다.',
@@ -2958,7 +3000,8 @@ Variants for Chinese language
 'metadata-help'     => '이 파일은 카메라/스캐너에서 기록한 부가 정보를 가지고 있습니다. 프로그램에서 파일을 편집할 경우, 새로 저장한 그림 파일에 일부 부가 정보가 빠질 수 있습니다.',
 'metadata-expand'   => '자세한 정보 보이기',
 'metadata-collapse' => '자세한 정보 숨기기',
-'metadata-fields'   => 'EXIF 메타데이터 표가 접혀 있을 때, 다음의 속성값만이 기본적으로 보이게 됩니다. 나머지 값은 자동적으로 숨겨집니다.
+'metadata-fields'   => '파일 메타데이터 표가 접혀 있을 때, 이 메시지에 올라와 있는 다음 속성값만이 기본적으로 보이게 됩니다.
+나머지 값은 자동적으로 숨겨집니다.
 * make
 * model
 * datetimeoriginal
@@ -3086,10 +3129,18 @@ Variants for Chinese language
 'exif-gpsareainformation'          => 'GPS 구역 이름',
 'exif-gpsdatestamp'                => 'GPS 날짜',
 'exif-gpsdifferential'             => 'GPS 차이 보정',
+'exif-jpegfilecomment'             => 'JPEG 파일의 주석',
+'exif-keywords'                    => '핵심단어(키워드)',
+'exif-worldregioncreated'          => '이 사진이 찍힌 지역에 대한 정보',
+'exif-countrycreated'              => '이 사진이 찍힌 국가와 이 사진에 묘사된 것을 기입하십시오.',
+'exif-countrycodecreated'          => '이 사진이 찍힌 나라의 ISO코드를 입력하십시오.',
 'exif-objectname'                  => '짧은 제목',
+'exif-languagecode'                => '언어',
 
 # EXIF attributes
 'exif-compression-1' => '압축되지 않음',
+
+'exif-copyrighted-false' => '퍼블릭 도메인',
 
 'exif-unknowndate' => '날짜를 알 수 없음',
 
@@ -3227,9 +3278,18 @@ Variants for Chinese language
 'exif-gpsspeed-m' => '마일 매 시간',
 'exif-gpsspeed-n' => '노트',
 
+# Pseudotags used for GPSDestDistanceRef
+'exif-gpsdestdistance-k' => '킬로미터',
+
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => '실제 방위',
 'exif-gpsdirection-m' => '자기 방위',
+
+'exif-dc-type' => '미디어 종류',
+
+'exif-iimcategory-edu' => '교육',
+'exif-iimcategory-evn' => '환경',
+'exif-iimcategory-sci' => '과학 기술',
 
 # External editor support
 'edit-externally'      => '이 파일을 외부 프로그램을 사용해서 편집하기',

@@ -357,6 +357,7 @@ $messages = array(
 'listingcontinuesabbrev'         => ' продълж.',
 'index-category'                 => 'Индексирани страници',
 'noindex-category'               => 'Неиндексирани страници',
+'broken-file-category'           => 'Страници с неработещи препратки към файлове',
 
 'mainpagetext'      => "'''Уикито беше успешно инсталирано.'''",
 'mainpagedocfooter' => 'Разгледайте [http://meta.wikimedia.org/wiki/Help:Contents ръководството] за подробна информация относно използването на софтуера.
@@ -657,6 +658,7 @@ $2',
 'createaccount'              => 'Регистриране',
 'gotaccount'                 => "Имате ли вече сметка? '''$1'''.",
 'gotaccountlink'             => 'Влизане',
+'userlogin-resetlink'        => 'Забравени данни за влизане в системата?',
 'createaccountmail'          => 'с писмо по електронната поща',
 'createaccountreason'        => 'Причина:',
 'badretype'                  => 'Въведените пароли не съвпадат.',
@@ -741,11 +743,15 @@ $2',
 'resetpass-temp-password'   => 'Временна парола:',
 
 # Special:PasswordReset
+'passwordreset'              => 'Възстановяване на парола',
+'passwordreset-legend'       => 'Възстановяване на парола',
+'passwordreset-disabled'     => 'Възстановяването на паролата е изключено в това уики.',
 'passwordreset-username'     => 'Потребителско име:',
 'passwordreset-email'        => 'Електронна поща:',
 'passwordreset-emailtitle'   => 'Подробности за сметката в {{SITENAME}}',
 'passwordreset-emailelement' => 'Потребителско име: $1
 Временна парола: $2',
+'passwordreset-emailsent'    => 'Беше изпратено напомнящо писмо на електронната поща.',
 
 # Edit page toolbar
 'bold_sample'     => 'Получер текст',
@@ -1312,6 +1318,8 @@ $1",
 'email'                         => 'Е-поща',
 'prefs-help-realname'           => '* <strong>Истинско име</strong> <em>(незадължително)</em>: Ако го посочите, на него ще бъдат приписани вашите приноси.',
 'prefs-help-email'              => 'Електронната поща е незадължителна, но позволява възстановяване на забравена или загубена парола.',
+'prefs-help-email-others'       => 'Можете да изберете да позволите на другите да се свързват с вас по електронна поща, като щракват на препратка от вашата лична потребителска страница или беседа. 
+Адресът на електронната ви поща не се разкрива на потребителите, които се свързват с вас по този начин.',
 'prefs-help-email-required'     => 'Изисква се адрес за електронна поща.',
 'prefs-info'                    => 'Основна информация',
 'prefs-i18n'                    => 'Интернационализация',
@@ -2103,7 +2111,7 @@ $1',
 'enotif_anon_editor'           => 'анонимен потребител $1',
 'enotif_body'                  => 'Уважаеми(а) $WATCHINGUSERNAME,
 
-Страницата $PAGETITLE в {{SITENAME}} е била $CHANGEDORCREATED на $PAGEEDITDATE от $PAGEEDITOR. За текущата версия на страницата вижте $PAGETITLE_URL.
+Страницата $PAGETITLE в {{SITENAME}} е била $CHANGEDORCREATED на $PAGEEDITDATE от $PAGEEDITOR. За текущата версия на страницата, вижте $PAGETITLE_URL.
 
 $NEWPAGE
 
@@ -2119,6 +2127,9 @@ $NEWPAGE
              Системата за известяване на {{SITENAME}}
 
 --
+За да промените настройките си за известявания чрез електронна поща, посетете
+{{fullurl:{{#special:Preferences}}}}
+
 За да промените настройките на списъка си за наблюдение, посетете
 {{fullurl:{{#special:Watchlist}}/edit}}
 
@@ -2338,6 +2349,7 @@ $1',
 'whatlinkshere-filters'    => 'Филтри',
 
 # Block/unblock
+'autoblockid'                     => 'Автоматично блокиране #$1',
 'block'                           => 'Блокиране на потребител',
 'unblock'                         => 'Отблокиране на потребител',
 'blockip'                         => 'Блокиране',
@@ -2387,6 +2399,7 @@ $1',
 'unblockiptext'                   => 'Използвайте долния формуляр, за да възстановите правото на писане на по-рано блокиран IP-адрес или потребител.',
 'ipusubmit'                       => 'Сваляне на блокирането',
 'unblocked'                       => '[[User:$1|$1]] беше отблокиран.',
+'unblocked-range'                 => '$1 беше отблокиран',
 'unblocked-id'                    => 'Блок № $1 беше премахнат',
 'blocklist'                       => 'Блокирани потребители',
 'ipblocklist'                     => 'Блокирани потребители',
@@ -2996,6 +3009,7 @@ $1',
 'exif-cameraownername'             => 'Собственик на фотоапарата',
 'exif-nickname'                    => 'Неформално име на изображението',
 'exif-rating'                      => 'Рейтинг (от 5)',
+'exif-usageterms'                  => 'Условия за използване',
 'exif-originaldocumentid'          => 'Уникален номер на оригиналния документ',
 
 # EXIF attributes
@@ -3159,11 +3173,13 @@ $1',
 'exif-dc-rights' => 'Права',
 
 'exif-iimcategory-ace' => 'Изкуствa, култура и забавление',
+'exif-iimcategory-clj' => 'Престъпност и право',
 'exif-iimcategory-dis' => 'Бедствия и аварии',
 'exif-iimcategory-fin' => 'Икономика и бизнес',
 'exif-iimcategory-edu' => 'Образование',
 'exif-iimcategory-evn' => 'Околна среда',
 'exif-iimcategory-hth' => 'Здраве',
+'exif-iimcategory-hum' => 'Човешки интереси',
 'exif-iimcategory-lab' => 'Труд',
 'exif-iimcategory-lif' => 'Начин на живот и отдих',
 'exif-iimcategory-pol' => 'Политика',
@@ -3173,6 +3189,10 @@ $1',
 'exif-iimcategory-spo' => 'Спорт',
 'exif-iimcategory-war' => 'Война, конфликти и безредици',
 'exif-iimcategory-wea' => 'Време',
+
+'exif-urgency-normal' => 'Нормална ($1)',
+'exif-urgency-low'    => 'Ниска ($1)',
+'exif-urgency-high'   => 'Висока ($1)',
 
 # External editor support
 'edit-externally'      => 'Редактиране на файла чрез външно приложение',

@@ -1550,7 +1550,7 @@ S.o [[Special:NewFiles|rann ar skeudennoù nevez]] evit kaout ur sell gwiroc'h",
 'hookaborted'                 => "Ar c'hemm hoc'h eus klasket degas zo bet harzet gant ur c'hrog astenn.",
 'illegal-filename'            => "N'eo ket aotreet anv ar restr.",
 'overwrite'                   => "N'eo ket aotreet frikañ ur restr zo anezhi c'hoazh.",
-'unknown-error'               => 'Ur gudenn dizanv a zo bet.',
+'unknown-error'               => "C'hoarvezet ez eus ur gudenn dianav.",
 'tmp-create-error'            => 'Dibosupl eo krouiñ ur restr padennek.',
 'tmp-write-error'             => 'Ur gudenn skrivañ a zo bet evit ar restr padennek.',
 'large-file'                  => "Erbediñ a reer ne vefe ket brasoc'h ar restroù eget $1; $2 eo ment ar restr-mañ.",
@@ -2109,7 +2109,7 @@ Evit tennañ ar bajenn-mañ a-ziwar ho rollad evezhiañ. klikit war "Paouez da e
 'enotif_anon_editor'           => 'implijer dizanv $1',
 'enotif_body'                  => '$WATCHINGUSERNAME ker,
 
-$CHANGEDORCREATED eo bet ar bajenn {{SITENAME}} evit $PAGETITLE gant $PAGEEDITOR d\'an $PAGEEDITDATE, gwelet $PAGETITLE_URL evit gwelet ar stumm red.
+$CHANGEDORCREATED eo bet pajenn $PAGETITLE {{SITENAME}} gant $PAGEEDITOR d\'an $PAGEEDITDATE gwelet $PAGETITLE_URL evit gwelet ar stumm red.
 
 $NEWPAGE
 
@@ -2125,6 +2125,9 @@ Gallout a rit nevesaat doare ar pennadoù evezhiet ganeoc\'h en ho rollad evezhi
             Ho reizhiad kemenn {{SITENAME}} muiañ karet
 
 --
+A-benn kemmañ arventennoù ho kemennoù dre bostel, sellit ouzh
+{{fullurl:{{#special:Preferences}}}}
+
 A-benn kemmañ doare ho rollad evezhiañ, sellit ouzh
 {{fullurl:{{#special:Watchlist}}/edit}}
 

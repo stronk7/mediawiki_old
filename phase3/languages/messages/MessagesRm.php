@@ -545,6 +545,9 @@ Ti vegns annunzià…',
 Eventualmain has ti gia midà cun success tes pled-clav u dumandà per in nov pled-clav temporar.',
 'resetpass-temp-password'   => 'Pled-clav temporar:',
 
+# Special:PasswordReset
+'passwordreset-username' => "Num d'utilisader:",
+
 # Edit page toolbar
 'bold_sample'     => 'Text grass',
 'bold_tip'        => 'Text grass',

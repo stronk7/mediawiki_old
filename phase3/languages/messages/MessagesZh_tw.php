@@ -754,7 +754,7 @@ $NEWPAGE
 'ipblocklist-no-results'      => '所要求的IP地址/使用者名沒有被封鎖。',
 'blocklink'                   => '禁封',
 'blocklogentry'               => '[[$1]]已被封鎖 $3 ，終止時間為$2',
-'blocklogtext'                => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:IPBlockList|被封鎖的IP地址和使用者列表]]。',
+'blocklogtext'                => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:BlockList|被封鎖的IP地址和使用者列表]]。',
 'block-log-flags-anononly'    => '僅限匿名使用者',
 'block-log-flags-nocreate'    => '禁止此IP/使用者建立新帳號',
 'block-log-flags-noautoblock' => '停用自動封鎖',

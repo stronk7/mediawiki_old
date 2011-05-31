@@ -380,6 +380,9 @@ $messages = array(
 'retypenew'                 => 'Пеҥгыдемдыза у шолыпмутым:',
 'resetpass-submit-loggedin' => 'Шолыпмутым вашталташ',
 
+# Special:PasswordReset
+'passwordreset-username' => 'Пайдаланышын лӱмжӧ',
+
 # Edit page toolbar
 'bold_sample'     => 'Кӱжгӧ текст',
 'bold_tip'        => 'Кӱжгӧ текст',

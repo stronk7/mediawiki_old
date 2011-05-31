@@ -572,6 +572,8 @@ $1',
 'page-rss-feed'           => '"$1" RSS izvor',
 'page-atom-feed'          => '"$1" Atom izvor',
 'red-link-title'          => '$1 (stranica ne postoji)',
+'sort-descending'         => 'Poredaj opadajuće',
+'sort-ascending'          => 'Poredaj rastuće',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Članak',
@@ -790,15 +792,36 @@ Možda ste već uspješno promijenili Vašu šifru ili ste tražili novu privrem
 'resetpass-temp-password'   => 'Privremena šifra:',
 
 # Special:PasswordReset
-'passwordreset'              => 'Poništavanje šifre',
-'passwordreset-text'         => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
-'passwordreset-legend'       => 'Poništi šifru',
-'passwordreset-username'     => 'Korisničko ime:',
-'passwordreset-email'        => 'E-mail adresa:',
-'passwordreset-emailtitle'   => 'Detalji računa na {{SITENAME}}',
-'passwordreset-emailelement' => 'Korisničko ime: $1
+'passwordreset'                => 'Poništavanje šifre',
+'passwordreset-text'           => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
+'passwordreset-legend'         => 'Poništi šifru',
+'passwordreset-disabled'       => 'Poništavanje šifre  je onemogućeno na ovoj wiki.',
+'passwordreset-pretext'        => '{{PLURAL:$1||Unesite jedan dio podataka ispod}}',
+'passwordreset-username'       => 'Korisničko ime:',
+'passwordreset-email'          => 'E-mail adresa:',
+'passwordreset-emailtitle'     => 'Detalji računa na {{SITENAME}}',
+'passwordreset-emailtext-ip'   => 'Neto (vjerovatno Vi, s IP adrese $1) je zatražio podsjetnik Vaših detalja računa
+za {{SITENAME}} ($4). Sljedeći {{PLURAL:$3|račun korisnika je|računi korisnika su}}
+povezani s ovom e-mail adresom:
+
+$2
+
+{{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
+Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
+zahtjev, ili ako ste se sjetili Vaše početne šifre, a ne želite je promijeniti, 
+možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
+'passwordreset-emailtext-user' => 'Korisnik $1 na {{SITENAME}} je zatražio podsjetnik o detaljima Vašeg računa za {{SITENAME}}
+($4). Sljedeći {{PLURAL:$3|korisnički račun je|korisnički računi su}} povezani s ovom e-mail adresom:
+
+$2
+
+{{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
+Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
+zahtjev, ili ako ste se sjetili Vaše originalne šifre, a ne želite je više promijeniti, 
+možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
+'passwordreset-emailelement'   => 'Korisničko ime: $1
 Privremena šifra: $2',
-'passwordreset-emailsent'    => 'E-mail podsjetnik je poslan.',
+'passwordreset-emailsent'      => 'E-mail podsjetnik je poslan.',
 
 # Edit page toolbar
 'bold_sample'     => 'Podebljan tekst',
@@ -2221,30 +2244,33 @@ Ako kasnije želite da uklonite stranicu sa vašeg spiska praćenih članaka, kl
 'enotif_anon_editor'           => 'anonimni korisnik $1',
 'enotif_body'                  => 'Poštovani $WATCHINGUSERNAME,
 
-{{SITENAME}} strana $PAGETITLE je bila $CHANGEDORCREATED $PAGEEDITDATE od strane $PAGEEDITOR,
-pogledajte $PAGETITLE_URL za trenutnu verziju.
+
+Stranica {{SITENAME}} sa naslovom $PAGETITLE je bila $CHANGEDORCREATED dana $PAGEEDITDATE od strane $PAGEEDITOR, pogledajte $PAGETITLE_URL za trenutnu reviziju.
 
 $NEWPAGE
 
-Sažetak editora: $PAGESUMMARY $PAGEMINOREDIT
+Sažetak urednika: $PAGESUMMARY $PAGEMINOREDIT
 
-Kontaktirajte editora:
-pošta: $PAGEEDITOR_EMAIL
+Kontaktirajte urednika:
+mail: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Neće biti drugih obaviještenja u slučaju daljih izmjena ukoliko ne posjetite ovu stranu.
-Također možete da resetujete zastavice za obaviještenja za sve Vaše praćene stranice na vašem spisku praćenih članaka.
+Neće biti drugih obavještenja u slučaju daljnjih izmjena osima ako posjetite stranicu.
+Također možete poništiti oznake obavijesti za sve praćene stranice koje imate na vašem spisku praćenja.
 
-             Vaš prijateljski {{SITENAME}} sistem obaviještavanja
+             Vaš prijateljski {{SITENAME}} sistem obavještavanja
 
 --
-Da promjenite podešavanja vezana za spisak praćenih članaka posjetite
+Za promjenu vaših postavki e-mail obavijesti, posjetite
+{{fullurl:{{#special:Preferences}}}}
+
+Za promjenu postavki vašeg praćenja, posjetite
 {{fullurl:{{#special:Watchlist}}/edit}}
 
-Da obrišete stranicu iz Vašeg spiska praćenja posjetite
+Da obrišete stranicu sa vašeg spiska praćenja, posjetite
 $UNWATCHURL
 
-Fidbek i dalja pomoć:
+Povratne informacije i daljnja pomoć:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
@@ -3162,7 +3188,7 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 'exif-gpsareainformation'          => 'Naziv GPS područja',
 'exif-gpsdatestamp'                => 'GPS datum',
 'exif-gpsdifferential'             => 'GPS diferencijalna korekcija',
-'exif-jpegfilecomment'             => 'JPEG komentar datoteke',
+'exif-jpegfilecomment'             => 'Komentar JPEG datoteke',
 'exif-keywords'                    => 'Ključne riječi',
 'exif-worldregioncreated'          => 'Regija svijeta gdje je slika načinjena',
 'exif-countrycreated'              => 'Država gdje je slika načinjena',
@@ -3184,19 +3210,53 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 'exif-editstatus'                  => 'Urednički status slike',
 'exif-urgency'                     => 'Hitnost',
 'exif-fixtureidentifier'           => 'Naziv rubrike',
+'exif-locationdest'                => 'Lokacija prikazana',
+'exif-locationdestcode'            => 'Kod prikazane lokacije',
+'exif-objectcycle'                 => 'Doba dana za koje je namijenjena medija',
 'exif-contact'                     => 'Podaci za kontakt',
 'exif-writer'                      => 'Pisac',
 'exif-languagecode'                => 'Jezik',
 'exif-iimversion'                  => 'IIM verzija',
 'exif-iimcategory'                 => 'Kategorija',
+'exif-iimsupplementalcategory'     => 'Dodatne kategorije',
+'exif-datetimeexpires'             => 'Ne koristite nakon',
+'exif-datetimereleased'            => 'Objavljeno',
+'exif-originaltransmissionref'     => 'Originalna šifra mjesta prenosa',
 'exif-identifier'                  => 'Oznaka',
 'exif-lens'                        => 'Korišteni objektiv',
+'exif-serialnumber'                => 'Serijski broj fotoaparata',
 'exif-cameraownername'             => 'Vlasnik fotoaparata',
 'exif-label'                       => 'Naslov',
+'exif-datetimemetadata'            => 'Datum posljednje izmjene meta podataka',
+'exif-nickname'                    => 'Neformalni naziv slike',
+'exif-rating'                      => 'Ocjena (od 5)',
+'exif-rightscertificate'           => 'Certifikat za upravljanje pravima',
+'exif-copyrighted'                 => 'Status autorskih prava',
+'exif-copyrightowner'              => 'Vlasnik autorskih prava',
+'exif-usageterms'                  => 'Uslovi upotrebe',
+'exif-webstatement'                => 'Online izjava o autorskom pravu',
+'exif-originaldocumentid'          => 'Jedinstveni ID originalnog dokumenta',
+'exif-licenseurl'                  => 'URL za licencu autorskog prava',
+'exif-morepermissionsurl'          => 'Alternativni podaci o licenci',
+'exif-attributionurl'              => 'Kada ponovo upotrebljavate ovaj rad, molimo povežite do njega',
+'exif-preferredattributionname'    => 'Kada ponovo upotrebljavate ovaj rad, molimo navedite ga',
+'exif-pngfilecomment'              => 'Komentar PNG datoteke',
+'exif-disclaimer'                  => 'Odricanje odgovornosti',
+'exif-contentwarning'              => 'Upozorenje o sadržaju',
+'exif-giffilecomment'              => 'Komentar GIF datoteke',
+'exif-intellectualgenre'           => 'Vrsta stavke',
+'exif-subjectnewscode'             => 'Kôd predmeta',
+'exif-scenecode'                   => 'IPTC kôd scene',
+'exif-event'                       => 'Prikazani događaj',
+'exif-organisationinimage'         => 'Prikazana organizacija',
+'exif-personinimage'               => 'Prikazana ličnost',
+'exif-originalimageheight'         => 'Visina slike prije nego što je odrezana',
+'exif-originalimagewidth'          => 'Širina slike prije nego što je odrezana',
 
 # EXIF attributes
 'exif-compression-1' => 'Nekompresovano',
 
+'exif-copyrighted-true'  => 'Zaštićeno autorskim pravima',
 'exif-copyrighted-false' => 'Javna domena',
 
 'exif-unknowndate' => 'Nepoznat datum',
@@ -3212,6 +3272,8 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 
 'exif-planarconfiguration-1' => 'grubi format',
 'exif-planarconfiguration-2' => 'format u ravni',
+
+'exif-colorspace-65535' => 'Nije podešeno',
 
 'exif-componentsconfiguration-0' => 'ne postoji',
 
@@ -3330,6 +3392,10 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 'exif-gpslongitude-e' => 'Istočna dužina',
 'exif-gpslongitude-w' => 'Zapadna dužina',
 
+# Pseudotags used for GPSAltitudeRef
+'exif-gpsaltitude-above-sealevel' => '$1 {{PLURAL:$1|metar|metra|metara}} nadmorske visine',
+'exif-gpsaltitude-below-sealevel' => '$1 {{PLURAL:$1|metar|metra|metara}} ispod nivoa mora',
+
 'exif-gpsstatus-a' => 'Mjerenje u toku',
 'exif-gpsstatus-v' => 'Mjerenje van funkcije',
 
@@ -3346,19 +3412,35 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 'exif-gpsdestdistance-m' => 'Milja',
 'exif-gpsdestdistance-n' => 'Nautičkih milja',
 
+'exif-gpsdop-excellent' => 'Odlično ($1)',
+'exif-gpsdop-good'      => 'Dobro ($1)',
+'exif-gpsdop-moderate'  => 'Umjereno ($1)',
+'exif-gpsdop-fair'      => 'Zadovoljavajuće ($1)',
+'exif-gpsdop-poor'      => 'Loše ($1)',
+
+'exif-objectcycle-a' => 'Samo jutro',
+'exif-objectcycle-p' => 'Samo navečer',
+'exif-objectcycle-b' => 'I ujutro i navečer',
+
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => 'Stvarni pravac',
 'exif-gpsdirection-m' => 'Magnetski smijer',
 
 'exif-ycbcrpositioning-1' => 'Centrirano',
 
-'exif-dc-date'      => 'Datum(i)',
-'exif-dc-publisher' => 'Izdavač',
-'exif-dc-rights'    => 'Prava',
+'exif-dc-contributor' => 'Autori',
+'exif-dc-date'        => 'Datum(i)',
+'exif-dc-publisher'   => 'Izdavač',
+'exif-dc-relation'    => 'Povezana medija',
+'exif-dc-rights'      => 'Prava',
+'exif-dc-source'      => 'Izvor medije',
 
 'exif-rating-rejected' => 'Odbijeno',
 
+'exif-isospeedratings-overflow' => 'Više od 65535',
+
 'exif-iimcategory-hth' => 'Zdravlje',
+'exif-iimcategory-lab' => 'Rad',
 'exif-iimcategory-pol' => 'Politika',
 'exif-iimcategory-spo' => 'Sport',
 'exif-iimcategory-wea' => 'Vrijeme',

@@ -944,7 +944,11 @@ eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}
 'userpage-userdoesnotexist-view'   => 'Kontot "$1" är inte registrerat.',
 'blocked-notice-logextract'        => 'Användaren är blockerad.
 Orsaken till senaste blockeringen kan ses nedan:',
-'clearyourcache'                   => "'''Observera: Sedan du sparat sidan kan du behöva tömma din webbläsares cache för att se ändringarna.''' '''Mozilla/Firefox/Safari:''' håll ner ''Skift'' och klicka på ''Reload'' eller tryck antingen ''Ctrl-F5'' eller ''Ctrl-R'' (''Command-R'' på Macintosh); '''Konqueror:''': klicka ''Reload'' eller tryck ''F5;'' '''Opera:''' rensa cachen i ''Tools → Preferences;'' '''Internet Explorer:'''  håll ner ''Ctrl'' och klicka på ''Refresh'' eller tryck ''Ctrl-F5.''",
+'clearyourcache'                   => "'''Observera: Sedan du sparat sidan kan du behöva tömma din webbläsares cache för att se ändringarna.''' 
+'''Mozilla/Firefox/Safari:''' håll ner ''Skift'' och klicka på ''Reload'' eller tryck antingen ''Ctrl-F5'' eller ''Ctrl-R'' (''Command-R'' på Macintosh);
+'''Konqueror:''': klicka ''Reload'' eller tryck ''F5;''
+'''Opera:''' rensa cachen i ''Tools → Preferences;''
+'''Internet Explorer:'''  håll ner ''Ctrl'' och klicka på ''Refresh'' eller tryck ''Ctrl-F5.''",
 'usercssyoucanpreview'             => "'''Tips:''' Använd \"{{int:showpreview}}\"-knappen för att testa din nya css innan du sparar.",
 'userjsyoucanpreview'              => "'''Tips:''' Använd \"{{int:showpreview}}\"-knappen för att testa din nya JavaScript innan du sparar.",
 'usercsspreview'                   => "'''Kom ihåg att du bara förhandsgranskar din användar-CSS.
@@ -1045,7 +1049,7 @@ Antalet anrop får vara högst $2, nu görs {{PLURAL:$#|$1 anrop}}.',
 'expensive-parserfunction-category'       => 'Sidor med för många resurskrävande parserfunktioner',
 'post-expand-template-inclusion-warning'  => 'Varning: Den här sidan innehåller för mycket mallinklusioner.
 Några av mallarna kommer inte att inkluderas.',
-'post-expand-template-inclusion-category' => 'Sidor som inkluderar för mycket mallar',
+'post-expand-template-inclusion-category' => 'Sidor som inkluderar för mycket mallkod',
 'post-expand-template-argument-warning'   => 'Varning: Sidan innehåller en eller flera mallparametrar som blir för långa när de expanderas.
 Dessa parametrar har uteslutits.',
 'post-expand-template-argument-category'  => 'Sidor med uteslutna mallparametrar',
@@ -2259,6 +2263,9 @@ Du kan också ta bort flaggan för meddelanden om ändringar på alla sidor i di
              Hälsningar från {{SITENAME}}s meddelandesystem
 
 --
+För att ändra inställningarna för dina uppdateringar via e-post, besök
+{{fullurl:{{#special:Preferences}}}}
+
 För att ändra inställningarna i din bevakningslista, besök
 {{fullurl:{{#special:Watchlist}}/edit}}
 
@@ -2553,8 +2560,8 @@ Ange orsak nedan (exempelvis genom att nämna sidor som blivit vandaliserade).',
 'ipblocklist-submit'              => 'Sök',
 'ipblocklist-localblock'          => 'Lokalblockering',
 'ipblocklist-otherblocks'         => 'Övriga {{PLURAL:$1|blockering|blockeringar}}',
-'infiniteblock'                   => 'för evigt',
-'expiringblock'                   => 'utgår den $1 kl $2',
+'infiniteblock'                   => 'på obestämd tid',
+'expiringblock'                   => 'upphör den $1 kl $2',
 'anononlyblock'                   => 'endast oinloggade',
 'noautoblockblock'                => 'utan automatisk blockering',
 'createaccountblock'              => 'kontoregistrering blockerad',
@@ -3214,6 +3221,7 @@ Andra kommer att gömmas som standard
 'exif-copyrighted'                 => 'Upphovsrättsstatus',
 'exif-copyrightowner'              => 'Upphovsrättsinnehavare',
 'exif-usageterms'                  => 'Användningsvillkor',
+'exif-webstatement'                => 'Online meddelande om upphovsrätt',
 'exif-originaldocumentid'          => 'Unikt ID för originaldokumentet',
 'exif-licenseurl'                  => 'URL för upphovsrättslicens',
 'exif-morepermissionsurl'          => 'Alternativ licensinformation',
@@ -3404,6 +3412,7 @@ Andra kommer att gömmas som standard
 'exif-ycbcrpositioning-1' => 'Centrerad',
 
 'exif-dc-contributor' => 'Bidragsgivare',
+'exif-dc-coverage'    => 'Rumslig och tidsmässig omfattning av media',
 'exif-dc-date'        => 'Datum',
 'exif-dc-publisher'   => 'Utgivare',
 'exif-dc-relation'    => 'Relaterad media',

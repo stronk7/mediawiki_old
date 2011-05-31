@@ -488,7 +488,7 @@ Tafadhali ripoti hili kwa [[Special:ListUsers/sysop|mkabidhi]], na uache jina la
 'cannotdelete'         => 'Haikuweza kufuta kurasa au faili linaloitwa "$1".
 Huenda likawa tayari lishafutwa na mtu mwingine.',
 'badtitle'             => 'Jina halifai',
-'badtitletext'         => 'Jina la ukurasa ulilotaka ni batilifu, tupu, au limeungwa vibaya na jina la lugha nyingine au Wiki nyingine.  Labda linazo herufi moja a zaidi ambazo hazitumiki katika majina.',
+'badtitletext'         => 'Jina la ukurasa ulilotaka ni batilifu, tupu, au limeungwa vibaya na jina la lugha nyingine au Wiki nyingine.  Labda linazo herufi moja au zaidi ambazo hazitumiki katika majina.',
 'perfcached'           => 'Data zifuatazo zinatoka kwenye kache na huenda si ya kisasa.',
 'perfcachedts'         => 'Data zifuatazo zimetoka kwenye kache iliobadilishwa mara ya mwisho saa $3, tarehe $2.',
 'querypage-no-updates' => 'Mabadiliko kwa ajili ya ukurasa huu yamesimamishwa.
@@ -860,6 +860,13 @@ Inaonekana kwamba ukurasa umefutwa.',
 'edit-already-exists'              => 'Haikufanikiwa kuanzisha ukurasa mpya.
 Ukurasa wa jina hilo unapatikana tayari.',
 
+# Parser/template warnings
+'post-expand-template-inclusion-warning'  => "'''Ilani:''' Kigezo kinajumlisha ukubwa uliozidi mno.
+Baadhi ya vigezo havitaweza kuingizwa.",
+'post-expand-template-inclusion-category' => 'Kurasa ambapo vigezo vinajumlisha ukubwa uliozidi',
+'post-expand-template-argument-warning'   => "'''Ilani:'''Ukurasa huu una agumeni ya kigezo moja au zaidi, ambayo ukubwa wake wa kupanuliwa unazidi mpaka. Agumeni hizi hazikutumika.",
+'post-expand-template-argument-category'  => 'Kurasa zenye vigezo vilivyoruka agumeni',
+
 # "Undo" feature
 'undo-success' => 'Sahihisho linaweza kutenguliwa.
 Tafadhali tazama linganisho lililopo chini ili kuthibitisha kwamba kutengua ndiyo inayotakiwa, na kisha uhifadhi mabadiliko ili kukamilisha kutengua sahihisho.',
@@ -1044,7 +1051,7 @@ Tazama [[Special:IPBlockList|orodha ya uzuio wa IP]] kuona orodha ya zuio zilizo
 'searchmenu-legend'                => 'Hitiari za kutafuta',
 'searchmenu-exists'                => "'''Ukurasa wa \"[[:\$1]]\" upo kwenye wiki hii'''",
 'searchmenu-new'                   => "'''Anzisha ukurasa wa \"[[:\$1]]\" katika wiki hii!'''",
-'searchmenu-new-nocreate'          => 'Huenda jina la "$1" ni jina batili la ukurasa, ama huna uwezo wa kuanzisha ukurasa wenye jina hili.',
+'searchmenu-new-nocreate'          => '"$1" ni jina batili la ukurasa, au hauwezi kuanzishwa na wewe.',
 'searchhelp-url'                   => 'Help:Yaliyomo',
 'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|Tafuta kurasa kwenye eneo hili la wiki]]',
 'searchprofile-articles'           => 'Kurasa kwa kusudi ya wiki',
@@ -1194,8 +1201,7 @@ Haiwezi kuzidi {{PLURAL:$1|tarakimu|tarakimu}} $1.',
 Taarifa hii itakuwa wazi.',
 'email'                         => 'Barua pepe',
 'prefs-help-realname'           => 'Jina la kweli si lazima. Ukichagua kutaja jina lako hapa, litatumiwa kuonyesha kwamba ndiyo ulifanya kazi unayochangia.',
-'prefs-help-email'              => 'Barua-pepe sio lazima, lakini inawezesha kupokea neno jipya la siri kwa kupitia barua-pepe yako endapo utakuwa umelisahau.
-Pia unaweza kuchagua kuwawezesha watumiaji wengine wawasiliane nawe kwa kupitia ukurasa wako wa mtumiaji au ule wa majadiliano bila ya kuonyesha jina la akaunti yako.',
+'prefs-help-email'              => 'Barua-pepe sio lazima, lakini inawezesha kupokea neno jipya la siri kwa kupitia barua-pepe yako endapo utakuwa umelisahau.',
 'prefs-help-email-others'       => 'Unaweza pia kuwezesha wengine wawasiliane nawe kwa njia ya ukurasa wako wa mtumiaji au ukurasa wako wa majadiliano tu, bila kujitambulisha.',
 'prefs-help-email-required'     => 'Barua pepe inahitajika.',
 'prefs-info'                    => 'Maelezo ya kimsingi',
@@ -1352,6 +1358,7 @@ Pia unaweza kuchagua kuwawezesha watumiaji wengine wawasiliane nawe kwa kupitia 
 'recentchanges-label-newpage'       => 'Ukurasa mpya ulianzishwa hapo',
 'recentchanges-label-minor'         => 'Hili ni badiliko dogo',
 'recentchanges-label-bot'           => 'Sahihisho hili lilitekelezwa na bot',
+'recentchanges-label-unpatrolled'   => 'Haririo hili bado halijafanyiwa doria',
 'rcnote'                            => "{{PLURAL:$1|Linalofuata ni badiliko '''1'''|Yanayofuata ni mabadiliko '''$1''' ya mwisho}} kutoka katika {{PLURAL:$2|siku iliyopita|siku '''$2''' zilizopita}}, hadi saa $5, tarehe $4.",
 'rcnotefrom'                        => "Hapo chini yaonekana mabadiliko tangu '''$2''' (tunaonyesha hadi '''$1''').",
 'rclistfrom'                        => 'Onyesha mabadiliko mapya kuanzia $1',
@@ -1424,13 +1431,13 @@ Tazama [[Special:NewFiles|mkusanyiko wa mafaili mapya]] kuona picha zenyewe.',
 'illegalfilename'             => 'Jina la faili la "$1" lina herufi zisizoruhusiwa katika majina ya kurasa.
 Tafadhali uweke jina jipya kwenye faili, halafu jaribu kulipakia upya.',
 'badfilename'                 => 'Jina la faili limebadilishwa kuwa "$1".',
-'filetype-mime-mismatch'      => 'Tawi (extension) la faili halingani na aina ya MIME.',
+'filetype-mime-mismatch'      => 'Tawi (extension) ".$1" la faili halingani na aina yake ya MIME ($2).',
 'filetype-badmime'            => 'Mafaili ya aina ya MIME ya "$1" hayaruhusiwi kupakiwa.',
 'filetype-bad-ie-mime'        => 'Haiwezi kupakia faili hili kwa sababu Internet Explorer ingefikiri kwamba ni "$1". Mafaili ya aina hii hayaruhusiwa, na huenda ni ya hatari.',
 'filetype-unwanted-type'      => "Aina la faili '''\".\$1\"''' halitakiwi.
 {{PLURAL:\$3|Aina ya faili inayopendelewa|Aina za faili zinazopendelewa}} ni \$2.",
-'filetype-banned-type'        => "'''\".\$1\"''' sio aina la faili linaloruhusiwa.
-{{PLURAL:\$3|Aina ya faili linaloruhusiwa|Aina za faili zinazoruhusiwa}} ni \$2.",
+'filetype-banned-type'        => '\'\'\'".$1"\'\'\' sio aina {{PLURAL:$4|ya faili linaloruhusiwa|za faili zinazoruhusiwa}}.
+{{PLURAL:$3|Aina ya faili inayoruhusiwa|Aina za faili zinazoruhusiwa}} ni $2.',
 'filetype-missing'            => 'Faili halina mnyambuliko (kama ".jpg").',
 'empty-file'                  => 'Faili ulilowasilisha ni tupu.',
 'file-too-large'              => 'Faili ulilowasilisha ni kubwa mno.',
@@ -1827,7 +1834,7 @@ Tazama pia [[Special:WantedCategories|jamii zinazohitajika]].',
 'linksearch-ok'    => 'Tafuta',
 'linksearch-text'  => 'Alama maalum za kutafuta kama "*.wikipedia.org" zinaweza kutumika.<br />
 Itifaki zinazoungwa mkono: <tt>$1</tt>',
-'linksearch-line'  => '$2 lina kiungo kinachokupeleka hadi $1',
+'linksearch-line'  => '$2 umeungwa kutoka $1',
 'linksearch-error' => 'Alama maalum za kutafuta zinaweza kutumika mwanzoni mwa URL tu.',
 
 # Special:ListUsers
@@ -2142,6 +2149,7 @@ Rejea kumbukumbu ya uzuio ya mwisho inayoandikwa chini:',
 Rejea kumbukumbu ya uzuio ya mwisho inayoandikwa chini:',
 'sp-contributions-search'              => 'Tafuta michango',
 'sp-contributions-username'            => 'Anwani ya IP au jina la mtumiaji:',
+'sp-contributions-toponly'             => 'Yaonyeshwe maharirio ya mwisho tu katika ukurasa',
 'sp-contributions-submit'              => 'Tafuta',
 
 # What links here
@@ -2388,6 +2396,7 @@ Ulihafadhi katika tarakalishi yako, halafu ulipakie hapa.',
 'importbadinterwiki'         => 'Kiungo kibovu kati za wiki',
 'importnotext'               => 'Tupu au bila maandishi',
 'importsuccess'              => 'Kuleta kumekamilishwa!',
+'import-noarticle'           => 'Hakuna kurasa za kuleta!',
 'import-token-mismatch'      => 'Data ya kipindi zilipotelewa.
 Tafadhali jaribu tena.',
 
@@ -2483,6 +2492,7 @@ Tafadhali jaribu tena.',
 'numtalkauthors' => 'Idadi ya waandishi tofauti (ukurasa wa majadiliano): $1',
 
 # Patrol log
+'patrol-log-line' => 'aliweka alama ya kufanyiwa doria katika $1 ya $2 $3',
 'patrol-log-auto' => '(kwa kujiendesha)',
 'patrol-log-diff' => 'pitio la $1',
 
@@ -2568,6 +2578,8 @@ likifupishwa. Nyuga zingine zitafichwa kama chaguo-msingi.
 'exif-copyright'                   => 'Mwenye hatimiliki',
 'exif-exifversion'                 => 'Mtindo wa Exif',
 'exif-componentsconfiguration'     => 'Maana ya kila kijenzi',
+'exif-pixelydimension'             => 'Upana wa picha',
+'exif-pixelxdimension'             => 'Urefu wa picha',
 'exif-usercomment'                 => 'Maoni ya mtumiaji',
 'exif-relatedsoundfile'            => 'Faili la sauti linalohusika',
 'exif-lightsource'                 => 'Mwanga',
@@ -2584,6 +2596,7 @@ likifupishwa. Nyuga zingine zitafichwa kama chaguo-msingi.
 'exif-gpsdestlatitude'             => 'Latitudo ya kikomo',
 'exif-gpsdestlongitude'            => 'Longitudo ya kikomo',
 'exif-gpsdestdistance'             => 'Mbali wa kikomo',
+'exif-gpsareainformation'          => 'Jina la eneo la GPS',
 'exif-gpsdatestamp'                => 'Tarehe ya GPS',
 'exif-jpegfilecomment'             => 'Maoni juu ya faili la JPEG',
 'exif-keywords'                    => 'Maneno yahusika',
@@ -2592,6 +2605,7 @@ likifupishwa. Nyuga zingine zitafichwa kama chaguo-msingi.
 'exif-objectname'                  => 'Jina fupi',
 'exif-specialinstructions'         => 'Maelekezo maalum',
 'exif-urgency'                     => 'Umuhimu',
+'exif-writer'                      => 'Mwandishi',
 'exif-languagecode'                => 'Lugha',
 'exif-iimcategory'                 => 'Jamii',
 'exif-pngfilecomment'              => 'Maoni juu ya faili la PNG',
@@ -2662,6 +2676,10 @@ likifupishwa. Nyuga zingine zitafichwa kama chaguo-msingi.
 'exif-gpsspeed-k' => 'Kilometa kwa saa',
 'exif-gpsspeed-m' => 'Maili kwa saa',
 'exif-gpsspeed-n' => 'Noti',
+
+# Pseudotags used for GPSDestDistanceRef
+'exif-gpsdestdistance-k' => 'Kilomita',
+'exif-gpsdestdistance-m' => 'Maili',
 
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => 'Mwelekeo halisi',
@@ -2764,6 +2782,9 @@ Ishara hizi za uthibitisho zitaishia mnamo $4.',
 'scarytranscludefailed'  => '[Kuleta kigezo imeshindikana kwa ajili ya $1]',
 'scarytranscludetoolong' => '[URL ni ndefu mno]',
 
+# Trackbacks
+'trackbackremove' => '([$1 Futa])',
+
 # Delete conflict
 'deletedwhileediting'      => "'''Ilani''': Ukurasa huu ulifutwa ulipokwisha kuanza huuhariri!",
 'confirmrecreate'          => "Mtumiaji [[User:$1|$1]] ([[User talk:$1|majadiliano]]) aliufuta ukurasa huu wakati umeshaanza kuuhariri, akaandika sababu hii ya kufuta:
@@ -2839,6 +2860,9 @@ Pia unaweza [[Special:EditWatchlist|kutumia kihariri cha kawaida]].',
 'watchlisttools-edit' => 'Tazama na hariri maangalizi',
 'watchlisttools-raw'  => 'Hariri maangalizi ghafi',
 
+# Core parser functions
+'duplicate-defaultsort' => '\'\'\'Ilani:\'\'\' Neno msingi "$2" ya kupanga inafanya vingine na neno msingi "$1" ya kupanga lilotangulia.',
+
 # Special:Version
 'version'                   => 'Toleo',
 'version-specialpages'      => 'Kurasa maalum',
@@ -2897,6 +2921,16 @@ Andika jina la faili bila kiambishi awali cha "{{ns:file}}:".',
 # Special:BlankPage
 'blankpage'              => 'Ukurasa tupu',
 'intentionallyblankpage' => 'Ukurasa huu umeachwa tupu kwa makusudi.',
+
+# External image whitelist
+'external_image_whitelist' => ' #Acha mstari huu jinsi ilivyo<pre>
+#Weka vipande vya uchanuzi wa kawaida (regex) (kipande kinachoingia kati ya // tu) hapo chini
+#Vipande hivi vitaoanishwa na URL ya picha za nje (na kiungo cha moto)
+#Vipande vinavyooanishwa vitaonekana kama picha, la sivyo, itaonyeshwa kiungo kinachokwenda katika picha tu
+#Mistari inayoanza na # zinatumiwa kama maelezo
+#Haitofautishana kati ya herufi kubwa na ndogo
+
+#Weka vipande vyote vya regex juu ya mstari huu. Acha mstari huu jinsi ilivyo</pre>',
 
 # Special:Tags
 'tag-filter'              => 'Chujio cha [[Special:Tags|tagi]]:',

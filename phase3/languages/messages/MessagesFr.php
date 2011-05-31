@@ -645,6 +645,8 @@ $1',
 'page-rss-feed'           => 'Flux RSS de « $1 »',
 'page-atom-feed'          => 'Flux Atom de « $1 »',
 'red-link-title'          => '$1 (page inexistante)',
+'sort-descending'         => 'Tri décroissant',
+'sort-ascending'          => 'Tri croissant',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Page',
@@ -1271,7 +1273,7 @@ Assurez-vous que cette opération conservera la continuité de l’historique de
 'mergelogpagetext'   => 'Voici la liste des fusions de l’historique d’une page dans celui d’une autre les plus récentes.',
 
 # Diffs
-'history-title'            => 'Historique des versions de « $1 »',
+'history-title'            => 'Historique des versions de «&nbsp;$1&nbsp;»',
 'difference'               => '(Différences entre les versions)',
 'difference-multipage'     => '(Différence entre les pages)',
 'lineno'                   => 'Ligne $1 :',
@@ -2290,6 +2292,9 @@ Vous pouvez aussi réinitialiser les drapeaux de notification pour toutes les pa
              Votre système de notification de {{SITENAME}}
 
 --
+Pour modifier les paramètres de notification par courriel, visitez
+{{fullurl:{{#special:Preferences}}}}
+
 Pour modifier les paramètres de votre liste de suivi, visitez
 {{fullurl:{{#special:Watchlist}}/edit}}
 
@@ -3035,7 +3040,7 @@ $1',
 # Media information
 'mediawarning'           => "'''Attention :''' ce type de fichier peut contenir du code malveillant.
 Si vous l’exécutez, votre système peut être compromis.",
-'imagemaxsize'           => "Taille maximale des images :<br />''(pour les pages de description de fichiers)''",
+'imagemaxsize'           => "Taille maximale des images :<br />''(pour les pages de description de fichier)''",
 'thumbsize'              => 'Taille de la miniature :',
 'widthheightpage'        => '$1 × $2, $3 page{{PLURAL:$3||s}}',
 'file-info'              => 'Taille du fichier : $1, type MIME : $2',
@@ -3624,7 +3629,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.",
 'size-gigabytes' => '$1 Go',
 
 # Live preview
-'livepreview-loading' => 'Chargement…',
+'livepreview-loading' => 'Chargement...',
 'livepreview-ready'   => 'Chargement … terminé !',
 'livepreview-failed'  => 'L’aperçu rapide a échoué !
 Essayez la prévisualisation normale.',

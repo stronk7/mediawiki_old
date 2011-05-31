@@ -460,7 +460,7 @@ ning [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide kasutusjuhendit].'
 'history'           => 'Artikli ajalugu',
 'history_short'     => 'Ajalugu',
 'updatedmarker'     => 'uuendatud pärast viimast külastust',
-'info_short'        => 'Info',
+'info_short'        => 'Teave',
 'printableversion'  => 'Prinditav versioon',
 'permalink'         => 'Püsilink',
 'print'             => 'Prindi',
@@ -2181,6 +2181,9 @@ Abivalmilt
 {{GRAMMAR:genitive|{{SITENAME}}}} teavitussüsteem
 
 --
+E-kirjatsi saabuvate teavituste sätteid saad muuta leheküljel
+{{fullurl:{{#special:Preferences}}}}.
+
 Oma jälgimisloendi sätete muutmiseks mine leheküljele
 {{fullurl:Special:Watchlist/edit}}.
 
@@ -2360,9 +2363,10 @@ $1',
 'undelete-show-file-submit'    => 'Jah',
 
 # Namespace form on various pages
-'namespace'      => 'Nimeruum:',
-'invert'         => 'Näita kõiki peale valitud nimeruumi',
-'blanknamespace' => '(Artiklid)',
+'namespace'             => 'Nimeruum:',
+'invert'                => 'Näita kõiki peale valitud nimeruumi',
+'namespace_association' => 'Seonduv nimeruum',
+'blanknamespace'        => '(Artiklid)',
 
 # Contributions
 'contributions'       => 'Kasutaja kaastöö',
@@ -2374,7 +2378,7 @@ $1',
 'month'               => 'Alates kuust (ja varasemad):',
 'year'                => 'Alates aastast (ja varasemad):',
 
-'sp-contributions-newbies'             => 'Näita ainult uute kasutajate kaastööd.',
+'sp-contributions-newbies'             => 'Näita ainult uute kasutajate kaastööd',
 'sp-contributions-newbies-sub'         => 'Uute kontode kaastöö',
 'sp-contributions-newbies-title'       => 'Uute kasutajate kaastöö',
 'sp-contributions-blocklog'            => 'blokeerimised',

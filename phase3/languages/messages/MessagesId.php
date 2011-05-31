@@ -368,6 +368,7 @@ $messages = array(
 'tog-ccmeonemails'            => 'Kirimkan saya salinan surel yang saya kirimkan ke orang lain',
 'tog-diffonly'                => 'Jangan tampilkan isi halaman di bawah perbedaan suntingan',
 'tog-showhiddencats'          => 'Tampilkan kategori tersembunyi',
+'tog-noconvertlink'           => 'Matikan konversi judul pranala',
 'tog-norollbackdiff'          => 'Jangan tampilkan perbedaan setelah melakukan pengembalian',
 
 'underline-always'  => 'Selalu',
@@ -619,7 +620,10 @@ $1',
 'site-atom-feed'          => 'Umpan Atom $1',
 'page-rss-feed'           => 'Umpan RSS "$1"',
 'page-atom-feed'          => 'Umpan Atom "$1"',
+'feed-atom'               => 'Atom',
 'red-link-title'          => '$1 (halaman belum tersedia)',
+'sort-descending'         => 'Urutkan menurun',
+'sort-ascending'          => 'Urutkan menaik',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Halaman',
@@ -1879,6 +1883,7 @@ Deskripsi dari [$2 halaman deskripsinya] ditunjukkan di bawah ini.',
 'uploadnewversion-linktext' => 'Muatkan versi yang lebih baru dari berkas ini',
 'shared-repo-from'          => 'dari $1',
 'shared-repo'               => 'suatu repositori bersama',
+'filepage.css'              => '/* CSS yang ditempatkan di sini disertakan pada halaman deskripsi berkas, juga disertakan pada klien wiki asing */',
 
 # File reversion
 'filerevert'                => 'Kembalikan $1',
@@ -2238,16 +2243,19 @@ Hubungi penyunting:
 surel: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Tidak akan ada pemberitahuan lainnya dalam rangka perubahan lebih lanjut kecuali anda mengunjungi halaman ini.
-Anda juga dapat menset ulang tanda pemberitahuan untuk semua halaman pantauan anda pada daftar pantauan anda.
+Kami tidak akan mengirim pemberitahuan lain bila ada perubahan lebih lanjut sampai Anda mengunjungi halaman ini.
+Anda juga dapat menyetel ulang tanda pemberitahuan untuk semua halaman pantauan pada daftar pantauan Anda.
 
-             Sistem pemberitahuan anda di {{SITENAME}}
+             Sistem pemberitahuan situs {{SITENAME}}
 
 --
-Untuk mengubah preferensi daftar pantauan anda, kunjungi
+Untuk mengubah setelan pemberitahuan surel, kunjungi
+{{fullurl:{{#special:Preferences}}}}
+
+Untuk mengubah setelan daftar pantauan, kunjungi
 {{fullurl:{{#special:Watchlist}}/edit}}
 
-Untuk menghapus halaman dari daftar pantauan anda, kunjungi
+Untuk menghapus halaman dari daftar pantauan, kunjungi
 $UNWATCHURL
 
 Umpan balik dan bantuan lebih lanjut:

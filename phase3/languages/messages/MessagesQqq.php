@@ -56,6 +56,7 @@
  * @author Lloffiwr
  * @author MF-Warburg
  * @author Malafaya
+ * @author MarkvA
  * @author MaxSem
  * @author McDutchie
  * @author Meno25
@@ -138,7 +139,9 @@ This is the toolbar: [[Image:Toolbar.png]]",
 'tog-nocache'                 => "[[Special:Preferences]], tab 'Misc.'. Offers the user the option of disabling caching of pages in the browser",
 'tog-enotifwatchlistpages'    => 'Option in [[Special:Preferences]] > {{int:prefs-personal}} > {{int:email}}.',
 'tog-enotifusertalkpages'     => 'Option in [[Special:Preferences]] > {{int:prefs-personal}} > {{int:email}}.',
-'tog-enotifminoredits'        => 'Option in [[Special:Preferences]] > {{int:prefs-personal}} > {{int:email}}.',
+'tog-enotifminoredits'        => 'Option in [[Special:Preferences]] > {{int:prefs-personal}} > {{int:email}}.
+
+Is only shown if {{msg-mw|tog-enotifusertalkpages}} or/and {{msg-mw|tog-enotifwatchlistpages}} are shown.',
 'tog-enotifrevealaddr'        => 'Toggle option used in [[Special:Preferences]] > {{int:prefs-personal}} > {{int:email}}.',
 'tog-shownumberswatching'     => 'Toggle option used in [[Special:Preferences]], in the section for recent changes. When this option is activated, the entries in recent changes includes the number of users who watch pages.',
 'tog-oldsig'                  => 'Used in [[Special:Preferences]], tab User profile.',
@@ -197,30 +200,54 @@ This is the toolbar: [[Image:Toolbar.png]]",
 'thu'           => 'Abbreviation for Thursday, a day of the week.',
 'fri'           => 'Abbreviation for Friday, a day of the week.',
 'sat'           => 'Abbreviation for Saturday, a day of the week.',
-'january'       => 'The first month of the Gregorian calendar',
-'february'      => 'The second month of the Gregorian calendar',
-'march'         => 'The third month of the Gregorian calendar',
-'april'         => 'The fourth month of the Gregorian calendar',
-'may_long'      => 'The fifth month of the Gregorian calendar',
-'june'          => 'The sixth month of the Gregorian calendar',
-'july'          => 'The seventh month of the Gregorian calendar',
-'august'        => 'The eighth month of the Gregorian calendar',
-'september'     => 'The ninth month of the Gregorian calendar',
-'october'       => 'The tenth month of the Gregorian calendar',
-'november'      => 'The eleventh month of the Gregorian calendar',
-'december'      => 'The twelfth month of the Gregorian calendar',
-'january-gen'   => 'The first month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'february-gen'  => 'The second month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'march-gen'     => 'The third month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'april-gen'     => 'The fourth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'may-gen'       => 'The fifth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'june-gen'      => 'The sixth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'july-gen'      => 'The seventh month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'august-gen'    => 'The eighth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'september-gen' => 'The nineth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'october-gen'   => 'The tenth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'november-gen'  => 'The eleventh month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
-'december-gen'  => 'The twelfth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
+'january'       => 'The first month of the Gregorian calendar
+{{Identical|January}}',
+'february'      => 'The second month of the Gregorian calendar
+{{Identical|February}}',
+'march'         => 'The third month of the Gregorian calendar
+{{Identical|March}}',
+'april'         => 'The fourth month of the Gregorian calendar
+{{Identical|April}}',
+'may_long'      => 'The fifth month of the Gregorian calendar
+{{Identical|May}}',
+'june'          => 'The sixth month of the Gregorian calendar
+{{Identical|June}}',
+'july'          => 'The seventh month of the Gregorian calendar
+{{Identical|July}}',
+'august'        => 'The eighth month of the Gregorian calendar
+{{Identical|August}}',
+'september'     => 'The ninth month of the Gregorian calendar
+{{Identical|September}}',
+'october'       => 'The tenth month of the Gregorian calendar
+{{Identical|October}}',
+'november'      => 'The eleventh month of the Gregorian calendar
+{{Identical|November}}',
+'december'      => 'The twelfth month of the Gregorian calendar
+{{Identical|December}}',
+'january-gen'   => 'The first month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|January}}',
+'february-gen'  => 'The second month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|February}}',
+'march-gen'     => 'The third month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|March}}',
+'april-gen'     => 'The fourth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|April}}',
+'may-gen'       => 'The fifth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|May}}',
+'june-gen'      => 'The sixth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|June}}',
+'july-gen'      => 'The seventh month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|July}}',
+'august-gen'    => 'The eighth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|August}}',
+'september-gen' => 'The nineth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|September}}',
+'october-gen'   => 'The tenth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|October}}',
+'november-gen'  => 'The eleventh month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|November}}',
+'december-gen'  => 'The twelfth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.
+{{Identical|December}}',
 'jan'           => 'Abbreviation of January, the first month of the Gregorian calendar',
 'feb'           => 'Abbreviation of February, the second month of the Gregorian calendar',
 'mar'           => 'Abbreviation of March, the thrird month of the Gregorian calendar',
@@ -917,6 +944,7 @@ Please report at [[Support]] if you are unable to properly translate this messag
 * $1 is the current number of parser function calls.
 * $2 is the allowed number of parser function calls.',
 'expensive-parserfunction-category'       => 'This message is used as a category name for a category where pages are placed automatically if they contain too many calls to expensive parser functions.',
+'post-expand-template-inclusion-warning'  => 'When templates are expanded, there is a size limit for the number of bytes yielded. Usually that occurs from excessively nested templates, recursive templates, or ones having x-zillion of #if #case or similar contructs in them. When the wikicode parser detects this, it outputs a red warning message to the page.',
 'post-expand-template-inclusion-category' => 'When templates are expanded, there is a size limit for the number of bytes yielded. Usually that occurs from excessively nested templates, recursive templates, or ones having x-zillion of #if #case or similar contructs in them. When the wikicode parser detects this, it outputs a red warning message to the page.',
 'language-converter-depth-warning'        => 'Error message shown when a page uses too deeply nested language conversion syntax
 
@@ -1810,7 +1838,8 @@ Extensions making use of it:
 'zip-unsupported' => "Perhaps translations of 'software' can be used instead of 'features' and 'understood' or 'handled' instead of 'supported'.",
 
 # img_auth script messages
-'img-auth-accessdenied' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Access Denied',
+'img-auth-accessdenied' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Access Denied
+{{Identical|Access denied}}',
 'img-auth-nopathinfo'   => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Missing PATH_INFO - see english description',
 'img-auth-notindir'     => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: When the specified path is not in upload directory.',
 'img-auth-badtitle'     => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Bad title, $1 is the invalid title',
@@ -2327,6 +2356,8 @@ This is a button text used in [[Special:Emailuser]] when called without a (valid
 {{Identical|Send}}',
 'emailccme'           => 'Used at [[Special:Preferences]] > E-mail',
 'emailccsubject'      => 'Subject of the carbon-copied  email for the sender sent through MediaWiki.',
+'emailsent'           => 'Title of Special:Emailuser when it says you it sent an email',
+'emailsenttext'       => 'When you send an e-mail, Special:Emailuser says you this (Your email has been sent).',
 'emailuserfooter'     => 'This message is appended to every email sent through the "Email user" function.
 
 * $1: username of the sender
@@ -3046,7 +3077,7 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 # Patrol log
 'patrol-log-page'      => 'Name of log.',
 'patrol-log-header'    => 'Text that appears above the log entries on the [[Special:log|patrol log]].',
-'patrol-log-line'      => 'Text of notes on entries in the [[Special:Log|patrol log]]. $1 is the link whose text is [[Mediawiki:patrol-log-diff]]. $2 is the name of the page. $3 appears to be [[Mediawiki:Patrol-log-auto]] (at least sometimes).
+'patrol-log-line'      => 'Text of notes on entries in the [http://translatewiki.net/w/i.php?title=Special%3ALog&type=patrol&user=&page=&year=&month=-1 patrol log]. $1 is the link whose text is {{msg-mw|patrol-log-diff}}. $2 is the name of the page. $3 appears to be {{msg-mw|Patrol-log-auto}} (at least sometimes).
 
 The message appears after the name of the patroller.',
 'patrol-log-auto'      => 'Automated edit summary when patrolling.
@@ -3064,12 +3095,27 @@ The message appears after the name of the patroller.',
 'mediawarning'         => 'Shows up on file description pages if the file type is not listed in [[mw:Manual:$wgTrustedMediaFormats|Manual:$wgTrustedMediaFormats]].',
 'imagemaxsize'         => 'This is used in Special:Preferences, under Files.',
 'widthheight'          => '{{optional}}',
-'widthheightpage'      => 'This message is used on image pages in the dimensions column in the file history section for images  with more than one page. Parameter $1 is the image width (in pixels), parameter $2 is the image height, and parameter $3 is the number of pages.',
+'widthheightpage'      => 'This message is used on image pages in the dimensions column in the file history section for images  with more than one page.
+
+Parameters:
+* $1 is the width of the image pages in pixels.
+* $2 is the height of the image pages in pixels.
+* $3 is the number of pages in the file.',
 'file-info'            => 'File info displayed on file description page.',
-'file-info-size'       => 'File info displayed on file description page.',
+'file-info-size'       => 'File info displayed on file description page.
+
+Parameters:
+* $1 is the width of the image(s) in pixels.
+* $2 is the height of the image(s) in pixels.
+* $3 is the file size as a number followed by a unit — for example: 99 KB
+* $4 is the MIME type, a formalized textual information — for example: <code>image/jpeg</code>',
 'file-nohires'         => 'File info displayed on file description page. For example of message in use see [[:File:Mouse10.gif]].',
 'svg-long-desc'        => 'Displayed under an SVG image at the image description page. Note that argument 3 is a string that includes the file size unit symbol. See for example [[:File:Yes check.svg]].',
 'show-big-image'       => 'Displayed under an image at the image description page, when it is displayed smaller there than it was uploaded.',
+'show-big-image-size'  => '
+Parameters:
+* $1 is the width of the image(s) in pixels.
+* $2 is the height of the image(s) in pixels.',
 'file-info-gif-looped' => 'Part of the information provided about a [http://en.wikipedia.org/wiki/Gif .gif file] on its file description page. Looped means repeating in the context of an animated gif. It is a sequence of images, each displayed after the other, and the first one displayed after the last, in a never ending loop. For example of message in use see [[:File:Mouse10.gif]].',
 'file-info-gif-frames' => 'Part of the information provided about a [http://en.wikipedia.org/wiki/Gif .gif file] on its file description page.',
 'file-info-png-looped' => 'Part of the information provided about a [http://en.wikipedia.org/wiki/APNG .apng file] on its file description page. Looped means repeating indefinetly in the context of an animated png. It is a sequence of images, each displayed after the other, and the first one displayed after the last, in a never ending loop.',
@@ -3211,7 +3257,9 @@ $1 is the value of the property (in one language), $2 is the language name that 
 
 {{Identical|Height}}',
 'exif-bitspersample'               => 'Exif is a format for storing metadata in image files. See this [http://en.wikipedia.org/wiki/Exchangeable_image_file_format Wikipedia article] and the example at the bottom of [http://commons.wikimedia.org/wiki/File:Phalacrocorax-auritus-020.jpg this page on Commons]. The tags are explained [http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html briefly] and [http://www.kodak.com/global/plugins/acrobat/en/service/digCam/exifStandard2.pdf in further detail].',
-'exif-compression'                 => 'Exif is a format for storing metadata in image files. See this [http://en.wikipedia.org/wiki/Exchangeable_image_file_format Wikipedia article] and the example at the bottom of [http://commons.wikimedia.org/wiki/File:Phalacrocorax-auritus-020.jpg this page on Commons]. The tags are explained [http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html briefly] and [http://www.kodak.com/global/plugins/acrobat/en/service/digCam/exifStandard2.pdf in further detail].',
+'exif-compression'                 => 'Exif is a format for storing metadata in image files. See this [http://en.wikipedia.org/wiki/Exchangeable_image_file_format Wikipedia article] and the example at the bottom of [http://commons.wikimedia.org/wiki/File:Phalacrocorax-auritus-020.jpg this page on Commons]. The tags are explained [http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html briefly] and [http://www.kodak.com/global/plugins/acrobat/en/service/digCam/exifStandard2.pdf in further detail].
+
+This field labels what the compression of the image is. It is commonly seen in Tiff images. It uses messages like {{msg-mw|exif-compression-1}} for the value. http://en.wikipedia.org/wiki/TIFF#TIFF_Compression_Tag has information about this field.',
 'exif-photometricinterpretation'   => 'Exif is a format for storing metadata in image files. See this [http://en.wikipedia.org/wiki/Exchangeable_image_file_format Wikipedia article] and the example at the bottom of [http://commons.wikimedia.org/wiki/File:Phalacrocorax-auritus-020.jpg this page on Commons]. The tags are explained [http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html briefly] and [http://www.kodak.com/global/plugins/acrobat/en/service/digCam/exifStandard2.pdf in further detail].',
 'exif-orientation'                 => 'Exif is a format for storing metadata in image files. See this [http://en.wikipedia.org/wiki/Exchangeable_image_file_format Wikipedia article] and the example at the bottom of [http://commons.wikimedia.org/wiki/File:Phalacrocorax-auritus-020.jpg this page on Commons]. The tags are explained [http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html briefly] and [http://www.kodak.com/global/plugins/acrobat/en/service/digCam/exifStandard2.pdf in further detail].',
 'exif-samplesperpixel'             => 'Exif is a format for storing metadata in image files. See this [http://en.wikipedia.org/wiki/Exchangeable_image_file_format Wikipedia article] and the example at the bottom of [http://commons.wikimedia.org/wiki/File:Phalacrocorax-auritus-020.jpg this page on Commons]. The tags are explained [http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html briefly] and [http://www.kodak.com/global/plugins/acrobat/en/service/digCam/exifStandard2.pdf in further detail].',
@@ -3997,6 +4045,7 @@ Name of month in Hebrew calender.',
 # Core parser functions
 'unknown_extension_tag' => '* Description: This is an error shown when you use an unknown extension tag name. This feature allows tags like <tt><nowiki><pre></nowiki></tt> to be called with a parser like <tt><nowiki>{{#tag:pre}}</nowiki></tt>.
 * Parameter $1: This is the unknown extension tag name.',
+'duplicate-defaultsort' => 'Definition of [http://en.wikipedia.org/wiki/Sorting sort key] on Wikipedia.',
 
 # Special:Version
 'version'                       => 'Name of special page displayed in [[Special:SpecialPages]]
@@ -4083,7 +4132,9 @@ $1 is the name of the requested file.',
 'intentionallyblankpage' => 'Text displayed in [[Special:BlankPage]].',
 
 # External image whitelist
-'external_image_whitelist' => "As usual please leave all the wiki markup, including the spaces, as they are. You can translate the text, including 'Leave this line exactly as it is'. The first line of this messages has one (1) leading space.",
+'external_image_whitelist' => "As usual please leave all the wiki markup, including the spaces, as they are. You can translate the text, including 'Leave this line exactly as it is'. The first line of this messages has one (1) leading space.
+
+Definition of [http://en.wikipedia.org/wiki/Regular_expression regular expression] on Wikipedia.",
 
 # Special:Tags
 'tags'                    => "Shown on [[Special:Specialpages]] for page listing the tags that the software may mark an edit with, and their meaning. For more information on tags see [http://www.mediawiki.org/wiki/Manual:Tags Mediawiki].

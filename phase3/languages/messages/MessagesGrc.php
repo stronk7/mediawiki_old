@@ -506,6 +506,9 @@ $2',
 'resetpass-submit-cancel'   => 'Ἀκυροῦν',
 'resetpass-temp-password'   => 'Προσωρινὸν σύνθημα:',
 
+# Special:PasswordReset
+'passwordreset-username' => 'Ὄνομα χρωμένου:',
+
 # Edit page toolbar
 'bold_sample'     => 'Γράμματα παχέα',
 'bold_tip'        => 'Γράμματα παχέα',

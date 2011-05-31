@@ -21,6 +21,7 @@
  * @author Gharbeia
  * @author Hakeem
  * @author Histolo2
+ * @author Houcinee1
  * @author Jak
  * @author Khaledhosny
  * @author Lord Anubis
@@ -744,6 +745,8 @@ $1',
 'feed-atom'               => 'أتوم',
 'feed-rss'                => 'أر إس إس',
 'red-link-title'          => '$1 (الصفحة غير موجودة)',
+'sort-descending'         => 'ترتيب تنازلي',
+'sort-ascending'          => 'ترتيب تصاعدي',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'صفحة',
@@ -972,16 +975,31 @@ $2',
 'resetpass-temp-password'   => 'كلمة سر مؤقتة:',
 
 # Special:PasswordReset
-'passwordreset'              => 'تمت إعادة ضبط كلمة السر',
-'passwordreset-text'         => 'أكمل هذا النموذج لتتلقى بريدا إلكترونيا يذكر بتفاصيل حسابك.',
-'passwordreset-legend'       => 'إعادة تعيين كلمة السر',
-'passwordreset-disabled'     => 'عُطّلت إعادة تعيين كلمة السر على هذه الويكي.',
-'passwordreset-username'     => 'اسم المستخدم:',
-'passwordreset-email'        => 'عنوان البريد الإلكتروني:',
-'passwordreset-emailtitle'   => 'تفاصيل حساب {{SITENAME}}',
-'passwordreset-emailelement' => 'اسم المستخدم: $1
+'passwordreset'                => 'تمت إعادة ضبط كلمة السر',
+'passwordreset-text'           => 'أكمل هذا النموذج لتتلقى بريدا إلكترونيا يذكر بتفاصيل حسابك.',
+'passwordreset-legend'         => 'إعادة تعيين كلمة السر',
+'passwordreset-disabled'       => 'عُطّلت إعادة تعيين كلمة السر على هذه الويكي.',
+'passwordreset-pretext'        => '{{PLURAL:$1||أدخل أحد أجزاء البيانات أدناه}}',
+'passwordreset-username'       => 'اسم المستخدم:',
+'passwordreset-email'          => 'عنوان البريد الإلكتروني:',
+'passwordreset-emailtitle'     => 'تفاصيل حساب {{SITENAME}}',
+'passwordreset-emailtext-ip'   => 'احد ما (قد يكون انت$1)طلب مذكرة تفاصيل الحساب ل{{SITENAME}} ($4).المستخدم الاتي {{PLURAL:$3|الحساب هو|الحسابات هي}} قد قرن بهذا العنوان :
+
+$2
+
+{{PLURAL:$3|كلمة المرور المؤقتة|كلمات المرور المؤقة}}سينتهي في {{PLURAL:$5|يوم|ايام$5 }}
+من الافضل ان تسجل الدخول وتختار كلمة مرور جديدة الان .
+إذا قام شخص آخر بهذا الطلب، أو إذا  تذكرت كلمة المرور الأصلية الخاصة بك،ولم تعد ترغب في تغييره، يمكنك تجاهل هذه الرسالة ومتابعة استخدام  كلمة المرورالقديمة.',
+'passwordreset-emailtext-user' => 'احد ما (قد يكون انت$1)طلب مذكرة تفاصيل الحساب ل{{SITENAME}} ($4).المستخدم الاتي {{PLURAL:$3|الحساب هو|الحسابات هي}} قد قرن بهذا العنوان :
+
+$2
+
+{{PLURAL:$3|كلمة المرور المؤقتة|كلمات المرور المؤقة}}سينتهي في {{PLURAL:$5|يوم|ايام$5 }}
+من الافضل ان تسجل الدخول وتختار كلمة مرور جديدة الان .
+إذا قام شخص آخر بهذا الطلب، أو إذا  تذكرت كلمة المرور الأصلية الخاصة بك،ولم تعد ترغب في تغييره، يمكنك تجاهل هذه الرسالة ومتابعة استخدام  كلمة المرورالقديمة.',
+'passwordreset-emailelement'   => 'اسم المستخدم: $1
 كلمة السر المؤقتة: $2',
-'passwordreset-emailsent'    => 'أرسل بريد إلكتروني تذكيري',
+'passwordreset-emailsent'      => 'أرسل بريد إلكتروني تذكيري',
 
 # Edit page toolbar
 'bold_sample'     => 'نص عريض',
@@ -2407,32 +2425,32 @@ $1',
 'enotif_lastvisited'           => 'انظر $1 لكل التغييرات منذ زيارتك الأخيرة.',
 'enotif_lastdiff'              => 'انظر $1 لرؤية هذا التغيير.',
 'enotif_anon_editor'           => 'مستخدم مجهول $1',
-'enotif_body'                  => 'عزيزي $WATCHINGUSERNAME،
+'enotif_body'                  => 'عزيزي $ WATCHINGUSERNAMEE
+صفحة  $PAGETITLE قد  $ CHANGEDORCREATEDفي $PAGEEDITDATE ب$PAGEEDITOR, انظر$PAGETITLE_URL للمراجعة الحالية
+موجز للمحرر: $PAGESUMMARY $PAGEMINOREDIT
 
-$CHANGEDORCREATED صفحة $PAGETITLE في {{SITENAME}} من قبل $PAGEEDITOR، لرؤية النسخة الحالية من الصفحة راجع: $PAGETITLE_URL.
 
-$NEWPAGE
+الاتصال بالمحرر:
+ البريد: $PAGEEDITOR_EMAIL
+ ويكي: $PAGEEDITOR_WIKI
 
-ملخص تعديل المحرر: $PAGESUMMARY $PAGEMINOREDIT
+لن يكون هناك لا إخطارات أخرى في حالة حدوث مزيد من التغييرات إلا إذا قمت بزيارة هذه الصفحة.
+يمكن أيضا تعيين إشارات الإعلام لجميع صفحات شاهد على هيئة الرصد الخاصة بك.
 
-اتصل بالمحرر:
-عبر بريد إلكتروني: $PAGEEDITOR_EMAIL
-عبر الويكي: $PAGEEDITOR_WIKI
-
-لن يكون هنالك أي إخطارات أخرى عن أية تغييرات تتم في المستقبل إلا إذا زرت هذه الصفحة.
-يمكنك أيضا أن تعيد تصفير عداد الإخطارات لجميع الصفحات التي تراقبها في قائمة مراقبتك.
-
-             نظام إخطار {{SITENAME}} الودود
+			 {{SITENAME}} إعلام النظام الخاص بك ودية
 
 --
-لتغيير إعدادات قائمة مراقبتك، اذهب إلى:
-{{fullurl:{{#special:Watchlist}}/edit}}
+لتغيير إعدادات إعلام البريد الإلكتروني الخاص بك، قم بزيارة
+{{fullurl: {{# الخاص: تفضيلات}}}}
 
-لحذف الصفحة من قائمة مراقبتك، زر
-$UNWATCHURL
+لتغيير إعدادات الرصد الخاصة بك، قم بزيارة
+{{fullurl: {{# الخاص: الرصد}}/تحرير}}
 
-للاقتراحات وللحصول على مساعدة إضافية:
-{{fullurl:{{MediaWiki:Helppage}}}}',
+لحذف الصفحة من هيئة الرصد الخاصة بك، قم بزيارة
+$ أونواتشورل
+
+التغذية المرتدة، والحصول على مساعدة إضافية:
+{{fullurl: {{MediaWiki:Helppage}}}}',
 
 # Delete
 'deletepage'             => 'حذف الصفحة',
@@ -2665,6 +2683,7 @@ $1',
 'whatlinkshere-filters'    => 'مرشحات',
 
 # Block/unblock
+'autoblockid'                     => 'منع تلقائي #$1',
 'block'                           => 'امنع المستخدم',
 'unblock'                         => 'إلغاء منع مستخدم',
 'blockip'                         => 'منع مستخدم',
@@ -3080,30 +3099,39 @@ $1',
 'tooltip-summary'                 => 'أدخل ملخصا قصيرا',
 
 # Stylesheets
-'common.css'      => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على كل الواجهات */',
-'standard.css'    => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة ستاندرد */',
-'nostalgia.css'   => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة نوستالشيا */',
-'cologneblue.css' => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة كولون بلو */',
-'monobook.css'    => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة مونوبوك */',
-'myskin.css'      => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة ماي سكين */',
-'chick.css'       => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة تشيك */',
-'simple.css'      => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة سيمبل */',
-'modern.css'      => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة مودرن */',
-'vector.css'      => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة فكتور */',
-'print.css'       => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على ناتج الطباعة */',
-'handheld.css'    => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على الأجهزة المحمولة بالاعتماد على الواجهة المضبوطة في $wgHandheldStyle */',
+'common.css'              => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على كل الواجهات */',
+'standard.css'            => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة ستاندرد */',
+'nostalgia.css'           => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة نوستالشيا */',
+'cologneblue.css'         => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة كولون بلو */',
+'monobook.css'            => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة مونوبوك */',
+'myskin.css'              => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة ماي سكين */',
+'chick.css'               => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة تشيك */',
+'simple.css'              => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة سيمبل */',
+'modern.css'              => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة مودرن */',
+'vector.css'              => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على مستخدمي واجهة فكتور */',
+'print.css'               => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على ناتج الطباعة */',
+'handheld.css'            => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على الأجهزة المحمولة بالاعتماد على الواجهة المضبوطة في $wgHandheldStyle */',
+'noscript.css'            => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على المستخدمين الذين الجافاسكريبت لديهم معطلة */',
+'group-autoconfirmed.css' => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على المستخدمين المؤكدين تلقائيا فقط */',
+'group-bot.css'           => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على البوتات فقط */',
+'group-sysop.css'         => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على الإداريين فقط */',
+'group-bureaucrat.css'    => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على البيروقراطيين فقط */',
 
 # Scripts
-'common.js'      => '/* الجافاسكريبت الموضوع هنا سيتم تحميله لكل المستخدمين مع كل تحميل للصفحة. */',
-'standard.js'    => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة ستاندرد */',
-'nostalgia.js'   => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة نوستالشيا */',
-'cologneblue.js' => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة كولون بلو */',
-'monobook.js'    => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة مونوبوك */',
-'myskin.js'      => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة ماي سكين */',
-'chick.js'       => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة تشيك */',
-'simple.js'      => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة سيمبل */',
-'modern.js'      => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة مودرن */',
-'vector.js'      => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة فكتور */',
+'common.js'              => '/* الجافاسكريبت الموضوع هنا سيتم تحميله لكل المستخدمين مع كل تحميل للصفحة. */',
+'standard.js'            => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة ستاندرد */',
+'nostalgia.js'           => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة نوستالشيا */',
+'cologneblue.js'         => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة كولون بلو */',
+'monobook.js'            => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة مونوبوك */',
+'myskin.js'              => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة ماي سكين */',
+'chick.js'               => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة تشيك */',
+'simple.js'              => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة سيمبل */',
+'modern.js'              => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة مودرن */',
+'vector.js'              => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين الذين يستعملون واجهة فكتور */',
+'group-autoconfirmed.js' => '/* أي جافاسكريبت هنا سيتم تحميلها للمستخدمين المؤكدين تلقائيا فقط */',
+'group-bot.js'           => '/* أي جافاسكريبت هنا سيتم تحميلها للبوتات فقط */',
+'group-sysop.js'         => '/* أي جافاسكريبت هنا سيتم تحميلها للإداريين فقط */',
+'group-bureaucrat.js'    => '/* أي جافاسكريبت هنا سيتم تحميلها للبيروقراطيين فقط */',
 
 # Metadata
 'nodublincore'      => 'Dublin Core RDF metadata معطلة لهذا الخادوم.',
@@ -3234,7 +3262,7 @@ $1',
 إذا كان الملف قد عدل عن حالته الأصلية، فبعض التفاصيل قد لا تعبر عن الملف المعدل.',
 'metadata-expand'   => 'عرض التفاصيل الممتدة',
 'metadata-collapse' => 'إخفاء التفاصيل الممتدة',
-'metadata-fields'   => 'حقول معطيات الميتا EXIF الموجودة في هذه الرسالة سوف تعرض في صفحة الصورة عندما يكون جدول معطيات الميتا مضغوطا.
+'metadata-fields'   => 'حقول معطيات الميتا الموجودة في هذه الرسالة سوف تعرض في صفحة الصورة عندما يكون جدول معطيات الميتا مضغوطا.
 الحقول الأخرى ستكون مخفية افتراضيا.
 * make
 * model
@@ -3300,9 +3328,9 @@ $1',
 'exif-exposureprogram'             => 'برنامج التعرض',
 'exif-spectralsensitivity'         => 'الحساسية الطيفية',
 'exif-isospeedratings'             => 'تقييم سرعة أيزو',
-'exif-shutterspeedvalue'           => 'سرعة الغالق',
-'exif-aperturevalue'               => 'فتحة الغالق',
-'exif-brightnessvalue'             => 'السطوع',
+'exif-shutterspeedvalue'           => 'سرعة الغالق APEX',
+'exif-aperturevalue'               => 'فتحة الغالق APEX',
+'exif-brightnessvalue'             => 'سطوع APEX',
 'exif-exposurebiasvalue'           => 'تعويض التعرض',
 'exif-maxaperturevalue'            => 'أقصى غالق أرضي',
 'exif-subjectdistance'             => 'مسافة الجسم',
@@ -3367,25 +3395,53 @@ $1',
 'exif-gpsdifferential'             => 'تصحيح GPS التفاضلي',
 'exif-jpegfilecomment'             => 'تعليق ملف JPEG',
 'exif-keywords'                    => 'الكلمات المفتاحية',
+'exif-worldregioncreated'          => ' المنطقة التي التقطت الصورة فيها',
 'exif-countrycreated'              => 'الدولة التي التقطت الصورة فيها',
+'exif-countrycodecreated'          => 'رمز البلد التي أخذت الصورة فيه',
+'exif-provinceorstatecreated'      => 'المقاطعة أو الدولة اين تم التقاط هذه الصورة',
+'exif-citycreated'                 => ' المدينة التي التقطت الصورة فيها',
+'exif-sublocationcreated'          => 'موقع من المدينة التي تم التقاط هذه الصورة فيها',
+'exif-worldregiondest'             => 'مناطق العالم المعروضة',
 'exif-countrydest'                 => 'الدولة المصورة',
 'exif-countrycodedest'             => 'رمز الدولة المصورة',
 'exif-provinceorstatedest'         => 'المقاطعة أو الولاية المصورة',
 'exif-citydest'                    => 'المدينة المصورة',
+'exif-sublocationdest'             => 'موقع من المدينة المعروضة',
 'exif-objectname'                  => 'عنوان قصير',
+'exif-specialinstructions'         => 'تعليمات خاصة',
 'exif-headline'                    => 'عنوان',
+'exif-credit'                      => 'الرصيد/المزود',
 'exif-source'                      => 'المصدر',
+'exif-editstatus'                  => 'الحالة التحريرية للصورة',
+'exif-urgency'                     => 'إلحاح',
+'exif-fixtureidentifier'           => 'اسم العنصر',
+'exif-locationdest'                => 'اسم الموقع مصورا',
+'exif-locationdestcode'            => 'رمز الموقع مصورا',
+'exif-objectcycle'                 => 'الوقت من اليوم المتعلق بوسائل الإعلام',
 'exif-contact'                     => 'معلومات الاتصال',
 'exif-writer'                      => 'الكاتب',
 'exif-languagecode'                => 'اللغة',
+'exif-iimversion'                  => 'نسخة IIM',
 'exif-iimcategory'                 => 'التصنيف',
+'exif-iimsupplementalcategory'     => 'تصنيفات تكميلية',
+'exif-datetimeexpires'             => 'لا تستخدم بعد',
+'exif-datetimereleased'            => 'صدر في يوم',
+'exif-originaltransmissionref'     => 'رمز موقع الإرسال الأصلي',
+'exif-identifier'                  => 'معرف',
 'exif-lens'                        => 'العدسة المستخدمة',
 'exif-serialnumber'                => 'الرقم التسلسلي للكاميرا',
 'exif-cameraownername'             => 'مالك الكاميرا',
+'exif-label'                       => 'علامة',
+'exif-datetimemetadata'            => 'آخر تعديل للبيانات التعريفية',
+'exif-nickname'                    => 'الاسم غير الرسمي للصورة',
 'exif-rating'                      => 'التقييم (من 5)',
+'exif-rightscertificate'           => 'شهادة إدارة الحقوق',
 'exif-copyrighted'                 => 'حالة حقوق النشر',
 'exif-copyrightowner'              => 'مالك حقوق النشر',
 'exif-usageterms'                  => 'شروط الاستخدام',
+'exif-webstatement'                => 'بيان حقوق التأليف والنشر على شبكة الإنترنت',
+'exif-originaldocumentid'          => 'المعرف الفريد للمستند الأصلي',
+'exif-licenseurl'                  => 'عنوان الموقع لرخصة حقوق الطبع والنشر',
 'exif-morepermissionsurl'          => 'معلومات الرخصة البديلة',
 'exif-attributionurl'              => 'عند إعادة استخدام الملف، رجاءً ضع وصلة إلى',
 'exif-preferredattributionname'    => 'عند إعادة استخدام الملف، رجاءً انسبه إلى',
@@ -3393,7 +3449,12 @@ $1',
 'exif-disclaimer'                  => 'إخلاء مسؤولية',
 'exif-contentwarning'              => 'تحذير محتوى',
 'exif-giffilecomment'              => 'تعليق ملف GIF',
+'exif-intellectualgenre'           => 'نوع العنصر',
 'exif-subjectnewscode'             => 'رمز الموضوع',
+'exif-scenecode'                   => 'رمز مشهد IPTC',
+'exif-event'                       => 'اسم الحدث مصورا',
+'exif-organisationinimage'         => 'المنظمة مصورة',
+'exif-personinimage'               => 'الشخص مصورا',
 'exif-originalimageheight'         => 'ارتفاع الصورة قبل أن تقتطع',
 'exif-originalimagewidth'          => 'عرض الصورة قبل أن تقتطع',
 
@@ -3428,7 +3489,7 @@ $1',
 'exif-xyresolution-c' => '$1 دي بي سي',
 
 'exif-colorspace-1'     => 'إس آر جي بي',
-'exif-colorspace-65535' => 'إف إف إف إف.إتش',
+'exif-colorspace-65535' => 'غير معاير',
 
 'exif-componentsconfiguration-0' => 'غير موجود',
 'exif-componentsconfiguration-1' => 'واي',
@@ -3503,7 +3564,7 @@ $1',
 'exif-sensingmethod-7' => 'مستشعر خطي ثلاثي',
 'exif-sensingmethod-8' => 'مستشعر لون خطي متتابع',
 
-'exif-filesource-3' => 'دي إس سي',
+'exif-filesource-3' => 'كاميرا رقمية واقفة',
 
 'exif-scenetype-1' => 'صورة ملتقطة بشكل مباشر',
 
@@ -3587,10 +3648,19 @@ $1',
 'exif-gpsdirection-t' => 'الاتجاه الحقيقي',
 'exif-gpsdirection-m' => 'الاتجاه المغناطيسي',
 
+'exif-ycbcrpositioning-1' => 'توسيط',
+'exif-ycbcrpositioning-2' => 'مذكورة في أكثر من موقع',
+
 'exif-dc-contributor' => 'المساهمون',
+'exif-dc-coverage'    => 'النطاق المكاني أو الزماني لوسائل الإعلام',
+'exif-dc-date'        => 'التاريخ (التواريخ)',
 'exif-dc-publisher'   => 'الناشر',
 'exif-dc-relation'    => 'وسائط متعلقة',
 'exif-dc-rights'      => 'الحقوق',
+'exif-dc-source'      => 'مصدر الوسائط',
+'exif-dc-type'        => 'نوع  الوسيط',
+
+'exif-rating-rejected' => 'مرفوض',
 
 'exif-isospeedratings-overflow' => 'أكبر من 65535',
 
@@ -3601,7 +3671,9 @@ $1',
 'exif-iimcategory-edu' => 'تعليم',
 'exif-iimcategory-evn' => 'بيئة',
 'exif-iimcategory-hth' => 'صحة',
+'exif-iimcategory-hum' => '# اهتمام البشرية',
 'exif-iimcategory-lab' => 'عمل',
+'exif-iimcategory-lif' => 'أسلوب الحياة وأوقات الفراغ',
 'exif-iimcategory-pol' => 'سياسة',
 'exif-iimcategory-rel' => 'دين ومعتقدات',
 'exif-iimcategory-sci' => 'علم وتقنية',
@@ -3609,6 +3681,11 @@ $1',
 'exif-iimcategory-spo' => 'رياضة',
 'exif-iimcategory-war' => 'حروب وصراعات واضطرابات',
 'exif-iimcategory-wea' => 'الطقس',
+
+'exif-urgency-normal' => 'عادي ($1)',
+'exif-urgency-low'    => 'منخفض ( $1 )',
+'exif-urgency-high'   => 'عالي ( $1 )',
+'exif-urgency-other'  => 'الأولوية المعرفة من قبل المستخدم ($1)',
 
 # External editor support
 'edit-externally'      => 'عدل هذا الملف باستخدام تطبيق خارجي',

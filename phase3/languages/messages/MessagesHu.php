@@ -1230,7 +1230,7 @@ Győződj meg róla, hogy a laptörténet folytonossága megmarad.',
 'compareselectedversions'  => 'Kiválasztott változatok összehasonlítása',
 'showhideselectedversions' => 'Kiválasztott változatok láthatóságának beállítása',
 'editundo'                 => 'visszavonás',
-'diff-multi'               => '({{PLURAL:$1|Egy közbeeső változat|$1 közbeeső változat}} nincs mutatva, amit $2 szerkesztő módosított)',
+'diff-multi'               => '({{PLURAL:$2|egy|$2}} szerkesztő {{PLURAL:$1|egy|$1}} közbeeső változata nincs mutatva)',
 'diff-multi-manyusers'     => '({{PLURAL:$1|Egy közbeeső változat|$1 közbeeső változat}} nincs mutatva, amit $2 szerkesztő módosított)',
 
 # Search results
@@ -1769,7 +1769,10 @@ Nem lehet megfelelően ellenőrizni a biztonságosságát.',
 Nem lehet megfelelően ellenőrizni a biztonságosságát.',
 
 # Special:UploadStash
+'uploadstash'          => 'Feltöltéstároló',
 'uploadstash-summary'  => 'Ezen a lapon lehet hozzáférni azokhoz a fájlokhoz, melyek fel lettek töltve (vagy épp feltöltés alatt vannak), de még nem lettek közzétéve a wikin. Az ilyen fájlok csak a feltöltőik számára láthatóak.',
+'uploadstash-clear'    => 'Tárolt fájlok törlése',
+'uploadstash-nofiles'  => 'Nincsenek tárolt fájljaid.',
 'uploadstash-badtoken' => 'A művelet végrehajtása sikertelen volt. Lehetséges, hogy lejártak a szerkesztést hitelesítő adataid. Próbáld újra!',
 'uploadstash-errclear' => 'A fájlok törlése nem sikerült.',
 'uploadstash-refresh'  => 'Fájlok listájának frissítése',
@@ -3153,6 +3156,7 @@ míg a többi elem a táblázat összecsukása után alapértelmezett esetben re
 'exif-languagecode'                => 'Nyelv',
 'exif-iimversion'                  => 'IIM-verzió',
 'exif-iimcategory'                 => 'Kategória',
+'exif-iimsupplementalcategory'     => 'Kiegészítő kategóriák',
 'exif-datetimeexpires'             => 'Nem használandó ezután',
 'exif-datetimereleased'            => 'Megjelenés ideje',
 'exif-identifier'                  => 'Azonosító',

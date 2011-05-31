@@ -645,6 +645,8 @@ $1',
 'page-rss-feed'           => '「$1」のRSSフィード',
 'page-atom-feed'          => '「$1」のAtomフィード',
 'red-link-title'          => '$1（存在しないページ）',
+'sort-descending'         => '降順に整列',
+'sort-ascending'          => '昇順に整列',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'ページ',
@@ -875,6 +877,7 @@ $2',
 
 # Special:PasswordReset
 'passwordreset'              => 'パスワードの再設定',
+'passwordreset-text'         => 'このフォームに回答すると、ご自身のアカウントの詳細が電子メールで通知されます。',
 'passwordreset-legend'       => 'パスワードのリセット',
 'passwordreset-disabled'     => 'パスワードのリセットは、このウィキでは無効になっています。',
 'passwordreset-pretext'      => '{{PLURAL:$1||以下のデータのうちのひとつを入力してください。}}',
@@ -2314,8 +2317,8 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 'changed'                      => '変更',
 'created'                      => '作成',
 'enotif_subject'               => '{{SITENAME}}のページ「$PAGETITLE」が$PAGEEDITORによって$CHANGEDORCREATEDされました',
-'enotif_lastvisited'           => '最後に閲覧した後に行なわれた全てのの変更は、$1で見ることができます。',
-'enotif_lastdiff'              => 'この変更内容を表示するには$1をご覧ください。',
+'enotif_lastvisited'           => '最後に閲覧した後に行なわれた全ての変更は、 $1 で見ることができます。',
+'enotif_lastdiff'              => 'この変更内容を表示するには $1 をご覧ください。',
 'enotif_anon_editor'           => '匿名利用者：$1',
 'enotif_body'                  => '$WATCHINGUSERNAMEさん
 
@@ -2335,9 +2338,14 @@ $NEWPAGE
                          {{SITENAME}}通知システム
 
 --
-ウォッチリストの設定は、{{fullurl:{{#special:Watchlist}}/edit}}で変更できます。
+メール通知の設定は、次のページから変更してください。
+{{fullurl:{{#special:Preferences}}}}
 
-このページをウォッチリストから除去するには$UNWATCHURLをご覧ください。
+ウォッチリストの設定は、次のページから変更して下さい。
+{{fullurl:{{#special:Watchlist}}/edit}}
+
+このページは、次のページでウォッチリストから除去することが出来ます。
+$UNWATCHURL
 
 ご意見、お問い合わせ：
 {{fullurl:{{MediaWiki:Helppage}}}}',
@@ -3295,6 +3303,10 @@ Variants for Chinese language
 'exif-objectname'                  => '短いタイトル',
 'exif-specialinstructions'         => '取扱いに関する特記事項',
 'exif-headline'                    => '見出し',
+'exif-objectcycle'                 => 'このメディアファイルによって意図されている時間帯',
+'exif-contact'                     => '連絡先情報',
+'exif-writer'                      => '記入者',
+'exif-languagecode'                => '言語',
 
 # EXIF attributes
 'exif-compression-1' => '非圧縮',
@@ -3444,6 +3456,10 @@ Variants for Chinese language
 'exif-gpsdestdistance-k' => 'キロメートル',
 'exif-gpsdestdistance-m' => 'マイル',
 'exif-gpsdestdistance-n' => '海里',
+
+'exif-objectcycle-a' => '午前中のみ',
+'exif-objectcycle-p' => '午後のみ',
+'exif-objectcycle-b' => '午後と午前の両方',
 
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => '真方位',

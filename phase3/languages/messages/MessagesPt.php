@@ -330,7 +330,7 @@ $messages = array(
 'tog-externaldiff'            => 'Por omissão, utilizar diferenças externas (só para utilizadores avançados, exige configurações adicionais no seu computador. [http://www.mediawiki.org/wiki/Manual:External_editors Mais informações.])',
 'tog-showjumplinks'           => 'Possibilitar links de acessibilidade "{{int:jumpto}}"',
 'tog-uselivepreview'          => 'Usar a antevisão ao vivo (requer JavaScript; é experimental)',
-'tog-forceeditsummary'        => 'Avisar-me ao introduzir um resumo vazio',
+'tog-forceeditsummary'        => 'Avisar-me se deixar o resumo da edição vazio',
 'tog-watchlisthideown'        => 'Esconder as minhas edições ao listar mudanças às páginas vigiadas',
 'tog-watchlisthidebots'       => 'Esconder edições de robôs ao listar mudanças às páginas vigiadas',
 'tog-watchlisthideminor'      => 'Esconder edições menores ao listar mudanças às páginas vigiadas',
@@ -1060,7 +1060,7 @@ Devia ter menos de $2 {{PLURAL:$2|chamada|chamadas}}. Neste momento tem $1 {{PLU
 Estes argumentos foram omitidos.',
 'post-expand-template-argument-category'  => 'Páginas com omissão de argumentos para predefinições',
 'parser-template-loop-warning'            => 'Ciclo de predefinições detectado: [[$1]]',
-'parser-template-recursion-depth-warning' => 'Atingido o limite de profundidade de recursividade de predefinição ($1)',
+'parser-template-recursion-depth-warning' => 'Foi excedido o limite da profundidade de recursividade nas predefinições ($1)',
 'language-converter-depth-warning'        => 'O limite de profundidade do conversor de línguas excedeu a ($1)',
 
 # "Undo" feature
@@ -2150,7 +2150,7 @@ Veja também as [[Special:WantedCategories|categorias desejadas]].',
 'listusersfrom'      => 'Mostrar utilizadores começando por:',
 'listusers-submit'   => 'Mostrar',
 'listusers-noresult' => 'Não foram encontrados utilizadores.',
-'listusers-blocked'  => '({{GENDER:$1|bloqueado|bloqueada}})',
+'listusers-blocked'  => '(bloqueado)',
 
 # Special:ActiveUsers
 'activeusers'            => 'Utilizadores activos',
@@ -2234,7 +2234,7 @@ O endereço de correio que introduziu nas suas [[Special:Preferences|preferênci
 'addedwatch'           => 'Adicionado à lista',
 'addedwatchtext'       => "A página \"[[:\$1]]\" foi adicionada à sua lista de [[Special:Watchlist|páginas vigiadas]], onde serão indicadas quaisquer
 modificações futuras desta página e da respectiva página de discussão.
-O nome desta página passará a aparecer a '''negrito''' na lista de [[Special:RecentChanges|mudanças recentes]] para que a encontre facilmente.",
+O nome desta página passará a aparecer a '''negrito''' na lista de [[Special:RecentChanges|mudanças recentes]], para que a encontre facilmente.",
 'removedwatch'         => 'Removida da lista de páginas vigiadas',
 'removedwatchtext'     => 'A página "[[:$1]]" foi removida da sua lista de [[Special:Watchlist|páginas vigiadas]].',
 'watch'                => 'Vigiar',
@@ -2272,7 +2272,7 @@ O nome desta página passará a aparecer a '''negrito''' na lista de [[Special:R
 'enotif_body'                  => 'Caro(a) $WATCHINGUSERNAME,
 
 
-A página $PAGETITLE na {{SITENAME}} foi $CHANGEDORCREATED a $PAGEEDITDATE por $PAGEEDITOR; consulte $PAGETITLE_URL para a versão actual.
+A página $PAGETITLE da {{SITENAME}} foi $CHANGEDORCREATED a $PAGEEDITDATE por $PAGEEDITOR; consulte $PAGETITLE_URL para ver a versão actual.
 
 $NEWPAGE
 
@@ -2282,19 +2282,22 @@ Contacte o editor:
 correio electrónico: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Até que visite esta página, não haverá lugar a mais notificações no caso de alterações futuras.
-Pode também reactivar as notificações para todas as suas páginas vigiadas na sua lista de páginas vigiadas.
+Até que visite esta página, não receberá mais notificações das alterações futuras.
+Pode também reactivar as notificações para todas páginas na sua lista de páginas vigiadas.
 
              O seu sistema de notificação amigável da {{SITENAME}}
 
 --
-Para alterar as suas preferências da lista de páginas vigiadas, visite
+Para alterar as suas preferências das notificações por correio electrónico, visite
+{{fullurl:{{#special:Preferences}}}}
+
+Para alterar as suas preferências das páginas vigiadas, visite
 {{fullurl:{{#special:Watchlist}}/edit}}
 
-Para retirar a página da sua lista de páginas vigiadas, visite
+Para retirar a página da lista de páginas vigiadas, visite
 $UNWATCHURL
 
-Contacto e assistência:
+Para comentários e pedidos de ajuda:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
@@ -2954,13 +2957,13 @@ Permite colocar uma justificação no resumo da edição.',
 'vector.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Vector */',
 
 # Metadata
-'nodublincore'      => 'Os metadados RDF para Dublin Core foram impossibilitados neste servidor.',
-'nocreativecommons' => 'Os metadados RDF para Creative Commons foram impossibilitados neste servidor.',
+'nodublincore'      => 'O uso de metadados RDF para Dublin Core foi impossibilitado neste servidor.',
+'nocreativecommons' => 'O uso de metadados RDF da Creative Commons foi impossibilitado neste servidor.',
 'notacceptable'     => 'O servidor não pode fornecer os dados num formato que o seu cliente possa ler.',
 
 # Attribution
 'anonymous'        => '{{PLURAL:$1|Utilizador anónimo|Utilizadores anónimos}} da {{SITENAME}}',
-'siteuser'         => '{{GENDER:$2|um utilizador|uma utilizadora|um utilizador}} da {{SITENAME}} ($1)',
+'siteuser'         => '$1 da {{SITENAME}}',
 'anonuser'         => 'utilizador anónimo $1 da {{SITENAME}}',
 'lastmodifiedatby' => 'Esta página foi modificada pela última vez às $2 de $1 por $3.',
 'othercontribs'    => 'Baseado no trabalho de $1.',
@@ -3250,7 +3253,7 @@ Caso o ficheiro tenha sido modificado a partir do seu estado original, alguns de
 'exif-rightscertificate'           => 'Certificado de gestão dos direitos',
 'exif-copyrighted'                 => 'Estado dos direitos de autor:',
 'exif-copyrightowner'              => 'Titular dos direitos de autor',
-'exif-usageterms'                  => 'Termos de uso',
+'exif-usageterms'                  => 'Condições de uso',
 'exif-webstatement'                => 'Declaração na internet dos direitos de autor',
 'exif-originaldocumentid'          => 'Identificação exclusiva do documento original',
 'exif-licenseurl'                  => 'URL da licença',
@@ -3259,7 +3262,7 @@ Caso o ficheiro tenha sido modificado a partir do seu estado original, alguns de
 'exif-preferredattributionname'    => 'Ao reutilizar esta obra, faça a atribuição a',
 'exif-pngfilecomment'              => 'Comentário de ficheiro PNG',
 'exif-disclaimer'                  => 'Exoneração de responsabilidade',
-'exif-contentwarning'              => 'Aviso cobre o conteúdo',
+'exif-contentwarning'              => 'Aviso sobre o conteúdo',
 'exif-giffilecomment'              => 'Comentário de ficheiro GIF',
 'exif-intellectualgenre'           => 'Género de conteúdo',
 'exif-subjectnewscode'             => 'Código do tema',
@@ -3526,7 +3529,7 @@ a confirmação do endereço de correio electrónico:
 
 $5
 
-Este código de confirmação irá expirar às $7 de $6.',
+Este código de confirmação expira a $4.',
 'confirmemail_body_changed' => 'Alguém, provavelmente você a partir do endereço IP $1,
 alterou o endereço de correio electrónico da conta "$2" para este na {{SITENAME}}.
 
@@ -3541,7 +3544,7 @@ para cancelar a confirmação do endereço de correio electrónico:
 
 $5
 
-Este código de confirmação irá expirar às $7 de $6.',
+Este código de confirmação expira a $4.',
 'confirmemail_body_set'     => 'Alguém, provavelmente você a partir do endereço IP $1,
 definiu o seu endereço de correio electrónico como correio da conta "$2" na {{SITENAME}}.
 
@@ -3556,7 +3559,7 @@ para cancelar a confirmação do endereço de correio electrónico:
 
 $5
 
-Este código de confirmação irá expirar às $7 de $6.',
+Este código de confirmação expira a $4.',
 'confirmemail_invalidated'  => 'Confirmação de endereço de correio electrónico cancelada',
 'invalidateemail'           => 'Cancelar confirmação de correio electrónico',
 

@@ -101,7 +101,7 @@ $messages = array(
 'tog-nolangconversion'        => 'Desactivar la conversión de variantes',
 'tog-ccmeonemails'            => 'Mandame copies de los correos que mando a otros usuarios',
 'tog-diffonly'                => 'Nun amosar el conteníu de la páxina embaxo de les diferencies',
-'tog-showhiddencats'          => 'Amosar categoríes ocultes',
+'tog-showhiddencats'          => 'Amosar categoríes anubríes',
 'tog-norollbackdiff'          => 'Desanicier les diferencies depués de restaurar',
 
 'underline-always'  => 'Siempre',
@@ -340,7 +340,7 @@ $1",
 'editsectionhint'         => 'Editar seición: $1',
 'toc'                     => 'Tabla de conteníos',
 'showtoc'                 => 'amosar',
-'hidetoc'                 => 'esconder',
+'hidetoc'                 => 'anubrir',
 'collapsible-collapse'    => 'Esconder',
 'collapsible-expand'      => 'Espander',
 'thisisdeleted'           => '¿Ver o restaurar $1?',
@@ -354,6 +354,8 @@ $1",
 'page-rss-feed'           => 'Canal RSS "$1"',
 'page-atom-feed'          => 'Canal Atom "$1"',
 'red-link-title'          => '$1 (la páxina nun esiste)',
+'sort-descending'         => 'Orde descendiente',
+'sort-ascending'          => 'Orde ascendiente',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Páxina',
@@ -464,7 +466,7 @@ Ten en cuenta que dalgunes páxines puen siguir apaeciendo como si tovía tuvier
 Se creó la to cuenta.
 Nun t'escaezas d'escoyer les tos [[Special:Preferences|preferencies de {{SITENAME}}]].",
 'yourname'                   => "Nome d'usuariu:",
-'yourpassword'               => 'Clave:',
+'yourpassword'               => 'Contraseña:',
 'yourpasswordagain'          => 'Reescribi la to clave:',
 'remembermypassword'         => 'Recordar la mio identificación nesti ordenador (por un máximu de $1 {{PLURAL:$1|día|díes}})',
 'securelogin-stick-https'    => "Siguir coneutáu al HTTPS dempués d'identificate",
@@ -475,12 +477,12 @@ Nun t'escaezas d'escoyer les tos [[Special:Preferences|preferencies de {{SITENAM
 'loginprompt'                => "Has tener les ''cookies'' activaes pa entrar en {{SITENAME}}.",
 'userlogin'                  => 'Entrar / Crear cuenta',
 'userloginnocreate'          => 'Entrar',
-'logout'                     => 'Salir',
-'userlogout'                 => 'Salir',
+'logout'                     => 'Colar',
+'userlogout'                 => 'Colar',
 'notloggedin'                => 'Non identificáu',
 'nologin'                    => "¿Nun tienes una cuenta? '''$1'''.",
 'nologinlink'                => '¡Fai una!',
-'createaccount'              => 'Crear una nueva cuenta',
+'createaccount'              => 'Crear una cuenta',
 'gotaccount'                 => "¿Ya tienes una cuenta? '''$1'''.",
 'gotaccountlink'             => '¡Identifícate!',
 'userlogin-resetlink'        => '¿Escaecisti la información de conexón?',
@@ -575,17 +577,36 @@ Seique yá camudasti la clave temporal o que solicitasti otra nueva.",
 'resetpass-temp-password'   => 'Clave temporal:',
 
 # Special:PasswordReset
-'passwordreset'              => 'Reaniciar contraseña',
-'passwordreset-text'         => 'Completa esti formulariu pa recibir un corréu que te recuerde los detalles de la to cuenta.',
-'passwordreset-legend'       => 'Reaniciar contraseña',
-'passwordreset-disabled'     => 'Los reanicios de contraseña tan desactivaos nesta wiki.',
-'passwordreset-pretext'      => "{{PLURAL:$1||Escribi una de les partes de los datos d'abaxo}}",
-'passwordreset-username'     => "Nome d'usuariu:",
-'passwordreset-email'        => 'Direición de corréu:',
-'passwordreset-emailtitle'   => 'Detalles de la cuenta en {{SITENAME}}',
-'passwordreset-emailelement' => "Nome d'usuariu: $1
+'passwordreset'                => 'Reaniciar contraseña',
+'passwordreset-text'           => 'Completa esti formulariu pa recibir un corréu que te recuerde los detalles de la to cuenta.',
+'passwordreset-legend'         => 'Reaniciar contraseña',
+'passwordreset-disabled'       => 'Los reanicios de contraseña tan desactivaos nesta wiki.',
+'passwordreset-pretext'        => "{{PLURAL:$1||Escribi una de les partes de los datos d'abaxo}}",
+'passwordreset-username'       => "Nome d'usuariu:",
+'passwordreset-email'          => 'Direición de corréu:',
+'passwordreset-emailtitle'     => 'Detalles de la cuenta en {{SITENAME}}',
+'passwordreset-emailtext-ip'   => "Dalguién (seique tu, dende la direición IP $1) pidió un recordatoriu cola
+información de la to cuenta de {{SITENAME}} ($4).
+{{PLURAL:$3|La siguiente cuenta d'usuariu ta asociada|Les siguientes cuentes d'usuariu tan asociaes}} con esta direición de corréu:
+
+$2
+
+{{PLURAL:$3|Esta contraseña temporal caducará|Estes contraseñes temporales caducarán}} {{PLURAL:$5|nun día|en $5 díes}}.
+Tendríes d'entrar al sistema y escoyer una contraseña nueva agora. Si esta
+solicitú ye d'otru o recordasti la contraseña orixinal y nun quies camudala,
+inora esti mensaxe y sigui emplegando la contraseña antigua.",
+'passwordreset-emailtext-user' => "L'usuariu $1 de {{SITENAME}} pidió un recordatoriu cola información de la to cuenta de {{SITENAME}} ($4).
+{{PLURAL:$3|La siguiente cuenta d'usuariu ta asociada|Les siguientes cuentes d'usuariu tan asociaes}} con esta direición de corréu:
+
+$2
+
+{{PLURAL:$3|Esta contraseña temporal caducará|Estes contraseñes temporales caducarán}} {{PLURAL:$5|nun día|en $5 díes}}.
+Tendríes d'entrar al sistema y escoyer una contraseña nueva agora. Si esta
+solicitú ye d'otru o recordasti la contraseña orixinal y nun quies camudala,
+inora esti mensaxe y sigui emplegando la contraseña antigua.",
+'passwordreset-emailelement'   => "Nome d'usuariu: $1
 Contraseña temporal: $2",
-'passwordreset-emailsent'    => "S'unvió un corréu de recordatoriu.",
+'passwordreset-emailsent'      => "S'unvió un corréu de recordatoriu.",
 
 # Edit page toolbar
 'bold_sample'     => 'Testu en negrina',
@@ -1054,7 +1075,7 @@ Asegúrate de qu'esti cambéu caltenga la continuidá del históricu de la páxi
 'powersearch-field'                => 'Buscar',
 'powersearch-togglelabel'          => 'Comprobar:',
 'powersearch-toggleall'            => 'Toos',
-'powersearch-togglenone'           => 'Dengunu',
+'powersearch-togglenone'           => 'Dengún',
 'search-external'                  => 'Busca esterna',
 'searchdisabled'                   => "La busca en {{SITENAME}} ta desactivada. Mentanto, pues buscar en Google. Has fixate en que'l conteníu de los sos índices de {{SITENAME}} pue tar desfasáu.",
 
@@ -1174,7 +1195,7 @@ Esta información sedrá pública.",
 'prefs-advancedwatchlist'       => 'Opciones avanzaes',
 'prefs-displayrc'               => 'Opciones de vista',
 'prefs-displaysearchoptions'    => 'Opciones de vista',
-'prefs-displaywatchlist'        => 'Display options',
+'prefs-displaywatchlist'        => 'Opciones de vista',
 'prefs-diffs'                   => 'Diferencies',
 
 # User preference: e-mail validation using jQuery
@@ -1353,7 +1374,7 @@ Esta información sedrá pública.",
 'rclinks'                           => 'Amosar los caberos $1 cambeos nos caberos $2 díes <br />$3',
 'diff'                              => 'dif',
 'hist'                              => 'hist',
-'hide'                              => 'Esconder',
+'hide'                              => 'Anubrir',
 'show'                              => 'Amosar',
 'minoreditletter'                   => 'm',
 'newpageletter'                     => 'N',
@@ -1427,7 +1448,7 @@ Mira la [[Special:NewFiles|galería d'archivos nuevos]] pa una güeyada más vis
 'filename-tooshort'           => 'El nome de ficheru ye demasiao curtiu.',
 'filetype-banned'             => 'Esta triba de ficheru ta torgada.',
 'verification-error'          => 'Esti ficheru nun pasó la comprobación de ficheros.',
-'hookaborted'                 => 'La conexón con una estensión albortó el cambéu que tentasti facer.',
+'hookaborted'                 => 'La conexón con una estensión encaboxó el cambéu que tentasti facer.',
 'illegal-filename'            => 'El nome de ficheru nun ta permitíu.',
 'overwrite'                   => 'Nun ta permitío sobroscribir un ficheru esistente.',
 'unknown-error'               => 'Hebo un error desconocíu.',
@@ -1536,6 +1557,19 @@ Si'l problema persiste, contauta con un [[Special:ListUsers/sysop|alministrador]
 # ZipDirectoryReader
 'zip-file-open-error' => "S'alcontró un fallu al abrir el ficheru pa les comprobaciones del ZIP.",
 'zip-wrong-format'    => 'El ficheru especificáu nun yera un ficheru ZIP.',
+'zip-bad'             => 'El ficheru ZIP ta corrompíu o ye imposible lleelu.
+Nun se pudo comprobar la seguridá de mou afayadizu.',
+'zip-unsupported'     => "El ficheru ye un archivu ZIP qu'usa carauterístiques ensin encontu en MediaWiki.
+Nun se pue comprobar la seguridá de mou afayadizu.",
+
+# Special:UploadStash
+'uploadstash'          => 'Ficheros na reserva',
+'uploadstash-summary'  => "Esta páxina ufre accesu a ficheros que tan xubíos (o en procesu de xubía), pero qu'entá nun s'espublizaron na wiki. Estos ficheros nun son visibles pa naide, sacante l'usuariu que los xubió.",
+'uploadstash-clear'    => 'Desaniciar los ficheros de la reserva',
+'uploadstash-nofiles'  => 'Nun tienes ficheros na reserva.',
+'uploadstash-badtoken' => 'Nun se pudo facer esa operación, seique porque caducó la identificación pa editar. Vuelvi a intentalo.',
+'uploadstash-errclear' => 'Nun se pudieron desaniciar los ficheros.',
+'uploadstash-refresh'  => 'Anovar la llista de ficheros',
 
 # img_auth script messages
 'img-auth-accessdenied'     => 'Accesu denegáu',
@@ -2488,7 +2522,7 @@ Por último, tamién pues usar un enllaz: p.e. [[{{#Special:Export}}/{{MediaWiki
 '''Nota:''' Desactivóse la esportación del historial completu de páxines al traviés d'esti formulariu por motivos de rendimientu.",
 'export-submit'     => 'Esportar',
 'export-addcattext' => 'Añader páxines dende la categoría:',
-'export-addcat'     => 'Añader',
+'export-addcat'     => 'Amestar',
 'export-addnstext'  => 'Amestar páxines del espaciu de nomes:',
 'export-addns'      => 'Amestar',
 'export-download'   => 'Guardar como archivu',
@@ -2581,7 +2615,7 @@ Guárdalu nel ordenador y xúbilu equí.",
 'tooltip-pt-mycontris'            => 'Llista de les tos contribuciones',
 'tooltip-pt-login'                => 'Encamentámoste a identificate, anque nun ye obligatorio',
 'tooltip-pt-anonlogin'            => "Encamiéntasete que t'identifiques, anque nun ye obligatorio.",
-'tooltip-pt-logout'               => 'Salir',
+'tooltip-pt-logout'               => 'Colar',
 'tooltip-ca-talk'                 => 'Alderique tocante al conteníu de la páxina',
 'tooltip-ca-edit'                 => "Pues editar esta páxina. Por favor usa'l botón de previsualización enantes de guardar los cambeos.",
 'tooltip-ca-addsection'           => 'Emprima una seición nueva',
@@ -2924,6 +2958,7 @@ Los demás tarán anubríos de mou predetermináu.
 'exif-source'                      => 'Fonte',
 'exif-editstatus'                  => 'Estáu editorial de la imaxe',
 'exif-urgency'                     => 'Urxencia',
+'exif-fixtureidentifier'           => 'Nome del elementu',
 'exif-locationdest'                => 'Llugar representáu',
 'exif-locationdestcode'            => 'Códigu del llugar representáu',
 'exif-objectcycle'                 => 'Hora del día a la que se destina esti mediu',
@@ -2948,9 +2983,30 @@ Los demás tarán anubríos de mou predetermináu.
 'exif-copyrighted'                 => 'Estáu del copyright',
 'exif-copyrightowner'              => 'Titular del copyright',
 'exif-usageterms'                  => "Términos d'usu",
+'exif-webstatement'                => "Declaración en llinia de drechos d'autor",
+'exif-originaldocumentid'          => 'ID única del documentu orixinal',
+'exif-licenseurl'                  => "URL de la llicencia de drechos d'autor",
+'exif-morepermissionsurl'          => 'Información de llicencia alternativa',
+'exif-attributionurl'              => 'Al re-usar esta obra, por favor enllazar a',
+'exif-preferredattributionname'    => 'Al re-usar esta obra, por favor atribuir a',
+'exif-pngfilecomment'              => 'Comentariu del ficheru PNG',
+'exif-disclaimer'                  => 'Avisu xeneral',
+'exif-contentwarning'              => "Avisu sobro'l conteníu",
+'exif-giffilecomment'              => 'Comentariu del ficheru GIF',
+'exif-intellectualgenre'           => "Triba d'elementu",
+'exif-subjectnewscode'             => 'Códigu del tema',
+'exif-scenecode'                   => "Códigu d'escena IPTC",
+'exif-event'                       => 'Acontecimientu representáu',
+'exif-organisationinimage'         => 'Organización representada',
+'exif-personinimage'               => 'Persona representada',
+'exif-originalimageheight'         => 'Altor de la imaxe enantes de cortase',
+'exif-originalimagewidth'          => 'Anchor de la imaxe enantes de cortase',
 
 # EXIF attributes
 'exif-compression-1' => 'Non comprimida',
+
+'exif-copyrighted-true'  => "Con drechos d'autor",
+'exif-copyrighted-false' => 'Dominiu públicu',
 
 'exif-unknowndate' => 'Fecha desconocida',
 
@@ -2965,6 +3021,8 @@ Los demás tarán anubríos de mou predetermináu.
 
 'exif-planarconfiguration-1' => 'formatu irregular',
 'exif-planarconfiguration-2' => 'formatu planu',
+
+'exif-colorspace-65535' => 'Ensin calibrar',
 
 'exif-componentsconfiguration-0' => 'nun esiste',
 
@@ -3029,6 +3087,8 @@ Los demás tarán anubríos de mou predetermináu.
 'exif-sensingmethod-7' => 'Sensor Trillinial',
 'exif-sensingmethod-8' => 'Sensor llinial secuencial de color',
 
+'exif-filesource-3' => 'Cámara fotográfica dixital',
+
 'exif-scenetype-1' => 'Una imaxe fotografiada direutamente',
 
 'exif-customrendered-0' => 'Procesu normal',
@@ -3077,6 +3137,10 @@ Los demás tarán anubríos de mou predetermináu.
 'exif-gpslongitude-e' => 'Lloxitú Este',
 'exif-gpslongitude-w' => 'Lloxitú Oeste',
 
+# Pseudotags used for GPSAltitudeRef
+'exif-gpsaltitude-above-sealevel' => "$1 {{PLURAL:$1|metru|metros}} sobro'l nivel del mar",
+'exif-gpsaltitude-below-sealevel' => "$1 {{PLURAL:$1|metru|metros}} baxo'l nivel del mar",
+
 'exif-gpsstatus-a' => 'Midición en progresu',
 'exif-gpsstatus-v' => 'Interoperabilidá de la midición',
 
@@ -3088,9 +3152,63 @@ Los demás tarán anubríos de mou predetermináu.
 'exif-gpsspeed-m' => 'Milles per hora',
 'exif-gpsspeed-n' => 'Nueyos',
 
+# Pseudotags used for GPSDestDistanceRef
+'exif-gpsdestdistance-k' => 'Quilómetros',
+'exif-gpsdestdistance-m' => 'Milles',
+'exif-gpsdestdistance-n' => 'Milles náutiques',
+
+'exif-gpsdop-excellent' => 'Escelente ($1)',
+'exif-gpsdop-good'      => 'Bona ($1)',
+'exif-gpsdop-moderate'  => 'Moderada ($1)',
+'exif-gpsdop-fair'      => 'Xusta ($1)',
+'exif-gpsdop-poor'      => 'Probe ($1)',
+
+'exif-objectcycle-a' => 'Sólo pola mañana',
+'exif-objectcycle-p' => 'Sólo pola tarde',
+'exif-objectcycle-b' => 'Pola mañana y pola tarde',
+
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => 'Direición real',
 'exif-gpsdirection-m' => 'Direición magnética',
+
+'exif-ycbcrpositioning-1' => 'Centráu',
+'exif-ycbcrpositioning-2' => 'Co-llocalizaos',
+
+'exif-dc-contributor' => 'Collaboradores',
+'exif-dc-coverage'    => 'Estensión espacial o temporal del conteníu',
+'exif-dc-date'        => 'Data(es)',
+'exif-dc-publisher'   => 'Editor',
+'exif-dc-relation'    => 'Otros medios rellacionaos',
+'exif-dc-rights'      => 'Drechos',
+'exif-dc-source'      => 'Mediu orixinal',
+'exif-dc-type'        => 'Triba de mediu',
+
+'exif-rating-rejected' => 'Refugáu',
+
+'exif-isospeedratings-overflow' => 'Mayor que 65535',
+
+'exif-iimcategory-ace' => 'Arte, cultura y entretenimientu',
+'exif-iimcategory-clj' => 'Crime y drechu',
+'exif-iimcategory-dis' => 'Desastres y accidentes',
+'exif-iimcategory-fin' => 'Economía y negocios',
+'exif-iimcategory-edu' => 'Educación',
+'exif-iimcategory-evn' => 'Mediu ambiente',
+'exif-iimcategory-hth' => 'Salú',
+'exif-iimcategory-hum' => 'Interés humanu',
+'exif-iimcategory-lab' => 'Trabayu',
+'exif-iimcategory-lif' => 'Estilu de vida y recréu',
+'exif-iimcategory-pol' => 'Política',
+'exif-iimcategory-rel' => 'Relixón y creencies',
+'exif-iimcategory-sci' => 'Ciencia y teunoloxía',
+'exif-iimcategory-soi' => 'Cuestiones sociales',
+'exif-iimcategory-spo' => 'Deportes',
+'exif-iimcategory-war' => 'Guerra, conflictos y protestes',
+'exif-iimcategory-wea' => 'Meteoroloxía',
+
+'exif-urgency-normal' => 'Normal ($1)',
+'exif-urgency-low'    => 'Baxa ($1)',
+'exif-urgency-high'   => 'Alta ($1)',
+'exif-urgency-other'  => 'Prioridá definía pol usuariu ($1)',
 
 # External editor support
 'edit-externally'      => 'Editar esti ficheru usando una aplicación esterna',
@@ -3184,11 +3302,12 @@ $1',
 'trackbackdeleteok' => 'El retroenllaz esborróse correutamente.',
 
 # Delete conflict
-'deletedwhileediting' => "'''Avisu''': ¡Esta páxina foi esborrada depués de qu'entamaras a editala!",
-'confirmrecreate'     => "L'usuariu [[User:$1|$1]] ([[User talk:$1|alderique]]) esborró esta páxina depués de qu'empecipiaras a editala pol siguiente motivu:
+'deletedwhileediting'      => "'''Avisu''': ¡Esta páxina foi esborrada depués de qu'entamaras a editala!",
+'confirmrecreate'          => "L'usuariu [[User:$1|$1]] ([[User talk:$1|alderique]]) esborró esta páxina depués de qu'empecipiaras a editala pol siguiente motivu:
 : ''$2''
 Por favor confirma que daveres quies volver a crear esta páxina.",
-'recreate'            => 'Volver a crear',
+'confirmrecreate-noreason' => "L'usuariu [[User:$1|$1]] ([[User talk:$1|talk]]) desanició esta páxina depués de que principiaras a editala.  Por favor confirma que daveres quies volver a crear esta páxina.",
+'recreate'                 => 'Volver a crear',
 
 # action=purge
 'confirm_purge_button' => 'Aceutar',
@@ -3300,14 +3419,15 @@ Tendríes d'haber recibío [{{SERVER}}{{SCRIPTPATH}}/COPYING una copia de la Lli
 Escribi'l nome d'archivu ensin el prefixu \"{{ns:file}}:\".",
 
 # Special:FileDuplicateSearch
-'fileduplicatesearch'          => 'Buscar archivos duplicaos',
-'fileduplicatesearch-summary'  => 'Busca archivos duplicaos basándose nos sos valores fragmentarios.',
-'fileduplicatesearch-legend'   => 'Buscar duplicaos',
-'fileduplicatesearch-filename' => "Nome d'archivu:",
-'fileduplicatesearch-submit'   => 'Guetar',
-'fileduplicatesearch-info'     => '$1 × $2 píxeles<br />Tamañu del archivu: $3<br />Triba MIME: $4',
-'fileduplicatesearch-result-1' => 'L\'archivu "$1" nun tien duplicáu idénticu.',
-'fileduplicatesearch-result-n' => 'L\'archivu "$1" tien {{PLURAL:$2|un duplicáu idénticu|$2 duplicaos idénticos}}.',
+'fileduplicatesearch'           => 'Buscar archivos duplicaos',
+'fileduplicatesearch-summary'   => 'Busca archivos duplicaos basándose nos sos valores fragmentarios.',
+'fileduplicatesearch-legend'    => 'Buscar duplicaos',
+'fileduplicatesearch-filename'  => "Nome d'archivu:",
+'fileduplicatesearch-submit'    => 'Guetar',
+'fileduplicatesearch-info'      => '$1 × $2 píxeles<br />Tamañu del archivu: $3<br />Triba MIME: $4',
+'fileduplicatesearch-result-1'  => 'L\'archivu "$1" nun tien duplicáu idénticu.',
+'fileduplicatesearch-result-n'  => 'L\'archivu "$1" tien {{PLURAL:$2|un duplicáu idénticu|$2 duplicaos idénticos}}.',
+'fileduplicatesearch-noresults' => "Nun s'alcontró dengún ficheru nomáu «$1».",
 
 # Special:SpecialPages
 'specialpages'                   => 'Páxines especiales',

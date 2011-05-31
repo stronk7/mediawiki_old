@@ -462,6 +462,8 @@ $1",
 'page-rss-feed'           => 'RSS-Feed fir "$1"',
 'page-atom-feed'          => 'Atom-Feed fir "$1"',
 'red-link-title'          => '$1 (Säit gëtt et net)',
+'sort-descending'         => 'Vu grouss op kleng zortéieren',
+'sort-ascending'          => 'Vu kleng op grouss zortéieren',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Säit',
@@ -681,6 +683,7 @@ Vläicht hutt Dir Äert Passwuert scho geännert oder en neit temporäert Passwu
 'passwordreset-text'         => 'Fëllt dëse Formulaire aus fir eng E-Mail Erënnerung vun den Detailer vun Ärem Benotzerkont ze kréien.',
 'passwordreset-legend'       => 'Passwuert zrécksetzen',
 'passwordreset-disabled'     => "D'Zerécksetze vum Passwuert ass op dëser Wiki ausgeschalt.",
+'passwordreset-pretext'      => '{{PLURAL:$1||Gitt eng vun dësen Donnéeën an}}',
 'passwordreset-username'     => 'Benotzernumm:',
 'passwordreset-email'        => 'E-Mailadress:',
 'passwordreset-emailtitle'   => 'Detailer vum Benotzerkont op{{SITENAME}}',
@@ -1489,8 +1492,8 @@ Gitt op d'[[Special:FileList|Lëscht vun den eropgeluedene Fichieren]], fir no F
 
 Fir e '''Bild''' op enger Säit zu benotzen, schreift amplaz vum Bild eng vun dëse Formelen:
 * '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.jpg]]</nowiki></tt>''' fir déi ganz Versioun vum Fichier ze benotzen
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.png|200px|thumb|left|alt text]]</nowiki></tt>''' fir eng 200 Pixel breet Versioun an enger Këscht am lénkse Rand mat 'alt text' als Beschreiwung
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fichier.ogg]]</nowiki></tt>''' fir e Fichier direk ze verlinken ouni de Fichier ze weisen",
+* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.png|200px|thumb|left|alt text]]</nowiki></tt>''' fir eng 200 Pixel breet Versioun an enger Këscht am lénke Rand mat 'alt text' als Beschreiwung
+* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fichier.ogg]]</nowiki></tt>''' fir e Fichier direkt ze verlinken ouni de Fichier ze weisen",
 'upload-permitted'            => 'Erlaabte Formater vun de Fichieren: $1.',
 'upload-preferred'            => 'Fichierszorten déi am beschte funktionéieren: $1.',
 'upload-prohibited'           => 'Verbuede Fichiers Formater: $1.',
@@ -2073,7 +2076,7 @@ $NEWPAGE
 
 Resumé vum Mataarbechter: $PAGESUMMARY $PAGEMINOREDIT
 
-Dëse Mataarbechter kontaktéieren:
+Den Editeur kontaktéieren:
 E-Mail: $PAGEEDITOR_EMAIL
 Wiki: $PAGEEDITOR_WIKI
 
@@ -2084,8 +2087,14 @@ Op Ärer Iwwerwaachungslëscht kënnt Dir all Benoorichtigungsmarkeren zesummen 
              Äre frëndleche {{SITENAME}} Benoriichtigungssystem
 
 --
-Fir d\'Astellungen op ärer Iwwerwaachungslëscht z\'änneren, besicht w.e.g.
+
+Fir d\'Astellungen op ären E-Mailbenoriichtigungen z\'änneren, besicht w.e.g.
+{{fullurl:{{#special:Preferences}}}}
+
+
+Fir d\'Astellungen vun ärer Iwwerwaachungslëscht z\'änneren, besicht w.e.g.
 {{fullurl:Special:Watchlist/edit}}
+
 
 Fir d\'Säit vun Ärer Iwwerwaachungslëscht erofzehuelen, gitt w.e.g. op
 $UNWATCHURL
@@ -2981,11 +2990,13 @@ Déi aner sinn am Standard verstoppt.
 'exif-worldregioncreated'          => "Welt-Regioun an där d'Bild gemaach gouf",
 'exif-countrycreated'              => "Land an deem d'Bild gemaach gouf",
 'exif-countrycodecreated'          => "Code fir d'Land an deem d'Bild gemaach gouf",
+'exif-provinceorstatecreated'      => "Provënz oder Staat an deem d'Bild gemaach gouf",
 'exif-citycreated'                 => "Stad an där d'Bild gemaach gouf",
 'exif-sublocationcreated'          => "Deel vun der Stad an deem d'Bild gemaach gouf",
 'exif-worldregiondest'             => 'Gewise Welt-Regioun',
 'exif-countrydest'                 => 'Gewisent Land',
 'exif-countrycodedest'             => 'Code vum gewisene Land',
+'exif-provinceorstatedest'         => 'Gewise Provënz oder Deel vun engem Land',
 'exif-citydest'                    => 'Gewise Stad',
 'exif-sublocationdest'             => 'Gewisenen Deel vun der Stad',
 'exif-objectname'                  => 'Kuerzen Titel',
@@ -3011,7 +3022,9 @@ Déi aner sinn am Standard verstoppt.
 'exif-nickname'                    => 'Informellen Numm vum Bild',
 'exif-rating'                      => 'Bewäertung (vu 5)',
 'exif-copyrightowner'              => "Titulaire vun den Droits d'auteur",
+'exif-licenseurl'                  => 'URL vum Copyright (Lizenz)',
 'exif-pngfilecomment'              => 'Bemierkung zum PNG-Fichier',
+'exif-contentwarning'              => 'Warnung iwwer den Inhalt',
 'exif-giffilecomment'              => 'Bemierkung zum GIF-Fichier',
 'exif-subjectnewscode'             => 'Code vum Sujet',
 'exif-organisationinimage'         => 'Organisatioun um Bild',
@@ -3021,6 +3034,8 @@ Déi aner sinn am Standard verstoppt.
 
 # EXIF attributes
 'exif-compression-1' => 'Onkompriméiert',
+
+'exif-copyrighted-false' => 'Ëffentlechen Domaine',
 
 'exif-unknowndate' => 'Onbekannten Datum',
 
@@ -3185,9 +3200,12 @@ Déi aner sinn am Standard verstoppt.
 'exif-gpsdirection-t' => 'Tatsächlech Richtung',
 'exif-gpsdirection-m' => 'Magnéitesch Richtung',
 
-'exif-dc-date'   => 'Datum(en)',
-'exif-dc-rights' => 'Rechter',
-'exif-dc-type'   => 'Medientyp',
+'exif-ycbcrpositioning-1' => 'Zentréiert',
+
+'exif-dc-date'      => 'Datum(en)',
+'exif-dc-publisher' => 'Editeur',
+'exif-dc-rights'    => 'Rechter',
+'exif-dc-type'      => 'Medientyp',
 
 'exif-rating-rejected' => 'Refuséiert',
 

@@ -555,7 +555,7 @@ Sicrhewch eich bod wedi galluogi cwcis, yna ail-lwythwch y dudalen hon a cheisiw
 'noname'                     => 'Dydych chi ddim wedi cynnig enw defnyddiwr dilys.',
 'loginsuccesstitle'          => 'Llwyddodd y mewngofnodi',
 'loginsuccess'               => "'''Yr ydych wedi mewngofnodi i {{SITENAME}} fel \"\$1\".'''",
-'nosuchuser'                 => "Does yna'r un defnyddiwr â'r enw \"\$1\".
+'nosuchuser'                 => "Does dim defnyddiwr o'r enw \"\$1\".
 Mae'r rhaglen yn gwahaniaethu rhwng llythrennau bach a mawr.
 Sicrhewch eich bod chi wedi sillafu'r enw'n gywir, neu [[Special:UserLogin/signup|crëwch gyfrif newydd]].",
 'nosuchusershort'            => 'Does dim defnyddiwr o\'r enw "<nowiki>$1</nowiki>". Gwiriwch eich sillafu.',
@@ -841,9 +841,9 @@ Mae ar gael yn barod.',
 
 Dylai fod llai na $2 {{PLURAL:$2|galwad|alwad|alwad|galwad|galwad|galwad}} yn y dudalen, ond ar hyn o bryd mae $1 {{PLURAL:$1|galwad|alwad|alwad|galwad|galwad|galwad}} ynddi.",
 'expensive-parserfunction-category'       => "Tudalennau a gormod o alwadau ar ffwythiannau dosrannu sy'n dreth ar adnoddau",
-'post-expand-template-inclusion-warning'  => "Rhybudd: Mae'r maint cynnwys nodyn yn rhy fawr.
+'post-expand-template-inclusion-warning'  => "'''Rhybudd:''' Mae maint y nodiadau ar ôl eu chwyddo yn rhy fawr.
 Ni chaiff rhai nodiadau eu cynnwys.",
-'post-expand-template-inclusion-category' => "Tudalennau a phatrymlun ynddynt sy'n fwy na chyfyngiad y meddalwedd",
+'post-expand-template-inclusion-category' => "Tudalennau a nodiadau ynddynt sy'n fwy na chyfyngiad y meddalwedd",
 'post-expand-template-argument-warning'   => "'''Rhybudd:''' Mae gan y dudalen hon o leiaf un arg nodyn sydd a maint ehangu rhy fawr.
 Cafodd yr argiau hyn eu hepgor.",
 'post-expand-template-argument-category'  => 'Tudalennau lle ceir argiau nodiadau coll',
@@ -1364,7 +1364,7 @@ Mae'r wybodaeth hon ar gael i'r cyhoedd.",
 'action-upload'               => "uwchlwytho'r ffeil",
 'action-reupload'             => 'trosysgrifo ffeil sydd eisoes ar gael',
 'action-reupload-shared'      => "Uwchlwytho ffeil ar wici lleol, gyda'r un teitl â ffeil yn y storfa gyfrannol",
-'action-upload_by_url'        => "uuchlwytho'r ffeil o gyfeiriad URL",
+'action-upload_by_url'        => "uwchlwytho'r ffeil o gyfeiriad URL",
 'action-writeapi'             => "defnyddio'r API i ysgrifennu a thrin y tudalennau",
 'action-delete'               => "dileu'r dudalen",
 'action-deleterevision'       => "dileu'r golygiad",
@@ -1529,7 +1529,7 @@ Gwiriwch y gosodiad ar file_uploads.',
 'uploadvirus'                 => 'Mae firws gan y ffeil hon! Manylion: $1',
 'uploadjava'                  => "Ffeil ZIP yw hwn sy'n cynnwys ffeil Java .class.
 Ni chaniateir uwchlwytho ffeiliau Java, oherwydd y gallant osgoi cyfyngiadau diogelwch.",
-'upload-source'               => 'Y ffeil gwreiddiol',
+'upload-source'               => 'Y ffeil wreiddiol',
 'sourcefilename'              => "Enw'r ffeil wreiddiol:",
 'sourceurl'                   => 'URL y gwreiddiol:',
 'destfilename'                => 'Enw ffeil y cyrchfan:',
@@ -1759,7 +1759,8 @@ Cofiwch chwilio am gysylltiadau eraill at nodyn a'u hystyried cyn ei ddileu.",
 
 'disambiguations'      => 'Tudalennau gwahaniaethu',
 'disambiguationspage'  => 'Template:Gwahaniaethu',
-'disambiguations-text' => "Mae'r tudalennau canlynol yn cysylltu â thudalennau gwahaniaethu. Yn hytrach dylent gysylltu'n syth â'r erthygl briodol.<br />Diffinir tudalen yn dudalen gwahaniaethu pan mae'n cynnwys un o'r nodiadau '[[MediaWiki:Disambiguationspage|tudalen gwahaniaethu]]'.",
+'disambiguations-text' => "Mae'r tudalennau canlynol yn cynnwys un neu ragor o gysylltau wici, sydd yn cysylltu â '''thudalennau gwahaniaethu'''. Yn hytrach dylent arwain yn syth at yr erthygl briodol.<br />
+Diffinir tudalen yn dudalen gwahaniaethu pan mae'n cynnwys un o'r nodiadau '[[MediaWiki:Disambiguationspage|tudalen gwahaniaethu]]'.",
 
 'doubleredirects'                   => 'Ailgyfeiriadau dwbl',
 'doubleredirectstext'               => "Mae pob rhes yn cynnwys cysylltiad i'r ddau ail-gyfeiriad cyntaf, ynghyd â chyrchfan yr ail ailgyfeiriad. Fel arfer bydd hyn yn rhoi'r gwir dudalen y dylai'r tudalennau cynt gyfeirio ati.
@@ -2046,10 +2047,13 @@ Os digwydd mwy o olygiadau i\'r dudalen cyn i chi ymweld â hi, ni chewch ragor 
              Sustem hysbysu {{SITENAME}}
 
 --
-I newid eich gosodiadau gwylio, ymwelwch â
+I newid eich gosodiadau negeseuon hysbysu, ewch i 
+{{fullurl:{{#special:Preferences}}}}
+
+I newid eich gosodiadau gwylio, ewch i
 {{fullurl:{{#special:Watchlist}}/edit}}
 
-I dynnu\'r dudalen oddi ar eich rhestr wylio, ewch at
+I dynnu\'r dudalen oddi ar eich rhestr wylio, ewch i
 $UNWATCHURL
 
 Am fwy o gymorth ac adborth:
@@ -2277,6 +2281,8 @@ Mae'r cofnod diweddaraf yn y lòg blocio i'w weld isod:",
 
 # Block/unblock
 'autoblockid'                     => 'Gosod bloc awtomatig ar #$1',
+'block'                           => 'Rhwystro defnyddiwr',
+'unblock'                         => 'Dad-rwystro defnyddiwr',
 'blockip'                         => "Blocio'r defnyddiwr",
 'blockip-title'                   => "Blocio'r defnyddiwr",
 'blockip-legend'                  => "Blocio'r defnyddiwr",
@@ -2306,10 +2312,13 @@ Mae'r cofnod diweddaraf yn y lòg blocio i'w weld isod:",
 'ipbwatchuser'                    => 'Gwylio tudalen defnyddiwr a thudalen sgwrs y defnyddiwr hwn',
 'ipb-disableusertalk'             => 'Atal y defnyddiwr hwn rhag golygu ei dudalen sgwrs eu hunan tra ei fod wedi ei flocio',
 'ipb-change-block'                => "Ailflocio'r defnyddiwr hwn gyda'r gosodiadau hyn",
+'ipb-confirm'                     => "Cadarnhau'r rhwystr",
 'badipaddress'                    => 'Cyfeiriad IP annilys.',
 'blockipsuccesssub'               => 'Llwyddodd y rhwystr',
 'blockipsuccesstext'              => 'Mae cyfeiriad IP [[Special:Contributions/$1|$1]] wedi cael ei flocio.
 <br />Gwelwch [[Special:IPBlockList|restr y blociau IP]] er mwyn arolygu blociau.',
+'ipb-blockingself'                => "Rydych ar rwystro'ch hunan! A ydych yn siŵr eich bod chi am wneud hyn?",
+'ipb-confirmhideuser'             => 'Rydych ar rwystro defnyddiwr sydd yn "guddiedig." Bydd hyn yn atal enw\'r defnyddiwr ym mhob rhestr a chofnod lòg. A ydych yn siŵr eich bod chi am wneud hyn?',
 'ipb-edit-dropdown'               => "Golygu'r rhesymau dros flocio",
 'ipb-unblock-addr'                => 'Datflocio $1',
 'ipb-unblock'                     => 'Datflocio enw defnyddiwr neu cyfeiriad IP',
@@ -2319,12 +2328,19 @@ Mae'r cofnod diweddaraf yn y lòg blocio i'w weld isod:",
 'unblockiptext'                   => "Defnyddiwch y ffurflen isod i ail-alluogi golygiadau gan ddefnyddiwr neu o gyfeiriad IP a fu gynt wedi'i flocio.",
 'ipusubmit'                       => 'Dadflocier',
 'unblocked'                       => 'Mae [[User:$1|$1]] wedi cael ei ddad-flocio',
+'unblocked-range'                 => 'Dad-rwystrir $1',
 'unblocked-id'                    => 'Tynnwyd y bloc $1',
+'blocklist'                       => 'Defnyddwyr a rwystrwyd',
 'ipblocklist'                     => "Defnyddwyr wedi'u blocio",
 'ipblocklist-legend'              => 'Dod o hyd i ddefnyddiwr sydd wedi ei flocio',
+'blocklist-userblocks'            => 'Cuddio rhwystrau cyfrifon',
+'blocklist-tempblocks'            => 'Cuddio rhwystrau dros dro',
+'blocklist-addressblocks'         => 'Cuddio rhwystrau IP unigol',
 'blocklist-timestamp'             => 'Dyddiad ac amser',
 'blocklist-target'                => 'Targed',
 'blocklist-expiry'                => 'Yn dod i ben:',
+'blocklist-by'                    => 'Rhwystro gweinyddion',
+'blocklist-params'                => 'Paramedrau rhwystro',
 'blocklist-reason'                => 'Rheswm',
 'ipblocklist-submit'              => 'Chwilier',
 'ipblocklist-localblock'          => 'Bloc lleol',
@@ -2366,6 +2382,7 @@ Dyma'r lòg cuddio perthnasol:",
 'ipb_already_blocked'             => 'Mae "$1" eisoes wedi ei flocio',
 'ipb-needreblock'                 => "Mae $1 wedi ei flocio'n barod. Ydych chi am newid y gosodiadau?",
 'ipb-otherblocks-header'          => '{{PLURAL:$1|Bloc|Bloc|Blociau|Blociau|Blociau|Blociau}} eraill',
+'unblock-hideuser'                => "Nid oes modd dad-rwystro'r defnyddiwr yma, oherwydd cuddir ei (h)enw defnyddiwr.",
 'ipb_cant_unblock'                => "Gwall: Ni chafwyd hyd i'r bloc a'r ID $1.
 Hwyrach ei fod wedi ei ddad-flocio'n barod.",
 'ipb_blocked_as_range'            => "Gwall: Nid yw'r IP $1 wedi ei blocio'n uniongyrchol ac felly ni ellir ei datflocio. Wedi dweud hynny, y mae'n rhan o'r amrediad $2 sydd wedi ei blocio; gellir datflocio'r amrediad.",
@@ -2563,7 +2580,7 @@ Mae cofnod o bob weithred o fewnforio i'w gweld ar y [[Special:Log/import|lòg m
 'import-interwiki-namespace' => 'Parth y cyrchir ato:',
 'import-upload-filename'     => "Enw'r ffeil:",
 'import-comment'             => 'Sylw:',
-'importtext'                 => "Os gwelwch yn dda, allforiwch y ffeil o'r wici gwreiddiol trwy ddefnyddio'r nodwedd [[Special:Export|allforio]]. Rhowch hi ar gadw ar eich cyfrifiadur, ac yna ei huwchlwytho fan hyn.",
+'importtext'                 => "Allforiwch y ffeil o'r wici gwreiddiol trwy ddefnyddio'r [[Special:Export|nodwedd allforio]]. Rhowch hi ar gadw ar eich cyfrifiadur, ac wedyn ei huwchlwytho fan hyn.",
 'importstart'                => "Wrthi'n mewnforio...",
 'import-revision-count'      => '$1 {{PLURAL:$1|diwygiad|diwygiad|ddiwygiad|diwygiad|diwygiad|diwygiad}}',
 'importnopages'              => "Dim tudalennau i gael i'w mewnforio.",
@@ -2968,6 +2985,8 @@ Cuddir y meysydd eraill trwy ragosodiad.
 'exif-originaldocumentid'          => 'ID unigryw y ddogfen wreiddiol',
 'exif-licenseurl'                  => 'URL y drwydded hawlfraint',
 'exif-morepermissionsurl'          => 'Gwybodaeth trwyddedu amgen',
+'exif-attributionurl'              => "Wrth ail-ddefnyddio'r gwaith yma, darparwch ddolen at",
+'exif-preferredattributionname'    => "Wrth ail-ddefnyddio'r gwaith yma, cydnabyddwch",
 'exif-pngfilecomment'              => 'Sylwadau ar y ffeil PNG',
 'exif-disclaimer'                  => 'Ymwadiad',
 'exif-contentwarning'              => 'Rhybudd am y cynnwys',

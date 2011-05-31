@@ -9,6 +9,7 @@
  *
  * @author .anaconda
  * @author Airon90
+ * @author Amire80
  * @author Andria
  * @author Beta16
  * @author Blaisorblade
@@ -41,6 +42,7 @@
  * @author Pinodd
  * @author Ramac
  * @author Remember the dot
+ * @author Rippitippi
  * @author S.Örvarr.S
  * @author SabineCretella
  * @author Stefano-c
@@ -374,6 +376,7 @@ $messages = array(
 'listingcontinuesabbrev'         => 'cont.',
 'index-category'                 => 'Pagine indicizzate',
 'noindex-category'               => 'Pagine non indicizzate',
+'broken-file-category'           => 'Pagine con link danneggiati',
 
 'mainpagetext'      => "'''Installazione di MediaWiki completata correttamente.'''",
 'mainpagedocfooter' => "Consultare la [http://meta.wikimedia.org/wiki/Aiuto:Sommario Guida utente] per maggiori informazioni sull'uso di questo software wiki.
@@ -1677,22 +1680,23 @@ Non può essere adeguatamente controllato per la sicurezza.',
 'uploadstash-refresh'  => "Aggiorna l'elenco dei file",
 
 # img_auth script messages
-'img-auth-accessdenied' => 'Accesso negato',
-'img-auth-nopathinfo'   => 'PATH_INFO mancante.
+'img-auth-accessdenied'     => 'Accesso negato',
+'img-auth-nopathinfo'       => 'PATH_INFO mancante.
 Il server non è impostato per passare questa informazione.
 Potrebbe essere basato su CGI e non può supportare img_auth.
 Consultare http://www.mediawiki.org/wiki/Manual:Image_Authorization.',
-'img-auth-notindir'     => 'Il percorso richiesto non si trova nella directory di upload configurata.',
-'img-auth-badtitle'     => 'Impossibile costruire un titolo valido da "$1".',
-'img-auth-nologinnWL'   => 'Non si è effettuato l\'accesso e "$1" non è nella whitelist.',
-'img-auth-nofile'       => 'File "$1" non esiste.',
-'img-auth-isdir'        => 'Si sta tentando di accedere a una directory "$1".
+'img-auth-notindir'         => 'Il percorso richiesto non si trova nella directory di upload configurata.',
+'img-auth-badtitle'         => 'Impossibile costruire un titolo valido da "$1".',
+'img-auth-nologinnWL'       => 'Non si è effettuato l\'accesso e "$1" non è nella whitelist.',
+'img-auth-nofile'           => 'File "$1" non esiste.',
+'img-auth-isdir'            => 'Si sta tentando di accedere a una directory "$1".
 Solo l\'accesso ai file è consentito.',
-'img-auth-streaming'    => '"$1" in streaming.',
-'img-auth-public'       => 'La funzione di img_auth.php è di dare in output file da un sito wiki privato.
+'img-auth-streaming'        => '"$1" in streaming.',
+'img-auth-public'           => 'La funzione di img_auth.php è di dare in output file da un sito wiki privato.
 Questo sito è configurato come un wiki pubblico.
 Per una sicurezza ottimale, img_auth.php è disattivato.',
-'img-auth-noread'       => 'L\'utente non ha accesso alla lettura di "$1".',
+'img-auth-noread'           => 'L\'utente non ha accesso alla lettura di "$1".',
+'img-auth-bad-query-string' => "L'URL contiene una stringa di query non valida.",
 
 # HTTP errors
 'http-invalid-url'      => 'URL non valido: $1',
@@ -2050,6 +2054,7 @@ Potrebbero esserci [[{{MediaWiki:Listgrouprights-helppage}}|ulteriori informazio
 'nowikiemailtitle'     => 'E-mail non permessa',
 'nowikiemailtext'      => 'Questo utente ha scelto di non ricevere messaggi di posta elettronica dagli altri utenti.',
 'emailusername'        => 'Nome utente:',
+'emailusernamesubmit'  => 'Invia',
 'email-legend'         => 'Invia un messaggio e-mail a un altro utente di {{SITENAME}}',
 'emailfrom'            => 'Da:',
 'emailto'              => 'A:',
@@ -2130,14 +2135,17 @@ Non verranno inviate altre notifiche in caso di ulteriori cambiamenti, a meno ch
              Il sistema di notifica di {{SITENAME}}, al tuo servizio
 
 --
-Per modificare le impostazioni della lista degli osservati speciali, visita
-{{fullurl:Special:Watchlist/edit}}
+Per modificare le impostazioni delle notifiche via e-mail, visita 
+{{fullurl:{{#special:Preferences}}}}
 
-Per cancellare la pagina della lista degli osservati speciali, visita
+Per modificare la lista degli osservati speciali, visita 
+{{fullurl:{{#special:Watchlist}}/edit}}
+
+Per rimuovere la pagina dalla lista degli osservati speciali, visita
 $UNWATCHURL
 
-Per dare il tuo feedback e ricevere ulteriore assistenza:
-{{fullurl:Help:Aiuto}}',
+Per commentare e ricevere aiuto:
+{{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
 'deletepage'             => 'Cancella pagina',
@@ -2634,7 +2642,7 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 'import-interwiki-namespace' => 'Namespace di destinazione:',
 'import-upload-filename'     => 'Nome file:',
 'import-comment'             => 'Oggetto:',
-'importtext'                 => 'Si prega di esportare il file dal sito wiki di origine con la funzione Special:Export, salvarlo sul proprio disco e poi caricarlo qui.',
+'importtext'                 => 'Si prega di esportare il file dal sito wiki di origine con la [[Special:Export|funzione di esportazione]], salvarlo sul proprio disco e poi caricarlo qui.',
 'importstart'                => 'Importazione delle pagine in corso...',
 'import-revision-count'      => '{{PLURAL:$1|una revisione importata|$1 revisioni importate}}',
 'importnopages'              => 'Nessuna pagina da importare.',
@@ -2869,7 +2877,7 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 'metadata-help'     => 'Questo file contiene informazioni aggiuntive, probabilmente aggiunte dalla fotocamera o dallo scanner usati per crearlo o digitalizzarlo. Se il file è stato modificato, alcuni dettagli potrebbero non corrispondere alla realtà.',
 'metadata-expand'   => 'Mostra dettagli',
 'metadata-collapse' => 'Nascondi dettagli',
-'metadata-fields'   => "I campi relativi ai metadati EXIF elencati in questo messaggio verranno mostrati sulla pagina dell'immagine quando la tabella dei metadati è presentata nella forma breve. Per impostazione predefinita, gli altri campi verranno nascosti.
+'metadata-fields'   => "I campi relativi ai metadati dell'immagine elencati in questo messaggio verranno mostrati sulla pagina dell'immagine quando la tabella dei metadati è presentata nella forma breve. Per impostazione predefinita, gli altri campi verranno nascosti.
 * make
 * model
 * datetimeoriginal
@@ -2998,7 +3006,11 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 'exif-gpsdatestamp'                => 'Data GPS',
 'exif-gpsdifferential'             => 'Correzione differenziale GPS',
 'exif-keywords'                    => 'Parole chiave',
+'exif-provinceorstatecreated'      => 'Provincia o stato dove è stata scattata la foto',
+'exif-citycreated'                 => 'Città dove è stata scattata la foto',
 'exif-objectname'                  => 'Titolo breve',
+'exif-urgency'                     => 'Urgenza',
+'exif-locationdest'                => 'Località raffigurata',
 'exif-contact'                     => 'Informazioni di contatto',
 'exif-languagecode'                => 'Lingua',
 'exif-iimcategory'                 => 'Categoria',
@@ -3008,6 +3020,9 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 'exif-label'                       => 'Etichetta',
 'exif-copyrighted'                 => 'Informazioni sul copyright',
 'exif-copyrightowner'              => 'Detentore del copyright',
+'exif-usageterms'                  => 'Termini di utilizzo',
+'exif-morepermissionsurl'          => 'Informazioni sulle licenze alternative',
+'exif-disclaimer'                  => 'Avvertenze',
 'exif-personinimage'               => 'Persona raffigurata',
 'exif-originalimageheight'         => "Altezza dell'immagine prima che fosse ritagliata",
 'exif-originalimagewidth'          => "Larghezza dell'immagine prima che fosse ritagliata",
@@ -3104,6 +3119,8 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 'exif-sensingmethod-7' => 'Sensore trilineare',
 'exif-sensingmethod-8' => 'Sensore lineare colore sequenziale',
 
+'exif-filesource-3' => 'Fotocamera digitale',
+
 'exif-scenetype-1' => 'Fotografia diretta',
 
 'exif-customrendered-0' => 'Processo normale',
@@ -3185,7 +3202,11 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 
 'exif-ycbcrpositioning-1' => 'Centrato',
 
-'exif-dc-rights' => 'Diritti',
+'exif-dc-contributor' => 'Collaboratori',
+'exif-dc-date'        => 'Data (e)',
+'exif-dc-rights'      => 'Diritti',
+
+'exif-rating-rejected' => 'Rifiutato',
 
 'exif-isospeedratings-overflow' => 'Maggiore di 65535',
 

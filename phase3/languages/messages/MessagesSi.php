@@ -20,6 +20,7 @@
  * @author තඹරු විජේසේකර
  * @author දසනැබළයෝ
  * @author නන්දිමිතුරු
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  * @author රොමානිස් සැමුවෙල්
  * @author ශ්වෙත
@@ -190,10 +191,10 @@ $magicWords = array(
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'සබැඳි යටීර කිරීම:',
-'tog-highlightbroken'         => 'භින්න සබැඳියන් ආකෘතිකරණය මේ අයුරින් කරන්න <a href="" class="new"> </a> (විකල්ප: මේ අයුරින් කරන්න<a href="" class="internal">?</a>).',
-'tog-justify'                 => 'ඡේදයන් justify කරන්න',
-'tog-hideminor'               => 'මෑත වෙනස්වීකිරීම්වල සුළු සංස්කරණ සඟවන්න',
-'tog-hidepatrolled'           => 'විමසුමට ලක්කෙරුණු සංස්කරණයන්, මෑත වෙනස්වීම් හී නොපෙන්වන්න',
+'tog-highlightbroken'         => 'භින්න වූ සබැඳියන් <a href="" class="new">මේ අයුරින්</a> ආකෘතිකරණය කරන්න  (විකල්පය: මේ අයුරින්<a href="" class="internal">?</a>)',
+'tog-justify'                 => 'ඡේදයන් පේළ ගස්වන්න',
+'tog-hideminor'               => 'මෑත වෙනස් කිරීම්වල සුළු සංස්කරණ සඟවන්න',
+'tog-hidepatrolled'           => 'මෑත වෙනස් කිරීම්වල මුර සංචාරය කරන ලද සංස්කරණ සඟවන්න',
 'tog-newpageshidepatrolled'   => 'විමසුමට ලක්කෙරුණු පිටු, අළුත් පිටු ලැයිස්තුවෙහි නොපෙන්වන්න',
 'tog-extendwatchlist'         => 'මෑත වෙනස්වීම් පමණක් නොව, අදාළ සියළු වෙනස්වීම් දක්වා පෙන්වන අයුරින් මුර-ලැයිස්තුව පුළුල් කරන්න',
 'tog-usenewrc'                => 'ආවර්ධිත මෑත වෙනස්වීම් භාවිතා කරන්න (ජාවාස්ක්‍රිප්ට් ඇවැසිය)',
@@ -203,7 +204,7 @@ $messages = array(
 'tog-editsection'             => '[සංස්කරණය] සබැඳියාවන් මගින් ඡේද සංස්කරණය සක්‍රීය කරන්න',
 'tog-editsectiononrightclick' => 'ඡේද ශීර්ෂ මත දකුණු-ක්ලික් කිරීමෙන් ඡේද සංස්කරණය සක්‍රීය කරන්න (ජාවාස්ක්‍රිප්ට්)',
 'tog-showtoc'                 => 'පටුන පෙන්වන්න ( තුනකට වඩා වැඩියෙන් ශීර්ෂ-නාම අඩංගු පිටු සඳහා)',
-'tog-rememberpassword'        => 'මාගේ ප්‍රවිෂ්ටය පිළිබඳ විස්තර මෙම පරිගණක මතකයෙහි (උපරිම ලෙස{{PLURAL:$1|දිනයක්|දින $1 ක්}}) තබාගන්න',
+'tog-rememberpassword'        => 'මගේ ප්‍රවිෂ්ටය මෙම ගවේශකයෙහි උපරිම ලෙස {{PLURAL:$1|දිනයක්|දින $1ක්}} මතක තබා ගන්න',
 'tog-watchcreations'          => 'මම තනන පිටු මගේ මුර-ලැයිස්තුවට එක් කරන්න',
 'tog-watchdefault'            => 'මම සංස්කරණය කරන පිටු මගේ මුර-ලැයිස්තුවට එක් කරන්න',
 'tog-watchmoves'              => 'මම ගෙනයන පිටු මගේ මුර-ලැයිස්තුවට එක් කරන්න',
@@ -211,7 +212,7 @@ $messages = array(
 'tog-minordefault'            => 'සියළු සංස්කරණයන් පෙර-නිමියෙන් සුළු-සංස්කරණ ලෙස සලකුණු කරන්න',
 'tog-previewontop'            => 'සංස්කරණ කොටුවට ඉදිරියෙන් පෙර-දසුන පෙන්වන්න',
 'tog-previewonfirst'          => 'පළමු සංස්කරණයෙහිදී පෙර-දසුන පෙන්වන්න',
-'tog-nocache'                 => 'පිටු කෑෂ්කිරීම (caching) අක්‍රීය කරන්න',
+'tog-nocache'                 => 'ගවේශක පිටු මතක තබා ගැනීම අක්‍රීය කරන්න',
 'tog-enotifwatchlistpages'    => 'මගේ මුර-ලැයිස්තුවේ පිටුවක් වෙනස් වූ විට මා හට විද්‍යුත්-තැපෑලක් එවන්න',
 'tog-enotifusertalkpages'     => 'මගේ පරිශීලක සාකච්ඡා පිටුව වෙනස් වූ විට මා හට විද්‍යුත්-තැපෑලක් එවන්න',
 'tog-enotifminoredits'        => 'පිටුවල  සුළු-සංස්කරණයකදී පවා මට ඊ- තැපැල් ලිපියක් එවන්න',
@@ -219,8 +220,8 @@ $messages = array(
 'tog-shownumberswatching'     => 'මුර කරනු ලබන පරිශීලකයන් සංඛ්‍යාව පෙන්වන්න',
 'tog-oldsig'                  => 'පවතින අත්සනෙහි පූර්ව දර්ශනය:',
 'tog-fancysig'                => 'අත්සන විකිපෙළ (ස්වයංක්‍රීය සබැඳියක් විරහිතව) ලෙසින් සලකන්න',
-'tog-externaleditor'          => 'පෙරනිමියෙන් බාහිර සංස්කාරකයක් භාවිත කරන්න (ප්‍රවීණයන් සඳහා පමණි, ඔබගේ පරිගණකයට විශේෂ  සැකසුම් යෙදිය යුතුවේ)',
-'tog-externaldiff'            => 'පෙරනිමියෙන් බාහිර වෙනස භාවිතා කරන්න (ප්‍රවීණයන් සඳහා පමණයි, ඔබගේ පරිගණකයෙහි විශේෂ පරිස්ථිතීන් අවශ්‍යයයි)',
+'tog-externaleditor'          => 'බාහිර සම්පාදකයක් භාවිත කරන්න (ප්‍රවීණයන් සඳහා පමණි, ඔබගේ පරිගණකයේ විශේෂිත වූ සැකසුම් අවශ්‍ය වේ. [http://www.mediawiki.org/wiki/Manual:External_editors තවත් තොරතුරු.])',
+'tog-externaldiff'            => 'බාහිර ප්‍රභේදයක් භාවිත කරන්න (ප්‍රවීණයන් සඳහා පමණි, ඔබගේ පරිගණකයේ විශේෂිත වූ සැකසුම් අවශ්‍ය වේ. [http://www.mediawiki.org/wiki/Manual:External_editors තවත් තොරතුරු.])',
 'tog-showjumplinks'           => '"වෙත පනින්න"  යන ප්‍රවේශතා සබැඳියන් සක්‍රීය කරන්න',
 'tog-uselivepreview'          => 'තත්කාල පෙර-දසුන භාවිතා කරන්න (ජාවාස්ක්‍රිප්ට්) (පරීක්ෂණාත්මක)',
 'tog-forceeditsummary'        => 'හිස් සංස්කරණ සාරාංශයකට මා ඇතුළු වන විට මාහට ඉඟි කරන්න',
@@ -317,6 +318,7 @@ $messages = array(
 'listingcontinuesabbrev'         => 'ඉතිරිය.',
 'index-category'                 => 'සූචිගත පිටු',
 'noindex-category'               => 'සූචිගත නොකළ පිටු',
+'broken-file-category'           => 'භින්න වූ ගොනු සබැඳි සහිත පිටු',
 
 'linkprefix'        => '/^(.*?)([a-zA-Z\\x80-\\xff]+)$/sD',
 'mainpagetext'      => "'''මාධ්‍යවිකි සාර්ථක ලෙස ස්ථාපනය කරන ලදි.'''",
@@ -335,7 +337,7 @@ $messages = array(
 'mypage'        => 'මගේ පිටුව',
 'mytalk'        => 'මගේ සාකච්ඡා',
 'anontalk'      => 'මෙම IP ලිපිනය සඳහා සාකච්ඡාව',
-'navigation'    => 'සංචලනය',
+'navigation'    => 'යාත්‍රණය',
 'and'           => '&#32;සහ',
 
 # Cologne Blue skin
@@ -353,7 +355,7 @@ $messages = array(
 'vector-action-addsection'       => 'මාතෘකාව එක්කරන්න',
 'vector-action-delete'           => 'මකාදමන්න',
 'vector-action-move'             => 'ගෙනයන්න',
-'vector-action-protect'          => 'ආරක්ෂා කරන්න',
+'vector-action-protect'          => 'ආරක්‍ෂණය කරන්න',
 'vector-action-undelete'         => 'මකාදැමීම අවලංගු කරන්න',
 'vector-action-unprotect'        => 'ආරක්ෂා‍ නොකරන්න',
 'vector-simplesearch-preference' => 'වැඩිදියුණුකළ සෙවුම් යෝජනා සක්‍රීය කරන්න ("Vector" තීමය සඳහා පමණි)',
@@ -364,13 +366,13 @@ $messages = array(
 'vector-view-viewsource'         => 'මූලාශ්‍රය නරඹන්න',
 'actions'                        => 'කාර්යයන්',
 'namespaces'                     => 'නාමඅවකාශයන්',
-'variants'                       => 'ප්‍රභේද්‍යයන්',
+'variants'                       => 'ප්‍රභේද',
 
 'errorpagetitle'    => 'දෝෂය',
 'returnto'          => '$1 ට නැවත යන්න.',
 'tagline'           => '{{SITENAME}} වෙතින්',
 'help'              => 'උදවු',
-'search'            => 'ගවේෂණය',
+'search'            => 'සොයන්න',
 'searchbutton'      => 'සොයන්න',
 'go'                => 'යන්න',
 'searcharticle'     => 'යන්න',
@@ -421,7 +423,7 @@ $messages = array(
 'protectedpage'     => 'ආරක්ෂිත පිටුව',
 'jumpto'            => 'වෙත යන්න:',
 'jumptonavigation'  => 'සංචලනය',
-'jumptosearch'      => 'ගවේෂණය',
+'jumptosearch'      => 'සොයන්න',
 'view-pool-error'   => "සමාවන්න, ස'වරයන් (server) මෙම අවස්ථාවෙහිදී අධිභාරණය (overloade) වී ඇත.
 පමණට වඩා පරිශීලක පිරිසක් මෙම පිටුව නැරඹීමට යත්න දරති.
 මද වේලාවක් පමාවී නැවත උත්සාහකරන්න.
@@ -432,8 +434,7 @@ $1",
 'pool-errorunknown' => 'හඳුනා නොගත් දෝෂය',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite'            => '{{SITENAME}} පිළිබඳ
-<!--{{SITENAME}}About-->',
+'aboutsite'            => '{{SITENAME}} පිළිබඳ',
 'aboutpage'            => 'Project:පිළිබඳ',
 'copyright'            => ' $1 යටතේ අන්තර්ගතය දැක ගත හැක.',
 'copyrightpage'        => '{{ns:project}}:කර්තෘ-හිමිකම්',
@@ -449,7 +450,7 @@ $1",
 'policy-url'           => 'Project:ප්‍රතිපත්තිය',
 'portal'               => 'ප්‍රජා ද්වාරය',
 'portal-url'           => 'Project:ප්‍රජා ද්වාරය',
-'privacy'              => 'පෞද්ගලිකත්ව ප්‍රතිපත්තිය',
+'privacy'              => 'පුද්ගලිකත්ව ප්‍රතිපත්තිය',
 'privacypage'          => 'Project:පුද්ගලිකත්ව ප්‍රතිපත්තිය',
 
 'badaccess'        => 'අවසරදීමේ දෝෂයකි',
@@ -472,7 +473,7 @@ $1",
 'viewsourceold'           => 'මූලාශ්‍රය නරඹන්න',
 'editlink'                => 'සංස්කරණය',
 'viewsourcelink'          => 'මූලාශ්‍රය නරඹන්න',
-'editsectionhint'         => 'ඡේද සංස්කරණය: $1',
+'editsectionhint'         => 'ඡේදය සංස්කරණය කරන්න: $1',
 'toc'                     => 'පටුන',
 'showtoc'                 => 'පෙන්වන්න',
 'hidetoc'                 => 'සඟවන්න',
@@ -485,12 +486,14 @@ $1",
 'feed-invalid'            => 'දායකත්ව පෝෂකයෙහි ශෛලිය අනීතිකය.',
 'feed-unavailable'        => 'සමග්‍රහ පෝෂකයන් නොමැත',
 'site-rss-feed'           => '$1 RSS පෝෂකය',
-'site-atom-feed'          => '$1 Atom පෝෂකය',
+'site-atom-feed'          => '$1 අටොම් පෝෂකය',
 'page-rss-feed'           => '"$1" RSS පෝෂකය',
 'page-atom-feed'          => '"$1" Atom පෝෂකය',
 'feed-atom'               => 'Atom',
 'feed-rss'                => 'RSS',
 'red-link-title'          => '$1 (පිටුව නොපවතියි)',
+'sort-descending'         => 'අවරෝහණ වර්ගය',
+'sort-ascending'          => 'ආරෝහණ වර්ගය',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'පිටුව',
@@ -605,7 +608,7 @@ $2',
 'yourname'                   => 'පරිශීලක නාමය:',
 'yourpassword'               => 'මුරපදය:',
 'yourpasswordagain'          => 'මුරපදය යළි ඇතුළු කරන්න:',
-'remembermypassword'         => 'මාගේ ප්‍රවිෂ්ටය පිළිබඳ මෙම browser මතකයෙහි (උපරිම ලෙස{{PLURAL:$1|දිනයක්|දින $1 ක්}}) තබාගන්න',
+'remembermypassword'         => 'මාගේ පිවිසීම මෙම browser මතකයෙහි (උපරිම ලෙස{{PLURAL:$1|දිනයක්|දින $1 ක්}}) තබාගන්න',
 'securelogin-stick-https'    => 'ඇතුල්වීමෙන් පසුවද HTTPS හරහා සම්බන්ධ වන්න',
 'yourdomainname'             => 'ඔබගේ වසම:',
 'externaldberror'            => 'එක්කෝ සත්‍යාවත් දත්ත-ගබඩා දෝෂයක් පැවතුනි නැතිනම් ඔබගේ බාහිර ගිණුම යාවත්කාලීන කිරීමට ඔබ හට අවසර දී නොමැත.',
@@ -614,33 +617,34 @@ $2',
 'loginprompt'                => '{{SITENAME}} වෙත ප්‍රවිෂ්ට වීම සඳහා ඔබ විසින් කුකීස් සක්‍රීය කොට තිබිය යුතුය.',
 'userlogin'                  => 'පිවිසෙන්න / නව ගිණුමක් තනන්න',
 'userloginnocreate'          => 'ප්‍රවිෂ්ට වන්න',
-'logout'                     => 'නිෂ්ක්‍රමණය',
+'logout'                     => 'නික්මීම',
 'userlogout'                 => 'නික්මීම',
-'notloggedin'                => 'ප්‍රවිෂ්ට වී නොමැත',
+'notloggedin'                => 'ප්‍රවිසී නැත',
 'nologin'                    => "ඔබ හට ගිණුමක් නොමැතිද? '''$1'''.",
 'nologinlink'                => 'ගිණුමක් තනන්න',
 'createaccount'              => 'ගිණුම තනන්න',
 'gotaccount'                 => "දැනටමත් ගිණුමක් තිබේද? '''$1'''.",
 'gotaccountlink'             => 'ප්‍රවිෂ්ට වන්න',
+'userlogin-resetlink'        => 'ඔබගේ ප්‍රවිෂ්ට වීමේ තොරතුරු අමතක වුනාද?',
 'createaccountmail'          => 'විද්‍යුත් තැපෑල මගින්',
 'createaccountreason'        => 'හේතුව:',
 'badretype'                  => 'ඔබ ඇතුළු කල මුරපදය නොගැලපේ.',
 'userexists'                 => 'ඔබ ඇතුළු කල පරිශීලක නාමය දැනටමත් භාවිතයෙහි ඇත.
 කරුණාකර වෙනත් නමක් තෝරා ගන්න.',
-'loginerror'                 => 'ප්‍රවිෂ්ට වීමේ දෝෂයකි',
+'loginerror'                 => 'ප්‍රවිසීමේ දෝෂයකි',
 'createaccounterror'         => 'ගිණුම නිර්මාණය කළ නොහැකි විය:$1',
-'nocookiesnew'               => 'පරිශීලක ගිණුම තනා ඇති නමුදු, ඔබ ප්‍රවිෂ්ට වී නොමැත.
+'nocookiesnew'               => 'පරිශීලක ගිණුම තනා ඇති නමුදු, ඔබ ප්‍රවිසී නැත.
 පරිශීලකයන් ප්‍රවිෂ්ට කර ගැනීම සඳහා, {{SITENAME}} විසින් කුකී භාවිතා කරයි.
 ඔබ විසින් කුකී අක්‍රීය කර ඇත.
-කරුණාකර ඒවා සක්‍රීය කොට, ඔබගේ නව පරිශීලක-නාමය හා මුර-පදය ඇසුරෙන් ප්‍රවිෂ්ට වන්න.',
+කරුණාකර ඒවා සක්‍රීය කොට, ඔබගේ නව පරිශීලක-නාමය හා මුර-පදය ඇසුරෙන් පිවිසෙන්න.',
 'nocookieslogin'             => 'පරිශීලකයන් ප්‍රවිෂ්ට කර ගැනීම සඳහා, {{SITENAME}} විසින් කුකී භාවිතා කරනු ලැබේ.
 ඔබ විසින් කුකී අක්‍රීය නොට ඇත.
 කරුණාකර, ඒවා සක්‍රීය කොට, නැවත උත්සාහ ‍කරන්න.',
 'nocookiesfornew'            => 'මූලාශ්‍රය තහවුරු කරගත නොහැකි වුනු බැවින් පරිශීලක ගිණුම නොතැනිනි.
 කුකීස් සක්‍රීය බව තහවුරු කරගෙන, මෙම පිටුව ප්‍රතිපූරණය කර නැවත උත්සාහ කරන්න.',
 'noname'                     => 'වලංගු පරිශීලක-නාමයක් සඳහන් කිරීමට ඔබ අසමත් වී ඇත.',
-'loginsuccesstitle'          => 'ප්‍රවිෂ්ට වීම සාර්ථකයි',
-'loginsuccess'               => "'''ඔබ දැන්, \"\$1\" ලෙස, {{SITENAME}}ට ප්‍රවිෂ්ට විමට සමත් වී ඇත.'''",
+'loginsuccesstitle'          => 'ප්‍රවිසීම සාර්ථකයි',
+'loginsuccess'               => "'''ඔබ දැන්, \"\$1\" ලෙස, {{SITENAME}} වෙත ප්‍රවිෂ්ට විමට සමත් වී ඇත.'''",
 'nosuchuser'                 => '"$1" යන නමැති පරිශීලකයෙකු නොමැත.
 පරිශීලක නාමයන්හි මහාප්‍රාණ ආදිය සැලකේ.
 ඔබගේ අක්ෂර-වින්‍යාසය පිරික්සා බැලීම හෝ, [[Special:UserLogin/signup|නව ගිණුමක් තැනීම]] හෝ සිදුකරන්න.',
@@ -689,6 +693,7 @@ $2',
 'usernamehasherror'          => 'පරිශීලක නාමයේ පූරක අනුලකුණු අඩංගු විය නොහැකිය',
 'login-throttled'            => 'ඔබ විසින් මෑතදී  පමණට වඩා වාර ගණනක් ප්‍රවිෂ්ට වීමට උත්සාහ දරා ඇත.
 යළි උත්සාහ කිරීමට පෙර කරුණාකර මදක් පොරොත්තු වන්න.',
+'login-abort-generic'        => 'ඔබගේ ප්‍රවිෂ්ටය අසාර්ථකයි - රුද්ධයි',
 'loginlanguagelabel'         => 'භාෂාව: $1',
 'suspicious-userlogout'      => 'නිෂ්ක්‍රමණය සඳහා ඔබගේ අයැදුම නිෂ්ප්‍රභා කෙරුනේ එය යොමු කොට ඇත්තේ භින්න(කැඩුනු) බ්‍රවුසරයකින් හෝ නිවේෂණය කෙරෙමින් පවතින ප්‍රොක්සියක් වෙතින් යැයි බැලූ බැල්මට පෙනෙන බැවිනි.',
 
@@ -715,8 +720,17 @@ $2',
 'resetpass-temp-password'   => 'තාවකාලික මුර-පදය:',
 
 # Special:PasswordReset
-'passwordreset'          => 'මුරපදය වෙනස් කරන්න',
-'passwordreset-username' => 'පරිශීලක නාමය:',
+'passwordreset'              => 'මුරපදය වෙනස් කරන්න',
+'passwordreset-text'         => 'ඔබගේ ගිණුම් තොරතුරුවල විද්‍යුත් තැපැල් මතක්කිරීමක් ලබා ගැනීම සදහා මෙම ආකෘතිපත්‍රය සම්පූර්ණ කරන්න.',
+'passwordreset-legend'       => 'මුරපදය යළි පිහිටුවන්න',
+'passwordreset-disabled'     => 'මෙම විකියෙහි මුර පද ප්‍රත්‍යාරම්භ කිරීම් අක්‍රීය කොට ඇත.',
+'passwordreset-pretext'      => '{{PLURAL:$1||පහත දැක්වෙන දත්ත කණ්ඩ වලින් එකක් ඇතුල් කරන්න}}',
+'passwordreset-username'     => 'පරිශීලක නාමය:',
+'passwordreset-email'        => 'විද්‍යුත්-තැපැල් ලිපිනය:',
+'passwordreset-emailtitle'   => '{{SITENAME}}යෙහි ගිණුම් තොරතුරු',
+'passwordreset-emailelement' => 'පරිශීලක නාමය: $1
+තාවකාලික මුරපදය: $2',
+'passwordreset-emailsent'    => 'විද්‍යුත් තැපැල් මතක්කිරීමක් යවන ලදී.',
 
 # Edit page toolbar
 'bold_sample'     => 'තදකුරු පෙළ',
@@ -725,14 +739,14 @@ $2',
 'italic_tip'      => 'ඇලකුරු පෙළ',
 'link_sample'     => 'සබැඳි ශීර්ෂය',
 'link_tip'        => 'අභ්‍යන්තර සබැඳිය',
-'extlink_sample'  => 'http://www.example.com සබැඳියෙහි ශීර්ෂය',
+'extlink_sample'  => 'http://www.example.com සබැඳුම් මාතෘකාව',
 'extlink_tip'     => 'බාහිර සබැඳිය ( http:// උපසර්ගය සිහි තබාගන්න)',
-'headline_sample' => 'සිරස්තල  පෙළ',
-'headline_tip'    => '2වන මට්ටමෙහි සිරස්තලය',
+'headline_sample' => 'සිරස්තල පෙළ',
+'headline_tip'    => '2 වන මට්ටමෙහි සිරස්තලය',
 'nowiki_sample'   => 'ආකෘතිකරණය-නොකල පෙළ මෙහි රුවන්න',
 'nowiki_tip'      => 'විකි ආකෘතිකරණය නොසලකාහරින්න',
 'image_sample'    => 'නිදසුන.jpg',
-'image_tip'       => 'නිවේශිත(embedded) ගොනුව',
+'image_tip'       => 'කා වැද්දූ ගොනුව',
 'media_sample'    => 'නිදසුන.ogg',
 'media_tip'       => 'ගොනු සබැඳිය',
 'sig_tip'         => 'වේලා-මුද්‍රාව හා සමග ඔබගේ විද්‍යුත් අත්සන',
@@ -748,8 +762,8 @@ $2',
 'showpreview'                      => 'පෙරදසුන පෙන්වන්න',
 'showlivepreview'                  => 'තත්කාල පෙර-දසුන',
 'showdiff'                         => 'වෙනස්කිරීම් පෙන්වන්න',
-'anoneditwarning'                  => "'''අවවාදයයි:''' ඔබ පරිශීලකයෙකු වශයෙන් පද්ධතියට ප්‍රවිෂ්ටවී නැත.
-එබැව්න් මෙම පිටුවෙහි සංස්කරණ ඉතිහාසයෙහි, ඔබගේ IP ලිපිනය සටහන් කරගනු ඇත.",
+'anoneditwarning'                  => "'''අවවාදයයි:''' ඔබ පරිශීලකයෙකු වශයෙන් පද්ධතියට ප්‍රවිෂ්ට වී නොමැත.
+ඔබගේ අයිපී යොමුව මෙම පිටුවෙහි සංස්කරණ ඉතිහාසයෙහි වාර්තාගත වෙනු ඇත",
 'anonpreviewwarning'               => 'අවවාදයයි: ඔබ පරිශීලකයෙකු වශයෙන් පද්ධතියට ප්‍රවිෂ්ට වී නොමැත. එමනිසා මෙම පිටුවෙහි සංස්කරණ ඉතිහාසයෙහි, ඔබගේ අන්තර්ජාල ලිපිනය සටහන් කරගැනීමට සිදුවනු ඇත.',
 'missingsummary'                   => "'''සිහිගැන්වීමයි:''' ඔබ විසින් සංස්කරණ සාරාංශයක් සපයා නොමැත.
 ඔබ නැවතත් සුරැකීම ක්ලික් කලහොත්, ඔබගේ සංස්කරණය එවැන්නක් විරහිතවම සුරැකෙනු ඇත.",
@@ -798,7 +812,7 @@ $2',
 'nosuchsectiontext'                => 'ඔබ උත්සාහ කළේ නොපවතින කොටසක් සංස්කරණය කිරීමටයි.
 එම කොටස ඔබ පිටුව නරඹමින් සිටින අතරතුර මකා දමනු ලැබ හෝ දලනය කිරීමට ලක් කර හෝ තිබිය හැක.',
 'loginreqtitle'                    => 'ප්‍රවිෂ්ට වී සිටීම අවශ්‍යයි',
-'loginreqlink'                     => 'ප්‍රවිෂ්ටය',
+'loginreqlink'                     => 'පිවිසෙන්න',
 'loginreqpagetext'                 => 'අනෙකුත් පිටු නරඹනු වස් ඔබ  $1 විය යුතුය.',
 'accmailtitle'                     => 'මුර-පදය යවන ලදි',
 'accmailtext'                      => "[[User talk:$1|$1]] සඳහා අහඹු ලෙස ජනනය කරන ලද මුරපදයක් $2 වෙත යවා ඇත.
@@ -842,8 +856,8 @@ $2',
 රීති ප්‍රකාරව .css හා .js පිටු විසින් ඉංග්‍රීසි කුඩා-අකුරු ශීර්ෂ භාවිතා කෙරෙන බව සිහි තබා ගන්න, නිදසුන. {{ns:user}}:Foo/vector.css මිස {{ns:user}}:Foo/Vector.css නොවන බව.",
 'updated'                          => '(යාවත්කාලීන)',
 'note'                             => "'''සටහන:'''",
-'previewnote'                      => "'''මෙය පෙරදසුනක් පමණකි;
-වෙනස්වීම් සුරැකීම තවමත් සිදුකොට නොමැත!'''",
+'previewnote'                      => "'''මෙය පෙරදසුනක් පමණි.'''
+ඔබගේ වෙනස්කිරීම් තවමත් සුරක්ෂිත කොට නොමැත!",
 'previewconflict'                  => 'ඔබ විසින් සුරැකීම තෝරාගත්තොත්,  ඉහළ පෙළ සංස්කරණ සරියෙහි,  පෙළ දර්ශනය විය හැකි අයුර මෙම පෙර-දසුනෙන් ආවර්ජනය වේ.',
 'session_fail_preview'             => "'''කණගාටුයි! සැසි දත්ත හානියක් හේතුවෙන් අප විසින් ඔබගේ  සංස්කරණය ක්‍රියායයනය කිරීමට නොහැකි වී ඇත.
 කරුණාකර නැවත උත්සාහ කරන්න.
@@ -1153,6 +1167,7 @@ $1",
 'searchmenu-legend'                => 'ගවේෂණ තෝරාගැනීම්',
 'searchmenu-exists'                => "''' මෙම විකියෙහි  \"[[:\$1]]\" ලෙස නම් කර ඇති පිටුවක් ඇත'''",
 'searchmenu-new'                   => "'''මෙම විකියෙහි \"[[:\$1]]\" පිටුව තනන්න!'''",
+'searchmenu-new-nocreate'          => '"$1" යනු වලංගු නොවන පිටු නාමයක් වන අතර ඔබ හට මෙය නිර්මාණය කල නොහැක.',
 'searchhelp-url'                   => 'Help:පටුන',
 'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|මෙම උපසර්ගය භාවිත කරමින් පිටු පිරික්සන්න]]',
 'searchprofile-articles'           => 'අන්තර්ගත පිටු',
@@ -1165,7 +1180,7 @@ $1",
 'searchprofile-images-tooltip'     => 'ගොනු සඳහා ගවේෂණය කරන්න',
 'searchprofile-everything-tooltip' => 'සියළු අන්තර්ගතය ගවේෂණය කරන්න(සාකච්ඡා පිටුද ඇතුළුව)',
 'searchprofile-advanced-tooltip'   => 'අභිරුචි නාමඅවකාශයන්හි ගවේෂණය කරන්න',
-'search-result-size'               => '$1 ({{PLURAL:$2|වචන1 ක් |වචන $2 ක්}})',
+'search-result-size'               => '$1 ({{PLURAL:$2|වචන 1 ක් |වචන $2 ක්}})',
 'search-result-category-size'      => '{{PLURAL:$1|එක් සාමාජීකයෙන්|සාමාජීකයන් $1 ක්}} ({{PLURAL:$2|එක් උප-ප්‍රවර්ගයක්|උප-ප්‍රවර්ග $2 ක්}}, {{PLURAL:$3|එක් ගොනුවක්|ගොනු $3 ක්}})',
 'search-result-score'              => 'අදාළතාව: $1%',
 'search-redirect'                  => '($1 යළි-යොමු කරන්න)',
@@ -1223,9 +1238,10 @@ $1",
 'prefs-rc'                      => '‍නව වෙනස්වීම්',
 'prefs-watchlist'               => 'මුර-ලැයිස්තුව',
 'prefs-watchlist-days'          => 'මුර-ලැයිස්තුවෙහි පෙන්විය යුතු දිනයන්:',
-'prefs-watchlist-days-max'      => '(උපරිමයෙන් දින7 ක්)',
+'prefs-watchlist-days-max'      => 'Maximum 7 days
+උපරිමය දින 7 කි',
 'prefs-watchlist-edits'         => 'ආවර්ධිත මුර-ලැයිස්තුවෙහි පෙන්විය යුතු උපරිම වෙනස්වීම් සංඛ්‍යාව:',
-'prefs-watchlist-edits-max'     => '(උපරිම සංඛ්‍යාව: 1000)',
+'prefs-watchlist-edits-max'     => 'උපරිම සංඛ්‍යාව: 1000',
 'prefs-watchlist-token'         => 'මුරලැයිස්තු ටෝකනය:',
 'prefs-misc'                    => 'විවිධ',
 'prefs-resetpass'               => 'මුර-පදය වෙනස් කරන්න',
@@ -1303,7 +1319,9 @@ HTML ටැගයන් පිරික්සන්න.',
 'email'                         => 'විද්‍යුත් තැපෑල',
 'prefs-help-realname'           => 'සැබෑ නාමය හෙළි කිරීම වෛකල්පිකයි.
 ඔබ විසින් එය හෙළි කල හොත්, ඔබගේ කෘතීන් සඳහා ඔබහට කතෘ-බුහුමන් පිරිනැමීමට එය භාවිතා කරනු ඇත.',
-'prefs-help-email'              => 'විද්‍යුත්-තැපෑල ලිපිනය සැපයීම වෛකල්පිකයි, එනමුදු ඔබගේ මුර-පදය ඔබහට අමතක වූ විටෙක ඔබගේ මුර-පදය යළි පිහිටුවීමට එය අවශ්‍ය වෙයි.',
+'prefs-help-email'              => 'විද්‍යුත් තැපෑල් ලිපිනය අත්‍යාවශ්‍ය නොවේ, එහෙත් මුර පද ප්‍රත්‍යාරම්භ කිරීමට එය අවශ්‍ය වේ (ඔබගේ මුර පදය අමතක වූ විට).',
+'prefs-help-email-others'       => 'ඔබගේ පරිශීලක හෝ පරිශීලක සාකච්ඡා පිටුවෙහි සබැඳියක් ඔස්සේ විද්‍යුත් තැපෑල මගින් අනෙක් අයට ඔබව සම්බන්ධ කර ගැනීම පිණිස තේරිමක් සිදු කල හැක.
+අනෙකුත් පරිශීලකයන් ඔබව අමතන විට ඔබගේ විද්‍යුත් තැපැල් ලිපිනය ශ්‍රැතිමය නොවේ.',
 'prefs-help-email-required'     => 'විද්‍යුත්-ලිපිනය අවශ්‍යයි.',
 'prefs-info'                    => 'මූලික තොරතුරු',
 'prefs-i18n'                    => 'ජාත්‍යන්තරකරණය',
@@ -1623,6 +1641,8 @@ HTML ටැගයන් පිරික්සන්න.',
 කරුණාකර  ගොනු_උඩුගතකිරීම් පරිස්ථිතිය පරික්ෂා කර බලන්න.',
 'uploadscripted'              => 'වෙබ් බ්‍රවුසරයක් මගින් සාවද්‍ය ලෙස අර්ථ පැහැදිය හැකි HTML හෝ ලේඛන ක්‍රම තේතයක් මෙම ගොනුවේ අඩංගු වේ.',
 'uploadvirus'                 => 'මෙම ගොනුවෙහි වයිරසයක් අඩංගුය! විස්තර: $1',
+'uploadjava'                  => 'මෙය ZIP ගොනුවක් වන අතර ජාවා .class ගොනු අඩංගු වෙයි.
+ජාවා ගොනු උඩුගත කිරීම සදහා අවසර ලබා නොදේ, මන්ද ඒවා ආරක්ෂිත අවහිරතා මගහැර යාමට හේතු විය හැක.',
 'upload-source'               => 'මූලාශ්‍ර ගොනුව',
 'sourcefilename'              => 'මූල ගොනුනාමය:',
 'sourceurl'                   => 'මූලාශ්‍ර URL:',
@@ -1871,7 +1891,7 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 'double-redirect-fixed-move' => '[[$1]] ගෙන ගොස් ඇත, එය දැන් [[$2]] වෙතට යළි-යොමුවකි',
 'double-redirect-fixer'      => 'යළි-යොමුවීම් උපස්ථායක',
 
-'brokenredirects'        => 'බිඳුනු යළි-යොමු (Broken redirects)',
+'brokenredirects'        => 'භින්න වූ ආපසු හැරවුම්',
 'brokenredirectstext'    => 'මෙහි පහත දැක්වෙන යළි-යොමුවීම් නොපවතින පිටු වලට සබැඳේ:',
 'brokenredirects-edit'   => 'සංස්කරණය',
 'brokenredirects-delete' => 'මකා දැමීම',
@@ -1916,7 +1936,7 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 'prefixindex'             => 'උපසර්ගය සහිත සියළු පිටු',
 'shortpages'              => 'කෙටි පිටු',
 'longpages'               => 'දිගු පිටු',
-'deadendpages'            => 'ආවෘත-අගැති (Dead-end) පිටු',
+'deadendpages'            => 'අපගත-සීමා පිටු',
 'deadendpagestext'        => 'පහත පිටු, {{SITENAME}} හි අනෙකුත් පිටු වෙත සබැඳී නොමැත.',
 'protectedpages'          => 'ආරක්ෂිත පිටු',
 'protectedpages-indef'    => 'අනිශ්චිත ආරක්ෂණයන් පමණයි',
@@ -1949,7 +1969,7 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 'querypage-disabled'      => 'ක්‍රියාකාරීත්ව හේතූන්මත මෙම විශේෂ පිටුව අක්‍රීය කර ඇත.',
 
 # Book sources
-'booksources'               => 'ග්‍රන්ථ මූලාශ්‍ර',
+'booksources'               => 'මූලාශ්‍ර පොත්',
 'booksources-search-legend' => 'ග්‍රන්ථ මූලාශ්‍ර සඳහා ගවේෂණය කරන්න',
 'booksources-isbn'          => 'ISBN:',
 'booksources-go'            => 'යන්න',
@@ -2065,6 +2085,9 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 'noemailtext'          => 'මෙම පරිශීලකයා නීතික විද්‍යුත්-තැපැල් ලිපිනයක් සඳහන් කර නැත.',
 'nowikiemailtitle'     => 'විද්‍යුත්-තැපෑලයන් කිසිවක් සඳහා අවසර නොමැත',
 'nowikiemailtext'      => 'අනෙකුත් පරිශීලකයන්ගෙන් විද්‍යුත්-තැපැල් ලැබ නොගැනුම මෙම පරිශිලකයා විසින් තෝරාගෙන ඇත.',
+'emailtarget'          => 'ලබන්නාගේ පරිශීලක නාමය ඇතුල් කරන්න',
+'emailusername'        => 'පරිශීලක නාමය:',
+'emailusernamesubmit'  => 'යොමුකරන්න',
 'email-legend'         => 'වෙනත් {{SITENAME}} පරිශීලකයෙකුට විද්‍යුත්-තැපෑලක් යවන්න',
 'emailfrom'            => 'වෙතින්:',
 'emailto'              => 'වෙතට:',
@@ -2126,32 +2149,35 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 'enotif_lastvisited'           => 'ඔබගේ අවසාන පිවිසුමට පසු සිදුවූ සියළු වෙනස්වීම් නැරඹුමට $1 බලන්න.',
 'enotif_lastdiff'              => 'මෙම වෙනස නැරඹීම සඳහා $1 බලන්න.',
 'enotif_anon_editor'           => 'නිර්නාමික පරිශීලක $1',
-'enotif_body'                  => 'සාදර  $WATCHINGUSERNAME,
+'enotif_body'                  => 'හිතවත් $WATCHINGUSERNAME,
 
 
-{{SITENAME}} හි  $PAGETITLE පිටුව,  $PAGEEDITDATE  දිනදී  $PAGEEDITOR විසින් $CHANGEDORCREATED කර ඇති අතර, වත්මන් අනුවාදය සඳහා $PAGETITLE_URL බලන්න.
+{{SITENAME}} මත ඇති $PAGETITLE පිටුව $PAGEEDITOR විසින් $PAGEEDITDATE වැනි දින $CHANGEDORCREATED, වර්තමාන සංශෝධනය සදහා $PAGETITLE_URL බලන්න.
 
 $NEWPAGE
 
-සංස්කාරකගේ  සාරාංශය: $PAGESUMMARY $PAGEMINOREDIT
+Editor\'s summary: $PAGESUMMARY $PAGEMINOREDIT
 
-සංස්කාරක හා සම්බන්ධවීමට:
-තැපෑල: $PAGEEDITOR_EMAIL
-විකි: $PAGEEDITOR_WIKI
+Contact the editor:
+mail: $PAGEEDITOR_EMAIL
+wiki: $PAGEEDITOR_WIKI
 
-ඔබ විසින් මෙම පිටුව වෙත පිවිසුනොත් මිස ඉදිරියෙහිදී සිදුවිය හැකි වෙනස්වීම් අභිමුඛයෙහි වෙනත් කිසිම දෑනුම්දීම් සිදුනොවනු ඇත.
-ඔබගේ මුර ලැයිස්තුවෙහි ඔබගේ සියළු මුරකෙරුණු පිටු සඳහා දැනුම්දීමේ සලකුණු ප්‍රත්‍යාරම්භ කෙරුමද ඔබ හට සිදුකල හැක.
+There will be no other notifications in case of further changes unless you visit this page.
+You could also reset the notification flags for all your watched pages on your watchlist.
 
-             ඔබගේ හිතවත් {{SITENAME}} හි දැනුම්දීමේ පද්ධතිය
+             Your friendly {{SITENAME}} notification system
 
 --
-ඔබගේ මුරලැයිස්තු පරිස්ථිතීන් වෙනස්කිරීම සඳහා
-{{fullurl:{{#special:Watchlist}}/edit}} වෙත පිවිසෙන්න
+To change your email notification settings, visit
+{{fullurl:{{#special:Preferences}}}}
 
-ඔබගේ මුරලැයිස්තුවෙන් පිටුව මකා දැමීම සඳහා වූ
-$UNWATCHURL වෙත පිවිසෙන්න
+To change your watchlist settings, visit
+{{fullurl:{{#special:Watchlist}}/edit}}
 
-ප්‍රතිපෝෂණය හා වැඩිමනත්  සහාය:
+To delete the page from your watchlist, visit
+$UNWATCHURL
+
+Feedback and further assistance:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
@@ -2302,7 +2328,7 @@ $2 ගේ අවසන් අනුවාදය වෙතට යළි වෙන
 එක්කෝ ඔබගේ සබැඳිය සදොස්ය, නැතහොත් සංශෝධනය ප්‍රතිෂ්ඨාපනයට හෝ සංරක්ෂිතයෙන් ඉවත් කිරීමට හෝ  ලක්ව තිබේ.',
 'undelete-nodiff'              => 'පූර්ව සංශෝධන කිසිවක් සොයා ගත නොහැකි විය.',
 'undeletebtn'                  => 'ප්‍රතිෂ්ඨාපනය',
-'undeletelink'                 => 'නරඹන්න/ප්‍රතිෂ්ඨාපනය කරන්න',
+'undeletelink'                 => 'බලන්න/යලි පිහිටුවන්න',
 'undeleteviewlink'             => 'නරඹන්න',
 'undeletereset'                => 'ප්‍රත්‍යාරම්භ කරන්න',
 'undeleteinvert'               => 'තෝරාගැනුම කණපිට පෙරලන්න',
@@ -2334,9 +2360,10 @@ $1',
 'undelete-show-file-submit'    => 'ඔව්',
 
 # Namespace form on various pages
-'namespace'      => 'නාමඅවකාශය:',
-'invert'         => 'තෝරාගැනුම ප්‍රතිලෝම කරන්න',
-'blanknamespace' => '(ප්‍රධාන)',
+'namespace'             => 'නාමඅවකාශය:',
+'invert'                => 'තෝරාගැනුම ප්‍රතිලෝම කරන්න',
+'namespace_association' => 'ආශ්‍රිත නාම අවකාශය',
+'blanknamespace'        => '(ප්‍රධාන)',
 
 # Contributions
 'contributions'       => 'මේ පරිශීලකයාගේ දායකත්ව',
@@ -2387,6 +2414,9 @@ $1',
 'whatlinkshere-filters'    => 'පෙරහන්',
 
 # Block/unblock
+'autoblockid'                     => 'ස්වයංවාරණය #$1',
+'block'                           => 'පරිශීලකයා වාරණය කරන්න',
+'unblock'                         => 'පරිශීලකයාගේ වාරණය අත්හිටුවන්න',
 'blockip'                         => 'පරිශීලකයා වාරණය කරන්න',
 'blockip-title'                   => 'පරිශීලකයා වාරණය කරන්න',
 'blockip-legend'                  => 'වාරණයකල පරිශීලක',
@@ -2430,8 +2460,13 @@ $1',
 'ipusubmit'                       => 'මෙම වාරණය කිරීම අත්හිටුවන්න',
 'unblocked'                       => '[[User:$1|$1]]  වාරණය අත්හිටුවා ඇත',
 'unblocked-id'                    => '$1 වාරණය ඉවත් කරගන්නා ලදි',
-'ipblocklist'                     => 'වාරණයකල IP ලිපින හා පරිශීලක-නාම',
+'ipblocklist'                     => 'වාරණය කල පරිශීලකයන්',
 'ipblocklist-legend'              => 'වාරණය කෙරුනු පරිශීලකයා සොයන්න',
+'blocklist-timestamp'             => 'කාලමුද්‍රාව',
+'blocklist-target'                => 'ඉලක්කය',
+'blocklist-expiry'                => 'ඉකුත් වන්නේ',
+'blocklist-params'                => 'පරාමිතියන් අවහිර කරන්න',
+'blocklist-reason'                => 'හේතුව',
 'ipblocklist-submit'              => 'ගවේෂණය',
 'ipblocklist-localblock'          => 'පෙදෙසි අවහිරය',
 'ipblocklist-otherblocks'         => 'අනෙක් {{PLURAL:$1|අවහිර කිරීම|අවහිර කිරීම්}}',
@@ -2462,7 +2497,7 @@ $1 ගේ වාරණයට හේතුව මෙය වේ: "$2"',
 වර්තමානයෙහි ක්‍රියාත්මක වන තහනම් හා වාරණ සඳහා [[Special:BlockList|අන්තර්ජාල ලිපිනයන් වාරණ ලැයිස්තුව]] බලන්න.',
 'unblocklogentry'                 => '$1 හි වාරණය අත්හිටුවන ලදි',
 'block-log-flags-anononly'        => 'නිර්නාමික පරිශීලකයන් පමණි',
-'block-log-flags-nocreate'        => 'ගිණුම් තැනීම අක්‍රීයකර ඇත',
+'block-log-flags-nocreate'        => 'ගිණුම් තැනීම අක්‍රීය කර ඇත',
 'block-log-flags-noautoblock'     => 'ස්වයංක්‍රීය වාරණය අක්‍රීය කොට ඇත',
 'block-log-flags-noemail'         => 'විද්‍යුත්-තැපෑල වාරණය කොට ඇත',
 'block-log-flags-nousertalk'      => 'ස්වීය සාකච්ඡා පිටුව සංස්කරණය කල නොහැක',
@@ -2579,7 +2614,7 @@ $1 ගේ වාරණයට හේතුව මෙය වේ: "$2"',
 'movepage-page-unmoved'        => ' $1 පිටුව  $2 වෙත ගෙනයෑම සිදුකල නොහැකි විය.',
 'movepage-max-pages'           => '{{PLURAL:$1|එක් පිටුවක|පිටු $1 ක}}  උපරිමයකට යටත්ව ගෙනයෑම සිදුකර ඇති අතර ස්වයංක්‍රීය ලෙස ගෙනයෑම තවදුරටත් සිදු නොවනු ඇත.',
 '1movedto2'                    => '[[$1]] යන්න [[$2]] වෙත ගෙන යන ලදි',
-'1movedto2_redir'              => 'යළි-යොමුකිරීමක් මගින් [[$2]] වෙත  [[$1]] ගෙන යන ලදි',
+'1movedto2_redir'              => 'ආපසු හරවා යැවීමක් ඔස්සේ [[$2]] වෙත [[$1]] ගෙන යන ලදි',
 'move-redirect-suppressed'     => 'යළි-යොමුකිරීම් යටපත් කෙරිණි',
 'movelogpage'                  => 'ගෙනයෑම් සටහන',
 'movelogpagetext'              => 'පහත දැක්වෙන්නේ ගෙනගිය පිටු ලැයිස්තුවකි.',
@@ -2678,8 +2713,8 @@ $1 ගේ වාරණයට හේතුව මෙය වේ: "$2"',
 'import-interwiki-namespace' => 'ගමනාන්ත නාමඅවකාශය:',
 'import-upload-filename'     => 'ගොනු-නාමය:',
 'import-comment'             => 'පරිකථනය:',
-'importtext'                 => '[[Special:Export|නිර්යාත උපයුක්තය]] භාවිතා කරමින් ගොනුව මූල විකියෙන් නිර්යාත කිරීමට කාරුණික වන්න.
-ඔය ඔබගේ පරිගණකයෙහි සුරැක මෙහි උඩුගත කරන්න.',
+'importtext'                 => 'කරුණාකර [[Special:Export|නිර්යාත උපයුක්තය]] භාවිත කරමින් මූලාශ්‍ර විකිය මගින් ගොනුව නිර්යාත කරන්න .
+එය ඔබේ පරිගණකයෙහි සුරක්ෂිත කොට මෙතැනට උඩුගත කරන්න.',
 'importstart'                => 'පිටු ආයාත කරමින්...',
 'import-revision-count'      => ' {{PLURAL:$1|සංශෝධනය|සංශෝධන $1 ක්}}',
 'importnopages'              => 'ආයාත කිරීමට කිසිදු පිටුවක් නොමැත.',
@@ -2724,7 +2759,7 @@ $1 ගේ වාරණයට හේතුව මෙය වේ: "$2"',
 'tooltip-pt-preferences'          => 'මගේ අභිරුචි',
 'tooltip-pt-watchlist'            => 'වෙනස්වීම් සිදුවී තිබේදැයි යන්න පිලිබඳව ඔබගේ විමසුමට ලක්ව ඇති පිටු ලැයිස්තුව',
 'tooltip-pt-mycontris'            => 'ඔබගේ දායකත්වයන් ලැයිස්තුව‍',
-'tooltip-pt-login'                => 'එය අවශ්‍ය‍යෙන් කල යුත්තක් ‍නොවුනද, ප්‍රවිෂ්ට වීම සඳහා ඔබ ධෛර්යමත් කරනු ලැබේ.',
+'tooltip-pt-login'                => 'ප්‍රවිෂ්ට වීම සදහා ඔබට අනුබල දෙයි; එසේ වුවත්, එය අනුගම්‍ය නොවේ',
 'tooltip-pt-anonlogin'            => 'එය අවශ්‍ය‍යෙන් කල යුත්තක් ‍නොවුනද, ප්‍රවිෂ්ට වීම සඳහා ඔබ ධෛර්යමත් කරනු ලැබේ.',
 'tooltip-pt-logout'               => 'නික්මීම',
 'tooltip-ca-talk'                 => 'අන්තර්ගත පිටුව පිළිබඳ සාකච්ඡාව',
@@ -2741,17 +2776,17 @@ $1 ගේ වාරණයට හේතුව මෙය වේ: "$2"',
 'tooltip-ca-move'                 => 'මෙම පිටුව ගෙන යන්න',
 'tooltip-ca-watch'                => 'මෙම පිටුව ඔබගේ මුර-ලැයිස්තුවට එක් කරන්න',
 'tooltip-ca-unwatch'              => 'මෙම පිටුව ඔබගේ මුර-ලැයිස්තුවෙන් ඉවත් කරන්න',
-'tooltip-search'                  => '{{SITENAME}} ගවේෂණය',
+'tooltip-search'                  => '{{SITENAME}} ගවේෂණය කරන්න',
 'tooltip-search-go'               => 'මෙම නාමය එලෙසම ඇති පිටුවක් ඇත්නම් එය වෙත යන්න',
 'tooltip-search-fulltext'         => 'මෙම පෙළ අඩංගු පිටු ගවේෂණය කරන්න',
-'tooltip-p-logo'                  => 'මුල් පිටුව',
+'tooltip-p-logo'                  => 'මුල් පිටුව වෙත ගමන් කරන්න',
 'tooltip-n-mainpage'              => 'මුල් පිටුව‍ට පිවිසෙන්න',
 'tooltip-n-mainpage-description'  => 'මුල් පිටුව‍ට පිවිසෙන්න',
-'tooltip-n-portal'                => 'ව්‍යාපෘතියට අදාළව, ඔබට සිදුකල හැකි දෑ, අවශ්‍ය දෑ සොයා ගත හැකි අයුරු, යනාදී වැදගත් තොරතුරු',
+'tooltip-n-portal'                => 'ව්‍යාපෘති පිළිබඳ, ඔබට කල හැක්කේ කුමක්ද, තොරතුරු සොයාගත හැක්කේ කොතැනද',
 'tooltip-n-currentevents'         => 'කාලීන සිදුවීම් පිළිබඳ පසුබිම් තොරතුරු සොයා දැනගන්න',
 'tooltip-n-recentchanges'         => 'විකියෙහි මෑත වෙනස්වීම් දැක්වෙන ලැයිස්තුවක්.',
 'tooltip-n-randompage'            => 'අහඹු පිටුවක් ප්‍රවේශනය කරන්න',
-'tooltip-n-help'                  => 'තොරතුරු සොයාගතහැකි තැන.',
+'tooltip-n-help'                  => 'සොයා දැනගත හැකි තැන.',
 'tooltip-t-whatlinkshere'         => 'මෙය හා සබැ‍ඳෙන සියළු විකි පිටු ලැයිස්තුව',
 'tooltip-t-recentchangeslinked'   => 'මෙම පිටුව හා සබැඳි පිටුවල ‍නව වෙනස්වීම්',
 'tooltip-feed-rss'                => 'මෙම පිටුව සඳහා RSS පෝෂකය',
@@ -2966,8 +3001,8 @@ Variants for Chinese language
 ගොනුව මුලින්ම පැවැති තත්ත්වයෙහි සිට විකරණය කොට තිබේ නම්, සමහරක් තොරතුරු විකරිත ගොනුව පූර්ණ වශයෙන් පිළිඹිමු නොකරනු ඇත.',
 'metadata-expand'   => 'විස්තීරණය කරන ලද විස්තර පෙන්වන්න',
 'metadata-collapse' => 'විස්තීරණය කරන ලද විස්තර සඟවන්න',
-'metadata-fields'   => 'පාරදත්ත වගුව බිඳවැටෙන විට, මෙම පණිවුඩයෙහි ලැයිස්තු ගත කොට ඇති  EXIF පාරදත්ත ක්ෂේත්‍රයන් රූප පිටු ප්‍රදර්ශනයෙහි ඇතුළත් කෙරෙයි.
-අනෙක්වා ‍‍ පෙරනිමියෙන් සඟවනු ලැබේ.
+'metadata-fields'   => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
+Others will be hidden by default.
 * make
 * model
 * datetimeoriginal
@@ -3016,8 +3051,8 @@ Variants for Chinese language
 'exif-colorspace'                  => 'වර්ණ අවකාශය',
 'exif-componentsconfiguration'     => 'එක් එක් සංරචකයේ අර්ථය',
 'exif-compressedbitsperpixel'      => 'රූප සම්පීඩන මාදිලිය',
-'exif-pixelydimension'             => 'නීතිකරූප පළල',
-'exif-pixelxdimension'             => 'නීතික රූප උස',
+'exif-pixelydimension'             => 'ප්‍රතිබිම්බයෙහි පළල',
+'exif-pixelxdimension'             => 'ප්‍රතිබිම්බයෙහි උස',
 'exif-usercomment'                 => 'පරිශීලක පරිකථනයන්',
 'exif-relatedsoundfile'            => 'සහසම්බන්ධිත ශ්‍රව්‍ය ගොනුව',
 'exif-datetimeoriginal'            => 'දත්ත ජනන දිනය හා වේලාව',
@@ -3032,9 +3067,9 @@ Variants for Chinese language
 'exif-exposureprogram'             => 'නිරාවරණ වැඩසටහන',
 'exif-spectralsensitivity'         => 'වර්ණාවලී සංවේදිතාවය',
 'exif-isospeedratings'             => 'ISO වේග ඇගැයුම',
-'exif-shutterspeedvalue'           => 'ෂටර වේගය',
-'exif-aperturevalue'               => 'විවරය',
-'exif-brightnessvalue'             => 'දීප්තතාවය',
+'exif-shutterspeedvalue'           => 'APEX ශටර වේගය',
+'exif-aperturevalue'               => 'APEX විවරය',
+'exif-brightnessvalue'             => 'APEX දීප්තිය',
 'exif-exposurebiasvalue'           => 'නිරාවරණ නැඹුරුව',
 'exif-maxaperturevalue'            => 'උපරිම භූමි විවරය',
 'exif-subjectdistance'             => 'වස්තු දුර',
@@ -3097,10 +3132,51 @@ Variants for Chinese language
 'exif-gpsareainformation'          => 'GPS සරියෙහි නම',
 'exif-gpsdatestamp'                => 'GPS දිනය',
 'exif-gpsdifferential'             => 'GPS ආන්තරීක ශෝධනය',
+'exif-keywords'                    => 'මූලපද',
+'exif-countrydest'                 => 'පෙන්වනලද රට',
+'exif-citydest'                    => 'පෙන්වනලද නගරය',
+'exif-objectname'                  => 'කෙටි මාතෘකාව',
+'exif-headline'                    => 'ශිරස්තලය',
+'exif-credit'                      => 'විශ්වාසය/ප්‍රතිපාදකයා',
+'exif-source'                      => ' මූලාශ්‍රය',
+'exif-urgency'                     => 'අවශ්‍යතාව',
+'exif-fixtureidentifier'           => 'සවිකුරු නාමය',
+'exif-locationdest'                => 'විස්තර දක්වන ලද පිහිටීම',
+'exif-contact'                     => 'සම්බන්ධ කර ගැනීම් තොරතුරු',
+'exif-writer'                      => 'රචකයා',
+'exif-languagecode'                => 'භාෂාව',
+'exif-iimversion'                  => 'IIM අනුවාදය',
+'exif-iimcategory'                 => 'ප්‍රවර්ගය',
+'exif-iimsupplementalcategory'     => 'අතිරේක ප්‍රවර්ගයන්',
+'exif-datetimeexpires'             => 'මෙයින් පසු භාවිත නොකරන්න',
+'exif-datetimereleased'            => 'වුහුටු වූයේ',
+'exif-identifier'                  => 'හඳුන්වනය',
+'exif-lens'                        => 'භාවිත කරන ලද කාචය',
+'exif-serialnumber'                => 'කැමරාවේ 	අනුක්‍රමික අංකය',
+'exif-cameraownername'             => 'කැමරාවේ අයිතිකරු',
+'exif-label'                       => 'ලේබලය',
+'exif-rating'                      => 'ඇගැයුම (5 න් උපන්)',
+'exif-copyrighted'                 => 'හිමිකම් තත්ත්වය',
+'exif-copyrightowner'              => 'හිමිකම් දරන්නා',
+'exif-usageterms'                  => 'භාවිතයේ කොන්දේසි',
+'exif-webstatement'                => 'මාර්ගගත ප්‍රකාශන හිමිකම් ප්‍රකාශය',
+'exif-pngfilecomment'              => 'PNG ගොනු නිදර්ශනය',
+'exif-disclaimer'                  => 'වියාචනය',
+'exif-contentwarning'              => 'තෘප්ති අවවාදය',
+'exif-giffilecomment'              => 'GIF ගොනු නිදර්ශනය',
+'exif-intellectualgenre'           => 'අයිතමයේ වර්ගය',
+'exif-subjectnewscode'             => 'විෂය කේතය',
+'exif-scenecode'                   => 'IPTC දර්ශන කේතය',
+'exif-event'                       => 'විස්තර දක්වන ලද සිද්ධිය',
+'exif-organisationinimage'         => 'විස්තර දක්වන ලද සංවිධානය',
+'exif-personinimage'               => 'පුද්ගලික වචනයෙන් විස්තර කරන ලද',
 
 # EXIF attributes
 'exif-compression-1' => 'අසංක්ෂිප්ත',
 'exif-compression-6' => 'JPEG',
+
+'exif-copyrighted-true'  => 'කර්තෘ හිමිකම් තබාගත්',
+'exif-copyrighted-false' => 'පොදු රාජ්‍ය',
 
 'exif-photometricinterpretation-2' => 'RGB',
 'exif-photometricinterpretation-6' => 'YCbCr',
@@ -3123,7 +3199,7 @@ Variants for Chinese language
 'exif-xyresolution-c' => '$1 dpc',
 
 'exif-colorspace-1'     => 'sRGB',
-'exif-colorspace-65535' => 'FFFF.H',
+'exif-colorspace-65535' => 'අක්‍රමාංකිත',
 
 'exif-componentsconfiguration-0' => 'නොපවතියි',
 'exif-componentsconfiguration-1' => 'Y',
@@ -3198,7 +3274,7 @@ Variants for Chinese language
 'exif-sensingmethod-7' => 'ත්‍රිරේඛීය සංවේදකය',
 'exif-sensingmethod-8' => 'වර්ණ අනුක්‍රමික රේඛීය සංවේදකය',
 
-'exif-filesource-3' => 'DSC (ආන්තර පරිලෝකන වර්ණමිතිය)',
+'exif-filesource-3' => 'සංඛ්‍යාංක නිශ්චල කැමරාව',
 
 'exif-scenetype-1' => 'සෘජු ලෙස ඡායරූපගතකල රූපයන්',
 
@@ -3259,9 +3335,62 @@ Variants for Chinese language
 'exif-gpsspeed-m' => 'පැයට සැතපුම්',
 'exif-gpsspeed-n' => 'නාවික සැතපුම්',
 
+# Pseudotags used for GPSDestDistanceRef
+'exif-gpsdestdistance-k' => 'කිලෝමීටර',
+'exif-gpsdestdistance-m' => 'හැතැප්ම',
+'exif-gpsdestdistance-n' => 'නාවික සැතපුම්',
+
+'exif-gpsdop-excellent' => 'අනර්ඝයි ($1)',
+'exif-gpsdop-good'      => 'හොඳයි ($1)',
+'exif-gpsdop-moderate'  => 'මධ්‍යස්තයි ($1)',
+'exif-gpsdop-fair'      => 'සතුටුදායකයි ($1)',
+'exif-gpsdop-poor'      => 'දුර්වලයි ($1)',
+
+'exif-objectcycle-a' => 'උදෑසන පමණි',
+'exif-objectcycle-p' => 'සැන්දෑව පමණි',
+'exif-objectcycle-b' => 'උදෑසන සහ සැන්දෑව යන දෙකම',
+
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => 'සත්‍ය දිශාව',
 'exif-gpsdirection-m' => 'චුම්භක දිශාව',
+
+'exif-ycbcrpositioning-1' => 'මධ්‍යස්තිත',
+'exif-ycbcrpositioning-2' => 'සම-පිහිටීම',
+
+'exif-dc-contributor' => 'දායකයින්',
+'exif-dc-date'        => 'දිනය(න්)',
+'exif-dc-publisher'   => 'ප්‍රකාශකයා',
+'exif-dc-relation'    => 'ආශ්‍රිත මාධ්‍ය',
+'exif-dc-rights'      => 'හිමිකම්',
+'exif-dc-source'      => 'මූලාශ්‍ර මාධ්‍ය',
+'exif-dc-type'        => 'මාධ්‍ය වර්ගය',
+
+'exif-rating-rejected' => 'ප්‍රතික්ෂිප්ත',
+
+'exif-isospeedratings-overflow' => '65535 ට වඩා විශාලතර',
+
+'exif-iimcategory-ace' => 'කලා ශිල්ප, සංස්කෘතිය සහ විනෝදය',
+'exif-iimcategory-clj' => 'අපරාධ සහ නීතිය',
+'exif-iimcategory-dis' => 'විපත් සහ හදිසි අනතුරු',
+'exif-iimcategory-fin' => 'ආර්ථිකය සහ ව්‍යාපාර',
+'exif-iimcategory-edu' => 'අධ්‍යාපනය',
+'exif-iimcategory-evn' => 'වටපිටාව',
+'exif-iimcategory-hth' => 'සෞඛ්‍යය',
+'exif-iimcategory-hum' => 'මානව අයිතිය',
+'exif-iimcategory-lab' => 'කම්කරු',
+'exif-iimcategory-lif' => 'ජීවන ක්‍රම සහ විවේකය',
+'exif-iimcategory-pol' => 'දේශපාලනය',
+'exif-iimcategory-rel' => 'ආගම සහ විශ්වාස',
+'exif-iimcategory-sci' => 'විද්‍යාව හා තාක්ෂණය',
+'exif-iimcategory-soi' => 'සමාජීය වාදපද',
+'exif-iimcategory-spo' => 'ක්‍රීඩා',
+'exif-iimcategory-war' => 'යුද්ධ, ගැටුම් සහ කලබල සහිත බව',
+'exif-iimcategory-wea' => 'කාලගුණය',
+
+'exif-urgency-normal' => 'සාමාන්‍යයි ($1)',
+'exif-urgency-low'    => 'අඩුයි ($1)',
+'exif-urgency-high'   => 'ඉහළයි ($1)',
+'exif-urgency-other'  => 'පරිශීලක-අර්ථ දැක්වූ ප්‍රමුඛත්වය ($1)',
 
 # External editor support
 'edit-externally'      => 'බාහිර  උපයෝගයක් භාවිතා කරමින් මෙම ගොනුව සංස්කරණය කරන්න',
@@ -3326,6 +3455,20 @@ $3
 $5
 
 මෙම සහතික කිරීමේ කේතයෙහි වලංගු බව  $4 වන විට ඉකුත් වේ',
+'confirmemail_body_set'     => 'යමෙක්, සමහරවිට ඔබ, $1 යන අයිපී ලිපිනය මගින්,
+has set the e-mail address of the account "$2" to this address on {{SITENAME}}.
+
+To confirm that this account really does belong to you and reactivate
+e-mail features on {{SITENAME}}, open this link in your browser:
+
+$3
+
+If the account does *not* belong to you, follow this link
+to cancel the e-mail address confirmation:
+
+$5
+
+This confirmation code will expire at $4.',
 'confirmemail_invalidated'  => 'විද්‍යුත්-ගැපැල් ලිපිනය තහවුරුකිරීම අවලංගු කෙරිණි',
 'invalidateemail'           => 'විද්‍යුත්-තැපැල් තහවුරුකිරීම අවලංගු කරන්න',
 
@@ -3526,20 +3669,22 @@ MediaWiki බෙදාහැර ඇත්තේ එය ප්‍රයෝජන�
 "{{ns:file}}:" උපසර්ගය විරහිතව ගොනු නාමය ඇතුලත් කරන්න.',
 
 # Special:FileDuplicateSearch
-'fileduplicatesearch'          => 'අනුපිටපත් ගොනු සඳහා ගවේෂණය කරන්න',
-'fileduplicatesearch-summary'  => 'එහි පූරක අගය පාදක කර ගෙන අනුපිටපත් ගොනු සඳහා ගවේෂණය කරන්න.',
-'fileduplicatesearch-legend'   => 'අනුපිටපතක් සඳහා ගවේෂණය කරන්න',
-'fileduplicatesearch-filename' => 'ගොනු-නාමය:',
-'fileduplicatesearch-submit'   => 'ගවේෂණය',
-'fileduplicatesearch-info'     => '$1 × $2 පික්සල<br />ගොනු විශාලත්වය: $3<br />MIME ශෛලිය: $4',
-'fileduplicatesearch-result-1' => '"$1" ගොනුවට සර්වසම අනුපිටපතක් නොමැත.',
-'fileduplicatesearch-result-n' => '"$1" ගොනුවට {{PLURAL:$2|සර්වසම අනුපිටපතක්|සර්වසම අනුපිටපත් $2 ක්}} ඇත.',
+'fileduplicatesearch'           => 'අනුපිටපත් ගොනු සඳහා ගවේෂණය කරන්න',
+'fileduplicatesearch-summary'   => 'එහි පූරක අගය පාදක කර ගෙන අනුපිටපත් ගොනු සඳහා ගවේෂණය කරන්න.',
+'fileduplicatesearch-legend'    => 'අනුපිටපතක් සඳහා ගවේෂණය කරන්න',
+'fileduplicatesearch-filename'  => 'ගොනු-නාමය:',
+'fileduplicatesearch-submit'    => 'ගවේෂණය',
+'fileduplicatesearch-info'      => '$1 × $2 පික්සල<br />ගොනු විශාලත්වය: $3<br />MIME ශෛලිය: $4',
+'fileduplicatesearch-result-1'  => '"$1" ගොනුවට සර්වසම අනුපිටපතක් නොමැත.',
+'fileduplicatesearch-result-n'  => '"$1" ගොනුවට {{PLURAL:$2|සර්වසම අනුපිටපතක්|සර්වසම අනුපිටපත් $2 ක්}} ඇත.',
+'fileduplicatesearch-noresults' => '"$1" නමින් ගොනුවක් හමු නොවුණි',
 
 # Special:SpecialPages
 'specialpages'                   => 'විශේෂ පිටු',
 'specialpages-note'              => '----
 * සාමාන්‍ය විශේෂ පිටු.
-* <strong class="mw-specialpagerestricted">සීමිත විශේෂ පිටු.</strong>',
+* <span class="mw-specialpagerestricted">සීමිත විශේෂ පිටු.</span>
+* <span class="mw-specialpagecached">සුරක්ෂිත වන විශේෂ පිටු.</span>',
 'specialpages-group-maintenance' => 'නඩත්තු වාර්තා',
 'specialpages-group-other'       => 'අනෙකුත් විශේෂ පිටු',
 'specialpages-group-login'       => 'ප්‍රවිෂ්ට වන්න / ගිණුමක් තනන්න',

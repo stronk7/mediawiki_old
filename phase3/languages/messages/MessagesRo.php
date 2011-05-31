@@ -596,6 +596,8 @@ $1',
 'page-rss-feed'           => '„$1” Abonare RSS',
 'page-atom-feed'          => '„$1” Abonare Atom',
 'red-link-title'          => '$1 (pagină inexistentă)',
+'sort-descending'         => 'Sortare descendentă',
+'sort-ascending'          => 'Sortare ascendentă',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Pagină',
@@ -615,7 +617,9 @@ $1',
 S-ar putea să fi introdus greșit URL-ul, sau să fi urmat o legătură incorectă.
 Aceasta s-ar putea să indice și un bug în programul folosit de {{SITENAME}}.',
 'nosuchspecialpage' => 'Această pagină specială nu există',
-'nospecialpagetext' => 'Ai cerut o [[Special:SpecialPages|pagină specială]] care nu este recunoscută de {{SITENAME}}.',
+'nospecialpagetext' => '<strong>Ați cerut o [[Special:SpecialPages|pagină specială]] invalidă.</strong>
+
+O listă cu paginile speciale valide se poate găsi la [[Special:SpecialPages|{{int:specialpages}}]].',
 
 # General errors
 'error'                => 'Eroare',
@@ -808,6 +812,7 @@ Este posibil să fi reușit deja schimbarea parolei sau să fi cerut o parolă t
 'passwordreset-text'           => 'Completați acest formular pentru a primi un e-mail cu datele contului dumneavoastră.',
 'passwordreset-legend'         => 'Resetare parolă',
 'passwordreset-disabled'       => 'Resetarea parolei a fost dezactivată pe acest wiki.',
+'passwordreset-pretext'        => '{{PLURAL:$1| | Introduceți mai jos o parte din informații}}',
 'passwordreset-username'       => 'Nume de utilizator:',
 'passwordreset-email'          => 'Adresă de e-mail:',
 'passwordreset-emailtitle'     => 'Detalii despre cont pe {{SITENAME}}',
@@ -819,6 +824,7 @@ $2
 Ar trebui să vă autentificați și să alegeți acum o nouă parolă. Dacă altcineva a făcut această solicitare, ori dacă v-ați reamintit parola originală și nu mai doriți modificarea ei, puteți ignora acest mesaj, continuând cu vechea parolă.',
 'passwordreset-emailelement'   => 'Nume de utilizator: $1
 Parolă temporară: $2',
+'passwordreset-emailsent'      => 'A fost trimis un e-mail de reamintire.',
 
 # Edit page toolbar
 'bold_sample'     => 'Text aldin',
@@ -1280,7 +1286,7 @@ Folosirea linkurilor de navigare va reseta această coloană.',
 'powersearch'                      => 'Căutare avansată',
 'powersearch-legend'               => 'Căutare avansată',
 'powersearch-ns'                   => 'Căutare în spațiile de nume:',
-'powersearch-redir'                => 'Afișează redirectările',
+'powersearch-redir'                => 'Afișează redirecționările',
 'powersearch-field'                => 'Caută după',
 'powersearch-togglelabel'          => 'Marchează:',
 'powersearch-toggleall'            => 'Tot',
@@ -2220,7 +2226,7 @@ Modificările viitoare efectuate asupra acestei pagini dar și asupra paginii de
 'enotif_anon_editor'           => 'utilizator anonim $1',
 'enotif_body'                  => 'Domnule/Doamnă $WATCHINGUSERNAME,
 
-Pagina $PAGETITLE de la {{SITENAME}} a fost $CHANGEDORCREATED la $PAGEEDITDATE de către $PAGEEDITOR. Vedeți la $PAGETITLE_URL versiunea curentă.
+Pagina $PAGETITLE de la {{SITENAME}} a fost $CHANGEDORCREATED în data de $PAGEEDITDATE de către $PAGEEDITOR. Vedeți la $PAGETITLE_URL versiunea curentă.
 
 $NEWPAGE
 
@@ -2230,15 +2236,19 @@ Puteți contacta utilizatorul:
 e-mail: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Nu veți mai primi notificări în cazul unor viitoare modificări în afara cazului în care vizitați pagina. Puteți de asemenea reseta notificările pentru alte pagini urmărite.
+Nu veți mai primi notificări în cazul unor viitoare modificări până când nu veți vizitați pagina. 
+Puteți de asemenea reseta notificările pentru toate pagini pe care le urmăriți.
 
-             Al dvs. amic, sistemul de notificare de la {{SITENAME}}
+             Al dumneavoastră amic, sistemul de notificare de la {{SITENAME}}
 
 --
-Pentru a modifica preferințele listei de urmărire vizitați
+Pentru a modifica setările notificării prin e-mail, vizitați
+{{fullurl:{{#special:Preferences}}}}
+
+Pentru a modifica setările listei de pagini urmărite, vizitați
 {{fullurl:{{#special:Watchlist}}/edit}}
 
-Pentru a nu mai urmări pagina vizitați
+Pentru a nu mai urmări pagina, vizitați
 $UNWATCHURL
 
 Asistență și suport:
@@ -3388,6 +3398,7 @@ Altele vor fi ascunse implicit.
 'exif-urgency-normal' => 'Normal ($1)',
 'exif-urgency-low'    => 'Scăzut ($1)',
 'exif-urgency-high'   => 'Ridicat ($1)',
+'exif-urgency-other'  => 'Prioritate definită de utilizator ($1)',
 
 # External editor support
 'edit-externally'      => 'Editează acest fișier folosind o aplicație externă.',

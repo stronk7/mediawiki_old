@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Bhawani Gautam
  * @author Bhawani Gautam Rhk
  * @author Ganesh
  * @author Indiver
@@ -1197,22 +1198,22 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 'group-autoconfirmed' => 'स्वत निश्चित गरिएका प्रयोगकर्ताहरु',
 'group-bot'           => 'बोटहरु',
 'group-sysop'         => 'प्रबन्धकहरू',
-'group-bureaucrat'    => 'कुटनीतिज्ञहरु',
+'group-bureaucrat'    => 'प्रशासकहरु',
 'group-suppress'      => 'अतिदृष्टिहरु',
 'group-all'           => '(सबै)',
 
 'group-user-member'          => 'प्रयोगकर्ता',
-'group-autoconfirmed-member' => 'स्वत: निर्धारित प्रयोगकर्ता',
+'group-autoconfirmed-member' => 'स्वनिर्धारित प्रयोगकर्ता',
 'group-bot-member'           => 'बोट',
 'group-sysop-member'         => 'प्रबन्धक',
-'group-bureaucrat-member'    => 'कुटनीतिज्ञ',
+'group-bureaucrat-member'    => 'प्रशासक',
 'group-suppress-member'      => 'अतिदृष्टि',
 
 'grouppage-user'          => '{{ns:project}}:प्रयोगकर्ताहरु',
 'grouppage-autoconfirmed' => '{{ns:project}}:स्वनिर्धारित  प्रयोगकर्ताहरु',
 'grouppage-bot'           => '{{ns:project}}:बोटहरु',
 'grouppage-sysop'         => '{{ns:project}}: प्रबन्धकहरु',
-'grouppage-bureaucrat'    => '{{ns:project}}:कुटनीतिज्ञहरु',
+'grouppage-bureaucrat'    => '{{ns:project}}:प्रशासकहरु',
 'grouppage-suppress'      => '{{ns:project}}:अतिदृष्टि',
 
 # Rights
@@ -1321,7 +1322,7 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 # Recent changes
 'nchanges'                          => '$1 {{PLURAL:$1|परिवर्तन|परिवर्तनहरु}}',
 'recentchanges'                     => 'नयाँ परिवर्तनहरु',
-'recentchanges-legend'              => 'हालैको परिवर्रन विकल्पहरु',
+'recentchanges-legend'              => 'हालैको परिवर्तन विकल्पहरु',
 'recentchangestext'                 => 'विकिका भर्खरका परिवर्तनहरुलाई यस पृष्ठमा पहिल्याउने',
 'recentchanges-feed-description'    => 'यो फिडमा रहेको विकीको सवैभन्दा अन्तिम परिवर्तनहरुको जानकारी राख्नुहोस्',
 'recentchanges-label-newpage'       => 'यो सम्पादनले नयाँ पृष्ठ निर्माण गरेको छ',
@@ -1649,7 +1650,7 @@ $1',
 'protectedpagesempty'     => 'दिइएको प्यारामिटर प्रयोग गरि सुरक्षा गरिएका पृष्ठहरु छैनन् ।',
 'protectedtitles'         => 'सुरक्षा गरिएका शिर्षकहरु',
 'protectedtitlestext'     => 'निम्न शिर्षकहरु शृजनाहुनबाट सुरक्षित गरिएको छ',
-'protectedtitlesempty'    => 'दिइएको प्यारामिटर प्रयोग गरि सुरक्षा गरिएका शिर्षकहरु छैनन् ।',
+'protectedtitlesempty'    => 'दिइएको प्यारामिटर प्रयोग गरि सुरक्षा गरिएका शीर्षकहरु छैनन् ।',
 'listusers'               => 'प्रयोगकर्ता सूची',
 'listusers-editsonly'     => 'सम्पादन गरेका प्रयोगकर्तामात्र देखाउने',
 'listusers-creationsort'  => 'सृजना मिति अनुसार क्रमवद्ध गर्ने',
@@ -1689,11 +1690,13 @@ $1',
 'allpagesto'        => 'निम्नमा अन्तहुने पृष्ठहरु देखाउने:',
 'allarticles'       => 'सबै लेखहरु',
 'allinnamespace'    => 'सबै पृष्ठहरु ($1 नेमस्पेस)',
-'allnotinnamespace' => 'सबै पृष्ठहरु ($1 नेमस्पेसमा छिनन् )',
+'allnotinnamespace' => 'सबै पृष्ठहरु ($1 नेमस्पेसमा छैनन् )',
 'allpagesprev'      => 'अघिल्लो',
 'allpagesnext'      => 'अर्को',
-'allpagessubmit'    => 'जानुहोस्',
+'allpagessubmit'    => 'जाने',
 'allpagesprefix'    => 'यी सुरुका अक्षरसहितका पृष्ठहरु हेर्ने:',
+'allpagesbadtitle'  => 'दिएको पृष्ठ शीर्षक अमान्य, खाली वा गलत रुपमा अन्तर भाषा वा अन्तर विकी सम्बन्ध गरिएको थियो।  
+यसमा शीर्षकमा प्रयोग गर्न नमिल्ने एक वा बढी अक्षरहरू रहेका हुनसक्छन् ।',
 'allpages-bad-ns'   => '{{SITENAME}} को नामस्थान छैन "$1" ।',
 
 # Special:Categories

@@ -168,6 +168,7 @@ $messages = array(
 'listingcontinuesabbrev'         => '(дале)',
 'index-category'                 => 'Індексованы сторінкы',
 'noindex-category'               => 'Неіндексованы сторінкы',
+'broken-file-category'           => 'Сторінкы, што ся одказують на неекзістуючі файлы',
 
 'mainpagetext'      => "'''MediaWiki была успішно наіншталована.'''",
 'mainpagedocfooter' => '[http://meta.wikimedia.org/wiki/Help:Contents Мануял хоснователя] Вам порадить, як хосновати MediaWiki.
@@ -208,11 +209,11 @@ $messages = array(
 'vector-action-undelete'         => 'Обновити',
 'vector-action-unprotect'        => 'Одомкнути',
 'vector-simplesearch-preference' => 'Поволити росшырены пропозіції гляданя (лем взгляд Vector )',
-'vector-view-create'             => 'Вытворити',
+'vector-view-create'             => 'Створити',
 'vector-view-edit'               => 'Едітовати',
-'vector-view-history'            => 'Відїти історію',
+'vector-view-history'            => 'Видїти історію',
 'vector-view-view'               => 'Чітати',
-'vector-view-viewsource'         => 'Відїти код',
+'vector-view-viewsource'         => 'Видїти код',
 'actions'                        => 'Дїї',
 'namespaces'                     => 'Просторы назв',
 'variants'                       => 'Варіанты',
@@ -256,14 +257,14 @@ $messages = array(
 'talk'              => 'Діскузія',
 'views'             => 'Перегляды',
 'toolbox'           => 'Інштрументы',
-'userpage'          => 'Відїти сторінку хоснователя',
-'projectpage'       => 'Відїти сторінку проєкту',
-'imagepage'         => 'Відїти сторінку файлу',
-'mediawikipage'     => 'Відїти сторінку вістї',
-'templatepage'      => 'Відїти шаблону',
-'viewhelppage'      => 'Відїти сторінку помочі',
-'categorypage'      => 'Відїти сторінку катеґорії',
-'viewtalkpage'      => 'Відїти діскузію',
+'userpage'          => 'Видїти сторінку хоснователя',
+'projectpage'       => 'Видїти сторінку проєкту',
+'imagepage'         => 'Видїти сторінку файлу',
+'mediawikipage'     => 'Видїти сторінку повідомлїнь',
+'templatepage'      => 'Видїти шаблону',
+'viewhelppage'      => 'Видїти сторінку помочі',
+'categorypage'      => 'Видїти сторінку катеґорії',
+'viewtalkpage'      => 'Видїти діскузію',
 'otherlanguages'    => 'Іншыма языками',
 'redirectedfrom'    => '(Напрямленый з $1)',
 'redirectpagesub'   => 'Сторінка-напрямлїня',
@@ -317,9 +318,9 @@ $1',
 'youhavenewmessagesmulti' => 'Маєте новы ознамы на $1',
 'editsection'             => 'едіт.',
 'editold'                 => 'едіт.',
-'viewsourceold'           => 'відїти код',
+'viewsourceold'           => 'видїти код',
 'editlink'                => 'едітовати',
-'viewsourcelink'          => 'відїти код',
+'viewsourcelink'          => 'видїти код',
 'editsectionhint'         => 'Едітовати секцію: $1',
 'toc'                     => 'Обсяг',
 'showtoc'                 => 'вказати',
@@ -337,6 +338,8 @@ $1',
 'page-rss-feed'           => '"$1" RSS канал',
 'page-atom-feed'          => '"$1" Atom канал',
 'red-link-title'          => '$1 (така сторінка не екзістує)',
+'sort-descending'         => 'Сортовати зоступно',
+'sort-ascending'          => 'Сортовати взоступно',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Сторінка',
@@ -413,12 +416,12 @@ $1',
 'wrong_wfQuery_params' => 'Неправилны параметры функцій wfQuery()<br />
 Функція: $1<br />
 Запрос: $2',
-'viewsource'           => 'Відїти код',
+'viewsource'           => 'Видїти код',
 'viewsourcefor'        => 'Сторінка «$1»',
 'actionthrottled'      => 'Акція была придушена',
 'actionthrottledtext'  => 'Взглядом ку протиспамовым опатрїням не можете жадану акцію провести барз часто в короткім часї. Спробуйте то знову о пару мінут.',
 'protectedpagetext'    => 'Тота сторінка была замкнута, также ся не дасть едітовати',
-'viewsourcetext'       => 'Можете відїти і копіровати код той сторінкы:',
+'viewsourcetext'       => 'Можете видїти і копіровати код той сторінкы:',
 'protectedinterface'   => 'Тота сторінка є частинов інтрефейсу проґрамового забезпечіня і єй можуть едітовати лем адміністраторы проєкту.',
 'editinginterface'     => "'''Увага:''' Едітуєте сторінку,котра є частинов текстового інтерфейсу. Зміны той сторінкы выкличуть зміну інтерфейсу про іншых хоснователїв. Про переклад увідомлїня хоснуйте [http://translatewiki.net/wiki/Main_Page?setlang=uk translatewiki.net] — проєкт, што ся занимає локалізаціёв MediaWiki.",
 'sqlhidden'            => '(SQL запрос скрытый)',
@@ -449,18 +452,19 @@ $2',
 'yourdomainname'             => 'Ваша домена:',
 'externaldberror'            => 'Або ся стала хыба екстерной автентіфікачной датабазы, або не маєте поволено мінити своє екстерне конто.',
 'login'                      => 'Приголошіня',
-'nav-login-createaccount'    => 'Приголошіня / Вытворїня конта',
+'nav-login-createaccount'    => 'Приголошіня / створїня конта',
 'loginprompt'                => 'Ку приголошіню до {{grammar:2sg|{{SITENAME}}}} мусите мати поволены cookies.',
-'userlogin'                  => 'Приголошіня / вытворїня конта',
+'userlogin'                  => 'Приголошіня / створїня конта',
 'userloginnocreate'          => 'Приголошіня',
 'logout'                     => 'Одголосити',
 'userlogout'                 => 'Одголошіня',
 'notloggedin'                => 'Не сьте приголошеный(а)',
 'nologin'                    => "До теперь не маєте конто? '''$1'''.",
-'nologinlink'                => 'Вытворити конто',
+'nologinlink'                => 'Створити конто',
 'createaccount'              => 'Вытворити конто',
 'gotaccount'                 => "Уж сьте реґістрованы? '''$1'''.",
 'gotaccountlink'             => 'Приголошіня',
+'userlogin-resetlink'        => 'Забыли сьте вашы дата про приголошіня?',
 'createaccountmail'          => 'електроничнов поштов',
 'createaccountreason'        => 'Причіна:',
 'badretype'                  => 'Вами написаны гесла не сугласять.',
@@ -523,6 +527,7 @@ $2',
 'usernamehasherror'          => 'Мено хоснователя не сміє обсяговати сімбол мережка (#)',
 'login-throttled'            => 'Зробили сьте дуже много спроб о приголошіня.
 Просиме Вас, почекайте перед далшов спробов.',
+'login-abort-generic'        => 'Не подарило ся войти до сістемы.',
 'loginlanguagelabel'         => 'Язык: $1',
 'suspicious-userlogout'      => 'Ваша пожадавка на одголошіня была одвергнута, бо вызерає то так, же была послана розбитым переглядачом або кешуючім проксі-сервером.',
 
@@ -547,7 +552,35 @@ $2',
 'resetpass-temp-password'   => 'Дочасне гесло:',
 
 # Special:PasswordReset
-'passwordreset-username' => 'Мено хоснователя:',
+'passwordreset'                => 'Ресет гесла',
+'passwordreset-text'           => 'Выповньте тот формуларь, жебы обтримати  припомянутя детайлів вашого конта',
+'passwordreset-legend'         => 'Знову наставити гесло',
+'passwordreset-disabled'       => 'Зновунаставлїня гесла є на тій вікі заказане',
+'passwordreset-pretext'        => '{{PLURAL:$1||Задайте єден з дат ниже}}',
+'passwordreset-username'       => 'Мено хоснователя:',
+'passwordreset-email'          => 'Адреса електронічной пошты:',
+'passwordreset-emailtitle'     => 'Детайлы конта на {{SITENAME}}',
+'passwordreset-emailtext-ip'   => 'Дахто (асі вы, з IP адресы $1) пожадав о припомянутя інформацій ку вашому 
+конту на {{grammar:6sg|{{SITENAME}}}} ($4). Ку тій адресї {{PLURAL:$3|є спрягнуте наступне конто|суть спрягнуты наступны конта}}:
+
+$2
+
+{{PLURAL:$3|Тот дочасне гесло|Тоты дочасны гесла}} кінчать{{PLURAL:$5|за єден день|за $5 днїв|за $5 днїв}}.
+Нынї бы сьте ся мав(а) приголосити і зволити нове гесло. Як тоту пожадавку
+послав дахто другый або сьте собі на своє старе гесло спомянув(а), і не хочете го
+змінити, можете тото повідомлїня іґноровати і надале хосновати старе гесло.',
+'passwordreset-emailtext-user' => '{{gender:$1|Хоснователь|Хоснователька|Хоснователь}} $1 {{grammar:2sg|{{SITENAME}}}} {{gender:$1|попросив|попросила|попросив}} о припомянутя інформацій ку вашому
+конту на {{grammar:6sg|{{SITENAME}}}} ($4). Ку тій адресї {{PLURAL:$3|є спряжене наступне конто|суть спряжены наступну конта}}:
+
+$2
+
+{{PLURAL:$3|Тото дочасне гесло|Тоты дочасны гесла}} кінчать {{PLURAL:$5|о єден день|о $5 днї|о $5 днїв}}.
+Нынї бы сьте ся мав(а) приголосити у зволити собі нове гесло. Кідь тоту пожадавку
+послав дахто другый або сьте собі на своє старе гесло спомянув(а),і не хочете го
+змінити, можете тото повідомлїня іґноровати і надале хосновати старе гесло.',
+'passwordreset-emailelement'   => 'Імя хоснователя: $1
+Дочасне гесло: $2',
+'passwordreset-emailsent'      => 'Імейл з геслом быв посланый.',
 
 # Edit page toolbar
 'bold_sample'     => 'Тучный текст',
@@ -671,6 +704,7 @@ $2',
 'token_suffix_mismatch'            => "'''Ваша едітація не была схвалена, бо ваш вебовый переглядач комолить дакотры знакы в едітованім текстї.
 Едітація не была схвалена, жебы ся заборонило пошкоджіню тексту сторінкы.
 Тото ся може даколи стати, кідь хоснуєте хыбный вебовый анонімізер.'''",
+'edit_form_incomplete'             => "'''Часть едітачного формуларя іщі не пришла не сервер; перевірьте комплетность вашых змін і спробуйте іщі раз.'''",
 'editing'                          => 'Едітованя $1',
 'editingsection'                   => 'Едітованя $1 (роздїл)',
 'editingcomment'                   => 'Едітованя $1 (нова секція)',
@@ -735,7 +769,7 @@ $2',
 'expensive-parserfunction-warning'        => 'Увага: Тота сторінка обсягує дуже много кликаня выконово нарочных функцій парсера.
 
 Поволеный ліміт є $2, теперь шак  {{PLURAL:$1|ту єдно кликаня є|ту суть  $2 кликаня|ту є $2 кликань}}.',
-'expensive-parserfunction-category'       => 'Сторінкы з дуже великым почтом кликаня функції парсера',
+'expensive-parserfunction-category'       => 'Сторінкы з дуже великым чіслом кликаня функції парсера',
 'post-expand-template-inclusion-warning'  => 'Увага: розмір шаблон про включіня є барз великый.
 Дакотры шаблоны не будуть включены.',
 'post-expand-template-inclusion-category' => 'Сторінкы з перевышуючов великостёв включеных шаблон',
@@ -963,6 +997,7 @@ $1",
 'searchmenu-legend'                => 'Параметры гляданя',
 'searchmenu-exists'                => "'''У тій вікі є сторінка з назвов «[[:$1]]»'''",
 'searchmenu-new'                   => "'''Створити сторінку «[[:$1]]» у тій вікі!'''",
+'searchmenu-new-nocreate'          => '"$1" – заборонена назва сторінкы або недозволена про створїня вами.',
 'searchhelp-url'                   => 'Help:Обсяг',
 'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|Вказати сторінкы з тым префіксом]]',
 'searchprofile-articles'           => 'Статї',
@@ -974,7 +1009,7 @@ $1",
 'searchprofile-project-tooltip'    => 'Переглядавати: $1',
 'searchprofile-images-tooltip'     => 'Глядати файлы',
 'searchprofile-everything-tooltip' => 'Переглядавати вшыток обсяг (рахувчі діскузны сторінкы)',
-'searchprofile-advanced-tooltip'   => 'Наставлити меновы просторы, в котрых ся має глядати',
+'searchprofile-advanced-tooltip'   => 'Задати просторы назв, де ся мать глядати',
 'search-result-size'               => '$1 ({{PLURAL:$2|слово|слова|слов}})',
 'search-result-category-size'      => '{{PLURAL:$1|1 член|$1 члена|$1 членів}} ({{PLURAL:$2|1 підкатеґорія|$2 підкатеґорії|$2 підкатеґорії}}, {{PLURAL:$3|1 файл|$3 файлы|$3 файлів}})',
 'search-result-score'              => 'Одповідность: $1 %',
@@ -1031,7 +1066,7 @@ $1",
 'prefs-rc'                      => 'Послїднї зміны',
 'prefs-watchlist'               => 'Слїдованы сторінкы',
 'prefs-watchlist-days'          => 'Чісло днїв зображеных в слїдованых сторінках:',
-'prefs-watchlist-days-max'      => '(максімалнї 7 днїв)',
+'prefs-watchlist-days-max'      => 'Максімално 7 днїв',
 'prefs-watchlist-edits'         => 'Чісло едітовань зображеных во вылїпшенім списку слїдованых сторінок:',
 'prefs-watchlist-edits-max'     => 'Максімалне чісло: 1000',
 'prefs-watchlist-token'         => 'Ключ до списку слїдованых сторінок:',
@@ -1416,6 +1451,8 @@ $1",
 'php-uploaddisabledtext'      => 'В PHP є выпнуте начітаня файлів. Просиме, перевірте наставлїня file_uploads.',
 'uploadscripted'              => 'Тот файл обсягує HTML-код або скріпт, якый може быти неправилно інтерпретованый вебовым переглядячом.',
 'uploadvirus'                 => 'Файл обсягує вірус! Детайлы: $1',
+'uploadjava'                  => 'Тот файл є ZIP архів, котрый обсягує .class-файл Java.
+Начітаня Java-файлів не є доволене, бо они можуть запричінити обход забезпечіня сістемы.',
 'upload-source'               => 'Здройовый файл',
 'sourcefilename'              => 'Назва здройового файлу:',
 'sourceurl'                   => 'Здройова URL-адреса:',
@@ -1450,6 +1487,14 @@ $1',
 'upload-unknown-size'       => 'Незнамый розмір',
 'upload-http-error'         => 'Дішло ку хыбі HTTP: $1',
 
+# ZipDirectoryReader
+'zip-file-open-error' => 'При одкрытю ZIP-архіву про ёго перевірку выникла хыба.',
+'zip-wrong-format'    => 'Вказаный файл не є ZIP-файлом',
+'zip-bad'             => 'ZIP-файл є пошкодженый ці в іншый способ непридатный про чітаня.
+Не годен перевірити ёго безпечность.',
+'zip-unsupported'     => 'Файл хоснує такы можности ZIP, якы MediaWiki не підпорує.
+Не годен перевірити ёго безпечность.',
+
 # Special:UploadStash
 'uploadstash'          => 'Награти скрышу',
 'uploadstash-summary'  => 'Тота сторінка додавать приступ ку файлом котры суть награты (або награваня іщі не скінчіло) але іщі не были пувлікованы на вікі. Тоты файлы не видить нихто окрем хоснователя што їх награв.',
@@ -1460,22 +1505,23 @@ $1',
 'uploadstash-refresh'  => 'Обновити список файлів',
 
 # img_auth script messages
-'img-auth-accessdenied' => 'Приступ одопертый',
-'img-auth-nopathinfo'   => 'Хыбить PATH_INFO.
+'img-auth-accessdenied'     => 'Приступ одопертый',
+'img-auth-nopathinfo'       => 'Хыбить PATH_INFO.
 Ваш сервер не є наставеный так, жебы давав тоту інформацію.
 Може фунґує помочов CGI і img_auth на нім не може фунґовати.
 Видьте  http://www.mediawiki.org/wiki/Manual:Image_Authorization.',
-'img-auth-notindir'     => 'Пожадована стежка не є в конфіґурованім адресарю з начітаныма файлами.',
-'img-auth-badtitle'     => 'З „$1“  ся не дасть створити платна назва сторінкы.',
-'img-auth-nologinnWL'   => 'Не сьте приголошеный і „$1“ не є на білім списку.',
-'img-auth-nofile'       => 'Файл «$1» не екзістує.',
-'img-auth-isdir'        => 'Пробуєте приступовати до адресаря „$1“.
+'img-auth-notindir'         => 'Пожадована стежка не є в конфіґурованім адресарю з начітаныма файлами.',
+'img-auth-badtitle'         => 'З „$1“  ся не дасть створити платна назва сторінкы.',
+'img-auth-nologinnWL'       => 'Не сьте приголошеный і „$1“ не є на білім списку.',
+'img-auth-nofile'           => 'Файл «$1» не екзістує.',
+'img-auth-isdir'            => 'Пробуєте приступовати до адресаря „$1“.
 Доволеный є лем приступ к файлам.',
-'img-auth-streaming'    => 'Переношать ся „$1“.',
-'img-auth-public'       => 'Помочов img_auth.php ся поскытують файлы на пріватных вікі.
+'img-auth-streaming'        => 'Переношать ся „$1“.',
+'img-auth-public'           => 'Помочов img_auth.php ся поскытують файлы на пріватных вікі.
 Тота вікі є наставлена як публічна.
 З безпечностных причін є img_auth.php выпнуте.',
-'img-auth-noread'       => 'Хоснователь не має приступ про чітаня „$1“.',
+'img-auth-noread'           => 'Хоснователь не має приступ про чітаня „$1“.',
+'img-auth-bad-query-string' => 'URL обсягує неправилный одказ.',
 
 # HTTP errors
 'http-invalid-url'      => 'Неправилне URL: $1',
@@ -1538,7 +1584,7 @@ $1',
 Наслїдуючій список зображує лем {{PLURAL:$1|тоту першу|першы $1|першых $1}}.
 Можете собі посмотрити [[Special:WhatLinksHere/$2|повный список]].',
 'nolinkstoimage'            => 'На тот файл не одказує жадна сторінка',
-'morelinkstoimage'          => 'Відїти [[Special:WhatLinksHere/$1|далшы одказы]] на тот файл.',
+'morelinkstoimage'          => 'Видїти [[Special:WhatLinksHere/$1|далшы одказы]] на тот файл.',
 'redirectstofile'           => '{{plural:$1|Наслідуючій файл напрямлює|Наслїдуючі $1 файлы напрямлюють|Наслїдуючіх $1 файлів напрямлює}} на тот файл:',
 'duplicatesoffile'          => '{{plural:$1|Наслїдуючій файл є дуплікат|Наслїдуючі $1 файлы суть дуплікаты|Наслїдуючіх $1 файлів є дуплікатами}} того файлу ([[Special:FileDuplicateSearch/$2|детайлы]]):',
 'sharedupload'              => 'Тот файл є з $1 і є доступным про іншы проекты.',
@@ -1632,12 +1678,13 @@ $1',
 'disambiguationspage'  => 'Template:disambig',
 'disambiguations-text' => "Одказы на наслїдуючіх сторінках ведуть на '''богатозначны сторінкы'''. (сторінкы котры обсягують дакотру з тых шаблон на [[MediaWiki:Disambiguationspage|списку шаблон про богатозначны сторінкы]]) намісто на дану статю.",
 
-'doubleredirects'            => 'Двоїты напрямлїня',
-'doubleredirectstext'        => 'На тій сторінцї є список напрямлїн ведучіх на далшы напрямлїня.
+'doubleredirects'                   => 'Двоїты напрямлїня',
+'doubleredirectstext'               => 'На тій сторінцї є список напрямлїн ведучіх на далшы напрямлїня.
 Каждый рядок обсягує одказ на перше і друге напрямлїня і ку тому ціль другого напрямлїня, котрый звычайно вказує мено „реалной“ цілёвой сторінкы, на котру бы ся мало перше напрямлїня одказовати.
 <del>Перечаркнуты</del> положкы уж были вырїшены.',
-'double-redirect-fixed-move' => 'Сторінка [[$1]] была переменована, нынї напрямлює на [[$2]]',
-'double-redirect-fixer'      => 'Оправарь напрямлїнь',
+'double-redirect-fixed-move'        => 'Сторінка [[$1]] была переменована, нынї напрямлює на [[$2]]',
+'double-redirect-fixed-maintenance' => 'Корекція двоїтого напрямлїня з [[$1]] на [[$2]].',
+'double-redirect-fixer'             => 'Оправарь напрямлїнь',
 
 'brokenredirects'        => 'Перерваны напрямлїня',
 'brokenredirectstext'    => 'Тоты напрямлїня ведуть на неекзістуючі сторінкы:',
@@ -1678,7 +1725,7 @@ $1',
 'mostlinked'              => 'Найодказованїшы сторінкы',
 'mostlinkedcategories'    => 'Найхоснованїшы катеґорії',
 'mostlinkedtemplates'     => 'Найужыванїшы шаблоны',
-'mostcategories'          => 'Сторінкы з найвекшым почтом катеґорій',
+'mostcategories'          => 'Сторінкы з найвекшым чіслом катеґорій',
 'mostimages'              => 'Найужыванїшы файлы',
 'mostrevisions'           => 'Сторінкы з найвеце ревізіями',
 'prefixindex'             => 'Вшыткы сторінкы з початком назв',
@@ -1756,7 +1803,7 @@ $1',
 Невказаны суть то [[Special:UnusedCategories|нехоснованы катеґорії]].
 Посмотьте ся тыж на [[Special:WantedCategories|жаданы катеґорії]].',
 'categoriesfrom'                => 'Вказати сторінкы, што ся зачінають на:',
-'special-categories-sort-count' => 'упорядковати подля почту',
+'special-categories-sort-count' => 'упорядковати подля множества',
 'special-categories-sort-abc'   => 'упорядковати за алфавітом',
 
 # Special:DeletedContributions
@@ -1832,6 +1879,10 @@ $1',
 'noemailtext'          => 'Тот хоснователь не зазначів платну адресу ел. пошты.',
 'nowikiemailtitle'     => 'Ел. пошта не є доволена',
 'nowikiemailtext'      => 'Тот хоснователь собі не желать діставати пошту од іншых хоснователїв.',
+'emailnotarget'        => 'Неекзістуюче або некоректне імя хоснователя.',
+'emailtarget'          => 'Уведьте імя хоснователя-адресата',
+'emailusername'        => 'Імя хоснователя:',
+'emailusernamesubmit'  => 'Одослати',
 'email-legend'         => 'Одосыланя ел. пошты іншому хоснователёві {{GRAMMAR:2sg|{{SITENAME}}}}',
 'emailfrom'            => 'Од:',
 'emailto'              => 'Кому:',
@@ -1893,29 +1944,33 @@ $1',
 'enotif_lastvisited'           => 'Видьте $1 про список вшыткых змін од минулой навщівы.',
 'enotif_lastdiff'              => 'Тоту зміну видьте на $1',
 'enotif_anon_editor'           => 'анонімный хоснователь $1',
-'enotif_body'                  => 'Учтивый  $WATCHINGUSERNAME,
+'enotif_body'                  => 'Дорогый хоснователю $WATCHINGUSERNAME,
 
-В $PAGEEDITDATE $CHANGEDORCREATED $PAGEEDITOR сторінку $PAGETITLE, видьте актуалну верзію на $PAGETITLE_URL .
+У $PAGEEDITDATE $CHANGEDORCREATED $PAGEEDITOR сторінку $PAGETITLE, смотьте актуалну верзію на $PAGETITLE_URL .
 
 $NEWPAGE
+Куртый опис змін: $PAGESUMMARY $PAGEMINOREDIT
 
-Згорнутя едітованя: $PAGESUMMARY $PAGEMINOREDIT
-
-Хоснователя, котрый зміну выконав, можете контактовати:
-ел. поштов: $PAGEEDITOR_EMAIL
+Хоснователя, котрый учінив зміну, можете контактовати:
+імейлом: $PAGEEDITOR_EMAIL
 на вікі: $PAGEEDITOR_WIKI
 
-Покы сторінку не навщівите, не будуть вам посыланы далшы повідомлїня о змінах той сторінкы, припадно собі можете вынуловати флаґы в своїм списку слїдованых сторінок.
-	З поздравом ваш засылач повідомлїнь {{grammar:2sg|{{SITENAME}}}}
+Покы сторінку не навщівите, не будуть вам посыланы далшы повідомлїя о змінах той сторінкы.
+Припадно собі можете вынуловати флачы у своїм списку слїдованых сторінок.
+
+	Поздравує ваш посылач повідомлїнь {{grammar:2sg|{{SITENAME}}}}
 
 --
+Змінити наставлїня імейловых повідомлїнь можете на
+{{fullurl:{{#special:Preferences}}}}
+
 Наставлїня слїдованых сторінок можете змінити на
 {{fullurl:Special:Watchlist/edit}}
 
-Сторінку можете із своїх слїдованых вырядити на
+Сторінку можете із своїх слїдованых вылучіти на
 $UNWATCHURL
 
-Порада і контакты
+Порада і контакт:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
@@ -1987,7 +2042,7 @@ $UNWATCHURL
 'protect_expiry_invalid'      => 'Неправилный час укончіня',
 'protect_expiry_old'          => 'Час страты платности є в минулости.',
 'protect-unchain-permissions' => 'Зприступнити далшы наставлїня замку',
-'protect-text'                => "Ту можете відїти і змінити рівень охраны сторінкы '''<nowiki>$1</nowiki>'''.",
+'protect-text'                => "Ту можете видїти і змінити рівень охраны сторінкы '''<nowiki>$1</nowiki>'''.",
 'protect-locked-blocked'      => "Не можете мінити наставлїня замків покы сьте заблокованый. Сучасне наставлїня про тоту сторінку є: '''$1''':",
 'protect-locked-dblock'       => "Наставлїня замків ся не дасть змінити про замкнуту датабазу.
 Сучасне наставлїня про тоту сторінку є: '''$1''':",
@@ -2050,7 +2105,7 @@ $UNWATCHURL
 'undelete-nodiff'              => 'Не найджена жадна попередня верзія.',
 'undeletebtn'                  => 'Обновити',
 'undeletelink'                 => 'видїти/обновити',
-'undeleteviewlink'             => 'відїти',
+'undeleteviewlink'             => 'видїти',
 'undeletereset'                => 'Ресетовати',
 'undeleteinvert'               => 'Інвертовати селекцію',
 'undeletecomment'              => 'Причіна:',
@@ -2079,9 +2134,10 @@ $1',
 'undelete-show-file-submit'    => 'Гей',
 
 # Namespace form on various pages
-'namespace'      => 'Простор назв:',
-'invert'         => 'Окрем выбраного',
-'blanknamespace' => '(Основный)',
+'namespace'             => 'Простор назв:',
+'invert'                => 'Окрем выбраного',
+'namespace_association' => 'Повязаный простор назв',
+'blanknamespace'        => '(Основный)',
 
 # Contributions
 'contributions'       => 'Приспевок хоснователя',
@@ -2131,6 +2187,7 @@ $1',
 'whatlinkshere-filters'    => 'Філтры',
 
 # Block/unblock
+'autoblockid'                     => 'Автоблокованя #$1',
 'block'                           => 'Заблоковати хоснователя',
 'unblock'                         => 'Одблоковати хоснователя',
 'blockip'                         => 'Заблоковати хоснователя',
@@ -2151,6 +2208,7 @@ $1',
 ** Застрашованя або выгрожованя
 ** Знеужываня веце конт
 ** Невгодне мено хоснователя',
+'ipb-hardblock'                   => 'Заборонити приголошеным хоснователям едітовати з той IP-адресы',
 'ipbcreateaccount'                => 'Не доволити реґістрацію новых хоснователїв',
 'ipbemailban'                     => 'Заборонити хоснователёві посылати ел. пошту',
 'ipbenableautoblock'              => 'Автоматічно блоковати IP адресы хоснованы тым хоснователём',
@@ -2161,11 +2219,14 @@ $1',
 'ipbotherreason'                  => 'Інша/додаткова причіна:',
 'ipbhidename'                     => 'Сховати мено хоснователя в едітованях і списках',
 'ipbwatchuser'                    => 'Слїдовати хосновательску і діскузну сторінку того хоснователя',
+'ipb-disableusertalk'             => 'Заборонити тому хоснователёви едітовати властну хосновательску діскузію по час блокованя',
 'ipb-change-block'                => 'Знову заблоковати хоснователя з тыма наставлїнями',
+'ipb-confirm'                     => 'Потвердити блокованя',
 'badipaddress'                    => 'Неправилна IP адреса',
 'blockipsuccesssub'               => 'Блокованя проведено',
 'blockipsuccesstext'              => 'Хоснователь „[[Special:Contributions/$1|$1]]“ є блокованый.<br />
 Можете собі посмотрити [[Special:IPBlockList|список блокованых хоснователїв]].',
+'ipb-blockingself'                => 'Зберате ся заблоковати {{gender:|сам|сама|самы}} себе! Сьте собі {{gender:|певный|певна|певны}}, же тото хочете зробити?',
 'ipb-edit-dropdown'               => 'Едітовати причіны блоковань',
 'ipb-unblock-addr'                => 'Одблоковати $1',
 'ipb-unblock'                     => 'Одблоковати хоснователя або  IP адресу',
@@ -2312,7 +2373,7 @@ $1',
 'movepage-page-unmoved'        => 'Сторінка $1 не може быти переменована на $2.',
 'movepage-max-pages'           => '{{PLURAL:$1|Была переменована максімално поволена єдна сторінка|Были переменованы максімално поволены $1 сторінкы|Было переменоване максімално поволеных $1 сторінок}}, веце їх уж автоматічно переменованых не буде.',
 '1movedto2'                    => 'переменовав «[[$1]]» на «[[$2]]»',
-'1movedto2_redir'              => 'переменовав «[[$1]]» на «[[$2]]» поверх напрямлиня',
+'1movedto2_redir'              => 'переменовав «[[$1]]» на «[[$2]]» поверьх напрямлїня',
 'move-redirect-suppressed'     => 'напрямлїня не створене',
 'movelogpage'                  => 'Лоґ переменовань',
 'movelogpagetext'              => 'Тото є список вшыткых переменованый сторінок.',
@@ -2408,7 +2469,7 @@ $1',
 'import-interwiki-namespace' => 'Цілёвый простор назв:',
 'import-upload-filename'     => 'Назва файлу:',
 'import-comment'             => 'Коментарь:',
-'importtext'                 => 'Просиме Вас, експортуйте сторінку з іншой вікі помочов [[Special:Export| експорт]], уложте файл на ваш діск а потім го награйте ту.',
+'importtext'                 => 'Просиме Вас, експортуйте сторінку з іншой вікі помочов [[Special:Export|інштрументу на експорт]], уложте файл на ваш діск а потім го награйте ту.',
 'importstart'                => 'Імпорт сторінок…',
 'import-revision-count'      => '$1 {{PLURAL:$1|ревізія|ревізії|ревізій}}',
 'importnopages'              => 'Не є што імпортовати.',
@@ -2491,23 +2552,23 @@ $1',
 'tooltip-ca-nstab-media'          => 'Вказати сторінку файлу',
 'tooltip-ca-nstab-special'        => 'Шпеціална сторінка, она є недоступна про едітованя',
 'tooltip-ca-nstab-project'        => 'Сторінка проєкту',
-'tooltip-ca-nstab-image'          => 'Відїти код сторінкы',
+'tooltip-ca-nstab-image'          => 'Видїти код сторінкы',
 'tooltip-ca-nstab-mediawiki'      => 'Вказати повідомлїня сістемы',
 'tooltip-ca-nstab-template'       => 'Видїти шаблону',
-'tooltip-ca-nstab-help'           => 'Відїти сторінку помочі',
+'tooltip-ca-nstab-help'           => 'Видїти сторінку помочі',
 'tooltip-ca-nstab-category'       => 'Сторінка катеґорії',
 'tooltip-minoredit'               => 'Позначіти тото як незначне едітованя',
 'tooltip-save'                    => 'Уложыти вашы зміны',
 'tooltip-preview'                 => 'Нагляд сторінкы, просиме Вас, хоснуйте перед уложінём!',
 'tooltip-diff'                    => 'Вказати зміны, што были зроблены в тексті.',
-'tooltip-compareselectedversions' => 'Відїти роздїл міджі двома указаныма верзіями той сторінкы.',
+'tooltip-compareselectedversions' => 'Видїти роздїл міджі двома указаныма верзіями той сторінкы.',
 'tooltip-watch'                   => 'Придати тоту сторінку до списку слїдованых',
 'tooltip-recreate'                => 'Обновити сторінку і кідь была змазана',
 'tooltip-upload'                  => 'Почати одосыланя',
 'tooltip-rollback'                => 'Єдным кликом вернути зміны, зроблены послїдным приспівателём',
 'tooltip-undo'                    => 'Зрушыти зміны і вказати попереднїй перегляд. Доволяє придати причіну до ресуме.',
 'tooltip-preferences-save'        => 'Уложыти наставлїня',
-'tooltip-summary'                 => 'Задайте коротке згорнутя',
+'tooltip-summary'                 => 'Задайте курте згорнутя',
 
 # Metadata
 'nodublincore'      => 'На тім сервері є выпнуте ґенерованя метадат Dublin Core RDF.',
@@ -2599,9 +2660,9 @@ $1',
 'imagelisttext'         => "Ниже є {{plural:$1|єден файл|список '''$1'''&nbsp;файлів сортованых $2|список '''$1'''&nbsp;файлів сортованых $2}}.",
 'newimages-summary'     => 'На тій шпеціалній сторінцї ся зображують остатнї начітаны файлы.',
 'newimages-legend'      => 'Філтер',
-'newimages-label'       => 'Назва файлу (або єй частина):',
+'newimages-label'       => 'Назва файлу (або єй часть):',
 'showhidebots'          => '($1 ботів)',
-'noimages'              => 'Не є што відїти.',
+'noimages'              => 'Не є што зобразити.',
 'ilsubmit'              => 'Глядати',
 'bydate'                => 'подля датуму',
 'sp-newimages-showfrom' => 'Вказати новы файлы почінаючі од $2, $1',
@@ -2669,8 +2730,8 @@ $1',
 'exif-colorspace'                  => 'Фаребный простор',
 'exif-componentsconfiguration'     => 'Конфіґурація компонентів фарбы',
 'exif-compressedbitsperpixel'      => 'Компрімачный режім',
-'exif-pixelydimension'             => 'Платна шырка образу',
-'exif-pixelxdimension'             => 'Платна вышка образу',
+'exif-pixelydimension'             => 'Шырка образчіка',
+'exif-pixelxdimension'             => 'Вышка образчіка',
 'exif-usercomment'                 => 'Додатковый коментарь',
 'exif-relatedsoundfile'            => 'Звязаный звуковый файл',
 'exif-datetimeoriginal'            => 'Оріґіналный датум і час',
@@ -2684,9 +2745,9 @@ $1',
 'exif-exposureprogram'             => 'Експозічный проґрам',
 'exif-spectralsensitivity'         => 'Спектрална чутливость',
 'exif-isospeedratings'             => 'Світлочутливость ISO',
-'exif-shutterspeedvalue'           => 'Швыдкость спущі',
-'exif-aperturevalue'               => 'Цлона',
-'exif-brightnessvalue'             => 'Світлость',
+'exif-shutterspeedvalue'           => 'Експозічный час (APEX)',
+'exif-aperturevalue'               => 'Цлона (APEX)',
+'exif-brightnessvalue'             => 'Яс (APEX)',
 'exif-exposurebiasvalue'           => 'Компензація експозіції',
 'exif-maxaperturevalue'            => 'Найменша цлона',
 'exif-subjectdistance'             => 'Далеко ку обєкту',
@@ -2748,6 +2809,37 @@ $1',
 'exif-gpsareainformation'          => 'Назва области GPS',
 'exif-gpsdatestamp'                => 'GPS датум',
 'exif-gpsdifferential'             => 'Діференціална корекція GPS',
+'exif-jpegfilecomment'             => 'Позначкы ку файлу JPEG',
+'exif-keywords'                    => 'Ключовы слова',
+'exif-worldregioncreated'          => 'Часть світу, де быв образчік зазначеный',
+'exif-countrycreated'              => 'Країна, де быв образчік зазначеный',
+'exif-countrycodecreated'          => 'Код країны, де быв образчік зазначеный',
+'exif-provinceorstatecreated'      => 'Провінція або штат, де быв образчік зазначеный',
+'exif-citycreated'                 => 'Місто, де быв образчік зазначеный',
+'exif-sublocationcreated'          => 'Часть міста, де быв образчік зазначеный',
+'exif-worldregiondest'             => 'Вказана часть світа',
+'exif-countrydest'                 => 'Вказана країна',
+'exif-countrycodedest'             => 'Код вказаной країны',
+'exif-provinceorstatedest'         => 'Вказана провінція або штат',
+'exif-citydest'                    => 'Вказане місто',
+'exif-sublocationdest'             => 'Вказана часть міста',
+'exif-objectname'                  => 'Курта назва',
+'exif-specialinstructions'         => 'Шпеціалны інштрукції',
+'exif-headline'                    => 'Надпис',
+'exif-credit'                      => 'Ждідло/Додаватель',
+'exif-source'                      => 'Жрідло',
+'exif-editstatus'                  => 'Редакчный статус образчіка',
+'exif-urgency'                     => 'Урґенція',
+'exif-locationdest'                => 'Вказане місце',
+'exif-locationdestcode'            => 'Код вказаного місця',
+'exif-objectcycle'                 => 'Денный час, про котрый є файл становленый',
+'exif-contact'                     => 'Контактна інформація',
+'exif-writer'                      => 'Автор попису',
+'exif-languagecode'                => 'Язык',
+'exif-iimversion'                  => 'IIM верзія',
+'exif-iimcategory'                 => 'Катеґорія',
+'exif-iimsupplementalcategory'     => 'Додатковы катеґорії',
+'exif-datetimeexpires'             => 'Не хосновати по',
 
 # EXIF attributes
 'exif-compression-1' => 'Нестиснутый',
@@ -2891,6 +2983,16 @@ $1',
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => 'Справный курз',
 'exif-gpsdirection-m' => 'Маґнетічный курз',
+
+'exif-iimcategory-edu' => 'Едукація',
+'exif-iimcategory-hth' => 'Здоровя',
+'exif-iimcategory-lab' => 'Праца',
+'exif-iimcategory-lif' => 'Вольный час і жывотный штіл',
+'exif-iimcategory-pol' => 'Політіка',
+'exif-iimcategory-rel' => 'Віра і реліґія',
+'exif-iimcategory-sci' => 'Наука і технолоґії',
+'exif-iimcategory-soi' => 'Соціална проблематіка',
+'exif-iimcategory-spo' => 'Шпорт',
 
 # External editor support
 'edit-externally'      => 'Едітовати тот файл хоснувчі екстерну аплікацію',

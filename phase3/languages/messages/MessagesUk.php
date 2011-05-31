@@ -744,7 +744,7 @@ $1',
 'usernamehasherror'          => "Ім'я користувача не може містити символу «решітка»",
 'login-throttled'            => 'Ви зробили надто багато спроб ввійти до системи.
 Будь ласка, зачекайте перед повторною спробою.',
-'login-abort-generic'        => 'Не вдалося увійти в систему',
+'login-abort-generic'        => 'Не вдалося ввійти до системи',
 'loginlanguagelabel'         => 'Мова: $1',
 'suspicious-userlogout'      => 'Ваш запит на завершення сеанса відхилений, оскільки він схожий на запит, відправлений зіпсованим веб-оглядачем або кешуючим проксі-сервером.',
 
@@ -3285,11 +3285,11 @@ $1',
 'exif-gpsdestdistance-m' => 'Милі',
 'exif-gpsdestdistance-n' => 'Морські милі',
 
-'exif-gpsdop-excellent' => 'Відмінна',
+'exif-gpsdop-excellent' => 'Відмінна ($1)',
 'exif-gpsdop-good'      => 'Добра',
 'exif-gpsdop-moderate'  => 'Середня',
 'exif-gpsdop-fair'      => 'Нижче середньої',
-'exif-gpsdop-poor'      => 'Низька',
+'exif-gpsdop-poor'      => 'Низька ($1)',
 
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => 'справжній',
