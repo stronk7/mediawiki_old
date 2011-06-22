@@ -15,7 +15,13 @@ mw.UploadWizardUploadInterface = function( upload, filesDiv ) {
 	_this.isFilled = false;
 
 	_this.$fileInputCtrl = $j('<input size="1" class="mwe-upwiz-file-input" name="file" type="file"/>')
-				.change( function() { _this.fileChanged(); } );
+				.change( function() { 
+					_this.clearErrors();
+					_this.upload.extractLocalFileInfo( 
+						this, // the file input
+						function() { _this.fileChanged(); } 
+					); 
+				} );
 
 	_this.$indicator = $j( '<div class="mwe-upwiz-file-indicator"></div>' );
 
@@ -82,6 +88,15 @@ mw.UploadWizardUploadInterface = function( upload, filesDiv ) {
 	$j( _this.div ).bind( 'transportProgressEvent', function(e) { _this.showTransportProgress(); } );
 	// $j( _this.div ).bind( 'transportedEvent', function(e) { _this.showStashed(); } );
 
+	// XXX feature envy
+	var $preview = $j( this.div ).find( '.mwe-upwiz-file-preview' );
+	_this.upload.setThumbnail( 
+		$preview, 
+		mw.UploadWizard.config[ 'thumbnailWidth' ],
+		mw.UploadWizard.config[ 'thumbnailMaxHeight' ],
+		true
+	);
+
 };
 
 
@@ -143,7 +158,6 @@ mw.UploadWizardUploadInterface.prototype = {
 	 * Set the status line for this upload with an internationalized message string.
 	 * @param String msgKey: key for the message
 	 * @param Array args: array of values, in case any need to be fed to the image.
-	 * @param Boolean error: if true, show an error
 	 */
 	setStatus: function( msgKey, args ) {
 		if ( !mw.isDefined( args ) ) {
@@ -155,6 +169,14 @@ mw.UploadWizardUploadInterface.prototype = {
 	},
 
 	/**
+	 * Set status line directly with a string
+	 * @param {String}
+	 */
+	setStatusString: function( s ) {
+		$j( this.div ).find( '.mwe-upwiz-file-status' ).html( s ).show();
+	},
+
+	/**
 	 * Clear the status line for this upload (hide it, in case there are paddings and such which offset other things.)
 	 */
 	clearStatus: function() {
@@ -162,7 +184,7 @@ mw.UploadWizardUploadInterface.prototype = {
 	},
 
 	/**
-	 * Put the visual state of an individual upload ito "progress"
+	 * Put the visual state of an individual upload into "progress"
 	 * @param fraction	The fraction of progress. Float between 0 and 1
 	 */
 	showTransportProgress: function( fraction ) {
@@ -209,10 +231,10 @@ mw.UploadWizardUploadInterface.prototype = {
 	 */
 	fileChanged: function() {
 		var _this = this;
-		_this.clearErrors();
-		_this.upload.extractLocalFileInfo( _this.$fileInputCtrl.val() );
 		var extension = _this.upload.title.getExtension();
 		var hasExtension = ! mw.isEmpty( extension );
+
+		/* this should not be in the interface */
 		var isGoodExtension = false;
 		if ( hasExtension ) {
 			isGoodExtension = $j.inArray( extension.toLowerCase(), mw.UploadWizard.config[ 'fileExtensions' ] ) !== -1;
@@ -220,10 +242,24 @@ mw.UploadWizardUploadInterface.prototype = {
 		if ( hasExtension && isGoodExtension ) {
 			_this.updateFilename();
 		} else {       
-			var errorMessage = hasExtension ? 'mwe-upwiz-upload-error-bad-filename-extension' : 'mwe-upwiz-upload-error-bad-filename-no-extension';
+			var $errorMessage;
+			// Check if firefogg should be recommended to be installed ( user selects an extension that can be converted) 
+			if( mw.UploadWizard.config['enableFirefogg']
+					&&
+				$j.inArray( extension.toLowerCase(), mw.UploadWizard.config['transcodeExtensionList'] ) !== -1 
+			){
+				$errorMessage = $j( '<p>' ).msg('mwe-upwiz-upload-error-bad-extension-video-firefogg',
+						mw.Firefogg.getFirefoggInstallUrl(),
+						'http://commons.wikimedia.org/wiki/Help:Converting_video'
+					);
+				
+			} else {
+				var errorKey = hasExtension ? 'mwe-upwiz-upload-error-bad-filename-extension' : 'mwe-upwiz-upload-error-bad-filename-no-extension';
+				$errorMessage = $j( '<p>' ).msg( errorKey, extension );
+			}
 			$( '<div></div>' )
 				.append( 
-					$j( '<p>' ).msg( errorMessage, extension ),
+					$errorMessage,
 					$j( '<p>' ).msg( 'mwe-upwiz-allowed-filename-extensions' ),
 					$j( '<blockquote>' ).append( $j( '<tt>' ).append(  
 						mw.UploadWizard.config[ 'fileExtensions' ].join( " " )
@@ -237,7 +273,11 @@ mw.UploadWizardUploadInterface.prototype = {
 					modal: true
 				});
 		}
+
 		this.clearStatus();
+		if ( this.upload.file ) {
+			this.setStatusString( mw.units.bytes( this.upload.file.size ) );	
+		}
 	},
 
 	/**
@@ -313,6 +353,8 @@ mw.UploadWizardUploadInterface.prototype = {
 		// But for UploadWizard, at this stage, it's the reverse. We want to stop same-content dead, but for now we ignore same-filename
 		$j( _this.filenameCtrl ).val( ( new Date() ).getTime().toString() +_this.upload.title.getMain() );
 
+
+		// deal with styling the file inputs and making it react to mouse
 		if ( ! _this.isFilled ) {
 			var $div = $j( _this.div );
 			_this.isFilled = true;

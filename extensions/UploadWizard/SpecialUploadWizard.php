@@ -180,7 +180,30 @@ class SpecialUploadWizard extends SpecialPage {
 	 */
 	function getWizardHtml() {
 		global $wgUploadWizardConfig, $wgExtensionAssetsPath;
-		
+
+		if ( array_key_exists( 'fallbackToAltUploadForm', $wgUploadWizardConfig ) 
+			&& array_key_exists( 'altUploadForm', $wgUploadWizardConfig ) 
+			&& $wgUploadWizardConfig['altUploadForm'] != ''
+			&& $wgUploadWizardConfig[ 'fallbackToAltUploadForm' ] 			) {
+
+			$linkHtml = '';
+			$altUploadForm = Title::newFromText( $wgUploadWizardConfig[ 'altUploadForm' ] );
+			if ( $altUploadForm instanceof Title ) {
+				$linkHtml = Html::rawElement( 'p', array( 'style' => 'text-align: center;' ), 
+					Html::rawElement( 'a', array( 'href' => $altUploadForm->getLocalURL() ), 
+						$wgUploadWizardConfig['altUploadForm'] 
+					) 
+				);
+			}
+
+			return 	 
+				Html::rawElement( 'div', array( 'id' => 'upload-wizard', 'class' => 'upload-section' ),
+					Html::rawElement( 'p', array( 'style' => 'text-align: center' ), wfMsg( 'mwe-upwiz-extension-disabled' ) ) 
+					. $linkHtml
+				);
+
+		}
+	
 		$tutorialHtml = '';		
 		// only load the tutorial HTML if we aren't skipping the first step
 		// TODO should use user preference not a cookie ( so the user does not have to skip it for every browser )
@@ -265,6 +288,7 @@ class SpecialUploadWizard extends SpecialPage {
 		.     '<div class="mwe-upwiz-stepdiv" id="mwe-upwiz-stepdiv-details" style="display:none;">'
 		.       '<div id="mwe-upwiz-macro-files" class="mwe-upwiz-filled-filelist ui-corner-all"></div>'
 		.       '<div class="mwe-upwiz-buttons">'
+		.	   '<div id="mwe-upwiz-details-error-count" class="mwe-upwiz-file-endchoice mwe-error"></div>'
 		.	   '<div class="mwe-upwiz-start-next mwe-upwiz-file-endchoice">'
 		.            '<button class="mwe-upwiz-button-next">' . wfMsg( "mwe-upwiz-next-details" )  . '</button>'
 		.          '</div>'

@@ -1,4 +1,3 @@
-
 /**
  * Object that represents the Details (step 2) portion of the UploadWizard
  * n.b. each upload gets its own details.
@@ -7,8 +6,6 @@
  * The correct thing would be to have some hidden static HTML
  * on the page which we clone and slice up with selectors. Inputs can still be members of the object
  * but they'll be found by selectors, not by creating them as members and then adding them to a DOM structure.
- *
- * XXX this should have styles for what mode we're in 
  *
  * @param UploadWizardUpload
  * @param containerDiv	The div to put the interface into
@@ -64,7 +61,11 @@ mw.UploadWizardDetails = function( upload, containerDiv ) {
 			processResult: function( result ) { _this.processDestinationCheck( result ); } 
 		} );
 
-	_this.titleErrorDiv = $j('<div class="mwe-upwiz-details-input-error"><label class="mwe-validator-error" for="' + _this.titleId + '" generated="true"/></div>');
+	_this.titleErrorDiv = $j('<div class="mwe-upwiz-details-input-error">'
+					+ '<label class="mwe-error mwe-validator-error" for="' + _this.titleId + '" generated="true"/>'
+					+ '<label class="mwe-error errorTitleUnique" for="' + _this.titleId + '" generated="true"/>'
+					+ '<label class="mwe-error errorRecovery" for="' + _this.titleId + '" generated="true"/>'
+				+ '</div>');
 
 	var titleHintId = 'mwe-upwiz-title-hint-' + _this.upload.index;
 	var $titleDialog = $('<div>')
@@ -162,7 +163,7 @@ mw.UploadWizardDetails = function( upload, containerDiv ) {
 	
 		
 	/* Build the form for the file upload */
-	_this.$form = $j( '<form></form>' );
+	_this.$form = $j( '<form></form>' ).addClass( 'detailsForm' );
 	_this.$form.append( 
 		titleContainerDiv,
 		_this.descriptionsDiv, 
@@ -183,6 +184,17 @@ mw.UploadWizardDetails = function( upload, containerDiv ) {
 			)
 		);
 
+	// Add in remove control to submittingDiv
+	_this.$removeCtrl = $j.fn.removeCtrl( 
+			'mwe-upwiz-remove', 
+			'mwe-upwiz-remove-upload', 
+			function() { _this.upload.remove(); } 
+		).addClass( "mwe-upwiz-file-status-line-item" );
+
+	_this.submittingDiv.find( '.mwe-upwiz-file-status-line' )
+		.append( _this.$removeCtrl );
+	
+	
 	$j( _this.dataDiv ).append( 
 		_this.$form,
 		_this.submittingDiv
@@ -231,18 +243,30 @@ mw.UploadWizardDetails = function( upload, containerDiv ) {
 	_this.addDescription( true, mw.config.get( 'wgUserLanguage' ) );
 	$j( containerDiv ).append( _this.div );
 
-	// make the title field required
+	// make the title field required, and non-blacklisted
 	_this.$form.find( '.mwe-title' )
 		.rules( "add", {
 			required: true,
+			titleBlacklist: true,
+			titleBadchars: true,
+			titleSenselessimagename: true,	
+			titleHosting: true,
+			titleThumbnail: true,
+			titleExtension: true,
 			messages: { 
-				required: gM( 'mwe-upwiz-error-blank' )
+				required: gM( 'mwe-upwiz-error-blank' ),
+				titleBlacklist: gM( 'mwe-upwiz-error-title-blacklisted' ),
+				titleBadchars: gM( 'mwe-upwiz-error-title-badchars' ),
+				titleSenselessimagename: gM( 'mwe-upwiz-error-title-senselessimagename' ),	
+				titleHosting: gM( 'mwe-upwiz-error-title-hosting' ),
+				titleThumbnail: gM( 'mwe-upwiz-error-title-thumbnail' ),
+				titleExtension: gM( 'mwe-upwiz-error-title-extension' )
 			}
 		} );
 	
 	// make this a category picker
 	var hiddenCats = [];
-	if ( mw.isDefined( mw.UploadWizard.config.autoCategory ) ) {
+	if ( mw.isDefined( mw.UploadWizard.config.autoCategory ) && mw.UploadWizard.config.autoCategory !== '' ) {
 		hiddenCats.push( mw.UploadWizard.config.autoCategory );
 	}
 	$categoriesDiv.find( '.mwe-upwiz-details-input' )
@@ -325,9 +349,11 @@ mw.UploadWizardDetails.prototype = {
 	 */
 	processDestinationCheck: function( result ) {
 		var _this = this;
+		var $errorEl = _this.$form.find( 'label[for=' + _this.titleId + '].errorTitleUnique' );
+
 		if ( result.isUnique ) {
 			$j( _this.titleInput ).data( 'valid', true );
-			_this.$form.find( 'label[for=' + _this.titleId + ']' ).hide().empty();
+			$errorEl.hide().empty();
 			_this.ignoreWarningsInput = undefined;
 			return;
 		}
@@ -350,9 +376,7 @@ mw.UploadWizardDetails.prototype = {
 			errHtml = gM( 'mwe-upwiz-fileexists-replace-no-link', titleString );
 		}
 				
-		_this.$form.find( 'label[for=' + _this.titleId + ']' )
-			.html( errHtml )
-			.show();
+		$errorEl.html( errHtml ).show();
 	}, 
 
 	/**
@@ -428,7 +452,12 @@ mw.UploadWizardDetails.prototype = {
 	 */
 	populate: function() {
 		var _this = this;
-		_this.upload.setThumbnail( _this.thumbnailDiv, mw.UploadWizard.config['thumbnailWidth'], mw.UploadWizard.config['thumbnailMaxHeight'] );
+		_this.upload.setThumbnail( 
+			_this.thumbnailDiv, 
+			mw.UploadWizard.config['thumbnailWidth'], 
+			mw.UploadWizard.config['thumbnailMaxHeight'],
+			true
+		 );
 		_this.prefillDate();
 		_this.prefillSource();
 		_this.prefillAuthor(); 
@@ -456,8 +485,9 @@ mw.UploadWizardDetails.prototype = {
 			$j.each( [ 'datetimeoriginal', 'datetimedigitized', 'datetime', 'date' ], function( i, propName ) {
 				var dateInfo = metadata[propName];
 				if ( ! mw.isEmpty( dateInfo ) ) {
-					var matches = $j.trim( dateInfo ).match( yyyyMmDdRegex );   
-					if ( ! mw.isEmpty( matches ) ) {
+					var matches = $j.trim( dateInfo ).match( yyyyMmDdRegex );  
+					// EXIF was founded in 1995, so anything before that is very unlikely 
+					if ( ! mw.isEmpty( matches ) && parseInt( matches[1], 10 ) > 1994) {
 						dateObj = new Date( parseInt( matches[1], 10 ), 
 								    parseInt( matches[2], 10 ) - 1, 
 								    parseInt( matches[3], 10 ) );
@@ -673,7 +703,7 @@ mw.UploadWizardDetails.prototype = {
 	 */
 	submit: function() {
 		var _this = this;
-
+		
 		_this.upload.state = 'submitting-details';
 		_this.setStatus( gM( 'mwe-upwiz-submitting-details' ) ); 
 		_this.showIndicator( 'progress' );
@@ -692,8 +722,9 @@ mw.UploadWizardDetails.prototype = {
 
 		var err = function( code, info ) {
 			_this.upload.state = 'error';
-			_this.showError( code, info );	
+			_this.processError( code, info );	
 		};
+		
 
 		var ok = function( result ) {
 			if ( result && result.upload && result.upload.imageinfo ) {
@@ -702,6 +733,22 @@ mw.UploadWizardDetails.prototype = {
 				_this.upload.state = 'complete';
 				_this.showIndicator( 'uploaded' );
 				_this.setStatus( gM( 'mwe-upwiz-published' ) );
+			} else if ( result && result.upload.warnings ) {
+				var warnings = result.upload.warnings;
+				if ( warnings['was-deleted'] ) { 
+					_this.recoverFromError( _this.titleId, gM( 'mwe-upwiz-api-warning-was-deleted' ) );
+				} else if ( warnings['thumb'] ) { 
+					_this.recoverFromError( _this.titleId, gM( 'mwe-upwiz-error-title-thumbnail' ) );
+				} else if ( warnings['bad-prefix'] ) { 
+					_this.recoverFromError( _this.titleId, gM( 'mwe-upwiz-error-title-senselessimagename' ) );
+				} else {
+					var warningsKeys = [];
+					$j.each( warnings, function( key, val ) { 
+						warningsKeys.push( key );
+					} );
+					_this.upload.state = 'error';
+					_this.showError( 'unknown', gM( 'mwe-upwiz-api-error-unknown-warning', warningsKeys.join( ', ' ) ) );
+				}
 			} else {
 				err( 'details-info-missing', result );
 			}
@@ -710,15 +757,59 @@ mw.UploadWizardDetails.prototype = {
 		_this.upload.api.postWithEditToken( params, ok, err );
 	},
 
-	showError: function( code, result ) {
-		this.showIndicator( 'error' );
-		// types of errors we know about...
-		// recoverable by fixing title
-		// TODO unmask and fix the error on the title
 
-		// recoverable by trying again, or removing
-		// TODO removal / retry interface
-		this.setStatus( result.error.info );
+	/** 
+	 * Create a recoverable error -- show the form again, and highlight the problematic field. Go to error state but do not block submission
+	 * @param {String} id of input field -- presumed to be within this upload's details form.
+	 * @param {String} error message to show
+	 */
+	recoverFromError: function( fieldId, errorMessage ) {
+		this.upload.state = 'error';
+		this.dataDiv.morphCrossfade( '.detailsForm' );
+		$j( '#' + fieldId ).addClass( 'mwe-error' );
+		this.$form.find( 'label[for=' + fieldId + '].errorRecovery' ).html( errorMessage ).show();
+	},
+
+	/**
+	 * Show error state, possibly using a recoverable error form
+	 * @param {String} error code
+	 * @param {String} status line 
+	 */
+	showError: function( code, statusLine ) {
+		this.showIndicator( 'error' );
+		this.setStatus( statusLine );
+	},
+
+
+	/**
+	 * Decide how to treat various errors
+	 * @param {String} error code
+	 * @param {Mixed} result from ajax call
+	 */
+	processError: function( code, result ) {
+		var statusLine = gM( 'mwe-upwiz-api-error-unclassified' );
+		var titleErrorMap = {
+			'senselessimagename': 'senselessimagename',
+			'fileexists-shared-forbidden': 'fileexists-shared-forbidden',
+		 	'titleblacklist-custom-filename': 'hosting',
+			'titleblacklist-custom-SVG-thumbnail': 'thumbnail',
+			'titleblacklist-custom-thumbnail': 'thumbnail',
+		 	'titleblacklist-custom-double-apostrophe': 'double-apostrophe'
+		};
+		if ( result && result.error && result.error.code ) {
+			if ( titleErrorMap[code] ) {
+				_this.recoverFromError( _this.titleId, gM( 'mwe-upwiz-error-title-' + titleErrorMap[code] ) );
+				return;
+			} else {
+				statusKey = 'mwe-upwiz-api-error-' + code;
+				if ( result.error.info ) {
+					statusLine = gM( statusKey, result.error.info );
+				} else {
+					statusLine = gM( statusKey, '[no error info]' );
+				}
+			}
+		}
+		this.showError( code, statusLine );
 	},
 
 	setStatus: function( s ) { 

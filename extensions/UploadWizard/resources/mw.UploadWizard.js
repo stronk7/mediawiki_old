@@ -8,6 +8,10 @@
 ( function( $j ) {
 
 mw.UploadWizardUpload = function( api, filesDiv ) {
+
+	this.index = mw.UploadWizardUpload.prototype.count;
+	mw.UploadWizardUpload.prototype.count++;
+
 	this.api = api;
 	this.state = 'new';
 	this.thumbnails = {};
@@ -20,8 +24,8 @@ mw.UploadWizardUpload = function( api, filesDiv ) {
 	this.sessionKey = undefined;
 
 	// this should be moved to the interface, if we even keep this
-	this.transportWeight = 1;  // default
-	this.detailsWeight = 1; // default
+	this.transportWeight = 1; // default all same
+	this.detailsWeight = 1; // default all same
 
 	// details
 	this.ui = new mw.UploadWizardUploadInterface( this, filesDiv );
@@ -29,13 +33,15 @@ mw.UploadWizardUpload = function( api, filesDiv ) {
 	// handler -- usually ApiUploadHandler
 	// this.handler = new ( mw.UploadWizard.config[  'uploadHandlerClass'  ] )( this );
 	// this.handler = new mw.MockUploadHandler( this );
-	this.handler = new mw.ApiUploadHandler( this, api );
+	this.handler = this.getUploadHandler();
 	
-	this.index = mw.UploadWizardUpload.prototype.count++;
+	
 };
 
 mw.UploadWizardUpload.prototype = {
-
+	// Upload handler 
+	uploadHandler: null,
+	
 	// increments with each upload
 	count: 0,
 
@@ -59,8 +65,8 @@ mw.UploadWizardUpload.prototype = {
 	 */
 	remove: function() {
 		this.state = 'aborted';
-		if ( this.deedThumbnailDiv ) {
-			this.deedThumbnailDiv.remove();
+		if ( this.deedPreview ) {
+			this.deedPreview.remove();
 		}
 		if ( this.details && this.details.div ) {
 			this.details.div.remove();
@@ -227,32 +233,18 @@ mw.UploadWizardUpload.prototype = {
 	 * @param {Mixed} result -- result of AJAX call
 	 */
 	setSuccess: function( result ) {
-		var _this = this; // was a triumph
+		var _this = this; 
 		_this.state = 'transported';
 		_this.transportProgress = 1;
 
-		// I'm making a note here
 		_this.ui.setStatus( 'mwe-upwiz-getting-metadata' );
 		if ( result.upload ) {
 			_this.extractUploadInfo( result.upload );
-			_this.getThumbnail(
-				function( image ) {
-					// n.b. if server returns a URL, which is a 404, we do NOT get broken image
-					_this.ui.setPreview( image ); // make the thumbnail the preview image
-				},
-				mw.UploadWizard.config[ 'thumbnailWidth' ],
-				mw.UploadWizard.config[ 'thumbnailMaxHeight' ]
-			);
-			// create the large thumbnail that the other thumbnails link to
-			_this.getThumbnail(
-				function( image ) {},
-				mw.UploadWizard.config[ 'largeThumbnailWidth' ],
-				mw.UploadWizard.config[ 'largeThumbnailMaxHeight' ]
-			);
 			_this.deedPreview.setup();
 			_this.details.populate();
 			_this.state = 'stashed';
 			_this.ui.showStashed();
+			$.publishReady( 'thumbnails.' + _this.index, 'api' );
 		} else {
 			_this.setError( 'noimageinfo' );
 		}
@@ -261,17 +253,98 @@ mw.UploadWizardUpload.prototype = {
 
 	/**
 	 * Called when the file is entered into the file input
-	 * Get as much data as possible -- maybe exif, even thumbnail maybe
+	 * Get as much data as possible with this browser, including thumbnail.
+	 * TODO exif
+	 * @param {HTMLFileInput} file input field
+	 * @param {Function} callback when ready
 	 */
-	extractLocalFileInfo: function( filename ) {
-		if ( false ) {  // FileAPI, one day
-			this.transportWeight = getFileSize();
-		}
-		// XXX sanitize filename
+	extractLocalFileInfo: function( fileInput, callback ) {
+		var _this = this;
+		if ( mw.fileApi.isAvailable() ) {
+			if ( fileInput.files && fileInput.files.length ) {
+				// TODO multiple files in an input
+				this.file = fileInput.files[0];
+			}
+			// TODO check max upload size, alert user if too big
+			this.transportWeight = this.file.size;
+
+			if ( mw.fileApi.isPreviewableFile( this.file ) ) {
+				/*
+			 	 * The following part is a bit tricky, but not easy to untangle in code
+				 * First, we will read the file as binary
+				 *  in the binary reader's onload function
+				 *    we try to get metadata with jpegmeta library, and add it to the upload object
+				 *    we re-read the file as a data URL
+				 *      in that file reader's onload function
+				 *	  assign it to an image
+				 *        in that image's onload function
+				 *          publish the event, that this upload can now do thumbnails, with the image itself
+				 *            (listeners will then use that image to create thumbnails in the DOM, 
+				 *		with local scaling or canvas)
+				 */
+
+				var image = document.createElement( 'img' );
+				image.onload = function() {
+					$.publishReady( 'thumbnails.' + _this.index, image );
+				};
+					
+				var binReader = new FileReader();
+				binReader.onload = function() {
+					var meta;
+					try {
+						meta = mw.util.jpegmeta( binReader.result, _this.file.fileName );
+						meta._binary_data = null;
+					} catch ( e ) {
+						meta = null;
+					}
+					_this.extractMetadataFromJpegMeta( meta );
+					
+					var dataUrlReader = new FileReader();
+					dataUrlReader.onload = function() { 
+						image.src = dataUrlReader.result;
+						_this.thumbnails['*'] = image;
+					};
+					dataUrlReader.readAsDataURL( _this.file );
+				};
+				binReader.readAsBinaryString( _this.file );
+			}
+		} 
+		// TODO sanitize filename
+		var filename = fileInput.value;
 		try {
 			this.title = new mw.Title( mw.UploadWizardUtil.getBasename( filename ).replace( /:/g, '_' ), 'file' );
 		} catch ( e ) {
 			this.setError( 'mwe-upwiz-unparseable-filename', filename );
+		}
+		if ( this.title ) {
+			callback();
+		}
+	},
+
+
+	/**
+	 * Map fields from jpegmeta's metadata return into our format (which is more like the imageinfo returned from the API
+	 * @param {Object} (as returned by jpegmeta)
+	 */
+	extractMetadataFromJpegMeta: function( meta ) {
+		if ( mw.isDefined( meta ) && meta !== null && typeof meta === 'object' ) { 
+			if ( !mw.isDefined( this.imageinfo ) ) {
+				this.imageinfo = {};
+			}
+			if ( !mw.isDefined( this.imageinfo.metadata ) ) {
+				this.imageinfo.metadata = {};
+			}
+			if ( meta.tiff && meta.tiff.Orientation ) {
+				this.imageinfo.metadata.orientation = meta.tiff.Orientation.value; 
+			}
+			if ( meta.general ) {
+				if ( meta.general.pixelHeight ) {
+					this.imageinfo.height = meta.general.pixelHeight.value;
+				}
+				if ( meta.general.pixelWidth ) {
+					this.imageinfo.width = meta.general.pixelWidth.value;
+				}
+			}
 		}
 	},
 
@@ -281,21 +354,23 @@ mw.UploadWizardUpload.prototype = {
 	 * @param result The JSON object from a successful API upload result.
 	 */
 	extractUploadInfo: function( resultUpload ) {
+
 		if ( resultUpload.sessionkey ) {
 			this.sessionKey = resultUpload.sessionkey;
 		}
+
 		if ( resultUpload.imageinfo ) {
 			this.extractImageInfo( resultUpload.imageinfo );
 		} else if ( resultUpload.stashimageinfo ) {
 			this.extractImageInfo( resultUpload.stashimageinfo );
 		}
 
-
 	},
 
 	/**
 	 * Extract image info into our upload object
 	 * Image info is obtained from various different API methods
+	 * This may overwrite metadata obtained from FileReader.
 	 * @param imageinfo JSON object obtained from API result.
 	 */
 	extractImageInfo: function( imageinfo ) {
@@ -303,7 +378,9 @@ mw.UploadWizardUpload.prototype = {
 		for ( var key in imageinfo ) {
 			// we get metadata as list of key-val pairs; convert to object for easier lookup. Assuming that EXIF fields are unique.
 			if ( key == 'metadata' ) {
-				_this.imageinfo.metadata = {};
+				if ( !mw.isDefined( _this.imageinfo.metadata ) ) {
+					_this.imageinfo.metadata = {};
+				}
 				if ( imageinfo.metadata && imageinfo.metadata.length ) {
 					$j.each( imageinfo.metadata, function( i, pair ) {
 						if ( pair !== undefined ) {
@@ -331,6 +408,10 @@ mw.UploadWizardUpload.prototype = {
 			}
 			*/
 		}
+
+
+
+
 	},
 
 	/**
@@ -383,172 +464,419 @@ mw.UploadWizardUpload.prototype = {
 		this.api.get( params, { ok: ok, err: err } );
 	},
 
+
 	/**
-	 * Fetch a thumbnail for a stashed upload of the desired width.
-	 * It is assumed you don't call this until it's been transported.
+	 * Get information about published images
+	 * (There is some overlap with getStashedImageInfo, but it's different at every stage so it's clearer to have separate functions)
+	 * See API documentation for prop=imageinfo for what 'props' can contain
+	 * @param {Function} callback -- called with null if failure, with imageinfo data structure if success
+	 * @param {Array} properties to extract
+	 * @param {Number} optional, width of thumbnail. Will force 'url' to be added to props
+	 * @param {Number} optional, height of thumbnail. Will force 'url' to be added to props
+	 */
+	getImageInfo: function( callback, props, width, height ) { 
+		var _this = this;
+		if (!mw.isDefined( props ) ) {
+			props = [];
+		}
+		var requestedTitle = _this.title.getPrefixedText();
+		var params = {
+			'prop': 'imageinfo',
+			'titles': requestedTitle,
+			'iiprop': props.join( '|' )
+		};
+
+		if ( mw.isDefined( width ) || mw.isDefined( height ) ) {
+			if ( ! $j.inArray( 'url', props ) ) {
+				props.push( 'url' );
+			}
+			if ( mw.isDefined( width ) ) {
+				params['iiurlwidth'] = width;
+			}
+			if ( mw.isDefined( height ) ) {
+				params['iiurlheight'] = height;
+			}
+		}
+
+		var ok = function( data ) {
+			if ( data && data.query && data.query.pages ) {
+				var found = false;
+				$j.each( data.query.pages, function( pageId, page ) {
+					if ( page.title && page.title === requestedTitle && page.imageinfo ) {
+						found = true;
+						callback( page.imageinfo );
+						return false;
+					}
+				} );
+				if ( found ) {
+					return;
+				}
+			} 
+			mw.log("mw.UploadWizardUpload::getImageInfo> No data matching " + requestedTitle + " ? ");
+			callback( null );
+		};
+
+		var err = function( code, result ) {
+			mw.log( 'mw.UploadWizardUpload::getImageInfo> error: ' + code, 'debug' );
+			callback( null );
+		};
+
+		this.api.get( params, { ok: ok, err: err } );
+	},
+	
+
+	/**
+	 * Get the upload handler per browser capabilities 
+	 */
+	getUploadHandler: function(){
+		if( !this.uploadHandler ){
+			if( typeof( Firefogg ) != 'undefined'
+					&&
+				mw.UploadWizard.config[ 'enableFirefogg' ]
+			) {
+				mw.log("mw.UploadWizard::getUploadHandler> FirefoggHandler");
+				this.uploadHandler = new mw.FirefoggHandler( this, this.api );			
+			} else {
+				// By default use the apiUploadHandler
+				mw.log("mw.UploadWizard::getUploadHandler> ApiUploadHandler");
+				this.uploadHandler = new mw.ApiUploadHandler( this, this.api );
+			}
+		}		
+		return this.uploadHandler;
+	},
+
+	/**
+	 * Explicitly fetch a thumbnail for a stashed upload of the desired width.
+	 * Publishes to any event listeners that might have wanted it.
  	 *
-	 * @param callback - callback to execute once thumbnail has been obtained -- must accept Image object for success, null for error
 	 * @param width - desired width of thumbnail (height will scale to match)
 	 * @param height - (optional) maximum height of thumbnail
 	 */
-	getThumbnail: function( callback, width, height ) {
+	getAndPublishApiThumbnail: function( key, width, height ) {
 		var _this = this;
+
 		if ( mw.isEmpty( height ) ) {
 			height = -1;
 		}
-		// this key is overspecified for this thumbnail ( we don't need to reiterate the index ) but 
-		// we can use this as key as an event now, that might fire much later
-		var key = 'thumbnail.' + _this.index + '.width' + width + ',height' + height;
-		if ( mw.isDefined( _this.thumbnails[key] ) ) {
-			callback( _this.thumbnails[key] );
-			return;
-		}
 
-		// subscribe to the event that this thumbnail is ready -- will give null or an Image to the callback
-		$j.subscribe( key, callback );
-
-		// if someone else already started a thumbnail fetch & publish, then don't bother, just wait for the event.
-		if ( ! mw.isDefined( _this.thumbnailPublishers[ key ] ) ) {
-			// The thumbnail publisher accepts the result of a stashImageInfo, and then tries to get the thumbnail, and eventually
-			// will trigger the event we just subscribed to.
-			_this.thumbnailPublishers[ key ] = _this.getThumbnailPublisher( key );
-			_this.getStashImageInfo( _this.thumbnailPublishers[ key ], [ 'url' ], width, height );
-		}
-	},
-
-	/**
-	 * Returns a callback that can be used with a stashImageInfo call to fetch images, and then fire off an event to
-	 * let everyone else know the image is loaded.
-	 *
-	 * Will retry the thumbnail URL several times, as thumbnails are known to be slow in production.
-	 * @param {String} name of event to publish when thumbnails received (or final failure)
-	 */
-	getThumbnailPublisher: function( key ) {
-		var _this = this;
-		return function( thumbnails ) { 
+		if ( !mw.isDefined( _this.thumbnailPublishers[key] ) ) {
+			var thumbnailPublisher = function( thumbnails ) { 
 				if ( thumbnails === null ) {
-				// the api call failed somehow, no thumbnail data.
-				$j.publish( key, null );
+					// the api call failed somehow, no thumbnail data.
+					$j.publishReady( key, null );
 				} else {
-				// ok, the api callback has returned us information on where the thumbnail(s) ARE, but that doesn't mean
-				// they are actually there yet. Keep trying to set the source ( which should trigger "error" or "load" event )
-				// on the image. If it loads publish the event with the image. If it errors out too many times, give up and publish
-				// the event with a null.
-				$j.each( thumbnails, function( i, thumb ) {
+					// ok, the api callback has returned us information on where the thumbnail(s) ARE, but that doesn't mean
+					// they are actually there yet. Keep trying to set the source ( which should trigger "error" or "load" event )
+					// on the image. If it loads publish the event with the image. If it errors out too many times, give up and publish
+					// the event with a null.
+					$j.each( thumbnails, function( i, thumb ) {
 						if ( thumb.thumberror || ( ! ( thumb.thumburl && thumb.thumbwidth && thumb.thumbheight ) ) ) {
 							mw.log( "mw.UploadWizardUpload::getThumbnail> thumbnail error or missing information" );
-						$j.publish( key, null );
+							$j.publishReady( key, null );
 							return;
 						}
 
-					// try to load this image with exponential backoff
-					// if the delay goes past 8 seconds, it gives up and publishes the event with null
-					var timeoutMs = 100;
-
+						// try to load this image with exponential backoff
+						// if the delay goes past 8 seconds, it gives up and publishes the event with null
+						var timeoutMs = 100;
 						var image = document.createElement( 'img' );
 						image.width = thumb.thumbwidth;
 						image.height = thumb.thumbheight;
-					$j( image )
-						.load( function() {
-							// cache this thumbnail
-						_this.thumbnails[key] = image;
-							// publish the image to anyone who wanted it
-							$j.publish( key, image );
-						} )
-						.error( function() { 
-							// retry with exponential backoff
-							if ( timeoutMs < 8000 ) {
-								setTimeout( function() { 
-									timeoutMs = timeoutMs * 2 + Math.round( Math.random() * ( timeoutMs / 10 ) ); 
-									setSrc();
-								}, timeoutMs )	
-							} else {
-								$j.publish( key, null );
-					}
-						} );
+						$j( image )
+							.load( function() {
+								// cache this thumbnail
+								_this.thumbnails[key] = image;
+								// publish the image to anyone who wanted it
+								$j.publishReady( key, image );
+							} )
+							.error( function() { 
+								// retry with exponential backoff
+								if ( timeoutMs < 8000 ) {
+									setTimeout( function() { 
+										timeoutMs = timeoutMs * 2 + Math.round( Math.random() * ( timeoutMs / 10 ) ); 
+										setSrc();
+									}, timeoutMs );
+								} else {
+									$j.publishReady( key, null );
+								}
+							} );
 
-					// executing this should cause a .load() or .error() event on the image
-					function setSrc() { 
-						image.src = thumb.thumburl;
+						// executing this should cause a .load() or .error() event on the image
+						function setSrc() { 
+							image.src = thumb.thumburl;
+						}
+
+						// and, go!
+						setSrc();
+					} );
+				}
 			};
 
-					// and, go!
-					setSrc();
-				} );
+			_this.thumbnailPublishers[key] = thumbnailPublisher;
+			if ( _this.state !== 'complete' ) {
+				_this.getStashImageInfo( thumbnailPublisher, [ 'url' ], width, height );
+			} else {
+				_this.getImageInfo( thumbnailPublisher, [ 'url' ], width, height );
+			}
+
 		}
-		};
 	},
 
 	/**
-	 * Look up thumbnail info and set it in HTML, with loading spinner
-	 *
-	 * @param selector
-	 * @param width
-	 * @param height (optional)
+	 * Return the orientation of the image in degrees. Relies on metadata that
+	 * may have been extracted at filereader stage, or after the upload when we fetch metadata. Default returns 0.
+	 * @return {Integer} orientation in degrees: 0, 90, 180 or 270
 	 */
-	setThumbnail: function( selector, width, height ) {
-		var _this = this;
-		if ( typeof width === 'undefined' || width === null || width <= 0 )  {
-			width = mw.UploadWizard.config[  'thumbnailWidth'  ];
+	getOrientationDegrees: function() {
+		var orientation = 0;
+		if ( this.imageinfo && this.imageinfo.metadata && this.imageinfo.metadata.orientation ) {
+			switch ( this.imageinfo.metadata.orientation ) { 
+				case 8:	
+					orientation = 90;   // 'top left' -> 'left bottom'
+					break;			
+				case 3:
+					orientation = 180;   // 'top left' -> 'bottom right'
+					break;
+				case 6:
+					orientation = 270;   // 'top left' -> 'right top'
+					break;
+				case 1:
+				default:
+					orientation = 0;     // 'top left' -> 'top left'
+					break;
+					
+			}
 		}
-		width = parseInt( width, 10 );
-		height = null;
-		if ( !mw.isEmpty( height ) ) {
-			height = parseInt( height, 10 );
+		return orientation;
+	},
+
+	/**
+	 * Fit an image into width & height constraints with scaling factor
+	 * @param {HTMLImageElement}
+	 * @param {Object} with width & height properties
+	 * @return {Number}
+	 */
+	getScalingFromConstraints: function( image, constraints ) {
+		var scaling = 1;
+		$j.each( [ 'width', 'height' ], function( i, dim ) { 
+			if ( constraints[dim] && image[dim] > constraints[dim] ) {
+				var s = constraints[dim] / image[dim];
+				if ( s < scaling ) { 
+					scaling = s;
+				}
+			}
+		} );
+		return scaling;
+	},
+
+	/**
+	 * Given an image (already loaded), dimension constraints
+	 * return canvas object scaled & transformedi ( & rotated if metadata indicates it's needed )
+	 * @param {HTMLImageElement}
+	 * @param {Object} containing width & height constraints
+	 * @return {HTMLCanvasElement} 
+	 */
+	getTransformedCanvasElement: function( image, constraints ) {
+	
+		var rotation = 0;
+	
+		// if this wiki can rotate images to match their EXIF metadata, 
+		// we should do the same in our preview
+		if ( mw.config.get( 'wgFileCanRotate' ) ) { 
+			var angle = this.getOrientationDegrees();
+			rotation = angle ? 360 - angle : 0;
 		}
 
-		var callback = function( image ) {
+		// swap scaling constraints if needed by rotation...
+		var scaleConstraints;
+		if ( rotation === 90 || rotation === 270 ) {
+			scaleConstraints = {
+				width: constraints.height,
+				height: constraints.width
+			};
+		} else {
+			scaleConstraints = {
+				width: constraints.width,
+				height: constraints.height
+			};
+		}
+
+		var scaling = this.getScalingFromConstraints( image, constraints );
+
+		var width = image.width * scaling;
+		var height = image.height * scaling;
+
+		// Determine the offset required to center the image
+		var dx = (constraints.width - width) / 2;
+		var dy = (constraints.height - height) / 2;
+
+		switch ( rotation ) {
+			// If a rotation is applied, the direction of the axis
+			// changes as well. You can derive the values below by 
+			// drawing on paper an axis system, rotate it and see
+			// where the positive axis direction is
+			case 90:
+				x = dx;
+				y = dy - constraints.height;
+				break;
+			case 180:
+				x = dx - constraints.width;
+				y = dy - constraints.height;
+				break;
+			case 270:
+				x = dx - constraints.width;
+				y = dy;
+				break;
+			case 0:
+			default:
+				x = dx;
+				y = dy;
+				break;
+		}
+		
+		var $canvas = $j( '<canvas></canvas>' ).attr( constraints );
+		var ctx = $canvas[0].getContext( '2d' );	
+		ctx.clearRect( 0, 0, width, height );
+		ctx.rotate( rotation / 180 * Math.PI );
+		ctx.drawImage( image, x, y, width, height );
+
+		return $canvas;
+	},
+
+	/**
+	 * Return a browser-scaled image element, given an image and constraints.
+	 * @param {HTMLImageElement}
+	 * @param {Object} with width and height properties
+	 * @return {HTMLImageElement} with same src, but different attrs
+	 */
+	getBrowserScaledImageElement: function( image, constraints ) {
+		var scaling = this.getScalingFromConstraints( image, constraints );
+		return $j( '<img/>' )
+			.attr( {
+				width:  parseInt( image.width * scaling, 10 ),
+				height: parseInt( image.height * scaling, 10 ),
+				src:    image.src
+			} )
+			.css( { 
+				'margin-top': ( parseInt( ( constraints.height - image.height * scaling ) / 2, 10 ) ).toString() + 'px' 
+			} );
+	},
+
+	/** 
+	 * Return an element suitable for the preview of a certain size. Uses canvas when possible
+	 * @param {HTMLImageElement} 
+	 * @param {Integer} width
+	 * @param {Integer} height
+	 * @return {HTMLCanvasElement|HTMLImageElement}
+	 */
+	getScaledImageElement: function( image, width, height ) {
+		if ( typeof width === 'undefined' || width === null || width <= 0 )  {
+			width = mw.UploadWizard.config['thumbnailWidth'];
+		}
+		var constraints = { 
+			width: parseInt( width, 10 ),
+			height: ( mw.isDefined( height ) ? parseInt( height, 10 ) : null )
+		};
+
+		return mw.canvas.isAvailable() ? this.getTransformedCanvasElement( image, constraints )
+					       : this.getBrowserScaledImageElement( image, constraints );
+	},
+
+	/**
+	 * Given a jQuery selector, subscribe to the "ready" event that fills the thumbnail
+ 	 * This will trigger if the thumbnail is added in the future or if it already has been
+	 *
+	 * @param selector
+	 * @param width  Width constraint
+	 * @param height Height constraint (optional)
+	 * @param boolean add lightbox large preview when ready
+	 */
+	setThumbnail: function( selector, width, height, isLightBox ) {
+		var _this = this;
+
+		/**
+		 * This callback will add an image to the selector, using in-browser scaling if necessary
+	 	 * @param {HTMLImageElement}
+	 	 */
+		var placed = false;
+		var placeImageCallback = function( image ) {
 			if ( image === null ) {
 				$j( selector ).addClass( 'mwe-upwiz-file-preview-broken' );
 				_this.ui.setStatus( 'mwe-upwiz-thumbnail-failed' );
-			} else {
-				var $thumbnailLink = $j( '<a class="mwe-upwiz-thumbnail-link"></a>' );
-				if ( _this.state != 'complete' ) { // don't use lightbox for thank you page thumbnail
-					$thumbnailLink
-						.attr( {
-							'href': '#',
-							'target' : '_new'
-						} )
-						// set up lightbox behavior for thumbnail
-						.click( function() {
-							// get large preview image
-							_this.getThumbnail(
-								// open large preview in modal dialog box
-								function( image ) {
-									var dialogWidth = ( image.width > 200 ) ? image.width : 200;
-									$( '<div class="mwe-upwiz-lightbox"></div>' )
-										.append( image )
-										.dialog( {
-											'width': dialogWidth,
-											'autoOpen': true,
-											'title': gM( 'mwe-upwiz-image-preview' ),
-											'modal': true,
-											'resizable': false
-										} );
-								},
-								mw.UploadWizard.config[ 'largeThumbnailWidth' ],
-								mw.UploadWizard.config[ 'largeThumbnailMaxHeight' ]
-							);
-							return false;
-						} ); // close thumbnail click function
-				} // close if
-
-				$j( selector ).html(
-					// insert the thumbnail into the anchor
-					$thumbnailLink.append(
-						$j( '<img/>' )
-							.attr( {
-								'width':  image.width,
-								'height': image.height,
-								'src':    image.src
-							} )
-					) // close append
-				); // close html
-			} // close image !== null else condition
+				return;
+			} 
+			var elm = _this.getScaledImageElement( image, width, height );
+			// add the image to the DOM, finally
+			$j( selector )
+				.css( { background: 'none' } )
+				.html( 
+					$j( '<a/></a>' )
+						.addClass( "mwe-upwiz-thumbnail-link" )
+						.append( elm )
+				);
+			placed = true;
 		};
 
-		_this.getThumbnail( callback, width, height );
+		// Listen for even which says some kind of thumbnail is available. 
+		// The argument is an either an ImageHtmlElement ( if we could get the thumbnail locally ) or the string 'api' indicating you 
+		// now need to get the scaled thumbnail via the API 
+		$.subscribeReady( 
+			'thumbnails.' + _this.index,
+			function ( x ) {
+				if ( isLightBox ) {
+					_this.setLightBox( selector );
+				} 
+				if ( !placed ) { 
+					if ( x === 'api' ) {
+						// get the thumbnail via API. This also works with an async pub/sub model; if this thumbnail was already
+						// fetched for some reason, we'll get it immediately
+						var key = 'apiThumbnail.' + _this.index + ',width=' + width + ',height=' + height;
+						$.subscribeReady( key, placeImageCallback );
+						_this.getAndPublishApiThumbnail( key, width, height );
+					} else if ( x instanceof HTMLImageElement ) {
+						placeImageCallback( x );
+					} else {
+						// something else went wrong, place broken image
+						mw.log( 'unexpected argument to thumbnails event: ' + x );
+						placeImageCallback( null );
+					}
+				}
+			}
+		);
 	},
+
+	/**
+	 * set up lightbox behavior for non-complete thumbnails
+	 * TODO center this
+	 * @param selector
+	 */
+	setLightBox: function( selector ) {
+		var _this = this;
+		var $imgDiv = $j( '<div></div>' ).css( 'text-align', 'center' );
+		$j( selector )
+			.click( function() {
+				// get large preview image
+				// open large preview in modal dialog box
+				$j( '<div class="mwe-upwiz-lightbox"></div>' )
+					.append( $imgDiv )
+					.dialog( {
+						'width': mw.UploadWizard.config[ 'largeThumbnailWidth' ],
+						'height': mw.UploadWizard.config[ 'largeThumbnailMaxHeight' ],
+						'autoOpen': true,
+						'title': gM( 'mwe-upwiz-image-preview' ),
+						'modal': true,
+						'resizable': false
+					} );
+				_this.setThumbnail( 
+					$imgDiv, 
+					mw.UploadWizard.config[ 'largeThumbnailWidth' ],
+					mw.UploadWizard.config[ 'largeThumbnailMaxHeight' ],
+					false /* obviously the largeThumbnail doesn't have a lightbox itself! */
+				);
+				return false;
+			} ); // close thumbnail click function
+	},
+
 
 	/**
 	 * Given a filename like "Foo.jpg", get the URL to that filename, assuming the browser is on the same wiki.
@@ -569,8 +897,8 @@ mw.UploadWizardUpload.prototype = {
 
 
 /**
- * Object that reperesents the entire multi-step Upload Wizard
- */
+* Object that reperesents the entire multi-step Upload Wizard
+*/
 mw.UploadWizard = function( config ) {
 
 	this.uploads = [];
@@ -633,6 +961,8 @@ mw.UploadWizard.prototype = {
 	 * Depending on whether we split uploading / detailing, it may actually always be as simple as loading a URL
 	 */
 	reset: function() {
+		$.purgeReadyEvents();
+		$.purgeSubscriptions();
 		this.removeMatchingUploads( function() { return true; } );
 	},
 
@@ -675,8 +1005,16 @@ mw.UploadWizard.prototype = {
 		}
 		if ( mw.isDefined( mw.UploadWizard.config['altUploadForm'] ) && mw.UploadWizard.config['altUploadForm'] !== '' ) {
 			// altUploadForm is expected to be a page title like 'Commons:Upload', so convert to URL
-			var altUploadFormUrl = ( new mw.Title( mw.UploadWizard.config['altUploadForm'] ) ).getUrl();
-			$j( '#contentSub' ).append( $j( '<span class="contentSubLink"></span>' ).msg( 'mwe-upwiz-subhead-alt-upload', $j( '<a></a>' ).attr( { href: altUploadFormUrl } ) ) );
+			var title;
+			try {
+				title = new mw.Title( mw.UploadWizard.config['altUploadForm'] );
+			} catch ( e ) {
+				// page was empty, or impossible on this wiki (missing namespace or some other issue). Give up.
+			}
+			if ( title instanceof mw.Title ) { 
+				var altUploadFormUrl = title.getUrl();
+				$j( '#contentSub' ).append( $j( '<span class="contentSubLink"></span>' ).msg( 'mwe-upwiz-subhead-alt-upload', $j( '<a></a>' ).attr( { href: altUploadFormUrl } ) ) );
+			}
 		}
 		$j( '#contentSub .contentSubLink:not(:last)' ).after( '&nbsp;&middot;&nbsp;' );
 
@@ -783,8 +1121,11 @@ mw.UploadWizard.prototype = {
 			if ( _this.detailsValid() ) {
 				_this.hideDetailsEndButtons();
 				_this.detailsSubmit( function() {
+					_this.detailsErrorCount();
 					_this.showNext( 'details', 'complete', finalizeDetails );
 				} );
+			} else {
+				_this.detailsErrorCount();
 			}
 		};
 
@@ -1298,6 +1639,15 @@ mw.UploadWizard.prototype = {
 			.find( '.mwe-upwiz-data' )
 			.morphCrossfade( '.mwe-upwiz-submitting' );
 
+		// hide errors ( assuming maybe this submission will fix it, if it hadn't blocked )
+		$j( '#mwe-upwiz-stepdiv-details' ) 
+			.find( 'label.mwe-error' )
+			.hide().empty();
+
+		$j( '#mwe-upwiz-stepdiv-details' ) 
+			.find( 'input.mwe-error' )
+			.removeClass( 'mwe-error' );
+
 		// add the upload progress bar, with ETA
 		// add in the upload count
 		_this.makeTransitioner(
@@ -1309,6 +1659,21 @@ mw.UploadWizard.prototype = {
 			},
 			endCallback /* called when all uploads are in a valid end state */
 		);
+	},
+
+	/** 
+	 * The details page can be vertically long so sometimes it is not obvious there are errors above. This counts them and puts the count
+ 	 * right next to the submit button, so it should be obvious to the user they need to fix things. 
+	 * This is a bit of a hack. The validator library actually already has a way to count errors but some errors are generated
+	 * outside of that library. So we are going to just look for any visible inputs in an error state.
+	 */
+	detailsErrorCount: function() {
+		var errorCount = $( '#mwe-upwiz-stepdiv-details' ).find( 'input.mwe-error, textarea.mwe-error, input.mwe-validator-error, textarea.mwe-validator-error' ).length;
+		if ( errorCount > 0 ) {
+			$( '#mwe-upwiz-details-error-count' ).msg( 'mwe-upwiz-details-error-count', errorCount, this.uploads.length );
+		} else {
+			$( '#mwe-upwiz-details-error-count' ).empty();
+		}
 	},
 
 	prefillThanksPage: function() {
@@ -1331,12 +1696,17 @@ mw.UploadWizard.prototype = {
 				.html( $j( '<a/>' ).html( upload.title.getMainText() ) );
 			var $thumbnailWrapDiv = $j( '<div></div>' ).addClass( 'mwe-upwiz-thumbnail-side' );
 			$thumbnailWrapDiv.append( $thumbnailDiv, $thumbnailCaption );
-			upload.setThumbnail( $thumbnailDiv );
+			upload.setThumbnail( 
+				$thumbnailDiv, 
+				mw.UploadWizard.config[ 'thumbnailWidth' ], 
+				mw.UploadWizard.config[ 'thumbnailMaxHeight' ],
+				false
+			);
 
 			// Set the thumbnail links so that they point to the image description page
 			$thumbnailWrapDiv.find( 'a' ).attr( {
 				'href': upload.imageinfo.descriptionurl,
-				'target' : '_new'
+				'target' : '_blank'
 			} );
 			$thanksDiv.append( $thumbnailWrapDiv );
 
@@ -1440,12 +1810,21 @@ mw.UploadWizardDeedPreview = function(upload) {
 
 mw.UploadWizardDeedPreview.prototype = {
 	setup: function() {
-		var _this = this;
 		// add a preview on the deeds page
-		var thumbnailDiv = $j( '<div></div>' ).addClass( 'mwe-upwiz-thumbnail' );
-		$j( '#mwe-upwiz-deeds-thumbnails' ).append( thumbnailDiv );
-		_this.upload.setThumbnail( thumbnailDiv, mw.UploadWizard.config[  'thumbnailWidth'  ], mw.UploadWizard.config[ 'thumbnailMaxHeight' ] );
-		_this.upload.deedThumbnailDiv = thumbnailDiv;
+		this.$thumbnailDiv = $j( '<div></div>' ).addClass( 'mwe-upwiz-thumbnail' );
+		$j( '#mwe-upwiz-deeds-thumbnails' ).append( this.$thumbnailDiv );
+		this.upload.setThumbnail( 
+			this.$thumbnailDiv, 
+			mw.UploadWizard.config['thumbnailWidth'], 
+			mw.UploadWizard.config['thumbnailMaxHeight'],
+			true
+		);
+	},
+
+	remove: function() { 
+		if ( this.$thumbnailDiv ) {
+			this.$thumbnailDiv.remove();
+		}
 	}
 };
 
