@@ -80,14 +80,6 @@
 				debug: false
 			};
 
-			/* debuging utils */
-			// 
-			// function benchmark( s, d ) {
-			//     console.log( s + " " + ( new Date().getTime() - d.getTime() ) + "ms" );
-			// }
-			// 
-			// this.benchmark = benchmark;
-			// 
 			/* parsers utils */
 
 			function buildParserCache( table, $headers ) {
@@ -101,7 +93,7 @@
 						l = cells.length;
 
 					for ( var i = 0; i < l; i++ ) {
-						p = false;
+						var p = false;
 						sortType = $headers.eq(i).data('sort-type');
 						if ( typeof sortType != 'undefined' ) {
 							p = getParserById( sortType );
@@ -110,9 +102,7 @@
 						if (p === false) {
 							p = detectParserForColumn( table, rows, i );
 						}
-						// if ( table.config.debug ) {
-						//     console.log( "column:" + i + " parser:" + p.id + "\n" );
-						// }
+
 						list.push(p);
 					}
 				}
@@ -264,7 +254,7 @@
 				// }
 				//var header_index = computeTableHeaderCellIndexes( table );
 				var realCellIndex = 0;
-				$tableHeaders = $( "thead:eq(0) tr", table );
+				var $tableHeaders = $( "thead:eq(0) tr", table );
 				if ( $tableHeaders.length > 1 ) {
 					$tableHeaders.each(function() {
 						if (this.cells.length > maxSeen) {
@@ -299,11 +289,6 @@
 					table.config.headerList[index] = this;
 				} );
 
-				// if ( table.config.debug ) {
-				//     benchmark( "Built headers:", time );
-				//     console.log( $tableHeaders );
-				// }
-				// 
 				return $tableHeaders;
 
 			}
@@ -378,19 +363,11 @@
 				mergeSortHelper(array, begin, beginRight, end, sortList);
 			}
 
-			var lastSort = '';
-			
 			function multisort( table, sortList, cache ) {
 				//var sortTime = new Date();
 		    
 				var i = sortList.length;
-				if ( i == 1 && sortList[0][0] === lastSort) {
-					// Special case a simple reverse
-					cache.normalized.reverse();
-				} else {
-					mergeSort(cache.normalized, 0, cache.normalized.length, sortList);
-				}
-				lastSort = ( sortList.length == 1 ) ? sortList[0][0] : '';
+				mergeSort(cache.normalized, 0, cache.normalized.length, sortList);
 
 				//benchmark( "Sorting in dir " + order + " time:", sortTime );
 		    
@@ -453,7 +430,7 @@
 
 				//Build RegEx
 				//Any date formated with . , ' - or /
-				ts.dateRegex[0] = new RegExp(/^\s*\d{1,2}[\,\.\-\/'\s]*\d{1,2}[\,\.\-\/'\s]*\d{2,4}\s*?/i);
+				ts.dateRegex[0] = new RegExp(/^\s*\d{1,2}[\,\.\-\/'\s]{1,2}\d{1,2}[\,\.\-\/'\s]{1,2}\d{2,4}\s*?/i);
 
 				//Written Month name, dmy
 				ts.dateRegex[1] = new RegExp('^\\s*\\d{1,2}[\\,\\.\\-\\/\'\\s]*(' + r + ')' + '[\\,\\.\\-\\/\'\\s]*\\d{2,4}\\s*$', 'i');
@@ -471,23 +448,33 @@
 					var cell = $( this );
 					var next = cell.parent().nextAll();
 					for ( var i = 0; i < rowSpan - 1; i++ ) {
-						next.eq(0).find( 'td' ).eq( this.cellIndex ).before( cell.clone() );
+						var td = next.eq( i ).find( 'td' );
+						if ( !td.length ) {
+							next.eq( i ).append( cell.clone() );
+						} else if ( this.cellIndex == 0 ) {
+							td.eq( this.cellIndex ).before( cell.clone() );
+						} else {
+							td.eq( this.cellIndex - 1 ).after( cell.clone() );
+						}
 					}
 				});
 			}
 
 			function buildCollationTable() {
 				ts.collationTable = mw.config.get('tableSorterCollation');
-				if ( typeof ts.collationTable === "object" ) {
-					ts.collationRegex = [];
+				ts.collationRegex = null;
+				if ( ts.collationTable ) {
+					var keys = [];
 
 					//Build array of key names
 					for ( var key in ts.collationTable ) {
 						if ( ts.collationTable.hasOwnProperty(key) ) { //to be safe
-							ts.collationRegex.push(key);
+							keys.push(key);
 						}
 					}
-					ts.collationRegex = new RegExp( '[' + ts.collationRegex.join('') + ']', 'ig' );
+					if (keys.length) {
+						ts.collationRegex = new RegExp( '[' + keys.join('') + ']', 'ig' );
+					}
 				}
 			}
 
@@ -496,7 +483,7 @@
 					IPAddress: [new RegExp(/^\d{1,3}[\.]\d{1,3}[\.]\d{1,3}[\.]\d{1,3}$/)],
 					currency: [new RegExp(/^[£$€?.]/), new RegExp(/[£$€]/g)],
 					url: [new RegExp(/^(https?|ftp|file):\/\/$/), new RegExp(/(https?|ftp|file):\/\//)],
-					isoDate: [new RegExp(/^\d{4}[\/-]\d{1,2}[\/-]\d{1,2}$/)],
+					isoDate: [new RegExp(/^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}$/)],
 					usLongDate: [new RegExp(/^[A-Za-z]{3,10}\.? [0-9]{1,2}, ([0-9]{4}|'?[0-9]{2}) (([0-2]?[0-9]:[0-5][0-9])|([0-1]?[0-9]:[0-5][0-9]\s(AM|PM)))$/)],
 					time: [new RegExp(/^(([0-2]?[0-9]:[0-5][0-9])|([0-1]?[0-9]:[0-5][0-9]\s(am|pm)))$/)]
 				};
@@ -587,14 +574,14 @@
 									config.sortList.push( [i, this.order] );
 								}
 							}
-							setTimeout( function () {
-								// set css for headers
-								setHeadersCss( $this[0], $headers, config.sortList, sortCSS, sortMsg );
-								appendToTable( 
-								$this[0], multisort( 
-								$this[0], config.sortList, cache ) );
-								//benchmark( "Sorting " + totalRows + " rows:", clickTime );
-							}, 1 );
+
+							// set css for headers
+							setHeadersCss( $this[0], $headers, config.sortList, sortCSS, sortMsg );
+							appendToTable( 
+							$this[0], multisort( 
+							$this[0], config.sortList, cache ) );
+							//benchmark( "Sorting " + totalRows + " rows:", clickTime );
+
 							// stop normal event by returning false
 							return false;
 						}
@@ -731,7 +718,9 @@
 				l = a.length;
 			for ( var i = 0; i < l; i++ ) {
 				var item = a[i];
-				if ( item.length == 2 ) {
+				if ( item.length == 1 ) {
+					r += "00" + item;
+				} else if ( item.length == 2 ) {
 					r += "0" + item;
 				} else {
 					r += item;
@@ -795,7 +784,7 @@
 		format: function ( s, table ) {
 			s = $.trim( s.toLowerCase() );
 
-			for ( i = 1, j = 0; i < 13 && j < 2; i++ ) {
+			for ( var i = 1, j = 0; i < 13 && j < 2; i++ ) {
 				s = s.replace( ts.monthNames[j][i], i );
 				if ( i == 12 ) {
 					j++;
@@ -813,6 +802,7 @@
 			//Pad Month and Day
 			if ( s[0] && s[0].length == 1 ) s[0] = "0" + s[0];
 			if ( s[1] && s[1].length == 1 ) s[1] = "0" + s[1];
+			var y;
 
 			if ( !s[2] ) {
 				//Fix yearless dates
