@@ -128,6 +128,7 @@ production.
 * (bug 16956) IPTC and XMP metadata now extracted from images.
 * (bug 23816) A tracking category is now added for any pages with broken images.
 * (bug 23495) Allow createAndPromote.php to create non-sysop users
+* mw.util.getScript has been implemented (like wfScript in GlobalFunctions.php)
 
 === Bug fixes in 1.18 ===
 * (bug 23119) WikiError class and subclasses are now marked as deprecated.
@@ -251,6 +252,7 @@ production.
 * (bug 22227) Special:Listfiles no longer throws an error on bogus file entries
 * (bug 19408) user_properties.up_property: 32 bytes is not enough.
 * (bug 25262) Fix for minification of hardcoded data: URIs in CSS
++* (bug 29071) mediawiki.action.watch.ajax.js should pass uselang to API.
 
 === API changes in 1.18 ===
 * (bug 26339) Throw warning when truncating an overlarge API result.

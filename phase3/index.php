@@ -176,6 +176,10 @@ function wfDie( $errorMsg ){
 	$encLogo = htmlspecialchars( $logo );
 
 	header( $_SERVER['SERVER_PROTOCOL'] . ' 500 MediaWiki configuration Error', true, 500 );
+	header( 'Content-type: text/html; charset=UTF-8' );
+	// Don't cache error pages!  They cause no end of trouble...
+	header( 'Cache-control: none' );
+	header( 'Pragma: nocache' );
 
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

@@ -188,12 +188,11 @@ class MWException extends Exception {
 				die( $hookResult );
 			}
 
-			if ( defined( 'MEDIAWIKI_INSTALL' ) || $this->htmlBodyOnly() ) {
-				echo $this->getHTML();
+			$html = $this->getHTML();
+			if ( defined( 'MEDIAWIKI_INSTALL' ) ) {
+				echo $html;
 			} else {
-				echo $this->htmlHeader();
-				echo $this->getHTML();
-				echo $this->htmlFooter();
+				wfDie( $html );
 			}
 		}
 	}
@@ -219,6 +218,7 @@ class MWException extends Exception {
 	/**
 	 * Send headers and output the beginning of the html page if not using
 	 * $wgOut to output the exception.
+	 * @deprecated since 1.18 call wfDie() if you need to die immediately
 	 */
 	function htmlHeader() {
 		global $wgLogo, $wgOutputEncoding, $wgLang;
@@ -273,16 +273,10 @@ ENDL
 
 	/**
 	 * print the end of the html page if not using $wgOut.
+	 * @deprecated since 1.18
 	 */
 	function htmlFooter() {
 		return Html::closeElement( 'body' ) . Html::closeElement( 'html' );
-	}
-
-	/**
-	 * headers handled by subclass?
-	 */
-	function htmlBodyOnly() {
-		return false;
 	}
 
 	static function isCommandLine() {
@@ -493,7 +487,7 @@ function wfReportException( Exception $e ) {
 			if ( $cmdLine ) {
 				wfPrintError( $message );
 			} else {
-				wfDie( htmlspecialchars( $message ) ) . "\n";
+				wfDie( nl2br( htmlspecialchars( $message ) ) ) . "\n";
 			}
 		}
 	} else {
@@ -507,7 +501,7 @@ function wfReportException( Exception $e ) {
 		if ( $cmdLine ) {
 			wfPrintError( $message );
 		} else {
-			wfDie( htmlspecialchars( $message ) ) . "\n";
+			wfDie( nl2br( htmlspecialchars( $message ) ) ) . "\n";
 		}
 	}
 }
