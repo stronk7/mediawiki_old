@@ -3,32 +3,21 @@
 $dir = dirname( __FILE__ ) . '/';
 
 // from prefswitch in usability initiative
-$prefswitchdir = dirname( dirname( __FILE__ ) ) . "/PrefSwitch";
+$prefswitchdir = dirname( dirname( __FILE__ ) ) . '/PrefSwitch';
 // Horrible back for back compat with pre-r73480 installs
 if ( !is_dir( $prefswitchdir ) ) {
-	$prefswitchdir = dirname( dirname( __FILE__ ) ) . "/UsabilityInitiative/PrefSwitch";
+	$prefswitchdir = dirname( dirname( __FILE__ ) ) . '/UsabilityInitiative/PrefSwitch';
 }
+
+require_once( $prefswitchdir . '/PrefSwitch.php' );
 
 // Use this to override the URL of ext.prefSwitch.{js,css} if needed
 $wgSimpleSurveyJSPath = null;
 $wgSimpleSurveyCSSPath = null;
 
 // Adds Autoload Classes
-$wgAutoloadClasses = array_merge(
-	$wgAutoloadClasses,
-	array(
-		'PrefSwitchSurvey' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyField' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyFieldSelect' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyFieldRadios' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyFieldChecks' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyFieldBoolean' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyFieldDimensions' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'PrefSwitchSurveyFieldText' => $prefswitchdir . '/PrefSwitch.classes.php',
-		'SimpleSurvey' => $dir . "SimpleSurvey.classes.php",
-		'SpecialSimpleSurvey' => $dir . 'SpecialSimpleSurvey.php',
-	)
-);
+$wgAutoloadClasses['SimpleSurvey'] = $dir . 'SimpleSurvey.classes.php';
+$wgAutoloadClasses['SpecialSimpleSurvey'] = $dir . 'SpecialSimpleSurvey.php';
 
 // add special pages
 $wgSpecialPages['SimpleSurvey'] = 'SpecialSimpleSurvey';
@@ -50,7 +39,7 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'SimpleSurvey::schema';
 $wgValidSurveys = array();
 
 // add surveys
-require_once( $dir . "Surveys.php" );
+require_once( $dir . 'Surveys.php' );
 
 // Always include the browser stuff...
 foreach ( $wgPrefSwitchSurveys as &$survey ) {
