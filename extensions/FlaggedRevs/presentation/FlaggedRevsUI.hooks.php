@@ -288,6 +288,7 @@ class FlaggedRevsUIHooks {
 		}
 		# Environment (e.g. $wgTitle) will change in MediaWiki::initializeArticle
 		if ( $clearEnvironment ) $view->clear();
+
 		return true;
 	}
 

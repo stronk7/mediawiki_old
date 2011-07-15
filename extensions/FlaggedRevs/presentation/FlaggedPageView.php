@@ -59,9 +59,9 @@ class FlaggedPageView {
 	 * or false if there isn't such a title
 	 */
 	public static function globalArticleInstance() {
-		global $wgTitle;
-		if ( !empty( $wgTitle ) ) {
-			return FlaggedPage::getTitleInstance( $wgTitle );
+		$title = RequestContext::getMain()->getTitle();
+		if ( $title ) {
+			return FlaggedPage::getTitleInstance( $title );
 		}
 		return null;
 	}
@@ -594,18 +594,21 @@ class FlaggedPageView {
 			}
 		}
 
-		# Check if this is a redirect...
 		$text = $frev->getRevText();
-		$redirHtml = $this->getRedirectHtml( $text );
+		# Get the new stable parser output...
+		$pOpts = $this->article->makeParserOptions( $wgUser );
+		$parserOut = FlaggedRevs::parseStableText(
+			$this->article->getTitle(), $text, $frev->getRevId(), $pOpts );
 
 		# Parse and output HTML
-		if ( $redirHtml == '' ) {
-			$parserOptions = $this->article->makeParserOptions( $wgUser );
-			$parserOut = FlaggedRevs::parseStableText(
-				$this->article->getTitle(), $text, $frev->getRevId(), $parserOptions );
+		$redirHtml = $this->getRedirectHtml( $text );
+		if ( $redirHtml == '' ) { // page is not a redirect...
+			# Add the stable output to the page view
 			$this->addParserOutput( $parserOut );
-		} else {
+		} else { // page is a redirect...
 			$this->out->addHtml( $redirHtml );
+			# Add output to set categories, displaytitle, etc.
+			$this->out->addParserOutputNoText( $parserOut );
 		}
 	}
 
@@ -673,30 +676,31 @@ class FlaggedPageView {
 		}
 
 		# Get parsed stable version and output HTML
-		$parserOptions = $this->article->makeParserOptions( $wgUser );
+		$pOpts = $this->article->makeParserOptions( $wgUser );
 		$parserCache = FRParserCacheStable::singleton();
-		$parserOut = $parserCache->get( $this->article, $parserOptions );
+		$parserOut = $parserCache->get( $this->article, $pOpts );
 		if ( $parserOut ) {
+			# Cache hit. Note that redirects are not cached.
 			$this->addParserOutput( $parserOut );
 		} else {
 			$text = $srev->getRevText();
-			# Check if this is a redirect...
+			# Get the new stable parser output...
+			$parserOut = FlaggedRevs::parseStableText(
+				$this->article->getTitle(), $text, $srev->getRevId(), $pOpts );
+
 			$redirHtml = $this->getRedirectHtml( $text );
-			# Don't parse redirects, use separate handling...
-			if ( $redirHtml == '' ) {
-				# Get the new stable output
-				$parserOut = FlaggedRevs::parseStableText(
-					$this->article->getTitle(), $text, $srev->getRevId(), $parserOptions );
+			if ( $redirHtml == '' ) { // page is not a redirect...
 				# Update the stable version cache
-				$parserCache->save( $parserOut, $this->article, $parserOptions );
+				$parserCache->save( $parserOut, $this->article, $pOpts );
 				# Add the stable output to the page view
 				$this->addParserOutput( $parserOut );
-				
-				# Update the stable version dependancies
-				FlaggedRevs::updateStableOnlyDeps( $this->article, $parserOut );
-			} else {
+			} else { // page is a redirect...
 				$this->out->addHtml( $redirHtml );
+				# Add output to set categories, displaytitle, etc.
+				$this->out->addParserOutputNoText( $parserOut );
 			}
+			# Update the stable version dependancies
+			FlaggedRevs::updateStableOnlyDeps( $this->article, $parserOut );
 		}
 
 		# Update page sync status for tracking purposes.
@@ -723,7 +727,8 @@ class FlaggedPageView {
 	protected function getRedirectHtml( $text ) {
 		$rTargets = Title::newFromRedirectArray( $text );
 		if ( $rTargets ) {
-			return $this->article->viewRedirect( $rTargets );
+			$article = new Article( $this->article->getTitle() );
+			return $article->viewRedirect( $rTargets );
 		}
 		return '';
 	}
@@ -904,7 +909,7 @@ class FlaggedPageView {
 	 * Adds stable version tags to page when editing
 	 */
 	public function addToEditView( EditPage $editPage ) {
-		global $wgUser;
+		global $wgUser, $wgParser;
 		$this->load();
 		# Must be reviewable. UI may be limited to unobtrusive patrolling system.
 		if ( !$this->article->isReviewable() ) {
@@ -956,7 +961,7 @@ class FlaggedPageView {
 				$section = ( $editPage->section == "" ) ?
 					false : intval( $editPage->section );
 				if ( $section !== false ) {
-					$text = $this->article->getSection( $text, $section );
+					$text = $wgParser->getSection( $text, $section );
 				}
 				if ( $text !== false && strcmp( $text, $editPage->textbox1 ) !== 0 ) {
 					$diffEngine = new DifferenceEngine( $this->article->getTitle() );
@@ -1641,11 +1646,22 @@ class FlaggedPageView {
 						array( ':' , '.' ), array( '%3A', '%' ), // hack: reverse encoding
 						substr( $sectionAnchor, 1 ) // remove the '#'
 					);
+<<<<<<< .working
 					$extraQuery .= '&fromsection=' . $section;
+=======
+					$params += array( 'fromsection' => $section );
+>>>>>>> .merge-right.r90388
 					$sectionAnchor = ''; // go to the top of the page to see notice
 				}
 			}
 		}
+<<<<<<< .working
+=======
+		if ( $extraQuery !== '' ) {
+			$extraQuery .= '&';
+		}
+		$extraQuery .= wfArrayToCGI( $params ); // note: EditPage will add initial "&"
+>>>>>>> .merge-right.r90388
 		return true;
 	}
 
