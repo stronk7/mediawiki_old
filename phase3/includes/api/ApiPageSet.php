@@ -446,18 +446,24 @@ class ApiPageSet extends ApiQueryBase {
 		}
 
 		$pageids = array_map( 'intval', $pageids ); // paranoia
-		$set = array(
-			'page_id' => $pageids
-		);
-		$db = $this->getDB();
-
-		// Get pageIDs data from the `page` table
-		$this->profileDBIn();
-		$res = $db->select( 'page', $this->getPageTableFields(), $set,
-					__METHOD__ );
-		$this->profileDBOut();
-
 		$remaining = array_flip( $pageids );
+
+		$pageids = self::getPositiveIntegers( $pageids );
+
+		$res = null;
+		if ( count( $pageids ) ) {
+			$set = array(
+				'page_id' => $pageids
+			);
+			$db = $this->getDB();
+
+			// Get pageIDs data from the `page` table
+			$this->profileDBIn();
+			$res = $db->select( 'page', $this->getPageTableFields(), $set,
+						__METHOD__ );
+			$this->profileDBOut();
+		}
+		
 		$this->initFromQueryResult( $res, $remaining, false );	// process PageIDs
 
 		// Resolve any found redirects
@@ -479,20 +485,22 @@ class ApiPageSet extends ApiQueryBase {
 			ApiBase::dieDebug( __METHOD__, 'Missing $processTitles parameter when $remaining is provided' );
 		}
 
-		foreach ( $res as $row ) {
-			$pageId = intval( $row->page_id );
+		if ( $res ) {
+			foreach ( $res as $row ) {
+				$pageId = intval( $row->page_id );
 
-			// Remove found page from the list of remaining items
-			if ( isset( $remaining ) ) {
-				if ( $processTitles ) {
-					unset( $remaining[$row->page_namespace][$row->page_title] );
-				} else {
-					unset( $remaining[$pageId] );
+				// Remove found page from the list of remaining items
+				if ( isset( $remaining ) ) {
+					if ( $processTitles ) {
+						unset( $remaining[$row->page_namespace][$row->page_title] );
+					} else {
+						unset( $remaining[$pageId] );
+					}
 				}
-			}
 
-			// Store any extra fields requested by modules
-			$this->processDbRow( $row );
+				// Store any extra fields requested by modules
+				$this->processDbRow( $row );
+			}
 		}
 
 		if ( isset( $remaining ) ) {
@@ -534,21 +542,25 @@ class ApiPageSet extends ApiQueryBase {
 		$pageids = array();
 		$remaining = array_flip( $revids );
 
-		$tables = array( 'revision', 'page' );
-		$fields = array( 'rev_id', 'rev_page' );
-		$where = array( 'rev_id' => $revids, 'rev_page = page_id' );
+		$revids = self::getPositiveIntegers( $revids );
 
-		// Get pageIDs data from the `page` table
-		$this->profileDBIn();
-		$res = $db->select( $tables, $fields, $where,  __METHOD__ );
-		foreach ( $res as $row ) {
-			$revid = intval( $row->rev_id );
-			$pageid = intval( $row->rev_page );
-			$this->mGoodRevIDs[$revid] = $pageid;
-			$pageids[$pageid] = '';
-			unset( $remaining[$revid] );
+		if ( count( $revids ) ) {
+			$tables = array( 'revision', 'page' );
+			$fields = array( 'rev_id', 'rev_page' );
+			$where = array( 'rev_id' => $revids, 'rev_page = page_id' );
+
+			// Get pageIDs data from the `page` table
+			$this->profileDBIn();
+			$res = $db->select( $tables, $fields, $where,  __METHOD__ );
+			foreach ( $res as $row ) {
+				$revid = intval( $row->rev_id );
+				$pageid = intval( $row->rev_page );
+				$this->mGoodRevIDs[$revid] = $pageid;
+				$pageids[$pageid] = '';
+				unset( $remaining[$revid] );
+			}
+			$this->profileDBOut();
 		}
-		$this->profileDBOut();
 
 		$this->mMissingRevIDs = array_keys( $remaining );
 
@@ -708,6 +720,25 @@ class ApiPageSet extends ApiQueryBase {
 		}
 
 		return $linkBatch;
+	}
+
+	/**
+	 * Returns the input array of integers with all values < 0 removed
+	 *
+	 * @param $array array
+	 * @return array
+	 */
+	private static function getPositiveIntegers( $array ) {
+		// bug 25734 API: possible issue with revids validation
+		// It seems with a load of revision rows, MySQL gets upset
+		// Remove any < 0 integers, as they can't be valid
+		foreach( $array as $i => $int ) {
+			if ( $int < 0 ) {
+				unset( $array[$i] );
+			}
+		}
+
+		return $array;
 	}
 
 	protected function getAllowedParams() {

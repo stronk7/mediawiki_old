@@ -183,6 +183,19 @@ class LocalSettingsGenerator {
 			$metaNamespace = "\$wgMetaNamespace = \"{$this->values['wgMetaNamespace']}\";\n";
 		}
 
+		$groupRights = '';
+		if( $this->groupPermissions ) {
+			$groupRights .= "# The following permissions were set based on your choice in the installer\n";
+			foreach( $this->groupPermissions as $group => $rightArr ) {
+				$group = self::escapePhpString( $group );
+				foreach( $rightArr as $right => $perm ) {
+					$right = self::escapePhpString( $right );
+					$groupRights .= "\$wgGroupPermissions['$group']['$right'] = " .
+						wfBoolToStr( $perm ) . ";\n";
+				}
+			}
+		}
+
 		switch( $this->values['wgMainCacheType'] ) {
 			case 'anything':
 			case 'db':
