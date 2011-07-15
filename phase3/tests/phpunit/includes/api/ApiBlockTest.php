@@ -27,9 +27,7 @@ class ApiBlockTest extends ApiTestSetup {
 			$user->saveSettings();
 		}
 	}
-	
 
-	
 	function testMakeNormalBlock() {
 		
 		$data = $this->getTokens();
