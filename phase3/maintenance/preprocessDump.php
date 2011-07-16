@@ -24,7 +24,7 @@
  * @file
  * @ingroup Maintenance
  */
- 
+
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class PreprocessDump extends Maintenance {
@@ -40,7 +40,7 @@ class PreprocessDump extends Maintenance {
 		global $wgParser;
 		return $wgParser->getStripList();
 	}
-		
+
 	public function __construct() {
 		parent::__construct();
 		$this->saveFailed = false;
@@ -83,7 +83,7 @@ class PreprocessDump extends Maintenance {
 			$wgPreprocessorCacheThreshold = false;
 			$this->saveFailed = $this->getOption('save-failed');
 		}
-		
+
 		if ( $this->hasOption( 'preprocessor' ) ) {
 			$name = $this->getOption( 'preprocessor' );
 		} elseif ( isset( $wgParserConf['preprocessorClass'] ) ) {
@@ -129,7 +129,7 @@ class PreprocessDump extends Maintenance {
 		# It is only available since 5.2.0 (since 5.2.1 if you haven't compiled with --enable-memory-limit)
 		$this->error( "Memory peak usage of " . memory_get_peak_usage() . " bytes\n" );
 	}
-	
+
 	/**
 	 * Callback function for each revision, preprocessToObj()
 	 * @param $rev Revision

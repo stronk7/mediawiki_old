@@ -1219,7 +1219,6 @@ abstract class Installer {
 		global $IP;
 		$exts = $this->getVar( '_Extensions' );
 		$IP = $this->getVar( 'IP' );
-		$path = $IP . '/extensions';
 
 		/**
 		 * We need to include DefaultSettings before including extensions to avoid
@@ -1235,7 +1234,7 @@ abstract class Installer {
 		require( "$IP/includes/DefaultSettings.php" );
 
 		foreach( $exts as $e ) {
-			require_once( "$path/$e/$e.php" );
+   			require_once( "$IP/extensions/$e/$e.php" );
 		}
 
 		$hooksWeWant = isset( $wgHooks['LoadExtensionSchemaUpdates'] ) ?

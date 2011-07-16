@@ -2661,7 +2661,6 @@ class OutputPage {
 			'wgUserGroups' => $this->getUser()->getEffectiveGroups(),
 			'wgCategories' => $this->getCategories(),
 			'wgBreakFrames' => $this->getFrameOptions() == 'DENY',
-			'wgIsMainPage' => $title->isMainPage(),
 		);
 		if ( $wgContLang->hasVariants() ) {
 			$vars['wgUserVariant'] = $wgContLang->getPreferredVariant();
@@ -2671,6 +2670,9 @@ class OutputPage {
 		}
 		if ( $wgUseAjax && $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
 			$vars['wgSearchNamespaces'] = SearchEngine::userNamespaces( $this->getUser() );
+		}
+		if ( $title->isMainPage() ) {
+			$vars['wgIsMainPage'] = true;
 		}
 
 		// Allow extensions to add their custom variables to the global JS variables

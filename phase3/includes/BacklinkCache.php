@@ -253,7 +253,7 @@ class BacklinkCache {
 
 	/**
 	 * Partition the backlinks into batches.
-	 * Returns an array giving the start and end of each range. The firsti
+	 * Returns an array giving the start and end of each range. The first
 	 * batch has a start of false, and the last batch has an end of false.
 	 *
 	 * @param $table String: the links table name
@@ -262,7 +262,7 @@ class BacklinkCache {
 	 */
 	public function partition( $table, $batchSize ) {
 
-		// 1) try this per process cache first
+		// 1) try partition cache ... 
 
 		if ( isset( $this->partitionCache[$table][$batchSize] ) ) {
 			wfDebug( __METHOD__ . ": got from partition cache\n" );
@@ -272,7 +272,7 @@ class BacklinkCache {
 		$this->partitionCache[$table][$batchSize] = false;
 		$cacheEntry =& $this->partitionCache[$table][$batchSize];
 
-		// 2) try full result cache
+		// 2) ... then try full result cache ...
 
 		if ( isset( $this->fullResultCache[$table] ) ) {
 			$cacheEntry = $this->partitionResult( $this->fullResultCache[$table], $batchSize );
