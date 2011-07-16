@@ -614,7 +614,7 @@ class Block {
 		$autoblock->prevents( 'editownusertalk', $this->prevents( 'editownusertalk' ) );
 
 		$dbr = wfGetDB( DB_READ );
-		if ( $this->mTimestamp == $dbr->getInfinity() ) {
+		if ( $this->mExpiry == $dbr->getInfinity() ) {
 			# Original block was indefinite, start an autoblock now
 			$autoblock->mExpiry = Block::getAutoblockExpiry( wfTimestampNow() );
 		} else {
@@ -701,7 +701,7 @@ class Block {
 	public function getRangeStart() {
 		switch( $this->type ) {
 			case self::TYPE_USER:
-				return null;
+				return '';
 			case self::TYPE_IP:
 				return IP::toHex( $this->target );
 			case self::TYPE_RANGE:
@@ -718,7 +718,7 @@ class Block {
 	public function getRangeEnd() {
 		switch( $this->type ) {
 			case self::TYPE_USER:
-				return null;
+				return '';
 			case self::TYPE_IP:
 				return IP::toHex( $this->target );
 			case self::TYPE_RANGE:
