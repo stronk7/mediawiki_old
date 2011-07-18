@@ -1,0 +1,37 @@
+/* Overlay styling */
+#mw-moodBar-overlay {
+	position: absolute;
+	top: 4em;
+	left: 10.2em;
+	min-width: 100px;
+	min-height: 100px;
+	background: #fafafa;
+	border: 1px solid #0645ad;
+	border-radius: 40px;
+	padding: 22px 22px;
+	box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.5);
+	display: none;
+}
+
+.mw-moodBar-overlayTitle {
+	font-weight: bold;
+}
+
+.mw-moodBar-overlayClose {
+	float: right;
+	font-size: 10px;
+}
+
+.mw-moodBar-type {
+	float: left;
+	width: 100px;
+	margin: 10px;
+	padding: 100px 10px 5px 10px;
+	background: #f0f0f0;
+	text-align: center;
+}
+
+.mw-moodBar-typeTitle,
+.mw-moodBar-overlayWhat {
+	font-size: 10px;
+}

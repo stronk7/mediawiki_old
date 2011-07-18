@@ -1,0 +1,7 @@
+#!/bin/sh
+
+scp rnelson@ersch.wikimedia.org:/var/www/LocalSettings.php .
+scp rnelson@alsted.wikimedia.org:/etc/swift/proxy-server.conf .
+scp rnelson@ersch.wikimedia.org:/var/www/extensions/SwiftMedia/{SwiftMedia.body.php,SwiftMedia.i18n.php,SwiftMedia.php,TODO} .
+scp rnelson@alsted.wikimedia.org:/usr/local/lib/python2.6/dist-packages/wmf/{client.py,__init__.py,rewrite.py} wmf/
+perl -pi -e "s/'key' => '.*'/'key' => 'secret'/" LocalSettings.php

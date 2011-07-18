@@ -1,0 +1,3 @@
+Extension to provide Asssessment parsing and collection/filtering based on assessments for creating collections of articles. Used primarily for the Wikipedia Offline projeect.
+
+This is YuviPanda's GSoC 2011 Project. The extension works only on MySQL, with a proper engine that supports Transactions.

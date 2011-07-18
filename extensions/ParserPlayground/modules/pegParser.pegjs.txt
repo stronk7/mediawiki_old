@@ -1,0 +1,291 @@
+/* Produces output more or less compatible with FakeParser; plug it into FP's output and see */
+
+start
+  = e:block* { return {type: 'page', content: e } }
+
+anything
+  = a:[A-Za-z0-9,._ -]+ { return a.join('') } / [^\n]
+
+space
+  = s:[ ]+ { return s.join(''); }
+
+newline
+  = [\n]
+
+block
+  = br
+  / h
+  / para
+
+h = h1 / h2 / h3 / h4 / h5 / h6
+
+h1 = '=' c:heading_text '=' newline {
+    return {
+      type: 'h',
+      level: 1,
+      text: c
+    }
+}
+
+h2 = '==' c:heading_text '==' newline {
+    return {
+      type: 'h',
+      level: 2,
+      text: c
+    }
+}
+
+h3 = '===' c:heading_text '===' newline {
+    return {
+      type: 'h',
+      level: 3,
+      text: c
+    }
+}
+
+h4 = '====' c:heading_text '====' newline {
+    return {
+      type: 'h',
+      level: 4,
+      text: c
+    }
+}
+
+h5 = '=====' c:heading_text '=====' newline {
+    return {
+      type: 'h',
+      level: 5,
+      text: c
+    }
+}
+
+h6 = '======' c:heading_text '======' newline {
+    return {
+      type: 'h',
+      level: 6,
+      text: c
+    }
+}
+
+heading_marker
+  = '=' '='*
+
+heading_text
+  = h:( !heading_marker x:(anything) { return x } )* { return h.join(''); }
+
+br
+  = newline { return {type: 'br'} }
+
+para
+  = c:inline newline { return {type: 'para', content: c } } /
+    c:anything
+
+inline
+  = c:inline_element+ {
+    var out = [];
+    var text = '';
+    for (var i = 0; i < c.length; i++) {
+      if (typeof c[i] == 'string') {
+        text += c[i];
+      } else {
+        if (text.length) {
+          out.push({
+            type: 'text',
+            text: text
+          });
+          text = '';
+        }
+        out.push(c[i]);
+      }
+    }
+    if (text.length) {
+      out.push({
+        type: 'text',
+        text: text
+      });
+    }
+    return out;
+}
+
+inline_element
+  = comment
+  / ref
+  / extlink
+  / template
+  / link
+  / bold
+  / italic
+  / anything
+
+comment
+  = '<!--' c:comment_chars+ '-->' {
+	return {
+		type: 'comment',
+		text: c.join('')
+	}
+}
+
+comment_chars
+  = c:[^-] { return c; }
+  / c:'-' !'-' { return c; }
+
+inline_text_run
+  = c:[^\n]+ { return c.join(''); }
+
+extlink
+  = "[" target:url space text:extlink_text "]" {
+    return {
+      type: 'extlink',
+      target: target,
+      text: text
+    }
+}
+
+//  = "[" target:url text:extlink_text "]" { return { type: 'extlink', target: target, text: text } }
+
+url
+  = proto:"http:" rest:([^ \]]+) { return proto + rest.join(''); }
+
+extlink_text
+  = c:[^\]]+ { return c.join(''); }
+
+template
+  = "{{" target:link_target params:("|" p:template_param { return p })* "}}" {
+    var obj = {
+      type: 'template',
+      target: target
+    };
+    if (params && params.length) {
+      obj.params = params;
+    }
+    return obj;
+}
+
+template_param
+  = name:template_param_name "=" c:template_param_text {
+  return {
+    name: name,
+    content: c
+  };
+} / c:template_param_text {
+  return {
+    content: c
+  };
+}
+
+template_param_name
+  = h:( !"}}" x:([^=|]) { return x } )* { return h.join(''); }
+
+template_param_text
+  = template_param_text_chunk*
+/*  = h:( !"}}" x:([^|]) { return x } )* { return h.join(''); }*/
+
+template_param_text_chunk
+  = comment
+  / ref
+  / extlink
+  / template
+  / link
+  / bold
+  / italic
+  / !"}}" x:([^|]) { return x }
+
+link
+  = "[[" target:link_target text:("|" link_text)* "]]" {
+    var obj = {
+      type: 'link',
+      target: target
+    };
+    if (text && text.length) {
+      obj.text = text[0][1]; // ehhhh
+    }
+    return obj;
+}
+
+link_target
+  = h:( !"]]" x:([^|]) { return x } )* { return h.join(''); }
+
+link_text
+  = h:( !"]]" x:(anything) { return x } )* { return h.join(''); }
+
+bold
+  = bold_marker c:bold_text bold_marker {
+  return {
+    type: 'b',
+    text: c,
+  }
+}
+
+bold_marker
+  = "'''"
+
+bold_text
+  = h:( !bold_marker x:(anything) { return x } )+ { return h.join(''); }
+
+italic
+  = italic_marker c:italic_text italic_marker {
+  return {
+    type: 'i',
+    text: c
+  }
+}
+
+italic_marker
+  = "''"
+
+italic_text
+  = h:( !italic_marker x:(anything) { return x } )+ { return h.join(''); }
+
+
+ref = ref_full / ref_empty
+
+ref_full
+  = params:ref_start ">" content:ref_content+ close:ref_end {
+    return {
+        type: 'ext',
+        name: 'ref',
+        params: params,
+        content: content,
+        close: close
+    }
+}
+
+ref_empty
+  = params:ref_start "/>" {
+    return {
+        type: 'ext',
+        name: 'ref',
+        params: params
+    }
+}
+
+ref_start
+  = "<ref" params:ext_param* space* {
+  return params;
+}
+
+ref_end
+  = all:("</ref" space* ">") {
+  return all.join('');
+}
+
+ref_content
+  = !ref_end a:inline_element {
+  return a;
+}
+
+ext_param
+  = space* name:ext_param_name "=" val:ext_param_val {
+  val.name = name;
+  return val;
+}
+
+ext_param_name
+  = name:[a-zA-Z0-9-]+ {
+  return name.join('');
+}
+
+ext_param_val
+  = t:[0-9A-Za-z]+ { return {text: t.join('') } }
+  / "'" t:[^'>]+ "'" { return { quote: "'", text: t.join('') } }
+  / '"' t:[^">]+ '"' { return { quote: '"', text: t.join('') } }

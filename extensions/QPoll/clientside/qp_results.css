@@ -1,0 +1,10 @@
+.qpoll .head {font-weight:bold; color:gray;}
+.qpoll table.pollresults {border-collapse: collapse;}
+.qpoll table.pollresults th {border: 1px gray solid; background-color:lightgray; padding: 3px;}
+.qpoll table.pollresults tr.spans { color:Navy; }
+.qpoll table.pollresults td {border: 1px gray solid; text-align: center; padding: 3px;}
+.qpoll table.pollresults td.stats {background-color: Azure;}
+.qpoll table.pollresults td.spaneven {background-color: Aquamarine;}
+.qpoll table.pollresults td.spanodd {background-color: Moccasin;}
+.qpoll .interp_answer { border: 1px solid gray; padding: 0; margin: 0; color: black; background-color: lightgray; font-weight:bold; line-height:2em; }
+.qpoll .interp_answer_body { border: none; border-top: 1px solid gray; padding: 0.5em; margin-top: 0; color: black; background-color: Azure; font-weight: normal; line-height:normal; }
