@@ -65,8 +65,6 @@ class ApiEditPage extends ApiBase {
 				$titles = Title::newFromRedirectArray( Revision::newFromTitle( $oldTitle )->getText( Revision::FOR_THIS_USER ) );
 				// array_shift( $titles );
 
-				$this->getResult()->addValue( null, 'foo', $titles );
-
 				$redirValues = array();
 				foreach ( $titles as $id => $newTitle ) {
 

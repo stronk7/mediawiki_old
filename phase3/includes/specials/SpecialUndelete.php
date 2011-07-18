@@ -564,7 +564,7 @@ class PageArchive {
  * @ingroup SpecialPage
  */
 class SpecialUndelete extends SpecialPage {
-	var $mAction, $mTarget, $mTimestamp, $mRestore, $mInvert, $mTargetObj, $mFile;
+	var $mAction, $mTarget, $mTimestamp, $mRestore, $mInvert, $mTargetObj, $mFilename;
 	var $mTargetTimestamp, $mAllowed, $mCanView, $mComment, $mToken, $mRequest;
 
 	function __construct( $request = null ) {
@@ -585,7 +585,7 @@ class SpecialUndelete extends SpecialPage {
 		$this->mSearchPrefix = $this->mRequest->getText( 'prefix' );
 		$time = $this->mRequest->getVal( 'timestamp' );
 		$this->mTimestamp = $time ? wfTimestamp( TS_MW, $time ) : '';
-		$this->mFile = $this->mRequest->getVal( 'file' );
+		$this->mFilename = $this->mRequest->getVal( 'file' );
 
 		$posted = $this->mRequest->wasPosted() &&
 			$wgUser->matchEditToken( $this->mRequest->getVal( 'wpEditToken' ) );
@@ -674,11 +674,11 @@ class SpecialUndelete extends SpecialPage {
 		if( $this->mTimestamp !== '' ) {
 			return $this->showRevision( $this->mTimestamp );
 		}
-		if( $this->mFile !== null ) {
-			$file = new ArchivedFile( $this->mTargetObj, '', $this->mFile );
+		if( $this->mFilename !== null ) {
+			$file = new ArchivedFile( $this->mTargetObj, '', $this->mFilename );
 			// Check if user is allowed to see this file
 			if ( !$file->exists() ) {
-				$wgOut->addWikiMsg( 'filedelete-nofile', $this->mFile );
+				$wgOut->addWikiMsg( 'filedelete-nofile', $this->mFilename );
 				return;
 			} else if( !$file->userCan( File::DELETED_FILE ) ) {
 				if( $file->isDeleted( File::DELETED_RESTRICTED ) ) {
@@ -687,11 +687,11 @@ class SpecialUndelete extends SpecialPage {
 					$wgOut->permissionRequired( 'deletedtext' );
 				}
 				return false;
-			} elseif ( !$wgUser->matchEditToken( $this->mToken, $this->mFile ) ) {
-				$this->showFileConfirmationForm( $this->mFile );
+			} elseif ( !$wgUser->matchEditToken( $this->mToken, $this->mFilename ) ) {
+				$this->showFileConfirmationForm( $this->mFilename );
 				return false;
 			} else {
-				return $this->showFile( $this->mFile );
+				return $this->showFile( $this->mFilename );
 			}
 		}
 		if( $this->mRestore && $this->mAction == "submit" ) {
@@ -985,7 +985,7 @@ class SpecialUndelete extends SpecialPage {
 	 */
 	private function showFileConfirmationForm( $key ) {
 		global $wgOut, $wgUser, $wgLang;
-		$file = new ArchivedFile( $this->mTargetObj, '', $this->mFile );
+		$file = new ArchivedFile( $this->mTargetObj, '', $this->mFilename );
 		$wgOut->addWikiMsg( 'undelete-show-file-confirm',
 			$this->mTargetObj->getText(),
 			$wgLang->date( $file->getTimestamp() ),
