@@ -1,5 +1,0 @@
-# UserDailyContribs allows you to track users' contribution totals
-
-# Example LocalSettings.php additions
-
-require_once( "$IP/extensions/UserDailyContribs/UserDailyContribs.php" );
