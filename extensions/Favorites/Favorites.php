@@ -21,8 +21,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Favorites',
 	'author' => 'Jeremy Lemley',
-	'description' => 'A method of creating a favorites list',
-	'version' => '0.0.2',
+	'descriptionmsg' => 'favorites-desc',
+	'version' => '0.0.4',
 	'url' => "http://www.mediawiki.org/wiki/Extension:Favorites",
 );
 
@@ -35,8 +35,6 @@ $wgAutoloadClasses['Favorites'] = $dir . 'Favorites_body.php';
 $wgAutoloadClasses['FavoritelistEditor'] = $dir . 'FavoritelistEditor.php';
 $wgAutoloadClasses['FavoritedItem'] = $dir . 'FavoritedItem.php';
 $wgAutoloadClasses['SpecialFavoritelist'] = $dir . 'SpecialFavoritelist.php';
-$wgAutoloadClasses['APIQueryFavoritelistRaw'] = $dir . 'APIQueryFavoritelistRaw.php';
-$wgAutoloadClasses['APIFavorite'] = $dir . 'APIFavorite.php';
 $wgAutoloadClasses['FavUser'] = $dir . 'FavUser.php';
 $wgAutoloadClasses['FavArticle'] = $dir . 'FavArticle.php';
 $wgAutoloadClasses['FavTitle'] = $dir . 'FavTitle.php';
@@ -93,7 +91,6 @@ function fnHookMoveToFav(&$title, &$nt, &$wgUser, $pageid, $redirid ) {
 function fnAddCss (&$out) {
 	global $wgScriptPath;
 	$out->addStyle($wgScriptPath. '/extensions/favorites/favorites.css');
-	//$out->addInlineScript($wgScriptPath . '/extensions/favorites/ajaxfavorite.js');
 	return true;
 }
 

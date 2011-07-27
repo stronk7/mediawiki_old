@@ -46,7 +46,7 @@ function wfSpecialFavoritelist() {
 		array( 'fl_user' => $uid ), __METHOD__ );
 	// Adjust for page X, talk:page X, which are both stored separately,
 	// but treated together
-	$nitems = floor($favoritelistCount / 2);
+	$nitems = floor($favoritelistCount);
 
 	if( $nitems == 0 ) {
 		$output = wfmsg('nofavoritelist');
@@ -92,7 +92,7 @@ function wfSpecialFavoritelist() {
 		$dbr = wfGetDB( DB_MASTER );
 		$res = $dbr->select( 'favoritelist', 'COUNT(*) AS count', array( 'fl_user' => $user->getId() ), __METHOD__ );
 		$row = $dbr->fetchObject( $res );
-		return ceil( $row->count / 2 ); // Paranoia
+		return ceil( $row->count); // Paranoia
 	}
 
 	/**
@@ -260,7 +260,7 @@ function flCountItems( &$user, $talk = true ) {
 
 	# Halve to remove talk pages if needed
 	if( !$talk )
-		$count = floor( $count / 2 );
+		$count = floor( $count);
 
 	return( $count );
 }
