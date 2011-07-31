@@ -22,7 +22,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Favorites',
 	'author' => 'Jeremy Lemley',
 	'descriptionmsg' => 'favorites-desc',
-	'version' => '0.0.6',
+	'version' => '0.0.7',
 	'url' => "http://www.mediawiki.org/wiki/Extension:Favorites",
 );
 

@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS /*_*/favoritelist (
   fl_notificationtimestamp varbinary(14) DEFAULT NULL,
   UNIQUE KEY fl_user (fl_user,fl_namespace,fl_title),
   KEY namespace_title (fl_namespace,fl_title)
-) 
+) ;

@@ -50,7 +50,7 @@ function favoritesTabs($skin, &$content_actions) {
 	$mode = $favTitle->userIsFavoriting() ? 'unfavorite' : 'favorite';
 	// See if this object even exists - if the user can't read it, the object doesn't get created.
 	if ($wgArticle) {
-		 $content_actions['newtab'] = array (
+		 $content_actions[$mode] = array (
 			'class' => (( $action == 'favorite' || $action == 'unfavorite' ) ? ' selected' : false ),
 			'text' => wfMsg( $mode ), // uses 'favorite' or 'unfavorite' message
 			'href' => $wgArticle->mTitle->getLocalUrl( 'action=' . $mode )
