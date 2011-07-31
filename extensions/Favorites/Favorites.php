@@ -22,7 +22,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Favorites',
 	'author' => 'Jeremy Lemley',
 	'descriptionmsg' => 'favorites-desc',
-	'version' => '0.0.5',
+	'version' => '0.0.6',
 	'url' => "http://www.mediawiki.org/wiki/Extension:Favorites",
 );
 
@@ -49,7 +49,8 @@ $wgHooks['ParserFirstCallInit'][] = 'ParseFavorites';
 
 
 //add the icon / link
-$wgHooks['SkinTemplateNavigation'][] = 'fnNavUrls';
+$wgHooks['SkinTemplateNavigation'][] = 'fnNavUrls';  // For Vector
+$wgHooks['SkinTemplateTabs'][] = 'fnNavTabs';  // For other skins
 
 //add or remove
 $wgHooks['UnknownAction'][] = 'fnAction';
@@ -76,11 +77,18 @@ function fnAction ($action, $article) {
 	return false;
 }
 
-function fnNavUrls(&$sktemplate, &$links) {
+function fnNavUrls($sktemplate, &$links) {
 	$fNav = new Favorites();
 	$fNav->favoritesIcon($sktemplate, $links);
 	return true;
 }
+
+function fnNavTabs( $skin, &$content_actions ){
+	$fNav = new Favorites();
+	$fNav->favoritesTabs($skin, $content_actions);
+	return true;
+}
+
 
 function fnHookMoveToFav(&$title, &$nt, &$wgUser, $pageid, $redirid ) {
 	$favTitle = new FavTitle();

@@ -17,7 +17,7 @@ class Favorites extends QuickTemplate {
 	
 	// See if this object even exists - if the user can't read it, the object doesn't get created.
 	if ($wgArticle) {  
-		
+			
 			if ( $wgUseIconFavorite ) {
 			
 					$class = 'icon ';
@@ -41,8 +41,25 @@ class Favorites extends QuickTemplate {
 	}
 	
 }
+
+function favoritesTabs($skin, &$content_actions) {
+	global $wgUseIconFavorite, $wgRequest, $wgArticle;
+	
+	$action = $wgRequest->getText( 'action' );
+	$favTitle = new FavTitle();
+	$mode = $favTitle->userIsFavoriting() ? 'unfavorite' : 'favorite';
+	// See if this object even exists - if the user can't read it, the object doesn't get created.
+	if ($wgArticle) {
+		 $content_actions['newtab'] = array (
+			'class' => (( $action == 'favorite' || $action == 'unfavorite' ) ? ' selected' : false ),
+			'text' => wfMsg( $mode ), // uses 'favorite' or 'unfavorite' message
+			'href' => $wgArticle->mTitle->getLocalUrl( 'action=' . $mode )
+ 		);
+	return true;
+	}
+
  
 }
 
-
+}
 
