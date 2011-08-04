@@ -60,7 +60,7 @@ $messages['en'] = array(
 'favoritelistall2'    => 'all',
 
 # Favoritelist editor
-'favoritelistedit-numitems'       => 'Your favorites contain {{PLURAL:$1|1 title|$1 titles}}, excluding talk pages.',
+'favoritelistedit-numitems'       => 'Your favorites contain {{PLURAL:$1|1 title|$1 titles}}.',
 'favoritelistedit-noitems'        => 'Your favorites contain no titles.',
 'favoritelistedit-normal-title'   => 'Edit favorites',
 'favoritelistedit-normal-legend'  => 'Remove titles from favorites',
@@ -120,7 +120,7 @@ $messages['de'] = array(
 	'tooltip-ca-unfavorite' => 'Entferne diese Seite von deiner Favoritenliste',
 	'tooltip-favorite' => 'Füge diese Seite zu deiner Favoritenliste hinzu',
 	'favoritelistall2' => 'alle',
-	'favoritelistedit-numitems' => 'Deine Favoritenliste enthält {{PLURAL:$1|einen Eintrag |$1 Einträge}}. Die Diskussionsseiten wurden dabei nicht mitgezählt.',
+	'favoritelistedit-numitems' => 'Deine Favoritenliste enthält {{PLURAL:$1|einen Eintrag |$1 Einträge}}.',
 	'favoritelistedit-noitems' => 'Deine Favoritenliste enthält keine Einträge.',
 	'favoritelistedit-normal-title' => 'Favoritenliste bearbeiten',
 	'favoritelistedit-normal-legend' => 'Einträge aus der Favoritenliste entfernen',
@@ -158,7 +158,7 @@ $messages['de-formal'] = array(
 	'tooltip-ca-favorite' => 'Fügen Sie diese Seite zu Ihrer Favoritenliste hinzu',
 	'tooltip-ca-unfavorite' => 'Entfernen Sie diese Seite von Ihrer Favoritenliste',
 	'tooltip-favorite' => 'Fügen Sie diese Seite zu Ihrer Favoritenliste hinzu',
-	'favoritelistedit-numitems' => 'Ihre Favoritenliste enthält {{PLURAL:$1|einen Eintrag|$1 Einträge}}. Die Diskussionsseiten wurden dabei nicht mitgezählt.',
+	'favoritelistedit-numitems' => 'Ihre Favoritenliste enthält {{PLURAL:$1|einen Eintrag|$1 Einträge}}.',
 	'favoritelistedit-noitems' => 'Ihre Favoritenliste enthält keine Einträge.',
 	'favoritelistedit-normal-explain' => 'Dies sind die Einträge Ihrer Favoritenliste.
 Um Einträge zu entfernen, markieren Sie die Kästchen neben den Einträgen und klicken Sie am Ende der Seite auf „{{int:Favoritelistedit-normal-submit}}“.
@@ -205,17 +205,69 @@ Dir kënnt och [[Special:Favoritelist/raw|déi net-formatéiert Lëscht änneren
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'favorites-desc' => 'Создај список на бендисани',
+	'favoritethis' => 'Бендисај ја станицава',
+	'prefs-favoritelist' => 'Бендисани',
+	'prefs-favoritelist-token' => 'Жетон за бендисани:',
+	'prefs-advancedfavoritelist' => 'Напредни поставки',
+	'favoritelist' => 'Мои бендисани',
+	'myfavoritelist' => 'Мои бендисани',
 	'favoritelistfor' => "(за '''$1''')",
+	'nofavoritelist' => 'Немате бендисани.',
+	'favoritelistanontext' => '$1 за да ги погледате или уредите бендисаните.',
+	'favoritenologin' => 'Не сте најавени',
+	'favoritenologintext' => 'Мора да сте [[Special:UserLogin|најавени]] за да можете да ги менувате бендисаните.',
+	'addedfavorite' => 'Додадено во бендисаните',
+	'addedfavoritetext' => 'Страницата „[[:$1]]“ е додадена во [[Special:Favoritelist|бендисаните]].',
+	'removedfavorite' => 'Отстрането од бендисаните',
+	'removedfavoritetext' => 'Страницата „[[:$1]]“ е отстранета од [[Special:Favoritelist|бендисаните]].',
+	'favorite' => 'Бендисај',
+	'favoritethispage' => 'Бендисај ја страницава',
+	'unfavorite' => 'Одбендисај',
+	'unfavoritethispage' => 'Одбендисај ја страницава',
+	'favoritelist-options' => 'Поставки за бендисани',
 	'favoriteing' => 'Бендисувам...',
 	'unfavoriteing' => 'Одбендисувам...',
+	'tooltip-pt-favoritelist' => 'Список на страници кои сте избрале да ги набљудувате',
+	'tooltip-ca-favorite' => 'Додај ја страницава во бендисаните',
+	'tooltip-ca-unfavorite' => 'Отстрани ја страницава од бендисаните',
+	'tooltip-favorite' => 'Додај ја страницава во бендисаните',
 	'favoritelistall2' => 'сите',
+	'favoritelistedit-numitems' => 'Во бендисаните има {{PLURAL:$1|1 наслов|$1 наслови}}.',
+	'favoritelistedit-noitems' => 'Немате наслови во бендисаните.',
+	'favoritelistedit-normal-title' => 'Уреди бендисани',
+	'favoritelistedit-normal-legend' => 'Отстрани наслови од бендисаните',
+	'favoritelistedit-normal-explain' => 'Насловите во вашиот список на набљудувања се прикажани подолу.
+За да избришете наслов, штиклирајте го квадратчето лево од насловот, и стиснете на „{{int:Favoritelistedit-normal-submit}}“.
+Можете да го [[Special:Favoritelist/raw|уредите сировниот список]].',
+	'favoritelistedit-normal-submit' => 'Отстрани наслови',
+	'favoritelistedit-normal-done' => '{{PLURAL:$1|1 наслов|$1 наслови}} се отстранети од бендисаните:',
+	'favoritelistedit-raw-title' => 'Уреди сиров список на бендисани',
+	'favoritelistedit-raw-legend' => 'Уреди сиров список на бендисани',
+	'favoritelistedit-raw-explain' => 'Насловите во бендисаните се прикажани подолу, и можат да се уредуваат со додавање или бришење на ставки од списокот;
+по еден наслов во секој ред.
+Кога ќе завршите, стиснете на „{{int:Favoritelistedit-raw-submit}}“.
+Можете и да го [[Special:Favoritelist/edit|употребите обичниот уредувач]].',
 	'favoritelistedit-raw-titles' => 'Наслови:',
+	'favoritelistedit-raw-submit' => 'Поднови бендисани',
+	'favoritelistedit-raw-done' => 'Бендисаните се подновени.',
+	'favoritelistedit-raw-added' => '{{PLURAL:$1|Додаден е 1 наслов|Додадени се $1 наслови}}:',
+	'favoritelistedit-raw-removed' => '{{PLURAL:$1|Отстранет е 1 наслов|Отстранети се $1 наслови}}:',
+	'favoritelisttools-view' => 'Погледај „Бендисани“',
+	'favoritelisttools-edit' => 'Погледај и уреди „Бендисани“',
+	'favoritelisttools-raw' => 'Уреди сирови бендисани',
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'prefs-favoritelist' => 'Favorieten',
+	'favoritelist' => 'Mijn favorieten',
+	'myfavoritelist' => 'Mijn favorieten',
+	'favoritelistfor' => "(voor '''$1''')",
+	'favoritenologin' => 'Niet aangemeld',
 	'favoritelistall2' => 'alle',
 	'favoritelistedit-normal-submit' => "Pagina's verwijderen",
 	'favoritelistedit-normal-done' => 'Er {{PLURAL:$1|is 1 pagina|zijn $1 pagina’s}} verwijderd uit uw favorieten:',
@@ -268,7 +320,7 @@ $messages['pt'] = array(
 	'tooltip-ca-unfavorite' => 'Remover esta página das páginas preferidas',
 	'tooltip-favorite' => 'Adicionar esta página às suas preferidas',
 	'favoritelistall2' => 'todas',
-	'favoritelistedit-numitems' => 'A sua lista de páginas preferidas contém {{PLURAL:$1|uma página|$1 páginas}}, excluindo páginas de discussão.',
+	'favoritelistedit-numitems' => 'A sua lista de páginas preferidas contém {{PLURAL:$1|uma página|$1 páginas}}.',
 	'favoritelistedit-noitems' => 'A sua lista de página preferidas está vazia.',
 	'favoritelistedit-normal-title' => 'Editar a lista de preferidas',
 	'favoritelistedit-normal-legend' => 'Remover páginas das preferidas',
