@@ -22,7 +22,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Favorites',
 	'author' => 'Jeremy Lemley',
 	'descriptionmsg' => 'favorites-desc',
-	'version' => '0.0.7',
+	'version' => '0.1.4',
 	'url' => "http://www.mediawiki.org/wiki/Extension:Favorites",
 );
 
@@ -55,8 +55,9 @@ $wgHooks['SkinTemplateTabs'][] = 'fnNavTabs';  // For other skins
 //add or remove
 $wgHooks['UnknownAction'][] = 'fnAction';
 
-//handle page moves
+//handle page moves and deletes
 $wgHooks['TitleMoveComplete'][] = 'fnHookMoveToFav';
+$wgHooks['ArticleDeleteComplete'][] = 'fnHookDeleteFav';
 
 //add CSS
 $wgHooks['BeforePageDisplay'][] = 'fnAddCss';
@@ -96,6 +97,14 @@ function fnHookMoveToFav(&$title, &$nt, &$wgUser, $pageid, $redirid ) {
 	return true;
 }
 
+function fnHookDeleteFav(&$article, &$user, $reason, $id ){
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->delete('favoritelist', array(
+		'fl_title' => $article->mTitle->getDBKey()), 
+		$fname = 'Database::delete');
+	return true;
+}
+
 function fnAddCss (&$out) {
 	global $wgScriptPath;
 	$out->addStyle($wgScriptPath. '/extensions/favorites/favorites.css');
@@ -115,10 +124,10 @@ function favParser_Render ( $input, $argv, $parser) {
         # The parser function itself
         # The input parameters are wikitext with templates expanded
         # The output should be wikitext too
-        $output = "Parser Output goes here.";
+        //$output = "Parser Output goes here.";
         
         $favParse = new FavParser();
-        $output = $favParse->wfSpecialFavoritelist();
+        $output = $favParse->wfSpecialFavoritelist($argv, $parser);
 		$parser->disableCache();
         return $output;
         

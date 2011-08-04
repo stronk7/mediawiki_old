@@ -449,12 +449,16 @@ private function viewFavList ($user, $output, $request, $mode) {
 	 */
 	private function buildRemoveLine( $title, $redirect, $skin ) {
 		global $wgLang;
-
+		# In case the user adds something unusual to their list using the raw editor
+		# We moved the Tools array completely into the "if( $title->exists() )" section.
+		$showlinks=false; 
 		$link = $skin->link( $title );
 		if( $redirect )
 			$link = '<span class="favoritelistredir">' . $link . '</span>';
-		$tools[] = $skin->link( $title->getTalkPage(), wfMsgHtml( 'talkpagelinktext' ) );
+			
 		if( $title->exists() ) {
+			$showlinks = true;
+			$tools[] = $skin->link( $title->getTalkPage(), wfMsgHtml( 'talkpagelinktext' ) );
 			$tools[] = $skin->link(
 				$title,
 				wfMsgHtml( 'history_short' ),
@@ -472,10 +476,15 @@ private function viewFavList ($user, $output, $request, $mode) {
 				array( 'known', 'noclasses' )
 			);
 		}
-		return "<li>"
-			//. Xml::check( 'titles[]', false, array( 'value' => $title->getPrefixedText() ) )
+		
+		if ($showlinks) {
+			return "<li>"
 			. $link . " (" . $wgLang->pipeList( $tools ) . ")" . "</li>\n";
+		} else {
+			return "<li>"
+			. $link . "</li>\n";
 		}
+	}
 
 	/**
 	 * Show a form for editing the favoritelist in "raw" mode

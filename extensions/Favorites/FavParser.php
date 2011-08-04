@@ -2,58 +2,66 @@
 
 class FavParser {
 
-function wfSpecialFavoritelist() {
-	
-	global $wgUser, $wgOut, $wgLang, $wgRequest;
-	global $wgRCShowFavoritingUsers, $wgEnotifFavoritelist, $wgShowUpdatedMarker;
-	$output = '';
-
-	$skin = $wgUser->getSkin();
-	$specialTitle = SpecialPage::getTitleFor( 'Favoritelist' );
-	//$wgOut->setRobotPolicy( 'noindex,nofollow' );
-
-	# Anons don't get a favoritelist
-	if( $wgUser->isAnon() ) {
-		//$wgOut->setPageTitle( wfMsg( 'favoritenologin' ) );
-		$llink = $skin->linkKnown(
-			SpecialPage::getTitleFor( 'Userlogin' ), 
-			wfMsg( 'loginreqlink' ),
-			array(),
-			array( 'returnto' => $specialTitle->getPrefixedText() )
-		);
-		$output = wfMsgHtml( 'favoritelistanontext', $llink ) ;
-		return $output ;
+	function wfSpecialFavoritelist($argv, $parser) {
 		
-	}
-
-
-
+		global $wgUser, $wgOut, $wgLang, $wgRequest;
+		global $wgRCShowFavoritingUsers, $wgEnotifFavoritelist, $wgShowUpdatedMarker;
+		$output = '';
 	
-	$output = $this->viewFavList($wgUser, $output, $wgRequest);
-	return $output ;
-}
+		$skin = $wgUser->getSkin();
+		$specialTitle = SpecialPage::getTitleFor( 'Favoritelist' );
+		//$wgOut->setRobotPolicy( 'noindex,nofollow' );
+	
+		# Anons don't get a favoritelist
+		if( $wgUser->isAnon() ) {
+			//$wgOut->setPageTitle( wfMsg( 'favoritenologin' ) );
+			$llink = $skin->linkKnown(
+				SpecialPage::getTitleFor( 'Userlogin' ), 
+				wfMsg( 'loginreqlink' ),
+				array(),
+				array( 'returnto' => $specialTitle->getPrefixedText() )
+			);
+			$output = wfMsgHtml( 'favoritelistanontext', $llink ) ;
+			
+			
+			return $output ;
+			
+		}
+	
+		$output = $this->viewFavList($wgUser, $output, $wgRequest);
+		if ( array_key_exists('editlink', $argv) && $argv['editlink']) {
+			# Add an edit link if you want it:
+			$output .= "<div id='contentSub'><br>" . 
+				$skin->link(
+					SpecialPage::getTitleFor( 'Favoritelist', 'edit' ),
+					wfMsgHtml( "favoritelisttools-edit" ),
+					array(),
+					array(),
+					array( 'known', 'noclasses' )
+				) . "</div>";
+		}
+		
+		return $output ;
+	}
 
 	
 	private function viewFavList ($user, $output, $request) {
-	global $wgUser, $wgOut, $wgLang, $wgRequest;
-	$uid = $wgUser->getId();
-	$output = $this->showNormalForm( $output, $user );
-
-	$dbr = wfGetDB( DB_SLAVE, 'favoritelist' );
+		global $wgUser, $wgOut, $wgLang, $wgRequest;
+		$uid = $wgUser->getId();
+		$output = $this->showNormalForm( $output, $user );
 	
-
-	$favoritelistCount = $dbr->selectField( 'favoritelist', 'COUNT(*)',
-		array( 'fl_user' => $uid ), __METHOD__ );
-	// Adjust for page X, talk:page X, which are both stored separately,
-	// but treated together
-	$nitems = floor($favoritelistCount);
-
-	if( $nitems == 0 ) {
-		$output = wfmsg('nofavoritelist');
+		$dbr = wfGetDB( DB_SLAVE, 'favoritelist' );
 		
+		$favoritelistCount = $dbr->selectField( 'favoritelist', 'COUNT(*)',
+			array( 'fl_user' => $uid ), __METHOD__ );
+		$nitems = floor($favoritelistCount);
+	
+		if( $nitems == 0 ) {
+			$output = wfmsg('nofavoritelist');
+			
+		}
+		return $output;
 	}
-	return $output;
-}
 
 
 	/**
@@ -193,9 +201,10 @@ function wfSpecialFavoritelist() {
 	 * @param $user User
 	 */
 	private function showNormalForm( $output, $user ) {
-		global $wgUser;
+		global $wgUser, $wgOut;
+		$skin = $wgUser->getSkin();
 		if( ( $count = $this->showItemCount( $output, $user ) ) > 0 ) {
-			$form = $this->buildRemoveList( $user, $wgUser->getSkin() );
+			$form = $this->buildRemoveList( $user, $skin );
 			$output .=  $form ;
 			return $output;
 		}
@@ -209,15 +218,14 @@ function wfSpecialFavoritelist() {
 	 */
 	private function buildRemoveList( $user, $skin ) {
 		$list = "";
+		$list .= "<ul>\n";
 		foreach( $this->getFavoritelistInfo( $user ) as $namespace => $pages ) {
-
-			$list .= "<ul>\n";
 			foreach( $pages as $dbkey => $redirect ) {
 				$title = Title::makeTitleSafe( $namespace, $dbkey );
 				$list .= $this->buildRemoveLine( $title, $redirect, $skin );
 			}
-			$list .= "</ul>\n";
 		}
+		$list .= "</ul>\n";
 		return $list;
 	}
 

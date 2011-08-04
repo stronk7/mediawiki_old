@@ -89,7 +89,7 @@ class FavoritedItem {
 	 */
 	public static function duplicateEntries( $ot, $nt ) {
 		FavoritedItem::doDuplicateEntries( $ot->getSubjectPage(), $nt->getSubjectPage() );
-		FavoritedItem::doDuplicateEntries( $ot->getTalkPage(), $nt->getTalkPage() );
+		//FavoritedItem::doDuplicateEntries( $ot->getTalkPage(), $nt->getTalkPage() );
 	}
 
 	/**
@@ -126,6 +126,12 @@ class FavoritedItem {
 		# Note that multi-row replace is very efficient for MySQL but may be inefficient for
 		# some other DBMSes, mostly due to poor simulation by us
 		$dbw->replace( 'favoritelist', array( array( 'fl_user', 'fl_namespace', 'fl_title' ) ), $values, __METHOD__ );
+		
+		# Delete the old item - we don't need to have the old page on the list of favorites.
+		$dbw->delete('favoritelist', array(
+			'fl_namespace' => $oldnamespace,
+			'fl_title' => $oldtitle), 
+			$fname = 'Database::delete');
 		return true;
 	}
 }

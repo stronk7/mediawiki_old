@@ -150,7 +150,7 @@ class FavoritelistEditor {
 	}
 
 	/**
-	 * Count the number of titles on a user's favoritelist, excluding talk pages
+	 * Count the number of titles on a user's favoritelist
 	 *
 	 * @param $user User
 	 * @return int
@@ -159,11 +159,11 @@ class FavoritelistEditor {
 		$dbr = wfGetDB( DB_MASTER );
 		$res = $dbr->select( 'favoritelist', 'COUNT(*) AS count', array( 'fl_user' => $user->getId() ), __METHOD__ );
 		$row = $dbr->fetchObject( $res );
-		return ceil( $row->count / 2 ); // Paranoia
+		return ceil( $row->count); 
 	}
 
 	/**
-	 * Prepare a list of titles on a user's favoritelist (excluding talk pages)
+	 * Prepare a list of titles on a user's favoritelist
 	 * and return an array of (prefixed) strings
 	 *
 	 * @param $user User
@@ -192,7 +192,7 @@ class FavoritelistEditor {
 	}
 
 	/**
-	 * Get a list of titles on a user's favoritelist, excluding talk pages,
+	 * Get a list of titles on a user's favoritelist,
 	 * and return as a two-dimensional array with namespace, title and
 	 * redirect status
 	 *
@@ -220,7 +220,7 @@ class FavoritelistEditor {
 						$cache->addBadLinkObj( $title );
 					}
 					// Ignore non-talk
-					if( !$title->isTalkPage() )
+					//if( !$title->isTalkPage() )
 						$titles[$row->fl_namespace][$row->fl_title] = $row->page_is_redirect;
 				}
 			}
@@ -274,12 +274,6 @@ class FavoritelistEditor {
 			if( $title instanceof Title ) {
 				$rows[] = array(
 					'fl_user' => $user->getId(),
-					'fl_namespace' => ( $title->getNamespace() & ~1 ),
-					'fl_title' => $title->getDBkey(),
-					'fl_notificationtimestamp' => null,
-				);
-				$rows[] = array(
-					'fl_user' => $user->getId(),
 					'fl_namespace' => ( $title->getNamespace() | 1 ),
 					'fl_title' => $title->getDBkey(),
 					'fl_notificationtimestamp' => null,
@@ -304,15 +298,6 @@ class FavoritelistEditor {
 			if( !$title instanceof Title )
 				$title = Title::newFromText( $title );
 			if( $title instanceof Title ) {
-				$dbw->delete(
-					'favoritelist',
-					array(
-						'fl_user' => $user->getId(),
-						'fl_namespace' => ( $title->getNamespace() & ~1 ),
-						'fl_title' => $title->getDBkey(),
-					),
-					__METHOD__
-				);
 				$dbw->delete(
 					'favoritelist',
 					array(
@@ -370,12 +355,12 @@ class FavoritelistEditor {
 			$list .= $skin->makeHeadLine( 2, ">", $anchor, $heading, "" );
 			$toc .= $skin->tocLine( $anchor, $heading, $tocLength, 1 ) . $skin->tocLineEnd();
 
-			$list .= "<ul>\n";
+			$list .= "\n";
 			foreach( $pages as $dbkey => $redirect ) {
 				$title = Title::makeTitleSafe( $namespace, $dbkey );
 				$list .= $this->buildRemoveLine( $title, $redirect, $skin );
 			}
-			$list .= "</ul>\n";
+			$list .= "\n";
 		}
 		// ISSUE: omit the TOC if the total number of titles is low?
 		if( $tocLength > 1 ) {
@@ -407,12 +392,15 @@ class FavoritelistEditor {
 	 */
 	private function buildRemoveLine( $title, $redirect, $skin ) {
 		global $wgLang;
-
+		# In case the user adds something unusual to their list using the raw editor
+		# We moved the Tools array completely into the "if( $title->exists() )" section.
+		$showlinks=false; 
 		$link = $skin->link( $title );
 		if( $redirect )
 			$link = '<span class="favoritelistredir">' . $link . '</span>';
-		$tools[] = $skin->link( $title->getTalkPage(), wfMsgHtml( 'talkpagelinktext' ) );
 		if( $title->exists() ) {
+			$showlinks = true;
+			$tools[] = $skin->link( $title->getTalkPage(), wfMsgHtml( 'talkpagelinktext' ) );
 			$tools[] = $skin->link(
 				$title,
 				wfMsgHtml( 'history_short' ),
@@ -430,9 +418,17 @@ class FavoritelistEditor {
 				array( 'known', 'noclasses' )
 			);
 		}
-		return "<li>"
-			. Xml::check( 'titles[]', false, array( 'value' => $title->getPrefixedText() ) )
-			. $link . " (" . $wgLang->pipeList( $tools ) . ")" . "</li>\n";
+		
+		if ($showlinks) {
+		return 
+			Xml::check( 'titles[]', false, array( 'value' => $title->getPrefixedText() ) )
+			. $link . " (" . $wgLang->pipeList( $tools ) . ")" . "\n<br>";
+		} else {
+			return 
+			Xml::check( 'titles[]', false, array( 'value' => $title->getPrefixedText() ) ) 
+			. $link . "\n<br>";
+		}
+		
 		}
 
 	/**
