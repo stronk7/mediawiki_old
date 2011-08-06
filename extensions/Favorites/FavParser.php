@@ -4,14 +4,28 @@ class FavParser {
 
 	function wfSpecialFavoritelist($argv, $parser) {
 		
-		global $wgUser, $wgOut, $wgLang, $wgRequest;
+		global $wgUser, $wgOut, $wgLang, $wgRequest, $wgArticle;
 		global $wgRCShowFavoritingUsers, $wgEnotifFavoritelist, $wgShowUpdatedMarker;
 		$output = '';
-	
+		
 		$skin = $wgUser->getSkin();
 		$specialTitle = SpecialPage::getTitleFor( 'Favoritelist' );
 		//$wgOut->setRobotPolicy( 'noindex,nofollow' );
-	
+		
+		$this->mTitle = $wgArticle->mTitle;
+		
+		if ($this->mTitle->getNamespace() == NS_USER && array_key_exists('userpage', $argv) && $argv['userpage']) {
+			$parts = explode( '/', $this->mTitle->getText() );
+			$rootPart = $parts[0];
+			$user = User::newFromName( $rootPart, true /* don't allow IP users*/ );
+			//echo "Userpage: $user";
+			$output = $this->viewFavList($user, $output, $wgRequest, $argv);
+			$output .= $this->editlink($argv, $skin);
+			return $output ;
+		} else {
+			$user = $wgUser;
+		}
+		
 		# Anons don't get a favoritelist
 		if( $wgUser->isAnon() ) {
 			//$wgOut->setPageTitle( wfMsg( 'favoritenologin' ) );
@@ -22,34 +36,21 @@ class FavParser {
 				array( 'returnto' => $specialTitle->getPrefixedText() )
 			);
 			$output = wfMsgHtml( 'favoritelistanontext', $llink ) ;
-			
-			
 			return $output ;
 			
 		}
 	
-		$output = $this->viewFavList($wgUser, $output, $wgRequest);
-		if ( array_key_exists('editlink', $argv) && $argv['editlink']) {
-			# Add an edit link if you want it:
-			$output .= "<div id='contentSub'><br>" . 
-				$skin->link(
-					SpecialPage::getTitleFor( 'Favoritelist', 'edit' ),
-					wfMsgHtml( "favoritelisttools-edit" ),
-					array(),
-					array(),
-					array( 'known', 'noclasses' )
-				) . "</div>";
-		}
+		$output = $this->viewFavList($user, $output, $wgRequest, $argv);
+		$output .= $this->editlink($argv, $skin);
 		
 		return $output ;
 	}
 
 	
-	private function viewFavList ($user, $output, $request) {
-		global $wgUser, $wgOut, $wgLang, $wgRequest;
-		$uid = $wgUser->getId();
+	private function viewFavList ($user, $output, $request, $argv) {
+		global $wgOut, $wgLang, $wgRequest;
 		$output = $this->showNormalForm( $output, $user );
-	
+		$uid=$user->getId();
 		$dbr = wfGetDB( DB_SLAVE, 'favoritelist' );
 		
 		$favoritelistCount = $dbr->selectField( 'favoritelist', 'COUNT(*)',
@@ -60,10 +61,34 @@ class FavParser {
 			$output = wfmsg('nofavoritelist');
 			
 		}
+
 		return $output;
 	}
 
-
+	/**
+	 * Does the user want to display an editlink?
+	 *
+	 * @param $argv Array of values from the parser
+	 * $param $skin User skin
+	 * @return Output
+	 */
+	private function editlink($argv, $skin) {
+		$output='';
+		if ( array_key_exists('editlink', $argv) && $argv['editlink']) {
+			# Add an edit link if you want it:
+			$output = "<div id='contentSub'><br>" . 
+				$skin->link(
+					SpecialPage::getTitleFor( 'Favoritelist', 'edit' ),
+					wfMsgHtml( "favoritelisttools-edit" ),
+					array(),
+					array(),
+					array( 'known', 'noclasses' )
+				) . "</div>";
+		}
+		return $output;
+	}
+	
+	
 	/**
 	 * Extract a list of titles from a blob of text, returning
 	 * (prefixed) strings; unfavoritable titles are ignored
@@ -201,8 +226,8 @@ class FavParser {
 	 * @param $user User
 	 */
 	private function showNormalForm( $output, $user ) {
-		global $wgUser, $wgOut;
-		$skin = $wgUser->getSkin();
+		global $wgOut;
+		$skin = $user->getSkin();
 		if( ( $count = $this->showItemCount( $output, $user ) ) > 0 ) {
 			$form = $this->buildRemoveList( $user, $skin );
 			$output .=  $form ;
