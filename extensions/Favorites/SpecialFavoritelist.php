@@ -105,7 +105,7 @@ private function viewFavList ($user, $output, $request, $mode) {
 	$dbr = wfGetDB( DB_SLAVE, 'favoritelist' );
 //	$recentchanges = $dbr->tableName( 'recentchanges' );
 
-	$favoritelistCount = $dbr->selectField( 'favoritelist', 'COUNT(*)',
+	$favoritelistCount = $dbr->selectField( 'favoritelist', 'COUNT(fl_user)',
 		array( 'fl_user' => $uid ), __METHOD__ );
 	// Adjust for page X, talk:page X, which are both stored separately,
 	// but treated together
@@ -199,7 +199,7 @@ private function viewFavList ($user, $output, $request, $mode) {
 	 */
 	private function countFavoritelist( $user ) {
 		$dbr = wfGetDB( DB_MASTER );
-		$res = $dbr->select( 'favoritelist', 'COUNT(*) AS count', array( 'fl_user' => $user->getId() ), __METHOD__ );
+		$res = $dbr->select( 'favoritelist', 'COUNT(fl_user) AS count', array( 'fl_user' => $user->getId() ), __METHOD__ );
 		$row = $dbr->fetchObject( $res );
 		return ceil( $row->count ); // Paranoia
 	}
@@ -216,7 +216,10 @@ private function viewFavList ($user, $output, $request, $mode) {
 		$dbr = wfGetDB( DB_MASTER );
 		$res = $dbr->select(
 			'favoritelist',
-			'*',
+			array(
+				'fl_namespace',
+				'fl_title'
+			),
 			array(
 				'fl_user' => $user->getId(),
 			),
@@ -270,35 +273,8 @@ private function viewFavList ($user, $output, $request, $mode) {
 		return $titles;
 	}
 
-	/**
-	 * Show a message indicating the number of items on the user's favoritelist,
-	 * and return this count for additional checking
-	 *
-	 * @param $output OutputPage
-	 * @param $user User
-	 * @return int
-	 */
-	private function showItemCount( $output, $user ) {
-		if( ( $count = $this->countFavoritelist( $user ) ) > 0 ) {
-			//$output->addHTML( wfMsgExt( 'favoritelistedit-numitems', 'parse',
-			//	$GLOBALS['wgLang']->formatNum( $count ) ) );
-		} else {
-			//$output->addHTML( wfMsgExt( 'favoritelistedit-noitems', 'parse' ) );
-		}
-		return $count;
-	}
 
-	/**
-	 * Remove all titles from a user's favoritelist
-	 *
-	 * @param $user User
-	 */
-	private function clearFavoritelist( $user ) {
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete( 'favoritelist', array( 'fl_user' => $user->getId() ), __METHOD__ );
-	}
-
-	/**
+/**
 	 * Add a list of titles to a user's favoritelist
 	 *
 	 * $titles can be an array of strings or Title objects; the former
@@ -314,12 +290,6 @@ private function viewFavList ($user, $output, $request, $mode) {
 			if( !$title instanceof Title )
 				$title = Title::newFromText( $title );
 			if( $title instanceof Title ) {
-				$rows[] = array(
-					'fl_user' => $user->getId(),
-					'fl_namespace' => ( $title->getNamespace() & ~1 ),
-					'fl_title' => $title->getDBkey(),
-					'fl_notificationtimestamp' => null,
-				);
 				$rows[] = array(
 					'fl_user' => $user->getId(),
 					'fl_namespace' => ( $title->getNamespace() | 1 ),
@@ -350,15 +320,6 @@ private function viewFavList ($user, $output, $request, $mode) {
 					'favoritelist',
 					array(
 						'fl_user' => $user->getId(),
-						'fl_namespace' => ( $title->getNamespace() & ~1 ),
-						'fl_title' => $title->getDBkey(),
-					),
-					__METHOD__
-				);
-				$dbw->delete(
-					'favoritelist',
-					array(
-						'fl_user' => $user->getId(),
 						'fl_namespace' => ( $title->getNamespace() | 1 ),
 						'fl_title' => $title->getDBkey(),
 					),
@@ -378,7 +339,7 @@ private function viewFavList ($user, $output, $request, $mode) {
 	 */
 	private function showNormalForm( $output, $user ) {
 		global $wgUser;
-		if( ( $count = $this->showItemCount( $output, $user ) ) > 0 ) {
+		if( ( $count = $this->countFavoritelist($user ) ) > 0 ) {
 			$self = SpecialPage::getTitleFor( 'Favoritelist' );
 			$form  = Xml::openElement( 'form', array( 'method' => 'post',
 				'action' => $self->getLocalUrl( array( 'action' => 'edit' ) ) ) );
@@ -494,7 +455,7 @@ private function viewFavList ($user, $output, $request, $mode) {
 	 */
 	public function showRawForm( $output, $user ) {
 		global $wgUser;
-		$this->showItemCount( $output, $user );
+		$this->countFavoritelist( $user );
 		$self = SpecialPage::getTitleFor( 'Favoritelist' );
 		$form  = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $self->getLocalUrl( array( 'action' => 'raw' ) ) ) );
