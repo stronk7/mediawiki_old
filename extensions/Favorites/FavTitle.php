@@ -18,11 +18,13 @@ class FavTitle extends Title {
 		
 		global $wgUser, $wgArticle; 
 		$favUser = new FavUser();
-		if ( is_null( $this->mFav ) ) {
-			if ( NS_SPECIAL == $this->mNamespace || !$wgUser->isLoggedIn()) {
-				$this->mFav = false;
-			} else {
-				$this->mFav = $favUser->isFavorited( $wgArticle->mTitle ); 
+		if ($wgArticle) {
+			if ( is_null( $this->mFav ) ) {
+				if ( NS_SPECIAL == $this->mNamespace || !$wgUser->isLoggedIn()) {
+					$this->mFav = false;
+				} else {
+					$this->mFav = $favUser->isFavorited( $wgArticle->mTitle ); 
+				}
 			}
 		}
 		return $this->mFav;
