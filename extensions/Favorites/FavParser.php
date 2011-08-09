@@ -7,7 +7,7 @@ class FavParser {
 		global $wgUser, $wgOut, $wgLang, $wgRequest, $wgArticle;
 		global $wgRCShowFavoritingUsers, $wgEnotifFavoritelist, $wgShowUpdatedMarker;
 		$output = '';
-		
+	
 		$skin = $wgUser->getSkin();
 		$specialTitle = SpecialPage::getTitleFor( 'Favoritelist' );
 		//$wgOut->setRobotPolicy( 'noindex,nofollow' );
@@ -50,17 +50,6 @@ class FavParser {
 	private function viewFavList ($user, $output, $request, $argv) {
 		global $wgOut, $wgLang, $wgRequest;
 		$output = $this->showNormalForm( $output, $user );
-		$uid=$user->getId();
-		$dbr = wfGetDB( DB_SLAVE, 'favoritelist' );
-		
-		$favoritelistCount = $dbr->selectField( 'favoritelist', 'COUNT(*)',
-			array( 'fl_user' => $uid ), __METHOD__ );
-		$nitems = floor($favoritelistCount);
-	
-		if( $nitems == 0 ) {
-			$output = wfmsg('nofavoritelist');
-			
-		}
 
 		return $output;
 	}
@@ -88,31 +77,8 @@ class FavParser {
 		return $output;
 	}
 	
+
 	
-	/**
-	 * Extract a list of titles from a blob of text, returning
-	 * (prefixed) strings; unfavoritable titles are ignored
-	 *
-	 * @param $list mixed
-	 * @return array
-	 */
-	private function extractTitles( $list ) {
-		$titles = array();
-		if( !is_array( $list ) ) {
-			$list = explode( "\n", trim( $list ) );
-			if( !is_array( $list ) )
-				return array();
-		}
-		foreach( $list as $text ) {
-			$text = trim( $text );
-			if( strlen( $text ) > 0 ) {
-				$title = Title::newFromText( $text );
-				//if( $title instanceof Title && $title->isFavoritable() )
-					$titles[] = $title->getPrefixedText();
-			}
-		}
-		return array_unique( $titles );
-	}
 
 
 	/**
@@ -123,39 +89,11 @@ class FavParser {
 	 */
 	private function countFavoritelist( $user ) {
 		$dbr = wfGetDB( DB_MASTER );
-		$res = $dbr->select( 'favoritelist', 'COUNT(*) AS count', array( 'fl_user' => $user->getId() ), __METHOD__ );
+		$res = $dbr->select( 'favoritelist', 'COUNT(fl_user) AS count', array( 'fl_user' => $user->getId() ), __METHOD__ );
 		$row = $dbr->fetchObject( $res );
-		return ceil( $row->count); // Paranoia
+		return ceil( $row->count); 
 	}
 
-	/**
-	 * Prepare a list of titles on a user's favoritelist (excluding talk pages)
-	 * and return an array of (prefixed) strings
-	 *
-	 * @param $user User
-	 * @return array
-	 */
-	private function getFavoritelist( $user ) {
-		$list = array();
-		$dbr = wfGetDB( DB_MASTER );
-		$res = $dbr->select(
-			'favoritelist',
-			'*',
-			array(
-				'fl_user' => $user->getId(),
-			),
-			__METHOD__
-		);
-		if( $res->numRows() > 0 ) {
-			while( $row = $res->fetchObject() ) {
-				$title = Title::makeTitleSafe( $row->fl_namespace, $row->fl_title );
-				if( $title instanceof Title && !$title->isTalkPage() )
-					$list[] = $title->getPrefixedText();
-			}
-			$res->free();
-		}
-		return $list;
-	}
 
 	/**
 	 * Get a list of titles on a user's favoritelist, excluding talk pages,
@@ -194,30 +132,6 @@ class FavParser {
 		return $titles;
 	}
 
-	/**
-	 * Show a message indicating the number of items on the user's favoritelist,
-	 * and return this count for additional checking
-	 *
-	 * @param $output OutputPage
-	 * @param $user User
-	 * @return int
-	 */
-	private function showItemCount( $output, $user ) {
-		if( ( $count = $this->countFavoritelist( $user ) ) > 0 ) {
-			//$output->addHTML( wfMsgExt( 'favoritelistedit-numitems', 'parse',
-			//	$GLOBALS['wgLang']->formatNum( $count ) ) );
-		} else {
-			//$output->addHTML( wfMsg( 'favoritelistedit-noitems', 'parse' ) );
-		}
-		return $count;
-	}
-
-	/**
-	 * Remove all titles from a user's favoritelist
-	 *
-	 * @param $user User
-//	 */
-
 
 	/**
 	 * Show the standard favoritelist 
@@ -228,9 +142,13 @@ class FavParser {
 	private function showNormalForm( $output, $user ) {
 		global $wgOut;
 		$skin = $user->getSkin();
-		if( ( $count = $this->showItemCount( $output, $user ) ) > 0 ) {
+		
+		if ( $this->countFavoritelist($user ) > 0 ) {
 			$form = $this->buildRemoveList( $user, $skin );
 			$output .=  $form ;
+			return $output;
+		} else {
+			$output = wfmsg('nofavoritelist');
 			return $output;
 		}
 	}
@@ -274,26 +192,4 @@ class FavParser {
 		return "<li>" . $link . "</li>\n";
 		}
 
-}
-/**
- * Count the number of items on a user's favoritelist
- *
- * @param $talk Include talk pages
- * @return integer
- */
-function flCountItems( &$user, $talk = true ) {
-	$dbr = wfGetDB( DB_SLAVE, 'favoritelist' );
-
-	# Fetch the raw count
-	$res = $dbr->select( 'favoritelist', 'COUNT(*) AS count', 
-		array( 'fl_user' => $user->mId ), 'flCountItems' );
-	$row = $dbr->fetchObject( $res );
-	$count = $row->count;
-	$dbr->freeResult( $res );
-
-	# Halve to remove talk pages if needed
-	if( !$talk )
-		$count = floor( $count);
-
-	return( $count );
 }
