@@ -19,7 +19,6 @@ class Favorites extends QuickTemplate {
 	if ($wgArticle) {  
 			
 			if ( $wgUseIconFavorite ) {
-			
 					$class = 'icon ';
 					$place = 'views';
 				} else {

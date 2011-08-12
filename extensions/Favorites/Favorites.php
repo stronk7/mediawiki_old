@@ -22,13 +22,11 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Favorites',
 	'author' => 'Jeremy Lemley',
 	'descriptionmsg' => 'favorites-desc',
-	'version' => '0.2.0',
+	'version' => '0.2.2',
 	'url' => "http://www.mediawiki.org/wiki/Extension:Favorites",
 );
-
-
  
-
+global $wgUseIconFavorite;
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Favorites'] = $dir . 'favorites.i18n.php';
 $wgAutoloadClasses['Favorites'] = $dir . 'Favorites_body.php';
@@ -52,15 +50,17 @@ $wgHooks['ParserFirstCallInit'][] = 'ParseFavorites';
 $wgHooks['SkinTemplateNavigation'][] = 'fnNavUrls';  // For Vector
 $wgHooks['SkinTemplateTabs'][] = 'fnNavTabs';  // For other skins
 
+if ($wgUseIconFavorite){
+	//add CSS - only needed for icon display
+	$wgHooks['BeforePageDisplay'][] = 'fnAddCss';
+}
+
 //add or remove
 $wgHooks['UnknownAction'][] = 'fnAction';
 
 //handle page moves and deletes
 $wgHooks['TitleMoveComplete'][] = 'fnHookMoveToFav';
 $wgHooks['ArticleDeleteComplete'][] = 'fnHookDeleteFav';
-
-//add CSS
-$wgHooks['BeforePageDisplay'][] = 'fnAddCss';
 
 
 function fnAction ($action, $article) {
@@ -107,7 +107,7 @@ function fnHookDeleteFav(&$article, &$user, $reason, $id ){
 
 function fnAddCss (&$out) {
 	global $wgScriptPath;
-	$out->addStyle($wgScriptPath. '/extensions/favorites/favorites.css');
+	$out->addStyle($wgScriptPath. '/extensions/Favorites/favorites.css');
 	return true;
 }
 
