@@ -22,11 +22,12 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Favorites',
 	'author' => 'Jeremy Lemley',
 	'descriptionmsg' => 'favorites-desc',
-	'version' => '0.2.2',
+	'version' => '0.2.6',
 	'url' => "http://www.mediawiki.org/wiki/Extension:Favorites",
 );
  
-global $wgUseIconFavorite;
+global $wgUseIconFavorite, $wgFavoritesPersonalURL;
+
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Favorites'] = $dir . 'favorites.i18n.php';
 $wgAutoloadClasses['Favorites'] = $dir . 'Favorites_body.php';
@@ -62,6 +63,31 @@ $wgHooks['UnknownAction'][] = 'fnAction';
 $wgHooks['TitleMoveComplete'][] = 'fnHookMoveToFav';
 $wgHooks['ArticleDeleteComplete'][] = 'fnHookDeleteFav';
 
+// Do we want to display a "My Favorites" link in the personal urls area?
+if ($wgFavoritesPersonalURL) {
+	$wgHooks['PersonalUrls'][] = 'onAddPersonalUrls';
+} 
+
+function onAddPersonalUrls( &$personal_urls, &$wgTitle ) {
+      global $wgUser;
+ 
+ //     $skin = $wgUser->getSkin();
+ 		$title = Title::newFromText( 'Special:Favoritelist' );
+      if( $wgUser->getID() ) {
+      	 $url['userpage'] = array_shift( $personal_urls );
+      	 $url[] = array_shift( $personal_urls );
+      	 $url[] = array_shift( $personal_urls );
+      	 
+         $url[] = array( 'text' => wfMsg( 'myfavoritelist' ),
+                         'href' => $title->getLocalURL( )
+                               );
+            
+ 	
+         $personal_urls = $url + $personal_urls;
+      }
+ 
+      return true;
+}
 
 function fnAction ($action, $article) {
 	$title = new Title();
@@ -106,8 +132,8 @@ function fnHookDeleteFav(&$article, &$user, $reason, $id ){
 }
 
 function fnAddCss (&$out) {
-	global $wgScriptPath;
-	$out->addStyle($wgScriptPath. '/extensions/Favorites/favorites.css');
+	global $wgExtensionAssetsPath;
+	$out->addStyle($wgExtensionAssetsPath . '/Favorites/favorites.css');
 	return true;
 }
 
