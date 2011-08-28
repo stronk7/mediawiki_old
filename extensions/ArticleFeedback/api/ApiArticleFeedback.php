@@ -37,11 +37,12 @@ class ApiArticleFeedback extends ApiBase {
 				$this->dieUsage( 'ArticleFeedback is not enabled on this page', 'invalidpage' );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbw = wfGetDB( DB_MASTER );
 
 		// Query the latest ratings by this user for this page,
 		// possibly for an older revision
-		$res = $dbr->select(
+		// Select from the master to prevent replag-induced bugs
+		$res = $dbw->select(
 			'article_feedback',
 			array( 'aa_rating_id', 'aa_rating_value', 'aa_revision' ),
 			array(

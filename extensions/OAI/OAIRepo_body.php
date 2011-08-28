@@ -875,7 +875,12 @@ class WikiOAIRecord extends OAIRecord {
 			array( 'img_name' => $this->_row->page_title ),
 			$fname );
 		if( $imageRow ) {
-			$url = wfFindFile( $imageRow->img_name )->getUrl();
+			$file = wfFindFile( $imageRow->img_name );
+			if ( !$file ) {
+				wfDebug( 'Invalid image row retrieved. Image name: ' . $imageRow->img_name );
+				return '';
+			}
+			$url = $file->getUrl();
 
 			if( $url{0} == '/' ) {
 				global $wgServer;
@@ -904,8 +909,6 @@ class WikiOAIRecord extends OAIRecord {
 		}
 		return '<contributor>' . $tag . '</contributor>';
 	}
-
-
 }
 
 /** For the very first page output siteinfo, else same sa XmlDumpWriter  */

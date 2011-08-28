@@ -40,12 +40,11 @@ class PopulateAFRevisions extends Maintenance {
 		
 		$lastRevID = 0;
 		$i = 0;
-		$dbr = wfGetDB( DB_SLAVE );
 		$dbw = wfGetDB( DB_MASTER );
 		$this->output( "Reading data from article_feedback ...\n" );
 		while ( true ) {
 			// Get the next revision ID
-			$row = $dbr->selectRow( 'article_feedback', array( 'aa_revision', 'aa_page_id' ),
+			$row = $dbw->selectRow( 'article_feedback', array( 'aa_revision', 'aa_page_id' ),
 				"aa_revision > $lastRevID", __METHOD__,
 				array( 'ORDER BY' => 'aa_revision', 'LIMIT' => 1 )
 			);
@@ -57,7 +56,7 @@ class PopulateAFRevisions extends Maintenance {
 			$pageid = intval( $row->aa_page_id );
 			
 			// Get all article_feedback rows for this revision
-			$res = $dbr->select( 'article_feedback',
+			$res = $dbw->select( 'article_feedback',
 				array( 'aa_rating_id', 'aa_rating_value', 'aa_user_id', 'aa_user_anon_token' ),
 				array( 'aa_revision' => $revid ),
 				__METHOD__
