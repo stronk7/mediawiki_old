@@ -10,7 +10,7 @@
 
 $wgHooks['EditFilterMerged'][] = 'AntiBot_GenericFormEncoding::onEditFilterMerged';
 class AntiBot_GenericFormEncoding {
-	function onEditFilterMerged( $editPage, $text, &$hookError ) {
+	static function onEditFilterMerged( $editPage, $text, &$hookError ) {
 		if ( !function_exists( 'apache_request_headers' ) ) {
 			return true;
 		}

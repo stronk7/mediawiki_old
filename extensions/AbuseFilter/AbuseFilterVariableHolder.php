@@ -331,7 +331,7 @@ class AFComputedVariable {
 
 				$users = array();
 				foreach ( $res as $user ) {
-					$users[] = $user[0];
+					$users[] = $user->rev_user_text;
 				}
 				$result = $users;
 				break;
