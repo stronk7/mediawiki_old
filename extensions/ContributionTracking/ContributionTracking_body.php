@@ -93,7 +93,7 @@ class ContributionTracking extends UnlistedSpecialPage {
 		$returnText = $wgRequest->getText( 'returnto', "Donate-thanks/$language" );
 		$returnTitle = Title::newFromText( $returnText );
 		if( $returnTitle ) {
-			$returnto = $returnTitle->getFullUrl();
+			$returnto = wfExpandUrl( $returnTitle->getFullUrl(), PROTO_CURRENT );
 		} else {
 			$returnto = $wgContributionTrackingReturnToURLDefault . "/$language";
 		}

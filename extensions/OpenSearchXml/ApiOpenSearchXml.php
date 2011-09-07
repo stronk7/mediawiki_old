@@ -122,11 +122,11 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			$item = array();
 			$item['Text']['*'] = $title->getPrefixedText();
 			$item['Description']['*'] = $extract;
-			$item['Url']['*'] = $title->getFullUrl();
+			$item['Url']['*'] = wfExpandUrl( $title->getFullUrl(), PROTO_CURRENT );
 			if( $image ) {
 				$thumb = $image->transform( array( 'width' => 50, 'height' => 50 ), 0 );
 				$item['Image'] = array(
-					'source' => wfExpandUrl( $thumb->getUrl() ),
+					'source' => wfExpandUrl( $thumb->getUrl(), PROTO_CURRENT ),
 					//alt
 					'width' => $thumb->getWidth(),
 					'height' => $thumb->getHeight() );

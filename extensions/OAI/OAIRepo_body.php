@@ -544,7 +544,7 @@ class OAIRepo {
 
 	function baseUrl() {
 		$title =& SpecialPage::getTitleFor( 'OAIRepository' );
-		return $title->getFullUrl();
+		return $title->getCanonicalUrl();
 	}
 
 	function earliestDatestamp() {
@@ -828,7 +828,7 @@ class WikiOAIRecord extends OAIRecord {
 			oaiTag( 'dc:language',    array(), $wgContLanguageCode ) . "\n" .
 			oaiTag( 'dc:type',        array(), 'Text' ) . "\n" .
 			oaiTag( 'dc:format',      array(), $wgMimeType ) . "\n" .
-			oaiTag( 'dc:identifier',  array(), $title->getFullUrl() ) . "\n" .
+			oaiTag( 'dc:identifier',  array(), $title->getCanonicalUrl() ) . "\n" .
 			oaiTag( 'dc:contributor', array(), $this->_row->rev_user_text ) . "\n" .
 			oaiTag( 'dc:date',        array(), oaiDatestamp( $this->getDatestamp() ) ) . "\n" .
 			"</oai_dc:dc>\n";

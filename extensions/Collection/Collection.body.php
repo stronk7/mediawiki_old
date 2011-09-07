@@ -577,7 +577,7 @@ class SpecialCollection extends SpecialPage {
 			'revision' => strval( $oldid ),
 			'latest' => strval( $latest ),
 			'timestamp' => wfTimestamp( TS_UNIX, $revision->mTimestamp ),
-			'url' => $title->getFullURL(),
+			'url' => $title->getCanonicalURL(),
 			'currentVersion' => $currentVersion,
 		);
 
@@ -762,7 +762,7 @@ class SpecialCollection extends SpecialPage {
 				'latest' => $latest,
 				'revision' => $oldid,
 				'timestamp' => wfTimestamp( TS_UNIX, $revision->mTimestamp ),
-				'url' => $articleTitle->getFullURL(),
+				'url' => $articleTitle->getCanonicalURL(),
 				'currentVersion' => $currentVersion,
 			);
 			if ( $displayTitle ) {
@@ -952,7 +952,7 @@ class SpecialCollection extends SpecialPage {
 
 		$response = self::mwServeCommand( 'render', array(
 			'metabook' => $this->buildJSONCollection( $collection ),
-			'base_url' => wfExpandUrl( $wgScriptPath ),
+			'base_url' => wfExpandUrl( $wgScriptPath, PROTO_CURRENT ),
 			'script_extension' => $wgScriptExtension,
 			'template_blacklist' => wfMsgForContent( 'coll-template_blacklist_title' ),
 			'template_exclusion_category' => wfMsgForContent( 'coll-exclusion_category_title' ),
@@ -985,7 +985,7 @@ class SpecialCollection extends SpecialPage {
 
 		$response = self::mwServeCommand( 'render', array(
 			'collection_id' => $collectionID,
-			'base_url' => wfExpandUrl( $wgScriptPath ),
+			'base_url' => wfExpandUrl( $wgScriptPath, PROTO_CURRENT ),
 			'script_extension' => $wgScriptExtension,
 			'template_blacklist' => wfMsgForContent( 'coll-template_blacklist_title' ),
 			'template_exclusion_category' => wfMsgForContent( 'coll-exclusion_category_title' ),
@@ -1060,7 +1060,7 @@ class SpecialCollection extends SpecialPage {
 			$wgOut->setPageTitle( wfMsg( 'coll-rendering_finished_title' ) );
 
 			$template = new CollectionFinishedTemplate();
-			$template->set( 'download_url', wfExpandUrl( SkinTemplate::makeSpecialUrl( 'Book', 'bookcmd=download&' . $query ) ) );
+			$template->set( 'download_url', wfExpandUrl( SkinTemplate::makeSpecialUrl( 'Book', 'bookcmd=download&' . $query ), PROTO_CURRENT ) );
 			$template->set( 'is_cached', $wgRequest->getVal( 'is_cached' ) );
 			$template->set( 'query', $query );
 			$template->set( 'return_to', $return_to );
@@ -1150,7 +1150,7 @@ class SpecialCollection extends SpecialPage {
 
 		$response = self::mwServeCommand( 'zip_post', array(
 			'metabook' => $this->buildJSONCollection( $collection ),
-			'base_url' => wfExpandUrl( $wgScriptPath ),
+			'base_url' => wfExpandUrl( $wgScriptPath, PROTO_CURRENT ),
 			'script_extension' => $wgScriptExtension,
 			'template_blacklist' => wfMsgForContent( 'coll-template_blacklist_title' ),
 			'template_exclusion_category' => wfMsgForContent( 'coll-exclusion_category_title' ),
@@ -1271,7 +1271,7 @@ class SpecialCollection extends SpecialPage {
 		curl_setopt( $c, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
 		curl_setopt( $c, CURLOPT_HEADER, false );
 		if ( is_object( $wgTitle ) ) {
-			curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
+			curl_setopt( $c, CURLOPT_REFERER, wfExpandUrl( $wgTitle->getFullURL(), PROTO_CURRENT ) );
 		}
 		if ( $timeout ) {
 			curl_setopt( $c, CURLOPT_TIMEOUT, $wgHTTPTimeout );

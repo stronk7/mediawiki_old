@@ -439,13 +439,13 @@ class CodeRevision {
 			);
 
 			// Get repo and build comment title (for url)
-			$url = $this->getFullUrl();
+			$url = $this->getCanonicalUrl();
 
 			foreach ( $res as $row ) {
 				$revision = CodeRevision::newFromRow( $this->repo, $row );
 				$users = $revision->getCommentingUsers();
 
-				$rowUrl = $revision->getFullUrl();
+				$rowUrl = $revision->getCanonicalUrl();
 
 				$revisionAuthor = $revision->getWikiUser();
 
@@ -623,7 +623,7 @@ class CodeRevision {
 		$commentId = $dbw->insertId();
 		$dbw->commit();
 
-		$url = $this->getFullUrl( $commentId );
+		$url = $this->getCanonicalUrl( $commentId );
 
 		$this->sendCommentToUDP( $commentId, $text, $url );
 
@@ -1238,10 +1238,12 @@ class CodeRevision {
 	}
 
 	/**
+	 * Get the canonical URL of a revision. Constructs a Title for this revision
+	 * along the lines of [[Special:Code/RepoName/12345#c678]] and calls getCanonicalUrl().
 	 * @param string $commentId
 	 * @return \type
 	 */
-	public function getFullUrl( $commentId = 0 ) {
+	public function getCanonicalUrl( $commentId = 0 ) {
 		$title = SpecialPage::getTitleFor( 'Code', $this->repo->getName() . '/' . $this->id );
 
 		# Append comment id if not null, empty string or zero
@@ -1249,7 +1251,7 @@ class CodeRevision {
 			$title->setFragment( "#c{$commentId}" );
 		}
 
-		return $title->getFullUrl();
+		return $title->getCanonicalUrl();
 	}
 
 	/**
@@ -1263,7 +1265,7 @@ class CodeRevision {
 
 		if( $wgCodeReviewUDPAddress ) {
 			if( is_null( $url ) ) {
-				$url = $this->getFullUrl( $commentId );
+				$url = $this->getCanonicalUrl( $commentId );
 			}
 
 			$line = wfMsg( 'code-rev-message' ) . " \00314(" . $this->repo->getName() .
@@ -1282,7 +1284,7 @@ class CodeRevision {
 		global $wgCodeReviewUDPAddress, $wgCodeReviewUDPPort, $wgCodeReviewUDPPrefix, $wgUser;
 
 		if( $wgCodeReviewUDPAddress ) {
-			$url = $this->getFullUrl();
+			$url = $this->getCanonicalUrl();
 
 			$line = wfMsg( 'code-rev-status' ) . " \00314(" . $this->repo->getName() .
 					")\00303 " . RecentChange::cleanupForIRC( $wgUser->getName() ) . "\003 " .
