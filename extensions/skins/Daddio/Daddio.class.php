@@ -99,8 +99,6 @@ class DaddioTemplate extends ModernTemplate {
 		<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 
 		<?php $this->html('bodytext') ?>
-		<?php if(isset($this->data['printfooter'])) { ?><div class="printfooter"><?php $this->html('printfooter'); ?></div><?php } ?>
-		<?php if(isset($this->data['debughtml'])) { $this->html('debughtml'); } ?>
 		<div class='mw_clear'></div>
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
 		<?php $this->html('dataAfterContent') ?>
