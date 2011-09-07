@@ -52,10 +52,10 @@ function efOpenSearchXmlUrls( &$urls ) {
 }
 
 function efOpenSearchXmlTemplate() {
-	global $wgServer, $wgScriptPath;
+	global $wgCanonicalServer, $wgScriptPath;
 	$ns = implode( '|', SearchEngine::defaultNamespaces() );
 	if( !$ns ) {
 		$ns = '0';
 	}
-	return $wgServer . $wgScriptPath . '/api.php?action=opensearch&format=xml&search={searchTerms}&namespace=' . $ns;
+	return $wgCanonicalServer . $wgScriptPath . '/api.php?action=opensearch&format=xml&search={searchTerms}&namespace=' . $ns;
 }
