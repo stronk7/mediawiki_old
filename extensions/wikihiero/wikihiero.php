@@ -26,6 +26,7 @@
 
 // Register MediaWiki extension
 $wgHooks['ParserFirstCallInit'][] = 'WH_Register';
+$wgHooks['BeforePageDisplay'][] = 'wfHieroBeforePageDisplay';
 $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'WikiHiero',
@@ -34,6 +35,12 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'wikihiero-desc',
 );
 $wgExtensionMessagesFiles['Wikihiero'] =  dirname(__FILE__) . '/wikihiero.i18n.php';
+
+$wgResourceModules['ext.wikihiero'] = array(
+	'styles' => 'ext.wikihiero.css',
+	'localBasePath' => dirname( __FILE__ ) . '/modules',
+	'remoteExtPath' => 'wikihiero/modules',
+);
 
 function WH_Register( &$parser ) {
 	$parser->setHook( 'hiero', 'WikiHieroLoader' );
@@ -46,6 +53,11 @@ function WikiHieroLoad() {
 		require( dirname( __FILE__ ) . '/wh_main.php' );
 		$loaded = true;
 	}
+}
+
+function wfHieroBeforePageDisplay( $out ) {
+	$out->addModuleStyles( 'ext.wikihiero' );
+	return true;
 }
 
 // MediaWiki entry point
