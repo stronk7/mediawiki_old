@@ -1,0 +1,15 @@
+.mw-hierotable {
+	border: 0 !important;
+	border-spacing: 0 !important;
+}
+
+.mw-hiero-outer {
+	display: inline;
+}
+
+.mw-hierotable td {
+	border: 0 !important;
+	padding: 0 !important;
+	text-align: center !important;
+	vertical-align: middle !important;
+}
