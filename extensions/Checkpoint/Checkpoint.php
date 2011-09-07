@@ -45,7 +45,7 @@ function efCheckpointSave( $article, $user, $text, &$summary, $minor, $watch, $s
 			// blank summary, so let's get an automatic one if
 			// applicable (the appending bit prevents autosummaries
 			// from appearing otherwise).
-			$oldtext = $article->fetchContent();
+			$oldtext = $article->getRawText(); // current revision
 			$summary = $article->getAutosummary( $oldtext, $text, $flags );
 		}
 		$summary .= wfMsg( 'word-separator' ) . wfMsg( 'checkpoint-notice' );
