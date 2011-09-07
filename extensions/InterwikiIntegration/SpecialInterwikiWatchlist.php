@@ -222,7 +222,8 @@ class InterwikiWatchlist extends SpecialWatchlist {
 		}
 	
 		# Show a message about slave lag, if applicable
-		if( ( $lag = $dbr->getLag() ) > 0 )
+		$lag = wfGetLB()->safeGetLag( $dbr );		
+		if( $lag > 0 )
 			$wgOut->showLagWarning( $lag );
 	
 		# Create output form

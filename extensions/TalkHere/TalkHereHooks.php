@@ -333,7 +333,7 @@ class TalkHereEditPage extends EditPage {
 
 	public function internalAttemptSave( &$result, $bot = false ) {
 		$res = parent::internalAttemptSave( $result, $bot );
-		$this->code = $res;
+		$this->code = $res->value;
 		if ( isset( $result['sectionanchor'] ) ) {
 			$this->sectionanchor = $result['sectionanchor'];
 		}

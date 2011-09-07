@@ -162,7 +162,7 @@ class ArchiveLinksSpider extends Maintenance {
 			
 			$this->jobs = array();
 
-			$wait_time = $this->db_slave->getLag() * 3;
+			$wait_time = wfGetLB()->safeGetLag( $this->db_slave ) * 3;
 			$pid = (string) microtime() . ' - ' .  getmypid();
 			$time = time();
 			
