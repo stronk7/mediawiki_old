@@ -951,7 +951,7 @@ $messages['en-gb'] = array(
 	'pfunc-convert-unit-volume-litre'           => '{{PLURAL:$1|$2litre|$2litres}}',
 
 	# PRESSURE
-	'pfunc-convert-unit-pressure-mmhg'              => '{{PLURAL:$1|millimetre of mercury|miillimetres of mercury}}',
+	'pfunc-convert-unit-pressure-mmhg'              => '{{PLURAL:$1|millimetre of mercury|millimetres of mercury}}',
 );
 
 /** Esperanto (Esperanto)
