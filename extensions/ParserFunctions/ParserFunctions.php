@@ -29,6 +29,23 @@ $wgPFStringLengthLimit = 1000;
  */
 $wgPFEnableStringFunctions = false;
 
+/**
+ * Enable Convert parser for converting between units of measurement
+ */
+$wgPFEnableConvert = false;
+
+/**
+ * The language for 'en' is actually 'en-us', which insists on using non-canonical translations
+ * of the SI base units ("meter" rather than "metre" and "liter" rather than "litre").  We
+ * can avoid contaminatng dialects by internally mapping languages by default; this is
+ * configurable so you can remove it if you like, or add other maps if that's useful.
+ * Essentially, if your wiki's $wgContLang appears as a key in this array, the value is
+ * what is used as the default language for {{#convert}} output.
+ */
+$wgPFUnitLanguageVariants = array(
+   'en' => 'en-gb'
+);
+
 /** REGISTRATION */
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
@@ -53,7 +70,7 @@ $wgParserTestFiles[] = dirname( __FILE__ ) . "/convertTests.txt";
 $wgHooks['ParserFirstCallInit'][] = 'wfRegisterParserFunctions';
 
 function wfRegisterParserFunctions( $parser ) {
-	global $wgPFEnableStringFunctions;
+	global $wgPFEnableStringFunctions, $wgPFEnableConvert;
 
 	if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
 		// These functions accept DOM-style arguments
@@ -77,7 +94,6 @@ function wfRegisterParserFunctions( $parser ) {
 	$parser->setFunctionHook( 'timel', 'ExtParserFunctions::localTime' );
 	$parser->setFunctionHook( 'rel2abs', 'ExtParserFunctions::rel2abs' );
 	$parser->setFunctionHook( 'titleparts', 'ExtParserFunctions::titleparts' );
-	$parser->setFunctionHook( 'convert', 'ExtParserFunctions::convert' );
 
 	// String Functions
 	if ( $wgPFEnableStringFunctions ) {
@@ -89,6 +105,10 @@ function wfRegisterParserFunctions( $parser ) {
 		$parser->setFunctionHook( 'replace',   'ExtParserFunctions::runReplace'   );
 		$parser->setFunctionHook( 'explode',   'ExtParserFunctions::runExplode'   );
 		$parser->setFunctionHook( 'urldecode', 'ExtParserFunctions::runUrlDecode' );
+	}
+
+	if( $wgPFEnableConvert ) {
+		$parser->setFunctionHook( 'convert', 'ExtParserFunctions::convert' );
 	}
 
 	return true;
