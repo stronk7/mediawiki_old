@@ -443,12 +443,12 @@ class OggHandler extends MediaHandler {
 	}
 
 	static function getMyScriptPath() {
-		global $wgScriptPath;
-		return "$wgScriptPath/extensions/OggHandler";
+		global $wgExtensionAssetsPath;
+		return "$wgExtensionAssetsPath/OggHandler";
 	}
 
 	function setHeaders( $out ) {
-		global $wgOggScriptVersion, $wgCortadoJarFile, $wgServer;
+		global $wgOggScriptVersion, $wgCortadoJarFile;
 
 		if ( $out->hasHeadItem( 'OggHandlerScript' ) && $out->hasHeadItem( 'OggHandlerInlineScript' ) &&
 			$out->hasHeadItem( 'OggHandlerInlineCSS' ) ) {
@@ -466,8 +466,9 @@ class OggHandler extends MediaHandler {
 		$cortadoUrl = $wgCortadoJarFile;
 		$scriptPath = self::getMyScriptPath();
 		if( substr( $cortadoUrl, 0, 1 ) != '/'
-			&& substr( $cortadoUrl, 0, 4 ) != 'http' ) {
-			$cortadoUrl = "$wgServer$scriptPath/$cortadoUrl";
+				&& substr( $cortadoUrl, 0, 4 ) != 'http' )
+		{
+			$cortadoUrl = wfExpandUrl( "$scriptPath/$cortadoUrl", PROTO_CURRENT );
 		}
 		$encCortadoUrl = Xml::encodeJsVar( $cortadoUrl );
 		$encExtPathUrl = Xml::encodeJsVar( $scriptPath );
@@ -540,12 +541,7 @@ class OggTransformOutput extends MediaTransformOutput {
 
 		OggTransformOutput::$serial++;
 
-		if ( substr( $this->videoUrl, 0, 4 ) != 'http' ) {
-			global $wgServer;
-			$url = $wgServer . $this->videoUrl;
-		} else {
-			$url = $this->videoUrl;
-		}
+		$url = wfExpandUrl( $this->videoUrl, PROTO_RELATIVE );
 		// Normalize values
 		$length = floatval( $this->length );
 		$width = intval( $this->width );

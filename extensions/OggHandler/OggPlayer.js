@@ -51,6 +51,11 @@ var wgOggPlayer = {
 	 * Parameters are: id, videoUrl, width, height, length, linkUrl, isVideo
 	 */
 	'init': function ( player, params ) {
+		// Expand params.videoUrl if protocol-relative
+		if ( params.videoUrl.substr( 0, 2 ) == '//' ) {
+			// window.location.protocol is something like 'http:'
+			params.videoUrl = window.location.protocol + params.videoUrl;
+		}
 		elt = document.getElementById( params.id );
 
 		// Save still image HTML
