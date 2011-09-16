@@ -441,6 +441,11 @@ abstract class Maintenance {
 		# Save additional script dependant options to display
 		# them separately in help
 		$this->mDependantParameters = array_diff_key( $this->mParams, $this->mGenericParameters );
+
+		// Moodle Docs hack - all maintenance scripts MUST provide version (19, 20...) & path (en, pt_br, dev...)
+		$this->addOption( 'mdversion', 'REQUIRED. The version (19, 20, archive...) to use for this script in Moodle Docs', true, true );
+		$this->addOption( 'mdpath', 'REQUIRED. The path (en, pt_br, dev, test...) to use for this script in Moodle Docs', true, true );
+		// Moodle Docs hack - end
 	}
 
 	/**
@@ -705,6 +710,13 @@ abstract class Maintenance {
 		if ( $this->hasOption( 'batch-size' ) ) {
 			$this->mBatchSize = intval( $this->getOption( 'batch-size' ) );
 		}
+
+		// Moodle Docs hack - populate $climdocsver amd $clicallpath globals with
+		// the values of the mdversion and mdpath options
+		global $climdocsver, $clicallpath;
+		$climdocsver = $this->getOption('mdversion');
+		$clicallpath = $this->getOption('mdpath');
+		// Moodle Docs hack - end
 	}
 
 	/**
