@@ -174,7 +174,7 @@ class ArticleFeedbackHooks {
 					true
 				) );
 			}
-			if ( !db->indexExists( 'article_feedback', 'aa_page_id', __METHOD__ ) ) { 
+			if ( !$db->indexExists( 'article_feedback', 'aa_page_id', __METHOD__ ) ) { 
 				$updater->addExtensionUpdate( array(
 					'addIndex',
 					'article_feedback',
