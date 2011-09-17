@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS /*_*/article_feedback (
   PRIMARY KEY (aa_revision, aa_user_text, aa_rating_id, aa_user_anon_token)
 ) /*$wgDBTableOptions*/;
 CREATE INDEX /*i*/aa_user_page_revision ON /*_*/article_feedback (aa_user_id, aa_page_id, aa_revision);
+CREATE INDEX /*i*/aa_page_id ON /*_*/article_feedback (aa_page_id, aa_timestamp);
 
 -- Aggregate rating table for a page
 CREATE TABLE IF NOT EXISTS /*_*/article_feedback_pages (
