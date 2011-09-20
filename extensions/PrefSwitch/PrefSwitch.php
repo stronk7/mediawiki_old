@@ -15,6 +15,9 @@
 
 $wgPrefSwitchStyleVersion = 1;
 
+// Set this to true to show the "New features" link in the top bar
+$wgPrefSwitchShowLinks = false;
+
 // Preferences to set when users switch prefs
 $wgPrefSwitchPrefs = array(
 	'off' => array(
