@@ -359,4 +359,8 @@ FlaggedRevsReview.updateRatingFormColors();
 FlaggedRevsReview.enableAjaxReview();
 
 // Flag users as "no longer reviewing" on navigate-away
-window.onbeforeunload = FlaggedRevsReview.deadvertiseReviewing;
+window.onbeforeunload = function( e ) {
+	if ( FlaggedRevsReview.isUserReviewing == 1 ) {
+		FlaggedRevsReview.deadvertiseReviewing();
+	}
+};
