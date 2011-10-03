@@ -80,11 +80,10 @@ class TitleBlacklistHooks {
 	 *
 	 * @return bool Acceptable
 	 */
-	private static function acceptNewUserName( $userName, &$err, $override = true ) {
-		global $wgTitleBlacklist, $wgUser;
-		efInitTitleBlacklist();
+	private static function acceptNewUserName( $userName, $permissionsUser, &$err, $override = true ) {
 		$title = Title::makeTitleSafe( NS_USER, $userName );
-		$blacklisted = $wgTitleBlacklist->userCannot( $title, $wgUser, 'new-account', $override );
+		$blacklisted = TitleBlacklist::singleton()->userCannot( $title, $permissionsUser, 
+			'new-account', $override );
 		if( $blacklisted instanceof TitleBlacklistEntry ) {
 			$message = $blacklisted->getErrorMessage( 'new-account' );
 			$err = wfMsgWikiHtml( $message, $blacklisted->getRaw(), $userName );
@@ -101,13 +100,15 @@ class TitleBlacklistHooks {
 	public static function abortNewAccount( $user, &$message ) {
 		global $wgUser, $wgRequest;
 		$override = $wgRequest->getCheck( 'wpIgnoreTitleBlacklist' );
-		return self::acceptNewUserName( $user->getName(), $message, $override );
+		return self::acceptNewUserName( $user->getName(), $wgUser, $message, $override );
 	}
 
 	/** CentralAuthAutoCreate hook */
 	public static function centralAuthAutoCreate( $user, $userName ) {
 		$message = ''; # Will be ignored
-		return self::acceptNewUserName( $userName, $message );
+		$anon = new User;
+		global $wgUser;
+		return self::acceptNewUserName( $userName, $anon, $message );
 	}
 
 	/** EditFilter hook
@@ -176,9 +177,9 @@ class TitleBlacklistHooks {
 
 	/** UserCreateForm hook based on the one from AntiSpoof extension */
 	public static function addOverrideCheckbox( &$template ) {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 
-		if ( TitleBlacklist::userCanOverride( 'new-account' ) ) {
+		if ( TitleBlacklist::userCanOverride( $wgUser, 'new-account' ) ) {
 			$template->addInputItem( 'wpIgnoreTitleBlacklist',
 				$wgRequest->getCheck( 'wpIgnoreTitleBlacklist' ),
 				'checkbox', 'titleblacklist-override' );

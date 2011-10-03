@@ -138,7 +138,7 @@ class TitleBlacklist {
 	 *         otherwise FALSE
 	 */
 	public function userCannot( $title, $user, $action = 'edit', $override = true ) {
-		if( $override && self::userCanOverride( $action ) )
+		if( $override && self::userCanOverride( $user, $action ) ) {
 			return false;
 		else
 			return $this->isBlacklisted( $title, $action );
@@ -266,10 +266,9 @@ class TitleBlacklist {
 	 * 
 	 * @param $action Action
 	 */
-	public static function userCanOverride( $action ) {
-		global $wgUser;
-		return $wgUser->isAllowed( 'tboverride' ) ||
-			( $action == 'new-account' && $wgUser->isAllowed( 'tboverride-account' ) );
+	public static function userCanOverride( $user, $action ) {
+		return $user->isAllowed( 'tboverride' ) ||
+			( $action == 'new-account' && $user->isAllowed( 'tboverride-account' ) );
 	}
 }
 
