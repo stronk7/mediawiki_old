@@ -422,7 +422,7 @@ $.articleFeedback = {
 							var average = Math.round( ( rating.total / rating.count ) * 10 ) / 10;
 							$(this)
 								.find( '.articleFeedback-rating-average' )
-									.text( average + ( average % 1 === 0 ? '.0' : '' ) )
+									.text( mw.language.convertNumber( average + ( average % 1 === 0 ? '.0' : '' ) , false ) )
 									.end()
 								.find( '.articleFeedback-rating-meter div' )
 									.css( 'width', Math.round( average * 21 ) + 'px' )

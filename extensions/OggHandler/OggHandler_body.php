@@ -26,7 +26,6 @@ class OggHandler extends MediaHandler {
 			return true;
                 }
 		if ( $name == 'thumbtime' ) {
-			$length = $this->getLength( $image );
 			$time = $this->parseTimeString( $value );
 			if ( $time === false || $time <= 0 ) {
 				return false;
