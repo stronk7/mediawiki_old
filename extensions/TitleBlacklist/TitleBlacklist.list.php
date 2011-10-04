@@ -140,8 +140,9 @@ class TitleBlacklist {
 	public function userCannot( $title, $user, $action = 'edit', $override = true ) {
 		if( $override && self::userCanOverride( $user, $action ) ) {
 			return false;
-		else
+		} else {
 			return $this->isBlacklisted( $title, $action );
+		}
 	}
 
 	/**
