@@ -1,0 +1,6 @@
+User-agent: *
+# Plz, don't crawl testing stuff
+Disallow: /test/
+Disallow: /test*/
+# Just delay crawlers a bit
+Crawl-delay: 2

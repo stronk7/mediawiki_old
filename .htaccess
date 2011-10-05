@@ -1,0 +1,134 @@
+Options FollowSymLinks
+ErrorDocument 404 /error404.html
+
+
+RewriteEngine on
+
+# This brings the entire site down for maintenance
+# Make sure to put YOUR ip below so you can still access!
+# HQ IP
+#RewriteCond %{REQUEST_URI} ^/dev($|/)
+#RewriteCond %{REMOTE_ADDR} !^203.59.94.230$
+#RewriteCond %{REQUEST_URI} !^/upgradeinprogress.php
+#RewriteCond %{REQUEST_URI} !^/moodle.gif
+#RewriteCond %{REQUEST_URI} !^/invaders.swf
+#RewriteRule ^(.*) /upgradeinprogress.php [L]
+# Disable the below rule if you enable the ones above (maintenance mode)
+# ppl keep accessing this script even after the above is disabled, tsk tsk.
+Redirect /upgradeinprogress.php http://docs.moodle.org/
+
+# Default lang and version is 20 english
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*) /20/en [R=301,L]
+
+# Rewrite attempts to access langless versions to english
+RewriteRule ^(19|20)($|/$) /$1/en/? [R=301,L]
+
+# Rewrite attempts to access /21/* to 20/* using temporary redirection
+RewriteCond %{REQUEST_URI} ^/(21|22)($|/)
+RewriteRule ^(21|22)($|/(.*)) /20$2 [R=302,L,QSA]
+
+# Rewrite any 2 digit version string that is not 19 or 20 as above
+#RewriteCond %{REQUEST_URI} ^/[0-9]{2}($|/)
+#RewriteCond %{REQUEST_URI} !^/(19|20)($|/)
+#RewriteRule ^[0-9]{2}($|/(.*)) /20$1 [R=302,L,QSA]
+
+# Rewrite query string if client requests old skin from any page
+#RewriteCond %{QUERY_STRING} (^|(.*?)&)useskin=moodledocs($|&(.*))
+#RewriteRule ^ %{REQUEST_URI}?%1useskin=moodledocs19%4
+
+# Redirect archived langs root - option 3
+RewriteCond %{REQUEST_URI} ^/(19|20)/(ar|ca|cs|da|fi|hu|it|nl|no|pl|pt|ru|sk|zh)($|/)
+RewriteCond %{REQUEST_URI} !^/(19|20)/([a-z]{2}|pt_br)/skins/
+RewriteCond %{REQUEST_URI} !^/(19|20)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
+# Below rule redirects to archive page
+#RewriteRule ^(19|20)/([a-z]{2}|pt_br)($|(/(.*))) /archive/$2$3 [R=301,L,QSA]
+# Below rule redirects to /20/en with page requests
+RewriteRule ^(19|20)/([a-z]{2}|pt_br)($|(/(.*))) /20/en$3 [R=301,L]
+
+# Stop people accessing other langs from /archive
+RewriteCond %{REQUEST_URI} !^/archive/(ar|ca|cs|da|fi|hu|it|nl|no|pl|pt|ru|sk|zh)($|/)
+RewriteRule ^archive/([a-z]{2}|pt_br)($|(/(.*))) /$1/$2/
+
+# Redirect language children to parents
+RewriteCond %{REQUEST_URI} ^(/19/|/20/|/)([a-z]{2})_([a-z]{2}|kids)($|/(.*))
+RewriteRule (^19/|^20/|^)(de_du|de_kids|en_us|es_es|es_mx|es_ar|es_cb|fr_ca|no_gr|zh_cn|zh_tw)($|/(.*)) %1%2/$4 [R=301,L,QSA]
+
+# Redirect certain versionless langs to 20 version
+RewriteCond %{REQUEST_URI} ^/([a-z]{2}|pt_br)($|/)
+RewriteCond %{REQUEST_URI} !^/([a-z]{2}|pt_br)/skins/
+RewriteCond %{REQUEST_URI} !^/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
+RewriteRule ^([a-z]{2}|pt_br)($|(/(.*))) /20/$1$2 [R=301,L,QSA]
+
+# Next 4 lines are backup for the 4 after (just incase) - jordan
+#RewriteCond %{REQUEST_URI} ^/(19|20)/en/Development:(.*)
+#RewriteRule ^(19|20)/en/Development:(.*) /dev/$2 [R=301,L,QSA]
+#RewriteCond %{QUERY_STRING} ^(.*?)title=Development:(.*)
+#RewriteRule ^(19|20)/en/index.php /dev/index.php?%1title=%2 [R=301,L]
+# Regex to catch /en/Development: namespace and redirect to /dev/
+RewriteCond %{REQUEST_URI} ^/(19|20)/en/Development(:|_(talk:))(.*)
+RewriteRule ^(19|20)/en/Development(:|_(talk:))(.*) /dev/$3$4 [R=301,L,QSA]
+# As above, but catches /en/index.php with query string title=Development: instead
+RewriteCond %{QUERY_STRING} ^(.*?)title=Development(:|_(talk:))(.*)
+RewriteRule ^(19|20)/en/index.php /dev/index.php?%1title=%3%4 [R=301,L]
+
+# Add trailing / if missing, causing mediawiki to serve the native langs Main_Page
+# Pass through for further rule checking below (no redirect yet)
+RewriteRule ^(test|dev)$ /$1/
+RewriteRule ^archive/([a-z]{2}|pt_br)$ /archive/$1/
+RewriteRule ^(19|20)/([a-z]{2}|pt_br)$ /$1/$2/
+
+# If lang is option 2 and ver 20 is requested, redirect to 19
+# This rule is where we list option 1 langs
+RewriteCond %{REQUEST_URI} ^/20/([a-z]{2}|pt_br)($|/)
+RewriteCond %{REQUEST_URI} !^/(19|20)/(en|ja|de)($|/)
+RewriteRule ^(19|20)/([a-z]{2}|pt_br)($|(/(.*))) /19/$2/$5 [R=301,L]
+
+# Regex to catch old skin urls
+#RewriteCond %{REQUEST_URI} ^/([a-z]{2}|pt_br)/skins/moodledocs/
+#RewriteRule ^([a-z]{2}|pt_br)/skins/moodledocs/(.*) /prodwiki/skins/moodledocs/$2 [L,QSA]
+#RewriteCond %{REQUEST_URI} ^/([a-z]{2}|pt_br)/skins/
+#RewriteCond %{REQUEST_URI} !^/([a-z]{2}|pt_br)/skins/moodledocs/
+RewriteRule ^([a-z]{2}|pt_br)/skins/(.*) /19/$1/skins/$2
+RewriteRule ^(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/skins/moodledocs19/(.*) /$1/skins/moodledocs/$5 [L,QSA]
+RewriteRule ^(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/skins/moodledocs20/(.*) /$1/skins/moodledocs/$5 [L,QSA]
+RewriteRule ^(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/skins/moodledocsdev/(.*) /$1/skins/moodledocs/$5 [L,QSA]
+# Regex to catch old image urls
+#RewriteCond %{REQUEST_URI} ^/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
+RewriteRule ^([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /prodwiki/19images/images_$2/$3 [L,QSA]
+
+# Regex to catch requests for wiki pages
+RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/skins/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/images_([a-z]{2}|pt_br|test|dev)/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/stylesheets/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/(redirect|texvc|index|api).php
+#RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/error/(40(1|3|4)|500).html
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/favicon.ico
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/robots.txt
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/opensearch_desc.php
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/config/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/extensions/MediawikiPlayer/
+RewriteCond %{QUERY_STRING} ^$ [OR] RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/Special:Search
+RewriteRule ^(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/(.*) /prodwiki/index.php?title=$5 [L,QSA,S=1]
+
+# Regex to catch requests for all ver/langs images
+RewriteCond %{REQUEST_URI} ^/(19|20)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
+RewriteRule ^(19|20)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /prodwiki/$1images/images_$2/$4 [L,QSA]
+# Regex to catch requests for special wiki images
+RewriteCond %{REQUEST_URI} ^/(test|dev)/images_(test|dev)/
+RewriteRule ^(test|dev)/images_(test|dev)/(.*) /prodwiki/20images/images_$2/$3 [L,QSA]
+# Regex to catch requests for archive images
+RewriteCond %{REQUEST_URI} ^/archive/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
+RewriteRule ^archive/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /prodwiki/19images/images_$1/$3 [L,QSA]
+
+# Serve different skin images to different versions
+RewriteCond %{REQUEST_URI} ^/(test|dev|archive|19|20)/
+RewriteCond %{REQUEST_URI} !^/(|19|20)/(es|eu|fr|hr|is|pt_br)/
+RewriteRule ^(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/skins/moodledocs/((version)(.png)|(moodledocs)(.css))$ /prodwiki/skins/moodledocs/$6$8%1$7$9 [L]
+RewriteRule ^(19|20)/(es|eu|fr|hr|is|pt_br)/skins/moodledocs/((version)(.png)|(moodledocs)(.css))$ /prodwiki/skins/moodledocs/$4$6nover$5$7 [L]
+
+# Regex to catch requests for all other urls like css, robots, favicon, errors etc..
+RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/
+RewriteRule ^(test|dev|((archive|19|20)/([a-z]{2}|pt_br)))/(.*) /prodwiki/$5 [L,QSA]
+
