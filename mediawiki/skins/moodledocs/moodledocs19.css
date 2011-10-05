@@ -1,0 +1,218 @@
+/*
+ * MediaWiki 'moodledocs' style sheet for CSS2-capable browsers.
+ * (defined as differences from 'monoblock', see Copyright there
+ * License: GPL (http://www.gnu.org/copyleft/gpl.html)
+ */
+body {
+	font-size: 100%;
+}
+#globalWrapper {
+	font-size: 84%;
+}
+#column-content {
+	margin-left: -13.7em;
+}
+#content {
+	margin-right: 0.75em;
+	margin-left: 13.7em;
+	border: 1px solid #ddd;
+	line-height: 1.4em;
+}
+#p-personal {
+	top: 2em;
+	width: 80%;
+	margin-left: 20%;
+}
+#p-personal ul {
+	margin-right: 1%;
+}
+.pBody {
+	font-size: 100%;
+}
+#p-cactions {
+	line-height: 1em;
+	font-size: 100%;
+	left: 13.3em;
+}
+#p-cactions ul {
+	line-height: 1.8em;
+}
+#p-cactions li a,
+#p-cactions li.selected a,
+#p-cactions li a:hover {
+	background-color: transparent;
+	text-decoration: none;
+	text-transform: lowercase;
+}
+#p-cactions li {
+	background: url("tab.gif") top right no-repeat;
+	padding-top: 4px;
+	padding-bottom: 0.2em;
+	border: none;
+}
+#p-cactions li span.tab {
+	background: url("tab_li.gif") top left no-repeat;
+	padding-top: 4px;
+	padding-bottom: 0.1em;
+}
+#p-cactions li.selected,
+#p-cactions li:hover {
+	background: url("tab_active.gif") top right no-repeat;
+	padding-top: 4px;
+	padding-bottom: 0.2em;
+	border: none;
+}
+#p-cactions li.selected span.tab,
+#p-cactions li span.tab:hover {
+	background: url("tab_active_li.gif") top left no-repeat;
+	padding-top: 4px;
+	padding-bottom: 0.1em;
+}
+#p-logo {
+	display: none;
+}
+
+.portlet,
+.sideblock {
+	margin: 0 0 0.75em 0.75em;
+}
+
+.portlet h5,
+.sideblock .header {
+	background: url("gradient.gif") top left;
+	border: 1px solid #DDD;
+	border-bottom: none;
+	padding: 3px 1em 5px;
+	display: block;
+	font-weight: bold;
+	font-size: 95%;
+	margin-top: 0;
+	height: 1em;
+}
+
+.portlet .pBody,
+.sideblock .content {
+	border: 1px solid #DDD;
+}
+
+.right {
+	float: right;
+	margin-left: 2em;
+}
+
+.right .header {
+	padding-bottom: 7px;
+	padding-left: 1.7em;
+	padding-top: 1px;
+}
+
+.right .content {
+    background-color: white;
+}
+
+.right .content p {
+    padding-left: 0.6em;
+}
+
+.portlet ul {
+	list-style-image: none;
+	list-style-type: none;
+	margin-left: 0.5em;
+}
+
+/* general styles */
+b, strong {
+	color: #111;
+}
+p {
+	line-height: 1.4em;
+}
+hr {
+	color: #ddd;
+	background-color: #ddd;
+}
+h1, h2, h3, h4, h5, h6 {
+	padding-top: 0em;
+	border-bottom: 1px solid #ddd;
+	margin-top: 1.5em;
+}
+h2 {
+	font-size: 150%;
+}
+h3 {
+	font-size: 120%;
+	border-bottom: none;
+}
+h4, h5, h6 {
+	font-size: 100%;
+	border-bottom: none;
+}
+ul, ol, dd {
+	line-height: 1.4em;
+}
+fieldset {
+	border: 1px solid #FFB53A;
+	line-height: 1.4em;
+}
+legend {
+	background: white;
+}
+code {
+	font-size: 120%;
+	line-height: 1.4em;
+}
+pre {
+	border: 1px dashed #FFB53A;
+	font-size: 120%;
+	line-height: 1.4em;
+}
+
+/* MoodleDocs notes */
+
+p.note {
+	padding:0.5em 1em;
+	border: 1px solid #FF0;
+	background:#FFA;
+	color: #444;
+	-moz-border-radius:5px;
+}
+p.note.green {
+	background:#EFA;
+}
+p.note.orange {
+	background:#FEA;
+}
+.small-info-right {
+	float: right;
+	background:#FFA;
+	margin-left: 1em;
+	padding: 0.2em 0.5em;
+	border: 1px solid #FF0;
+	-moz-border-radius:5px;
+}
+.small-info-right .text-small {
+	font-weight: normal;
+	font-size: 100%;
+}
+.small-info-right .text-big {
+	font-weight: bold;
+	font-size: 180%;
+	color: #666;
+}
+.small-info-right .new {
+	color: #E90;
+}
+#siteNotice {
+	padding: 0 .9em;
+}
+.error {
+	color: red;
+	font-size: larger;
+}
+#catlinks {
+	border-left: 1em solid #EEE;
+	border-top: 1px solid #EEE;
+}
+#column-one {
+        background: url("version.png") top left no-repeat;
+}
