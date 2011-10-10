@@ -256,13 +256,10 @@ The signature is shown automatically.',
 	'lqt-marked-as-read-placeholder' => 'The thread $1 was marked as read.',
 	'lqt-change-subject' => 'Change subject',
 	'lqt-save-subject' => 'Save',
-	'lqt-save-subject-failed' => 'The following error occurred while attempting to ' .
-'change the subject of this thread: $1',
-	'lqt-ajax-invalid-subject' => 'The subject you specified was invalid, probably ' .
-'because it was too long.',
+	'lqt-save-subject-failed' => 'The following error occurred while attempting to change the subject of this thread: $1',
+	'lqt-ajax-invalid-subject' => 'The subject you specified was invalid, probably because it was too long.',
 	'lqt-ajax-no-subject' => 'You must specify a subject for the new thread.',
-	'lqt-save-subject-error-unknown' => 'An unknown error occurred when attempting ' .
-'to set the subject of this thread. Please try to do this by clicking "edit" on the top post.',
+	'lqt-save-subject-error-unknown' => 'An unknown error occurred when attempting to set the subject of this thread. Please try to do this by clicking "edit" on the top post.',
 	'lqt-cancel-subject-edit' => 'Cancel',
 	'lqt-drag-activate' => 'Drag to new location',
 	'lqt-drag-drop-zone' => 'Drop here',
