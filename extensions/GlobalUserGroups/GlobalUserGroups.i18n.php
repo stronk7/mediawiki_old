@@ -27,3 +27,4 @@ $messages['en'] = array(
 $messages['de'] = array(
 	'globalusergroups-desc' => 'Ermöglicht das Nutzen von definierten lokalen Benutzergruppen als globale Gruppen',
 );
+
