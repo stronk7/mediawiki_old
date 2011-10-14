@@ -101,3 +101,4 @@ function efGlobalUserGroupsEMWT() {
 		$wgExtensionMessagesFiles['GlobalUserGroupsExtras'] = $dir . 'GlobalUserGroups.i18n.extras.php';
 	}
 }
+
