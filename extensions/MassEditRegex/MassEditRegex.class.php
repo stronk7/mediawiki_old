@@ -34,20 +34,33 @@ class MassEditRegex extends SpecialPage {
 	private $sk;
 
 	function __construct() {
-		parent::__construct( 'MassEditRegex', 'bot' );
+		parent::__construct( 'MassEditRegex', 'masseditregex' );
 	}
 
 	function execute( $par ) {
 		global $wgUser, $wgRequest, $wgOut;
 
-		wfLoadExtensionMessages('MassEditRegex');
-
 		$this->setHeaders();
 
-		#if ( !$wgUser->isAllowed( 'bot' ) ) {
-		#	$wgOut->permissionRequired( 'bot' );
-		#	return;
-		#}
+		# Check permissions
+		if ( !$wgUser->isAllowed( 'masseditregex' ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
+		# Show a message if the database is in read-only mode
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+
+		# If user is blocked, s/he doesn't need to access this page
+		if ( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+
+		wfLoadExtensionMessages('MassEditRegex');
 
 		$this->outputHeader();
 

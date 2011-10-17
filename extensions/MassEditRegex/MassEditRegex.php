@@ -30,3 +30,6 @@ $wgExtensionAliasesFiles['MassEditRegex'] = $dir . 'MassEditRegex.alias.php';
 $wgAutoloadClasses['MassEditRegex'] = $dir . 'MassEditRegex.class.php';
 $wgSpecialPages['MassEditRegex'] = 'MassEditRegex';
 $wgSpecialPageGroups['MassEditRegex'] = 'pagetools';
+
+// Required permission to use Special:MassEditRegex
+$wgAvailableRights[] = 'masseditregex';
