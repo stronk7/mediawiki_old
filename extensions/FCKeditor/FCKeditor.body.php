@@ -125,7 +125,7 @@ class FCKeditor_MediaWiki {
 	}
 
 	public static function onParserBeforeStrip( &$parser, &$text, &$stripState ) {
-		$text = $parser->strip( $text, $stripState );
+		$text = $parser->replaceVariables( $text );
 		return true;
 	}
 
