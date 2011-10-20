@@ -32,6 +32,9 @@ class OggHandler extends MediaHandler {
 			}
 			return true;
 		}
+		if ( $name == 'noicon' ) {
+			return true;
+		}
 		return false;
 	}
 

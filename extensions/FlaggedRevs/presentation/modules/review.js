@@ -5,6 +5,7 @@
  */
 
 window.FlaggedRevsReview = {
+	'isUserReviewing': 0, // user reviewing this page?
 	/*
 	* Updates for radios/checkboxes on patch by Daniel Arnold (bug 13744).
 	* Visually update the revision rating form on change.
@@ -322,17 +323,82 @@ window.FlaggedRevsReview = {
 	},
 	
 	/*
+	* Enable AJAX-based functionality to set that a user is reviewing a page/diff
+	*/
+	'enableAjaxReviewActivity': function() {
+		// User is already reviewing in another tab...
+		if ( $('#mw-fr-user-reviewing').val() == 1 ) {
+			FlaggedRevsReview.isUserReviewing = 1;
+			FlaggedRevsReview.advertiseReviewing( null, true );
+		// User is not already reviewing this....
+		} else {
+			FlaggedRevsReview.deadvertiseReviewing( null, true );
+		}
+		$('#mw-fr-reviewing-status').show();
+	},
+	
+	/*
+	* Flag users as "now reviewing"
+	*/
+	'advertiseReviewing': function( e, isInitial ) {
+		if ( isInitial !== true ) { // don't send if just setting up form
+			if ( !FlaggedRevsReview.setReviewingStatus( 1 ) ) {
+				return; // failed
+			}
+		}
+		// Build notice to say that user is advertising...
+		var msgkey = $('#mw-fr-input-refid').length
+			? 'revreview-adv-reviewing-c' // diff
+			: 'revreview-adv-reviewing-p' // page
+		var $underReview = $(
+			'<span class="fr-under-review">' + mw.message( msgkey ).escaped() + '</span>' );
+		// Update notice to say that user is advertising...
+		$('#mw-fr-reviewing-status')
+			.empty()
+			.append( $underReview )
+			.append( ' ('  + mw.html.element( 'a',
+				{ id: 'mw-fr-reviewing-stop' }, mw.msg( 'revreview-adv-stop-link' ) ) + ')' )
+			.find( '#mw-fr-reviewing-stop')
+			.css( 'cursor', 'pointer' )
+			.click( FlaggedRevsReview.deadvertiseReviewing );
+	},
+	
+	/*
 	* Flag users as "no longer reviewing"
 	*/
-	'deadvertiseReviewing': function() {
-		var form = document.getElementById('mw-fr-reviewform');
-		if( form && jsReviewingStatus ) {
-			var oRevId = document.getElementById('mw-fr-input-refid').value;
-			var nRevId = document.getElementById('mw-fr-input-oldid').value;
-		} else if( location.href.indexOf('&reviewing=1') != -1 ) {
-			var oRevId = 0;
-			var nRevId = mw.config.get('wgCurRevisionId');
+	'deadvertiseReviewing': function( e, isInitial ) {
+		if ( isInitial !== true ) { // don't send if just setting up form
+			if ( !FlaggedRevsReview.setReviewingStatus( 0 ) ) {
+				return; // failed
+			}
 		}
+		// Build notice to say that user is not advertising...
+		var msgkey = $('#mw-fr-input-refid').length
+			? 'revreview-sadv-reviewing-c' // diff
+			: 'revreview-sadv-reviewing-p' // page
+		var $underReview = $(
+			'<span class="fr-make-under-review">' +
+			mw.message( msgkey )
+				.escaped()
+				.replace( /\$1/, mw.html.element( 'a',
+					{ id: 'mw-fr-reviewing-start' }, mw.msg( 'revreview-adv-start-link' ) ) ) +
+			'</span>'
+		);
+		$underReview.find( '#mw-fr-reviewing-start')
+			.css( 'cursor', 'pointer' )
+			.click( FlaggedRevsReview.advertiseReviewing );
+		// Update notice to say that user is not advertising...
+		$('#mw-fr-reviewing-status').empty().append( $underReview );
+	},
+	
+	/*
+	* Set reviewing status for this page/diff
+	*/
+	'setReviewingStatus': function( value ) {
+		// Get {previd,oldid} array for this page view.
+		// The previd value will be 0 if this is not a diff view.
+		var oRevId = $('#mw-fr-input-refid') ? $('#mw-fr-input-refid').val() : 0;
+		var nRevId = $('#mw-fr-input-oldid') ? $('#mw-fr-input-oldid').val() : 0;
 		if ( nRevId > 0 ) {
 			// Send GET request via AJAX!
 			var call = jQuery.ajax({
@@ -341,15 +407,20 @@ window.FlaggedRevsReview = {
 					action		: 'reviewactivity',
 					previd		: oRevId,
 					oldid		: nRevId,
-					reviewing	: 0
+					reviewing	: value
 				},
 				type	: "POST",
 				dataType: "html", // response type
-				timeout : 2000, // don't delay user exiting
+				timeout : 1700, // don't delay user exiting
 				async	: false
 			});
 		}
-		return;
+		if ( call.status == 200 ) {
+			FlaggedRevsReview.isUserReviewing = value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 };
 
@@ -357,10 +428,11 @@ window.FlaggedRevsReview = {
 FlaggedRevsReview.maybeDisableAcceptButton();
 FlaggedRevsReview.updateRatingFormColors();
 FlaggedRevsReview.enableAjaxReview();
+FlaggedRevsReview.enableAjaxReviewActivity();
 
 // Flag users as "no longer reviewing" on navigate-away
-window.onbeforeunload = function( e ) {
+$( window ).bind( 'beforeunload', function( e ) {
 	if ( FlaggedRevsReview.isUserReviewing == 1 ) {
 		FlaggedRevsReview.deadvertiseReviewing();
 	}
-};
+} );

@@ -1407,9 +1407,6 @@ class FlaggedPageView {
 				$changeDiv = '';
 				# If the user can review then prompt them to review them...
 				if ( $wgUser->isAllowed( 'review' ) ) {
-					# Set a key to note that someone is viewing this
-					FRUserActivity::setUserReviewingDiff(
-						$wgUser, $oldRev->getId(), $newRev->getId() );
 					// Reviewer just edited...
 					if ( $wgRequest->getInt( 'shownotice' )
 						&& $newRev->isCurrent()
