@@ -35,7 +35,7 @@ if ( !defined( 'Validator_VERSION' ) ) {
 
 // Only initialize the extension when all dependencies are present.
 if ( ! defined( 'Validator_VERSION' ) ) {
-	die( '<b>Error:</b> You need to have <a href="http://www.mediawiki.org/wiki/Extension:Validator">Validator</a> installed in order to use <a href="http://www.mediawiki.org/wiki/Extension:SubPageList">SubPageList</a>.<br />' );
+	die( '<b>Error:</b> You need to have <a href="http://www.mediawiki.org/wiki/Extension:Validator">Validator</a> installed in order to use <a href="http://www.mediawiki.org/wiki/Extension:Ratings">Ratings</a>.<br />' );
 }
 
 define( 'Ratings_VERSION', '0.1 alpha' );
