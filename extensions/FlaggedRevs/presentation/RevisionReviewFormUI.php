@@ -189,7 +189,7 @@ class RevisionReviewFormUI {
 		# Add the submit buttons
 		$form .= self::submitButtons( $rejectId, $frev, (bool)$disabled, $reviewIncludes );
 		# Add "cancel" link
-		$form .= Linker::link( $article->getTitle(), wfMsg( 'revreview-cancel' ) );
+		#$form .= Linker::link( $article->getTitle(), wfMsg( 'revreview-cancel' ) );
 
 		# Show stability log if there is anything interesting...
 		if ( $article->isPageLocked() ) {

@@ -172,11 +172,13 @@ $wgGroupPermissions['sysop']['movestable'] = true;
 
 # Special:Userrights settings
 # # Basic rights for Sysops
-$wgAddGroups['sysop'][] = 'editor';
-$wgRemoveGroups['sysop'][] = 'editor';
-# # Extra ones for Bureaucrats (@TODO: remove this)
-$wgAddGroups['bureaucrat'][] = 'reviewer';
-$wgRemoveGroups['bureaucrat'][] = 'reviewer';
+$wgAddGroups['sysop'][] = 'editor'; // promote to basic reviewer (established editors)
+$wgRemoveGroups['sysop'][] = 'editor'; // demote from basic reviewer (established editors)
+$wgAddGroups['sysop'][] = 'autoreview'; // promote to basic auto-reviewer (semi-trusted users)
+$wgRemoveGroups['sysop'][] = 'autoreview'; // demote from basic auto-reviewer (semi-trusted users)
+# # Extra ones for Bureaucrats
+$wgAddGroups['bureaucrat'][] = 'reviewer'; // promote to full reviewers
+$wgRemoveGroups['bureaucrat'][] = 'reviewer'; // demote from full reviewers
 
 # How far the logs for overseeing quality revisions and depreciations go
 $wgFlaggedRevsOversightAge = 30 * 24 * 3600;
@@ -222,11 +224,10 @@ $wgFlaggedRevsPatrolNamespaces = array(); // @TODO: remove when ready
 # array so that it shows up in sp:ListGroupRights...
 $wgGroupPermissions['bot']['autoreview'] = true;
 
-# Lets some users access the review UI and set some flags
-$wgAvailableRights[] = 'review'; # review pages to basic levels
-$wgAvailableRights[] = 'validate'; # review pages to all levels
-$wgAvailableRights[] = 'autoreview'; # auto-review pages on edit (including rollback)
-$wgAvailableRights[] = 'autoreviewrestore'; # auto-review on rollback
+$wgAvailableRights[] = 'review'; # review pages to basic quality levels
+$wgAvailableRights[] = 'validate'; # review pages to all quality levels
+$wgAvailableRights[] = 'autoreview'; # auto-review one's own edits (including rollback)
+$wgAvailableRights[] = 'autoreviewrestore'; # auto-review one's own rollbacks
 $wgAvailableRights[] = 'unreviewedpages'; # view the list of unreviewed pages
 $wgAvailableRights[] = 'movestable'; # move pages with stable versions
 $wgAvailableRights[] = 'stablesettings'; # change page stability settings
