@@ -371,8 +371,9 @@ class RequestAccountPage extends SpecialPage {
 		# Send confirmation, required!
 		$result = $this->sendConfirmationMail( $u, $token, $expires );
 		if ( WikiError::isError( $result ) ) {
+			global $wgOut;
 			$dbw->rollback(); // Nevermind
-			$error = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );
+			$error = wfMsg( 'mailerror', $wgOut->parse( $result->getWikiText() ) );
 			$this->showForm( $error );
 			return false;
 		}
