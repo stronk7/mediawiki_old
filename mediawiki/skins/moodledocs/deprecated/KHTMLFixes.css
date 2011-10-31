@@ -1,0 +1,8 @@
+/* KHTML fix stylesheet */
+/* work around the horizontal scrollbars */
+/* Commented, as it's a known problem with Chromium
+   and mediawiki upstream (1.16) has done the same
+   in order to get Chrome/ium >= 4.0 working ok
+   See http://www.mail-archive.com/chromium-discuss@googlegroups.com/msg07506.html
+   Eloy, 20091109 */
+/* #column-content { margin-left: 0; } */

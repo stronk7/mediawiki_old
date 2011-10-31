@@ -1,0 +1,21 @@
+#page {
+  width: 100%;
+  margin: 16px 0px 0px 0px;
+  color: #444;
+  background: #FFF url(images/header_stripe_grad.jpg) no-repeat left top;
+}
+#p-cactions {
+  top: 9.8em;
+}
+#column-content #content {
+  margin-top: 4.3em;
+}
+#p-Navigation h5.header {
+  margin-top: 4.6em;
+}
+#p-personal {
+  top: 2em;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

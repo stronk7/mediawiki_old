@@ -13,6 +13,8 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
+require_once(dirname(__FILE__).'/moodledocs/moodleoutput.php');
+
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @todo document
@@ -25,7 +27,6 @@ class SkinMoodleDocs extends SkinTemplate {
 
 	function setupSkinUserCss( OutputPage $out ) {
 		global $wgHandheldStyle;
-		global $wgStylePath;
 
 		parent::setupSkinUserCss( $out );
 
@@ -33,7 +34,7 @@ class SkinMoodleDocs extends SkinTemplate {
 		// We keep the originals pointing to monobook, our skin only contains own ones
 		$out->addStyle( 'monobook/main.css', 'screen' );
 		// This is our CSS
-		$out->addStyle( 'moodledocs/moodledocs.css', 'screen' );
+                moodle_output::add_primary_styles($out);
 		if( $wgHandheldStyle ) {
 			// Currently in testing... try 'chick/main.css'
 			$out->addStyle( $wgHandheldStyle, 'handheld' );
@@ -47,27 +48,11 @@ class SkinMoodleDocs extends SkinTemplate {
 
 		$out->addStyle( 'monobook/rtl.css', 'screen', '', 'rtl' );
 
-		// These are our CSS
-		$out->addStyle( 'moodledocs/moodledocsrtl.css', 'screen', '', 'rtl' );
-		$out->addStyle( 'moodledocs/moodle/moodle.css', 'screen');
-		$out->addStyle( 'moodledocs/moodle/menu.css', 'screen');
-		$out->addStyle( 'moodledocs/moodle/menuprint.css', 'print');
-		$out->addStyle( 'moodledocs/moodle/IE60Fixes.css', 'screen', 'IE 6' );
-		$out->addStyle( 'moodledocs/moodle/IE55Fixes.css', 'screen', 'IE 5.5000' );
-
-
+                moodle_output::add_browser_specific_styles($out);
 	}
 
 	function outputPage( OutputPage $out ) {
-		global $wgStylePath;
-
-		$out->addScriptFile($wgStylePath . '/moodledocs/moodle/sm/c_config.js');
-		$out->addScriptFile($wgStylePath . '/moodledocs/moodle/sm/c_smartmenus.js');
-
-		if (function_exists('MungeEmail')) {
-			$out->mBodytext = MungeEmail($out->mBodytext);
-		}
-
+                moodle_output::prepare_output_page( $out );
 		SkinTemplate::outputPage( $out );
 	}
 }
@@ -87,7 +72,7 @@ class MoodleDocsTemplate extends QuickTemplate {
 	 * @access private
 	 */
 	function execute() {
-		global $wgRequest;
+                global $wgRequest;
 		global $wgLanguageName;
 
 		$this->skin = $skin = $this->data['skin'];
@@ -119,37 +104,13 @@ class MoodleDocsTemplate extends QuickTemplate {
 
 		$this->html( 'headelement' );
 
-		require_once('moodledocs/moodle/header.html');
-?>
-<div id="moodlemenu" class="clearfix">
-<?php $moodlemenu = 'menu-'.$this->data['lang'].'.html';
-	if (file_exists('moodledocs/moodle/'.$moodlemenu)) {
-   		include('moodledocs/moodle/'.$moodlemenu);
-	} else {
-		include('moodledocs/moodle/menu.html');
-	}
-?>
-	<form id="global-search" method="get" action="http://moodle.org/public/search">
-		<div>
-			<input type="hidden" name="cx" value="017878793330196534763:-0qxztjngoy" />
-			<input type="hidden" name="cof" value="FORID:9" />
-			<input type="hidden" name="ie" value="UTF-8" />
-			<input class="input-text" type="text" name="q" size="15" maxlength="255"/>
-			<input class="input-submit" type="submit" name="sa" value="Search moodle.org"/>
-		</div>
-	</form>
-</div>
-<div class="navbar clearfix" dir="LTR">
-	<div class="breadcrumb"><h2 class="accesshide">You are here</h2>
-		<ul>
-			<li class="first"><a href="http://moodle.org">Home</a></li>
-			<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="/overview/">Moodle Docs</a></li>
-			<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="<?php $this->text('scriptpath'); ?>/"><?php echo $wgLanguageName ?></a></li>
-			<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <?php $this->html('title') ?></li>
-		</ul>
-	</div>
-</div>
-<div id="globalWrapper">
+                echo '<div id="page">';
+                moodle_output::header();
+                moodle_output::menu($this->data['lang']);
+                // Removed as per MDLSITE-1511
+                // moodle_output::navbar($this->data['scriptpath'], $this->data['title']);
+
+?><div id="globalWrapper">
 <div id="column-content"><div id="content"<?php $this->html("specialpageattributes") ?>>
 	<a id="top"></a>
 	<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
@@ -231,7 +192,8 @@ class MoodleDocsTemplate extends QuickTemplate {
 		if ( !isset( $sidebar['LANGUAGES'] ) ) $sidebar['LANGUAGES'] = true;
 		foreach ($sidebar as $boxName => $cont) {
 			if ( $boxName == 'SEARCH' ) {
-				$this->searchBox();
+				// Removing the search box from the sidebar
+				// $this->searchBox();
 			} elseif ( $boxName == 'TOOLBOX' ) {
 				$this->toolbox();
 			} elseif ( $boxName == 'LANGUAGES' ) {
@@ -283,7 +245,9 @@ class MoodleDocsTemplate extends QuickTemplate {
 
 -->
 <?php endif;
-		require_once('moodledocs/moodle/footer.html');
+                moodle_output::footer();
+                echo '</div><!-- #page -->';
+                moodle_output::google_analtyics_js();
 
 		echo Html::closeElement( 'body' );
 		echo Html::closeElement( 'html' );
