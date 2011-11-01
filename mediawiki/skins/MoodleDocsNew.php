@@ -1,6 +1,6 @@
 <?php
 /**
- * MoodleDocs skin in the design of moodle.org
+ * MoodleDocsNew skin in the design of moodle.org
  *
  * Translated from gwicke's previous TAL template version to remove
  * dependency on PHPTAL.
@@ -13,17 +13,17 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-require_once(dirname(__FILE__).'/moodledocs/moodleoutput.php');
+require_once(dirname(__FILE__).'/moodledocsnew/moodleoutput.php');
 
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @todo document
  * @ingroup Skins
  */
-class SkinMoodleDocs extends SkinTemplate {
-	/** Using moodledocs. */
-	var $skinname = 'moodledocs', $stylename = 'moodledocs',
-		$template = 'MoodleDocsTemplate', $useHeadElement = true;
+class SkinMoodleDocsNew extends SkinTemplate {
+	/** Using moodledocsnew. */
+	var $skinname = 'moodledocsnew', $stylename = 'moodledocsnew',
+		$template = 'MoodleDocsNewTemplate', $useHeadElement = true;
 
 	function setupSkinUserCss( OutputPage $out ) {
 		global $wgHandheldStyle;
@@ -61,10 +61,10 @@ class SkinMoodleDocs extends SkinTemplate {
  * @todo document
  * @ingroup Skins
  */
-class MoodleDocsTemplate extends QuickTemplate {
+class MoodleDocsNewTemplate extends QuickTemplate {
 	var $skin;
 	/**
-	 * Template filter callback for MoodleDocs skin.
+	 * Template filter callback for MoodleDocsNew skin.
 	 * Takes an associative array of data set from a SkinTemplate-based
 	 * class, and a wrapper for MediaWiki's localization database, and
 	 * outputs a formatted page.

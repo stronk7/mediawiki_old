@@ -1,0 +1,12 @@
+/** Special styles for the moodledocsnew dev skin **/
+div.frontpagetotal {
+  max-width: 100em;
+  min-width: 27em;
+}
+
+div.frontpageblock {
+  padding: 20px;
+  width: 25em;
+  display: inline-block;
+  vertical-align: top;
+}

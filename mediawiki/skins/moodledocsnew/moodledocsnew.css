@@ -31,10 +31,10 @@ div#moodlenavbar .navbutton {margin: 2px 12px 2px 0;}
 div#globalWrapper {font-size: 84%;background: none;}
 div#column-content {margin:0 0 0.6em 0;float:none;}
 div#content {margin:4.3em 0.75em 0;border: 1px solid #ddd;line-height: 1.4em;}
-div#content .navtrail {display:none;margin:0;padding:0;}
 div#column-one {padding-top: 1.3em;}
 div#moodlesitelink {text-align: center;padding-top: 1em;}
 div#moodlesitelink img.logo {border:0;width:100px;height:30px;}
+div#content .navtrail {position:absolute;top:-6.2em;background-color:transparent;margin-bottom:0;}
 /** Layout overrides - end **/
 
 /** General styles */
