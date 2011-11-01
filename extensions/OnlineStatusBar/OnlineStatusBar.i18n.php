@@ -22,6 +22,8 @@ $messages['en'] = array(
 	'onlinestatusbar-used' => 'Do you want to let others see if you are online?',
 	// Message in config asking what status they want to use
 	'onlinestatusbar-status' => 'What is the default status you wish to use:',
+	// Message in config asking if user wants to purge the user page
+	'onlinestatusbar-purge' => 'Purge user page everytime when you login or logout',
 	// Section for config
 	'prefs-onlinestatus' => 'Online status',
 	// Message in config
@@ -46,6 +48,7 @@ $messages['qqq'] = array(
 * $3 a status, it will appear in title bar of their user space pages',
 	'onlinestatusbar-used' => 'Message in config asking user if they want to enable it, checkbox',
 	'onlinestatusbar-status' => 'Message in config asking what status they want to use, option box',
+	'onlinestatusbar-purge' => 'Option to purge user page everytime they login so that magic word is updated',
 	'prefs-onlinestatus' => 'Section for config, located in preferences - misc',
 	'onlinestatusbar-hide' => 'Ask user if they want to hide status bar this is useful when they are using custom template but need to check if they are online',
 	'onlinestatusbar-status-online' => 'Status for users who mark themselves as active',
@@ -83,6 +86,7 @@ $messages['de-formal'] = array(
 
 /** French (Français)
  * @author DavidL
+ * @author Gomoko
  */
 $messages['fr'] = array(
 	'onlinestatusbar-desc' => "Barre d'état montrant si un utilisateur est en ligne, basé sur les préférences, sur leur page utilisateur",
@@ -91,6 +95,11 @@ $messages['fr'] = array(
 	'onlinestatusbar-status' => 'Quel est le statut par défaut que vous souhaitez utiliser :',
 	'prefs-onlinestatus' => 'État en ligne',
 	'onlinestatusbar-hide' => "Voulez-vous masquer la barre d'état afin d'utiliser le mot magique seulement ? (Pour les utilisateurs avancés)",
+	'onlinestatusbar-status-online' => 'Présent',
+	'onlinestatusbar-status-busy' => 'Occupé',
+	'onlinestatusbar-status-away' => 'Parti',
+	'onlinestatusbar-status-offline' => 'Absent',
+	'onlinestatusbar-status-hidden' => 'Caché',
 );
 
 /** Galician (Galego)
@@ -121,6 +130,23 @@ $messages['hsb'] = array(
 	'onlinestatusbar-status-away' => 'Preč',
 	'onlinestatusbar-status-offline' => 'Offline',
 	'onlinestatusbar-status-hidden' => 'Schowany',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'onlinestatusbar-desc' => 'Barra de stato que monstra si un usator es in linea, dependente de su preferentias, in su pagina de usator',
+	'onlinestatusbar-line' => '$1 es ora $2 $3',
+	'onlinestatusbar-used' => 'Vole tu permitter que alteres vide si tu es in linea?',
+	'onlinestatusbar-status' => 'Qual es le stato predefinite que tu vole usar:',
+	'prefs-onlinestatus' => 'Stato in linea',
+	'onlinestatusbar-hide' => 'Vole tu celar le barra de stato pro usar solmente le parola magic? (Pro usatores avantiate)',
+	'onlinestatusbar-status-online' => 'In linea',
+	'onlinestatusbar-status-busy' => 'Occupate',
+	'onlinestatusbar-status-away' => 'Absente',
+	'onlinestatusbar-status-offline' => 'Foras de linea',
+	'onlinestatusbar-status-hidden' => 'Celate',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
