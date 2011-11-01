@@ -34,6 +34,7 @@ class moodle_output {
     }
 
     public static function add_browser_specific_styles(OutputPage $out) {
+        $out->addStyle( 'moodledocs/fixes.IE70.css', 'screen', 'IE 7' );
         $out->addStyle( 'moodledocs/fixes.IE60.css', 'screen', 'IE 6' );
         $out->addStyle( 'moodledocs/fixes.IE55.css', 'screen', 'IE 5.5000' );
     }
@@ -54,7 +55,7 @@ class moodle_output {
         self::area_start('header');
         echo '<div id="moodlelogo">';
         echo '<a href="http://moodle.org/">';
-        echo "<img class='logo' src='$wgStylePath/moodledocs/images/moodle-logo.gif' border='0' alt='moodlelogo' title='moodle.org' />";
+        echo "<img class='logo' src='$wgStylePath/moodledocs/images/moodle-logo.gif'\ alt='moodlelogo' title='moodle.org' />";
         echo '</a>';
         echo '</div>'; // .moodlelogo
         self::area_end();
@@ -65,7 +66,7 @@ class moodle_output {
         self::area_start('final footer');
         echo '<div id="moodlesitelink">';
         echo '<a href="http://moodle.org/">';
-        echo '<img width="100" height="30" src="'.$wgStylePath.'/moodledocs/images/moodle-logo-footer.gif" border="0" alt="moodlelogo" title="Return to Moodle.org" />';
+        echo '<img class="logo" src="'.$wgStylePath.'/moodledocs/images/moodle-logo-footer.gif" alt="moodlelogo" title="Return to Moodle.org" />';
         echo '</a>';
         echo '</div>';
         self::area_end();
