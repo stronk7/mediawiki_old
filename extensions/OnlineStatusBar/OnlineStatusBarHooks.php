@@ -28,16 +28,19 @@ class OnlineStatusBarHooks {
 	 * @return bool
 	 */
 	public static function logout( &$user, &$inject_html, $old_name ) {
-		OnlineStatusBar::DeleteStatus( $old_name );
+		OnlineStatusBar::purge( $old_name );
+		OnlineStatusBar::deleteStatus( $old_name );
 		return true;
 	}
 
 	/**
-	 * Called everytime when it's needed to update db
+	 * Called everytime on login 
 	 * @return bool
 	 */
 	public static function updateStatus() {
-		OnlineStatusBar::UpdateDb();
+		global $wgUser;
+		OnlineStatusBar::purge( $wgUser );
+		OnlineStatusBar::updateStatus();
 		return true;
 	}
 
@@ -51,7 +54,7 @@ class OnlineStatusBarHooks {
 	public static function renderBar( &$article, &$outputDone, &$pcache ) {
 		$context = $article->getContext();
 
-		OnlineStatusBar::UpdateStatus();
+		OnlineStatusBar::updateStatus();
 		$result = OnlineStatusBar::getUserInfoFromTitle( $article->getTitle() );
 		if ( $result === false && User::isIP ( $article->getTitle()->getBaseText() ) ) {
 			$result = OnlineStatusBar::getAnonFromTitle( $article->getTitle() ); 
@@ -88,6 +91,7 @@ class OnlineStatusBarHooks {
 		global $wgOnlineStatusBarDefaultOnline, $wgOnlineStatusBarDefaultEnabled, $wgOnlineStatusBarModes;
 		$preferences['OnlineStatusBar_active'] = array( 'type' => 'toggle', 'label-message' => 'onlinestatusbar-used', 'section' => 'misc/onlinestatus' );
 		$preferences['OnlineStatusBar_hide'] = array( 'type' => 'toggle', 'label-message' => 'onlinestatusbar-hide', 'section' => 'misc/onlinestatus' );
+		$preferences['OnlineStatusBar_autoupdate'] = array( 'type' => 'toggle', 'label-message' => 'onlinestatusbar-purge', 'section' => 'misc/onlinestatus' );
 		$preferences['OnlineStatusBar_status'] = array( 'type' => 'radio', 'label-message' => 'onlinestatusbar-status', 'section' => 'misc/onlinestatus',
 			'options' => array(
 				wfMessage( 'onlinestatusbar-status-online' )->escaped() => 'online',
@@ -106,6 +110,7 @@ class OnlineStatusBarHooks {
 	public static function setDefaultOptions( &$defaultOptions ) {
 		global $wgOnlineStatusBarDefaultOnline, $wgOnlineStatusBarDefaultEnabled;
 		// set defaults
+		$defaultOptions['OnlineStatusBar_autoupdate'] = false;
 		$defaultOptions['OnlineStatusBar_status'] = $wgOnlineStatusBarDefaultOnline;
 		$defaultOptions['OnlineStatusBar_active'] = $wgOnlineStatusBarDefaultEnabled;
 		$defaultOptions['OnlineStatusBar_hide'] = false;
