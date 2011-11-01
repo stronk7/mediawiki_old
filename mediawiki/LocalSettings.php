@@ -61,15 +61,19 @@ if (php_sapi_name() != 'cli') {
         $langoffset = 0;
         if (substr($_SERVER['REQUEST_URI'], 1, 2) === '19') {
             $mdocsver = '19';
+            $mlogover = '19';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '20') {
             $mdocsver = '20';
+            $mlogover = '20';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 7) === 'archive') {
             $langoffset = 5; // pad with an extra 5 chars to look for langs in the next block
             $mdocsver = '19'; // all archived langs are 19docs
             $wgReadOnly="This translation has been archived and is in Read-Only mode."; // Cant touch this! do do do do do
+            $mlogover = 'archive';
         }else {
              // default version to serve. this should always be the newest version (mod_rewrite handles the rest)
             $mdocsver = '20';
+            $mlogover = '20';
         }
 
         /// Try to determine requested lang or test|dev
@@ -77,8 +81,10 @@ if (php_sapi_name() != 'cli') {
         /// for compound langs (pt_br...), else get just two chars (en, es...)
         if (substr($_SERVER['REQUEST_URI'], 1, 4) === 'test') {
             $callpath = 'test';                                 // test
+            $mlogover = 'test';
         } else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'dev') {
             $callpath = 'dev';                                  // dev
+            $mlogover = 'dev';
         } else if (substr($_SERVER['REQUEST_URI'], 6+$langoffset, 1) === '_') { 
             $callpath = substr($_SERVER['REQUEST_URI'], 4+$langoffset, 5);      // pt_br ...
         } else {
@@ -88,7 +94,8 @@ if (php_sapi_name() != 'cli') {
         // Somehow called from browser without a request uri, should never happen so force 20/en
         $mdocsver = '20';
         $callpath = 'en';
-    } 
+        $mlogover = '20';
+    }
 }else {
     // Called from CLI
     unset($callpath,$mdocsver); // pesky ninjas...
@@ -577,6 +584,10 @@ $wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) )
 
 #$wgLogo = "/pix/moodle-docs.gif";
 $wgLogo = '/prodwiki/skins/moodledocs/wiki.png';
+// Select a logo that represents this skin
+if (!empty($mlogover)) {
+    $wgLogo = "/prodwiki/skins/moodledocs/images/version.{$mlogover}.png";
+}
 
 $wgGroupPermissions['user']['move'] = false;  ///Added by Eloy (Helen request): 25/01/2006
 $wgGroupPermissions['*']['edit'] = false;     ///Added by Eloy (Helen request): 25/01/2006
