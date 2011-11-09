@@ -65,6 +65,9 @@ if (php_sapi_name() != 'cli') {
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '20') {
             $mdocsver = '20';
             $mlogover = '20';
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '21') {
+            $mdocsver = '21';
+            $mlogover = '21';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 7) === 'archive') {
             $langoffset = 5; // pad with an extra 5 chars to look for langs in the next block
             $mdocsver = '19'; // all archived langs are 19docs
