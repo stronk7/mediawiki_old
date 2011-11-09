@@ -502,9 +502,11 @@ getDefaultConfig: function () {
 					}
 				},
 				open: function() {
+					// Obtain the server name without the protocol. wgServer may be protocol-relative
+					var serverName = mw.config.get( 'wgServer' ).replace( /^(https?:)?\/\//, '' );
 					// Cache the articlepath regex
 					$(this).data( 'articlePathRegex', new RegExp(
-						'^' + $.escapeRE( mw.config.get( 'wgServer' ) + mw.config.get( 'wgArticlePath' ) )
+						'^https?://' + $.escapeRE( serverName + mw.config.get( 'wgArticlePath' ) )
 							.replace( /\\\$1/g, '(.*)' ) + '$'
 					) );
 					// Pre-fill the text fields based on the current selection
@@ -779,8 +781,11 @@ getDefaultConfig: function () {
 					.addClass( 'sortable' )
 					.insertAfter( $( '#wikieditor-toolbar-table-preview' ) )
 					.hide();
-				if ( typeof jQuery.fn.tablesorter == 'function' )
+
+				mw.loader.using( 'jquery.tablesorter', function() {
 					$( '#wikieditor-toolbar-table-preview2' ).tablesorter();
+				});
+
 				$( '#wikieditor-toolbar-table-sortable' ).click( function() {
 					// Swap the currently shown one clone with the other one
 					$( '#wikieditor-toolbar-table-preview' )
