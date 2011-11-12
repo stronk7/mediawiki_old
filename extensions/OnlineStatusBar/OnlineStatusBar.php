@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits[version_compare( $wgVersion, '1.17', '>=' ) ? 'userpage tools' : 'other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Online status bar',
-	'version' => '1.0.1',
+	'version' => '1.0.2',
 	'author' => array( 'Petr Bena' ),
 	'descriptionmsg' => 'onlinestatusbar-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:OnlineStatusBar',
@@ -28,6 +28,42 @@ $wgExtensionMessagesFiles['OnlineStatusBar'] = "$dir/OnlineStatusBar.i18n.php";
 
 $wgResourceModules['ext.OnlineStatusBar'] = array (
 	'styles' => 'OnlineStatusBar.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.vector'] = array (
+	'styles' => 'OnlineStatusBarVector.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.chick'] = array (
+	'styles' => 'OnlineStatusBarChick.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.monobook'] = array (
+	'styles' => 'OnlineStatusBarMono.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.simple'] = array (
+	'styles' => 'OnlineStatusBarSimple.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.cologne'] = array (
+	'styles' => 'OnlineStatusBarCologne.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.nostalgia'] = array (
+	'styles' => 'OnlineStatusBarNostalgia.css',
 	'localBasePath' => dirname ( __FILE__ ),
 	'remoteExtPath' => 'OnlineStatusBar',
 );
