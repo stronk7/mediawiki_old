@@ -127,7 +127,7 @@ HTML;
 		}
 
 		if ( $status == 'hidden' ) {
-			$status = 'offline';
+			$status = $wgOnlineStatusBarDefaultOffline;
 		}
 
 		return $status;

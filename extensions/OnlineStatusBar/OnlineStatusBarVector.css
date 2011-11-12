@@ -4,8 +4,8 @@ where topicon isn't defined
 */
 div.onlinestatusbartop {
 	position: absolute;
-	top: 2em;
-	margin-right: 0px;
+	top: -2em;
+	margin-right: -10px;
 	display: block !important;
 }
 
@@ -20,5 +20,5 @@ div.onlinestatusbaricon {
 
 div.onlinestatusbarbody {
 	right:0px;
-	margin-top:0px;
+	margin-top:-10px;
 }

@@ -134,7 +134,18 @@ class OnlineStatusBarHooks {
 	 * @return bool
 	 */
 	public static function stylePage( &$out, &$skin ) {
-		$out->addModules( 'ext.OnlineStatusBar' );
+		switch ($skin->getSkinName()) {
+			case 'monobook':
+			case 'vector':
+			case 'simple':
+			case 'nostalgia':
+			case 'chick':
+			case 'cologneblue':
+				$out->addModules( 'ext.OnlineStatusBar.' . $skin->getSkinName() );
+				break;
+			default:
+				$out->addModules( 'ext.OnlineStatusBar' );
+		}
 		return true;
 	}
 

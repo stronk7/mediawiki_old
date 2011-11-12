@@ -58,6 +58,18 @@ $messages['qqq'] = array(
 	'onlinestatusbar-status-hidden' => 'Status for users who mark themselves as hidden (used on preferences only)',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'onlinestatusbar-line' => '$1 zo bremañ $2 $3',
+	'onlinestatusbar-status-online' => 'Kevreet',
+	'onlinestatusbar-status-busy' => 'Soulgarget',
+	'onlinestatusbar-status-away' => 'Er-maez',
+	'onlinestatusbar-status-offline' => 'Ezvezant',
+	'onlinestatusbar-status-hidden' => 'Kuzhet',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  */
@@ -66,6 +78,7 @@ $messages['de'] = array(
 	'onlinestatusbar-line' => '$1 ist gerade $3 $2',
 	'onlinestatusbar-used' => 'Möchtest du, dass andere Benutzer deinen Onlinestatus sehen?',
 	'onlinestatusbar-status' => 'Welchen Status möchtest du standardmäßig nutzen:',
+	'onlinestatusbar-purge' => 'Den Cache der Benutzerseite jedes Mal leeren, wenn du dich an- oder abmeldest',
 	'prefs-onlinestatus' => 'Onlinestatus',
 	'onlinestatusbar-hide' => "Möchtest du die Statusleiste ausblenden, um stattdessen lediglich das ''Magic Word'' zu nutzen? (Für Fortgeschrittene)",
 	'onlinestatusbar-status-online' => 'Online',
@@ -81,6 +94,7 @@ $messages['de'] = array(
 $messages['de-formal'] = array(
 	'onlinestatusbar-used' => 'Möchten Sie, dass andere Benutzer Ihren Onlinestatus sehen?',
 	'onlinestatusbar-status' => 'Welchen Status möchten Sie standardmäßig nutzen:',
+	'onlinestatusbar-purge' => 'Den Cache der Benutzerseite jedes Mal leeren, wenn Sie sich an- oder abmelden',
 	'onlinestatusbar-hide' => "Möchten Sie die Statusleiste ausblenden, um stattdessen lediglich das ''Magic Word'' zu nutzen? (Für Fortgeschrittene)",
 );
 
@@ -93,6 +107,7 @@ $messages['fr'] = array(
 	'onlinestatusbar-line' => '$1 est maintenant $2 $3',
 	'onlinestatusbar-used' => 'Voulez-vous permettre que les autres voient si vous êtes en ligne ?',
 	'onlinestatusbar-status' => 'Quel est le statut par défaut que vous souhaitez utiliser :',
+	'onlinestatusbar-purge' => 'Vider la page utilisateur chaque vous que vous vous connectez ou vous déconnectez',
 	'prefs-onlinestatus' => 'État en ligne',
 	'onlinestatusbar-hide' => "Voulez-vous masquer la barre d'état afin d'utiliser le mot magique seulement ? (Pour les utilisateurs avancés)",
 	'onlinestatusbar-status-online' => 'Présent',
@@ -100,6 +115,19 @@ $messages['fr'] = array(
 	'onlinestatusbar-status-away' => 'Parti',
 	'onlinestatusbar-status-offline' => 'Absent',
 	'onlinestatusbar-status-hidden' => 'Caché',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'onlinestatusbar-line' => '$1 est ora $2 $3',
+	'prefs-onlinestatus' => 'Ètat en legne',
+	'onlinestatusbar-status-online' => 'Present',
+	'onlinestatusbar-status-busy' => 'Ocupo',
+	'onlinestatusbar-status-away' => 'Viâ',
+	'onlinestatusbar-status-offline' => 'Absent',
+	'onlinestatusbar-status-hidden' => 'Cachiê',
 );
 
 /** Galician (Galego)
@@ -110,6 +138,7 @@ $messages['gl'] = array(
 	'onlinestatusbar-line' => '$1 está $2 $3 nestes intres',
 	'onlinestatusbar-used' => 'Quere deixar que os outros poidan ver se está conectado?',
 	'onlinestatusbar-status' => 'Cal é o estado por defecto que quere usar:',
+	'onlinestatusbar-purge' => 'Purgar a páxina de usuario cada vez que se identifique ou saia do sistema',
 	'prefs-onlinestatus' => 'Conectado',
 	'onlinestatusbar-hide' => 'Quere agochar a barra de estado para usar unicamente a palabra máxica? (Para usuarios avanzados)',
 	'onlinestatusbar-status-online' => 'Conectado',
@@ -117,6 +146,24 @@ $messages['gl'] = array(
 	'onlinestatusbar-status-away' => 'Non dispoñible',
 	'onlinestatusbar-status-offline' => 'Desconectado',
 	'onlinestatusbar-status-hidden' => 'Agochado',
+);
+
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'onlinestatusbar-desc' => 'שורת מצב שמציגה בדף המשתמש אם המשתמש מקוון, בהתאם להעדפות',
+	'onlinestatusbar-line' => '$1 $2 $3 עכשיו',
+	'onlinestatusbar-used' => 'לאפשר לאחרים לראות שאתם מחוברים?',
+	'onlinestatusbar-status' => 'מהו המצב שתרצו להיות פה לפי בררת המחדל:',
+	'onlinestatusbar-purge' => 'לנקות את המטמון של דף המשתמש בכל פעם שאתם נכנסים או יוצאים',
+	'prefs-onlinestatus' => 'מצב ההימצאות באתר',
+	'onlinestatusbar-hide' => 'האם להסתיר את שורת המצב כדי להשתמש רק במילת הקסם? (למשתמשים מתקדמים)',
+	'onlinestatusbar-status-online' => 'באתר',
+	'onlinestatusbar-status-busy' => 'עסוק',
+	'onlinestatusbar-status-away' => 'לא ליד מחשב',
+	'onlinestatusbar-status-offline' => 'לא באתר',
+	'onlinestatusbar-status-hidden' => 'מוסתר',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -140,6 +187,7 @@ $messages['ia'] = array(
 	'onlinestatusbar-line' => '$1 es ora $2 $3',
 	'onlinestatusbar-used' => 'Vole tu permitter que alteres vide si tu es in linea?',
 	'onlinestatusbar-status' => 'Qual es le stato predefinite que tu vole usar:',
+	'onlinestatusbar-purge' => 'Purgar le pagina de usator cata vice que tu aperi o claude session',
 	'prefs-onlinestatus' => 'Stato in linea',
 	'onlinestatusbar-hide' => 'Vole tu celar le barra de stato pro usar solmente le parola magic? (Pro usatores avantiate)',
 	'onlinestatusbar-status-online' => 'In linea',
@@ -168,6 +216,7 @@ $messages['mk'] = array(
 	'onlinestatusbar-line' => '$1 сега е $2 $3',
 	'onlinestatusbar-used' => 'Дали сакате другите да знаат кога сте на линија?',
 	'onlinestatusbar-status' => 'Вашиот статус по основно:',
+	'onlinestatusbar-purge' => 'Пречисти го кешот на корисничката страница секојпат кога ќе се најавам или одјавам',
 	'prefs-onlinestatus' => 'Вклученост',
 	'onlinestatusbar-hide' => 'Дали би сакале да го скриете статусникот за да го користите само волшебниот збор (за напредни корисници)',
 	'onlinestatusbar-status-online' => 'Вклучен',
@@ -178,12 +227,15 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'onlinestatusbar-desc' => 'Statusbalk die weergeeft of een gebruiker online is, op basis van voorkeuren, op zijn/haar gebruikerspagina',
 	'onlinestatusbar-line' => '$1 is nu $2 $3',
 	'onlinestatusbar-used' => 'Wilt u andere gebruikers laten zien dat u online bent?',
 	'onlinestatusbar-status' => 'Welke standaard status wilt u gebruiken:',
+	'onlinestatusbar-purge' => 'Uw gebruikerspagina bij aanmelden en afmelden uit de cache verwijderen',
 	'prefs-onlinestatus' => 'Onlinestatus',
 	'onlinestatusbar-hide' => 'Wilt u de statusbalk verbergen en alleen het magische woord gebruiken (voor gevorderde gebruikers)?',
 	'onlinestatusbar-status-online' => 'Online',
