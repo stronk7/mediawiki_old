@@ -1,7 +1,7 @@
 /*
  * Collapsible tabs for Vector
  */
-$(document).ready( function() {	
+jQuery(function( $ ) {	
 	var rtl = $( 'body' ).is( '.rtl' );
 	
 	// Overloading the moveToCollapsed function to animate the transition 
