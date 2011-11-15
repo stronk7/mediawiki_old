@@ -1132,6 +1132,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Wix
  */
 $messages['fi'] = array(
@@ -1143,7 +1144,7 @@ $messages['fi'] = array(
 	'mw_math_html' => 'Näytä HTML:nä, jos mahdollista, muuten PNG:nä',
 	'mw_math_source' => 'Näytä TeX-muodossa (tekstiselaimille)',
 	'mw_math_modern' => 'Suositus nykyselaimille',
-	'mw_math_mathml' => 'Näytä MathML:nä jos mahdollista (kokeellinen)',
+	'mw_math_mathml' => 'Näytä MathML:nä, jos mahdollista (kokeellinen)',
 	'math_failure' => 'Jäsentäminen epäonnistui',
 	'math_unknown_error' => 'Tuntematon virhe',
 	'math_unknown_function' => 'Tuntematon funktio',
@@ -1462,7 +1463,7 @@ $messages['gu'] = array(
 	'math_tip' => 'ગણિતિક સૂત્ર (LaTeX)',
 	'prefs-math' => 'ગણિત',
 	'mw_math_png' => 'PNGને હમેંશા પરત કરો',
-	'mw_math_simple' => 'જો સરળ હોય તો  HTML અન્યથા PNG',
+	'mw_math_simple' => ' જો સરળ હોય તો  HTML અન્યથા PNG',
 	'mw_math_html' => 'જો સરળ હોય તો  HTML અન્યથા PNG',
 	'mw_math_source' => 'આને શબ્દ રહેવા દો (ટેક્સ્ટ બ્રાઉઝર)',
 	'mw_math_modern' => 'અત્યાધુનિક બ્રાઉઝરો માટે ભલામણ યોગ્ય',
@@ -2829,9 +2830,12 @@ $messages['nah'] = array(
 	'prefs-math' => 'Tlapōhualmatiliztli',
 );
 
-/** Min Nan Chinese (Bân-lâm-gú) */
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
 $messages['nan'] = array(
 	'math_sample' => 'Chia siá hong-thêng-sek',
+	'math_tip' => '數學的公式 （LaTeX）',
 	'prefs-math' => 'Sò·-ha̍k ê rendering',
 	'mw_math_png' => 'Tiāⁿ-tio̍h iōng PNG render',
 	'mw_math_simple' => 'Tân-sûn ê chêng-hêng iōng HTML; kî-thaⁿ iōng PNG',
@@ -3202,12 +3206,12 @@ $messages['prg'] = array(
 	'mw_math_modern' => 'HTML - radītan per nāunans lasātlins',
 	'mw_math_mathml' => 'MathML ik mazīngi (eksperimentālai)',
 	'math_failure' => 'Parsers ni mazēi skaitātun',
-	'math_unknown_error' => 'niwaīsta blānda',
-	'math_unknown_function' => 'niwaīsta funkciōni',
+	'math_unknown_error' => 'niwaistā blānda',
+	'math_unknown_function' => 'niwaistā funkciōni',
 	'math_lexing_error' => 'laksisis blānda',
 	'math_syntax_error' => 'sīntaksis blānda',
-	'math_image_error' => 'Maināsna en PNG ni izpalla.
-Izbāndais, anga latex, dvips, gs be convert ast instalītan tikrōmiskai',
+	'math_image_error' => 'Mainasnā en PNG ni izpalla.
+Izbandais, anga latex, dvips, gs be convert ast instalītan tikrōmiskai',
 	'math_bad_tmpdir' => 'Ni mazīngi teīktun anga enpeisātun en kīsmingiskasmu matemātiskan fōlderin',
 	'math_bad_output' => 'Ni mazīngi teīktun anga enpeisātun en izēiseniskasmu matemātiskan fōlderin',
 	'math_notexvc' => 'Ni ast texvc prōgraman.
@@ -3358,6 +3362,7 @@ $messages['rmy'] = array(
  * @author Emily
  * @author Laurap
  * @author Minisarm
+ * @author Strainu
  */
 $messages['ro'] = array(
 	'math_sample' => 'Introduceți formula aici',
@@ -3374,7 +3379,7 @@ $messages['ro'] = array(
 	'math_unknown_function' => 'funcție necunoscută',
 	'math_lexing_error' => 'eroare lexicală',
 	'math_syntax_error' => 'eroare de sintaxă',
-	'math_image_error' => 'Conversiune în PNG eșuată; verificați corectitudinea instalării sistemelor LaTex sau dvipng (sau dvips + gs + convert)',
+	'math_image_error' => 'Conversie în PNG eșuată; verificați corectitudinea instalării sistemelor LaTex sau dvipng (sau dvips + gs + convert)',
 	'math_bad_tmpdir' => 'Nu se poate crea sau nu se poate scrie în directorul temporar pentru formule matematice',
 	'math_bad_output' => 'Nu se poate crea sau nu se poate scrie în directorul de ieșire pentru formule matematice',
 	'math_notexvc' => 'Lipsește executabilul texvc; vezi math/README pentru configurare.',
