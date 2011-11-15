@@ -1076,9 +1076,9 @@ class FlaggedPageView {
 		}
 		# Get the revision being displayed
 		$rev = false;
-		if ( $this->reviewFormRev ) {
+		if ( $this->reviewFormRev ) { //diff
 			$rev = $this->reviewFormRev; // $newRev for diffs stored here
-		} elseif ( $this->out->getRevisionId() ) {
+		} elseif ( $this->out->getRevisionId() ) { // page view
 			$rev = Revision::newFromId( $this->out->getRevisionId() );
 		}
 		# Build the review form as needed
@@ -1371,6 +1371,9 @@ class FlaggedPageView {
 			return true;
 		}
 		$srev = $this->article->getStableRev();
+		if ( $srev && $this->isReviewableDiff ) {
+			$this->reviewFormRev = $newRev;
+		}
 		# Check if this is a diff-to-stable. If so:
 		# (a) prompt reviewers to review the changes
 		# (b) list template/file changes if only includes are pending
@@ -1379,7 +1382,6 @@ class FlaggedPageView {
 			&& !$this->article->stableVersionIsSynced() ) // pending changes
 		{
 			$changeDiv = '';
-			$this->reviewFormRev = $newRev;
 			$changeList = array();
 			# Page not synced only due to includes?
 			if ( !$this->article->revsArePending() ) {
