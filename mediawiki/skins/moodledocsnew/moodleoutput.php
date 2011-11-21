@@ -42,6 +42,7 @@ class moodle_output {
     public static function prepare_output_page(OutputPage $out) {
         global $wgStylePath;
 
+        $out->addInlineScript("var moodleconfig = {'menuimagepath':'$wgStylePath/moodledocsnew/menu/sm/'}");
         $out->addScriptFile($wgStylePath . '/moodledocsnew/menu/sm/c_config.js');
         $out->addScriptFile($wgStylePath . '/moodledocsnew/menu/sm/c_smartmenus.js');
 

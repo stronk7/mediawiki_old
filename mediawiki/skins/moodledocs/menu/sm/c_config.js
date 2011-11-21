@@ -30,7 +30,7 @@ c_rightToLeft=false; // if the menu text should have "rtl" direction (e.g. Hebre
 
 
 // c_imagesPath="/theme/moodle2/sm/"; // path to the directory containing the menu images
-c_imagesPath="http://moodle.org/theme/moodle2/sm/"; // path to the directory containing the menu images
+c_imagesPath=moodleconfig.menuimagepath; // path to the directory containing the menu images
 
 
 c_styles['MM']=[ // MainMenu (the shorter the class name the better)
