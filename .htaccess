@@ -104,6 +104,7 @@ RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/r
 RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/opensearch_desc.php
 RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/config/
 RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/extensions/MediawikiPlayer/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/load.php
 RewriteCond %{QUERY_STRING} ^$ [OR] RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/Special:Search
 RewriteRule ^(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/(.*) /prodwiki/index.php?title=$5 [L,QSA,S=1]
 
@@ -118,10 +119,10 @@ RewriteCond %{REQUEST_URI} ^/archive/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
 RewriteRule ^archive/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /prodwiki/19images/images_$1/$3 [L,QSA]
 
 # Serve different skin images to different versions
-RewriteCond %{REQUEST_URI} ^/(test|dev|archive|19|20|21)/
-RewriteCond %{REQUEST_URI} !^/(|19|20|21)/(es|eu|fr|hr|is|pt_br)/
-RewriteRule ^(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/skins/moodledocs/((version)(.png)|(moodledocs)(.css))$ /prodwiki/skins/moodledocs/$6$8%1$7$9 [L]
-RewriteRule ^(19|20|21)/(es|eu|fr|hr|is|pt_br)/skins/moodledocs/((version)(.png)|(moodledocs)(.css))$ /prodwiki/skins/moodledocs/$4$6nover$5$7 [L]
+#RewriteCond %{REQUEST_URI} ^/(test|dev|archive|19|20|21)/
+#RewriteCond %{REQUEST_URI} !^/(|19|20|21)/(es|eu|fr|hr|is|pt_br)/
+#RewriteRule ^(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/skins/moodledocs/((version)(.png)|(moodledocs)(.css))$ /prodwiki/skins/moodledocs/$6$8%1$7$9 [L]
+#RewriteRule ^(19|20|21)/(es|eu|fr|hr|is|pt_br)/skins/moodledocs/((version)(.png)|(moodledocs)(.css))$ /prodwiki/skins/moodledocs/$4$6nover$5$7 [L]
 
 # Regex to catch requests for all other urls like css, robots, favicon, errors etc..
 RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|19|20|21)/([a-z]{2}|pt_br)))/
