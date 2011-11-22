@@ -6,7 +6,7 @@
  * @ingroup Extensions
  * @author Petr Bena <benapetr@gmail.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @link http://www.mediawiki.org/wiki/Extension:OnlineStatusBar Documentation
+ * @link http://www.mediawiki.org/wiki/Extension:InteractiveBlockMessage Documentation
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -29,7 +29,6 @@ $wgAutoloadClasses['InteractiveBlockMessage'] = "$dir/InteractiveBlockMessage.ph
 $wgAutoloadClasses['InteractiveBlockMessageHooks'] = "$dir/InteractiveBlockMessageHooks.php";
 
 $wgExtensionMessagesFiles['InteractiveBlockMessage'] = "$dir/InteractiveBlockMessage.i18n.php";
-
 
 $wgHooks['LanguageGetMagic'][] = 'InteractiveBlockMessageHooks::magicWordVar';
 $wgHooks['MagicWordwgVariableIDs'][] = 'InteractiveBlockMessageHooks::magicWordSet';
