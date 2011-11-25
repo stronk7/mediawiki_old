@@ -29,18 +29,20 @@ class OnlineStatusBarHooks {
 	 */
 	public static function logout( &$user, &$inject_html, $old_name ) {
 		OnlineStatusBar::purge( $old_name );
-		OnlineStatusBar::deleteStatus( $old_name );
+		OnlineStatusBar_StatusCheck::deleteStatus( $old_name );
 		return true;
 	}
 
 	/**
-	 * Called everytime on login 
+	 * Called everytime on login
 	 * @return bool
 	 */
 	public static function updateStatus() {
 		global $wgUser;
+		// Purge user page (optional)
 		OnlineStatusBar::purge( $wgUser );
-		OnlineStatusBar::updateStatus();
+		// Update status
+		OnlineStatusBar_StatusCheck::updateStatus();
 		return true;
 	}
 
@@ -53,13 +55,24 @@ class OnlineStatusBarHooks {
 	 */
 	public static function renderBar( &$article, &$outputDone, &$pcache ) {
 		$context = $article->getContext();
+		
+		// Update status of each user who wants to be tracked
+		OnlineStatusBar_StatusCheck::updateStatus();
 
-		OnlineStatusBar::updateStatus();
-		$result = OnlineStatusBar::getUserInfoFromTitle( $article->getTitle() );
-		if ( $result === false && User::isIP ( $article->getTitle()->getBaseText() ) ) {
-			$result = OnlineStatusBar::getAnonFromTitle( $article->getTitle() ); 
+		// Performace fix
+		$title = $article->getTitle();
+		if ( $title->getNamespace() != NS_USER && $title->getNamespace() != NS_USER_TALK ) {
+			return true;
 		}
 
+		// Retrieve status of user parsed from title
+		$result = OnlineStatusBar::getUserInfoFromTitle( $title );
+		// In case that status can't be parsed we check if it isn't anon
+		if ( $result === false && User::isIP ( $title->getBaseText() ) ) {
+			$result = OnlineStatusBar::getAnonFromTitle( $title ); 
+		}
+
+		// In case we were unable to get a status let's quit
 		if ( $result === false ) {
 			return true;
 		}
@@ -67,13 +80,13 @@ class OnlineStatusBarHooks {
 		/** @var $user User */
 		list( $status, $user ) = $result;
 
-		// Don't display status of those who have opted out
+		// Don't display status of those who don't want to show bar but only use magic
 		if ( $user->getOption( 'OnlineStatusBar_hide' ) == true ) {
 			return true;
 		}
 
 		$modetext = wfMessage( 'onlinestatusbar-status-' . $status )->toString();
-		$image = OnlineStatusBar::getImageHtml( $status );
+		$image = OnlineStatusBar::getImageHtml( $status, $modetext );
 		$text = wfMessage( 'onlinestatusbar-line', $user->getName() )
 				->rawParams( $image )->params( $modetext )->escaped();
 		$context->getOutput()->addHtml( OnlineStatusBar::getStatusBarHtml( $text ) );
@@ -124,7 +137,7 @@ class OnlineStatusBarHooks {
 	 * @return bool
 	 */
 	public static function magicWordVar( array &$magicWords, $ln ) {
-		$magicWords['isonline'] = array( 0, 'isonline' );
+		$magicWords['ISONLINE'] = array( 1, 'ISONLINE' );
 		return true;
 	}
 
@@ -138,6 +151,8 @@ class OnlineStatusBarHooks {
 			case 'monobook':
 			case 'vector':
 			case 'simple':
+			case 'modern':
+			case 'standard':
 			case 'nostalgia':
 			case 'chick':
 			case 'cologneblue':
@@ -154,7 +169,7 @@ class OnlineStatusBarHooks {
 	 * @return bool
 	 */
 	public static function magicWordSet( &$vars ) {
-		$vars[] = 'isonline';
+		$vars[] = 'ISONLINE';
 		return true;
 	}
 
@@ -166,17 +181,19 @@ class OnlineStatusBarHooks {
 	 * @return bool
 	 */
 	public static function parserGetVariable( &$parser, &$varCache, &$index, &$ret ) {
-		if ( $index != 'isonline' ) {
+		if ( $index != 'ISONLINE' ) {
 			return true;
 		}
 
+		// get a status of user parsed from title
 		$result = OnlineStatusBar::getUserInfoFromTitle( $parser->getTitle() );
-		if ( User::isIP( $parser->getTitle()->getBaseText() ) && $result == null ) {
+		// if user is IP and we track them
+		if ( User::isIP( $parser->getTitle()->getBaseText() ) && $result === false ) {
 			$result = OnlineStatusBar::getAnonFromTitle( $parser->getTitle() );
 		}
 		
-		if ( $result == false ) {
-			$ret = "unknown";
+		if ( $result === false ) {
+			$ret = 'unknown';
 			return true;
 		}
 

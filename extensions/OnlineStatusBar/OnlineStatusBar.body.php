@@ -29,19 +29,20 @@ HTML;
 	 * Returns image element
 	 *
 	 * @param $mode String
+	 * @param $mode_text String
 	 * @return string
 	 */
-	public static function GetImageHtml( $mode ) {
+	public static function GetImageHtml( $mode, $mode_text ) {
 		global $wgExtensionAssetsPath, $wgOnlineStatusBarIcon;
 		$icon = "$wgExtensionAssetsPath/OnlineStatusBar/{$wgOnlineStatusBarIcon[$mode]}";
-		return Html::element( 'img', array( 'src' => $icon ) );
+		return Html::element( 'img', array( 'src' => $icon, 'alt' => $mode_text ) );
 	}
 
 
 	/**
 	 * Returns the status and User element
 	 *
-	 * @param Title $title
+	 * @param Title $title a title of page
 	 * @return array|bool Array containing the status and User object
          */
 	public static function getAnonFromTitle( Title $title ) {
@@ -50,7 +51,7 @@ HTML;
 		if ( $wgOnlineStatusBarTrackIpUsers == false ) {
 			return false;
 		}
-	
+
 		// checks ns
 		if ( $title->getNamespace() != NS_USER && $title->getNamespace() != NS_USER_TALK ) {
 			return false;
@@ -65,7 +66,7 @@ HTML;
 			return false;
 		}
 
-		$status = self::getStatus( $user, true );
+		$status = OnlineStatusBar_StatusCheck::getStatus( $user );
 
 		return array( $status, $user );
 	}
@@ -74,7 +75,7 @@ HTML;
 	/**
 	 * Returns the status and User element
 	 *
-	 * @param Title $title
+	 * @param Title $title a title of page
 	 * @return array|bool Array containing the status and User object
 	 */
 	public static function getUserInfoFromTitle( Title $title ) {
@@ -82,6 +83,7 @@ HTML;
 			return false;
 		}
 
+		// We create an user object using name of user parsed from title
 		$user = User::newFromName( $title->getBaseText() );
 		// Invalid user
 		if ( !($user instanceof User) ) {
@@ -91,46 +93,9 @@ HTML;
 			return false;
 		}
 
-		$status = self::getStatus( $user, true );
+		$status = OnlineStatusBar_StatusCheck::getStatus( $user );
 
 		return array( $status, $user );
-	}
-
-	/**
-	 * @param $user User
-	 * @return String
-	 */
-	public static function getStatus( $user, $update = false ) {
-		global $wgOnlineStatusBarDefaultOffline, $wgOnlineStatusBarDefaultOnline;
-		// remove old entries
-		if ( $update )
-		{
-			self::deleteOld();
-		}
-
-		// instead of delete every time just select the records which are not that old
-		$t_time = self::getTimeoutDate();
-		$dbr = wfGetDB( DB_SLAVE );
-		$result = $dbr->selectField( 'online_status', 'username', array( 'username' => $user->getName(),
-			"timestamp > " . $dbr->addQuotes( $dbr->timestamp( $t_time ) ) ),
-			__METHOD__, array( 'LIMIT 1', 'ORDER BY timestamp DESC' ) );
-
-		if ( $result === false ) {
-			$status = $wgOnlineStatusBarDefaultOffline;
-		} else {
-			// let's check if it isn't anon
-			if ( $user->isLoggedIn() ) {
-				$status = $user->getOption( 'OnlineStatusBar_status', $wgOnlineStatusBarDefaultOnline );
-			} else {
-				$status = $wgOnlineStatusBarDefaultOnline;
-			}
-		}
-
-		if ( $status == 'hidden' ) {
-			$status = $wgOnlineStatusBarDefaultOffline;
-		}
-
-		return $status;
 	}
 
 	/**
@@ -139,9 +104,11 @@ HTML;
 	 *
 	 */
 	public static function purge( $user_type ) {
+		// First of all we need to know if we already have user object or just a name
+		// if so let's create new object
 		if (  $user_type instanceof User  ) {
 			$user = $user_type;
-		} else if ( is_string( $user_type ) ){
+		} elseif ( is_string( $user_type ) ){
 			$user = User::newFromName( $user_type );
 		} else {
 			return false;
@@ -160,78 +127,19 @@ HTML;
 		return true;
 	}
 
-	/**
-	 * Insert to the database
-	 * @return bool
-	 */
-	public static function updateDb() {
-		global $wgUser;
-		// Skip users we don't track
-		if ( self::isValid ( $wgUser ) != true ) {
-			return false;
-		}
-		// If we track them, let's insert it to the table 
-		$dbw = wfGetDB( DB_MASTER );
-		$row = array(
-			'username' => $wgUser->getName(),
-			'timestamp' => $dbw->timestamp(),
-		);
-		$dbw->insert( 'online_status', $row, __METHOD__, 'DELAYED' );
-		return false;
-	}
-
-	/**
-	 * Update status of user
-	 * @return bool
-	 */
-	public static function updateStatus() {
-		global $wgUser, $wgOnlineStatusBarDefaultOffline, $wgOnlineStatusBarTrackIpUsers, $wgOnlineStatusBarDefaultEnabled;
-		// if anon users are not tracked and user is anon leave it
-		if ( !$wgOnlineStatusBarTrackIpUsers ) {
-			if ( !$wgUser->isLoggedIn() ) {
-				return false;
-			}
-		}
-		// if user doesn't want to be tracked leave it as well for privacy reasons
-		if ( $wgUser->isLoggedIn() && !$wgUser->getOption ( "OnlineStatusBar_active", $wgOnlineStatusBarDefaultEnabled ) ) {
-			return false;
-		}
-		if ( OnlineStatusBar::getStatus( $wgUser ) == $wgOnlineStatusBarDefaultOffline ) {
-			OnlineStatusBar::updateDb();
-			return true;
-		}
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update(
-			'online_status',
-			array( 'timestamp' => $dbw->timestamp() ),
-			array( 'username' => $wgUser->getName() ),
-			__METHOD__
-		);
-
-		return true;
-	}
 
 	/**
 	 * @return timestamp
 	 */
-	private static function getTimeoutDate() {
-		global $wgOnlineStatusBar_LogoutTime;
+	public static function getTimeoutDate( $delayed = false ) {
+		global $wgOnlineStatusBar_WriteTime, $wgOnlineStatusBar_LogoutTime;
+
+		if ($delayed) {
+			return wfTimestamp( TS_UNIX ) - $wgOnlineStatusBar_WriteTime;
+		}
+
 		return wfTimestamp( TS_UNIX ) - $wgOnlineStatusBar_LogoutTime;
 	}
-
-	/**
-	 * Delete old records from the table, this function is called frequently too keep it as small as possible
-	 * @return int
-	 */
-	public static function deleteOld() {
-		$dbw = wfGetDB( DB_MASTER );
-		// calculate time and convert it back to mediawiki format
-		$time = self::getTimeoutDate();
-		$dbw->delete( 'online_status', array( "timestamp < " . $dbw->addQuotes( $dbw->timestamp( $time ) ) ), __METHOD__ );
-		return 0;
-	}
-
 
 	/**
 	 * Checks to see if the user can be tracked
@@ -249,16 +157,5 @@ HTML;
 
 		// do we track them
 		return $user->getOption( "OnlineStatusBar_active", $wgOnlineStatusBarDefaultEnabled );
-	}
-
-	/**
-	 * Delete user who logged out
-	 * @param $userName string
-	 * @return bool
-	 */
-	static function deleteStatus( $userName ) {
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete( 'online_status', array( 'username' => $userName ), __METHOD__ ); // delete user
-		return true;
 	}
 }

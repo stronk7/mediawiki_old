@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits[version_compare( $wgVersion, '1.17', '>=' ) ? 'userpage tools' : 'other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Online status bar',
-	'version' => '1.0.2',
+	'version' => '1.0.3',
 	'author' => array( 'Petr Bena' ),
 	'descriptionmsg' => 'onlinestatusbar-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:OnlineStatusBar',
@@ -38,8 +38,20 @@ $wgResourceModules['ext.OnlineStatusBar.vector'] = array (
 	'remoteExtPath' => 'OnlineStatusBar',
 );
 
+$wgResourceModules['ext.OnlineStatusBar.modern'] = array (
+	'styles' => 'OnlineStatusBarModern.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
 $wgResourceModules['ext.OnlineStatusBar.chick'] = array (
 	'styles' => 'OnlineStatusBarChick.css',
+	'localBasePath' => dirname ( __FILE__ ),
+	'remoteExtPath' => 'OnlineStatusBar',
+);
+
+$wgResourceModules['ext.OnlineStatusBar.standard'] = array (
+	'styles' => 'OnlineStatusBarClassic.css',
 	'localBasePath' => dirname ( __FILE__ ),
 	'remoteExtPath' => 'OnlineStatusBar',
 );
@@ -68,7 +80,9 @@ $wgResourceModules['ext.OnlineStatusBar.nostalgia'] = array (
 	'remoteExtPath' => 'OnlineStatusBar',
 );
 
+// Load other files of extension
 $wgAutoloadClasses['OnlineStatusBar'] = "$dir/OnlineStatusBar.body.php";
+$wgAutoloadClasses['OnlineStatusBar_StatusCheck'] = "$dir/OnlineStatusBar.status.php";
 $wgAutoloadClasses['OnlineStatusBarHooks'] = "$dir/OnlineStatusBarHooks.php";
 
 // Configuration
@@ -83,6 +97,10 @@ $wgOnlineStatusBarIcon = array(
 
 // default for anonymous and uknown users
 $wgOnlineStatusBarTrackIpUsers = false;
+// it's better to cron this for performance reasons
+$wgOnlineStatusBarAutoDelete = true;
+// delay between db updates
+$wgOnlineStatusBar_WriteTime = 300;
 // default for online
 $wgOnlineStatusBarDefaultOnline = "online";
 // default for offline

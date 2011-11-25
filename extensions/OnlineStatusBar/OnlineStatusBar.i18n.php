@@ -63,6 +63,7 @@ $messages['qqq'] = array(
  */
 $messages['br'] = array(
 	'onlinestatusbar-line' => '$1 zo bremañ $2 $3',
+	'prefs-onlinestatus' => 'Statud enlinenn',
 	'onlinestatusbar-status-online' => 'Kevreet',
 	'onlinestatusbar-status-busy' => 'Soulgarget',
 	'onlinestatusbar-status-away' => 'Er-maez',
@@ -170,8 +171,13 @@ $messages['he'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
+	'onlinestatusbar-desc' => 'Statusowa lajsta, kotraž na zakładźe nastajenjow pokazuje, hač wužiwar je na swojej wužiwarskej stronje online',
 	'onlinestatusbar-line' => '$1 je nětko $3 $2',
+	'onlinestatusbar-used' => 'Chceće druhich widźeć dać, zo wy sće online?',
+	'onlinestatusbar-status' => 'Što je standardny status, kotryž chceće wužiwać:',
+	'onlinestatusbar-purge' => 'Pufrowak wužiwarskeje strony kóždy raz wuprózdnić, hdyž so přizjewjeće abo wotzjewjeće',
 	'prefs-onlinestatus' => 'Onlinestatus',
+	'onlinestatusbar-hide' => 'Chceće statusowu lajstu schować, zo byšće jenož magiske słowo wužiwał? (Za pokročenych wužiwarjow)',
 	'onlinestatusbar-status-online' => 'Online',
 	'onlinestatusbar-status-busy' => 'Ma dźěło',
 	'onlinestatusbar-status-away' => 'Preč',
@@ -224,6 +230,24 @@ $messages['mk'] = array(
 	'onlinestatusbar-status-away' => 'Отсутен',
 	'onlinestatusbar-status-offline' => 'Исклучен',
 	'onlinestatusbar-status-hidden' => 'Скриен',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'onlinestatusbar-desc' => 'Palang status yang menunjukkan sama pengguna berada dalam talian atau tidak, berasaskan keutamaan pada laman penggunanya',
+	'onlinestatusbar-line' => '$1 kini $2 $3',
+	'onlinestatusbar-used' => 'Adakah anda ingin orang lain tahu sama ada anda berada dalam talian atau tidak?',
+	'onlinestatusbar-status' => 'Yang manakah status asali yang ingin anda gunakan:',
+	'onlinestatusbar-purge' => 'Singkirkan isi laman pengguna setiap kali ketika log masuk/keluar',
+	'prefs-onlinestatus' => 'Status dalam talian',
+	'onlinestatusbar-hide' => 'Adakah anda ingin menyorokkan palang status demi menggunakan kata sakti sahaja? (Untuk pengguna lebih berpengalaman)',
+	'onlinestatusbar-status-online' => 'Dalam talian',
+	'onlinestatusbar-status-busy' => 'Sibuk',
+	'onlinestatusbar-status-away' => 'Tiada',
+	'onlinestatusbar-status-offline' => 'Luar talian',
+	'onlinestatusbar-status-hidden' => 'Tersorok',
 );
 
 /** Dutch (Nederlands)

@@ -5,7 +5,8 @@ where topicon isn't defined
 div.onlinestatusbartop {
 	position: absolute;
 	top: 0px;
-	margin-right: 261px;
+	margin-right: 2px;
+	color: white;
 	display: block !important;
 }
 
@@ -20,5 +21,5 @@ div.onlinestatusbaricon {
 
 div.onlinestatusbarbody {
 	right:0px;
-	margin-top:0px;
+	margin-top:-3px;
 }
