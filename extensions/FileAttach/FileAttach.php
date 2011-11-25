@@ -80,9 +80,11 @@ class FileAttach {
 		# Modify the upload form
 		if( $this->uploadForm ) {
 			global $wgRequest;
-			if( $attachto = $wgRequest->getText( 'attachto' ) ) {
+			$attachto = $wgRequest->getText( 'attachto' );
+			if( $attachto ) {
 				$out->mPagetitle = wfMsg( 'fileattach-uploadheading', $attachto );
-				$out->mBodytext = str_replace( "</form>", "<input type=\"hidden\" name=\"attachto\" value=\"$attachto\" /></form>", $out->mBodytext );
+				$escVal = htmlspecialchars( $attachto );
+				$out->mBodytext = str_replace( "</form>", "<input type=\"hidden\" name=\"attachto\" value=\"$escVal\" /></form>", $out->mBodytext );
 			}
 		}
 
