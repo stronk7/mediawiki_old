@@ -278,13 +278,16 @@ Parameters:
 * $2 is the article's parent wikilog name (optional)
 * $3 is a URL formatted link to the article
 * $4 is the article title (optional)",
-	'wikilog-entry-footer' => 'Has the same parameters of {{msg-mw|wikilog-summary-footer}}.',
-	'wikilog-simple-signature' => 'Parameters:
+	'wikilog-entry-footer' => '{{optional}}
+Has the same parameters of {{msg-mw|wikilog-summary-footer}}.',
+	'wikilog-simple-signature' => '{{optional}}
+Parameters:
 * $1 is a link to the commenting user page
 * $2 is a link to the commenting user talk page, with {{msg-mw|talkpagelinktext}} as link text',
 	'wikilog-edit-hint' => 'Parameters:
 * $1 is an article title.',
-	'wikilog-comment-footer' => 'Parameters:
+	'wikilog-comment-footer' => '{{optional}}
+Parameters:
 * $1 is the name of the author of the comment (optional)
 * $2 is the name of the author or the comment formatted with {{msg-mw|wikilog-simple-signature|notext=1}}
 * $3 is the comment date
@@ -312,7 +315,8 @@ Parameters:
 	'wikilog-comment-autosumm' => 'Parameters:
 * $1 is a user name
 * $2 is a summary',
-	'wikilog-feed-title' => 'Parameters:
+	'wikilog-feed-title' => '{{optional}}
+Parameters:
 * $1 is a title
 * $2 is the content language of the wiki',
 	'wikilog-feed-ns-title' => 'Parameters:
@@ -621,6 +625,7 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
+ * @author روخو
  */
 $messages['ar'] = array(
 	'wikilog-desc' => 'يضيف خصائص تدوين، منشئا تهجين ويكي-مدونة',
@@ -681,6 +686,7 @@ $messages['ar'] = array(
 	'wikilog-edit-signpub' => 'وقع وانشر هذه المقالة',
 	'wikilog-edit-signpub-tooltip' => 'يسبب هذه المقالة أن يتم توقيعها ونشرها في سجلها للويكي عند حفظها.
 لا تعلم على هذا الصندوق لإبقاء المقالة كمسودة.',
+	'wikilog-comment-anonsig' => '$3 (مجهول)',
 	'wikilog-comment-pending' => 'هذا التعليق بانتظار الموافقة.',
 	'wikilog-comment-deleted' => 'هذا التعليق تم حذفه.',
 	'wikilog-comment-autosumm' => 'تعليق جديد بواسطة $1: $2',
@@ -734,7 +740,7 @@ $messages['ar'] = array(
 	'wikilog-show-published' => 'منشور',
 	'wikilog-show-drafts' => 'مسودات',
 	'wikilog-submit' => 'أرسل',
-	'wikilog-preview' => 'معاينة',
+	'wikilog-preview' => 'عاين',
 	'wikilog-edit-lc' => 'عدل',
 	'wikilog-reply-lc' => 'رد',
 	'wikilog-delete-lc' => 'احذف',
@@ -869,6 +875,31 @@ $messages['arz'] = array(
 	'wikilog-page-lc' => 'صفحة',
 	'wikilog-history-lc' => 'تاريخ',
 	'wikilog-doc-import-comment' => 'استورد توثيق سجل الويكي',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikilog-pager-next' => 'növbəti',
+	'wikilog-pager-first' => 'birinci',
+	'wikilog-pager-last' => 'sonuncu',
+	'wikilog-author-signature' => '[[{{ns:User}}:$1|$1]] ([[{{ns:User_talk}}:$1|müzakirə]])',
+	'wikilog-title-comments' => 'Şərhlər - $1',
+	'wikilog-form-category' => 'Kateqoriya:',
+	'wikilog-form-name' => 'Ad:',
+	'wikilog-form-author' => 'Müəllif:',
+	'wikilog-form-date' => 'Tarix:',
+	'wikilog-form-status' => 'Status:',
+	'wikilog-form-comment' => 'Şərh:',
+	'wikilog-show-all' => 'Bütün postlar',
+	'wikilog-submit' => 'Təsdiq et',
+	'wikilog-preview' => 'Sınaq göstərişi',
+	'wikilog-edit-lc' => 'redaktə',
+	'wikilog-reply-lc' => 'yenidən',
+	'wikilog-delete-lc' => 'sil',
+	'wikilog-page-lc' => 'səhifə',
+	'wikilog-history-lc' => 'tarix',
 );
 
 /** Belarusian (Беларуская)
@@ -1220,7 +1251,7 @@ Ret eo e vefe krouet da gentañ evit ma vefe posupl embann pennadoù hag implijo
 	'wikilog-wikilog' => 'Wikilog',
 	'wikilog-title' => 'Titl',
 	'wikilog-actions' => 'Oberoù',
-	'wikilog-comments' => 'Addisplegoù',
+	'wikilog-comments' => 'Evezhiadennoù',
 	'wikilog-replies' => 'Respontoù',
 	'wikilog-view-archives' => 'Dielloù',
 	'wikilog-view-summary' => 'Diverradur',
@@ -1902,7 +1933,7 @@ Der Kommentar wird erst erscheinen, nachdem er von einem Moderator geprüft wurd
  */
 $messages['de-formal'] = array(
 	'wikilog-comment-feed-description' => 'Lesen Sie die neuesten Kommentare dieses Feeds.',
-	'wikilog-posting-anonymously' => 'Sie sind zur Zeit nicht angemeldet; Ihr Kommentar wird anonym versendet, identifiziert durch Ihre Internetverbindungsadresse. Sie sollten oben entweder ein Pseudonym angeben, um den Kommentar zu identifizieren oder sich $1, damit er passend zugeordnet wird.',
+	'wikilog-posting-anonymously' => 'Sie sind zurzeit nicht angemeldet; Ihr Kommentar wird anonym versendet, identifiziert durch Ihre Internetverbindungsadresse. Sie sollten oben entweder ein Pseudonym angeben, um den Kommentar zu identifizieren oder sich $1, damit er passend zugeordnet wird.',
 	'wikilog-anonymous-moderated' => 'Nachdem Sie Ihren Kommentar absenden, wird er nicht sofort auf dieser Seite angezeigt.
 Der Kommentar wird nur erscheinen, nachdem er von einem Moderator freigegeben wurde.',
 );
@@ -3039,6 +3070,7 @@ $messages['grc'] = array(
 	'wikilog-form-category' => 'Κατηγορία:',
 	'wikilog-form-name' => 'Ὄνομα:',
 	'wikilog-form-author' => 'Δημιουργός:',
+	'wikilog-form-date' => 'Ἡμερομηνία:',
 	'wikilog-form-comment' => 'Σχόλιον:',
 	'wikilog-edit-lc' => 'μεταγράφειν',
 );
@@ -3880,8 +3912,8 @@ $messages['ig'] = array(
 	'wikilog-form-name' => 'Áhạ:',
 	'wikilog-form-author' => 'Ọdè ákwúkwó:',
 	'wikilog-form-date' => 'Ubọchị:',
-	'wikilog-edit-lc' => 'rüwa',
-	'wikilog-delete-lc' => 'gbakashia',
+	'wikilog-edit-lc' => 'mèzi',
+	'wikilog-delete-lc' => 'kàcha',
 	'wikilog-page-lc' => 'ihü',
 	'wikilog-history-lc' => 'akíkó mbu',
 );
@@ -4335,7 +4367,7 @@ Se moß eets vun enem Moderator aanjenumme wääde.',
 	'wikilog-doc-import-comment' => 'Empoteet Handbooch för {{int:Wikilog-wikilog}}',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -4662,7 +4694,7 @@ $messages['mk'] = array(
 	'wikilog-comment-page' => 'Оди на страницата на овој коментар',
 	'wikilog-comment-edit' => 'Уреди го коментаров',
 	'wikilog-comment-delete' => 'Избриши го коментаров',
-	'wikilog-comment-history' => 'Види историја на коментарот',
+	'wikilog-comment-history' => 'Историја на коментирање',
 	'wikilog-comment-approve' => 'Одобри го коментарот (делува веднаш)',
 	'wikilog-comment-reject' => 'Одбиј го коментарот (делува веднаш)',
 	'wikilog-newtalk-text' => '<!-- празна страница создадена од Викидневникот -->',
@@ -4798,15 +4830,25 @@ $messages['ms'] = array(
 	'wikilog-authors' => 'Pengarang',
 	'wikilog-title' => 'Tajuk',
 	'wikilog-actions' => 'Tindakan',
+	'wikilog-comments' => 'Komen',
 	'wikilog-view-summary' => 'Ringkasan',
+	'wikilog-anonymous-mark' => '(tanpa nama)',
 	'wikilog-pager-prev' => 'sebelumnya',
 	'wikilog-pager-next' => 'berikutnya',
+	'wikilog-has-comments' => '{{PLURAL:$1|satu komen|$1 komen}}',
+	'wikilog-title-comments' => 'Komen - $1',
 	'wikilog-form-name' => 'Nama:',
 	'wikilog-form-author' => 'Pengarang:',
 	'wikilog-form-date' => 'Tarikh:',
+	'wikilog-form-preview' => 'Pralihat:',
+	'wikilog-form-comment' => 'Komen:',
+	'wikilog-submit' => 'Serahkan',
+	'wikilog-preview' => 'Pralihat',
+	'wikilog-edit-lc' => 'sunting',
 	'wikilog-delete-lc' => 'hapuskan',
 	'wikilog-approve-lc' => 'luluskan',
 	'wikilog-page-lc' => 'laman',
+	'wikilog-history-lc' => 'sejarah',
 );
 
 /** Nedersaksisch (Nedersaksisch)
@@ -5287,6 +5329,13 @@ Lo comentari apareisserà pas qu'aprèp verificacion per un moderator.",
 	'wikilog-doc-import-comment' => 'Documentacion importada de wikilog',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'wikilog-title' => 'ଶିରୋନାମା',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -5306,6 +5355,7 @@ $messages['pdc'] = array(
 	'wikilog-form-comment' => 'Aamaericking:',
 	'wikilog-preview' => 'Devor aagucke',
 	'wikilog-edit-lc' => 'ennere',
+	'wikilog-delete-lc' => 'lesche',
 	'wikilog-page-lc' => 'Blatt',
 );
 
@@ -5602,7 +5652,7 @@ $messages['ps'] = array(
 	'wikilog-new-item-go' => 'جوړول',
 	'wikilog-item-name' => 'د ليکنې نوم:',
 	'wikilog-published' => 'خپاره شوي',
-	'wikilog-updated' => 'اوسمهاله شو',
+	'wikilog-updated' => 'اوسمهالېدلی',
 	'wikilog-draft' => 'مسوده',
 	'wikilog-authors' => 'ليکوالان',
 	'wikilog-wikilog' => 'ويکي يادښت',
@@ -5630,6 +5680,7 @@ $messages['ps'] = array(
 	'wikilog-comment-delete' => 'دا تبصره ړنګول',
 	'wikilog-comment-history' => 'د تبصرې پېښليک کتل',
 	'wikilog-title-comments' => 'تبصرې - $1',
+	'wikilog-form-wikilog' => 'ويکي يادښتونه:',
 	'wikilog-form-category' => 'وېشنيزه:',
 	'wikilog-form-name' => 'نوم:',
 	'wikilog-form-author' => 'ليکوال:',
@@ -6483,18 +6534,29 @@ $messages['si'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'wikilog-desc' => 'Doda zmožnosti bloganja in ustvari križanec med wikijem in blogom',
 	'wikilog-auto' => 'Wikilog Samodejno',
 	'wikilog-help' => '{{ns:Help}}:Wikilog',
 	'right-wl-postcomment' => 'Objavljanje pripomb k člankom wikiloga',
+	'right-wl-moderation' => 'Upravljanje pripomb člankov wikilog',
 	'wikilog-specialwikilog-title' => 'Wikilogi',
 	'wikilog-log-pagename' => 'Dnevnik dejanj Wikilog',
 	'wikilog-log-pagetext' => 'Spodaj se nahaja seznam dejanj wikiloga.',
-	'wikilog-log-cmt-approve' => 'odobril(-a) pripombo »[[$1]]«',
-	'wikilog-log-cmt-reject' => 'zavrnil(-a) pripombo »[[$1]]«',
+	'wikilog-log-cmt-approve' => 'je odobril(-a) pripombo »[[$1]]«',
+	'wikilog-log-cmt-reject' => 'je zavrnil(-a) pripombo »[[$1]]«',
 	'wikilog-log-cmt-rejdel' => 'Zavrnjena pripomba wikilog od [[Special:Contributions/$1|$1]]',
 	'wikilog-tab' => 'Wikilog',
 	'wikilog-tab-title' => 'Dejanja Wikilog',
+	'wikilog-missing-wikilog' => 'To je stran [[{{int:wikilog-help}}|wikiloga]] za [[{{FULLPAGENAME}}]].
+
+Ta wikilog še ne obstaja.
+Če želite objavljati članke in omogočiti druge zmožnosti wikiloga, ga morate najprej ustvariti.
+
+* <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} Ustvari wikilog].</span>',
 	'wikilog-information' => 'Informacije wikiloga',
+	'wikilog-post-count-published' => 'Na tem wikilogu {{PLURAL:$1|je $1 objavljen članek|sta $1 objavljena članka|so $1 objavljeni članki|je $1 objavljenih člankov}}',
+	'wikilog-post-count-drafts' => '{{PLURAL:$1|Obstaja $1 neobjavljen (osnutek) članka|Obstajata $1 neobjavljena (osnutka) članka|Obstajo $1 neobjavljeni (osnutki) člankov|Obstaja $1 neobjavljenih (osnutkov) člankov}}',
+	'wikilog-post-count-all' => 'Skupno {{PLURAL:$1|je tukaj $1 članek|sta tukaj $1 članka|so tukaj $1 članki|je tukaj $1 člankov}}.',
 	'wikilog-new-item' => 'Ustvari nov članek wikilog',
 	'wikilog-new-item-go' => 'Ustvari',
 	'wikilog-item-name' => 'Ime članka:',
@@ -6520,6 +6582,8 @@ $messages['sl'] = array(
 	'wikilog-pager-empty' => '(ni predmetov)',
 	'wikilog-no-comments' => 'ni pripomb',
 	'wikilog-has-comments' => '$1 {{PLURAL:$1|pripomba|pripombi|pripombe|pripomb}}',
+	'wikilog-summary-footer' => '{{PLURAL:$5|Objavil|Objavila|Objavili}} $7 na [[$1|$2]] dne $8 ob $9 ($15), $10.',
+	'wikilog-summary-footer-single' => '{{PLURAL:$5|Objavil|Objavila|Objavili}} $7 dne $8 ob $9 ($15), $10.',
 	'wikilog-summary-uncategorized' => 'Nekategorizirano',
 	'wikilog-summary-categories' => 'Vloženo pod $2',
 	'wikilog-summary-more' => '[[$3|→ nadaljujte z branjem ...]]',
@@ -6527,6 +6591,8 @@ $messages['sl'] = array(
 	'wikilog-edit-hint' => 'Uredi članek wikiloga: $1',
 	'wikilog-edit-fieldset-legend' => 'Možnosti wikiloga:',
 	'wikilog-edit-signpub' => 'Podpiši in objavi ta članek',
+	'wikilog-edit-signpub-tooltip' => 'Ob shranitvi povzroči podpis in objavo tega članka na njegovem wikilogu.
+Počistite to polje, da obdržite članek kot osnutek.',
 	'wikilog-comment-permalink' => '$1 ob $2',
 	'wikilog-comment-note-item' => 'objavljeno na $1',
 	'wikilog-comment-note-edited' => 'nazadnje urejeno dne $1 ob $2',
@@ -6559,6 +6625,8 @@ $messages['sl'] = array(
 	'wikilog-invalid-file' => 'Neveljavna datoteka: $1',
 	'wikilog-file-not-found' => 'Neobstoječa datoteka: $1.',
 	'wikilog-not-an-image' => 'Datoteka ni slika: $1.',
+	'wikilog-out-of-context' => 'Opozorilo: oznake Wikilog uporabljate izven konteksta.
+Uporabljene naj bodo samo v člankih v imenskem prostoru Wikilog.',
 	'wikilog-too-many-authors' => 'Opozorilo: V tej objavi wikilog je navedenih preveč avtorjev.',
 	'wikilog-too-many-tags' => 'Opozorilo: V tej objavi wikilog je navedenih preveč oznak.',
 	'wikilog-comment-is-empty' => 'Objavljena pripomba je prazna.',
@@ -6566,6 +6634,11 @@ $messages['sl'] = array(
 	'wikilog-comment-invalid-name' => 'Navedeno ime je neveljavno.',
 	'wikilog-no-such-article' => 'Zahtevan članek wikilog ne obstaja.',
 	'wikilog-reading-draft' => 'Ta članek wikilog je osnutek; ni še bil objavljen.',
+	'wikilog-posting-anonymously' => 'Trenutno niste prijavljeni;
+vaš komentar bo objavljen brezimno, identificiran z vašim naslovom internetne povezave.
+Zgoraj raje navedite svoj vzdevek, da identificirate svojo pripombo; če pa želite, da je pravilno pripisana, se morate $1.',
+	'wikilog-anonymous-moderated' => 'Ko oddate svojo pripombo, ne bo takoj vidna na tej strani.
+Pripomba bo prikazana šele takrat, ko jo pregleda moderator.',
 	'wikilog-post-comment' => 'Objavi novo pripombo',
 	'wikilog-post-reply' => 'Objavi nov odgovor',
 	'wikilog-form-legend' => 'Iskanje objav wikilog',
@@ -6600,7 +6673,7 @@ $messages['so'] = array(
 	'wikilog-form-category' => 'Qeybta:',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Жељко Тодоровић
  * @author Михајло Анђелковић
@@ -6633,7 +6706,10 @@ $messages['sr-ec'] = array(
 	'wikilog-summary-footer-single' => 'Послао/-ла $7 ка $8 у $9 ($15), $10.',
 	'wikilog-summary-uncategorized' => 'Некатегорисано',
 	'wikilog-summary-categories' => 'Заведено под $2',
+	'wikilog-entry-footer' => '— $7 • $9, $8 • $10',
+	'wikilog-simple-signature' => '$1 ($2)',
 	'wikilog-edit-signpub' => 'Потпиши и објави овај чланак',
+	'wikilog-comment-footer' => '— $2 • $5 $6',
 	'wikilog-comment-permalink' => '$1 у $2',
 	'wikilog-comment-note-item' => 'послато на $1',
 	'wikilog-comment-note-edited' => 'последње измењен на $1 у $2',
@@ -6645,9 +6721,11 @@ $messages['sr-ec'] = array(
 	'wikilog-comment-delete' => 'Обриши овај коментар',
 	'wikilog-comment-history' => 'Види историју коментара',
 	'wikilog-comment-approve' => 'Одобри овај коментар (моментална акција)',
+	'wikilog-feed-title' => '{{SITENAME}} – $1 [$2]',
 	'wikilog-feed-description' => 'Прочитај најскорије уносе у овом фиду.',
 	'wikilog-comment-feed-title1' => 'Коментар од $2 (#$1)',
 	'wikilog-comment-feed-title2' => 'Коментар од $2 за $3 (#$1)',
+	'wikilog-title-item-full' => '$1 – $2',
 	'wikilog-title-comments' => 'Коментари - $1',
 	'wikilog-invalid-param' => 'Неисправан параметар: $1.',
 	'wikilog-invalid-author' => 'Непостојећи аутор: $1.',
@@ -6683,7 +6761,7 @@ $messages['sr-ec'] = array(
 	'wikilog-history-lc' => 'историја',
 );
 
-/** Serbian Latin ekavian (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Rancher
  */
 $messages['sr-el'] = array(
@@ -7228,6 +7306,7 @@ Lilitaw lamang ang puna pagkaraang masuri ito ng isang tagapamagitan.',
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Homonihilis
  * @author Manco Capac
  * @author Universal Life
@@ -7288,10 +7367,12 @@ Madde yayımlamak ve diğer vikikayıt özelliklerini etkinleştirmek için, ilk
 	'wikilog-summary-categories' => '$2 altına yerleştirilmiştir',
 	'wikilog-summary-more' => '[[$3|→ okumaya devam edin...]]',
 	'wikilog-author-signature' => '[[{{ns:User}}:$1|$1]] ([[{{ns:User_talk}}:$1|tartışma]])',
+	'wikilog-edit-hint' => 'Wikilog maddesini düzenleyin: $1',
 	'wikilog-edit-fieldset-legend' => 'Vikikayıt seçenekleri:',
 	'wikilog-edit-signpub' => 'Bu maddeyi imzala ve yayınla',
 	'wikilog-edit-signpub-tooltip' => 'Kaydedildiğinde bu maddenin imzalanmasını ve vikikaydında yayımlanmasını sağlar.  
 Bu maddeyi taslak olarak tutmak için bu kutunun seçimini kaldırın.',
+	'wikilog-comment-anonsig' => '$3 (anonim)',
 	'wikilog-comment-pending' => 'Bu yorum onay beklemektedir.',
 	'wikilog-comment-deleted' => 'Bu yorum silindi.',
 	'wikilog-comment-autosumm' => '$1 tarafından yapılan yeni yorum: $2',

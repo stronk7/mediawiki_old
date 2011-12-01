@@ -51,6 +51,13 @@ $messages['arz'] = array(
 	'wlfeed-desc' => 'رتب توليد تلقيم ممددة',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'wlfeed-desc' => 'Clases de xeneración de canales ameyoraes',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
@@ -70,6 +77,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'wlfeed-desc' => 'Napredno generisanje klasa fida',
+);
+
+/** Catalan (Català)
+ * @author Gemmaa
+ */
+$messages['ca'] = array(
+	'wlfeed-desc' => 'Realçava tindre una generació classes',
 );
 
 /** Czech (Česky)
@@ -220,6 +234,13 @@ $messages['mk'] = array(
 	'wlfeed-desc' => 'Подобрени класи на создавање на емитувања на новости',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wlfeed-desc' => 'Kelas penjanaan suapan yang dipertingkat',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -299,14 +320,14 @@ $messages['sl'] = array(
 	'wlfeed-desc' => 'Izboljšani razredi ustvarjanja virov',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'wlfeed-desc' => 'Класе за побољшане фидове',
 );
 
-/** Serbian Latin ekavian (‪Srpski (latinica)‬) */
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
 $messages['sr-el'] = array(
 	'wlfeed-desc' => 'Klase za poboljšane fidove',
 );

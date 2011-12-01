@@ -43,6 +43,11 @@ $specialPageAliases['ja'] = array(
 	'Wikilog' => array( 'ウィキ記録' ),
 );
 
+/** Luxembourgish (Lëtzebuergesch) */
+$specialPageAliases['lb'] = array(
+	'Wikilog' => array( 'Wiki-Logbicher' ),
+);
+
 /** Macedonian (Македонски) */
 $specialPageAliases['mk'] = array(
 	'Wikilog' => array( 'Викидневник' ),

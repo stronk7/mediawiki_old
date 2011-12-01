@@ -128,7 +128,7 @@ $magicWords['ka'] = array(
 	'wlk-subtitle' => array( 0, 'ქვესათაური' ),
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬) */
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬) */
 $magicWords['ku-latn'] = array(
 	'wlk-subtitle' => array( 0, 'binnav' ),
 	'wlk-summary' => array( 'kurte' ),
@@ -168,6 +168,14 @@ $magicWords['myv'] = array(
 	'wlk-hidden' => array( 0, 'кекшезь' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$magicWords['nds-nl'] = array(
+	'wl-publish' => array( 0, 'wl-publiseren' ),
+	'wl-tags' => array( 0, 'wl-etiketten' ),
+	'wlk-icon' => array( 0, 'wlk-ikoon' ),
+	'wlk-hidden' => array( 0, 'verbörgen' ),
+);
+
 /** Dutch (Nederlands) */
 $magicWords['nl'] = array(
 	'wl-settings' => array( 0, 'wl-instellingen' ),
@@ -182,10 +190,10 @@ $magicWords['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $magicWords['no'] = array(
-	'wlk-subtitle' => array( 0, 'undertekst', 'subtitle' ),
-	'wlk-summary' => array( '1', 'sammendrag', 'summary' ),
-	'wlk-hidden' => array( 0, 'gjemt', 'hidden' ),
-	'wlk-more' => array( 0, 'mer', 'more' ),
+	'wlk-subtitle' => array( 0, 'undertekst' ),
+	'wlk-summary' => array( 'sammendrag' ),
+	'wlk-hidden' => array( 0, 'gjemt' ),
+	'wlk-more' => array( 0, 'mer' ),
 );
 
 /** Oriya (ଓଡ଼ିଆ) */
@@ -196,6 +204,15 @@ $magicWords['or'] = array(
 	'wlk-summary' => array( 'ସାରକଥା' ),
 	'wlk-hidden' => array( 0, 'ଲୁଚିଥିବା' ),
 	'wlk-more' => array( 0, 'ବେଶୀ' ),
+);
+
+/** Polish (Polski) */
+$magicWords['pl'] = array(
+	'wlk-icon' => array( 0, 'ikonaWL' ),
+	'wlk-subtitle' => array( 0, 'podtytuł' ),
+	'wlk-summary' => array( 'podsumowanie' ),
+	'wlk-hidden' => array( 0, 'ukryty' ),
+	'wlk-more' => array( 0, 'więcej' ),
 );
 
 /** Pashto (پښتو) */
@@ -246,7 +263,7 @@ $magicWords['ru'] = array(
 	'wlk-more' => array( 0, 'ещё' ),
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬) */
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
 $magicWords['sr-ec'] = array(
 	'wl-settings' => array( 0, 'вл-поставке' ),
 	'wl-publish' => array( 0, 'вл-објава' ),
@@ -274,7 +291,7 @@ $magicWords['ta'] = array(
 	'wlk-more' => array( 0, 'மேலும்' ),
 );
 
-/** Татарча (Татарча) */
+/** Tatar (Cyrillic script) (Татарча) */
 $magicWords['tt-cyrl'] = array(
 	'wlk-more' => array( 0, 'күбрәк' ),
 );
@@ -294,10 +311,10 @@ $magicWords['zh-hans'] = array(
 	'wl-author' => array( 0, '作者' ),
 	'wl-tags' => array( 0, '标签' ),
 	'wl-info' => array( 0, '信息' ),
-	'wlk-icon' => array( 0, '图标' ),
-	'wlk-logo' => array( 0, '徽标' ),
-	'wlk-subtitle' => array( 0, '小标题' ),
-	'wlk-summary' => array( '总结' ),
+	'wlk-icon' => array( 0, '记录图标' ),
+	'wlk-logo' => array( 0, '标志' ),
+	'wlk-subtitle' => array( 0, '子标题' ),
+	'wlk-summary' => array( '概要' ),
 	'wlk-hidden' => array( 0, '隐藏' ),
 	'wlk-more' => array( 0, '更多' ),
 );

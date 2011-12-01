@@ -29,7 +29,7 @@
 if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
-/*
+/**
  * General extension information.
  */
 $wgExtensionCredits['other'][] = array(
@@ -41,7 +41,7 @@ $wgExtensionCredits['other'][] = array(
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Wikilog',
 );
 
-/*
+/**
  * Module autoload information.
  */
 
@@ -61,7 +61,7 @@ $wgAutoloadClasses += array(
 	'WlRSSFeedCompat'		=> $dir . 'WlFeed.body.php'
 );
 
-/*
+/**
  * Extension setup.
  */
 

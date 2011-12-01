@@ -4,8 +4,8 @@
 
 === General notes ===
 
-MediaWiki requirement raised to 1.16.0 and later.  MediaWiki 1.15 and earlier
-are no longer supported in this release.
+MediaWiki requirement raised to 1.17.0 and later.
+MediaWiki 1.16 and earlier are no longer supported in this release.
 
 === New configuration options ===
 
@@ -13,12 +13,17 @@ are no longer supported in this release.
 
 * Article and comment timestamps are now displayed in the wiki timezone
   (as defined by $wgLocaltimezone).
+* (wl:issue 11) Added support for {{DISPLAYTITLE:...}}, allows the author to
+  alter the title of the wikilog article.
 
 === Bug fixes ===
 
 * (mw:bug 27904) Fixed method signature compatibility with Mw1.16 for
   WikilogParserCache.
-
+* (wl:issue 12) Fixed calls to $wgParser->clearState() (which is now a private
+  function).
+* Fixed a crash when creating a new wikilog post as an unlogged user.
+* Several fixes for compatibility with MediaWiki 1.18.
 
 == Wikilog 1.1.0 ==
 
