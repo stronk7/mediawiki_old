@@ -669,5 +669,8 @@ $wgSpecialVersionShowHooks = true;
 # Allow direct embedding of images from certain places
 $wgAllowExternalImagesFrom = array('http://tracker.moodle.org/', 'http://moodle.org/');
 
+# This is for testing purposes, review once upgrade to 1.18
+# See MDLSITE-1511 for more info
+$wgResourceLoaderValidateStaticJS = false;
 
 ?>
