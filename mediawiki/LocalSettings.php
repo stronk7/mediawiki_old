@@ -26,7 +26,7 @@ error_reporting((E_ALL | E_STRICT));
 #$wgShowExceptionDetails = true;
 #$wgShowSQLErrors = true;
 #$wgDebugDumpSql  = true;
-#$wgDebugLogFile = $IP . '/images_test/debug.txt';
+#$wgDebugLogFile = $IP . '/debug.txt';
 #$wgProfileLimit = 1.0; # requires StartProfiler.php created and valid
 
 # If PHP's memory limit is very low, some operations may fail.
@@ -131,10 +131,10 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     } elseif (preg_match("/ipod/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
     } else {
-        $wgDefaultSkin = 'moodledocs';
+        $wgDefaultSkin = 'moodledocsnew';
     }
 }else {
-    $wgDefaultSkin = 'moodledocs';
+    $wgDefaultSkin = 'moodledocsnew';
 }
 // End wizardy, onto business.
 
