@@ -20,7 +20,7 @@ Redirect /upgradeinprogress.php http://docs.moodle.org/
 
 # Default lang and version is 21 english
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*) /21/en [R=301,L]
+RewriteRule ^(.*) /22/en [R=301,L]
 
 # Rewrite attempts to access langless versions to english
 RewriteRule ^(19|20|21|22)($|/$) /$1/en/? [R=301,L]
@@ -55,11 +55,11 @@ RewriteRule ^archive/([a-z]{2}|pt_br)($|(/(.*))) /$1/$2/
 RewriteCond %{REQUEST_URI} ^(/19/|/20/|/)([a-z]{2})_([a-z]{2}|kids)($|/(.*))
 RewriteRule (^19/|^20/|^)(de_du|de_kids|en_us|es_es|es_mx|es_ar|es_cb|fr_ca|no_gr|zh_cn|zh_tw)($|/(.*)) %1%2/$4 [R=301,L,QSA]
 
-# Redirect certain versionless langs to 20 version
+# Redirect certain versionless langs to 22 version
 RewriteCond %{REQUEST_URI} ^/([a-z]{2}|pt_br)($|/)
 RewriteCond %{REQUEST_URI} !^/([a-z]{2}|pt_br)/skins/
 RewriteCond %{REQUEST_URI} !^/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
-RewriteRule ^([a-z]{2}|pt_br)($|(/(.*))) /21/$1$2 [R=301,L,QSA]
+RewriteRule ^([a-z]{2}|pt_br)($|(/(.*))) /22/$1$2 [R=301,L,QSA]
 
 # Regex to catch /en/Development: namespace and redirect to /dev/
 RewriteCond %{REQUEST_URI} ^/(19|20|21|22)/en/Development(:|_(talk:))(.*)
