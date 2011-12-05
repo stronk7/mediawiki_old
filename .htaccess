@@ -13,6 +13,7 @@ RewriteEngine on
 #RewriteCond %{REQUEST_URI} !^/invaders.swf
 #RewriteRule ^(.*) /upgradeinprogress.php [L]
 
+# Disable the below rule if you enable the ones above (maintenance mode)
 # ppl keep accessing this script even after the above is disabled, tsk tsk.
 Redirect /upgradeinprogress.php http://docs.moodle.org/
 
