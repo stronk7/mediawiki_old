@@ -134,10 +134,10 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     } elseif (preg_match("/ipod/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
     } else {
-        $wgDefaultSkin = 'moodledocsnew';
+        $wgDefaultSkin = 'moodledocs';
     }
 }else {
-    $wgDefaultSkin = 'moodledocsnew';
+    $wgDefaultSkin = 'moodledocs';
 }
 // End wizardy, onto business.
 
@@ -480,6 +480,8 @@ switch ($callpath) {
         $wgUploadDirectory  = "$IP/".$mdocsver."images/images_en";
         $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
         #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        # Use skin 'moodledocsnew' if version is higher than 19
+        if ($mdocsver != "19") { $wgDefaultSkin = "moodledocsnew"; }
     break;
 
     default:  // any unexpected input
