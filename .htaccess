@@ -3,6 +3,10 @@ ErrorDocument 404 /error404.html
 
 RewriteEngine on
 
+# Deny access to .git/ directory
+RewriteRule ^(.*/)?\.git+ - [F,L]
+ErrorDocument 403 "Access Forbidden"
+
 # This brings the entire site down for maintenance
 # Make sure to put YOUR ip below so you can still access!
 # Use the next line together with the others to only block certain wikis
