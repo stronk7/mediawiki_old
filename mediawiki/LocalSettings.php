@@ -538,8 +538,16 @@ $wgDBmysql5 = false;
 # (switched to MEMCACHED because of problems with APC sharedmem. Eloy 20110415)
 $wgMainCacheType = CACHE_MEMCACHED;
 $wgMemCachedServers = array("127.0.0.1:11211");
+$wgSessionsInMemcached = true;
 $wgFileCacheDirectory = "$IP/cache$wgScriptPath";
 $wgCacheDirectory = "$IP/cache$wgScriptPath"; // data cache for this wiki (messages)
+
+# Varnish cache settings
+$wgUseSquid = true;
+$wgSquadServers = array('184.172.24.2:80');
+# settings used in combination with Varnish
+$wgDisableCounters = true;
+$wgShowIPinHeader = false;
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
