@@ -587,7 +587,8 @@ $wgEnableCreativeCommonsRdf = true;
 $wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
 $wgRightsUrl = "http://docs.moodle.org/en/License";
 $wgRightsText = "GNU Public License";
-$wgRightsIcon = "";
+# Disabled RightsIcon due to error (blank src/url in images lead to doubled page requests)
+#$wgRightsIcon = "";
 # $wgRightsCode = ""; # Not yet used
 
 $wgDiff3 = "/usr/bin/diff3";
