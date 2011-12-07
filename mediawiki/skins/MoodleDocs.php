@@ -90,7 +90,7 @@ class MoodleDocsTemplate extends QuickTemplate {
 		// Unset any icons which don't have an image
 		foreach ( $footericons as $footerIconsKey => &$footerIconsBlock ) {
 			foreach ( $footerIconsBlock as $footerIconKey => $footerIcon ) {
-				if ( !is_string($footerIcon) && !isset($footerIcon["src"]) ) {
+				if ( !is_string($footerIcon) && empty($footerIcon["src"]) ) {
 					unset($footerIconsBlock[$footerIconKey]);
 				}
 			}
