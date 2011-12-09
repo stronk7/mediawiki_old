@@ -191,8 +191,7 @@ class MoodleDocsNewTemplate extends QuickTemplate {
 		if ( !isset( $sidebar['LANGUAGES'] ) ) $sidebar['LANGUAGES'] = true;
 		foreach ($sidebar as $boxName => $cont) {
 			if ( $boxName == 'SEARCH' ) {
-				// Removing the search box from the sidebar
-				// $this->searchBox();
+				$this->searchBox();
 			} elseif ( $boxName == 'TOOLBOX' ) {
 				$this->toolbox();
 			} elseif ( $boxName == 'LANGUAGES' ) {
