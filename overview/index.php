@@ -1,6 +1,7 @@
 <?php
 
-require_once('/var/www/vhosts/docs.moodle.org/html/prodwiki/skins/moodledocs/moodleoutput.php');
+require_once(dirname(dirname(__FILE__)).'/prodwiki/skins/moodledocs/moodleoutput.php');
+//require_once('/var/www/vhosts/docs.moodle.org/html/prodwiki/skins/moodledocs/moodleoutput.php');
 
 if (isset($wgStylePath)) $wgStylePathOriginal = $wgStylePath;
 $wgStylePath = '/20/en/skins';
@@ -8,102 +9,37 @@ $wgStylePath = '/20/en/skins';
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="generator" content="MediaWiki 1.17.0" />
+        <title>Moodle Docs overview</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="search" type="application/opensearchdescription+xml" href="/20/en/opensearch_desc.php" title="MoodleDocs 20 (English)" />
+        <link rel="EditURI" type="application/rsd+xml" href="http://docstest.moodle.local/20/en/api.php?action=rsd" />
+        <link title="Creative Commons" type="application/rdf+xml" href="/20/en/index.php?title=Main_Page&amp;action=creativecommons" rel="meta" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="keywords" content="Main Page,About Moodle,Administrator documentation,Bulk user actions,Developer documentation,GSOC/2008,Grades,Notes,Sandbox,Teacher documentation,Upgrading to Moodle 1.9" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="search" type="application/opensearchdescription+xml" href="/en/opensearch_desc.php" title="MoodleDocs" />
         <link title="Creative Commons" type="application/rdf+xml" href="/en/index.php?title=Main_Page&amp;action=creativecommons" rel="meta" />
         <link rel="copyright" href="http://docs.moodle.org/en/License" />
-        <title>Moodle Docs overview</title>
 
-        <style type="text/css" media="screen, projection">/*<![CDATA[*/
-            @import "/20/en/skins/common/shared.css?97";
-        /*]]>*/</style>
-        <link rel="stylesheet" type="text/css" media="print" href="/20/en/skins/common/commonPrint.css?97" />
-        <!--[if lt IE 7]><script type="text/javascript" src="/20/en/skins/common/IEFixes.js?97"></script>
-            <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+        <link rel="alternate" type="application/atom+xml" title="MoodleDocs Atom feed" href="/20/en/index.php?title=Special:RecentChanges&amp;feed=atom" />
+        <link rel="stylesheet" href="/20/en/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared&amp;only=styles&amp;skin=moodledocsnew&amp;*" />
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/main.css?301" media="screen" />
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/moodledocsnew.css?301" media="screen" />
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/menu/menu.css?301" media="screen" />
 
-        <link rel="stylesheet" href="/mediawiki/skins/monobook/main.css?301" media="screen" />
-        <link rel="stylesheet" href="/mediawiki/skins/moodledocs/moodledocs.css?301" media="screen" />
-        <link rel="stylesheet" href="/mediawiki/skins/moodledocs/menu/menu.css?301" media="screen" />
-        <link rel="stylesheet" href="/mediawiki/skins/moodledocs/menu/menuprint.css?301" media="print" />
-        <!--[if lt IE 5.5000]><link rel="stylesheet" href="/mediawiki/skins/monobook/IE50Fixes.css?301" media="screen" /><![endif]-->
-        <!--[if IE 5.5000]><link rel="stylesheet" href="/mediawiki/skins/monobook/IE55Fixes.css?301" media="screen" /><![endif]-->
-        <!--[if IE 6]><link rel="stylesheet" href="/mediawiki/skins/monobook/IE60Fixes.css?301" media="screen" /><![endif]-->
-        <!--[if IE 7]><link rel="stylesheet" href="/mediawiki/skins/monobook/IE70Fixes.css?301" media="screen" /><![endif]-->
-        
-        <!--[if IE 5.5000]><link rel="stylesheet" href="/mediawiki/skins/moodledocs/fixes.IE55.css?301" media="screen" /><![endif]-->
-        <!--[if IE 6]><link rel="stylesheet" href="/mediawiki/skins/moodledocs/fixes.IE60.css?301" media="screen" /><![endif]-->
-        <!--[if IE 7]><link rel="stylesheet" href="/mediawiki/skins/moodledocs/fixes.IE70.css?301" media="screen" /><![endif]-->
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/menu/menuprint.css?301" media="print" />
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/customisation.20.css?301" />
+        <!--[if lt IE 5.5000]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/IE50Fixes.css?301" media="screen" /><![endif]-->
+        <!--[if IE 5.5000]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/IE55Fixes.css?301" media="screen" /><![endif]-->
+        <!--[if IE 6]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/IE60Fixes.css?301" media="screen" /><![endif]-->
+        <!--[if IE 7]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/IE70Fixes.css?301" media="screen" /><![endif]-->
+        <!--[if IE 7]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/fixes.IE70.css?301" media="screen" /><![endif]-->
+        <!--[if IE 6]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/fixes.IE60.css?301" media="screen" /><![endif]-->
+        <!--[if IE 5.5000]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/fixes.IE55.css?301" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
 
-
-        <script type="text/javascript" src="/20/en/skins/moodledocs/menu/sm/c_config.js"></script>
-        <script type="text/javascript" src="/20/en/skins/moodledocs/menu/sm/c_smartmenus.js"></script>
-
-        <script type= "text/javascript">/*<![CDATA[*/
-var skin = "moodledocs";
-var stylepath = "/20/en/skins";
-var wgArticlePath = "/en/$1";
-var wgScriptPath = "/en";
-var wgScript = "/en/index.php";
-var wgServer = "http://docs.moodle.org";
-var wgCanonicalNamespace = "";
-var wgCanonicalSpecialPageName = false;
-var wgNamespaceNumber = 0;
-var wgPageName = "Main_Page";
-var wgTitle = "Main Page";
-var wgAction = "view";
-var wgRestrictionEdit = ["sysop"];
-var wgRestrictionMove = ["sysop"];
-var wgArticleId = "1";
-var wgIsArticle = true;
-var wgUserName = "Dougiamas";
-var wgUserGroups = ["bureaucrat", "sysop", "*", "user", "autoconfirmed", "emailconfirmed"];
-var wgUserLanguage = "en";
-var wgContentLanguage = "en";
-var wgBreakFrames = false;
-var wgCurRevisionId = "41590";
-var wgAjaxWatch = {"watchMsg": "Watch", "unwatchMsg": "Unwatch", "watchingMsg": "Watching...", "unwatchingMsg": "Unwatching..."};
-/*]]>*/</script>
-                
-        <script type="text/javascript" src="/20/en/skins/common/wikibits.js?97"><!-- wikibits js --></script>
-        <script type="text/javascript" src="/en/index.php?title=-&amp;action=raw&amp;smaxage=0&amp;gen=js&amp;useskin=moodledocs"><!-- site js --></script>
-
-        <style type="text/css">/*<![CDATA[*/
-@import "/en/index.php?title=MediaWiki:Common.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
-@import "/en/index.php?title=MediaWiki:Moodledocs.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
-@import "/en/index.php?title=-&action=raw&gen=css&maxage=18000&smaxage=0";
-/*]]>*/</style>
-        <!-- Head Scripts -->
-        <script type="text/javascript" src="/20/en/skins/common/ajax.js?97"></script>
-        <script type="text/javascript" src="/20/en/skins/common/ajaxwatch.js?97"></script>
-        <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/overview/extra.css"; /*]]>*/</style>
-        <style type="text/css">
-ul.lang-list {
-  width: 75%;
-  margin: 0 auto; 
-  padding: 10px;
-
-}
-ul.lang-list li {
-  width: 50%;
-  margin: 0;
-  padding: 5px 0;
-  text-align: center;
-  float: left;
-  font-size: 1.2em;
-  list-style: none;
-}
-p.lang-clearer {
-  padding: 20px 20px 10px 20px;
-  margin: 0;
-  clear: both;
-  text-align:center;
-}
-h2 {
-  text-align:center;
-}
-        </style>
+        <link type="text/css" rel="stylesheet" href="/overview/extra.css" />
+        <link type="text/css" rel="stylesheet" href="/overview/overview.css" />
     </head>
     <body class="mediawiki ns-0 ltr page-Main_Page skin-moodledocs">
         <div id="page">
@@ -122,6 +58,33 @@ h2 {
                 <?php echo moodle_output::footer(); ?>
             </div>
         </div>
+
+        <script src="/20/en/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=moodledocsnew&amp;*"></script>
+        <script>if ( window.mediaWiki ) {
+                mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Main_Page", "wgTitle": "Main Page", "wgAction": "view", "wgArticleId": 1, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 83364, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": ["sysop"], "wgRestrictionMove": ["sysop"]});
+        }
+        </script>
+        <script>if ( window.mediaWiki ) {
+                mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+                mediaWiki.loader.go();
+        }
+        </script>
+
+        <script>
+        var moodleconfig = {'menuimagepath':'<?php echo $wgStylePath;?>/moodledocsnew/menu/sm/'}
+        </script>
+        <script src="<?php echo $wgStylePath;?>/moodledocsnew/menu/sm/c_config.js?301"></script>
+        <script src="<?php echo $wgStylePath;?>/moodledocsnew/menu/sm/c_smartmenus.js?301"></script>
+        <script>if ( window.mediaWiki ) {
+                mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"moodledocsnew","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+                0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs100":false,"searchNs101":false,"searchNs102":false});;mediaWiki.loader.state({"user.options":"ready"});
+        }
+        </script><!-- Served in 0.085 secs. -->
+        <!-- google analytics start -->
+        <script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try {var pageTracker = _gat._getTracker("UA-72764-4");pageTracker._trackPageview();} catch(err) {}</script>
+
+        <!-- google analytics end -->
+
     </body>
 </html>
 <?php

@@ -1,0 +1,24 @@
+ul.lang-list {
+  width: 75%;
+  margin: 0 auto; 
+  padding: 10px;
+
+}
+ul.lang-list li {
+  width: 50%;
+  margin: 0;
+  padding: 5px 0;
+  text-align: center;
+  float: left;
+  font-size: 1.2em;
+  list-style: none;
+}
+p.lang-clearer {
+  padding: 20px 20px 10px 20px;
+  margin: 0;
+  clear: both;
+  text-align:center;
+}
+h2 {
+  text-align:center;
+}
