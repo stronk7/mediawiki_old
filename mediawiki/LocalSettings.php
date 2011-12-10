@@ -546,6 +546,7 @@ $wgCacheDirectory = "$IP/cache$wgScriptPath"; // data cache for this wiki (messa
 $wgUseSquid = true;
 $wgSquidServers = array('184.172.24.2:80');
 # settings used in combination with Varnish
+$wgPutIPinRC = true;
 $wgDisableCounters = true;
 $wgShowIPinHeader = false;
 
