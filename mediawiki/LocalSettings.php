@@ -205,6 +205,7 @@ switch ($callpath) {
         $wgDBname           = $mdocsver."docs_de";
         $wgUploadPath       = "$wgScriptPath/images_de";
         $wgUploadDirectory  = "$IP/".$mdocsver."images/images_de";
+        if ($mdocsver != "19") { $wgDefaultSkin = "moodledocsnew"; }
 	if ($mdocsver === "20") {
 	  /// 20docs_de is InnoDB with binary charset, 19docs_de is MyISAM with latin1 charset (set by default at the top of this file.)
 	  $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
