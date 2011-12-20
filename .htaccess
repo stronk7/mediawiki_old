@@ -80,11 +80,12 @@ RewriteRule ^(19|20|21|22)/([a-z]{2}|pt_br)$ /$1/$2/
 
 # If lang is option 2 and ver 20 or 21 is requested, redirect to 19
 # This rule is where we list option 1 langs
-RewriteCond %{REQUEST_URI} ^/(20|21|22|23)/([a-z]{2}|pt_br)($|/)
-RewriteCond %{REQUEST_URI} !^/(19|20|21|22|23)/(en|ja|de)($|/)
-RewriteCond %{REQUEST_URI} !^/(19|20|21|22|23)/(ar|ca|cs|da|fi|hu|it|nl|no|pl|pt|ru|sk|zh)($|/)
-RewriteCond %{REQUEST_URI} !^/21/en($|/)
-RewriteCond %{REQUEST_URI} !^/22/en($|/)
+#RewriteCond %{REQUEST_URI} ^/(20|21|22|23)/([a-z]{2}|pt_br)($|/)
+RewriteCond %{REQUEST_URI} ^/(20|21|22|23)/(es|eu|fr|hr|is|pt_br)($|/)
+#RewriteCond %{REQUEST_URI} !^/(19|20|21|22|23)/(en|ja|de)($|/)
+#RewriteCond %{REQUEST_URI} !^/(19|20|21|22|23)/(ar|ca|cs|da|fi|hu|it|nl|no|pl|pt|ru|sk|zh)($|/)
+#RewriteCond %{REQUEST_URI} !^/21/en($|/)
+#RewriteCond %{REQUEST_URI} !^/22/en($|/)
 RewriteRule ^(19|20|21|22)/([a-z]{2}|pt_br)($|(/(.*))) /19/$2/$5 [R=301,L]
 # But we want to redirect ja and de back to 20
 RewriteCond %{REQUEST_URI} ^/(21|22|23)/(ja|de)($|/)
