@@ -47,9 +47,9 @@ RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23)/(ar|ca|cs|da|fi|hu|it|nl|no|pl|pt|
 RewriteCond %{REQUEST_URI} !^/(19|20|21|22|23)/([a-z]{2}|pt_br)/skins/
 RewriteCond %{REQUEST_URI} !^/(19|20|21|22|23)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
 # Below rule redirects to archive page
-RewriteRule ^(19|20|21|22|23)/([a-z]{2}|pt_br)($|(/(.*))) /archive/$2$3 [R=301,L,QSA]
-# Below rule redirects to /20/en with page requests
-#RewriteRule ^(19|20|21|22|23)/([a-z]{2}|pt_br)($|(/(.*))) /20/en$3 [R=301,L]
+#RewriteRule ^(19|20|21|22|23)/([a-z]{2}|pt_br)($|(/(.*))) /archive/$2$3 [R=301,L,QSA]
+# Below rule redirects to /en with page requests
+RewriteRule ^(19|20|21|22|23)/([a-z]{2}|pt_br)($|(/(.*))) /en$3 [R=301,L]
 
 # Stop people accessing other langs from /archive
 RewriteCond %{REQUEST_URI} !^/archive/(ar|ca|cs|da|fi|hu|it|nl|no|pl|pt|ru|sk|zh)($|/)
