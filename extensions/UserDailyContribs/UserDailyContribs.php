@@ -32,6 +32,16 @@ $wgHooks['ParserTestTables'][] = 'UserDailyContribsHooks::parserTestTables';
 $wgAPIModules['userdailycontribs'] = 'ApiUserDailyContribs';
 
 /**
+ * Whether or not API calls should require
+ * that the given user name exists in whatever authentication
+ * is set up in $wgAuth. Note that by default, on a plain install
+ * there is no authentication plugin, hence all checks for existance
+ * return to false.
+ * If you use CentralAuth you'd probably want to set this to true.
+ */
+$wgUserDailyContributionsApiCheckAuthPlugin = false;
+
+/**
  * Get the number of revisions a user has made since a given time
  *
  * @param $time beginning timestamp

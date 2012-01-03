@@ -10,6 +10,7 @@ class ApiUserDailyContribs extends ApiBase {
 		$days = $params['daysago'];
 		$user = User::newFromName($userName);
 		if ( !$user ) {
+		if ( !$wgAuth->userExists( $userName ) ) {
 			$this->dieUsage( 'Specified user does not exist', 'bad_user' );
 		}
 		
