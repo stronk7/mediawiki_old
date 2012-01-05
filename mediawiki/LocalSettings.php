@@ -551,6 +551,10 @@ $wgPutIPinRC = true;
 $wgDisableCounters = true;
 $wgShowIPinHeader = false;
 
+# antispam measures
+$wgEnableDnsBlacklist = true;
+$wgDnsBlacklistUrls = array('http.dnsbl.sorbs.net.');
+
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
 $wgEnableUploads       = true;
