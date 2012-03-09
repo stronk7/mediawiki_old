@@ -24,9 +24,8 @@ $wgStylePath = '/20/en/skins';
         <link rel="alternate" type="application/atom+xml" title="MoodleDocs Atom feed" href="/20/en/index.php?title=Special:RecentChanges&amp;feed=atom" />
         <link rel="stylesheet" href="/20/en/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared&amp;only=styles&amp;skin=moodledocsnew&amp;*" />
         <link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/main.css?301" media="screen" />
-        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/moodledocsnew.css?301" media="screen" />
-        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/menu/menu.css?301" media="screen" />
-
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/main.css?301" media="screen" />
+        <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/menu/moodlemenu.css?301" media="screen" />
         <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/menu/menuprint.css?301" media="print" />
         <link rel="stylesheet" href="<?php echo $wgStylePath;?>/moodledocsnew/customisation.20.css?301" />
         <!--[if lt IE 5.5000]><link rel="stylesheet" href="<?php echo $wgStylePath;?>/monobook/IE50Fixes.css?301" media="screen" /><![endif]-->
