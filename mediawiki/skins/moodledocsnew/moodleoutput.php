@@ -42,10 +42,6 @@ class moodle_output {
     public static function prepare_output_page(OutputPage $out) {
         global $wgStylePath;
 
-        $out->addInlineScript("var moodleconfig = {'menuimagepath':'$wgStylePath/moodledocsnew/menu/sm/'}");
-        $out->addScriptFile($wgStylePath . '/moodledocsnew/menu/sm/c_config.js');
-        $out->addScriptFile($wgStylePath . '/moodledocsnew/menu/sm/c_smartmenus.js');
-
         if (function_exists('MungeEmail')) {
             $out->mBodytext = MungeEmail($out->mBodytext);
         }
@@ -92,12 +88,14 @@ class moodle_output {
 
         self::area_start('menu');
         echo '<div id="moodlemenu" class="clearfix">';
+        echo '<div id="moodle-custommenu">';
         $moodlemenu = 'menu-'.$lang.'.html';
         if (file_exists($basedir.'/menu/'.$moodlemenu)) {
             include($basedir.'/menu/'.$moodlemenu);
         } else {
             include($basedir.'/menu/menu-en.html');
         }
+        echo '</div>';
         self::google_search();
         echo '</div>'; // #moodlemenu
         self::area_end();

@@ -1,37 +1,36 @@
-/* @group moodlemenu */
-#moodlemenu {
-  clear: both;
-  border-top: 1px solid #ffe39d;
-  border-bottom: 0.16em solid #e4af5f;
-  z-index: 10;
-  background: #ffe39d url(menu_grad.jpg) repeat-x left top;
-  font-size: 0.8em;
-  overflow: hidden;
-  width: 100%;
-}
-#site-index #moodlemenu,
-#my-index #moodlemenu {
-  border-bottom-color: #ffe39d;
-}
-#Menu1 {
-  float: left;
-  width: auto !important;
-}
-#Menu1 li a {
-  padding: 0.5em 4px;
-}
-#Menu1 .first {
-  padding-left: 15px;
-}
-#global-search {
-  float: right;
-  margin: 2px 2px 0 0;
-}
-#global-search .input-text {
-  padding: 1px;
-  margin: 2px 0;
-  background-color: #fdfae9;
-  border: 1px solid #ffb63c;
-  font-size: 100%;
-}
-/* @end */
+/** Basic element styling **/
+.mcm ul {list-style: none;margin:0;}
+.mcm ul li {display:inline-block;}
+.mcm ul li li {display:block;}
+.mcm a:link,
+.mcm a:visited,
+.mcm a:hover {color:#444; text-decoration: none;}
+
+/** Mechanics **/
+.mcm .mcm-submenu {display:none;position:absolute;top:100%;left:0;}
+.mcm .mcm-submenu .mcm-submenu {top:0;left:100%;}
+.mcm .mcm-item.with-children {position:relative;}
+.mcm .mcm-submenu .mcm-link {display:block;white-space: nowrap;}
+.mcm .mcm-link,
+.mcm .mcm-link-dropdown {display:inline-block;cursor:pointer;}
+.mcm.cssonly .mcm-item.with-children:hover > .mcm-submenu,
+.mcm.active-menu .mcm-item.active-item > .mcm-submenu {display:block;z-index:100;}
+
+/** Basic moodle.org styling **/
+.mcm .mcm-item {border:0 solid #FFB63C;border-right-width:1px;}
+.mcm .mcm-item .mcm-item {border-width:0;}
+.mcm .mcm-link {padding:0 10px;line-height:2em;display:inline-block;}
+.mcm .mcm-item.with-children > .mcm-link {padding-right:5px;}
+.mcm .mcm-link-dropdown {padding:0 5px;border-left:1px solid #FFE39D;font-size:70%;color:#555;line-height:2em;}
+.mcm .mcm-item.active-item .mcm-link-dropdown {color:#333;line-height:2.3em;}
+.mcm .mcm-submenu {background-color: #FFEFCA;border:1px solid;margin-left:-1px;border-color:#FFEFCA #FFB63C #FFB63C #FFE39D;}
+.mcm .mcm-submenu .mcm-link:hover {background-color:#FFF;}
+
+/* Advanced moodle.org styling **/
+.mcm .mcm-submenu {-moz-box-shadow: 5px 5px 5px #ccc;-webkit-box-shadow: 5px 5px 5px #ccc;box-shadow: 5px 5px 5px #ccc;}
+
+/** IE 6/7 corrections **/
+.ie6 .mcm ul li,
+.ie7 .mcm ul li {float:left;}
+.ie6 .mcm ul li li,
+.ie7 .mcm ul li li {float:none;}
