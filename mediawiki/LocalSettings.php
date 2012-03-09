@@ -134,10 +134,10 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     } elseif (preg_match("/ipod/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
     } else {
-        $wgDefaultSkin = 'moodledocs';
+        $wgDefaultSkin = 'moodledocsnew';
     }
 }else {
-    $wgDefaultSkin = 'moodledocs';
+    $wgDefaultSkin = 'moodledocsnew';
 }
 // End wizardy, onto business.
 
