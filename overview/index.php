@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname(dirname(__FILE__)).'/prodwiki/skins/moodledocs/moodleoutput.php');
-//require_once('/var/www/vhosts/docs.moodle.org/html/prodwiki/skins/moodledocs/moodleoutput.php');
+require_once(dirname(dirname(__FILE__)).'/prodwiki/skins/moodledocsnew/moodleoutput.php');
 
 if (isset($wgStylePath)) $wgStylePathOriginal = $wgStylePath;
 $wgStylePath = '/20/en/skins';
@@ -70,11 +69,6 @@ $wgStylePath = '/20/en/skins';
         }
         </script>
 
-        <script>
-        var moodleconfig = {'menuimagepath':'<?php echo $wgStylePath;?>/moodledocsnew/menu/sm/'}
-        </script>
-        <script src="<?php echo $wgStylePath;?>/moodledocsnew/menu/sm/c_config.js?301"></script>
-        <script src="<?php echo $wgStylePath;?>/moodledocsnew/menu/sm/c_smartmenus.js?301"></script>
         <script>if ( window.mediaWiki ) {
                 mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"moodledocsnew","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
                 0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs100":false,"searchNs101":false,"searchNs102":false});;mediaWiki.loader.state({"user.options":"ready"});
