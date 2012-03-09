@@ -19,9 +19,9 @@ class moodle_output {
 
     public static function add_primary_styles(OutputPage $out) {
         global $mdocsver;
-        $out->addStyle( 'moodledocsnew/moodledocsnew.css', 'screen' );
-        $out->addStyle( 'moodledocsnew/moodledocsnew.rtl.css', 'screen', '', 'rtl' );
-        $out->addStyle( 'moodledocsnew/menu/menu.css', 'screen');
+        $out->addStyle( 'moodledocsnew/main.css', 'screen' );
+        $out->addStyle( 'moodledocsnew/main.rtl.css', 'screen', '', 'rtl' );
+        $out->addStyle( 'moodledocsnew/menu/moodlemenu.css', 'screen');
         $out->addStyle( 'moodledocsnew/menu/menuprint.css', 'print');
 
         // Include CSS specific to this docs version
