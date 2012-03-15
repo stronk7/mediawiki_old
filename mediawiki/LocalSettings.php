@@ -53,6 +53,10 @@ $wgUseFileCache   = false; # Disable file cache for this wiki (disabled after mi
 // DEFINE DIFFERENT SETTINGS FOR DIFFERENT SITES
 // Talk to Jordan if your confused by any of this, but dont mess with it (grrrrr!)
 
+// set default versions:
+$mdocsver = '22';
+$callpath = 'en';
+
 // Begin wizardy!
 if (php_sapi_name() != 'cli') {
     // Called from browser
@@ -61,25 +65,24 @@ if (php_sapi_name() != 'cli') {
         $langoffset = 0;
         if (substr($_SERVER['REQUEST_URI'], 1, 2) === '19') {
             $mdocsver = '19';
-            $mlogover = '19';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '20') {
             $mdocsver = '20';
-            $mlogover = '20';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '21') {
             $mdocsver = '21';
-            $mlogover = '21';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '22') {
             $mdocsver = '22';
-            $mlogover = '22';
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
+            $mdocsver = '2x';
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
+            $langoffset = 1; // pad with an extra 1 chars to look for langs in the next block
+            $mdocsver = 'all';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 7) === 'archive') {
             $langoffset = 5; // pad with an extra 5 chars to look for langs in the next block
-            $mdocsver = '19'; // all archived langs are 19docs
+            $mdocsver = 'archive'; // all archived langs are 19docs
             $wgReadOnly="This translation has been archived and is in Read-Only mode."; // Cant touch this! do do do do do
-            $mlogover = 'archive';
         }else {
              // default version to serve. this should always be the newest version (mod_rewrite handles the rest)
             $mdocsver = '20';
-            $mlogover = '20';
         }
 
         /// Try to determine requested lang or test|dev
@@ -87,20 +90,15 @@ if (php_sapi_name() != 'cli') {
         /// for compound langs (pt_br...), else get just two chars (en, es...)
         if (substr($_SERVER['REQUEST_URI'], 1, 4) === 'test') {
             $callpath = 'test';                                 // test
-            $mlogover = 'test';
+            $mdocsver = 'test';
         } else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'dev') {
             $callpath = 'dev';                                  // dev
-            $mlogover = 'dev';
+            $mdocsver = 'dev';
         } else if (substr($_SERVER['REQUEST_URI'], 6+$langoffset, 1) === '_') { 
             $callpath = substr($_SERVER['REQUEST_URI'], 4+$langoffset, 5);      // pt_br ...
         } else {
             $callpath = substr($_SERVER['REQUEST_URI'], 4+$langoffset, 2);      // en, es ...
         } 
-    }else {
-        // Somehow called from browser without a request uri, should never happen so force 20/en
-        $mdocsver = '20';
-        $callpath = 'en';
-        $mlogover = '20';
     }
 }else {
     // Called from CLI
@@ -116,7 +114,7 @@ if (php_sapi_name() != 'cli') {
     if (!isset($callpath) || !isset($mdocsver)) {
         // Only CLI scripts that havnt set $climdocsver or $clicallpath should get this far.
         echo "\n\nCould not determine version and/or lang information\n";
-        echo "Please set \$climdocsver (19|20|archive) and \$clicallpath (dev|test|en|pt_br|you|get|the|idea) then run your script again.\n\n";
+        echo "Please set \$climdocsver (all|19|20|archive) and \$clicallpath (dev|test|en|pt_br|you|get|the|idea) then run your script again.\n\n";
         exit;
     }
 }
@@ -134,367 +132,241 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     } elseif (preg_match("/ipod/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
     } else {
-        $wgDefaultSkin = 'moodledocsnew';
+        $wgDefaultSkin = 'moodledocs';
     }
 }else {
-    $wgDefaultSkin = 'moodledocsnew';
+    $wgDefaultSkin = 'moodledocs';
 }
+
 // End wizardy, onto business.
 
+if ($mdocsver == 'archive') {
+    /***********************************
+     * BEGIN config for archive wikis
+     ***********************************/
 
-switch ($callpath) {
-    case 'ar':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'ar';
-        $wgLanguageName     = 'ﺎﻠﻋﺮﺒﻳﺓ';
-        $wgScriptPath       = '/archive/ar';
-        $wgDBname           = $mdocsver."docs_ar";
-        $wgUploadPath       = "$wgScriptPath/images_ar";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_ar";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+    $mdocsinternal = '19'; // 'archive' wikis are actually 1.9
 
-    /* language 'be' (Belarusian) has been deleted (option 4) - it exists on disk but will not get served
-    case 'be':
-        $wgLanguageCode     = 'be';
-        $wgLanguageName     = 'Беларуская';
-        $wgScriptPath       = '/'.$mdocsver.'/be';
-        $wgDBname           = $mdocsver."docs_be";
-        $wgUploadPath       = "$wgScriptPath/images_be";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_be";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break; */
+    // paths for all wikis unless overriden
+    $wgScriptPath       = "/archive/{$callpath}";
+    $wgDBname           = "{$mdocsinternal}docs_{$callpath}";
+    $wgUploadPath       = "{$wgScriptPath}/images_{$callpath}";
+    $wgUploadDirectory  = "{$IP}/{$mdocsinternal}images/images_{$callpath}";
 
-    case 'ca':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'ca';
-        $wgLanguageName     = 'Català';
-        $wgScriptPath       = '/archive/ca';
-        $wgDBname           = $mdocsver."docs_ca";
-        $wgUploadPath       = "$wgScriptPath/images_ca";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_ca";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+    switch($callpath) {
+        case 'ar':
+            $wgLanguageCode     = 'ar';
+            $wgLanguageName     = 'ﺎﻠﻋﺮﺒﻳﺓ';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'ca':
+            $wgLanguageCode     = 'ca';
+            $wgLanguageName     = 'Català';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'cs':
+            $wgLanguageCode     = 'cs';
+            $wgLanguageName     = 'Čeština';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'da':
+            $wgLanguageCode     = 'da';
+            $wgLanguageName     = 'Dansk';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'fi':
+            $wgLanguageCode     = 'fi';
+            $wgLanguageName     = 'Suomi';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'hu':
+            $wgLanguageCode     = 'hu';
+            $wgLanguageName     = 'Magyar';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'it':
+            $wgLanguageCode     = 'it';
+            $wgLanguageName     = 'Italiano';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'nl':
+            $wgLanguageCode     = 'nl';
+            $wgLanguageName     = 'Nederlands';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'no':
+            $wgLanguageCode     = 'no';
+            $wgLanguageName     = 'Norsk';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'pl':
+            // This lang has been archived (Option 3)
+            $wgLanguageCode     = 'pl';
+            $wgLanguageName     = 'Polski';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'pt':
+            // This lang has been archived (Option 3)
+            $wgLanguageCode     = 'pt';
+            $wgLanguageName     = 'Português';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'ru':
+            // This lang has been archived (Option 3)
+            $wgLanguageCode     = 'ru';
+            $wgLanguageName     = 'Русский';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'sk':
+            // This lang has been archived (Option 3)
+            $wgLanguageCode     = 'sk';
+            $wgLanguageName     = 'Slovenčina';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'zh':
+            // This lang has been archived (Option 3)
+            $wgLanguageCode     = 'zh';
+            $wgLanguageName     = '中文';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        default:  // any unexpected input
+            // Check to see if we were called from CLI
+            if (php_sapi_name() === 'cli') {
+                echo "You passed an unknown lang, please set \$clicallpath to something valid\n";
+            }else {
+                // Redirect to english docs
+                header("Location: /error404.html");
+            }
+            exit;
+        break;
+    }
+    /***********************************
+     * END config for archive wikis
+     ***********************************/
+} else {
+    /***********************************
+     * BEGIN config for normal wikis
+     ***********************************/
 
-    case 'cs':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'cs';
-        $wgLanguageName     = 'Čeština';
-        $wgScriptPath       = '/archive/cs';
-        $wgDBname           = $mdocsver."docs_cs";
-        $wgUploadPath       = "$wgScriptPath/images_cs";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_cs";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+    // setup some internal aliases..
+    $mdocsinternal = $mdocsver;
+    switch ($mdocsver) {
+        case 'all':
+            // 'all' wikis are actually 1.9 internally
+            $mdocsinternal = '19';
+        break;
+        case '2x':
+            // 2x wikis are actually 20 internally
+            $mdocsinternal = '20';
+        break;
+    }
 
-    case 'da':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'da';
-        $wgLanguageName     = 'Dansk';
-        $wgScriptPath       = '/archive/da';
-        $wgDBname           = $mdocsver."docs_da";
-        $wgUploadPath       = "$wgScriptPath/images_da";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_da";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+    // paths for all wikis unless overriden
+    $wgScriptPath       = "/{$mdocsver}/{$callpath}";
+    $wgDBname           = "{$mdocsinternal}docs_{$callpath}";
+    $wgUploadPath       = "{$wgScriptPath}/images_{$callpath}";
+    $wgUploadDirectory  = "{$IP}/{$mdocsinternal}images/images_{$callpath}";
 
-    case 'de':
-        $wgLanguageCode     = 'de';
-        $wgLanguageName     = 'Deutsch';
-        $wgScriptPath       = '/'.$mdocsver.'/de';
-        $wgDBname           = $mdocsver."docs_de";
-        $wgUploadPath       = "$wgScriptPath/images_de";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_de";
-        if ($mdocsver != "19") { $wgDefaultSkin = "moodledocsnew"; }
-	if ($mdocsver === "20") {
-	  /// 20docs_de is InnoDB with binary charset, 19docs_de is MyISAM with latin1 charset (set by default at the top of this file.)
-	  $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
-	  $wgDBtransactions   = true;
-	}
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+    switch ($callpath) {
+        case 'de':
+            $wgLanguageCode     = 'de';
+            $wgLanguageName     = 'Deutsch';
+            if ($mdocsinternal === "20") {
+              /// 20docs_de is InnoDB with binary charset, 19docs_de is MyISAM with latin1 charset (set by default at the top of this file.)
+              $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
+              $wgDBtransactions   = true;
+            }
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    /* language 'el' (Greek) has been deleted (option 4) - it exists on disk but will not get served
-    case 'el':
-        $wgLanguageCode     = 'el';
-        $wgLanguageName     = 'Ελληνικά';
-        $wgScriptPath       = '/'.$mdocsver.'/el';
-        $wgDBname           = $mdocsver."docs_el";
-        $wgUploadPath       = "$wgScriptPath/images_el";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_el";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break; */
+        case 'es':
+            $wgLanguageCode     = 'es';
+            $wgLanguageName     = 'Español';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'es':
-        $wgLanguageCode     = 'es';
-        $wgLanguageName     = 'Español';
-        $wgScriptPath       = '/'.$mdocsver.'/es';
-        $wgDBname           = $mdocsver."docs_es";
-        $wgUploadPath       = "$wgScriptPath/images_es";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_es";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'eu':
+            $wgLanguageCode     = 'eu';
+            $wgLanguageName     = 'Euskara';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'fr':
+            $wgLanguageCode     = 'fr';
+            $wgLanguageName     = 'Français';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'eu':
-        $wgLanguageCode     = 'eu';
-        $wgLanguageName     = 'Euskara';
-        $wgScriptPath       = '/'.$mdocsver.'/eu';
-        $wgDBname           = $mdocsver."docs_eu";
-        $wgUploadPath       = "$wgScriptPath/images_eu";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_eu";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'hr':
+            $wgLanguageCode     = 'hr';
+            $wgLanguageName     = 'Hrvatski';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'is':
+            $wgLanguageCode     = 'is';
+            $wgLanguageName     = 'Íslenska';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'fi':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'fi';
-        $wgLanguageName     = 'Suomi';
-        $wgScriptPath       = '/archive/fi';
-        $wgDBname           = $mdocsver."docs_fi";
-        $wgUploadPath       = "$wgScriptPath/images_fi";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_fi";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'ja':
+            $wgLanguageCode     = 'ja';
+            $wgLanguageName     = '日本語';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'fr':
-        $wgLanguageCode     = 'fr';
-        $wgLanguageName     = 'Français';
-        $wgScriptPath       = '/'.$mdocsver.'/fr';
-        $wgDBname           = $mdocsver."docs_fr";
-        $wgUploadPath       = "$wgScriptPath/images_fr";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_fr";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'ko':
+            $wgLanguageCode     = 'ko';
+            $wgLanguageName     = '한국어';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'hr':
-        $wgLanguageCode     = 'hr';
-        $wgLanguageName     = 'Hrvatski';
-        $wgScriptPath       = '/'.$mdocsver.'/hr';
-        $wgDBname           = $mdocsver."docs_hr";
-        $wgUploadPath       = "$wgScriptPath/images_hr";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_hr";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'pt_br':
+            $wgLanguageCode     = 'pt_br';
+            $wgLanguageName     = 'Português Brasil';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'hu':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'hu';
-        $wgLanguageName     = 'Magyar';
-        $wgScriptPath       = '/archive/hu';
-        $wgDBname           = $mdocsver."docs_hu";
-        $wgUploadPath       = "$wgScriptPath/images_hu";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_hu";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'test':
+            $wgLanguageCode     = 'en';
+            $wgLanguageName     = 'Test English';
+            $wgScriptPath       = '/test';
+            $wgDBname           = "19docs_test";
+            $wgUploadPath       = "$wgScriptPath/images_test";
+            $wgUploadDirectory  = "$IP/20images/images_test";
+            $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'is':
-        $wgLanguageCode     = 'is';
-        $wgLanguageName     = 'Íslenska';
-        $wgScriptPath       = '/'.$mdocsver.'/is';
-        $wgDBname           = $mdocsver."docs_is";
-        $wgUploadPath       = "$wgScriptPath/images_is";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_is";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+       case 'dev':
+            $wgLanguageCode     = 'en';
+            $wgLanguageName     = 'Development';
+            $wgScriptPath       = '/dev';
+            $wgDBname           = "docs_development";
+            $wgUploadPath       = "$wgScriptPath/images_dev";
+            $wgUploadDirectory  = "$IP/20images/images_dev";
+            #$wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
+            $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
+            $wgDBtransactions   = true;
+            #$wgReadOnly="We are upgrading Moodle Developer Docs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'it':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'it';
-        $wgLanguageName     = 'Italiano';
-        $wgScriptPath       = '/archive/it';
-        $wgDBname           = $mdocsver."docs_it";
-        $wgUploadPath       = "$wgScriptPath/images_it";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_it";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
+        case 'en':
+            $wgLanguageCode     = 'en';
+            $wgLanguageName     = 'English';
+            $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
 
-    case 'ja':
-        $wgLanguageCode     = 'ja';
-        $wgLanguageName     = '日本語';
-        $wgScriptPath       = '/'.$mdocsver.'/ja';
-        $wgDBname           = $mdocsver."docs_ja";
-        $wgUploadPath       = "$wgScriptPath/images_ja";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_ja";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'ko':
-        $wgLanguageCode     = 'ko';
-        $wgLanguageName     = '한국어';
-        $wgScriptPath       = '/'.$mdocsver.'/ko';
-        $wgDBname           = $mdocsver."docs_ko";
-        $wgUploadPath       = "$wgScriptPath/images_ko";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_ko";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'nl':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'nl';
-        $wgLanguageName     = 'Nederlands';
-        $wgScriptPath       = '/archive/nl';
-        $wgDBname           = $mdocsver."docs_nl";
-        $wgUploadPath       = "$wgScriptPath/images_nl";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_nl";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'no':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'no';
-        $wgLanguageName     = 'Norsk';
-        $wgScriptPath       = '/archive/no';
-        $wgDBname           = $mdocsver."docs_no";
-        $wgUploadPath       = "$wgScriptPath/images_no";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_no";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'pl':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'pl';
-        $wgLanguageName     = 'Polski';
-        $wgScriptPath       = '/archive/pl';
-        $wgDBname           = $mdocsver."docs_pl";
-        $wgUploadPath       = "$wgScriptPath/images_pl";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_pl";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'pt':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'pt';
-        $wgLanguageName     = 'Português';
-        $wgScriptPath       = '/archive/pt';
-        $wgDBname           = $mdocsver."docs_pt";
-        $wgUploadPath       = "$wgScriptPath/images_pt";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_pt";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'pt_br':
-       	$wgLanguageCode     = 'pt_br';
-        $wgLanguageName     = 'Português Brasil';
-        $wgScriptPath       = '/'.$mdocsver.'/pt_br';
-        $wgDBname           = $mdocsver."docs_pt_br";
-        $wgUploadPath       = "$wgScriptPath/images_pt_br";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_pt_br";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'ru':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'ru';
-        $wgLanguageName     = 'Русский';
-        $wgScriptPath       = '/archive/ru';
-        $wgDBname           = $mdocsver."docs_ru";
-        $wgUploadPath       = "$wgScriptPath/images_ru";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_ru";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    /* language 'si' (Sinhala) has been deleted (option 4) - it exists on disk but will not get served
-    case 'si':
-        $wgLanguageCode     = 'si';
-        $wgLanguageName     = 'සිංහල';
-        $wgScriptPath       = '/'.$mdocsver.'/si';
-        $wgDBname           = $mdocsver."docs_si";
-        $wgUploadPath       = "$wgScriptPath/images_si";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_si";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break; */
-
-    case 'sk':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'sk';
-        $wgLanguageName     = 'Slovenčina';
-        $wgScriptPath       = '/archive/sk';
-        $wgDBname           = $mdocsver."docs_sk";
-        $wgUploadPath       = "$wgScriptPath/images_sk";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_sk";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    /* language 'sl' (Slovenian) has been deleted (option 4) - it exists on disk but will not get served
-    case 'sl':
-        $wgLanguageCode     = 'sl';
-        $wgLanguageName     = 'Slovenščina';
-        $wgScriptPath       = '/'.$mdocsver.'/sl';
-        $wgDBname           = $mdocsver."docs_sl";
-        $wgUploadPath       = "$wgScriptPath/images_sl";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_sl";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break; */
-
-    /* language 'sv' (Swedish) has been deleted (option 4) - it exists on disk but will not get served
-    case 'sv':
-        $wgLanguageCode     = 'sv';
-        $wgLanguageName     = 'Svenska';
-        $wgScriptPath       = '/'.$mdocsver.'/sv';
-        $wgDBname           = $mdocsver."docs_sv";
-        $wgUploadPath       = "$wgScriptPath/images_sv";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_sv";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break; */
-
-    case 'zh':
-	// This lang has been archived (Option 3)
-        $wgLanguageCode     = 'zh';
-        $wgLanguageName     = '中文';
-        $wgScriptPath       = '/archive/zh';
-        $wgDBname           = $mdocsver."docs_zh";
-        $wgUploadPath       = "$wgScriptPath/images_zh";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_zh";
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'test':
-        $wgLanguageCode     = 'en';
-        $wgLanguageName     = 'Test English';
-        $wgScriptPath       = '/test';
-        $wgDBname           = "19docs_test";
-        $wgUploadPath       = "$wgScriptPath/images_test";
-        $wgUploadDirectory  = "$IP/20images/images_test";
-        $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-   case 'dev':
-        $wgLanguageCode     = 'en';
-        $wgLanguageName     = 'Development';
-        $wgScriptPath       = '/dev';
-        $wgDBname           = "docs_development";
-        $wgUploadPath       = "$wgScriptPath/images_dev";
-        $wgUploadDirectory  = "$IP/20images/images_dev";
-        #$wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
-	$wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
-	$wgDBtransactions   = true;
-        #$wgReadOnly="We are upgrading Moodle Developer Docs, please be patient. This wiki will be back in a few hours.";
-    break;
-
-    case 'en':
-        $wgLanguageCode     = 'en';
-        $wgLanguageName     = 'English';
-        $wgScriptPath       = '/'.$mdocsver.'/en';
-        $wgDBname           = $mdocsver."docs_en";
-        $wgUploadPath       = "$wgScriptPath/images_en";
-        $wgUploadDirectory  = "$IP/".$mdocsver."images/images_en";
-        $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
-        #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-        # Use skin 'moodledocsnew' if version is higher than 19
-        if ($mdocsver != "19") { $wgDefaultSkin = "moodledocsnew"; }
-    break;
-
-    default:  // any unexpected input
-        // Check to see if we were called from CLI
-        if (php_sapi_name() === 'cli') {
-            echo "You passed an unknown lang, please set \$clicallpath to something valid\n";
-        }else {
-            // Redirect to english docs
-            header("Location: /error404.html");
-        }
-        exit;
-    break;
+        default:  // any unexpected input
+            // Check to see if we were called from CLI
+            if (php_sapi_name() === 'cli') {
+                echo "You passed an unknown lang, please set \$clicallpath to something valid\n";
+            }else {
+                // Redirect to english docs
+                header("Location: /error404.html");
+            }
+            exit;
+        break;
+    }
 }
 
 // The following is common to all sites for now
@@ -608,8 +480,8 @@ $wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) )
 #$wgLogo = "/pix/moodle-docs.gif";
 $wgLogo = '/prodwiki/skins/moodledocs/wiki.png';
 // Select a logo that represents this skin
-if (!empty($mlogover)) {
-    $wgLogo = "/prodwiki/skins/moodledocs/images/version.{$mlogover}.png";
+if (!empty($mdocsver)) {
+    $wgLogo = "/prodwiki/skins/moodledocs/images/version.{$mdocsver}.png";
 }
 
 $wgGroupPermissions['user']['move'] = false;  ///Added by Eloy (Helen request): 25/01/2006
