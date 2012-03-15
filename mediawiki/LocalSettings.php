@@ -132,10 +132,10 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     } elseif (preg_match("/ipod/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
     } else {
-        $wgDefaultSkin = 'moodledocs';
+        $wgDefaultSkin = 'moodledocsnew';
     }
 }else {
-    $wgDefaultSkin = 'moodledocs';
+    $wgDefaultSkin = 'moodledocsnew';
 }
 
 // End wizardy, onto business.
@@ -478,10 +478,10 @@ $wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) )
 /// Some MoodleDocs settings
 
 #$wgLogo = "/pix/moodle-docs.gif";
-$wgLogo = '/prodwiki/skins/moodledocs/wiki.png';
+$wgLogo = '/prodwiki/skins/moodledocsnew/wiki.png';
 // Select a logo that represents this skin
 if (!empty($mdocsver)) {
-    $wgLogo = "/prodwiki/skins/moodledocs/images/version.{$mdocsver}.png";
+    $wgLogo = "/prodwiki/skins/moodledocsnew/images/version.{$mdocsver}.png";
 }
 
 $wgGroupPermissions['user']['move'] = false;  ///Added by Eloy (Helen request): 25/01/2006
