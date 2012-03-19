@@ -55,12 +55,12 @@ RewriteRule ^(all|2x|19|20|21|22)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|d
 
 # Redirect german, japanese,french 2.x to 2x wiki [option 2 -ish]
 # e.g.  http://docs/22/ja/mod/forum/view -> http://docs/2x/ja/mod/forum/view
-RewriteCond %{REQUEST_URI} ^/(20|21|22)/(de|ja)($|/)
+RewriteCond %{REQUEST_URI} ^/(20|21|22)/(de|ja|fr)($|/)
 RewriteRule ^(20|21|22)/(de|ja)($|/(.*))  /2x/$2$3 [R=301,L]
 
 # Redirect combined wikis to the 'all' version [option 1]
 # e.g. http://docs/22/es/mod/forum/view -> http://docs/19/es/mod/forum/view
-RewriteCond %{REQUEST_URI} ^/(19|20|21|22)/(es|fr|is|eu|hr|pt_br)($|/)
+RewriteCond %{REQUEST_URI} ^/(19|20|21|22)/(es|is|eu|hr|pt_br)($|/)
 RewriteRule ^(19|20|21|22)/([a-z]{2}|pt_br)($|/(.*))  /all/$2$3 [R=301,L]
 
 # Regex to catch /en/Development: namespace and redirect to /dev/
