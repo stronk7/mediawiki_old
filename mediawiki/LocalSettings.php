@@ -122,6 +122,8 @@ if (php_sapi_name() != 'cli') {
 // Try to set skin via user agent (not mandatory)
 // Some browsers just dont send the user agent and this is acceptable according to RFC
 // this avoids errors in apache error_log and also catches CLI requests.
+/*
+ * DANP: Disabled 20120320 - the wptouch theme seems to have gone somehere..
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
     if (preg_match("/iphone/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
@@ -137,6 +139,8 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 }else {
     $wgDefaultSkin = 'moodledocsnew';
 }
+ */
+$wgDefaultSkin = 'moodledocsnew';
 
 // End wizardy, onto business.
 
