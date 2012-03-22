@@ -258,10 +258,22 @@ if ($mdocsver == 'archive') {
         case 'all':
             // 'all' wikis are actually 1.9 internally
             $mdocsinternal = '19';
+
+            // only permitted langs
+            $permitted = array('es','fr','is','eu','hr','pt_br');
+            if (!in_array($callpath, $permitted)) {
+                $callpath = ''; // will 404
+            }
         break;
         case '2x':
             // 2x wikis are actually 20 internally
             $mdocsinternal = '20';
+
+            // only permitted langs
+            $permitted = array('fr', 'ja');
+            if (!in_array($callpath, $permitted)) {
+                $callpath = ''; // will 404
+            }
         break;
     }
 
