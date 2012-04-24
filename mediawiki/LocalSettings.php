@@ -479,7 +479,7 @@ $wgProxyKey = "b9bd2fa2b057164cd46f1fe0b10b890f16941918b0e179a1a29baa03a7daaaa6"
 ## License and Creative Commons licenses are supported so far.
 $wgEnableCreativeCommonsRdf = true;
 $wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
-$wgRightsUrl = "http://docs.moodle.org/en/License";
+$wgRightsUrl = "http://docs.moodle.org/dev/License";
 $wgRightsText = "GNU General Public License";
 # Disabled RightsIcon due to error (blank src/url in images lead to doubled page requests)
 #$wgRightsIcon = "";
