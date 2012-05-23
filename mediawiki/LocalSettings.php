@@ -73,6 +73,8 @@ if (php_sapi_name() != 'cli') {
             $mdocsver = '21';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '22') {
             $mdocsver = '22';
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '23') {
+            $mdocsver = '23';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
             $mdocsver = '2x';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
