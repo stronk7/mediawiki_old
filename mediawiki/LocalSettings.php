@@ -49,6 +49,16 @@ if ( $wgCommandLineMode ) {
 $wgDBTableOptions = "ENGINE=MyISAM, DEFAULT CHARSET=latin1"; // new MySQL 5 directive
 $wgDBtransactions = false; // set to true for InnoDB
 $wgUseFileCache   = false; # Disable file cache for this wiki (disabled after migrating to new server (now using memcached). Eloy 20110414)
+
+## For a detailed description of the following switches see
+## http://www.mediawiki.org/wiki/Extension:Email_notification 
+## and http://www.mediawiki.org/wiki/Extension:Email_notification
+## There are many more options for fine tuning available see
+## /includes/DefaultSettings.php
+## UPO means: this is also a user preference option
+$wgEnotifUserTalk = true; # UPO
+$wgEnotifWatchlist = true; # UPO
+$wgEmailAuthentication = true;
 $wgEnableEmail      = true; /// Enable again once upgrade is finished
 $wgEnableUserEmail  = false;
 
@@ -376,6 +386,8 @@ if ($mdocsver == 'archive') {
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
             if ($mdocsver === "23") {
             	$wgEnableEmail = false; // disable email temporarily for Helen on 23/en
+            	$wgEnotifUserTalk = false;
+            	$wgEnotifWatchlist = false;
             }
         break;
 
@@ -412,16 +424,6 @@ $wgScriptExtension  = ".php";
 
 $wgEmergencyContact = "noreply@moodle.org";
 $wgPasswordSender = "noreply@docs.moodle.org";
-
-## For a detailed description of the following switches see
-## http://www.mediawiki.org/wiki/Extension:Email_notification 
-## and http://www.mediawiki.org/wiki/Extension:Email_notification
-## There are many more options for fine tuning available see
-## /includes/DefaultSettings.php
-## UPO means: this is also a user preference option
-$wgEnotifUserTalk = true; # UPO
-$wgEnotifWatchlist = true; # UPO
-$wgEmailAuthentication = true;
 
 # Experimental charset support for MySQL 4.1/5.0.
 $wgDBmysql5 = false;
