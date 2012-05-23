@@ -49,6 +49,8 @@ if ( $wgCommandLineMode ) {
 $wgDBTableOptions = "ENGINE=MyISAM, DEFAULT CHARSET=latin1"; // new MySQL 5 directive
 $wgDBtransactions = false; // set to true for InnoDB
 $wgUseFileCache   = false; # Disable file cache for this wiki (disabled after migrating to new server (now using memcached). Eloy 20110414)
+$wgEnableEmail      = true; /// Enable again once upgrade is finished
+$wgEnableUserEmail  = false;
 
 // DEFINE DIFFERENT SETTINGS FOR DIFFERENT SITES
 // Talk to Jordan if your confused by any of this, but dont mess with it (grrrrr!)
@@ -370,6 +372,9 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'English';
             $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+            if ($mdocsinternal === "23") {
+            	$wgEnableEmail = false; // disable email temporarily for Helen on 23/en
+            }
         break;
 
         default:  // any unexpected input
@@ -402,9 +407,6 @@ $wgScriptExtension  = ".php";
 
 ## For more information on customizing the URLs please see:
 ## http://www.mediawiki.org/wiki/Manual:Short_URL
-
-$wgEnableEmail      = true; /// Enable again once upgrade is finished
-$wgEnableUserEmail  = false;
 
 $wgEmergencyContact = "noreply@moodle.org";
 $wgPasswordSender = "noreply@docs.moodle.org";
