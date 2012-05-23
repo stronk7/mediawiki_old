@@ -374,7 +374,7 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'English';
             $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-            if ($mdocsinternal === "23") {
+            if ($mdocsver === "23") {
             	$wgEnableEmail = false; // disable email temporarily for Helen on 23/en
             }
         break;
