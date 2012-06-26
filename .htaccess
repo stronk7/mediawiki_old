@@ -22,10 +22,10 @@ ErrorDocument 403 "Access Forbidden"
 # ppl keep accessing this script even after the above is disabled, tsk tsk.
 Redirect /upgradeinprogress.php http://docs.moodle.org/
 
-# Default lang and version is 22 english
-# e.g. http://docs/-> http://docs/22/en
+# Default lang and version is 23 english
+# e.g. http://docs/-> http://docs/23/en
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*) /22/en/ [R=301,L]
+RewriteRule ^(.*) /23/en/ [R=301,L]
 
 # Add trailing / if missing, causing mediawiki to serve the native langs Main_Page
 RewriteRule ^(test|dev)$ /$1/
