@@ -37,10 +37,10 @@ RewriteRule ^(all|2x|19|20|21|22|23)/([a-z]{2}|pt_br)$ /$1/$2/
 RewriteCond %{REQUEST_URI} ^/(24)($|/)
 RewriteRule ^(24)($|/(.*)) /23$2 [R=302,L]
 
-# Redirect versionless langs to 22 version
-# e.g. http://docs/en/mod/forum/view -> http://docs/22/en/mod/forum/view
+# Redirect versionless langs to 23 version
+# e.g. http://docs/en/mod/forum/view -> http://docs/23/en/mod/forum/view
 RewriteCond %{REQUEST_URI} ^/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/)
-RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /22/$1$2 [R=301,L]
+RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /23/$1$2 [R=301,L]
 
 # Redirect language children to parents [if a wiki exists for the parent]
 # e.g. http://docs/19/es_es/mod/forum/view -> http://docs/19/es/mod/forum/view
