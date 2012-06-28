@@ -88,8 +88,7 @@ class ApiPurge extends ApiBase {
 				if ( !$user->pingLimiter() ) {
 					global $wgParser, $wgEnableParserCache;
 
-					$popts = ParserOptions::newFromContext( $this->getContext() );
-					$popts->setTidy( true );
+					$popts = $page->makeParserOptions( 'canonical' );
 					$p_result = $wgParser->parse( $page->getRawText(), $title, $popts,
 						true, true, $page->getLatest() );
 
@@ -132,6 +131,34 @@ class ApiPurge extends ApiBase {
 		$psModule = new ApiPageSet( $this );
 		return $psModule->getParamDescription() + array(
 			'forcelinkupdate' => 'Update the links tables',
+		);
+	}
+
+	public function getResultProperties() {
+		return array(
+			ApiBase::PROP_LIST => true,
+			'' => array(
+				'ns' => array(
+					ApiBase::PROP_TYPE => 'namespace',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'title' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'pageid' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'revid' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'invalid' => 'boolean',
+				'missing' => 'boolean',
+				'purged' => 'boolean',
+				'linkupdate' => 'boolean'
+			)
 		);
 	}
 

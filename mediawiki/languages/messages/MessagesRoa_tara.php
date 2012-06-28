@@ -30,7 +30,7 @@ $messages = array(
 'tog-hidepatrolled' => "Scunne le cangiaminde condrollete jndr'à le cangiaminde recende",
 'tog-newpageshidepatrolled' => "Scunne le pàggene tenute sotte condrolle da 'a liste de le pàggene nuève",
 'tog-extendwatchlist' => "Spanne 'a liste de le pàggene condrollete pe fa vedè tutte le cangiaminde fatte, none sulamende l'urteme",
-'tog-usenewrc' => "Ause le cangiaminde recende migliorate (richiede 'u JavaScript)",
+'tog-usenewrc' => "Ause le cangiaminde recende migliorate (vole 'u JavaScript)",
 'tog-numberheadings' => 'Testete auto-numerete',
 'tog-showtoolbar' => "Fà vedè 'a barra de le cangiaminde (JavaScript)",
 'tog-editondblclick' => "Cange le pàggene cu 'nu doppie clic (JavaScript)",
@@ -1934,6 +1934,8 @@ Pò condenè une  cchiù carattere ca non ge ponne essere ausate jndr'à le tite
 'allpages-hide-redirects' => 'Scunne le redirezionaminde',
 
 # SpecialCachedPage
+'cachedspecial-viewing-cached-ttl' => "Tu ste vide 'na versione jndr'à cache de sta pàgene, 'a quale pò essere aggiornate a $1 fà.",
+'cachedspecial-viewing-cached-ts' => "Tu ste vide 'na versione jndr'à cache de sta pàgene, 'a quale pò essere ca non g'è attuale.",
 'cachedspecial-refresh-now' => "Vide l'urteme.",
 
 # Special:Categories

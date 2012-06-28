@@ -74,6 +74,7 @@
  * @author Mihai
  * @author Mormegil
  * @author Mpradeep
+ * @author Murma174
  * @author Najami
  * @author Nemo bis
  * @author Niels
@@ -138,7 +139,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Option in Recent changes tab of [[Special:Preferences]] (if [[mw:Manual:$wgUseRCPatrol|$wgUseRCPatrol]] is enabled). {{Gender}}',
 'tog-newpageshidepatrolled' => 'Toggle in [[Special:Preferences]], section "Recent changes" (if [[mw:Manual:$wgUseRCPatrol|$wgUseRCPatrol]] is enabled). {{Gender}}',
 'tog-extendwatchlist' => "[[Special:Preferences]], tab 'Watchlist'. Offers user to show all applicable changes in watchlist (by default only the last change to a page on the watchlist is shown). {{Gender}}",
-'tog-usenewrc' => "[[Special:Preferences]], tab 'Recent changes'. Offers user to use alternative reprsentation of [[Special:RecentChanges]]. {{Gender}}",
+'tog-usenewrc' => "[[Special:Preferences]], tab 'Recent changes'. Offers user to use alternative representation of [[Special:RecentChanges]] and watchlist. {{Gender}}",
 'tog-numberheadings' => "[[Special:Preferences]], tab 'Misc'. Offers numbered headings on content pages to user. {{Gender}}",
 'tog-showtoolbar' => "[[Special:Preferences]], tab 'Edit'. Offers user to show edit toolbar in page edit screen. {{Gender}}
 
@@ -322,7 +323,7 @@ See http://test.wikipedia.org/wiki/Category:Test_ko?uselang={{SUBPAGENAME}}, for
 Possible alternatives to the word 'content' are 'subject matter' or 'wiki subject' or 'wiki purpose'.
 
 {{Identical|Content page}}",
-'newwindow' => 'Below the edit form, next to "[[MediaWiki:Edithelp/{{SUBPAGENAME}}|Editing help]]".',
+'newwindow' => 'Below the edit form, next to "{{msg-mw|Edithelp}}".',
 'cancel' => 'Message shown below the edit form, and if you click on it, you stop with editing the page and go back to the normal page view.
 
 {{Identical|Cancel}}',
@@ -696,6 +697,8 @@ $1 is a filename, I think.',
 'invalidtitle-unknownnamespace' => 'Displayed when an invalid title was encountered (generally in a list) and the namespace number is unknown.
 * $1 is the namespace number
 * $2 is the part of the title after the namespace (e.g. SomeName for the page User:SomeName)',
+'exception-nologin' => 'Generic page title used on error page when a user is not logged in. Message used by the UserNotLoggedIn exception.',
+'exception-nologin-text' => 'Generic reason displayed on error page when a user is not logged in. Message used by the UserNotLoggedIn exception.',
 
 # Login and logout pages
 'logouttext' => 'Log out message',
@@ -2376,7 +2379,7 @@ The title is {{msg-mw|nopagetitle}}.',
 'booksources-go' => 'Name of button in [[Special:BookSources]]
 
 {{Identical|Go}}',
-'booksources-invalid-isbn' => 'This message is displayed after an invalid ISBN is entered on Special:Booksources.',
+'booksources-invalid-isbn' => 'This message is displayed after an invalid ISBN is entered on [[Special:Booksources]].',
 
 # Special:Log
 'specialloguserlabel' => 'Used in [[Special:Log]] as a label for an input field with which the log can be filtered for entries describing actions \'\'performed\'\' by the specified user.  "Carried out" and "done" are possible alternatives for "performed".',
@@ -2484,7 +2487,7 @@ You can apparently use 'URL' instead of 'hostname'.",
 'activeusers-noresult' => 'identical with {{msg-mw|listusers-noresult}}',
 
 # Special:Log/newusers
-'newuserlogpage' => 'Part of the "Newuserlog" extension. It is both the title of [[Special:Log/newusers]] and the link you can see in the recent changes.',
+'newuserlogpage' => 'Part of the "Newuserlog" extension. It is both the title of [[Special:Log/newusers]] and the link you can see in [[Special:RecentChanges]].',
 'newuserlogpagetext' => 'Part of the "Newuserlog" extension. It is the description you can see on [[Special:Log/newusers]].',
 
 # Special:ListGroupRights
@@ -2596,7 +2599,7 @@ This is a button text used in [[Special:Emailuser]] when called without a (valid
 Possible alternatives to the word 'content' are 'subject matter' or 'wiki subject' or 'wiki purpose'.
 
 {{Identical|Content page}}",
-'watchlist-details' => 'Message on Special page: My watchlist. This is paired with the message [[Mediawiki:Nowatchlist]] which appears instead of Watchlist-details when $1 is 0.',
+'watchlist-details' => 'Message on [[Special:Watchlist]]. This is paired with the message {{msg-mw|Nowatchlist}} which appears instead of Watchlist-details when $1 is 0.',
 'wlheader-showupdated' => 'This message shows up near top of users watchlist page.',
 'wlnote' => 'Used on [[Special:Watchlist]] when the maximum number of days is specified.
 Similar to {{msg-mw|rcnote}} which is used on [[Special:RecentChanges]].
@@ -2746,8 +2749,8 @@ This message was something like "unlock move protection" in the past.',
 {{Identical|Infinite}}",
 'restriction-type' => 'Used on [[Special:ProtectedPages]]. The text next to a drop-down box. See [[mw:Manual:Administrators|MediaWiki Manual]] for more information on protection.',
 'restriction-level' => 'Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. The text next to a drop-down box. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.',
-'minimum-size' => 'Used in [[Special:Protectedpages]] as a pair of radio buttons, with [[MediaWiki:Maximum-size]]. There is an input box to specify the minimum bites of the projected pages listed.',
-'maximum-size' => 'Used in [[Special:Protectedpages]] as a pair of radio buttons, with [[MediaWiki:Minimum-size]]. There is an input box to specify the maximum bites of the projected pages listed.',
+'minimum-size' => 'Used in [[Special:Protectedpages]] as a pair of radio buttons, with {{msg-mw|Maximum-size}}. There is an input box to specify the minimum bites of the projected pages listed.',
+'maximum-size' => 'Used in [[Special:Protectedpages]] as a pair of radio buttons, with {{msg-mw|Minimum-size}}. There is an input box to specify the maximum bites of the projected pages listed.',
 'pagesize' => 'Used on [[Special:ProtectedPages]]. See the help page on [http://meta.wikimedia.org/wiki/Protect Meta] for more information on protection.',
 
 # Restrictions (nouns)
@@ -3197,7 +3200,7 @@ See also:
 # Tooltip help for the actions
 'tooltip-pt-userpage' => 'Tooltip shown when hovering the mouse over the link to your own User page in the upper-side personal toolbox.',
 'tooltip-pt-mytalk' => 'Tooltip shown when hovering over the "my talk" link in your personal toolbox (upper right side).',
-'tooltip-pt-preferences' => 'Tooltip shown when hovering over the "my preferences" ([[MediaWiki:Mypreferences]]) link in your personal toolbox (upper right side).
+'tooltip-pt-preferences' => 'Tooltip shown when hovering over the {{msg-mw|Mypreferences}} link in your personal toolbox (upper right side).
 
 {{Identical|My preferences}}',
 'tooltip-pt-watchlist' => 'Tooltip shown when hovering over the "my watchlist" link in your personal toolbox (upper right side).',
@@ -3225,8 +3228,8 @@ Possible alternatives to the word 'content' are 'subject matter' or 'wiki subjec
 'tooltip-ca-watch' => '{{Identical|Add this page to your watchlist}}',
 'tooltip-ca-unwatch' => 'Tooltip shown when hovering over the {{msg|unwatch}} tab.',
 'tooltip-search' => 'The tooltip when hovering over the search menu.',
-'tooltip-search-go' => 'This is the text of the tooltip displayed when hovering the mouse over the “[[MediaWiki:Go|Go]]” button next to the search box.',
-'tooltip-search-fulltext' => 'This is the text of the tooltip displayed when hovering the mouse over the “[[MediaWiki:Search|Search]]” button under the search box.',
+'tooltip-search-go' => 'This is the text of the tooltip displayed when hovering the mouse over the “{{msg-mw|Go}}” button next to the search box.',
+'tooltip-search-fulltext' => 'This is the text of the tooltip displayed when hovering the mouse over the “{{msg-mw|Search}}” button under the search box.',
 'tooltip-p-logo' => 'Tool tip shown when hovering the mouse over the logo that links to [[Main Page]].
 {{Identical|Visit the main page}}',
 'tooltip-n-mainpage' => 'Tool tip shown when hovering the mouse over the link to [[{{MediaWiki:Mainpage}}]].
@@ -3254,7 +3257,7 @@ No GENDER-Support for performance reason.',
 'tooltip-ca-nstab-template' => 'Tooltip shown when hovering over the {{msg|nstab-template}} tab.',
 'tooltip-ca-nstab-help' => 'Tootip shown when hovering over the {{msg|nstab-help}} tab in the Help namespace.',
 'tooltip-ca-nstab-category' => 'Tooltip shown when hovering over the {{msg|nstab-category}} tab.',
-'tooltip-minoredit' => 'Tooltip shown when hovering over the "[[MediaWiki:Minoredit/{{SUBPAGENAME}}|{{int:minoredit}}]]" link below the edit form.',
+'tooltip-minoredit' => 'Tooltip shown when hovering over the "{{msg-mw|Minoredit}}" link below the edit form.',
 'tooltip-save' => "This is the text that appears when you hover the mouse over the 'Save page' button on the edit page",
 'tooltip-preview' => 'Tooltip shown when hovering over the "Show preview" button.
 
@@ -3359,7 +3362,12 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 'nocredits' => 'This message is shown when viewing the credits of a page (example: {{fullurl:Main Page|action=credits}}) but when there are no credits available. Note that the credits action is disabled by default (currently enabled on translatewiki.net).',
 
 # Spam protection
-'spam_reverting' => '{{Identical|Revert}}',
+'spam_reverting' => 'Edit summary for spam cleanup script. Used when a page is reverted because all later revisions contained a particular link. Parameters:
+* $1 is a spammed domain name.',
+'spam_blanking' => 'Edit summary for spam cleanup script. Used when a page is blanked (made to have no content, but still exist) because the script could not find an appropriate revision to set the page to. Parameters:
+* $1 is a spammed domain name.',
+'spam_deleting' => 'Edit summary for spam cleanup script. Used when a page is deleted because all revisions contained a particular link. Parameters:
+* $1 is a spammed domain name.',
 
 # Info page
 'pageinfo-title' => 'Page title for action=info.
@@ -4292,14 +4300,14 @@ Bitrate (of a file, typically) in yottabits (1 yottabits = 1000×1000×1000×100
 'livepreview-loading' => '{{Identical|Loading}}',
 
 # Watchlist editor
-'watchlistedit-numitems' => 'Message on Special page: Edit watchlist. This is paired with the message [[Mediawiki:Watchlistedit-noitems]] which appears instead of Watchlistedit-numitems when $1 is 0.',
-'watchlistedit-noitems' => "Message on [[Special:Watchlist/edit]], which only appears when a user's watchlist is empty.",
+'watchlistedit-numitems' => 'Message on [[Special:EditWatchlist]]. This is paired with the message {{Msg-mw|Watchlistedit-noitems}} which appears instead of Watchlistedit-numitems when $1 is 0.',
+'watchlistedit-noitems' => "Message on [[Special:EditWatchlist]], which only appears when a user's watchlist is empty.",
 'watchlistedit-normal-title' => 'Title of [[Special:Watchlist/edit|special page]].',
 'watchlistedit-normal-legend' => 'Heading of dialogue box on [[Special:Watchlist/edit]]',
 'watchlistedit-normal-explain' => 'An introduction/explanation about the [[Special:Watchlist/edit|normal edit watchlist function]].
 Hint: the text "Remove Titles" is in {{msg-mw|watchlistedit-normal-submit}}',
 'watchlistedit-normal-submit' => 'Text of submit button on [[Special:Watchlist/edit]].',
-'watchlistedit-normal-done' => 'Message on Special page: Edit watchlist after pages are removed from the watchlist.',
+'watchlistedit-normal-done' => 'Message on [[Special:EditWatchlist]] after pages are removed from the watchlist.',
 'watchlistedit-raw-title' => 'Title of [[Special:Watchlist/raw|Special page]].
 
 {{Identical|Edit raw watchlist}}',
@@ -4310,8 +4318,8 @@ Hint: the text "Remove Titles" is in {{msg-mw|watchlistedit-normal-submit}}',
 'watchlistedit-raw-titles' => 'Text above edit box containing items being watched on [[Special:Watchlist/raw]].',
 'watchlistedit-raw-submit' => 'Text of submit button on [[Special:Watchlist/raw]].',
 'watchlistedit-raw-done' => 'A message which appears after the raw watchlist has been updated using [[Special:Watchlist/raw]].',
-'watchlistedit-raw-added' => 'Message on special page: Edit raw watchlist. The message appears after at least 1 message is added to the raw watchlist.',
-'watchlistedit-raw-removed' => 'Message on special page: Edit raw watchlist. The message appears after at least 1 message is deleted from the raw watchlist.',
+'watchlistedit-raw-added' => 'Message on [[Special:EditWatchlist/raw]]. The message appears after at least 1 message is added to the raw watchlist.',
+'watchlistedit-raw-removed' => 'Message on [[Special:EditWatchlist/raw]]. The message appears after at least 1 message is deleted from the raw watchlist.',
 
 # Watchlist editing tools
 'watchlisttools-view' => '[[Special:Watchlist]]: Navigation link under the title. See also {{msg|watchlisttools-edit}} and {{msg|watchlisttools-raw}}.',
@@ -4556,7 +4564,7 @@ It appears that the word 'valid' describes 'tags', not 'change'. It also appears
 'tags-hitcount-header' => 'Caption of a column in [[Special:Tags]]. For more information on tags see [//www.mediawiki.org/wiki/Manual:Tags Mediawiki].',
 'tags-edit' => '{{Identical|Edit}}
 Used on [[Special:Tags]]. Verb. Used as display text on a link to create/edit a description.',
-'tags-hitcount' => 'Shown in the “Tagged changes” column in [[Special:Tags]]. For more information on tags see [//www.mediawiki.org/wiki/Manual:Tags Mediawiki].
+'tags-hitcount' => 'Shown in the "{{msg-mw|Tags-hitcount-header}}" column in [[Special:Tags]]. For more information on tags see [//www.mediawiki.org/wiki/Manual:Tags Mediawiki].
 
 * <code>$1</code> is the number of changes marked with the tag',
 

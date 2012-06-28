@@ -875,9 +875,9 @@ class EnhancedChangesList extends ChangesList {
 		}
 
 		$users = ' <span class="changedby">'
-			. $this->getContext()->msg( 'brackets' )->rawParams(
+			. $this->msg( 'brackets' )->rawParams(
 				implode( $this->message['semicolon-separator'], $users )
-			)->plain() . '</span>';
+			)->escaped() . '</span>';
 
 		$tl = '<span class="mw-collapsible-toggle mw-enhancedchanges-arrow"></span>';
 		$r .= "<td>$tl</td>";
@@ -1171,7 +1171,7 @@ class EnhancedChangesList extends ChangesList {
 		} else { 
 			$r .= ' '.$rcObj->userlink . $rcObj->usertalklink;
 			$r .= $this->insertComment( $rcObj );
-			$r .= $this->insertRollback( $r, $rcObj );
+			$this->insertRollback( $r, $rcObj );
 		}
 
 		# Tags

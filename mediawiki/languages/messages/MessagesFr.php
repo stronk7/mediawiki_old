@@ -371,7 +371,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Masquer les modifications surveillées dans les modifications récentes',
 'tog-newpageshidepatrolled' => 'Masquer les pages surveillées parmi les nouvelles pages',
 'tog-extendwatchlist' => 'Étendre la liste de suivi pour afficher toutes les modifications et non seulement les plus récentes',
-'tog-usenewrc' => 'Utiliser les modifications récentes améliorées (nécessite JavaScript)',
+'tog-usenewrc' => 'Grouper les changements dans les modifications récentes et la liste de suivi (nécessite JavaScript)',
 'tog-numberheadings' => 'Numéroter automatiquement les titres de section',
 'tog-showtoolbar' => "Montrer la barre d'outils de modification (nécessite JavaScript)",
 'tog-editondblclick' => 'Modifier des pages sur double-clic (nécessite JavaScript)',
@@ -754,6 +754,8 @@ Le motif avancé est « ''$2'' ».",
 L’administrateur qui l’a verrouillé a fourni ce motif: « $3 ».',
 'invalidtitle-knownnamespace' => 'Titre invalide avec l’espace de noms « $2 » et l’intitulé « $3 »',
 'invalidtitle-unknownnamespace' => 'Titre invalide avec le numéro d’espace de noms $1 et l’intitulé « $2 » inconnus',
+'exception-nologin' => 'Non connecté',
+'exception-nologin-text' => "Cette page ou cette action nécessite d'être connecté sur ce wiki.",
 
 # Virus scanner
 'virus-badscanner' => "Mauvaise configuration : scanneur de virus inconnu : ''$1''",
@@ -3114,6 +3116,7 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'spambot_username' => 'Nettoyage de pourriels par MediaWiki',
 'spam_reverting' => 'Rétablissement de la dernière version ne contenant pas de lien vers $1',
 'spam_blanking' => 'Toutes les versions contenant des liens vers $1 sont blanchies',
+'spam_deleting' => 'Toutes les versions contenaient des liens vers $1, suppression',
 
 # Info page
 'pageinfo-title' => 'Informations pour « $1 »',
@@ -4052,4 +4055,6 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 'duration-centuries' => '$1 {{PLURAL:$1|siècle|siècles}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millénaire|millénaires}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => "Impossible d'acquérir des verrous sur le serveur $1.",
 );

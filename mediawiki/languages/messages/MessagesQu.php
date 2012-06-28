@@ -37,6 +37,9 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Katiguriya_rimanakuy',
 );
 
+// Remove Spanish gender aliases (bug 37090)
+$namespaceGenderAliases = array();
+
 $specialPageAliases = array(
 	'Allmessages'               => array( 'TukuyWillaykuna' ),
 	'Allpages'                  => array( 'TukuyPanqakuna' ),

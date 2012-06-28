@@ -79,6 +79,8 @@ class ApiLogin extends ApiBase {
 				$user->setOption( 'rememberpassword', 1 );
 				$user->setCookies( $this->getRequest() );
 
+				ApiQueryInfo::resetTokenCache();
+
 				// Run hooks.
 				// @todo FIXME: Split back and frontend from this hook.
 				// @todo FIXME: This hook should be placed in the backend
@@ -178,6 +180,66 @@ class ApiLogin extends ApiBase {
 			'password' => 'Password',
 			'domain' => 'Domain (optional)',
 			'token' => 'Login token obtained in first request',
+		);
+	}
+
+	public function getResultProperties() {
+		return array(
+			'' => array(
+				'result' => array(
+					ApiBase::PROP_TYPE => array(
+						'Success',
+						'NeedToken',
+						'WrongToken',
+						'NoName',
+						'Illegal',
+						'WrongPluginPass',
+						'NotExists',
+						'WrongPass',
+						'EmptyPass',
+						'CreateBlocked',
+						'Throttled',
+						'Blocked',
+						'Aborted'
+					)
+				),
+				'lguserid' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'lgusername' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'lgtoken' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'cookieprefix' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'sessionid' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'token' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'details' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'wait' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'reason' => array(
+					ApiBase::PROP_TYPE => 'string',
+					ApiBase::PROP_NULLABLE => true
+				)
+			)
 		);
 	}
 

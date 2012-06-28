@@ -269,7 +269,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Nascondi le modifiche verificate nelle ultime modifiche',
 'tog-newpageshidepatrolled' => "Nascondi le pagine verificate dall'elenco delle pagine più recenti",
 'tog-extendwatchlist' => "Mostra tutte le modifiche agli osservati speciali, non solo l'ultima",
-'tog-usenewrc' => 'Utilizza le ultime modifiche avanzate (richiede JavaScript)',
+'tog-usenewrc' => 'Raggruppa le modifiche per pagina nelle ultime modifiche e negli osservati speciali (richiede JavaScript)',
 'tog-numberheadings' => 'Numerazione automatica dei titoli di sezione',
 'tog-showtoolbar' => 'Mostra barra degli strumenti di modifica (richiede JavaScript)',
 'tog-editondblclick' => 'Modifica delle pagine tramite doppio clic (richiede JavaScript)',
@@ -652,6 +652,8 @@ La motivazione è la seguente: ''$2''.",
 L\'amministratore che lo ha bloccato ha fornito questa motivazione: "$3".',
 'invalidtitle-knownnamespace' => 'Titolo non valido con namespace "$2" e testo "$3"',
 'invalidtitle-unknownnamespace' => 'Titolo non valido con namespace sconosciuto "$1" e testo "$2"',
+'exception-nologin' => 'Accesso non effettuato',
+'exception-nologin-text' => "Questa pagina o azione richiede che tu abbia effettuato l'accesso su questo wiki.",
 
 # Virus scanner
 'virus-badscanner' => "Errore di configurazione: antivirus sconosciuto: ''$1''",
@@ -1297,7 +1299,7 @@ Vedi l'[[Special:BlockList|elenco dei blocchi]] per l'elenco dei bandi e dei blo
 'prefs-watchlist-days-max' => 'Massimo $1 {{PLURAL:$1|giorno|giorni}}',
 'prefs-watchlist-edits' => 'Numero di modifiche da mostrare con le funzioni avanzate:',
 'prefs-watchlist-edits-max' => 'Numero massimo: 1000',
-'prefs-watchlist-token' => 'Token Osservati speciali:',
+'prefs-watchlist-token' => 'Token osservati speciali:',
 'prefs-misc' => 'Varie',
 'prefs-resetpass' => 'Cambia password',
 'prefs-changeemail' => 'Modifica e-mail',
@@ -2951,6 +2953,7 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 'spambot_username' => 'MediaWiki - sistema di rimozione spam',
 'spam_reverting' => "Ripristinata l'ultima versione priva di collegamenti a $1",
 'spam_blanking' => 'Pagina svuotata, tutte le versioni contenevano collegamenti a $1',
+'spam_deleting' => 'Pagina cancellata, tutte le versioni contenevano collegamenti a $1',
 
 # Info page
 'pageinfo-title' => 'Informazioni per "$1"',
@@ -3656,7 +3659,7 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 
 MediaWiki è distribuito nella speranza che sia utile, ma SENZA ALCUNA GARANZIA; senza neppure la garanzia implicita di NEGOZIABILITÀ o di APPLICABILITÀ PER UN PARTICOLARE SCOPO. Si veda la GNU General Public License per maggiori dettagli.
 
-Questo programma deve essere distribuito assieme ad [{{SERVER}}{{SCRIPTPATH}}/COPYING una copia della GNU General Public License]; in caso contrario, se ne può ottenere una scrivendo alla Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA oppure [//www.softwarelibero.it/gnudoc/gpl.it.txt leggerla in rete].',
+Questo programma deve essere distribuito assieme ad [{{SERVER}}{{SCRIPTPATH}}/COPYING una copia della GNU General Public License]; in caso contrario, se ne può ottenere una scrivendo alla Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA oppure [http://www.softwarelibero.it/gnudoc/gpl.it.txt leggerla in rete].',
 'version-software' => 'Software installato',
 'version-software-product' => 'Prodotto',
 'version-software-version' => 'Versione',
@@ -3863,4 +3866,6 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 'duration-centuries' => '$1 {{PLURAL:$1|secolo|secoli}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennio|millenni}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Impossibile acquisire blocchi sul server $1.',
 );

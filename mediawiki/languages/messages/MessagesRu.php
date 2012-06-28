@@ -16,6 +16,7 @@
  * @author Alexander Sigachov (alexander.sigachov@gmail.com)
  * @author Alexandr Efremov
  * @author Amikeco
+ * @author Amire80
  * @author Askarmuk
  * @author Assele
  * @author Bouron
@@ -398,7 +399,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Скрывать патрулированные правки в списке свежих правок',
 'tog-newpageshidepatrolled' => 'Скрывать отпатрулированные страницы в списке новых страниц',
 'tog-extendwatchlist' => 'Расширенный список наблюдения, включающий все изменения, а не только последние',
-'tog-usenewrc' => 'Использовать улучшенный список свежих изменений (требуется JavaScript)',
+'tog-usenewrc' => 'Группировать изменения на странице свежих правок и в списке наблюдения (требуется JavaScript)',
 'tog-numberheadings' => 'Автоматически нумеровать заголовки',
 'tog-showtoolbar' => 'Показывать верхнюю панель инструментов при редактировании (JavaScript)',
 'tog-editondblclick' => 'Править страницы по двойному щелчку (JavaScript)',
@@ -783,6 +784,8 @@ $2',
 Установивший этот режим администратор оставил следующее разъяснение: «''$3''».",
 'invalidtitle-knownnamespace' => 'Недопустимый заголовок с пространством имен «$2» и текстом «$3»',
 'invalidtitle-unknownnamespace' => 'Недопустимый заголовок с неизвестным номером пространства $1 и текстом «$2»',
+'exception-nologin' => 'Вы не представились системе',
+'exception-nologin-text' => 'Для просмотра этой станицы или выполнения запрошенного действия необходимо представиться системе.',
 
 # Virus scanner
 'virus-badscanner' => "Ошибка настройки. Неизвестный сканер вирусов: ''$1''",
@@ -3165,6 +3168,7 @@ The wiki server can't provide data in a format your client can read.",
 'spambot_username' => 'Чистка спама',
 'spam_reverting' => 'Откат к последней версии, не содержащей ссылки на $1',
 'spam_blanking' => 'Все версии содержат ссылки на $1, очистка',
+'spam_deleting' => 'Все версии содержали ссылки на $1, производится удаление',
 
 # Info page
 'pageinfo-title' => 'Сведения по «$1»',
@@ -4166,4 +4170,6 @@ MediaWiki распространяется в надежде, что она бу
 'duration-centuries' => '$1 {{PLURAL:$1|век|века|веков}}',
 'duration-millennia' => '$1 {{PLURAL:$1|тысячелетие|тысячелетия|тысячелетий}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Не удалось получить блокировку на сервере  $1.',
 );

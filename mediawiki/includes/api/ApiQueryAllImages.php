@@ -165,7 +165,7 @@ class ApiQueryAllImages extends ApiQueryGeneratorBase {
 					break;
 				}
 			} else {
-				$titles[] = Title::makeTitle( NS_IMAGE, $row->img_name );
+				$titles[] = Title::makeTitle( NS_FILE, $row->img_name );
 			}
 		}
 
@@ -229,6 +229,19 @@ class ApiQueryAllImages extends ApiQueryGeneratorBase {
 	}
 
 	private $propertyFilter = array( 'archivename' );
+
+	public function getResultProperties() {
+		return array_merge(
+			array(
+				'' => array(
+					'name' => 'string',
+					'ns' => 'namespace',
+					'title' => 'string'
+				)
+			),
+			ApiQueryImageInfo::getResultPropertiesFiltered( $this->propertyFilter )
+		);
+	}
 
 	public function getDescription() {
 		return 'Enumerate all images sequentially';

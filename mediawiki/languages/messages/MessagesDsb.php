@@ -1,5 +1,5 @@
 <?php
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -166,7 +166,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Doglědowane změny w aktualnych změnach schowaś',
 'tog-newpageshidepatrolled' => 'Doglědowane boki z lisćiny nowych bokow schowaś',
 'tog-extendwatchlist' => 'Wobglědowańku wócyniś, aby wšě změny pokazał, nic jano nejnowše',
-'tog-usenewrc' => 'Rozšyrjonu lisćinu aktualnych změnow (JavaScript trěbny) wužywaś',
+'tog-usenewrc' => 'Kupkowe změny pó boku w aktualnych změnach a wobglědowanjach (trjeba JavaScript)',
 'tog-numberheadings' => 'Nadpisma awtomatiski numerěrowaś',
 'tog-showtoolbar' => 'Wobźěłańsku lejstwu pokazaś (JavaScript)',
 'tog-editondblclick' => 'Boki z dwójnym kliknjenim wobźěłaś (JavaScript)',
@@ -544,6 +544,8 @@ Wótpšašanje: $2',
 Administrator, kenž jo jen zastajił, jo toś tu pśicynu pódał: "$3".',
 'invalidtitle-knownnamespace' => 'Njepłaśiwy titel z mjenjowym rumom "$2" a tekstom "$3"',
 'invalidtitle-unknownnamespace' => 'Njepłaśiwy titel z njeznatym mjenjowym rumom $1 a tekstom "$2"',
+'exception-nologin' => 'Njejsy se pśizjawił',
+'exception-nologin-text' => 'Toś ten bok abo toś ta akcija pomina, až sy na toś tom wikiju pśizjawjony.',
 
 # Virus scanner
 'virus-badscanner' => "Špatna konfiguracija: njeznaty wirusowy scanner: ''$1''",
@@ -2817,6 +2819,7 @@ W zespominanju dajo se pśicyna pódaś.',
 'spambot_username' => 'MediaWikijowe spamowe rěšenje',
 'spam_reverting' => 'Nawrośijo se slědna wersija, kótaraž njejo wopśimjeła wótkaz na $1.',
 'spam_blanking' => 'Wšykne wersije su wopśimowali wótkaze na $1, do rěcha spórane.',
+'spam_deleting' => 'Wšykne wersije z wótkazami do $1 so lašuju',
 
 # Info page
 'pageinfo-title' => 'Informacije za bok "$1"',
@@ -3725,4 +3728,6 @@ Hować móžoš slědujucy jadnory formular wužywaś. Twój komentar pśidajo s
 'duration-centuries' => '$1 {{PLURAL:$1|stolěśe|stolěśi|stolěśa|stolěśow}}',
 'duration-millennia' => '$1 {{PLURAL:$1|lěttysac|lěttysaca|lěttysace|lěttysacow}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Zastajenja na serwer $1 njedaju se wótwołaś.',
 );

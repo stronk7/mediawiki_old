@@ -277,7 +277,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 					if ( $this->hasNS ) {
 						$parentID = $this->pageMap[$row-> { $this->bl_ns } ][$row-> { $this->bl_title } ];
 					} else {
-						$parentID = $this->pageMap[NS_IMAGE][$row-> { $this->bl_title } ];
+						$parentID = $this->pageMap[NS_FILE][$row-> { $this->bl_title } ];
 					}
 					$this->continueStr = $this->getContinueRedirStr( $parentID, $row->page_id );
 					break;
@@ -479,6 +479,17 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 			'filterredir' => 'How to filter for redirects',
 			'limit' => 'How many total pages to return'
 		) );
+	}
+
+	public function getResultProperties() {
+		return array(
+			'' => array(
+				'pageid' => 'integer',
+				'ns' => 'namespace',
+				'title' => 'string',
+				'redirect' => 'boolean'
+			)
+		);
 	}
 
 	public function getDescription() {

@@ -149,7 +149,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Celar le modificationes patruliate in le modificationes recente',
 'tog-newpageshidepatrolled' => 'Celar le paginas patruliate del lista de nove paginas',
 'tog-extendwatchlist' => 'Displicar le observatorio pro monstrar tote le modificationes, non solmente les plus recente',
-'tog-usenewrc' => 'Usar le modificationes recente meliorate (require JavaScript)',
+'tog-usenewrc' => 'Gruppar modificationes per pagina in modificationes recente e observatorio (require JavaScript)',
 'tog-numberheadings' => 'Numerar titulos automaticamente',
 'tog-showtoolbar' => 'Monstrar instrumentario de modification (require JavaScript)',
 'tog-editondblclick' => 'Duple clic pro modificar un pagina (require JavaScript)',
@@ -799,7 +799,7 @@ Per favor entra e valida tu adresse de e-mail per medio de tu [[Special:Preferen
 'nosuchsectiontitle' => 'Section non trovate',
 'nosuchsectiontext' => 'Tu ha tentate modificar un section que non existe.
 Illo pote haber essite displaciate o delite durante que tu legeva le pagina.',
-'loginreqtitle' => 'Identification requirite',
+'loginreqtitle' => 'Identification necessari',
 'loginreqlink' => 'aperir un session',
 'loginreqpagetext' => 'Tu debe $1 pro poter vider altere paginas.',
 'accmailtitle' => 'Contrasigno inviate.',
@@ -2965,7 +2965,8 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 'spamprotectionmatch' => 'Le sequente texto es lo que activava nostre filtro antispam: $1',
 'spambot_username' => 'Nettamento de spam in MediaWiki',
 'spam_reverting' => 'Revertite al ultime version que non contine ligamines a $1',
-'spam_blanking' => 'Tote le versiones contineva ligamines a $1. Le pagina ha essite vacuate.',
+'spam_blanking' => 'Tote le versiones contineva ligamines a $1. Le pagina es vacuate.',
+'spam_deleting' => 'Tote le versiones contineva ligamines a $1. Le pagina es delite.',
 
 # Info page
 'pageinfo-title' => 'Informationes pro "$1"',
@@ -3883,4 +3884,6 @@ Si non, tu pote usar le formulario facile hic infra. Tu commento essera addite a
 'duration-centuries' => '$1 {{PLURAL:$1|seculo|seculos}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennio|millennios}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Non poteva acquirer le serraturas sur le servitor $1.',
 );

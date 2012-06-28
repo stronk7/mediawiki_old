@@ -292,7 +292,13 @@ class ErrorPageError extends MWException {
 	public $title, $msg, $params;
 
 	/**
+	 * @todo document
+	 *
 	 * Note: these arguments are keys into wfMsg(), not text!
+	 *
+	 * @param $title A title
+	 * @param $msg String|Message . In string form, should be a message key
+	 * @param $params Array Array to wfMsg()
 	 */
 	function __construct( $title, $msg, $params = null ) {
 		$this->title = $title;
@@ -454,6 +460,49 @@ class UserBlockedError extends ErrorPageError {
 				$wgLang->timeanddate( wfTimestamp( TS_MW, $block->mTimestamp ), true )
 			)
 		);
+	}
+}
+
+/**
+ * Shows a generic "user is not logged in" error page.
+ *
+ * This is essentially an ErrorPageError exception which by default use the
+ * 'exception-nologin' as a title and 'exception-nologin-text' for the message.
+ * @see bug 37627
+ *
+ * @par Example:
+ * @code
+ * if( $user->isAnon ) {
+ * 	throw new UserNotLoggedIn();
+ * }
+ * @endcode
+ *
+ * Please note the parameters are mixed up compared to ErrorPageError, this
+ * is done to be able to simply specify a reason whitout overriding the default
+ * title.
+ *
+ * @par Example:
+ * @code
+ * if( $user->isAnon ) {
+ * 	throw new UserNotLoggedIn( 'action-require-loggedin' );
+ * }
+ * @endcode
+ *
+ * @param $reasonMsg A message key containing the reason for the error.
+ *        Optional, default: 'exception-nologin-text'
+ * @param $titleMsg A message key to set the page title.
+ *        Optional, default: 'exception-nologin'
+ * @param $params Parameters to wfMsg().
+ *        Optiona, default: null
+ */
+class UserNotLoggedIn extends ErrorPageError {
+
+	public function __construct(
+		$reasonMsg = 'exception-nologin-text',
+		$titleMsg  = 'exception-nologin',
+		$params = null
+	) {
+		parent::__construct( $titleMsg, $reasonMsg, $params );
 	}
 }
 

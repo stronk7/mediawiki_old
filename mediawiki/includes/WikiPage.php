@@ -243,11 +243,20 @@ class WikiPage extends Page {
 
 	/**
 	 * Clear the object
+	 * @return void
 	 */
 	public function clear() {
 		$this->mDataLoaded = false;
 		$this->mDataLoadedFrom = self::DATA_NOT_LOADED;
 
+		$this->clearCacheFields();
+	}
+
+	/**
+	 * Clear the object cache fields
+	 * @return void
+	 */
+	protected function clearCacheFields() {
 		$this->mCounter = null;
 		$this->mRedirectTarget = null; # Title object if set
 		$this->mLastRevision = null; # Latest revision
@@ -396,10 +405,18 @@ class WikiPage extends Page {
 			$this->mTouched     = wfTimestamp( TS_MW, $data->page_touched );
 			$this->mIsRedirect  = intval( $data->page_is_redirect );
 			$this->mLatest      = intval( $data->page_latest );
+			// Bug 37225: $latest may no longer match the cached latest Revision object.
+			// Double-check the ID of any cached latest Revision object for consistency.
+			if ( $this->mLastRevision && $this->mLastRevision->getId() != $this->mLatest ) {
+				$this->mLastRevision = null;
+				$this->mTimestamp = '';
+			}
 		} else {
 			$lc->addBadLinkObj( $this->mTitle );
 
 			$this->mTitle->loadFromRow( false );
+
+			$this->clearCacheFields();
 		}
 
 		$this->mDataLoaded = true;
@@ -611,7 +628,7 @@ class WikiPage extends Page {
 		if ( !$this->mTimestamp ) {
 			$this->loadLastEdit();
 		}
-		
+
 		return wfTimestamp( TS_MW, $this->mTimestamp );
 	}
 
@@ -1428,7 +1445,7 @@ class WikiPage extends Page {
 	 *  Compatibility note: this function previously returned a boolean value indicating success/failure
 	 */
 	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null ) {
-		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
+		global $wgUser, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
 		if ( $this->mTitle->getText() === '' ) {
@@ -1496,11 +1513,6 @@ class WikiPage extends Page {
 				return $status;
 			}
 
-			# Make sure the revision is either completely inserted or not inserted at all
-			if ( !$wgDBtransactions ) {
-				$userAbort = ignore_user_abort( true );
-			}
-
 			$revision = new Revision( array(
 				'page'       => $this->getId(),
 				'comment'    => $summary,
@@ -1511,6 +1523,9 @@ class WikiPage extends Page {
 				'user_text'  => $user->getName(),
 				'timestamp'  => $now
 			) );
+			# Bug 37225: use accessor to get the text as Revision may trim it.
+			# After trimming, the text may be a duplicate of the current text.
+			$text = $revision->getText(); // sanity; EditPage should trim already
 
 			$changed = ( strcmp( $text, $oldtext ) != 0 );
 
@@ -1530,11 +1545,6 @@ class WikiPage extends Page {
 				if ( !$ok ) {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
-
-					# Delete the invalid revision if the DB is not transactional
-					if ( !$wgDBtransactions ) {
-						$dbw->delete( 'revision', array( 'rev_id' => $revisionId ), __METHOD__ );
-					}
 
 					$revisionId = 0;
 					$dbw->rollback( __METHOD__ );
@@ -1564,10 +1574,6 @@ class WikiPage extends Page {
 				// Bug 32948: revision ID must be set to page {{REVISIONID}} and
 				// related variables correctly
 				$revision->setId( $this->getLatest() );
-			}
-
-			if ( !$wgDBtransactions ) {
-				ignore_user_abort( $userAbort );
 			}
 
 			// Now that ignore_user_abort is restored, we can respond to fatal errors
@@ -1616,6 +1622,9 @@ class WikiPage extends Page {
 				'timestamp'  => $now
 			) );
 			$revisionId = $revision->insertOn( $dbw );
+
+			# Bug 37225: use accessor to get the text as Revision may trim it
+			$text = $revision->getText(); // sanity; EditPage should trim already
 
 			# Update the page record with revision data
 			$this->updateRevisionOn( $dbw, $revision, 0 );
@@ -2280,7 +2289,7 @@ class WikiPage extends Page {
 	 * roll back to, e.g. user is the sole contributor. This function
 	 * performs permissions checks on $user, then calls commitRollback()
 	 * to do the dirty work
-	 * 
+	 *
 	 * @todo: seperate the business/permission stuff out from backend code
 	 *
 	 * @param $fromP String: Name of the user whose edits to rollback.
@@ -2950,7 +2959,7 @@ class WikiPage extends Page {
 	public function quickEdit( $text, $comment = '', $minor = 0 ) {
 		wfDeprecated( __METHOD__, '1.18' );
 		global $wgUser;
-		return $this->doQuickEdit( $text, $wgUser, $comment, $minor );
+		$this->doQuickEdit( $text, $wgUser, $comment, $minor );
 	}
 
 	/**

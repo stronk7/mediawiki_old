@@ -11,6 +11,7 @@
  * @author Kaganer
  * @author Mikel
  * @author Remember the dot
+ * @author Savh
  * @author Xuacu
  * @author לערי ריינהארט
  */
@@ -64,7 +65,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Anubrir les ediciones vixilaes nos cambeos recientes',
 'tog-newpageshidepatrolled' => 'Anubrir les páxines vixilaes na llista de páxines nueves',
 'tog-extendwatchlist' => "Espander la llista de vixilancia p'amosar tolos cambeos, non solo los más recientes.",
-'tog-usenewrc' => 'Cambeos recientes ameyoraos (necesita JavaScript)',
+'tog-usenewrc' => 'Agrupar los cambeos por páxina nos cambeos recientes y na llista de vixilancia (necesita JavaScript)',
 'tog-numberheadings' => 'Autonumberar los encabezaos',
 'tog-showtoolbar' => "Amosar la barra de ferramientes d'edición (JavaScript)",
 'tog-editondblclick' => 'Editar páxines con doble clic (necesita JavaScript)',
@@ -451,6 +452,8 @@ El motivu conseñáu ye «''$2''».",
 L'alministrador que lu bloquió dio esti motivu: «$3».",
 'invalidtitle-knownnamespace' => 'Títulu non válidu col espaciu de nomes «$2» y el testu «$3»',
 'invalidtitle-unknownnamespace' => "Titulu non válidu col númberu $1 d'espaciu de nomes desconocíu y el testu «$2»",
+'exception-nologin' => 'Non identificáu',
+'exception-nologin-text' => "Esta páxina o aición necesita qu'anicies sesión nesta wiki.",
 
 # Virus scanner
 'virus-badscanner' => "Fallu de configuración: Escáner de virus desconocíu: ''$1''",
@@ -1748,7 +1751,7 @@ Hai disponible una [[Special:WhatLinksHere/$2|llista completa]].",
 'sharedupload-desc-there' => 'Esti ficheru ye de $1 y puen usalu otros proyeutos.
 Llee la [páxina de descripción del ficheru $2] pa más información.',
 'sharedupload-desc-here' => "Esti ficheru ye de $1 y puen usalu otros proyeutos.
-La descripción de la [páxina de descripción del ficheru $2] s'amuesa darréu.",
+La descripción de la [$2 páxina de descripción del ficheru] s'amuesa darréu.",
 'sharedupload-desc-edit' => "Esti ficheru ye de $1 y se pue usar n'otros proyeutos.
 Seique quieras camudar la descripción de la so [páxina de descripción de ficheru $2] allí.",
 'sharedupload-desc-create' => "Esti ficheru ye de $1 y se pue usar n'otros proyeutos.
@@ -1945,6 +1948,7 @@ Date cuenta de qu'otros sitios web puen enllazar a un ficheru con una URL direut
 Pues filtrar la visualización seleicionando una mena de rexistru, el nome d'usuariu (teniendo en cuenta les mayúscules y minúscules) o la páxina afectada (teniendo en cuenta tamién les mayúscules y minúscules).",
 'logempty' => 'Nun hai coincidencies nel rexistru.',
 'log-title-wildcard' => "Buscar títulos qu'emprimen con esti testu",
+'showhideselectedlogentries' => 'Amosar/anubrir les entraes del rexistru seleicionaes',
 
 # Special:AllPages
 'allpages' => 'Toles páxines',
@@ -2857,6 +2861,7 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 'spambot_username' => 'Llimpieza de spam de MediaWiki',
 'spam_reverting' => 'Revirtiendo a la cabera versión que nun contién enllaces a $1',
 'spam_blanking' => 'Toles revisiones teníen enllaces a $1; dexando en blanco',
+'spam_deleting' => 'Toles revisiones teníen enllaces a $1, desaniciando',
 
 # Info page
 'pageinfo-title' => 'Información sobro "$1"',
@@ -3774,4 +3779,6 @@ D\'otra miente, pues usar el formulariu cenciellu d\'abaxo. El to comentariu apa
 'duration-centuries' => '$1 {{PLURAL:$1|sieglu|sieglos}}',
 'duration-millennia' => '$1 {{PLURAL:$1|mileniu|milenios}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Nun se pudieron afitar los bloqueos nel sirvidor $1.',
 );

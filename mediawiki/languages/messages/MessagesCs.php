@@ -361,7 +361,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Skrýt patrolované editace v posledních změnách',
 'tog-newpageshidepatrolled' => 'Skrýt patrolované stránky ze seznamu nových stránek',
 'tog-extendwatchlist' => 'Na seznamu sledovaných stránek zobrazovat všechny změny, ne jen tu poslední',
-'tog-usenewrc' => 'Používat zdokonalené poslední změny (vyžaduje JavaScript)',
+'tog-usenewrc' => 'V posledních změnách a sledovaných stránkách seskupovat změny podle stránek (vyžaduje JavaScript)',
 'tog-numberheadings' => 'Automaticky číslovat nadpisy',
 'tog-showtoolbar' => 'Zobrazit panel nástrojů (vyžaduje JavaScript)',
 'tog-editondblclick' => 'Editovat dvojklikem (JavaScript)',
@@ -742,6 +742,8 @@ $2',
 Správce serveru, který úložiště zamkl, poskytl toto zdůvodnění: „''$3''“.",
 'invalidtitle-knownnamespace' => 'Neplatný název se jmenným prostorem „$2“ a textem „$3“',
 'invalidtitle-unknownnamespace' => 'Neplatný název s neznámým číslem jmenného prostoru $1 a textem „$2“',
+'exception-nologin' => 'Nejste přihlášen(a)',
+'exception-nologin-text' => 'Tato stránka nebo akce vyžaduje, abyste byli na této wiki přihlášeni.',
 
 # Virus scanner
 'virus-badscanner' => "Špatná konfigurace: neznámý antivirový program: ''$1''",
@@ -3069,7 +3071,8 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 'spamprotectionmatch' => 'Následující text spustil náš filtr proti spamu: $1',
 'spambot_username' => 'Systémový čistič spamu',
 'spam_reverting' => 'Revert na poslední verzi neobsahující odkazy na $1',
-'spam_blanking' => 'Všechny revize obsahovaly odkazy na $1, vyprázdněno',
+'spam_blanking' => 'Všechny verze obsahovaly odkazy na $1, vyprázdněno',
+'spam_deleting' => 'Všechny verze obsahovaly odkazy na $1, smazáno',
 
 # Info page
 'pageinfo-title' => 'Informace o "$1"',
@@ -4038,4 +4041,6 @@ Jinak můžete využít jednoduchý formulář níže. Váš komentář bude př
 'duration-centuries' => '$1 {{PLURAL:$1|století}}',
 'duration-millennia' => '$1 {{PLURAL:$1|tisíciletí}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Nepodařilo se získat zámek serveru $1.',
 );

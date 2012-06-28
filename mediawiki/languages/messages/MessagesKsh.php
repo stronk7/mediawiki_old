@@ -2335,11 +2335,12 @@ Adress en Dinge [[Special:Preferences|ming Enstellunge]] stonn han, öm en E-Mai
 schecke.',
 'emailuser' => 'E-mail aan dä Metmaacher',
 'emailpage' => 'E-mail aan ene Metmaacher',
-'emailpagetext' => 'Wann dä Metmaacher en E-mail Adress aanjejovve hätt en singe Enstellunge,
-un die deit et och, dann kanns De met däm Fomular hee unge en einzelne E-Mail aan dä Metmaacher schecke.
-Ding E-mail Adress, die De en [[Special:Preferences|Ding eije Enstellunge]] aanjejovve häs,
-die weed als em Avsender sing Adress en die E-Mail enjedrage.
-Domet kann, wä die E-Mail kritt, drop antwoote, un die Antwood jeiht tirek aan Dech.
+'emailpagetext' => 'Wann heh dä Metmaacher en Adräß för sing <i lang="en">e-mail</i> aanjejovve hätt en singe Enstellunge,
+un die deit et och, dann kanns De met däm Fomular hee unge en einzel <i lang="en">e-mail</i> aan dä Metmaacher schecke.
+
+Ding <i lang="en">e-mail</i>-Adräß, di De en [[Special:Preferences|Ding eije Enstellunge]] aanjejovve häs,
+di weed als em Afsender sing Adräß en Ding <i lang="en">e-mail</i> enjedrage.
+Domet kann, wä di <i lang="en">e-mail</i> kritt, drop antwoote, un di Antwood jeiht tirek aan Desch.
 Alles klor?',
 'usermailererror' => 'Dat E-Mail-Objek jov ene Fähler us:',
 'defemailsubject' => 'e-mail fum $1 {{GRAMMAR:fun|{{SITENAME}}}}.',
@@ -2421,14 +2422,14 @@ dann klick op „Nimieh drop oppasse“ wann De die Sigg om Schirm häs.",
 'enotif_anon_editor' => 'Dä namelose Metmaacher $1',
 'enotif_body' => 'Leeven $WATCHINGUSERNAME,
 
-{{GRAMMAR:em|{{SITENAME}}}} wood die Sigg „$PAGETITLE“ am $PAGEEDITDATE vun „$PAGEEDITOR“ $CHANGEDORCREATED, unger $PAGETITLE_URL fings Do de neuste Version.
+{{GRAMMAR:em|{{SITENAME}}}} wood die Sigg „$PAGETITLE“ am $PAGEEDITDATE {{GENDER:$PAGEEDITOR|vum|vum|vum_Metmaacher|vun dä|vum}} „$PAGEEDITOR“ $CHANGEDORCREATED, unger $PAGETITLE_URL fings Do de neuste Version.
 
 $NEWPAGE
 
 {{int:summary}} „$PAGESUMMARY“ $PAGEMINOREDIT
 
 Do kanns dä Metmaacher „$PAGEEDITOR“ aanspreche:
-* E-mail: $PAGEEDITOR_EMAIL
+* Övver e-mail: $PAGEEDITOR_EMAIL
 * Em Wiki: $PAGEEDITOR_WIKI
 
 Do kriss vun jetz aan kein e-mail mieh, bes dat Do Der di Sigg aanjeluurt häs,
@@ -2441,10 +2442,10 @@ Ene schöne Jroß {{GRAMMAR:vun|{{SITENAME}}}}.
 Öm de Enshtällonge för Nohreeschet aan Desch ze ändere, jangk op:
 {{canonicalurl:{{#special:Preferences}}}}
 
-Do kanns hee Ding Oppassliss ändere:
+Do kanns hee Ding Oppassleß ändere:
 {{canonicalurl:{{#special:EditWatchlist}}}}
 
-Öm di Sigg vun Dinger Oppassliss ze schmieße:
+Öm di Sigg vun Dinger Oppassleß ze schmieße:
 $UNWATCHURL
 
 Do kanns hee noh Hölp luure:
@@ -3489,6 +3490,7 @@ Donoh kumme, en däsellve Reih, Links op Sigge wo die Datei trotz dämm jenehm e
 'exif-copyrighted-true' => 'Häd_en Urhävverrääsch',
 'exif-copyrighted-false' => 'Es en de Allmende (jemeinfrei, <i lang="en">public domain</i>)',
 
+'exif-photometricinterpretation-2' => 'RJB',
 'exif-photometricinterpretation-6' => '<i lang="en">YCbCr</i>',
 
 'exif-unknowndate' => 'Dattum onbikannt',
@@ -3512,6 +3514,7 @@ Donoh kumme, en däsellve Reih, Links op Sigge wo die Datei trotz dämm jenehm e
 'exif-colorspace-65535' => 'De Färve sin nit kallibreert',
 
 'exif-componentsconfiguration-0' => 'Jidd_et nit',
+'exif-componentsconfiguration-5' => 'J',
 
 'exif-exposureprogram-0' => 'Nit faßjelaat',
 'exif-exposureprogram-1' => 'Vun Hand',
@@ -3850,6 +3853,17 @@ Wells Do jetz met en neu Version die Sigg widder neu aanläje?',
 'size-megabytes' => '$1 MB',
 'size-gigabytes' => '$1 GB',
 
+# Bitrate units
+'bitrate-bits' => '$1&nbps;bps',
+'bitrate-kilobits' => '$1&nbps;Kbps',
+'bitrate-megabits' => '$1&nbps;Mbps',
+'bitrate-gigabits' => '$1&nbps;Gbps',
+'bitrate-terabits' => '$1&nbps;Tbps',
+'bitrate-petabits' => '$1&nbps;Pbps',
+'bitrate-exabits' => '$1&nbps;Ebps',
+'bitrate-zetabits' => '$1&nbps;Zbps',
+'bitrate-yottabits' => '$1&nbps;Ybps',
+
 # Live preview
 'livepreview-loading' => 'Ben am Lade …',
 'livepreview-ready' => 'Fädesch jelaade.',
@@ -3910,7 +3924,7 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 
 # Signatures
 'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|Klaafe]])',
-'timezone-utc' => 'UTC',
+'timezone-utc' => '<i lang="en">UTC</i>',
 
 # Core parser functions
 'unknown_extension_tag' => '„<code>$1</code>“ es en zosäzlejje Kennzeichnung, die kenne mer nit.',

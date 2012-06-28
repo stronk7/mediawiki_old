@@ -301,7 +301,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Ẩn sửa đổi đã tuần tra trong trang thay đổi gần đây',
 'tog-newpageshidepatrolled' => 'Ẩn trang đã tuần tra trong danh sách các trang mới',
 'tog-extendwatchlist' => 'Mở rộng danh sách theo dõi để hiển thị tất cả các thay đổi, chứ không chỉ các thay đổi gần đây',
-'tog-usenewrc' => 'Sử dụng Thay đổi gần đây nâng cao (cần JavaScript)',
+'tog-usenewrc' => 'Thu gọn các thay đổi theo trang trong thay đổi gần đây và danh sách theo dõi (cần JavaScript)',
 'tog-numberheadings' => 'Tự động đánh số các đề mục',
 'tog-showtoolbar' => 'Hiển thị thanh định dạng (JavaScript)',
 'tog-editondblclick' => 'Nhấn đúp để sửa đổi trang (JavaScript)',
@@ -457,7 +457,7 @@ $messages = array(
 'vector-view-create' => 'Tạo',
 'vector-view-edit' => 'Sửa',
 'vector-view-history' => 'Xem lịch sử',
-'vector-view-view' => 'Xem',
+'vector-view-view' => 'Đọc',
 'vector-view-viewsource' => 'Xem mã nguồn',
 'actions' => 'Tác vụ',
 'namespaces' => 'Không gian tên',
@@ -683,6 +683,8 @@ Lý do được cung cấp là ''$2''.",
 Bảo quản viên khóa nó đưa lý do là: “$3”.',
 'invalidtitle-knownnamespace' => 'Tựa trang không hợp lệ có không gian tên “$2” và văn bản “$3”',
 'invalidtitle-unknownnamespace' => 'Tựa trang không hợp lệ có không gian tên số $1 không rõ và văn bản “$2”',
+'exception-nologin' => 'Chưa đăng nhập',
+'exception-nologin-text' => 'Bạn cần phải đăng nhập để truy cập trang hoặc thực hiện tác vụ này tại wiki này.',
 
 # Virus scanner
 'virus-badscanner' => "Cấu hình sau: không nhận ra bộ quét virus: ''$1''",
@@ -3041,7 +3043,8 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'spamprotectionmatch' => 'Nội dung sau đây đã kích hoạt bộ lọc thư rác: $1',
 'spambot_username' => 'Bộ dọn dẹp thư rác MediaWiki',
 'spam_reverting' => 'Lùi lại đến phiên bản cuối không chứa liên kết đến $1',
-'spam_blanking' => 'Tất cả các phiên bản có liên kết đến $1, đang tẩy trống',
+'spam_blanking' => 'Tất cả các phiên bản có liên kết đến $1; tẩy trống',
+'spam_deleting' => 'Tất cả các phiên bản có liên kết đến $1; xóa',
 
 # Info page
 'pageinfo-title' => 'Thông tin về “$1”',
@@ -4055,4 +4058,6 @@ Nếu không thì bạn có thể điền biểu mẫu đơn giản ở dưới.
 'duration-centuries' => '$1 thế kỷ',
 'duration-millennia' => '$1 thiên niên kỷ',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Không thể lấy các chìa khóa trên máy chủ $1.',
 );

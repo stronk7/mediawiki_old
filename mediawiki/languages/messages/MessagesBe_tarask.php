@@ -1,5 +1,5 @@
 <?php
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -261,7 +261,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Хаваць патруляваныя зьмены ў сьпісе апошніх зьменаў',
 'tog-newpageshidepatrolled' => 'Хаваць правераныя старонкі ў сьпісе новых старонак',
 'tog-extendwatchlist' => 'Пашырыць сьпіс назіраньня, каб ён паказваў усе зьмены, а ня толькі апошнія',
-'tog-usenewrc' => 'Выкарыстоўваць удасканалены сьпіс апошніх зьменаў (патрабуе JavaScript)',
+'tog-usenewrc' => 'Групаваць зьмены старонкі ў сьпісах апошніх зьменаў і назіраньняў (патрабуе JavaScript)',
 'tog-numberheadings' => 'Аўтаматычная нумарацыя загалоўкаў',
 'tog-showtoolbar' => 'Паказваць панэль інструмэнтаў рэдагаваньня (патрабуе JavaScript)',
 'tog-editondblclick' => 'Рэдагаваць старонкі па падвойным пстрыку (JavaScript)',
@@ -645,6 +645,8 @@ $2',
 Адміністратар, які абмежаваў доступ, пазначыў прычыну: «$3».',
 'invalidtitle-knownnamespace' => 'Няслушная назва ў прасторы «$2»: «$3»',
 'invalidtitle-unknownnamespace' => 'Няслушная назва ў невядомай прасторы $1: «$2»',
+'exception-nologin' => 'Вы не ўвайшлі ў сыстэму',
+'exception-nologin-text' => 'Гэтая старонка ці дзеяньне патрабуе, каб вы ўвайшлі ў сыстэму.',
 
 # Virus scanner
 'virus-badscanner' => "Няслушная канфігурацыя: невядомы антывірусны сканэр: ''$1''",
@@ -1030,6 +1032,8 @@ $2
 'node-count-exceeded-warning' => 'Старонка перавысіла дазволеную колькасьць вузлоў',
 'expansion-depth-exceeded-category' => 'Старонкі зь перавышанай глыбінёй уключэньня',
 'expansion-depth-exceeded-warning' => 'Старонка перавысіла дазволеную глыбіню ўключэньняў',
+'parser-unstrip-loop-warning' => 'Вызначаная незачыненая пятля',
+'parser-unstrip-recursion-limit' => 'Перавышанае абмежаваньне глыбіні рэкурсіі ($1)',
 
 # "Undo" feature
 'undo-success' => 'Рэдагаваньне можа быць адмененае. Калі ласка, параўнайце адрозьненьні паміж вэрсіямі, каб упэўніцца, што гэта адпаведныя зьмены, а потым запішыце зьмены для сканчэньня рэдагаваньня.',
@@ -2974,6 +2978,7 @@ $1',
 'spambot_username' => 'Чыстка спаму MediaWiki',
 'spam_reverting' => 'Адкат да апошняй вэрсіі без спасылак на $1',
 'spam_blanking' => 'Усе вэрсіі ўтрымліваюць спасылкі на $1, чыстка',
+'spam_deleting' => 'Усе вэрсіі ўтрымлівалі спасылкі на $1, выдаляем',
 
 # Info page
 'pageinfo-title' => 'Інфармацыя пра «$1»',
@@ -3892,4 +3897,6 @@ MediaWiki распаўсюджваецца з надзеяй, што будзе 
 'duration-centuries' => '$1 {{PLURAL:$1|стагодзьдзе|стагодзьдзі|стагодзьдзяў}}',
 'duration-millennia' => '$1 {{PLURAL:$1|тысячагодзьдзе|тысячагодзьдзі|тысячагодзьдзяў}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Немагчыма запытаць блякаваньні на сэрвэры $1.',
 );

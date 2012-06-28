@@ -36,6 +36,9 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Neneuhcāyōtl_tēixnāmiquiliztli',
 );
 
+// Remove Spanish gender aliases (bug 37090)
+$namespaceGenderAliases = array();
+
 $namespaceAliases = array(
 	'Media'		=> NS_MEDIA,
 	'Especial'	=> NS_SPECIAL,

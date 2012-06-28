@@ -191,7 +191,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Skrij pregledana urejanja v zadnjih spremembah',
 'tog-newpageshidepatrolled' => 'Skrij pregledane strani iz seznama novih strani',
 'tog-extendwatchlist' => 'Razširi spisek nadzorov, da bo prikazoval vse spremembe, ne le najnovejše',
-'tog-usenewrc' => 'Izboljšane zadnje spremembe (zahteva JavaScript)',
+'tog-usenewrc' => 'Združi spremembe posamezne strani na zadnjih spremembah in spisku nadzorov (zahteva JavaScript)',
 'tog-numberheadings' => 'Samodejno številči poglavja',
 'tog-showtoolbar' => 'Prikaži urejevalno orodno vrstico',
 'tog-editondblclick' => 'Omogoči urejanje strani z dvojnim klikom (zahteva JavaScript)',
@@ -576,6 +576,8 @@ Podani razlog je bil »''$2''«.",
 Administrator, ki ga je zaklenil, je podal naslednje pojasnilo: »$3«.',
 'invalidtitle-knownnamespace' => 'Neveljaven naslov z imenskim prostorom »$2« in besedilom »$3«',
 'invalidtitle-unknownnamespace' => 'Neveljaven naslov z neznano številko imenskega prostora $1 in besedilom »$2«',
+'exception-nologin' => 'Niste prijavljeni',
+'exception-nologin-text' => 'Izbrana stran ali dejanje zahteva, da ste na tem wikiju prijavljeni.',
 
 # Virus scanner
 'virus-badscanner' => "Slaba konfiguracija: neznani virus skener: ''$1''",
@@ -2956,6 +2958,7 @@ Omogoča vnos pojasnila v povzetku urejanja.',
 'spambot_username' => 'Čiščenje navlake MediaWiki',
 'spam_reverting' => 'Vračanje na zadnjo redakcijo brez povezav na $1',
 'spam_blanking' => 'Vse redakcije so vsebovale povezave na $1, izpraznjujem',
+'spam_deleting' => 'Vse redakcije so vsebovale povezave na $1, brišem',
 
 # Info page
 'pageinfo-title' => 'Informacije o »$1«',
@@ -3873,4 +3876,6 @@ V nasprotnem primeru lahko uporabite preprost obrazec spodaj. Vašo pripombo bom
 'duration-centuries' => '$1 {{PLURAL:$1|stoletje|stoletji|stoletja|stoletij}}',
 'duration-millennia' => '$1 {{PLURAL:$1|tisočletje|tisočletji|tisočletja|tisočletij}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'Ne morem pridobiti zaklepov na strežniku $1.',
 );

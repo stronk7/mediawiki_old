@@ -99,6 +99,12 @@ class ApiQueryInfo extends ApiQueryBase {
 		return $this->tokenFunctions;
 	}
 
+	static $cachedTokens = array();
+
+	public static function resetTokenCache() {
+		ApiQueryInfo::$cachedTokens = array();
+	}
+
 	public static function getEditToken( $pageid, $title ) {
 		// We could check for $title->userCan('edit') here,
 		// but that's too expensive for this purpose
@@ -108,14 +114,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		// The edit token is always the same, let's exploit that
-		static $cachedEditToken = null;
-		if ( !is_null( $cachedEditToken ) ) {
-			return $cachedEditToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'edit' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'edit' ] = $wgUser->getEditToken();
 		}
 
-		$cachedEditToken = $wgUser->getEditToken();
-		return $cachedEditToken;
+		return ApiQueryInfo::$cachedTokens[ 'edit' ];
 	}
 
 	public static function getDeleteToken( $pageid, $title ) {
@@ -124,13 +128,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedDeleteToken = null;
-		if ( !is_null( $cachedDeleteToken ) ) {
-			return $cachedDeleteToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'delete' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'delete' ] = $wgUser->getEditToken();
 		}
 
-		$cachedDeleteToken = $wgUser->getEditToken();
-		return $cachedDeleteToken;
+		return ApiQueryInfo::$cachedTokens[ 'delete' ];
 	}
 
 	public static function getProtectToken( $pageid, $title ) {
@@ -139,13 +142,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedProtectToken = null;
-		if ( !is_null( $cachedProtectToken ) ) {
-			return $cachedProtectToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'protect' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'protect' ] = $wgUser->getEditToken();
 		}
 
-		$cachedProtectToken = $wgUser->getEditToken();
-		return $cachedProtectToken;
+		return ApiQueryInfo::$cachedTokens[ 'protect' ];
 	}
 
 	public static function getMoveToken( $pageid, $title ) {
@@ -154,13 +156,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedMoveToken = null;
-		if ( !is_null( $cachedMoveToken ) ) {
-			return $cachedMoveToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'move' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'move' ] = $wgUser->getEditToken();
 		}
 
-		$cachedMoveToken = $wgUser->getEditToken();
-		return $cachedMoveToken;
+		return ApiQueryInfo::$cachedTokens[ 'move' ];
 	}
 
 	public static function getBlockToken( $pageid, $title ) {
@@ -169,13 +170,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedBlockToken = null;
-		if ( !is_null( $cachedBlockToken ) ) {
-			return $cachedBlockToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'block' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'block' ] = $wgUser->getEditToken();
 		}
 
-		$cachedBlockToken = $wgUser->getEditToken();
-		return $cachedBlockToken;
+		return ApiQueryInfo::$cachedTokens[ 'block' ];
 	}
 
 	public static function getUnblockToken( $pageid, $title ) {
@@ -189,13 +189,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedEmailToken = null;
-		if ( !is_null( $cachedEmailToken ) ) {
-			return $cachedEmailToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'email' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'email' ] = $wgUser->getEditToken();
 		}
 
-		$cachedEmailToken = $wgUser->getEditToken();
-		return $cachedEmailToken;
+		return ApiQueryInfo::$cachedTokens[ 'email' ];
 	}
 
 	public static function getImportToken( $pageid, $title ) {
@@ -204,13 +203,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedImportToken = null;
-		if ( !is_null( $cachedImportToken ) ) {
-			return $cachedImportToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'import' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'import' ] = $wgUser->getEditToken();
 		}
 
-		$cachedImportToken = $wgUser->getEditToken();
-		return $cachedImportToken;
+		return ApiQueryInfo::$cachedTokens[ 'import' ];
 	}
 
 	public static function getWatchToken( $pageid, $title ) {
@@ -219,13 +217,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedWatchToken = null;
-		if ( !is_null( $cachedWatchToken ) ) {
-			return $cachedWatchToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'watch' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'watch' ] = $wgUser->getEditToken( 'watch' );
 		}
 
-		$cachedWatchToken = $wgUser->getEditToken( 'watch' );
-		return $cachedWatchToken;
+		return ApiQueryInfo::$cachedTokens[ 'watch' ];
 	}
 
 	public static function getOptionsToken( $pageid, $title ) {
@@ -234,13 +231,12 @@ class ApiQueryInfo extends ApiQueryBase {
 			return false;
 		}
 
-		static $cachedOptionsToken = null;
-		if ( !is_null( $cachedOptionsToken ) ) {
-			return $cachedOptionsToken;
+		// The token is always the same, let's exploit that
+		if ( !isset( ApiQueryInfo::$cachedTokens[ 'options' ] ) ) {
+			ApiQueryInfo::$cachedTokens[ 'options' ] = $wgUser->getEditToken();
 		}
 
-		$cachedOptionsToken = $wgUser->getEditToken();
-		return $cachedOptionsToken;
+		return ApiQueryInfo::$cachedTokens[ 'options' ];
 	}
 
 	public function execute() {
@@ -337,7 +333,10 @@ class ApiQueryInfo extends ApiQueryBase {
 	 */
 	private function extractPageInfo( $pageid, $title ) {
 		$pageInfo = array();
-		if ( $title->exists() ) {
+		$titleExists = $pageid > 0; //$title->exists() needs pageid, which is not set for all title objects
+		$ns = $title->getNamespace();
+		$dbkey = $title->getDBkey();
+		if ( $titleExists ) {
 			global $wgDisableCounters;
 
 			$pageInfo['touched'] = wfTimestamp( TS_ISO_8601, $this->pageTouched[$pageid] );
@@ -370,23 +369,23 @@ class ApiQueryInfo extends ApiQueryBase {
 
 		if ( $this->fld_protection ) {
 			$pageInfo['protection'] = array();
-			if ( isset( $this->protections[$title->getNamespace()][$title->getDBkey()] ) ) {
+			if ( isset( $this->protections[$ns][$dbkey] ) ) {
 				$pageInfo['protection'] =
-					$this->protections[$title->getNamespace()][$title->getDBkey()];
+					$this->protections[$ns][$dbkey];
 			}
 			$this->getResult()->setIndexedTagName( $pageInfo['protection'], 'pr' );
 		}
 
-		if ( $this->fld_watched && isset( $this->watched[$title->getNamespace()][$title->getDBkey()] ) ) {
+		if ( $this->fld_watched && isset( $this->watched[$ns][$dbkey] ) ) {
 			$pageInfo['watched'] = '';
 		}
 
-		if ( $this->fld_talkid && isset( $this->talkids[$title->getNamespace()][$title->getDBkey()] ) )	{
-			$pageInfo['talkid'] = $this->talkids[$title->getNamespace()][$title->getDBkey()];
+		if ( $this->fld_talkid && isset( $this->talkids[$ns][$dbkey] ) )	{
+			$pageInfo['talkid'] = $this->talkids[$ns][$dbkey];
 		}
 
-		if ( $this->fld_subjectid && isset( $this->subjectids[$title->getNamespace()][$title->getDBkey()] ) ) {
-			$pageInfo['subjectid'] = $this->subjectids[$title->getNamespace()][$title->getDBkey()];
+		if ( $this->fld_subjectid && isset( $this->subjectids[$ns][$dbkey] ) ) {
+			$pageInfo['subjectid'] = $this->subjectids[$ns][$dbkey];
 		}
 
 		if ( $this->fld_url ) {
@@ -398,7 +397,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		if ( $this->fld_preload ) {
-			if ( $title->exists() ) {
+			if ( $titleExists ) {
 				$pageInfo['preload'] = '';
 			} else {
 				$text = null;
@@ -409,8 +408,8 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		if ( $this->fld_displaytitle ) {
-			if ( isset( $this->displaytitles[$title->getArticleID()] ) ) {
-				$pageInfo['displaytitle'] = $this->displaytitles[$title->getArticleID()];
+			if ( isset( $this->displaytitles[$pageid] ) ) {
+				$pageInfo['displaytitle'] = $this->displaytitles[$pageid];
 			} else {
 				$pageInfo['displaytitle'] = $title->getPrefixedText();
 			}
@@ -719,6 +718,59 @@ class ApiQueryInfo extends ApiQueryBase {
 			'token' => 'Request a token to perform a data-modifying action on a page',
 			'continue' => 'When more results are available, use this to continue',
 		);
+	}
+
+	public function getResultProperties() {
+		$props = array(
+			ApiBase::PROP_LIST => false,
+			'' => array(
+				'touched' => 'timestamp',
+				'lastrevid' => 'integer',
+				'counter' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				),
+				'length' => 'integer',
+				'redirect' => 'boolean',
+				'new' => 'boolean',
+				'starttimestamp' => array(
+					ApiBase::PROP_TYPE => 'timestamp',
+					ApiBase::PROP_NULLABLE => true
+				)
+			),
+			'watched' => array(
+				'watched' => 'boolean'
+			),
+			'talkid' => array(
+				'talkid' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				)
+			),
+			'subjectid' => array(
+				'subjectid' => array(
+					ApiBase::PROP_TYPE => 'integer',
+					ApiBase::PROP_NULLABLE => true
+				)
+			),
+			'url' => array(
+				'fullurl' => 'string',
+				'editurl' => 'string'
+			),
+			'readable' => array(
+				'readable' => 'boolean'
+			),
+			'preload' => array(
+				'preload' => 'string'
+			),
+			'displaytitle' => array(
+				'displaytitle' => 'string'
+			)
+		);
+
+		self::addTokenProperties( $props, $this->getTokenFunctions() );
+
+		return $props;
 	}
 
 	public function getDescription() {

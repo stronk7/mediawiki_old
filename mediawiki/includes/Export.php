@@ -626,6 +626,9 @@ class XmlDumpWriter {
 
 		$out  = "    <revision>\n";
 		$out .= "      " . Xml::element( 'id', null, strval( $row->rev_id ) ) . "\n";
+		if( $row->rev_parent_id ) {
+			$out .= "      " . Xml::element( 'parentid', null, strval( $row->rev_parent_id ) ) . "\n";
+		}
 
 		$out .= $this->writeTimestamp( $row->rev_timestamp );
 
@@ -754,7 +757,7 @@ class XmlDumpWriter {
 	 * @return string
 	 */
 	function writeUploads( $row, $dumpContents = false ) {
-		if ( $row->page_namespace == NS_IMAGE ) {
+		if ( $row->page_namespace == NS_FILE ) {
 			$img = wfLocalFile( $row->page_title );
 			if ( $img && $img->exists() ) {
 				$out = '';

@@ -48,7 +48,7 @@ $messages = array(
 'tog-hidepatrolled' => "Stërma le modìfiche verificà ant j'ùltime modìfiche",
 'tog-newpageshidepatrolled' => 'Stërma le pàgine verificà da la lista dle pàgine neuve',
 'tog-extendwatchlist' => 'Slarga la funsion "ten sot euj" an manera che a la smon-a tute le modìfiche, nen mach l\'ùltima',
-'tog-usenewrc' => "Deuvra j'ùltime modìfiche an bela forma (a-i va JavaScript)",
+'tog-usenewrc' => "Deuvra j'ùltime modìfiche ameliorà (a-i và JavaScript)",
 'tog-numberheadings' => 'Tìtoj ëd paràgraf<br />che as nùmero daspërlor',
 'tog-showtoolbar' => "Mostra la bara dj'utiss (a-i va Javascript)",
 'tog-editondblclick' => "Dobia sgnacà për modifiché l'artìcol<br />(a-i va JavaScript)",
@@ -429,6 +429,8 @@ Coma rason a l'ha butà: ''$2''.",
 L'aministrator ch'a l'ha blocalo a l'ha lassà sta spiegassion: «$3».",
 'invalidtitle-knownnamespace' => 'Tìtol pa bon con spassi nominal "$2" e test "$3"',
 'invalidtitle-unknownnamespace' => 'Tìtol pa bon con spassi nominal sconossù nùmer $1 e test "$2"',
+'exception-nologin' => 'Nen rintrà ant ël sistema',
+'exception-nologin-text' => "Sta pagina o assion a veul ch'it sie intrà dzora a sta wiki.",
 
 # Virus scanner
 'virus-badscanner' => "Configurassion falà: antivìrus nen conossù: ''$1''",
@@ -520,7 +522,7 @@ Da qualsëssìa ëd coste funsion a sarà mandà gnun messagi fin che chiel (chi
 'invalidemailaddress' => "Costa adrëssa ëd pòsta eletrònica-sì as peul nen pijesse përchè a l'ha na forma nen bon-a.
 Për piasì che a buta n'adrëssa scrita giusta ò che a lassa ël camp veujd.",
 'cannotchangeemail' => "J'adrësse ëd pòsta eletrònica dij cont a peulo pa esse modificà ansima a costa wiki.",
-'emaildisabled' => 'Ës sit a peul pa mandé ëd mëssagi ëd pòsta eletrònica.',
+'emaildisabled' => 'Ës sit a peul pa mandé dij mëssagi ëd pòsta eletrònica.',
 'accountcreated' => 'Cont creà',
 'accountcreatedtext' => "Ël cont Utent për $1 a l'é stàit creà.",
 'createaccount-title' => 'Creassion ëd cont për {{SITENAME}}',
@@ -2594,12 +2596,12 @@ Për piasì, ch'a vìsita la [//www.mediawiki.org/wiki/Localisation Localisassio
 'allmessages-filter-unmodified' => 'Pa modificà',
 'allmessages-filter-all' => 'Tùit',
 'allmessages-filter-modified' => 'Modificà',
-'allmessages-prefix' => 'Filtra për prefiss:',
+'allmessages-prefix' => 'Filtré për prefiss:',
 'allmessages-language' => 'Lenga:',
-'allmessages-filter-submit' => 'Và',
+'allmessages-filter-submit' => 'Apliché',
 
 # Thumbnails
-'thumbnail-more' => 'Slarga',
+'thumbnail-more' => 'Slarghé',
 'filemissing' => 'Archivi che a manca',
 'thumbnail_error' => 'Eror antramentr che as fasìa la figurin-a: $1',
 'djvu_page_error' => 'Pàgina DjVu fòra dij lìmit',
@@ -2609,21 +2611,21 @@ Për piasì, ch'a vìsita la [//www.mediawiki.org/wiki/Localisation Localisassio
 'thumbnail_invalid_params' => 'Paràmetro dla figurin-a pa giust',
 'thumbnail_dest_directory' => 'As peul pa fesse ël dossié ëd destinassion',
 'thumbnail_image-type' => 'Sòrt ëd figura nen gestì',
-'thumbnail_gd-library' => 'Configurassion pa finìa dla librerìa GD: Fonsion $1 mancanta',
-'thumbnail_image-missing' => 'Ël file a smija esse mancant: $1',
+'thumbnail_gd-library' => 'Configurassion incompleta dla biblioteca GD: Fonsion $1 mancanta',
+'thumbnail_image-missing' => "L'archivi a smija ch'a manca: $1",
 
 # Special:Import
 'import' => 'Amportassion ëd pàgine',
 'importinterwiki' => 'Amportassion da wiki diferente',
 'import-interwiki-text' => "Che a selession-a na wiki e ël tìtol dla pàgina da amporté.
-Date dle revision e stranòm dj'editor a resteran piajit sù 'cò lor.
-Tute le amportassion antra wiki diferente a resto marcà ant ël [[Special:Log/import|Registr dj'amportassion]].",
-'import-interwiki-source' => 'Sorziss wiki/pàgina:',
-'import-interwiki-history' => 'Còpia tute le version stòriche dë sta pàgina-sì',
-'import-interwiki-templates' => 'Ansëriss tùit jë stamp',
+Date dle revision e stranòm dj'editor a resteran piàjit sù 'cò lor.
+Tute j'amportassion antra wiki diferente a resto marcà ant ël [[Special:Log/import|Registr dj'amportassion]].",
+'import-interwiki-source' => 'Wiki e pàgina sorgiss:',
+'import-interwiki-history' => 'Copié tute le revision ëd la stòria ëd costa pàgina',
+'import-interwiki-templates' => 'Anserì tùit jë stamp',
 'import-interwiki-submit' => 'Amporté',
 'import-interwiki-namespace' => 'Spassi nominal ëd destinassion:',
-'import-upload-filename' => 'Nòm dël file:',
+'import-upload-filename' => "Nòm ëd l'archivi:",
 'import-comment' => 'Oget:',
 'importtext' => "Për piasì, che as espòrta l'archivi da 'nt la sorgiss wiki ën dovrand l'[[Special:Export|utiss d'esportassion]]. 
 Che as lo salva ansima a sò ordinator e peui che a lo caria ambelessì.",
@@ -2634,8 +2636,8 @@ Che as lo salva ansima a sò ordinator e peui che a lo caria ambelessì.",
 'importfailed' => 'Amportassion falìa: $1',
 'importunknownsource' => "Sorgiss d'amportassion ëd na sòrt nen conossùa",
 'importcantopen' => "L'archivi da amporté a l'é pa podusse deurbe",
-'importbadinterwiki' => 'Anliura antra wiki diferente malfaita',
-'importnotext' => 'Veujd ò sensa pa gnun test',
+'importbadinterwiki' => 'Liura antra wiki diferente cioca',
+'importnotext' => 'Veujd o con gnun test',
 'importsuccess' => 'Amportassion andaita a bon fin!',
 'importhistoryconflict' => "A-i son dle stòrie dë sta pàgina-sì che as contradisso un-a con l'àutra (a peul esse che sta pàgina-sì a l'avèissa già amportala)",
 'importnosources' => "A l'é pa staita definìa gnun-a sorgiss d'amportassion da na wiki diferenta, e carié mach le stòrie as peul nen.",
@@ -2777,6 +2779,7 @@ Sòn a l'é motobin belfé che a sia rivà përchè a-i era n'anliura a un sit e
 'spambot_username' => 'MediaWiki - trigomiro che a-j dà deuit a la rumenta',
 'spam_reverting' => "Buta andaré a l'ùltima version che a l'avèissa pa andrinta dj'anliure a $1",
 'spam_blanking' => "Pàgina dësveujdà, che tute le version a l'avìo andrinta dj'anliure a $1",
+'spam_deleting' => 'Tute le revision a contnisìo dle liure a $1, scancelament',
 
 # Info page
 'pageinfo-title' => 'Anformassion për "$1"',
@@ -3707,4 +3710,6 @@ Dësnò, a peule dovré ël formlari semplificà sì-sota. Sò coment a sarà gi
 'duration-centuries' => '$1 {{PLURAL:$1|sécol|sécoj}}',
 'duration-millennia' => '$1 {{PLURAL:$1|milenari|milenari}}',
 
+# Unknown messages
+'lockmanager-fail-svr-acquire' => 'As peul pa butesse le saradure an sël servent $1.',
 );
