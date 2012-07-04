@@ -138,6 +138,8 @@ if (php_sapi_name() != 'cli') {
 // this avoids errors in apache error_log and also catches CLI requests.
 /*
  * DANP: Disabled 20120320 - the wptouch theme seems to have gone somehere..
+ * Added skins back 20120704 - JRT
+*/
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
     if (preg_match("/iphone/i", $_SERVER['HTTP_USER_AGENT'])) {
         $wgDefaultSkin = 'wptouch';
@@ -153,8 +155,6 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 }else {
     $wgDefaultSkin = 'moodledocsnew';
 }
- */
-$wgDefaultSkin = 'moodledocsnew';
 
 // End wizardy, onto business.
 
@@ -384,11 +384,6 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'English';
             $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-            if ($mdocsver === "23") {
-            	$wgEnableEmail = false; // disable email temporarily for Helen on 23/en
-            	$wgEnotifUserTalk = false;
-            	$wgEnotifWatchlist = false;
-            }
         break;
 
         default:  // any unexpected input
