@@ -49,7 +49,7 @@ RewriteRule (^19/|^20/|^21/|^22/|^23/|^)(de_du|de_kids|en_us|en_kids|es_ar|es_es
 
 # Redirect any non-current wikied language to the english wiki of the same version
 # e.g.  http://docs/21/la/mod/forum/view -> http://docs/21/en/mod/forum/view
-RewriteCond %{REQUEST_URI} !^/(all|2x|19|20|21|22|23)/(en|de|ja|es|fr|is|eu|hr|pt_br)($|/)
+RewriteCond %{REQUEST_URI} !^/(all|2x|19|20|21|22|23)/(en|de|ja|es|fr|fi|is|eu|hr|pt_br)($|/)
 RewriteCond %{REQUEST_URI} ^/(all|2x|19|20|21|22|23)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)
 RewriteRule ^(all|2x|19|20|21|22|23)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /$1/en$3 [R=301,L]
 
@@ -60,7 +60,7 @@ RewriteRule ^(20|21|22|23)/(ja|fr)($|/(.*))  /2x/$2$3 [R=301,L]
 
 # Redirect combined wikis to the 'all' version [option 1]
 # e.g. http://docs/22/es/mod/forum/view -> http://docs/19/es/mod/forum/view
-RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23)/(es|is|eu|hr|pt_br)($|/)
+RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23)/(es|is|eu|fi|hr|pt_br)($|/)
 RewriteRule ^(19|20|21|22|23)/([a-z]{2}|pt_br)($|/(.*))  /all/$2$3 [R=301,L]
 
 # Regex to catch /en/Development: namespace and redirect to /dev/
