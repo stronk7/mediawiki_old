@@ -301,7 +301,7 @@ if ($mdocsver == 'archive') {
         case 'de':
             $wgLanguageCode     = 'de';
             $wgLanguageName     = 'Deutsch';
-            if ($mdocsinternal === "20") {
+            if ($mdocsinternal >= "20") {
               /// 20docs_de is InnoDB with binary charset, 19docs_de is MyISAM with latin1 charset (set by default at the top of this file.)
               $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
               $wgDBtransactions   = true;
