@@ -187,11 +187,6 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'Dansk';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
-        case 'fi':
-            $wgLanguageCode     = 'fi';
-            $wgLanguageName     = 'Suomi';
-            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-        break;
         case 'hu':
             $wgLanguageCode     = 'hu';
             $wgLanguageName     = 'Magyar';
@@ -269,7 +264,7 @@ if ($mdocsver == 'archive') {
             $mdocsinternal = '19';
 
             // only permitted langs
-            $permitted = array('es','fr','is','eu','hr','pt_br');
+            $permitted = array('es','fi','fr','is','eu','hr','pt_br');
             if (!in_array($callpath, $permitted)) {
                 $callpath = ''; // will 404
             }
@@ -318,6 +313,11 @@ if ($mdocsver == 'archive') {
         case 'eu':
             $wgLanguageCode     = 'eu';
             $wgLanguageName     = 'Euskara';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
+        case 'fi':
+            $wgLanguageCode     = 'fi';
+            $wgLanguageName     = 'Suomi';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
         case 'fr':
