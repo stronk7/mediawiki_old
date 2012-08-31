@@ -155,7 +155,7 @@ $messages = array(
 'tog-hidepatrolled'           => 'હાલના સલામતી માટે કરવામાં આવેલાં થયેલા ફેરફારો છુપાવો.',
 'tog-newpageshidepatrolled'   => 'નવાં પાનાંની યાદીમાંથી દેખરેખ હેઠળનાં પાનાં છુપાવો',
 'tog-extendwatchlist'         => 'ધ્યાનસૂચિને વિસ્તૃત કરો જેથી,ફક્ત તાજેતરનાજ નહીં, બધા આનુષાંગિક ફેરફારો જોઇ શકાય',
-'tog-usenewrc'                => 'તાજેતરનાં વર્ધિત ફેરફારો (જાવાસ્ક્રીપ્ટ જરૂરી)',
+'tog-usenewrc'                => 'તાજેતરનાં વર્ધિત ફેરફારો વાપરો(જાવાસ્ક્રીપ્ટ જરૂરી)',
 'tog-numberheadings'          => 'મથાળાંઓને આપો-આપ ક્રમ (ઑટો નંબર) આપો',
 'tog-showtoolbar'             => 'ફેરફારો માટેનો ટૂલબાર બતાવો (જાવા સ્ક્રિપ્ટ)',
 'tog-editondblclick'          => 'ડબલ ક્લિક દ્વારા ફેરફાર કરો (જાવાસ્ક્રિપ્ટ જરૂરી)',
@@ -163,21 +163,21 @@ $messages = array(
 'tog-editsectiononrightclick' => 'વિભાગના મથાળાં ને રાઇટ ક્લિક દ્વારા ફેરફાર કરવાની રીત અપનાવો. (જાવાસ્ક્રિપ્ટ જરૂરી)',
 'tog-showtoc'                 => 'અનુક્રમણિકા દર્શાવો (૩થી વધુ પેટા-મથાળા વાળા લેખો માટે)',
 'tog-rememberpassword'        => 'આ કમ્પ્યૂટર પર મારી લોગ-ઇન વિગતો યાદ રાખો (મહત્તમ $1 {{PLURAL:$1|દિવસ|દિવસ}} માટે)',
-'tog-watchcreations'          => 'મેં લખેલા નવા લેખો મારી ધ્યાનસૂચિમાં ઉમેરો',
-'tog-watchdefault'            => 'હું ફેરફાર કરૂં તે પાના મારી ધ્યાનસૂચિમાં ઉમેરો',
-'tog-watchmoves'              => 'હું જેનું નામ બદલું તે પાના મારી ધ્યાનસૂચિમાં ઉમેરો',
-'tog-watchdeletion'           => 'હું હટાવું તે પાના મારી ધ્યાનસૂચિમાં ઉમેરો',
+'tog-watchcreations'          => 'મેં ઉમેરેલા પાનાંઓ અને અપલોડ કરેલ ફાઇલ્સ મારી ધ્યાનસૂચિમાં ઉમેરો',
+'tog-watchdefault'            => 'હું ફેરફાર કરૂં તે પાનાં અને ફાઇલ્સ મારી ધ્યાનસૂચિમાં ઉમેરો',
+'tog-watchmoves'              => 'હું ખસેડું તે પાનાં અને ફાઇલ્સ મારી ધ્યાનસૂચિમાં ઉમેરો',
+'tog-watchdeletion'           => 'હું દૂર કરું તે પાનાં અને ફાઇલ્સ મારી ધ્યાનસૂચિમાં ઉમેરો',
 'tog-minordefault'            => 'બધા નવા ફેરફારો નાના તરીકે માર્ક કરો.',
 'tog-previewontop'            => 'એડીટ બોક્સ પહેલાં પ્રિવ્યુ બતાવો.',
 'tog-previewonfirst'          => 'પ્રથમ ફેરફાર વખતે પ્રિવ્યુ બતાવો.',
 'tog-nocache'                 => 'બ્રાઉઝરનું પેજ કેશિંગ અક્રિય કરો',
-'tog-enotifwatchlistpages'    => 'મારી ધ્યાનસૂચિમાંનાં પાનામાં ફેરફાર થાય ત્યારે મને ઇ-મેલ મોકલો',
+'tog-enotifwatchlistpages'    => 'મારી ધ્યાનસૂચિમાંનું પાનુ અને ફાઇલમાં ફેરફાર થાય ત્યારે મને ઇ-મેલ મોકલો',
 'tog-enotifusertalkpages'     => 'મારી ચર્ચાનાં પાનામાં ફેરફાર થાય ત્યારે મને ઇ-મેલ મોકલો',
-'tog-enotifminoredits'        => 'પાનામાં નાનાં ફેરફાર થાય ત્યારે પણ મને ઇ-મેલ મોકલો',
+'tog-enotifminoredits'        => 'પાનાં અનેફાઇલ્સમાં નાનાં ફેરફાર થાય તો પણ મને ઇ-મેલ મોકલો',
 'tog-enotifrevealaddr'        => 'નોટીફીકેશનના ઇમેલમાં મારૂ ઇમેલ એડ્રેસ બતાવો',
 'tog-shownumberswatching'     => 'ધ્યાનમાં રાખતા સભ્યોની સંખ્યા બતાવો',
 'tog-oldsig'                  => 'હાલના હસ્તાક્ષર',
-'tog-fancysig'                => 'સ્વાચાલિત કડી વગરની (કાચી) સહી',
+'tog-fancysig'                => 'હસ્તાક્ષરનો વિકિલખાણ તરીકે ઉપયોગ કરો (સ્વચાલિત કડી વગર)',
 'tog-externaleditor'          => 'બીજું એડીટર વાપરો. (ફક્ત એકસપર્ટ માટે, તમારા કમ્પ્યુટરમાં સેટીંગ્સ બદલવા પડશે. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
 'tog-externaldiff'            => 'Use external diff by default (for experts only, needs special settings on your computer. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
 'tog-showjumplinks'           => "''આના પર જાવ'' કડીને સક્રીય કરો.",
@@ -449,7 +449,7 @@ $1',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'લેખ',
-'nstab-user'      => 'મારા વિષે',
+'nstab-user'      => 'સભ્ય પાનું',
 'nstab-media'     => 'મિડીયા પાનું',
 'nstab-special'   => 'ખાસ પાનું',
 'nstab-project'   => 'પરિયોજનાનું પાનું',
@@ -842,7 +842,7 @@ $2
 'updated'                          => '(સંવર્ધીત)',
 'note'                             => "'''નોંધ:'''",
 'previewnote'                      => "'''આ ફક્ત પૂર્વાવલોકન છે;'''
-ફેરફારો હજુ સાચવવામાં નથી આવ્યા!",
+તમારા ફેરફારો હજુ સાચવવામાં નથી આવ્યા!",
 'previewconflict'                  => 'જો તમે આ પાનું સાચવશો તો આ પ્રિવ્યુમાં દેખાય છે તેવું સચવાશે.',
 'session_fail_preview'             => "'''અફસોસ છે! સત્ર માહિતી ખોઇ દેવાને કારણે અમે તમારું કાર્ય સાચવી ન શક્યાં.'''
 કૃપયા ફરી પ્રયત્ન કરો.
@@ -869,7 +869,7 @@ $2
 'yourtext'                         => 'તમારું લખાણ',
 'storedversion'                    => 'રક્ષિત પુનરાવર્તન',
 'nonunicodebrowser'                => "'''ચેતવણી: તમારું બ્રાઉઝર યુનિકોડ ઉકેલવા સક્ષમ નથી.'''
-અહીં તમે સુરક્ષીત રીતે ફેરફરો નહીં કરી શકો: ASCII સિવાયના અક્ષરો ફેરફાર ચોકઠામાં હેક્સાડેસિમલ સ્વરૂપે દેખાશે.",
+અહીં તમે સુરક્ષિત રીતે ફેરફારો નહીં કરી શકો: ASCII સિવાયના અક્ષરો સંપાદન ચોકઠામાં હેક્સાડેસિમલ સ્વરૂપે દેખાશે.",
 'editingold'                       => "'''ચેતવણી: તમે કાલાતિત ફેરફારો ને બદલી રહ્યાં છો.'''
 જો તમે તેને સાચવશો , વચમાં થયેલ ફેરફારો સાચવી ન શકાય.",
 'yourdiff'                         => 'ભેદ',
@@ -891,9 +891,9 @@ $2
 તમારા સંદર્ભ માટે તાજેતરની લોગ યાદિ આપી છે:",
 'semiprotectedpagewarning'         => "'''નોંધ : આ પાના પર સંરક્ષણ વિકલ્પ સક્રીય છે અને માત્ર પ્રબંધકો જ આમાં ફેરફાર કરી શકે.'''
 તમારા સંદર્ભ માટે તાજેતરની લોગ યાદિ આપી છે:",
-'cascadeprotectedwarning'          => "'''ચેતવણી:''' આ પાનું સંરક્ષીત છે.  પ્રબંધન અધિકાર ધરાવતા સભ્યોજ આમાં ફેરફાર કરી શકે છે. આ પાનાને નીચેના પગથિયામય સંરક્ષણ{{PLURAL:$1|page|pages}} દ્વારા સુરક્ષીત છે.",
-'titleprotectedwarning'            => "'''ચેતવણી:  આ પાનું સંરક્ષીત છે  આની રચના માટે [[Special:ListGroupRights|specific rights]] ની જરૂર છે.'''
-તે સંબંધી તાજેતરની ફેરફાર યાદિ તમારા સંદર્ભ માટે આપેલી છે:",
+'cascadeprotectedwarning'          => "'''ચેતવણી:''' આ પાનું સંરક્ષિત છે. પ્રબંધન અધિકાર ધરાવતા સભ્યો જ આમાં ફેરફાર કરી શકે છે. આ પાનું નીચેના પગથિયામય સંરક્ષણ{{PLURAL:$1|પાના|પાનાઓ}} દ્વારા સુરક્ષિત છે.",
+'titleprotectedwarning'            => "'''ચેતવણી: આ પાનું સંરક્ષિત છે આથી આની રચના માટે [[Special:ListGroupRights|વિશેષ અધિકારો]]ની જરૂર છે.'''
+તે સંબંધી તાજેતરની ફેરફાર યાદી તમારા સંદર્ભ માટે આપેલી છે:",
 'templatesused'                    => 'આ પાનામાં વપરાયેલ {{PLURAL:$1|ઢાંચો|ઢાંચાઓ}}:',
 'templatesusedpreview'             => 'આ પૂર્વાવલોકનમાં વપરાયેલ {{PLURAL:$1|ઢાંચો|ઢાંચાઓ}}:',
 'templatesusedsection'             => 'આ ખંડ માં વપરાયેલા {{PLURAL:$1|ઢાંચો|ઢાંચા}} :',
@@ -1084,8 +1084,8 @@ $1",
 
 # Suppression log
 'suppressionlog'     => 'દાબ નોંધ',
-'suppressionlogtext' => 'નીચે પ્રબંધકોથી છુપાયેલ એવા હટાવ અને રોકની યાદિ આપેલી છે.
-હાલમાં સક્રીય એવા  પ્રતિબંધ અને રોકની યાદિ અહીં [[Special:BlockList|IP block list]]  આપેલ છે.',
+'suppressionlogtext' => 'નીચે પ્રબંધકોથી છુપાયેલ એવા હટાવ અને રોકની યાદી આપેલી છે.
+હાલમાં સક્રીય એવા પ્રતિબંધ અને રોકની યાદિ [[Special:BlockList|અહીં]] આપેલ છે.',
 
 # History merging
 'mergehistory'                     => 'પાનાનાં ઇતિહાસોનું વિલીનીકરણ',
@@ -1242,7 +1242,7 @@ $1",
 'searchresultshead'             => 'શોધો',
 'resultsperpage'                => 'પ્રતિ પાના પર પરિણામો',
 'stub-threshold'                => '<a href="#" class="stub">stub link</a>નાફોર્મમેટિંગ માટે શરૂઆતિ પગથિયું  (બાઈટ્સ):',
-'stub-threshold-disabled'       => 'નિષ્ક્રીયાન્વીત',
+'stub-threshold-disabled'       => 'નિષ્ક્રિય કરેલ',
 'recentchangesdays'             => 'તાજા ફેરફારોમાં દેખાડવાના દિવસો',
 'recentchangesdays-max'         => 'મહત્તમ  $1 {{PLURAL:$1|દિવસ|દિવસો}}',
 'recentchangescount'            => 'સમાન્ય પણે ફલકમાં બતાવવાના ફેરફારોની સંખ્યા',
@@ -1411,7 +1411,7 @@ HTML નાકું ચકાસો',
 'right-ipblock-exempt'        => 'IP દ્વારા, સ્વયં ચાલિત રીતે અને સમૂહ રોકને અવગનીને આગળ વધો',
 'right-proxyunbannable'       => 'અવેજીના અવયંચાલિત ખંડોને ટાળો',
 'right-unblockself'           => 'તેમને જાતે અપ્રતિબંધિત થવા દો',
-'right-protect'               => 'સંરક્ષણ સ્તર બદલો અને સંરક્ષીત પાનામાં ફેરફાર કરો.',
+'right-protect'               => 'સંરક્ષણ સ્તર બદલો અને સંરક્ષિત પાનાઓમાં ફેરફાર કરો.',
 'right-editprotected'         => 'સંરક્ષિત પાનામાં ફેરફાર કરો (પગથિયામય સુરક્ષા વગર)',
 'right-editinterface'         => 'સભ્ય સંભાષણ પટલમાં ફેરફાર કરો',
 'right-editusercssjs'         => 'અન્ય સભ્યોની CSS અને JavaScript ફાઇલમાં ફેરફાર કરો',
@@ -1443,7 +1443,7 @@ HTML નાકું ચકાસો',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read'                 => 'આ પાનું વાંચો.',
-'action-edit'                 => 'આ પાનામાં ફેરફાર કરવાની',
+'action-edit'                 => 'આ પાનામાં ફેરફાર કરો',
 'action-createpage'           => 'નવો લેખ શરૂ કરો',
 'action-createtalk'           => 'ચર્ચાનું પાનું બનાવો',
 'action-createaccount'        => ' ખાતું ખોલો',
@@ -1494,11 +1494,11 @@ HTML નાકું ચકાસો',
 'rcshowhideminor'                   => 'નાના ફેરફારો $1',
 'rcshowhidebots'                    => 'બૉટો $1',
 'rcshowhideliu'                     => 'લૉગ ઇન થયેલાં સભ્યો $1',
-'rcshowhideanons'                   => 'અનામિ સભ્યો $1',
+'rcshowhideanons'                   => 'અનામી સભ્યો $1',
 'rcshowhidepatr'                    => ' $1 ચોકીયાત ફેરફારો',
 'rcshowhidemine'                    => 'મારા ફેરફારો $1',
 'rclinks'                           => 'છેલ્લાં $2 દિવસમાં થયેલા છેલ્લાં $1 ફેરફારો દર્શાવો<br />$3',
-'diff'                              => 'ભેદ',
+'diff'                              => 'તફાવત',
 'hist'                              => 'ઇતિહાસ',
 'hide'                              => 'છુપાવો',
 'show'                              => 'બતાવો',
@@ -1540,9 +1540,9 @@ HTML નાકું ચકાસો',
 પહેલા ચડાવાયેલી ફાઇલ અહીં જુઓ કે શોધો  [[Special:FileList|list of uploaded files]], (પુનઃ) ચડાવેલી ફાઇલ પણ લોગમાં અહીં દર્શાવાઇ છે.  [[Special:Log/upload|upload log]], હટાવાયેલી ફાઇલોની યાદિ  [[Special:Log/delete|deletion log]].
 
 કોઇ ફાઇલને પાનામાં ઉમેરવા માટે, નીચેની કોઇ એક કડી પર ક્લિક કરો:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' ફાઇલની પૂર્ણ આવૃત્તિ વાપરવા 
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' to use a ડાબા હાંસિયા નજીક ચોકઠામાં 200 પિક્સેલ પહોળી ફાઇલ   'alt text' સાથે વર્ણન સહીત ચડાવવા 
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' ફાઇલના દર્શન કર્યા સિવાય સીધી ફાઇલ જોડવા માટે",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' ફાઇલની પૂર્ણ આવૃત્તિ વાપરવા 
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></code>''' to use a ડાબા હાંસિયા નજીક ચોકઠામાં 200 પિક્સેલ પહોળી ફાઇલ   'alt text' સાથે વર્ણન સહીત ચડાવવા 
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' ફાઇલના દર્શન કર્યા સિવાય સીધી ફાઇલ જોડવા માટે",
 'upload-permitted'            => 'રજામંદ ફાઈલ પ્રકારો: $1.',
 'upload-preferred'            => 'ઈચ્છીત ફાઈલ પ્રકારો: $1.',
 'upload-prohibited'           => 'પ્રતિબંધીત ફાઈલ પ્રકારો: $1.',
@@ -1590,20 +1590,20 @@ HTML નાકું ચકાસો',
 કદાચ તે તેમાં રહેલ લાહિતીના પ્રકારને લીધે હશે.
 કૃપયા ખાત્રી કરો શું તમે ખરેખર આ ફાઇલ ચડાવવા માંગો છો.',
 'windows-nonascii-filename'   => 'આ વીકી ફાઇલનામો મા વિશિષ્ટ અક્ષરો સાથે આધાર આપતું નથી.',
-'fileexists'                  => "આ નામે એક ફાઇલ પહેલેથી અસ્તિત્વમાં છે, કૃપયા  જો તમને ખાત્રી ન હોય તો અથવા બદલવા માંગતા હોય તો  '''<tt>[[:$1]]</tt>''' ચકાસો [[$1|thumb]]",
-'filepageexists'              => "આ ફાઇલનું માહિતી પત્રક  '''<tt>[[:$1]]</tt>'''પર પહેલેથી અસ્તિત્વમાં છે, પણ તેનામે કોઇ ફાઇલ અસ્તિત્વમાં નથી.
+'fileexists'                  => 'આ નામે એક ફાઇલ પહેલેથી અસ્તિત્વમાં છે, કૃપયા  જો તમને ખાત્રી ન હોય તો અથવા બદલવા માંગતા હોય તો  <strong>[[:$1]]</strong> ચકાસો [[$1|thumb]]',
+'filepageexists'              => 'આ ફાઇલનું માહિતી પત્રક  <strong>[[:$1]]</strong>પર પહેલેથી અસ્તિત્વમાં છે, પણ તેનામે કોઇ ફાઇલ અસ્તિત્વમાં નથી.
 તમે લખેલ સારાંશએ વર્ણનમાં નહીં દેખાય.
 તમે જો ઇચ્છો કે તમારો સારાંશ આમાં દેખાય તો, તે માટે તમારે જાતે તેમાં ફેરેફાર કરવો પડશે. 
-[[$1|thumb]]",
-'fileexists-extension'        => "આ જ નામે ફાઇલ પહેલેથી અસ્તિત્વ માં છે: [[$2|thumb]]
-* ચડાવાતી ફાઇલનું નામ છે: '''<tt>[[:$1]]</tt>'''
-* ઓઅહેલેથી વિહરમાન ફાઇલનું નામ : '''<tt>[[:$2]]</tt>'''
-કૃપયા અન્ય નામ આપો.",
-'fileexists-thumbnail-yes'    => "આ ફાઇલ સંકોચેલી ફાઇલનું લઘુ ચિત્ર છે.
+[[$1|thumb]]',
+'fileexists-extension'        => 'આ જ નામે ફાઇલ પહેલેથી અસ્તિત્વ માં છે: [[$2|thumb]]
+* ચડાવાતી ફાઇલનું નામ છે: <strong>[[:$1]]</strong>
+* ઓઅહેલેથી વિહરમાન ફાઇલનું નામ : <strong>[[:$2]]</strong>
+કૃપયા અન્ય નામ આપો.',
+'fileexists-thumbnail-yes'    => 'આ ફાઇલ સંકોચેલી ફાઇલનું લઘુ ચિત્ર છે.
 [[$1|thumb]]
-કૃપયા ફાઇલ તપાસો  '''<tt>[[:$1]]</tt>'''.
-જો તપાસેલી ફાઇલ તેની મૂળ પ્રતની આકૃતિ હોય તો વધારાની લઘુચિત્ર ચડાવવાની જરૂર નથી.",
-'file-thumbnail-no'           => "ફાઇલનું નામ '''<tt>$1</tt>'''થી શરૂ થાય છે.
+કૃપયા ફાઇલ તપાસો  <strong>[[:$1]]</strong>.
+જો તપાસેલી ફાઇલ તેની મૂળ પ્રતની આકૃતિ હોય તો વધારાની લઘુચિત્ર ચડાવવાની જરૂર નથી.',
+'file-thumbnail-no'           => "ફાઇલનું નામ <strong>$1</strong>થી શરૂ થાય છે.
 લાગે છે કે આ ઘટાડેલા કદનું ચિત્ર  ''(thumbnail)'' છે..
 જો તમારી સાથે પૂર્ણ ઘનત્વ ધરાવતી ચિત્રની ફાઇલ હોય તો જ આ ફાઇલ ચડાવશો, અન્યથા ફાઇલનું નામ બદલશો.",
 'fileexists-forbidden'        => 'આ નામની ફાઇલ પહેલેથી મોજુદ છે અને તેના ઉપર લેખન કરી શકાશે નહી.
@@ -1847,7 +1847,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 # MIME search
 'mimesearch'         => 'MIME શોધ',
 'mimesearch-summary' => 'આ પાનાનો ઉપયોગ MIME-પ્રકાર અનુસાર ફીલ્ટર કરવા માટે ઉપયોગ થાય છે.  ફાThis page enables the filtering of files for its MIME-type.
-ઇનપુટ: પ્રકાર, e.g. <tt>image/jpeg</tt>.',
+ઇનપુટ: પ્રકાર, e.g. <code>image/jpeg</code>.',
 'mimetype'           => 'MIME પ્રકાર:',
 'download'           => 'ડાઉનલોડ',
 
@@ -1872,7 +1872,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'randomredirect-nopages' => 'નામ સ્થળ "$1" માં કોઇ દિશા નિર્દેશન નથી',
 
 # Statistics
-'statistics'                   => 'આંકડાકિય માહિતિ',
+'statistics'                   => 'આંકડાકીય માહિતી',
 'statistics-header-pages'      => 'પાના સંબંધી આંકડાકીય માહિતી',
 'statistics-header-edits'      => 'આંકડાકીય માહિતી બદલો',
 'statistics-header-views'      => 'આંકડાકીય માહિતી જુઓ',
@@ -1894,9 +1894,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 
 'disambiguations'      => 'સંદિગ્ધ શીર્ષકવાળાં પાનાં સાથે જોડાતાં પૃષ્ઠો',
 'disambiguationspage'  => 'Template:અસંદિગ્ધ',
-'disambiguations-text' => "નીચેના પાના  '''સંદિગ્ધ વાક્યો વાળા પાના''' સાથે કડી દ્વારા જોડાયેલા છે.
-તેના કરતા તેને યોગ્ય તે વિષ્ય સાથે જોડાયેલા હોવા જોઇએ.<br />
-આ પાનાને સંદિગ્ધ  વાક્યો વાળા પાના ત્યારે કહી શકાય જ્યારે તે [[MediaWiki:Disambiguationspage]] નામના ઢાંચા સાથે જોડાયેલા હોય.",
+'disambiguations-text' => "નીચેના પાના  '''સંદિગ્ધ વાક્યો વાળા પાના''' સાથે ઓછામાં ઓછી એક કડી દ્વારા જોડાયેલા છે.
+તેઓ વધુ યોગ્ય પાનાં સાથે જોડાયેલા હોવા જોઇએ.<br />
+પાનાને સંદિગ્ધ વાક્યો વાળું પાનું ત્યારે કહી શકાય જ્યારે તે [[MediaWiki:Disambiguationspage]] નામના માળખા સાથે જોડાયેલું હોય.",
 
 'doubleredirects'                   => 'બમણું દિશાનિર્દેશન',
 'doubleredirectstext'               => 'આ પાનું દિશા નિર્દેશિત પાના પર થયેલા દિશા નિર્દેશિત પાનાની યાદિ બતાવે છે.
@@ -1930,10 +1930,10 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'specialpage-empty'       => 'આ પાનું ખાલી છે.',
 'lonelypages'             => 'અનાથ પાના',
 'lonelypagestext'         => 'નીચે બતાવેલા પાના {{SITENAME}} પર કે થી કડી દ્વારા જોડાયેલ નથી',
-'uncategorizedpages'      => 'અવર્ગિકૃત પાનાં',
-'uncategorizedcategories' => 'અવર્ગિકૃત શ્રેણીઓ',
-'uncategorizedimages'     => 'અવર્ગિકૃત દસ્તાવેજો',
-'uncategorizedtemplates'  => 'અવર્ગિકૃત ઢાંચાઓ',
+'uncategorizedpages'      => 'અવર્ગીકૃત પાનાં',
+'uncategorizedcategories' => 'અવર્ગીકૃત શ્રેણીઓ',
+'uncategorizedimages'     => 'અવર્ગીકૃત દસ્તાવેજો',
+'uncategorizedtemplates'  => 'અવર્ગીકૃત ઢાંચાઓ',
 'unusedcategories'        => 'વણ વપરાયેલી શ્રેણીઓ',
 'unusedimages'            => 'વણ વપરાયેલાં દસ્તાવેજો',
 'popularpages'            => 'પ્રખ્યાત પાના',
@@ -1960,8 +1960,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'protectedpages-indef'    => 'ફક્ત અનિશ્ચિત સુરક્ષા ધરાવતા પાના',
 'protectedpages-cascade'  => 'માત્ર પગથિયામય સુરક્ષા વાળા પગ',
 'protectedpagestext'      => 'નીચેના પાના કોઈ ફેરફાર કે હટાવવા થી સુરકક્ષીત કરાયા છે',
-'protectedpagesempty'     => 'આ વિકલ્પો દ્વારા કોઈ પાના સુરક્ષીત કરાયા નથી',
-'protectedtitles'         => 'સંરક્ષીત શીર્ષકો',
+'protectedpagesempty'     => 'આ વિકલ્પો દ્વારા કોઈ પાના સુરક્ષિત કરાયા નથી.',
+'protectedtitles'         => 'સંરક્ષિત શીર્ષકો',
 'protectedtitlestext'     => 'આ શીર્ષકો રચના માટે આરક્ષીત છે',
 'protectedtitlesempty'    => 'આ પરિબળો દ્વારા કોઇ પણ શીર્ષકો સચવાયા નથી.',
 'listusers'               => 'સભ્યોની યાદી',
@@ -2043,7 +2043,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'linksearch-ok'    => 'શોધ',
 'linksearch-text'  => '"*.wikipedia.org" જેવા વાઈલ્ડાકાર્ડ અહીં વાપર્યા હોઈ શકે છે.
 ઓછામાં ઓછું ઉચ્ચસ્તરનું ડોમેઇન જરૂરી છે, દા.ત. \'\'*.org".<br />
-માન્ય પ્રોટોકોલ : <tt>$1</tt> (આમાનું એકેય તમારી શોધમાં ના ઉમેરશો).',
+માન્ય પ્રોટોકોલ : <code>$1</code> (આમાનું એકેય તમારી શોધમાં ના ઉમેરશો).',
 'linksearch-line'  => '$1 એ $2થી જોડાયેલ છે',
 'linksearch-error' => 'યજમાન નામની શરૂઆતમાં જ વાઈલ્ડકાર્ડ પ્રકટ થશે',
 
@@ -2321,8 +2321,8 @@ Deleting it may disrupt database operations of {{SITENAME}};',
 'restriction-upload' => 'ફાઇલ ચઢાવો',
 
 # Restriction levels
-'restriction-level-sysop'         => 'સંપૂર્ણા સંરક્ષીત',
-'restriction-level-autoconfirmed' => 'અર્ધ સંરક્ષીત',
+'restriction-level-sysop'         => 'સંપૂર્ણ સંરક્ષિત',
+'restriction-level-autoconfirmed' => 'અર્ધ સંરક્ષિત',
 'restriction-level-all'           => 'કોઈ પણ સ્તર',
 
 # Undelete
@@ -2403,7 +2403,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'sp-contributions-deleted'             => 'સભ્યનું ભૂંસેલું યોગદાન',
 'sp-contributions-uploads'             => 'ખાસ યોગદાન / ચડાવેલ ફાઇલ',
 'sp-contributions-logs'                => 'લૉગ',
-'sp-contributions-talk'                => 'યોગદાનકર્તાની ચર્ચા',
+'sp-contributions-talk'                => 'ચર્ચા',
 'sp-contributions-userrights'          => 'સભ્ય હક્ક પ્રબંધન',
 'sp-contributions-blocked-notice'      => 'આ સભ્ય પ્રતિબંધિત છે
 તમારા સંદર્ભ માટે પ્રતિબંધિત સભ્યોની યાદિ આપી છે',
@@ -2472,8 +2472,8 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'ipb-confirm'                     => 'પ્રતિબંધ પુષ્ટિ',
 'badipaddress'                    => 'અવૈધ IP સરનામું',
 'blockipsuccesssub'               => 'સફળ પ્રતિબંધ મુકાયો',
-'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] પરા રોક લગાવાઈ છે<br />
-રોક લગાવેલ સભ્યોની યાદિ [[Special:BlockList|IP block list]].',
+'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] પર રોક લગાવાઈ છે.<br />
+સમીક્ષા માટે [[Special:BlockList|રોક લગાવાયેલ સભ્યોની યાદી]] જુઓ.',
 'ipb-blockingself'                => 'તમે પોતાના પર પ્રતિબંધ મુકવા જાઓ છો! શું તમે સાચેજમાં આ કરવા માગો છો?',
 'ipb-confirmhideuser'             => 'તમે "સભ્ય છુપાવો" સક્રિય રાખીને આ સભ્ય પર પ્રતિબંધ મુકવા જઇ રહ્યાં છો. આના કારણે કોઇપણ યાદી કે નોંધમાં સભ્યનું નામ જોઇ નહી શકાય. શું તમે ખરેખર આમ કરવા માંગો છો?',
 'ipb-edit-dropdown'               => 'પ્રતિબંધ કારણોમાં ફેરફાર કરો',
@@ -2526,9 +2526,9 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 રોક લગાવાયેલા સભ્યોની યાદિ આ મુજબ છે',
 'blocklogentry'                   => '[[$1]] પર પ્રતિબંધ $2 $3 સુધી મુકવામાં આવ્યો છે.',
 'reblock-logentry'                => '[[$1]] ની પ્રતિબંધ વિકલ્પો બદલ્યા જે નો કલાતિત સમય છે   $2 $3',
-'blocklogtext'                    => 'આ સભ્યો પર રોક લગાવવા અને હટાવવા સંબંધિત યાદિ છે.
-સ્વયંચાલિત રીતે રોક લગાવાયેલ IP સરનામાની યાદિ અહીં નથી આપી.
-હાલમાં પ્રવર્તમાન રોક ની યાદિ અહીં જુઓ [[Special:BlockList|IP block list]].',
+'blocklogtext'                    => 'આ સભ્યો પર રોક લગાવવા અને હટાવવા સંબંધિત યાદી છે.
+સ્વયંચાલિત રીતે રોક લગાવાયેલ IP સરનામાની યાદી અહીં નથી આપી.
+હાલમાં પ્રવર્તમાન પ્રતિબંધ અને રોક ની [[Special:BlockList|યાદી અહીં જુઓ]].',
 'unblocklogentry'                 => '$1 પરનો પ્રતિબંધ ઉઠાવ્યો',
 'block-log-flags-anononly'        => 'માત્ર અજ્ઞાત સભ્ય',
 'block-log-flags-nocreate'        => 'ખાતું ખોલવા પર પ્રતિબંધ છે',
@@ -2710,8 +2710,8 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'allmessagesname'               => 'નામ',
 'allmessagesdefault'            => 'મૂળ સંદેશ',
 'allmessagescurrent'            => 'વર્તમાન દસ્તાવેજ',
-'allmessagestext'               => 'આ મિડિયાવિકિ નામ સ્થળમાં આવેલ પ્રણાલીજનિત સંદેશાની યાદિ આ મુજબ છે.
-કૃપયા [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] અને [//translatewiki.net translatewiki.net]ની મુલાકાત લો જો ત મિડિયાયાવિકિના સ્થાનિય કરણમાં મદદરૂપ થવા ઇચ્છતા હોવ.',
+'allmessagestext'               => 'આ મિડિયાવિકિ નામસ્થળમાં આવેલ પ્રણાલીજનિત સંદેશાની યાદી આ મુજબ છે.
+જો તમે મિડિયાયાવિકિના સ્થાનીયકરણમાં મદદરૂપ થવા ઇચ્છતા હોવ તો કૃપયા [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] અને [//translatewiki.net translatewiki.net]ની મુલાકાત લો.',
 'allmessagesnotsupportedDB'     => "આ પાનું ન વાપરી શકાશે કેમકે '''\$wgUseDatabaseMessages'''  નિષ્ક્રીય કરાયું છે",
 'allmessages-filter-legend'     => 'ચાળણી',
 'allmessages-filter'            => 'સ્થાનીયકરણ સ્થિતિ દ્વારા ચાળો',
@@ -2739,11 +2739,11 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 # Special:Import
 'import'                     => 'પાના આયાત કરો',
 'importinterwiki'            => 'ટ્રાંસ વિકિ આયાત',
-'import-interwiki-text'      => 'આયાત કરવાના વિકિ અને પાનાનું શીર્ષક પસંદ કરો.
-ફેરફરની તારીખ અને લેખકો વિષે ની માહિતી સચવાશે.
-આંતર વિકિ આયાત આદિ [[Special:Log/import|import log]] માં અંકિત થાય છે.',
+'import-interwiki-text'      => 'આયાત કરવા માટેનાં પાનાનું શીર્ષક અને વિકિ પસંદ કરો.
+ફેરફારની તારીખ અને લેખકો વિષેની માહિતી જેમની તેમ રાખવામાં આવશે.
+બધા જ આંતરવિકિ આયાતની નોંધ [[Special:Log/import|import log]]માં રખાય છે.',
 'import-interwiki-source'    => 'સ્રોત વિકિ/પાનું:',
-'import-interwiki-history'   => 'આ પાના બધા ઐતિહાસીક ફેરફારોની નકલ કરો',
+'import-interwiki-history'   => 'આ પાનું બધા ફેરફારોના ઇતિહાસ સાથે આયાત કરો',
 'import-interwiki-templates' => 'બધા ઢાંચા શામિલ કરો',
 'import-interwiki-submit'    => 'આયાત કરો',
 'import-interwiki-namespace' => 'લક્ષ્ય નામ સ્થળ',
@@ -2794,7 +2794,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 
 # JavaScriptTest
 'javascripttest'                           => 'જાવા સ્ક્રીપ્ટ પરીક્ષણ',
-'javascripttest-disabled'                  => 'આ સૂત્ર (ફંકશન) નિષ્ક્રીય કરાયો',
+'javascripttest-disabled'                  => 'આ સૂત્ર (ફંકશન) આ વિકિ પર કાર્યરત કરાયેલું નથી.',
 'javascripttest-title'                     => '$1 પરીક્ષણ જારી',
 'javascripttest-pagetext-noframework'      => 'આ પાનું જાવા સ્ક્રીપ્ટ ચલાવવા આરક્ષિત છે.',
 'javascripttest-pagetext-unknownframework' => 'અજાણ ચકાસણી ફ્રેમવર્ક "$1".',
@@ -3192,7 +3192,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'exif-compression-3' => 'CCITT સમૂહ 3 ફેક્સ ઍનકોડિંગ',
 'exif-compression-4' => 'CCITT સમૂહ 3 ફેક્સ ઍનકોડિંગ',
 
-'exif-copyrighted-true'  => 'પ્રકશન અધિકારથી સુરક્ષીત',
+'exif-copyrighted-true'  => 'પ્રકાશન અધિકારથી સુરક્ષિત',
 'exif-copyrighted-false' => 'સાર્વજનિક ડોમેન',
 
 'exif-unknowndate' => 'અજ્ઞાત તારીખ',
@@ -3232,7 +3232,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'exif-meteringmode-4'   => 'બિંદુઓ',
 'exif-meteringmode-5'   => 'ભાત',
 'exif-meteringmode-6'   => 'આશિંક',
-'exif-meteringmode-255' => 'બીજું કઈ',
+'exif-meteringmode-255' => 'અન્ય',
 
 'exif-lightsource-0'   => 'અજાણ્યો',
 'exif-lightsource-1'   => 'દિવસ પ્રકાશ',
@@ -3399,7 +3399,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 
 # External editor support
 'edit-externally'      => 'બાહ્ય સોફ્ટવેર વાપરીને આ ફાઇલમાં ફેરફાર કરો',
-'edit-externally-help' => '(વધુ માહિતિ માટે [//www.mediawiki.org/wiki/Manual:External_editors સેટ-અપ સુચનાઓ] જુઓ)',
+'edit-externally-help' => '(વધુ માહિતી માટે [//www.mediawiki.org/wiki/Manual:External_editors સેટ-અપ સૂચનાઓ] જુઓ)',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'બધા',
@@ -3507,7 +3507,7 @@ $5
 'table_pager_first'        => 'પહેલું પાનું',
 'table_pager_last'         => 'છેલ્લું પાનું',
 'table_pager_limit'        => 'પ્રતિ પાને $1 વસ્તુ બતાવો',
-'table_pager_limit_label'  => 'વસ્તિઓ પ્રતિ પાને',
+'table_pager_limit_label'  => 'પ્રતિ પાને વિગતો:',
 'table_pager_limit_submit' => 'જાઓ',
 'table_pager_empty'        => 'કોઇ પરિણામ નથી',
 
@@ -3568,7 +3568,7 @@ $5
 'version-extensions'            => 'પ્રસ્થાપિત વિસ્તારકો',
 'version-specialpages'          => 'ખાસ પાનાં',
 'version-parserhooks'           => 'પદચ્છેદ ખૂંટો',
-'version-variables'             => 'સહગુણકો',
+'version-variables'             => 'ચલ',
 'version-antispam'              => 'સ્પેમ સંરક્ષણ',
 'version-skins'                 => 'ફલક',
 'version-other'                 => 'અન્ય',

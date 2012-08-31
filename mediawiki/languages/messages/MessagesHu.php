@@ -29,6 +29,7 @@
  * @author R-Joe
  * @author Samat
  * @author Sucy
+ * @author TK-999
  * @author Terik
  * @author Tgr
  * @author Xbspiro
@@ -314,12 +315,12 @@ $messages = array(
 # User preference toggles
 'tog-underline'               => 'Hivatkozások aláhúzása:',
 'tog-highlightbroken'         => 'A nem létező lapokra való hivatkozásokat <a href="" class="new">így</a> jelölje. (Alternatíva: így<a href="" class="internal">?</a>)',
-'tog-justify'                 => 'Sorkizárt fejezetek',
+'tog-justify'                 => 'Bekezdések sorkizárása',
 'tog-hideminor'               => 'Apró változtatások elrejtése a friss változtatások lapon',
 'tog-hidepatrolled'           => 'Az ellenőrzött szerkesztések elrejtése a friss változtatások lapon',
 'tog-newpageshidepatrolled'   => 'Ellenőrzött lapok elrejtése az új lapok listájáról',
 'tog-extendwatchlist'         => 'A figyelőlistán az összes változtatás látszódjon, ne csak az utolsó',
-'tog-usenewrc'                => 'Fejlettebb friss változások listája (JavaScript-alapú)',
+'tog-usenewrc'                => 'Fejlettebb friss változások használata (JavaScript-alapú)',
 'tog-numberheadings'          => 'Fejezetcímek automatikus számozása',
 'tog-showtoolbar'             => 'Szerkesztőeszközsor megjelenítése (JavaScript-alapú)',
 'tog-editondblclick'          => 'A lapok szerkesztése dupla kattintásra (JavaScript-alapú)',
@@ -335,9 +336,9 @@ $messages = array(
 'tog-previewontop'            => 'Előnézet megjelenítése a szerkesztőablak előtt',
 'tog-previewonfirst'          => 'Előnézet első szerkesztésnél',
 'tog-nocache'                 => 'A lapok gyorstárazásának letiltása a böngészőben',
-'tog-enotifwatchlistpages'    => 'Kapjak értesítést e-mailben, ha egy általam figyelt lap megváltozik',
+'tog-enotifwatchlistpages'    => 'Kapjak értesítést e-mailben, ha egy általam figyelt lap vagy fájl megváltozik',
 'tog-enotifusertalkpages'     => 'Kapjak értesítést e-mailben, ha megváltozik a vitalapom',
-'tog-enotifminoredits'        => 'Kapjak értesítést e-mailben a lapok apró változtatásairól',
+'tog-enotifminoredits'        => 'Kapjak értesítést e-mailben a lapok és fájlok apró változtatásairól',
 'tog-enotifrevealaddr'        => 'Jelenjen meg az e-mail címem a figyelmeztető e-mailekben',
 'tog-shownumberswatching'     => 'A lapot figyelő szerkesztők számának megjelenítése',
 'tog-oldsig'                  => 'A jelenlegi aláírás:',
@@ -432,7 +433,7 @@ $messages = array(
 'hidden-category-category'       => 'Rejtett kategóriák',
 'category-subcat-count'          => "''{{PLURAL:$2|Ennek a kategóriának csak egyetlen alkategóriája van.|Ez a kategória az alábbi {{PLURAL:$1|alkategóriával|$1 alkategóriával}} rendelkezik (összesen $2 alkategóriája van).}}''",
 'category-subcat-count-limited'  => 'Ebben a kategóriában {{PLURAL:$1|egy|$1}} alkategória található.',
-'category-article-count'         => '{{PLURAL:$2|Csak a következő lap található ebben a kategóriában:|Az összesen $2 lapból a következő $1-t listázza ez a kategóriaoldal, a többi a további oldalakon található.}}',
+'category-article-count'         => '{{PLURAL:$2|A kategóriában csak a következő lap található.|A következő $1 lap található a kategóriában, összesen $2 lapból.}}',
 'category-article-count-limited' => 'Ebben a kategóriában a következő {{PLURAL:$1|lap|$1 lap}} található:',
 'category-file-count'            => '{{PLURAL:$2|Csak a következő fájl található ebben a kategóriában.|Az összesen $2 fájlból a következő $1-t listázza ez a kategórialap, a többi a további oldalakon található.}}',
 'category-file-count-limited'    => 'Ebben a kategóriában {{PLURAL:$1|egy|$1}} fájl található.',
@@ -1705,20 +1706,20 @@ ez a fájl $2.',
 Ez valószínűleg azért van, mert hibásan adtad meg a feltöltendő fájl nevét.
 Ellenőrizd, hogy valóban fel akarod-e tölteni ezt a fájlt.',
 'windows-nonascii-filename'   => 'A wiki nem támogatja a speciális karaktereket tartalmazó fájlneveket.',
-'fileexists'                  => "'''<tt>[[:$1]]</tt>''' névvel már létezik egy állomány.
-Ellenőrizd, hogy biztosan felül akarod-e írni! [[$1|thumb]]",
-'filepageexists'              => "Ehhez a fájlnévhez már létezik leírás a '''<tt>[[:$1]]</tt>''' lapon, de jelenleg nincs feltöltve ilyen nevű fájl.
+'fileexists'                  => '<strong>[[:$1]]</strong> névvel már létezik egy állomány.
+Ellenőrizd, hogy biztosan felül akarod-e írni! [[$1|thumb]]',
+'filepageexists'              => 'Ehhez a fájlnévhez már létezik leírás a <strong>[[:$1]]</strong> lapon, de jelenleg nincs feltöltve ilyen nevű fájl.
 A leírás, amit ebbe az űrlapba írsz, nem fogja felülírni a már létezőt.
 Ha meg szeretnéd változtatni a leírást, meg kell nyitnod szerkesztésre a lapjot.
-[[$1|thumb]]",
-'fileexists-extension'        => "Már van egy hasonló nevű feltöltött fájl: [[$2|thumb]]
-* A feltöltendő fájl neve: '''<tt>[[:$1]]</tt>'''
-* A már létező fájl neve: '''<tt>[[:$2]]</tt>'''
-Kérjük, hogy válassz másik nevet.",
+[[$1|thumb]]',
+'fileexists-extension'        => 'Már van egy hasonló nevű feltöltött fájl: [[$2|thumb]]
+* A feltöltendő fájl neve: <strong>[[:$1]]</strong>
+* A már létező fájl neve: <strong>[[:$2]]</strong>
+Kérjük, hogy válassz másik nevet.',
 'fileexists-thumbnail-yes'    => "A fájl egy kisméretű képnek ''(bélyegképnek)'' tűnik. [[$1|thumb]]
-Kérjük, hogy ellenőrizd a(z) '''<tt>[[:$1]]</tt>''' fájlt.
+Kérjük, hogy ellenőrizd a(z) <strong>[[:$1]]</strong> fájlt.
 Ha az ellenőrzött fájl ugyanakkora, mint az eredeti méretű kép, akkor nincs szükség bélyegkép feltöltésére.",
-'file-thumbnail-no'           => "A fájlnév a(z) '''<tt>$1</tt>''' karakterlánccal kezdődik.
+'file-thumbnail-no'           => "A fájlnév a(z) <strong>$1</strong> karakterlánccal kezdődik.
 Úgy tűnik, hogy ez egy kisméretű kép ''(bélyegkép)''.
 Ha rendelkezel a teljesméretű képpel, akkor töltsd fel azt, egyébként kérjük, hogy változtasd meg a fájlnevet.",
 'fileexists-forbidden'        => 'Már létezik egy ugyanilyen nevű fájl, és nem lehet felülírni.
@@ -1962,7 +1963,7 @@ A [$2 fájl ottani leírólapjának] másolata alább látható.',
 
 # MIME search
 'mimesearch'         => 'Keresés MIME-típus alapján',
-'mimesearch-summary' => 'Ez az oldal engedélyezi a fájlok MIME-típus alapján történő szűrését. Bevitel: tartalomtípus/altípus, pl. <tt>image/jpeg</tt>.',
+'mimesearch-summary' => 'Ez az oldal engedélyezi a fájlok MIME-típus alapján történő szűrését. Bevitel: tartalomtípus/altípus, pl. <code>image/jpeg</code>.',
 'mimetype'           => 'MIME-típus:',
 'download'           => 'letöltés',
 
@@ -2156,7 +2157,7 @@ Lásd még a [[Special:WantedCategories|keresett kategóriák]] listáját.',
 'linksearch-ns'    => 'Névtér:',
 'linksearch-ok'    => 'keresés',
 'linksearch-text'  => 'Helyettesítő karaktereket is lehet használni, például "*.wikipedia.org". Legalább egy felső szintű tartománynak lennie kell, például "*.org"<br />
-Támogatott protokollok: <tt>$1</tt> (ezeket ne írd be a keresésbe).',
+Támogatott protokollok: <code>$1</code> (ezeket ne írd be a keresésbe).',
 'linksearch-line'  => '$1 hivatkozva innen: $2',
 'linksearch-error' => 'Helyettesítő karakterek csak a cím elején szerepelhetnek.',
 

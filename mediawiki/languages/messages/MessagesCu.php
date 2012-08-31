@@ -1,5 +1,5 @@
 <?php
-/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -544,6 +544,7 @@ $messages = array(
 'statistics-articles'     => 'истиньнꙑ члѣни',
 'statistics-pages'        => 'страницѧ',
 'statistics-files'        => 'положєнꙑ дѣла',
+'statistics-users-active' => 'дѣꙗтєльнꙑ польꙃєватєлє',
 
 'disambiguations'     => 'страницѧ ижє съвѧꙁи съ мъногосъмꙑслиꙗ имѫтъ',
 'disambiguationspage' => 'Template:мъногосъмꙑслиѥ',

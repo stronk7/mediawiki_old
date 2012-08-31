@@ -184,17 +184,17 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Eenzel Abschnitter mat Rietsklick änneren (JavaScript)',
 'tog-showtoc'                 => 'Inhaltsverzeechnes weise bei Säite mat méi wéi dräi Iwwerschrëften',
 'tog-rememberpassword'        => 'Meng Umeldung mat dësem Browser(fir maximal $1 {{PLURAL:$1|Dag|Deeg}}) verhalen',
-'tog-watchcreations'          => 'Säiten déi ech nei uleeën automatesch op meng Iwwerwaachungslëscht setzen',
-'tog-watchdefault'            => 'Säiten déi ech änneren op meng Iwwerwaachungslëscht setzen',
-'tog-watchmoves'              => 'Säiten déi ech réckelen automatesch op meng Iwwerwaachungslëscht setzen',
-'tog-watchdeletion'           => 'Säiten déi ech läschen op meng Iwwerwaachungslëscht setzen',
+'tog-watchcreations'          => 'Säiten déi ech uleeën a Fichieren déi ech eroplueden op meng Iwwerwaachungslëscht derbäisetzen',
+'tog-watchdefault'            => 'Säiten a Fichieren déi ech änneren op meng Iwwerwaachungslëscht derbäisetzen',
+'tog-watchmoves'              => 'Säiten a Fichieren déi ech réckelen automatesch op meng Iwwerwaachungslëscht derbäisetzen',
+'tog-watchdeletion'           => 'Säiten a Fichieren déi ech läschen op meng Iwwerwaachungslëscht derbäisetzen',
 'tog-minordefault'            => "All Ännerungen automatesch als 'Kleng Ännerungen' markéieren.",
 'tog-previewontop'            => "Déi ''nach-net gespäichert Versioun'' iwwer der Ännerungsfënster weisen",
 'tog-previewonfirst'          => "Beim éischten Änneren déi  ''nach net gespäichert Versioun'' weisen.",
 'tog-nocache'                 => 'Säitecache vum Browser desaktivéieren',
-'tog-enotifwatchlistpages'    => 'Schéckt mir eng E-Mail wann eng vun de Säiten op menger Iwwerwaachungslëscht geännert gëtt',
+'tog-enotifwatchlistpages'    => 'Schéckt mir eng E-Mail wann eng Säit oder e Fichier op menger Iwwerwaachungslëscht geännert gëtt',
 'tog-enotifusertalkpages'     => 'Schéckt mir E-Maile wa meng Diskussiounssäit geännert gëtt.',
-'tog-enotifminoredits'        => 'Schéckt mir och bei klengen Ännerungen op vu mir iwwerwaachte Säiten eng E-Mail.',
+'tog-enotifminoredits'        => 'Schéckt mir och bei klengen Ännerungen op vu mir iwwerwaachte Säiten oder Fichieren eng E-Mail.',
 'tog-enotifrevealaddr'        => 'Meng E-Mailadress an de Benoriichtigungsmaile weisen.',
 'tog-shownumberswatching'     => "D'Zuel vun de Benotzer déi dës Säit iwwerwaache weisen",
 'tog-oldsig'                  => 'Aktuell Ënnerschrëft:',
@@ -489,9 +489,9 @@ All Spezialsäiten déi et gëtt, sinn op der [[Special:SpecialPages|Lëscht vun
 'dberrortext'          => 'En Datebank Syntax Feeler ass opgetrueden.
 Dëst kann op e Feeler an der Software hiweisen.
 De leschte versichten Datebank Query war:
-<blockquote><tt>$1</tt></blockquote>
-vun der Funktioun "<tt>$2</tt>".
-D\'Datebank huet de Feeler "<tt>$3: $4</tt>" gemellt.',
+<blockquote><code>$1</code></blockquote>
+vun der Funktioun "<code>$2</code>".
+D\'Datebank huet de Feeler "<samp>$3: $4</samp>" gemellt.',
 'dberrortextcl'        => 'En Datebank Syntax Feeler ass opgetrueden.
 De leschten Datebank Query war:
 "$1"
@@ -560,11 +560,11 @@ $2',
 'virus-unknownscanner' => 'onbekannten Antivirus:',
 
 # Login and logout pages
-'logouttext'                 => "'''Dir sidd elo ofgemellt.'''
+'logouttext'                 => "'''Dir sidd elo ausgeloggt.'''
 
-Dir kënnt {{SITENAME}} elo anonym benotzen, oder Iech [[Special:UserLogin|erëm umellen]].
+Dir kënnt {{SITENAME}} elo anonym benotzen, oder Iech [[Special:UserLogin|erëm aloggen]].
 
-Opgepasst: Op verschiddene Säite gesäit et nach esou aus, wéi wann Dir nach ugemellt wiert, bis Dir Ärem Browser säin Tëschespäicher (cache) eidel maacht.",
+Opgepasst: Op verschiddene Säite kann et nach esou aus gesinn, wéi wann Dir nach ageloggt wiert, bis Dir Ärem Browser säin Tëschespäicher (cache) eidel maacht.",
 'welcomecreation'            => '== Wëllkomm, $1! ==
 Äre Kont gouf kreéiert.
 Denkt drun, Är [[Special:Preferences|{{SITENAME}}-Astellungen]] unzepassen.',
@@ -575,7 +575,7 @@ Denkt drun, Är [[Special:Preferences|{{SITENAME}}-Astellungen]] unzepassen.',
 'securelogin-stick-https'    => 'Nom Umelle mat HTTPS verbonn bleiwen',
 'yourdomainname'             => 'Ären Domain',
 'externaldberror'            => 'Entweder ass e Feeler bei der externer Authentifizéierung geschitt, oder Dir däerft Ären externe Benotzerkont net aktualiséieren.',
-'login'                      => 'Umellen',
+'login'                      => 'Aloggen',
 'nav-login-createaccount'    => 'Aloggen / Benotzerkont uleeën',
 'loginprompt'                => "Fir sech op {{SITENAME}} aloggen ze kënnen, mussen d'Cookien aktivéiert sinn.",
 'userlogin'                  => 'Aloggen / Benotzerkont uleeën',
@@ -673,7 +673,7 @@ Fir är Umeldung ofzeschléissen, musst Dir elo hei een neit Passwuert uginn:',
 'oldpassword'               => 'Aalt Passwuert:',
 'newpassword'               => 'Neit Passwuert:',
 'retypenew'                 => 'Neit Passwuert nach eemol antippen:',
-'resetpass_submit'          => 'Passwuert aginn an umellen',
+'resetpass_submit'          => 'Passwuert aginn an aloggen',
 'resetpass_success'         => 'Äert Passwuert gouf geännert!
 Loggt Iech elo an ...',
 'resetpass_forbidden'       => 'Passwierder kënnen net geännert ginn.',
@@ -819,7 +819,6 @@ Déi lescht Entrée am Logbuch vun de Späre steet als Referenz hei drënner:',
 * '''Firefox / Safari:''' Halt ''Shift'' während Dir ''Reload'' klickt oder dréckt entweder ''Ctrl-F5'' oder ''Ctrl-R'' (''⌘-R'' op engem Mac);
 * '''Google Chrome:''' Dréckt ''Ctrl-Shift-R'' (''⌘-Shift-R'' op engem Mac)
 * '''Internet Explorer:''' dréckt ''Ctrl'' während Dir op ''Refresh'' klickt oder dréckt ''Ctrl-F5.''
-* '''Konqueror:''' klickt  ''Reload'' oder dréckt ''F5'' 
 * '''Opera:''' maacht de Cache eidel an ''Tools → Preferences;''",
 'usercssyoucanpreview'             => "'''Tipp:''' Benotzt de \"{{int:showpreview}}\"-Knäppchen, fir Ären neien CSS virum Späicheren ze testen.",
 'userjsyoucanpreview'              => "'''Tipp:''' Benotzt de ''{{int:showpreview}}''-Knäppchen, fir Ären neie JavaScript virum Späicheren ze testen.",
@@ -1518,9 +1517,9 @@ Hei fannt Dir en Extrait aus dem Läsch- a Réckel-Logbuch fir dëse Fichier.",
 Gitt op d'[[Special:FileList|Lëscht vun den eropgeluedene Fichieren]], fir no Fichieren ze sichen déi virdrun eropgeluede goufen, Eropluedunge fannt dir an der [[Special:Log/upload|Lëscht vun den eropgeluedene Fichieren]], geläschte Fichieren am [[Special:Log/delete|Läschlog]].
 
 Fir e '''Bild''' op enger Säit zu benotzen, schreift amplaz vum Bild eng vun dëse Formelen:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.jpg]]</nowiki></tt>''' fir déi ganz Versioun vum Fichier ze benotzen
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.png|200px|thumb|left|alt text]]</nowiki></tt>''' fir eng 200 Pixel breet Versioun an enger Këscht am lénke Rand mat 'alt text' als Beschreiwung
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fichier.ogg]]</nowiki></tt>''' fir e Fichier direkt ze verlinken ouni de Fichier ze weisen",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.jpg]]</nowiki></code>''' fir déi ganz Versioun vum Fichier ze benotzen
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichier.png|200px|thumb|left|alt text]]</nowiki></code>''' fir eng 200 Pixel breet Versioun an enger Këscht am lénke Rand mat 'alt text' als Beschreiwung
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fichier.ogg]]</nowiki></code>''' fir e Fichier direkt ze verlinken ouni de Fichier ze weisen",
 'upload-permitted'            => 'Erlaabte Formater vun de Fichieren: $1.',
 'upload-preferred'            => 'Fichierszorten déi am beschte funktionéieren: $1.',
 'upload-prohibited'           => 'Verbuede Fichiers Formater: $1.',
@@ -1564,22 +1563,22 @@ Erlaabt {{PLURAL:$3|ass|sinn}}: $2.',
 'largefileserver'             => 'Dëse Fichier ass méi grouss wéi déi um Server agestallte Maximalgréisst.',
 'emptyfile'                   => 'De Fichier deen Dir eropgelueden hutt, schéngt eidel ze sinn. Dëst kann duerch en Tippfeeler am Numm vum Fichier kommen. Préift w.e.g. no, op Dir dëse Fichier wierklech eropluede wëllt.',
 'windows-nonascii-filename'   => "Dës Wiki ënnerstëtzt d'Spezialzeechen an de Fichiersnimm net.",
-'fileexists'                  => "Et gëtt schonn e Fichier mat dësem Numm, kuckt w.e.g.
-'''<tt>[[:$1]]</tt>''' wann Dir net sécher sidd, ob Dir den Numm ännere wëllt.
-[[$1|thumb]]",
-'filepageexists'              => "D'Beschreiwungssäit fir dëse Fichier gouf schonns als '''<tt>[[:$1]]</tt>''' ugeluecht, et gëtt awer kee Fichier mat deem Numm.
+'fileexists'                  => 'Et gëtt schonn e Fichier mat dësem Numm, kuckt w.e.g.
+<strong>[[:$1]]</strong> wann Dir net sécher sidd, ob Dir den Numm ännere wëllt.
+[[$1|thumb]]',
+'filepageexists'              => "D'Beschreiwungssäit fir dëse Fichier gouf schonns als <strong>[[:$1]]</strong> ugeluecht, et gëtt awer kee Fichier mat deem Numm.
 
 De Resumé deen Dir agitt, gëtt net op d'Beschreiwungssäit iwwerholl.
 Fir datt äre Resumé do opdaucht musst Dir e manuell änneren.
 [[$1|thumb]]",
-'fileexists-extension'        => "E Fichier mat engem ähnlechen Numm gëtt et schonn: [[$2|thumb]]
-* Numm vum Fichier deen Dir versicht eropzelueden: '''<tt>[[:$1]]</tt>'''
-* Numm vum Fichier deen et scho gëtt: '''<tt>[[:$2]]</tt>'''
-Wielt w.e.g. en aneren Numm.",
+'fileexists-extension'        => 'E Fichier mat engem ähnlechen Numm gëtt et schonn: [[$2|thumb]]
+* Numm vum Fichier deen Dir versicht eropzelueden: <strong>[[:$1]]</strong>
+* Numm vum Fichier deen et scho gëtt: <strong>[[:$2]]</strong>
+Wielt w.e.g. en aneren Numm.',
 'fileexists-thumbnail-yes'    => "Beim Fichier schéngt et sech ëm e klengt Bild ''(Miniatur)'' ze handelen. [[$1|thumb]]
-Kuckt de Fichier '''<tt>[[:$1]]</tt>''' w.e.g. no.
+Kuckt de Fichier <strong>[[:$1]]</strong> w.e.g. no.
 Wann et sech ëm d'Bild an der Originalgréisst handelt, da brauch kee separat Bild als Minitaur eropgelueden ze ginn.",
-'file-thumbnail-no'           => "Den Numm vum Fichier fänkt mat '''<tt>$1</tt>''' un.
+'file-thumbnail-no'           => "Den Numm vum Fichier fänkt mat <strong>$1</strong> un.
 Da deit drop hin datt et eng Minitaur ''(thumbnail)'' ass.
 Wann Dir dat Bild a méi enger grousser Opléisung hutt, da luet dëst erop, soss ännert den Numm vum Fichier w.e.g.",
 'fileexists-forbidden'        => 'Et gëtt schonn e Fichier mat dësem Numm an dee kann net iwwerschriwwe ginn.
@@ -1656,6 +1655,9 @@ Wann de Problem weider besteet, dann un de [[Special:ListUsers/sysop|Administrat
 'lockmanager-notlocked'        => '"$1" konnt net fräigeschalt ginn; $1 ass net gespaart.',
 'lockmanager-fail-closelock'   => 'De Spärfichier fir "$1" konnt net zougemaach ginn.',
 'lockmanager-fail-deletelock'  => 'De Spärfichier fir "$1" konnt net geläscht ginn.',
+'lockmanager-fail-acquirelock' => '"$1" konnt net gespaart ginn.',
+'lockmanager-fail-openlock'    => 'De Spärfichier fir "$1" konnt net opgemaach ginn.',
+'lockmanager-fail-releaselock' => 'D\'Spär fir "$1" konnt net opgehuewe ginn.',
 'lockmanager-fail-db-release'  => "D'Spären op der Datebank $1 konnten net fräigeschalt ginn.",
 'lockmanager-fail-svr-release' => "D'Spären um Server $1 konnten net fräigeschalt ginn.",
 
@@ -1712,8 +1714,8 @@ Kuckt w.e.g. no op kee Feeler an der URL ass an op de Site och online ass.',
 'upload-curl-error28'      => "D'Eroplueden huet ze laang gedauert (timeout)",
 'upload-curl-error28-text' => "Dëse Site huet ze laang gebraucht fir z'äntwerten. Kuckt w. e. g. no, ob dëse Site online ass, waart een Ament a probéiert et dann nach eng Kéier. Et ka sënnvoll sinn, et nach eng Kéier méi spéit ze versichen.",
 
-'license'            => 'Lizenzéiert:',
-'license-header'     => 'Lizenzéieren',
+'license'            => 'Lizenz',
+'license-header'     => 'Lizenz',
 'nolicense'          => 'Keng Lizenz ausgewielt',
 'license-nopreview'  => '(Kucken ouni ofzespäichere geet net)',
 'upload_source_url'  => ' (gëlteg, ëffentlech zougänglech URL)',
@@ -1805,7 +1807,7 @@ D'Beschreiwung op senger [$2 Beschreiwungssäit] steet hei ënnendrënner.",
 # MIME search
 'mimesearch'         => 'No MIME-Zort sichen',
 'mimesearch-summary' => "Op dëser Spezialsäit kënnen d'Fichieren no hirem MIME-Typ gefiltert ginn.
-Dir musst ëmmer de Medien- a Subtyp aginn: z. Bsp. <tt>image/jpeg</tt>.",
+Dir musst ëmmer de Medien- a Subtyp aginn: z. Bsp. <code>image/jpeg</code>.",
 'mimetype'           => 'MIME-Typ:',
 'download'           => 'eroflueden',
 
@@ -1851,9 +1853,9 @@ Dir musst ëmmer de Medien- a Subtyp aginn: z. Bsp. <tt>image/jpeg</tt>.",
 
 'disambiguations'      => 'Säiten déi op Homonymie-Säite linken',
 'disambiguationspage'  => 'Template:Homonymie',
-'disambiguations-text' => 'Dës Säite si mat enger Homonymie-Säit verlinkt.
-Sie sollten am beschten op déi eigentlech gemengte Säit verlinkt sinn.<br />
-Eng Säite gëtt als Homonymiesäit behandelt, wa si eng Schabloun benotzt déi vu [[MediaWiki:Disambiguationspage]] verlinkt ass.',
+'disambiguations-text' => "Dës Säite ass mat mindestens enger '''Homonymie-Säit''' verlinkt.
+Si sollte am beschten op déi eigentlech gemengte Säit verlinkt sinn.<br />
+Eng Säite gëtt als Homonymie-Säit behandelt, wa si eng Schabloun benotzt déi vu [[MediaWiki:Disambiguationspage]] verlinkt ass.",
 
 'doubleredirects'                   => 'Duebel Viruleedungen',
 'doubleredirectstext'               => 'Op dëser Säit stinn déi Säiten déi op aner Viruleedungssäite viruleeden.
@@ -1922,7 +1924,7 @@ An all Rei sti Linken zur éischter an zweeter Viruleedung, souwéi d\'Zil vun d
 'protectedtitlesempty'    => 'Zur Zäit si mat de Parameteren déi Dir uginn hutt keng Säite fir neit Uleeë gespaart.',
 'listusers'               => 'Benotzerlëscht',
 'listusers-editsonly'     => 'Nëmme Benotzer mat Ännerunge weisen',
-'listusers-creationsort'  => 'No dem Datum vum Uleeë sortéieren',
+'listusers-creationsort'  => 'Nom Datum vum Uleeën zortéieren',
 'usereditcount'           => '$1 {{PLURAL:$1|Ännerung|Ännerungen}}',
 'usercreated'             => "{{GENDER:$3|De(n)|D'}} $1 ëm $2 Auer ugeluecht",
 'newpages'                => 'Nei Säiten',
@@ -1982,8 +1984,8 @@ Dir kënnt d'Siche limitéieren wann Dir e Log-Typ, e Benotzernumm (case-senisit
 [[Special:UnusedCategories|Netbenotzt Kategorië]] ginn hei net gewisen.
 Kuckt och [[Special:WantedCategories|Gewënscht Kategorien]].',
 'categoriesfrom'                => 'Weis Kategorien ugefaang bei:',
-'special-categories-sort-count' => 'No der Zuel sortéieren',
-'special-categories-sort-abc'   => 'alphabetesch sortéieren',
+'special-categories-sort-count' => 'No der Zuel zortéieren',
+'special-categories-sort-abc'   => 'alphabetesch zortéieren',
 
 # Special:DeletedContributions
 'deletedcontributions'             => 'Geläschte Kontributiounen',
@@ -1995,9 +1997,9 @@ Kuckt och [[Special:WantedCategories|Gewënscht Kategorien]].',
 'linksearch-pat'   => 'Sich-Critère:',
 'linksearch-ns'    => 'Nummraum:',
 'linksearch-ok'    => 'Sichen',
-'linksearch-text'  => 'Sougennante "Wildcards" wéi zum Beispill <tt>*.example.com</tt> kënne benotzt ginn.
+'linksearch-text'  => 'Sougennante "Wildcards" wéi zum Beispill <code>*.example.com</code> kënne benotzt ginn.
 Et muss mindestens en Top-Level-Domaine ugi ginn, wéi z. Bsp. ".org".<br />
-Ënnerstëtzte Protekoller: <tt>$1</tt>',
+Ënnerstëtzte Protekoller: <code>$1</code>',
 'linksearch-line'  => '$1 verlinkt vun $2',
 'linksearch-error' => 'Wildcards (*,?) kënnen nëmmen am Ufank vum Host-Numm benotzt ginn.',
 
@@ -3549,7 +3551,7 @@ Den ugefrote Fichier gëtt direkt gewise respektiv mat enger verbonner Applikati
 * <span class="mw-specialpagecached">Spezialsäiten aus dem Tëschespäicher (ka vereelst sinn).</span>',
 'specialpages-group-maintenance' => 'Maintenance-Rapporten',
 'specialpages-group-other'       => 'Aner Spezialsäiten',
-'specialpages-group-login'       => 'Aloggen / Umellen',
+'specialpages-group-login'       => 'Aloggen / Benotzerkont uleeën',
 'specialpages-group-changes'     => 'Rezent Ännerungen a Lëschten',
 'specialpages-group-media'       => 'Medie-Rapporten an eropgeluede Fichieren',
 'specialpages-group-users'       => 'Benotzer a Rechter',

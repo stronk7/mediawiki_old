@@ -1,5 +1,5 @@
 <?php
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -1343,8 +1343,8 @@ Lasktud {{PLURAL:$3|failantip om|failantipad oma}} $2.',
 Voib olda, necen sü om vär failannimen kirjutamine.
 Olgat hüväd, kodvgat, todeks-ik tö tahtoit jügutoitta nece fail.",
 'windows-nonascii-filename'  => 'Neche vikihe ei sa tehta failannimid specialižiden znamoidenke.',
-'fileexists'                 => "Fail mugoman nimenke om jo olmas, olgat hüväd, kodvgat '''<tt>[[:$1]]</tt>''' ku teil ei ole varmdust, tahtoižit-ik tö toižetada sidä.
-[[$1|thumb]]",
+'fileexists'                 => 'Fail mugoman nimenke om jo olmas, olgat hüväd, kodvgat <strong>[[:$1]]</strong> ku teil ei ole varmdust, tahtoižit-ik tö toižetada sidä.
+[[$1|thumb]]',
 'file-exists-duplicate'      => 'Nece fail om {{PLURAL:$1|necen failan|neniden failoiden}} dublikat:',
 'uploadwarning'              => 'Varutuz jügutoitmižes',
 'savefile'                   => 'Kirjutada fail',

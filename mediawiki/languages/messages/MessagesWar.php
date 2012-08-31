@@ -65,7 +65,7 @@ $messages = array(
 'tog-hidepatrolled'           => 'Tago-a in mga gin-patrol o binantayan nga mga pagliwat ha mga dipala naiha nga mga kabag-ohan',
 'tog-newpageshidepatrolled'   => 'Tago-a an mga gin-patrol o binantayan nga mga pakli tikang han talaan hin bag-o nga pakli',
 'tog-extendwatchlist'         => 'Padako-a an angay timan-an agod makita an tanan nga kabag-ohan, diri la an gibag-ohi',
-'tog-usenewrc'                => 'Gamit hin mga gin-enhans o gindugngan nga gibag-ohi nga mga kabag-ohan (nakinahanglan hin JavaScript)',
+'tog-usenewrc'                => 'Gamita in mga gin-enhans o gindugngan nga gibag-ohi nga mga kabag-ohan (nakinahanglan hin JavaScript)',
 'tog-numberheadings'          => 'Auto-nga-ihap nga mga pagngaran',
 'tog-showtoolbar'             => 'Igpakita an edit toolbar (nakinahanglan hin JavaScript)',
 'tog-editondblclick'          => 'Igliwat in mga pakli ha doble nga klik (nakinahanglan hin JavaScript)',
@@ -346,9 +346,9 @@ $1',
 'nstab-media'     => 'Pakli hin medya',
 'nstab-special'   => 'Pinaurog nga pakli',
 'nstab-project'   => 'Pakli han proyekto',
-'nstab-image'     => 'Fayl',
+'nstab-image'     => 'Paypay',
 'nstab-mediawiki' => 'Mensahe',
-'nstab-template'  => 'Plantilya',
+'nstab-template'  => 'Batakan',
 'nstab-help'      => 'Pakli hin bulig',
 'nstab-category'  => 'Kaarangay',
 
@@ -537,14 +537,18 @@ Kun pidliton mo an \"{{int:savearticle}}\" utro, an imo ginliwat in matitipig bi
 'accmailtitle'                     => 'Ginpadara na an tigaman-pagsulod.',
 'newarticle'                       => '(Bag-o)',
 'newarticletext'                   => "Ginsunod mo an pakli nga waray pa kahihimo.  Para ighimo an pakli, tikanga pagmakinilya ha kahon nga aada ha ubos (kitaa an [[{{MediaWiki:Helppage}}|nabulig nga pakli]] para han kadugangan nga pananabutan).  Kun sayop an imo pagkanhi, igpidlit an imo kanan panngaykay (''browser'') '''balik''' (''back'') nga piridlitan.",
+'noarticletext'                    => 'Waray yana nahasurat hini nga pakli.
+Puyde hi ikaw [[Special:Search/{{PAGENAME}}|magbiling para han ngaran hini nga pakli]] ha iba nga mga pakli,
+<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} binga an mga nanginginlabot nga mga log],
+o [{{fullurl:{{FULLPAGENAME}}|action=edit}} igliwat ini nga pakli]</span>.',
 'noarticletext-nopermission'       => 'Ha yana waray surat ini nga pakli.
 Puydi nimo [[Special:Search/{{PAGENAME}}|pamilngon ini nga titulo han pakli]] ha iba nga mga pakli,
 o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pamilngon ha mga kasumpay nga talaan]</span>.',
 'userpage-userdoesnotexist-view'   => "An akawnt han gumaramit ni ''$1'' in diri nakarehistro.",
 'updated'                          => '(Ginbag-ohan)',
 'note'                             => "'''Pahibaro:'''",
-'previewnote'                      => "'''Hinumdumi nga pahiuna-nga-paggawas la ini.'''
-An imo mga ginbag-o in waray pa katipig!",
+'previewnote'                      => "'''Hinumdumi nga pahiuna-nga-paggawas pa la ini.'''
+¡Waray pa katipig an imo mga ginbag-o!",
 'editing'                          => 'Ginliliwat an $1',
 'editingsection'                   => 'Ginliliwat an $1 (bahin)',
 'editingcomment'                   => 'Ginliliwat an $1 (bag-o nga bahin)',
@@ -899,8 +903,8 @@ Mga detalye: $1',
 'filehist-filesize'       => 'Kadako han fayl',
 'filehist-comment'        => 'Komento',
 'filehist-missing'        => 'Nawawara an fayl',
-'imagelinks'              => 'Mga gamit hin fayl',
-'linkstoimage'            => 'An nasunod nga {{PLURAL:$1|pakli nasumpay|$1 mga pakli nasumpay}} hini nga fayl:',
+'imagelinks'              => 'Mga gamit hin paypay',
+'linkstoimage'            => 'An nasunod nga {{PLURAL:$1|pakli nasumpay|$1 mga pakli nasumpay}} hini nga paypay:',
 'nolinkstoimage'          => 'Waray mga pakli nga nasumpay hini nga fayl.',
 'sharedupload'            => 'Ini nga fayl tikang han $1 ngan puyde magamit ha iba nga mga proyekto.',
 'sharedupload-desc-there' => 'Ini nga fayl tikang han $1 ngan puyde magamit ha iba nga mga proyekto.
@@ -940,13 +944,13 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 'statistics-articles'          => 'Unod nga mga pakli',
 'statistics-pages'             => 'Mga pakli',
 'statistics-pages-desc'        => 'Ngatanan nga mga pakli ha sulod hini nga wiki, lakip an hiruhimangraw nga mga pakli, mga redirect, ngan iba pa',
-'statistics-files'             => 'Ginkarga nga mga paypay',
+'statistics-files'             => 'Mga paypay nga iginkarga pasaka',
 'statistics-edits'             => 'Mga pagliwat hit pakli tikang gintukod hini nga {{SITENAME}}',
 'statistics-edits-average'     => 'Average nga mga pagliwat kada pakli',
 'statistics-views-total'       => 'Ngatanan nga mga panginano',
 'statistics-views-peredit'     => 'Mga panginano kada pagliwat',
-'statistics-users'             => 'Mga nakarehistro nga [[Special:ListUsers|gumaramit]]',
-'statistics-users-active'      => 'Mga nanggigios nga gumaramit',
+'statistics-users'             => 'Mga [[Special:ListUsers|gumaramit]] nga nakarehistro',
+'statistics-users-active'      => 'Mga gumaramit nga nanggigios',
 'statistics-users-active-desc' => 'Mga gumaramit nga may-ada iginbuhat ha urhi nga {{PLURAL:$1|ka adlaw|$1 ka mga adlaw}}',
 'statistics-mostpopular'       => 'Gidamoi nga ginpanginanohan nga mga pakli',
 
@@ -1042,7 +1046,7 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 'listusers-blocked'  => '(ginpugngan)',
 
 # Special:ActiveUsers
-'activeusers'            => 'Lista han mga nanggigios nga gumaramit',
+'activeusers'            => 'Taramdan hin mga gumaramit nga nanggigios',
 'activeusers-hidebots'   => 'Igtago an mga bot',
 'activeusers-hidesysops' => 'Igtago an mga magdudumara',
 'activeusers-noresult'   => 'Waray gumaramit nga nahiagian.',
@@ -1345,6 +1349,8 @@ An bisan ano nga masunod nga mga sumpay ha kapareho nga bagis in igtratrato nga 
 
 # Metadata
 'metadata'        => 'Metadata',
+'metadata-help'   => 'Iní nga paypay mayda dugang nga pagpasabot, nga bangin gindugáng tikang han digital nga camera o iskaner nga gin-gamit paghimo o pag-digitar hini.
+Kon an paypay ginliwat tikang han orihinal nga kamutangan, mayda mga detalye nga bangin diri magpakita han ginliwat nga paypay',
 'metadata-fields' => 'An mga rumbay han hulagway han metadato nga nakatala dinhi nga mensahe in iglalakip ha padayag hin hulagway nga pakli kun an taramdan metadato in nakalukot.
 An iba in daan nakatago.
 * make
@@ -1488,6 +1494,7 @@ An iba in daan nakatago.
 'version-software-product' => 'Produkto',
 
 # Special:FilePath
+'filepath-page'   => 'Paypay:',
 'filepath-submit' => 'Kadto-a',
 
 # Special:FileDuplicateSearch
@@ -1500,6 +1507,16 @@ An iba in daan nakatago.
 # Special:BlankPage
 'blankpage'              => 'Blanko nga pakli',
 'intentionallyblankpage' => 'Ini nga pakli gintuyo pagpabilin nga blanko.',
+
+# External image whitelist
+'external_image_whitelist' => '#Pabay-i ini nga linea nga sugad gud la <pre>
+#Igbutang in mga regular nga expresyon nga mga fragment (iton bahin nga ada ha butnga han //) ha ubos
+#Ini igpapadis han mga URL han mga ha gawas (gin-hotlink) nga mga hulagway
+#An mga nasakto igpapakita nga mga hulagway, kon diri, sumpay la ngadto han hulagway an igpapakita
+#Mga linea nga natikang hin  # ginta-tratar nga mga komento
+# Case-insensitive ini
+
+#Igbutang an mga regex nga fragment ha igbaw hini nga linea. Pabay-i ini nga linea nga sugad gud la</pre>',
 
 # Special:Tags
 'tag-filter'        => '[[Special:Tags|Tag]] panara:',

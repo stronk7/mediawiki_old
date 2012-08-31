@@ -7,10 +7,12 @@
  * @ingroup Language
  * @file
  *
+ * @author -jem-
  * @author Aleator
  * @author Alhen
  * @author Alpertron
  * @author Alvaro qc
+ * @author Amire80
  * @author Armando-Martin
  * @author Ascánder
  * @author Baiji
@@ -47,6 +49,7 @@
  * @author Jens Liebenau
  * @author Jurock
  * @author Kaganer
+ * @author Larjona
  * @author Lin linao
  * @author Linterweb
  * @author Locos epraix
@@ -352,7 +355,7 @@ $messages = array(
 'tog-hidepatrolled'           => 'Ocultar ediciones patrulladas en los cambios recientes',
 'tog-newpageshidepatrolled'   => 'Ocultar páginas patrulladas de la lista de páginas nuevas',
 'tog-extendwatchlist'         => 'Expandir la lista de seguimiento a todos los cambios, no sólo a los más recientes.',
-'tog-usenewrc'                => 'Cambios recientes mejorados (requiere JavaScript)',
+'tog-usenewrc'                => 'Agrupar los cambios por página en los cambios recientes y en la lista de vigilancia (requiere JavaScript)',
 'tog-numberheadings'          => 'Numerar automáticamente los encabezados',
 'tog-showtoolbar'             => 'Mostrar la barra de edición (requiere JavaScript)',
 'tog-editondblclick'          => 'Editar páginas con doble clic (requiere JavaScript)',
@@ -360,17 +363,17 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Habilitar la edición de secciones presionando el botón de la derecha en los títulos de secciones (requiere JavaScript)',
 'tog-showtoc'                 => 'Mostrar el índice (para páginas con más de 3 encabezados)',
 'tog-rememberpassword'        => 'Recordar mi nombre de usuario y contraseña entre sesiones en este navegador (por un máximo de $1 {{PLURAL:$1|día|días}})',
-'tog-watchcreations'          => 'Vigilar las páginas que yo cree',
-'tog-watchdefault'            => 'Vigilar las páginas que yo modifique',
-'tog-watchmoves'              => 'Vigilar las páginas que renombre',
-'tog-watchdeletion'           => 'Vigilar las páginas que borre',
+'tog-watchcreations'          => 'Añadir las páginas que cree y los archivos que cargue a mi lista de vigilancia',
+'tog-watchdefault'            => 'Añadir la páginas y archivos que edite a mi lista de vigilancia',
+'tog-watchmoves'              => 'Añadir las páginas y archivos que mueva a mi lista de vigilancia',
+'tog-watchdeletion'           => 'Añadir la páginas y archivos que borre a mi lista de vigilancia',
 'tog-minordefault'            => 'Marcar todas las ediciones como menores de manera predeterminada',
 'tog-previewontop'            => 'Mostrar previsualización antes del cuadro de edición',
 'tog-previewonfirst'          => 'Mostrar previsualización en la primera edición',
 'tog-nocache'                 => 'Desactivar la caché de páginas del navegador',
-'tog-enotifwatchlistpages'    => 'Enviarme un correo electrónico cuando se modifique una página en mi lista de seguimiento',
+'tog-enotifwatchlistpages'    => 'Enviarme un correo electrónico cuando se modifique una página o un archivo de mi lista de seguimiento',
 'tog-enotifusertalkpages'     => 'Enviarme un correo electrónico cuando se modifique mi página de discusión',
-'tog-enotifminoredits'        => 'Notificarme también los cambios menores de páginas',
+'tog-enotifminoredits'        => 'Notificarme también por correo electrónico los cambios menores de las páginas y archivos',
 'tog-enotifrevealaddr'        => 'Revelar mi dirección de correo electrónico en los correos de notificación',
 'tog-shownumberswatching'     => 'Mostrar el número de usuarios que la vigilan',
 'tog-oldsig'                  => 'Firma actual:',
@@ -762,7 +765,7 @@ No olvides personalizar [[Special:Preferences|tus preferencias]].',
 'notloggedin'                => 'No has iniciado sesión',
 'nologin'                    => '¿No tienes una cuenta? $1.',
 'nologinlink'                => 'Crear una cuenta',
-'createaccount'              => 'Crear cuenta',
+'createaccount'              => 'Crear una cuenta',
 'gotaccount'                 => '¿Ya tienes una cuenta? $1.',
 'gotaccountlink'             => 'Entrar',
 'userlogin-resetlink'        => '¿Olvidaste tus datos de acceso?',
@@ -837,7 +840,7 @@ Puedes ignorar este mensaje si esta cuenta fue creada por error.',
 'suspicious-userlogout'      => 'Tu solicitud de desconexión ha sido denegada, pues parece haber sido enviada desde un navegador defectuoso o un proxy caché.',
 
 # E-mail sending
-'php-mail-error-unknown' => 'Error desconocido en la función mail() de PHP',
+'php-mail-error-unknown' => 'Error desconocido en la función mail() de PHP.',
 'user-mail-no-addy'      => 'Se ha intentado enviar correo electrónico sin una dirección de correo electrónico.',
 
 # Change password dialog
@@ -1086,7 +1089,7 @@ Puede volver atrás y editar una página existente, [[Special:UserLogin|identifi
 'sectioneditnotsupported-text'     => 'La edición de sección no es compatible con esta página.',
 'permissionserrors'                => 'Errores de permisos',
 'permissionserrorstext'            => 'No tienes permiso para hacer eso, por {{PLURAL:$1|el siguiente motivo|los siguientes motivos}}:',
-'permissionserrorstext-withaction' => 'No tienes permiso para $2, por los siguientes {{PLURAL:$1|motivo|motivos}}:',
+'permissionserrorstext-withaction' => 'No tienes permiso para $2, por {{PLURAL:$1|el siguiente motivo|los siguientes motivos}}:',
 'recreate-moveddeleted-warn'       => "'''Atención: estás volviendo a crear una página que ha sido borrada anteriormente.'''
 
 Deberías considerar si es apropiado continuar editando esta página.
@@ -1713,9 +1716,9 @@ Para ver o buscar archivos subidos con anterioridad, ve a la [[Special:FileList|
 Los archivos subidos quedarán registrados además en el [[Special:Log/upload|registro de archivos subidos]] y los borrados en el [[Special:Log/delete|registro de borrados]].
 
 Para incluir un archivo en una página, usa un enlace como los mostrados a continuación:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' para usar el fichero en tamaño completo
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|texto descriptivo]]</nowiki></tt>''' para una versión de 200 píxeles de ancho en una caja en el margen izquierdo con 'texto descriptivo' como descripción
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' para enlazar directamente al fichero sin mostrarlo.",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' para usar el fichero en tamaño completo
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|texto descriptivo]]</nowiki></code>''' para una versión de 200 píxeles de ancho en una caja en el margen izquierdo con 'texto descriptivo' como descripción
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' para enlazar directamente al fichero sin mostrarlo.",
 'upload-permitted'            => 'Tipos de archivo permitidos: $1.',
 'upload-preferred'            => 'Tipos de archivo preferidos: $1.',
 'upload-prohibited'           => 'Tipos de archivo prohibidos: $1.',
@@ -1759,19 +1762,19 @@ Mira la [[Special:NewFiles|galería de archivos nuevos]] para una descripción v
 'largefileserver'             => 'El tamaño de este archivo es mayor del que este servidor admite por configuración.',
 'emptyfile'                   => 'El archivo que has intentado subir parece estar vacío; por favor, verifica que realmente se trate del archivo que intentabas subir.',
 'windows-nonascii-filename'   => 'Este wiki no admite nombres de archivo con caracteres especiales.',
-'fileexists'                  => "Ya existe un archivo con este nombre, por favor comprueba '''<tt>[[:$1]]</tt>''' si no estás seguro de querer cambiarlo.
-[[$1|thumb]]",
-'filepageexists'              => "La página de descripción de este archivo ya ha sido creada en '''<tt>[[:$1]]</tt>''', pero no existe actualmente ningún fichero con este nombre.
+'fileexists'                  => 'Ya existe un archivo con este nombre, por favor comprueba <strong>[[:$1]]</strong> si no estás seguro de querer cambiarlo.
+[[$1|thumb]]',
+'filepageexists'              => 'La página de descripción de este archivo ya ha sido creada en <strong>[[:$1]]</strong>, pero no existe actualmente ningún fichero con este nombre.
 El resumen que ha ingresado no aparecerá en la página de descripción. Para que el sumario aparezca, deberá editarlo manualmente.
-[[$1|thumb]]",
-'fileexists-extension'        => "Existe un archivo con un nombre similar: [[$2|thumb]]
-* Nombre del archivo que se está subiendo: '''<tt>[[:$1]]</tt>'''
-* Nombre del archivo ya existente: '''<tt>[[:$2]]</tt>'''
-Por favor, elige un nombre diferente.",
+[[$1|thumb]]',
+'fileexists-extension'        => 'Existe un archivo con un nombre similar: [[$2|thumb]]
+* Nombre del archivo que se está subiendo: <strong>[[:$1]]</strong>
+* Nombre del archivo ya existente: <strong>[[:$2]]</strong>
+Por favor, elige un nombre diferente.',
 'fileexists-thumbnail-yes'    => "El archivo parece ser una imagen de tamaño reducido ''(thumbnail)''. [[$1|thumb]]
-Por favor comprueba el archivo '''<tt>[[:$1]]</tt>'''.
+Por favor comprueba el archivo <strong>[[:$1]]</strong>.
 Si el archivo comprobado es la misma imagen a tamaño original no es necesario subir un thumbnail más.",
-'file-thumbnail-no'           => "El nombre del archivo comienza con '''<tt>$1</tt>'''.
+'file-thumbnail-no'           => "El nombre del archivo comienza con <strong>$1</strong>.
 Parece ser una imagen de tamaño reducido ''(thumbnail)''.
 Si tiene esta imagen a toda resolución súbala, si no, por favor cambie el nombre del archivo.",
 'fileexists-forbidden'        => 'Ya existe un archivo con este nombre, y no puede ser grabado encima de otro. Si quiere subir su archivo de todos modos, por favor vuelva atrás y utilice otro nombre. [[File:$1|thumb|center|$1]]',
@@ -2021,7 +2024,7 @@ La descripción en su [$2 página de descripción del archivo] está mostrada de
 # MIME search
 'mimesearch'         => 'Búsqueda MIME',
 'mimesearch-summary' => 'Esta página permite el filtrado de ficheros por su tipo MIME.
-Entrada: contenttype/subtype, p. ej. <tt>image/jpeg</tt>.',
+Entrada: contenttype/subtype, p. ej. <code>image/jpeg</code>.',
 'mimetype'           => 'Tipo MIME:',
 'download'           => 'descargar',
 
@@ -2067,8 +2070,8 @@ Entrada: contenttype/subtype, p. ej. <tt>image/jpeg</tt>.',
 
 'disambiguations'      => 'Páginas que enlazan con páginas de desambiguación',
 'disambiguationspage'  => 'Template:Desambiguación',
-'disambiguations-text' => "Las siguientes páginas enlazan con una '''página de desambiguación'''.
-En lugar de ello deberían enlazar con  el tema apropiado.<br />
+'disambiguations-text' => "Las siguientes páginas contienen al menos un enlace a una '''página de desambiguación'''.
+En lugar de ello deberían enlazar a una página más apropiada.<br />
 Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:Disambiguationspage]].",
 
 'doubleredirects'                   => 'Redirecciones dobles',
@@ -2214,7 +2217,7 @@ Véase también las [[Special:WantedCategories|categorías requeridas]].',
 'linksearch-ok'    => 'Buscar',
 'linksearch-text'  => 'Se pueden usar caracteres comodín como "*.wikipedia.org".
 Es necesario, por lo menos, un dominio de nivel, por ejemplo "*.org".<br />
-Protocolos soportados: <tt>$1</tt> (no añada ninguno de estos en su búsqueda).',
+Protocolos soportados: <code>$1</code> (no añada ninguno de estos en su búsqueda).',
 'linksearch-line'  => '$1 enlazado desde $2',
 'linksearch-error' => 'Los comodines sólo pueden aparecer al principio del nombre de sitio.',
 
@@ -3259,11 +3262,11 @@ Existen otros campos que se mantendrán ocultos por defecto.
 'exif-meteringmode'                => 'Modo de medición',
 'exif-lightsource'                 => 'Fuente de luz',
 'exif-flash'                       => 'Flash',
-'exif-focallength'                 => 'Longitud de la lente focal',
+'exif-focallength'                 => 'Longitud focal de la lente',
 'exif-subjectarea'                 => 'Área del sujeto',
 'exif-flashenergy'                 => 'Energía del flash',
-'exif-focalplanexresolution'       => 'Resolución X plano focal',
-'exif-focalplaneyresolution'       => 'Resolución Y plano focal',
+'exif-focalplanexresolution'       => 'Resolución X del plano focal',
+'exif-focalplaneyresolution'       => 'Resolución Y del plano focal',
 'exif-focalplaneresolutionunit'    => 'Unidad de resolución del plano focal',
 'exif-subjectlocation'             => 'Localización del sujeto',
 'exif-exposureindex'               => 'Índice de exposición',
@@ -3300,7 +3303,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 'exif-gpstrackref'                 => 'Referencia para la dirección del movimiento',
 'exif-gpstrack'                    => 'Dirección del movimiento',
 'exif-gpsimgdirectionref'          => 'Referencia de la dirección de imágen',
-'exif-gpsimgdirection'             => 'Dirección de imágen',
+'exif-gpsimgdirection'             => 'Dirección de imagen',
 'exif-gpsmapdatum'                 => 'Utilizados datos de medición geodésica',
 'exif-gpsdestlatituderef'          => 'Referencia para la latitud del destino',
 'exif-gpsdestlatitude'             => 'Destino de latitud',
@@ -3385,7 +3388,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 'exif-compression-3' => 'Codificación de fax CCITT grupo 3',
 'exif-compression-4' => 'Codificación de fax CCITT grupo 4',
 
-'exif-copyrighted-true'  => 'Copyrighted',
+'exif-copyrighted-true'  => 'Con derechos de autor',
 'exif-copyrighted-false' => 'Dominio público',
 
 'exif-unknowndate' => 'Fecha desconocida',
@@ -3810,7 +3813,7 @@ Las imágenes se muestran en resolución máxima, otros tipos de archivo se inic
 * <span class="mw-specialpagecached">Páginas especiales en caché (podrían ser obsoletas).</span>',
 'specialpages-group-maintenance' => 'Reportes de mantenimiento',
 'specialpages-group-other'       => 'Otras páginas especiales',
-'specialpages-group-login'       => 'Iniciar sesión / Registrarse',
+'specialpages-group-login'       => 'Iniciar sesión / Crear cuenta',
 'specialpages-group-changes'     => 'Cambios recientes y registros',
 'specialpages-group-media'       => 'Páginas sobre archivos',
 'specialpages-group-users'       => 'Usuarios y permisos',
