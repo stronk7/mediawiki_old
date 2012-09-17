@@ -197,6 +197,11 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'Italiano';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
+        case 'ko':
+            $wgLanguageCode     = 'ko';
+            $wgLanguageName     = '한국어';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
         case 'nl':
             $wgLanguageCode     = 'nl';
             $wgLanguageName     = 'Nederlands';
@@ -340,12 +345,6 @@ if ($mdocsver == 'archive') {
         case 'ja':
             $wgLanguageCode     = 'ja';
             $wgLanguageName     = '日本語';
-            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-        break;
-
-        case 'ko':
-            $wgLanguageCode     = 'ko';
-            $wgLanguageName     = '한국어';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
 
