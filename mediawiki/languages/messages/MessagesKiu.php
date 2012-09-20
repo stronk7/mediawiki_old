@@ -13,6 +13,44 @@
 
 $fallback = 'tr';
 
+$namespaceNames = array(
+	NS_MEDIA            => 'Medya',
+	NS_SPECIAL          => 'Xısusi',
+	NS_TALK             => 'Werênayış',
+	NS_USER             => 'Karber',
+	NS_USER_TALK        => 'Karber_werênayış',
+	NS_PROJECT_TALK     => '$1_werênayış',
+	NS_FILE             => 'Dosye',
+	NS_FILE_TALK        => 'Dosya_werênayış',
+	NS_MEDIAWIKI        => 'MediaWiki',
+	NS_MEDIAWIKI_TALK   => 'MediaWiki_werênayış',
+	NS_TEMPLATE         => 'Şablon',
+	NS_TEMPLATE_TALK    => 'Şablon_werênayış',
+	NS_HELP             => 'Peşti',
+	NS_HELP_TALK        => 'Peşti_werênayış',
+	NS_CATEGORY         => 'Kategoriye',
+	NS_CATEGORY_TALK    => 'Kategori_werênayış',
+);
+
+$namespaceAliases = array(
+	// Turkish namespace names.
+	'Medya'              => NS_MEDIA,
+	'Özel'               => NS_SPECIAL,
+	'Tartışma'           => NS_TALK,
+	'Kullanıcı'          => NS_USER,
+	'Kullanıcı_mesaj'    => NS_USER_TALK,
+	'$1_tartışma'        => NS_PROJECT_TALK,
+	'Dosya'              => NS_FILE,
+	'Dosya_tartışma'     => NS_FILE_TALK,
+	'MediaWiki_tartışma' => NS_MEDIAWIKI_TALK,
+	'Şablon'             => NS_TEMPLATE,
+	'Şablon_tartışma'    => NS_TEMPLATE_TALK,
+	'Yardım'             => NS_HELP,
+	'Yardım_tartışma'    => NS_HELP_TALK,
+	'Kategori'           => NS_CATEGORY,
+	'Kategori_tartışma'  => NS_CATEGORY_TALK,
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline' => 'Bınê girey de xete bonce:',
@@ -29,17 +67,17 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Qısımu be teqnaena serrêze ra ebe gozaga raste bıvurne (JavaScript lazımo)',
 'tog-showtoc' => 'Tabloê tedeesteu basne (de pelunê be hirê sernustu ra jêdêri de)',
 'tog-rememberpassword' => 'Parola mı nê cıcêraoği de bia ho viri (serba tewr jêde $1 {{PLURAL:$1|roze|rozu}}).',
-'tog-watchcreations' => 'Pelê ke mı afernê, lista mına şêrkerdişi ke',
-'tog-watchdefault' => 'Pelê ke mı vurnê, lista mına şêrkerdişi ke',
-'tog-watchmoves' => 'Pelê ke mı kırısnê, lista mına şêrkerdişi ke',
-'tog-watchdeletion' => 'Pelê ke mı esterıtê, lista mına şêrkerdişi ke',
+'tog-watchcreations' => 'Pelê ke mı afernê u dosyê ke mı bar kerdê lista mına şêrkerdişi ke',
+'tog-watchdefault' => 'Pel u dosyê ke mı vurnê lista mına şêrkerdişi ke',
+'tog-watchmoves' => 'Pel u dosyê ke mı kırısnê lista mına şêrkerdişi ke',
+'tog-watchdeletion' => 'Pel u dosyê ke mı esterıtê, lista mına şêrkerdişi ke',
 'tog-minordefault' => 'Vurnaisunê ho pêrune ‘vurnaiso qızkek’ nisan bıde',
 'tog-previewontop' => 'Verqayti pela nustene ser de basne',
 'tog-previewonfirst' => 'Vurnaiso verên de verqayti tım basne',
 'tog-nocache' => 'Pelunê cıcêraoği mia ho viri',
-'tog-enotifwatchlistpages' => 'Pela ke ez şêr kenune eke vurnê mı rê e-poste bırusne',
+'tog-enotifwatchlistpages' => 'Zu pele ya ki dosyawa ke lista mına şêrkerdişi de vurnê mı rê e-poste bırusne',
 'tog-enotifusertalkpages' => 'Pela mına hurênaişi ke vurnê mı rê e-poste bırusne',
-'tog-enotifminoredits' => 'Vurnaisunê qızkeku de ki mı rê e-poste bırusne',
+'tog-enotifminoredits' => 'Vurnaisunê qızkekunê pelun u dosyu de ki mı rê e-poste bırusne',
 'tog-enotifrevealaddr' => 'Adresa e-postê mı postê xeberu de basne',
 'tog-shownumberswatching' => 'Amorê karberunê şêrkerdoğu basne',
 'tog-oldsig' => 'Verqaytê imza mewcude:',
@@ -560,7 +598,7 @@ Vurnayışê tu hama qeyd nıbiyo!",
 'yourtext' => 'Metnê to',
 'storedversion' => 'Metıno qeydkerde',
 'yourdiff' => 'Ferqi',
-'copyrightwarning' => "Diqet ke, iştırakê ke benê be pela {{SITENAME}}i, pêro bınê $2 de rakerde vêrenê (serba daêna melumati qaytê $1 ke).
+'copyrightwarning' => "Diqet ke, iştıraqê ke benê be pela {{SITENAME}}i, pêro bınê $2 de rakerde vêrenê (serba daêna melumati qaytê $1 ke).
 İştırakunê ho, eke nêwazena wa terefê binu ra bıvuriyê ya ki caunê binu ra vıla bê, o taw ita menuse.<br />
 Zobina ki ebe ita nustene ra sond wena ke nê iştıraki terefê to ra nuşiyê, ya çımê do rakerdey ra ya ki çımê do serbest ra kopya biyê.
 '''Gurêo ke ebe telifheqiye ra sevekiyo bê destur ita darde meke!'''",
@@ -1062,7 +1100,7 @@ Cêr [$2 pela arezekerdena dosya de] arezekerdene asnina.',
 'booksources-go' => 'So',
 
 # Special:Log
-'specialloguserlabel' => 'Karber:',
+'specialloguserlabel' => 'Kerdoğ:',
 'speciallogtitlelabel' => 'Sernuste:',
 'log' => 'Qeydi',
 
@@ -1237,7 +1275,7 @@ Tı şikina sewiya sevekiyaena na pele bıvurnê, hema yê nae sevekiyaena qedem
 'sp-contributions-talk' => 'hurênais',
 'sp-contributions-search' => 'Ebe iştıraku cı feteliye',
 'sp-contributions-username' => 'IP ya ki karber:',
-'sp-contributions-toponly' => 'Teyna revizyonanê tewr peniyan bimocne',
+'sp-contributions-toponly' => 'Tenya rewizyonanê tewr peyniyan bimocne',
 'sp-contributions-submit' => 'Cı feteliye',
 
 # What links here

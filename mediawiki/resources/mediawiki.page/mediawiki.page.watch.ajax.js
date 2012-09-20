@@ -2,16 +2,12 @@
  * Animate watch/unwatch links to use asynchronous API requests to
  * watch pages, rather than navigating to a different URI.
  */
-( function ( $, mw, undefined ) {
+( function ( mw, $ ) {
 	/**
 	 * The name of the page to watch or unwatch.
 	 */
 	var title = mw.config.get( 'wgRelevantPageName', mw.config.get( 'wgPageName' ) );
 
-	// Expose local methods
-	mw.page.watch = {
-		'updateWatchLink': updateWatchLink
-	};
 	/**
 	 * Update the link text, link href attribute and (if applicable)
 	 * "loading" class.
@@ -98,6 +94,11 @@
 		return 'view';
 	}
 
+	// Expose local methods
+	mw.page.watch = {
+		'updateWatchLink': updateWatchLink
+	};
+
 	$( document ).ready( function () {
 		var $links = $( '.mw-watchlink a, a.mw-watchlink, ' +
 			'#ca-watch a, #ca-unwatch a, #mw-unwatch-link1, ' +
@@ -133,7 +134,7 @@
 					otherAction = action === 'watch' ? 'unwatch' : 'watch';
 					$li = $link.closest( 'li' );
 
-					mw.util.jsMessage( watchResponse.message, 'ajaxwatch' );
+					mw.notify( $.parseHTML( watchResponse.message ), { tag: 'watch-self' } );
 
 					// Set link to opposite
 					updateWatchLink( $link, otherAction );
@@ -148,7 +149,7 @@
 				},
 				// Error
 				function () {
-					var cleanTitle, html, link;
+					var cleanTitle, msg, link;
 
 					// Reset link to non-loading mode
 					updateWatchLink( $link, action );
@@ -161,14 +162,14 @@
 							title: cleanTitle
 						}, cleanTitle
 					);
-					html = mw.msg( 'watcherrortext', link );
+					msg = mw.messsage( 'watcherrortext', link );
 
 					// Report to user about the error
-					mw.util.jsMessage( html, 'ajaxwatch' );
+					mw.notify( msg, { tag: 'watch-self' } );
 
 				}
 			);
 		});
 	});
 
-}( jQuery, mediaWiki ) );
+}( mediaWiki, jQuery ) );

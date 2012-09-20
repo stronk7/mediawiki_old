@@ -332,9 +332,6 @@ if ( !$wgEnotifMinorEdits ) {
 foreach( $wgDisabledActions as $action ){
 	$wgActions[$action] = false;
 }
-if( !$wgAllowPageInfo ){
-	$wgActions['info'] = false;
-}
 
 if ( !$wgHtml5Version && $wgHtml5 && $wgAllowRdfaAttributes ) {
 	# see http://www.w3.org/TR/rdfa-in-html/#document-conformance
@@ -365,12 +362,14 @@ if ( $wgNewUserLog ) {
 	$wgLogTypes[]                        = 'newusers';
 	$wgLogNames['newusers']              = 'newuserlogpage';
 	$wgLogHeaders['newusers']            = 'newuserlogpagetext';
-	# newusers, create, create2, autocreate
-	$wgLogActionsHandlers['newusers/*']  = 'NewUsersLogFormatter';
+	$wgLogActionsHandlers['newusers/newusers'] = 'NewUsersLogFormatter';
+	$wgLogActionsHandlers['newusers/create'] = 'NewUsersLogFormatter';
+	$wgLogActionsHandlers['newusers/create2'] = 'NewUsersLogFormatter';
+	$wgLogActionsHandlers['newusers/autocreate'] = 'NewUsersLogFormatter';
 }
 
 if ( $wgCookieSecure === 'detect' ) {
-	$wgCookieSecure = ( substr( $wgServer, 0, 6 ) === 'https:' );
+	$wgCookieSecure = ( WebRequest::detectProtocol() === 'https:' );
 }
 
 // Disable MWDebug for command line mode, this prevents MWDebug from eating up
@@ -447,7 +446,7 @@ if ( $wgCommandLineMode ) {
 	# Can't stub this one, it sets up $_GET and $_REQUEST in its constructor
 	$wgRequest = new WebRequest;
 
-	$debug = "\n\nStart request {$_SERVER['REQUEST_METHOD']} {$wgRequest->getRequestURL()}\n";
+	$debug = "\n\nStart request {$wgRequest->getMethod()} {$wgRequest->getRequestURL()}\n";
 
 	if ( $wgDebugPrintHttpHeaders ) {
 		$debug .= "HTTP HEADERS:\n";

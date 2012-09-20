@@ -36,7 +36,7 @@ class DoubleRedirectJob extends Job {
 
 	/**
 	 * Insert jobs into the job queue to fix redirects to the given title
-	 * @param $reason String: the reason for the fix, see message double-redirect-fixed-<reason>
+	 * @param $reason String: the reason for the fix, see message "double-redirect-fixed-<reason>"
 	 * @param $redirTitle Title: the title which has changed, redirects pointing to this title are fixed
 	 * @param $destTitle bool Not used
 	 */
@@ -89,7 +89,7 @@ class DoubleRedirectJob extends Job {
 			return false;
 		}
 
-		$targetRev = Revision::newFromTitle( $this->title );
+		$targetRev = Revision::newFromTitle( $this->title, false, Revision::READ_LATEST );
 		if ( !$targetRev ) {
 			wfDebug( __METHOD__.": target redirect already deleted, ignoring\n" );
 			return true;
@@ -141,8 +141,9 @@ class DoubleRedirectJob extends Job {
 		$oldUser = $wgUser;
 		$wgUser = $this->getUser();
 		$article = WikiPage::factory( $this->title );
-		$reason = wfMsgForContent( 'double-redirect-fixed-' . $this->reason,
-			$this->redirTitle->getPrefixedText(), $newTitle->getPrefixedText() );
+		$reason = wfMessage( 'double-redirect-fixed-' . $this->reason,
+			$this->redirTitle->getPrefixedText(), $newTitle->getPrefixedText()
+		)->inContentLanguage()->text();
 		$article->doEdit( $newText, $reason, EDIT_UPDATE | EDIT_SUPPRESS_RC, false, $this->getUser() );
 		$wgUser = $oldUser;
 
@@ -194,7 +195,7 @@ class DoubleRedirectJob extends Job {
 	 */
 	function getUser() {
 		if ( !self::$user ) {
-			self::$user = User::newFromName( wfMsgForContent( 'double-redirect-fixer' ), false );
+			self::$user = User::newFromName( wfMessage( 'double-redirect-fixer' )->inContentLanguage()->text(), false );
 			# FIXME: newFromName could return false on a badly configured wiki.
 			if ( !self::$user->isLoggedIn() ) {
 				self::$user->addToDatabase();

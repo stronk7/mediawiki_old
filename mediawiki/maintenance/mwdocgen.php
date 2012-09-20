@@ -49,13 +49,16 @@ if ( php_sapi_name() != 'cli' ) {
 }
 
 /** Figure out the base directory for MediaWiki location */
-$mwPath = dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR;
+$mwPath = dirname( __DIR__ ) . DIRECTORY_SEPARATOR;
 
 /** doxygen binary script */
 $doxygenBin = 'doxygen';
 
 /** doxygen configuration template for mediawiki */
 $doxygenTemplate = $mwPath . 'maintenance/Doxyfile';
+
+/** doxygen input filter to tweak source file before they are parsed */
+$doxygenInputFilter = "php {$mwPath}maintenance/mwdoc-filter.php";
 
 /** svnstat command, used to get the version of each file */
 $svnstat = $mwPath . 'bin/svnstat';
@@ -134,9 +137,9 @@ function getSvnRevision( $dir ) {
  * @return string
  */
 function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath, $currentVersion, $svnstat, $input, $exclude, $excludePatterns, $doxyGenerateMan ) {
+	global $doxygenInputFilter;
 
 	$template = file_get_contents( $doxygenTemplate );
-
 	// Replace template placeholders by correct values.
 	$replacements = array(
 		'{{OUTPUT_DIRECTORY}}' => $outputDirectory,
@@ -148,6 +151,7 @@ function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath,
 		'{{EXCLUDE_PATTERNS}}' => $excludePatterns,
 		'{{HAVE_DOT}}'         => `which dot` ? 'YES' : 'NO',
 		'{{GENERATE_MAN}}'     => $doxyGenerateMan ? 'YES' : 'NO',
+		'{{INPUT_FILTER}}'     => $doxygenInputFilter,
 	);
 	$tmpCfg = str_replace( array_keys( $replacements ), array_values( $replacements ), $template );
 	$tmpFileName = tempnam( wfTempDir(), 'mwdocgen-' );

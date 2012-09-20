@@ -85,6 +85,29 @@ This is a simple paragraph.
 !! end
 
 !! test
+Paragraphs with extra newline spacing
+!! input
+foo
+
+bar
+
+
+baz
+
+
+
+booz
+!! result
+<p>foo
+</p><p>bar
+</p><p><br />
+baz
+</p><p><br />
+</p><p>booz
+</p>
+!! end
+
+!! test
 Simple list
 !! input
 * Item 1
@@ -1581,6 +1604,23 @@ External links: [IDN ignored character reference in hostname; strip it right off
 </p>
 !! end
 
+# FIXME: This test (the IDN characters in the text of a link) is an inconsistency.
+# Where an external link could easily circumvent the sanitization of the text of
+# a link like this (where an IDN-ignore character is in the URL somewhere), this
+# test demands a higher standard. That's a bit strange.
+#
+# Example:
+#
+# http://e‌xample.com -> [http://example.com|http://example.com]
+# [http://example.com|http://e‌xample.com] -> [http://example.com|http://e‌xample.com]
+#
+# The first example is sanitized, but the second is not. Any security benefits
+# from this production are trivial to circumvent. Either remove this test and
+# let the parser(s) do their thing unaccosted, or fix the inconsistency and change
+# the test accordingly.
+#
+# All our love,
+# The Parsoid team.
 !! test
 External links: IDN ignored character reference in hostname; strip it right off
 !! input
@@ -2403,6 +2443,21 @@ Link with double quotes in title part (literal) and alternate part (interpreted)
 !! end
 
 !! test
+Broken image links with HTML captions (bug 39700)
+!! input
+[[File:Nonexistent|<script></script>]]
+[[File:Nonexistent|100px|<script></script>]]
+[[File:Nonexistent|&lt;]]
+[[File:Nonexistent|a<i>b</i>c]]
+!! result
+<p><a href="/index.php?title=Special:Upload&amp;wpDestFile=Nonexistent" class="new" title="File:Nonexistent">&lt;script&gt;&lt;/script&gt;</a>
+<a href="/index.php?title=Special:Upload&amp;wpDestFile=Nonexistent" class="new" title="File:Nonexistent">&lt;script&gt;&lt;/script&gt;</a>
+<a href="/index.php?title=Special:Upload&amp;wpDestFile=Nonexistent" class="new" title="File:Nonexistent">&lt;</a>
+<a href="/index.php?title=Special:Upload&amp;wpDestFile=Nonexistent" class="new" title="File:Nonexistent">abc</a>
+</p>
+!! end
+
+!! test
 Plain link to URL
 !! input
 [[http://www.example.com]]
@@ -2716,18 +2771,56 @@ Failing to transform badly formed HTML into correct XHTML
 </p>
 !!end
 
-!! test 
+!! test
 Horizontal ruler (should it add that extra space?)
-!! input 
+!! input
 <hr>
 <hr >
 foo <hr
 > bar
-!! result 
+!! result
 <hr />
 <hr />
 foo <hr /> bar
 
+!! end
+
+!! test
+Horizontal ruler -- 4+ dashes render hr
+!! input
+----
+!! result
+<hr />
+
+!! end
+
+!! test
+Horizontal ruler -- eats additional dashes on the same line
+!! input
+---------
+!! result
+<hr />
+
+!! end
+
+!! test
+Horizontal ruler -- does not collaps dashes on consecutive lines
+!! input
+----
+----
+!! result
+<hr />
+<hr />
+
+!! end
+
+!! test
+Horizontal ruler -- <4 dashes render as plain text
+!! input
+---
+!! result
+<p>---
+</p>
 !! end
 
 ###
@@ -4619,7 +4712,7 @@ Image with link parameter, URL target
 !! input
 [[Image:foobar.jpg|link=http://example.com/]]
 !! result
-<p><a href="http://example.com/"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
+<p><a href="http://example.com/" rel="nofollow"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
 </p>
 !! end
 
@@ -4630,7 +4723,29 @@ Image with link parameter, wgExternalLinkTarget
 !! config
 wgExternalLinkTarget='foobar'
 !! result
-<p><a href="http://example.com/" target="foobar"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
+<p><a href="http://example.com/" target="foobar" rel="nofollow"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
+</p>
+!! end
+
+!! test
+Image with link parameter, wgNoFollowLinks set to false
+!! input
+[[Image:foobar.jpg|link=http://example.com/]]
+!! config
+wgNoFollowLinks=false
+!! result
+<p><a href="http://example.com/"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
+</p>
+!! end
+
+!! test
+Image with link parameter, wgNoFollowDomainExceptions
+!! input
+[[Image:foobar.jpg|link=http://example.com/]]
+!! config
+wgNoFollowDomainExceptions='example.com'
+!! result
+<p><a href="http://example.com/"><img alt="Foobar.jpg" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
 </p>
 !! end
 
@@ -4641,7 +4756,7 @@ Image with link parameter, wgExternalLinkTarget, unnamed parameter
 !! config
 wgExternalLinkTarget='foobar'
 !! result
-<p><a href="http://example.com/" title="Title" target="foobar"><img alt="Title" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
+<p><a href="http://example.com/" title="Title" target="foobar" rel="nofollow"><img alt="Title" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
 </p>
 !! end
 
@@ -4668,7 +4783,7 @@ Image with link parameter (URL target) and unnamed parameter
 !! input
 [[Image:foobar.jpg|link=http://example.com/|Title]]
 !! result
-<p><a href="http://example.com/" title="Title"><img alt="Title" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
+<p><a href="http://example.com/" title="Title" rel="nofollow"><img alt="Title" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" /></a>
 </p>
 !! end
 
@@ -4882,6 +4997,15 @@ Bug 3090: External links other than http: in image captions
 !! result
 <div class="thumb tright"><div class="thumbinner" style="width:202px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/3/3a/Foobar.jpg" width="200" height="23" class="thumbimage" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div>This caption has <a rel="nofollow" class="external text" href="irc://example.net">irc</a> and <a rel="nofollow" class="external text" href="https://example.com">Secure</a> ext links in it.</div></div></div>
 
+!! end
+
+!! test
+Custom class
+!! input
+[[Image:foobar.jpg|a|class=b]]
+!! result
+<p><a href="/wiki/File:Foobar.jpg" class="image" title="a"><img alt="a" src="http://example.com/images/3/3a/Foobar.jpg" width="1941" height="220" class="b" /></a>
+</p>
 !! end
 
 !! article 
@@ -5406,6 +5530,30 @@ section 5
 <h2><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=5" title="Edit section: text &quot; text">edit</a>]</span> <span class="mw-headline" id="text_.22_text"> text " text </span></h2>
 <p>section 5
 </p>
+!! end
+
+!! test
+Headers with excess '=' characters
+(Are similar tests necessary beyond the 1st level?)
+!! input
+=foo==
+==foo=
+=''italic'' heading==
+==''italic'' heading=
+!! result
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#foo.3D"><span class="tocnumber">1</span> <span class="toctext">foo=</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#.3Dfoo"><span class="tocnumber">2</span> <span class="toctext">=foo</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#italic_heading.3D"><span class="tocnumber">3</span> <span class="toctext"><i>italic</i> heading=</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#.3Ditalic_heading"><span class="tocnumber">4</span> <span class="toctext">=<i>italic</i> heading</span></a></li>
+</ul>
+</td></tr></table>
+<h1><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=1" title="Edit section: foo=">edit</a>]</span> <span class="mw-headline" id="foo.3D">foo=</span></h1>
+<h1><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=2" title="Edit section: =foo">edit</a>]</span> <span class="mw-headline" id=".3Dfoo">=foo</span></h1>
+<h1><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=3" title="Edit section: italic heading=">edit</a>]</span> <span class="mw-headline" id="italic_heading.3D"><i>italic</i> heading=</span></h1>
+<h1><span class="editsection">[<a href="/index.php?title=Parser_test&amp;action=edit&amp;section=4" title="Edit section: =italic heading">edit</a>]</span> <span class="mw-headline" id=".3Ditalic_heading">=<i>italic</i> heading</span></h1>
+
 !! end
 
 !! test
@@ -6887,7 +7035,7 @@ Special page transclusion
 !! input
 {{Special:Prefixindex/Xyzzyx}}
 !! result
-<table border="0" id="mw-prefixindex-list-table"><tr><td><a href="/wiki/Xyzzyx" title="Xyzzyx">Xyzzyx</a></td></tr></table>
+<table id="mw-prefixindex-list-table"><tr><td><a href="/wiki/Xyzzyx" title="Xyzzyx">Xyzzyx</a></td></tr></table>
 
 !! end
 
@@ -6898,8 +7046,8 @@ Special page transclusion twice (bug 5021)
 {{Special:Prefixindex/Xyzzyx}}
 {{Special:Prefixindex/Xyzzyx}}
 !! result
-<table border="0" id="mw-prefixindex-list-table"><tr><td><a href="/wiki/Xyzzyx" title="Xyzzyx">Xyzzyx</a></td></tr></table>
-<table border="0" id="mw-prefixindex-list-table"><tr><td><a href="/wiki/Xyzzyx" title="Xyzzyx">Xyzzyx</a></td></tr></table>
+<table id="mw-prefixindex-list-table"><tr><td><a href="/wiki/Xyzzyx" title="Xyzzyx">Xyzzyx</a></td></tr></table>
+<table id="mw-prefixindex-list-table"><tr><td><a href="/wiki/Xyzzyx" title="Xyzzyx">Xyzzyx</a></td></tr></table>
 
 !! end
 
@@ -9328,6 +9476,17 @@ wgUseDynamicDates=true
 </p>
 !! end
 
+!! test
+formatdate parser function, with default format and on a page of which the content language is always English and different from the wiki content language
+!! options
+language=nl title=[[MediaWiki:Common.css]]
+!! input
+{{#formatdate:2009-03-24|dmy}}
+!! result
+<p><span class="mw-formatted-date" title="2009-03-24">24 March 2009</span>
+</p>
+!! end
+
 #
 #
 #
@@ -10184,11 +10343,37 @@ abc
 </p>
 !! end
 
+!!test
+Bug 34939 - Case insensitive link parsing ([HttP://])
+!! input
+[HttP://MediaWiki.Org/]
+!! result
+<p><a rel="nofollow" class="external autonumber" href="HttP://MediaWiki.Org/">[1]</a>
+</p>
+!! end
+
+!!test
+Bug 34939 - Case insensitive link parsing ([HttP:// title])
+!! input
+[HttP://MediaWiki.Org/ MediaWiki]
+!! result
+<p><a rel="nofollow" class="external text" href="HttP://MediaWiki.Org/">MediaWiki</a>
+</p>
+!! end
+
+!!test
+Bug 34939 - Case insensitive link parsing (HttP://)
+!! input
+HttP://MediaWiki.Org/
+!! result
+<p><a rel="nofollow" class="external free" href="HttP://MediaWiki.Org/">HttP://MediaWiki.Org/</a>
+</p>
+!! end
+
 
 TODO:
 more images
 more tables
-math
 character entities
 and much more
 Try for 100% code coverage

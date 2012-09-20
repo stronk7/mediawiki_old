@@ -4,7 +4,7 @@
  *
  * Created on Oct 16, 2006
  *
- * Copyright © 2006 Yuri Astrakhan <Firstname><Lastname>@gmail.com
+ * Copyright © 2006 Yuri Astrakhan "<Firstname><Lastname>@gmail.com"
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -263,6 +263,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		}
 		if ( !is_null( $params ) ) {
 			$result->setIndexedTagName( $params, 'param' );
+			$result->setIndexedTagName_recursive( $params, 'param' );
 			$vals = array_merge( $vals, $params );
 		}
 		return $vals;
@@ -359,7 +360,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 	public function getCacheMode( $params ) {
 		if ( !is_null( $params['prop'] ) && in_array( 'parsedcomment', $params['prop'] ) ) {
-			// formatComment() calls wfMsg() among other things
+			// formatComment() calls wfMessage() among other things
 			return 'anon-public-user-private';
 		} else {
 			return 'public';
@@ -367,7 +368,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 	}
 
 	public function getAllowedParams() {
-		global $wgLogTypes, $wgLogActions;
+		global $wgLogTypes, $wgLogActions, $wgLogActionsHandlers;
 		return array(
 			'prop' => array(
 				ApiBase::PARAM_ISMULTI => true,
@@ -389,7 +390,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				ApiBase::PARAM_TYPE => $wgLogTypes
 			),
 			'action' => array(
-				ApiBase::PARAM_TYPE => array_keys( $wgLogActions )
+				ApiBase::PARAM_TYPE => array_keys( array_merge( $wgLogActions, $wgLogActionsHandlers ) )
 			),
 			'start' => array(
 				ApiBase::PARAM_TYPE => 'timestamp'

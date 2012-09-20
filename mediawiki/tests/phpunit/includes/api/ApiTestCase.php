@@ -1,10 +1,6 @@
 <?php 
 
 abstract class ApiTestCase extends MediaWikiLangTestCase {
-	/**
-	 * @var Array of ApiTestUser
-	 */
-	public static $users;
 	protected static $apiUrl;
 
 	/**
@@ -23,13 +19,13 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 		$wgRequest = new FauxRequest( array() );
 
 		self::$users = array(
-			'sysop' => new ApiTestUser(
+			'sysop' => new TestUser(
 				'Apitestsysop',
 				'Api Test Sysop',
 				'api_test_sysop@example.com',
 				array( 'sysop' )
 			),
-			'uploader' => new ApiTestUser(
+			'uploader' => new TestUser(
 				'Apitestuser',
 				'Api Test User',
 				'api_test_user@example.com',
@@ -85,10 +81,16 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 	 * This is cheating a bit -- we grab a token in the correct format and then add it to the pseudo-session and to the
 	 * request, without actually requesting a "real" edit token
 	 * @param $params Array: key-value API params
-	 * @param $session Array: session array
+	 * @param $session Array|null: session array
 	 * @param $user User|null A User object for the context
 	 */
-	protected function doApiRequestWithToken( Array $params, Array $session, User $user = null ) {
+	protected function doApiRequestWithToken( Array $params, Array $session = null, User $user = null ) {
+		global $wgRequest;
+
+		if ( $session === null ) {
+			$session = $wgRequest->getSessionArray();
+		}
+
 		if ( $session['wsToken'] ) {
 			// add edit token to fake session
 			$session['wsEditToken'] = $session['wsToken'];
@@ -122,7 +124,7 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 		$data = $this->doApiRequest( array(
 			'action' => 'query',
 			'titles' => 'Main Page',
-			'intoken' => 'edit|delete|protect|move|block|unblock',
+			'intoken' => 'edit|delete|protect|move|block|unblock|watch',
 			'prop' => 'info' ), $session, false, $user->user );
 		return $data;
 	}

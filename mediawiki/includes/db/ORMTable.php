@@ -1,6 +1,7 @@
 <?php
 /**
  * Abstract base class for representing a single database table.
+ * Documentation inline and at https://www.mediawiki.org/wiki/Manual:ORMTable
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,7 +118,7 @@ abstract class ORMTable implements IORMTable {
 		$objects = array();
 
 		foreach ( $result as $record ) {
-			$objects[] = $this->newFromArray( $record );
+			$objects[] = $this->newRow( $record );
 		}
 
 		return $objects;
@@ -307,7 +308,7 @@ abstract class ORMTable implements IORMTable {
 	 */
 	public function count( array $conditions = array(), array $options = array() ) {
 		$res = $this->rawSelectRow(
-			array( 'COUNT(*) AS rowcount' ),
+			array( 'rowcount' => 'COUNT(*)' ),
 			$this->getPrefixedValues( $conditions ),
 			$options
 		);
@@ -328,7 +329,7 @@ abstract class ORMTable implements IORMTable {
 	public function delete( array $conditions, $functionName = null ) {
 		return wfGetDB( DB_MASTER )->delete(
 			$this->getName(),
-			$this->getPrefixedValues( $conditions ),
+			$conditions === array() ? '*' : $this->getPrefixedValues( $conditions ),
 			$functionName
 		) !== false; // DatabaseBase::delete does not always return true for success as documented...
 	}
@@ -451,7 +452,10 @@ abstract class ORMTable implements IORMTable {
 	public function updateSummaryFields( $summaryFields = null, array $conditions = array() ) {
 		$this->setReadDb( DB_MASTER );
 
-		foreach ( $this->select( null, $conditions ) as /* IORMRow */ $item ) {
+		/**
+		 * @var IORMRow $item
+		 */
+		foreach ( $this->select( null, $conditions ) as $item ) {
 			$item->loadSummaryFields( $summaryFields );
 			$item->setSummaryMode( true );
 			$item->save();
@@ -559,43 +563,13 @@ abstract class ORMTable implements IORMTable {
 	 * @return IORMTable
 	 */
 	public static function singleton() {
-		$class = function_exists( 'get_called_class' ) ? get_called_class() : self::get_called_class();
+		$class = get_called_class();
 
 		if ( !array_key_exists( $class, self::$instanceCache ) ) {
 			self::$instanceCache[$class] = new $class;
 		}
 
 		return self::$instanceCache[$class];
-	}
-
-	/**
-	 * Compatibility fallback function so the singleton method works on PHP < 5.3.
-	 * Code borrowed from http://www.php.net/manual/en/function.get-called-class.php#107445
-	 *
-	 * @since 1.20
-	 *
-	 * @return string
-	 */
-	protected static function get_called_class() {
-		$bt = debug_backtrace();
-		$l = count($bt) - 1;
-		$matches = array();
-		while(empty($matches) && $l > -1){
-			$lines = file($bt[$l]['file']);
-			$callerLine = $lines[$bt[$l]['line']-1];
-			preg_match('/([a-zA-Z0-9\_]+)::'.$bt[$l--]['function'].'/',
-				$callerLine,
-				$matches);
-		}
-		if (!isset($matches[1])) $matches[1]=NULL; //for notices
-		if ($matches[1] == 'self') {
-			$line = $bt[$l]['line']-1;
-			while ($line > 0 && strpos($lines[$line], 'class') === false) {
-				$line--;
-			}
-			preg_match('/class[\s]+(.+?)[\s]+/si', $lines[$line], $matches);
-		}
-		return $matches[1];
 	}
 
 	/**
@@ -618,6 +592,20 @@ abstract class ORMTable implements IORMTable {
 	}
 
 	/**
+	 * @see ORMTable::newRowFromFromDBResult
+	 *
+	 * @deprecated use newRowFromDBResult instead
+	 * @since 1.20
+	 *
+	 * @param stdClass $result
+	 *
+	 * @return IORMRow
+	 */
+	public function newFromDBResult( stdClass $result ) {
+		return self::newRowFromDBResult( $result );
+	}
+
+	/**
 	 * Get a new instance of the class from a database result.
 	 *
 	 * @since 1.20
@@ -626,8 +614,23 @@ abstract class ORMTable implements IORMTable {
 	 *
 	 * @return IORMRow
 	 */
-	public function newFromDBResult( stdClass $result ) {
-		return $this->newFromArray( $this->getFieldsFromDBResult( $result ) );
+	public function newRowFromDBResult( stdClass $result ) {
+		return $this->newRow( $this->getFieldsFromDBResult( $result ) );
+	}
+
+	/**
+	 * @see ORMTable::newRow
+	 *
+	 * @deprecated use newRow instead
+	 * @since 1.20
+	 *
+	 * @param array $data
+	 * @param boolean $loadDefaults
+	 *
+	 * @return IORMRow
+	 */
+	public function newFromArray( array $data, $loadDefaults = false ) {
+		return static::newRow( $data, $loadDefaults );
 	}
 
 	/**
@@ -640,7 +643,7 @@ abstract class ORMTable implements IORMTable {
 	 *
 	 * @return IORMRow
 	 */
-	public function newFromArray( array $data, $loadDefaults = false ) {
+	public function newRow( array $data, $loadDefaults = false ) {
 		$class = $this->getRowClass();
 		return new $class( $this, $data, $loadDefaults );
 	}

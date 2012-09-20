@@ -504,11 +504,11 @@ class CategoryViewer extends ContextSource {
 		# Split into three columns
 		$columns = array_chunk( $columns, ceil( count( $columns ) / 3 ), true /* preserve keys */ );
 
-		$ret = '<table width="100%"><tr valign="top">';
+		$ret = '<table style="width: 100%;"><tr style="vertical-align: top;">';
 		$prevchar = null;
 
 		foreach ( $columns as $column ) {
-			$ret .= '<td width="33.3%">';
+			$ret .= '<td style="width: 33.3%;">';
 			$colContents = array();
 
 			# Kind of like array_flip() here, but we keep duplicates in an
@@ -526,7 +526,7 @@ class CategoryViewer extends ContextSource {
 				if ( $first && $char === $prevchar ) {
 					# We're continuing a previous chunk at the top of a new
 					# column, so add " cont." after the letter.
-					$ret .= ' ' . wfMsgHtml( 'listingcontinuesabbrev' );
+					$ret .= ' ' . wfMessage( 'listingcontinuesabbrev' )->escaped();
 				}
 				$ret .= "</h3>\n";
 

@@ -4,7 +4,7 @@
  *
  * Created on Sep 7, 2006
  *
- * Copyright © 2006 Yuri Astrakhan <Firstname><Lastname>@gmail.com
+ * Copyright © 2006 Yuri Astrakhan "<Firstname><Lastname>@gmail.com"
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -248,6 +248,16 @@ class ApiQueryRevisions extends ApiQueryBase {
 				$this->dieUsage( 'user and excludeuser cannot be used together', 'badparams' );
 			}
 
+			// Continuing effectively uses startid. But we can't use rvstartid
+			// directly, because there is no way to tell the client to ''not''
+			// send rvstart if it sent it in the original query. So instead we
+			// send the continuation startid as rvcontinue, and ignore both
+			// rvstart and rvstartid when that is supplied.
+			if ( !is_null( $params['continue'] ) ) {
+				$params['startid'] = $params['continue'];
+				unset( $params['start'] );
+			}
+
 			// This code makes an assumption that sorting by rev_id and rev_timestamp produces
 			// the same result. This way users may request revisions starting at a given time,
 			// but to page through results use the rev_id returned after each page.
@@ -357,14 +367,14 @@ class ApiQueryRevisions extends ApiQueryBase {
 				if ( !$enumRevMode ) {
 					ApiBase::dieDebug( __METHOD__, 'Got more rows then expected' ); // bug report
 				}
-				$this->setContinueEnumParameter( 'startid', intval( $row->rev_id ) );
+				$this->setContinueEnumParameter( 'continue', intval( $row->rev_id ) );
 				break;
 			}
 
 			$fit = $this->addPageSubItem( $row->rev_page, $this->extractRowInfo( $row ), 'rev' );
 			if ( !$fit ) {
 				if ( $enumRevMode ) {
-					$this->setContinueEnumParameter( 'startid', intval( $row->rev_id ) );
+					$this->setContinueEnumParameter( 'continue', intval( $row->rev_id ) );
 				} elseif ( $revCount > 0 ) {
 					$this->setContinueEnumParameter( 'continue', intval( $row->rev_id ) );
 				} else {
@@ -538,7 +548,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 			return 'private';
 		}
 		if ( !is_null( $params['prop'] ) && in_array( 'parsedcomment', $params['prop'] ) ) {
-			// formatComment() calls wfMsg() among other things
+			// formatComment() calls wfMessage() among other things
 			return 'anon-public-user-private';
 		}
 		return 'public';

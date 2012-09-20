@@ -1,6 +1,7 @@
 <?php
 /**
  * Interface for objects representing a single database table.
+ * Documentation inline and at https://www.mediawiki.org/wiki/Manual:ORMTable
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -410,7 +411,7 @@ interface IORMTable {
 	 *
 	 * @return IORMRow
 	 */
-	public function newFromDBResult( stdClass $result );
+	public function newRowFromDBResult( stdClass $result );
 
 	/**
 	 * Get a new instance of the class from an array.
@@ -422,7 +423,7 @@ interface IORMTable {
 	 *
 	 * @return IORMRow
 	 */
-	public function newFromArray( array $data, $loadDefaults = false );
+	public function newRow( array $data, $loadDefaults = false );
 
 	/**
 	 * Return the names of the fields.

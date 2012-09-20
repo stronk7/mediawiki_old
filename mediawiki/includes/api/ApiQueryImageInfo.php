@@ -4,7 +4,7 @@
  *
  * Created on July 6, 2007
  *
- * Copyright © 2006 Yuri Astrakhan <Firstname><Lastname>@gmail.com
+ * Copyright © 2006 Yuri Astrakhan "<Firstname><Lastname>@gmail.com"
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,12 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			}
 
 			$result = $this->getResult();
-			$images = RepoGroup::singleton()->findFiles( $titles );
+			//search only inside the local repo
+			if( $params['localonly'] ) {
+				$images = RepoGroup::singleton()->getLocalRepo()->findFiles( $titles );
+			} else {
+				$images = RepoGroup::singleton()->findFiles( $titles );
+			}
 			foreach ( $images as $img ) {
 				// Skip redirects
 				if ( $img->getOriginalTitle()->isRedirect() ) {
@@ -356,8 +361,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 
 					if ( isset( $prop['thumbmime'] ) && $file->getHandler() ) {
 						list( $ext, $mime ) = $file->getHandler()->getThumbType(
-							substr( $mto->getPath(), strrpos( $mto->getPath(), '.' ) + 1 ),
-							$file->getMimeType(), $thumbParams );
+							$mto->getExtension(), $file->getMimeType(), $thumbParams );
 						$vals['thumbmime'] = $mime;
 					}
 				} elseif ( $mto && $mto->isError() ) {
@@ -472,6 +476,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 				ApiBase::PARAM_TYPE => 'string',
 			),
 			'continue' => null,
+			'localonly' => false,
 		);
 	}
 
@@ -491,7 +496,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	 *
 	 * @return array
 	 */
-	private static function getProperties() {
+	private static function getProperties( $modulePrefix = '' ) {
 		return array(
 			'timestamp' =>      ' timestamp     - Adds timestamp for the uploaded version',
 			'user' =>           ' user          - Adds the user who uploaded the image version',
@@ -503,7 +508,8 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			'dimensions' =>     ' dimensions    - Alias for size', // For backwards compatibility with Allimages
 			'sha1' =>           ' sha1          - Adds SHA-1 hash for the image',
 			'mime' =>           ' mime          - Adds MIME type of the image',
-			'thumbmime' =>      ' thumbmime     - Adds MIME type of the image thumbnail (requires url)',
+			'thumbmime' =>      ' thumbmime     - Adds MIME type of the image thumbnail' .
+				' (requires url and param ' . $modulePrefix . 'urlwidth)',
 			'mediatype' =>      ' mediatype     - Adds the media type of the image',
 			'metadata' =>       ' metadata      - Lists EXIF metadata for the version of the image',
 			'archivename' =>    ' archivename   - Adds the file name of the archive version for non-latest versions',
@@ -518,10 +524,10 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	 *
 	 * @return array
 	 */
-	public static function getPropertyDescriptions( $filter = array() ) {
+	public static function getPropertyDescriptions( $filter = array(), $modulePrefix = '' ) {
 		return array_merge(
 			array( 'What image information to get:' ),
-			array_values( array_diff_key( self::getProperties(), array_flip( $filter ) ) )
+			array_values( array_diff_key( self::getProperties( $modulePrefix ), array_flip( $filter ) ) )
 		);
 	}
 
@@ -532,7 +538,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	public function getParamDescription() {
 		$p = $this->getModulePrefix();
 		return array(
-			'prop' => self::getPropertyDescriptions(),
+			'prop' => self::getPropertyDescriptions( array(), $p ),
 			'urlwidth' => array( "If {$p}prop=url is set, a URL to an image scaled to this width will be returned.",
 					    'Only the current version of the image can be scaled' ),
 			'urlheight' => "Similar to {$p}urlwidth. Cannot be used without {$p}urlwidth",
@@ -543,7 +549,8 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			'end' => 'Timestamp to stop listing at',
 			'metadataversion' => array( "Version of metadata to use. if 'latest' is specified, use latest version.",
 						"Defaults to '1' for backwards compatibility" ),
-			'continue' => 'If the query response includes a continue value, use it here to get another page of results'
+			'continue' => 'If the query response includes a continue value, use it here to get another page of results',
+			'localonly' => 'Look only for files in the local repository',
 		);
 	}
 

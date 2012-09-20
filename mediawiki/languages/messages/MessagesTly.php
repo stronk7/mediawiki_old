@@ -19,17 +19,142 @@ $namespaceNames = array(
 	NS_TALK             => 'Nopegət',
 	NS_USER             => 'Okoədə',
 	NS_USER_TALK        => 'Okoədəj_nopegət',
-	NS_PROJECT_TALK     => '$1_Nopegətəti',
+	NS_PROJECT_TALK     => '$1_Nopegət',
 	NS_FILE             => 'Fajl',
-	NS_FILE_TALK        => 'Fajli_nopegət',
+	NS_FILE_TALK        => 'Fajl_nopegət',
 	NS_MEDIAWIKI        => 'MediaWiki',
 	NS_MEDIAWIKI_TALK   => 'MediaWiki_nopegət',
 	NS_TEMPLATE         => 'Numunə',
 	NS_TEMPLATE_TALK    => 'Numunə_nopegət',
 	NS_HELP             => 'Koməg',
-	NS_HELP_TALK        => 'Koməgi_nopegət',
+	NS_HELP_TALK        => 'Koməg_nopegət',
 	NS_CATEGORY         => 'Tispir',
-	NS_CATEGORY_TALK    => 'Tispiron_nopegət',
+	NS_CATEGORY_TALK    => 'Tispir_nopegət',
+);
+
+$namespaceAliases = array(
+	'$1_Nopegətəti'    => NS_PROJECT_TALK,
+	'Fajli_nopegət'    => NS_FILE_TALK,
+	'Koməgi_nopegət'   => NS_HELP_TALK,
+	'Tispiron_nopegət' => NS_CATEGORY_TALK,
+);
+
+$specialPageAliases = array(
+	'Allpages'                  => array( 'Һәммәј_сәһифон' ),
+	'Blankpage'                 => array( 'Тәјлијә_сәһифә' ),
+	'ChangeEmail'               => array( 'Е-номә_дәгиш_кардеј' ),
+	'ChangePassword'            => array( 'Пароли_дәгиш_кардеј' ),
+	'Emailuser'                 => array( 'Бә_иштирокәкә_номә_вығандеј' ),
+	'Longpages'                 => array( 'Дырозә_сәһифон' ),
+	'Movepage'                  => array( 'Сәһифә_номи_дәгиш_кардеј' ),
+	'Mypage'                    => array( 'Чымы_сәһифә' ),
+	'Mytalk'                    => array( 'Чымы_мызокирә' ),
+	'Myuploads'                 => array( 'Чымы_бо_жә_быә_чијон' ),
+	'Newimages'                 => array( 'Нујә_фајлон' ),
+	'Newpages'                  => array( 'Нујә_сәһифон' ),
+	'PasswordReset'             => array( 'Пароли_ләғв_кардеј' ),
+	'Protectedpages'            => array( 'Мыдофијә_кардә_быә_сәһифон' ),
+	'Protectedtitles'           => array( 'Мыдофијә_кардә_быә_номон' ),
+	'Randompage'                => array( 'Рајрастә_сәһифә._Рајрастә' ),
+	'Recentchanges'             => array( 'Ән_нујә_дәгишон' ),
+	'Recentchangeslinked'       => array( 'Ангыл_кардә_быә_дәгишон' ),
+	'Revisiondelete'            => array( 'Рәдд_кардә_быә_дәгишон' ),
+	'Search'                    => array( 'Нәве' ),
+	'Shortpages'                => array( 'Кыртә_сәһифон' ),
+	'Tags'                      => array( 'Нышонон' ),
+	'Undelete'                  => array( 'Бәрпо_кардеј' ),
+	'Version'                   => array( 'Рәвојәт' ),
+);
+
+$magicWords = array(
+	'redirect'                  => array( '0', '#ТОЖӘДӘН_ИСТИҒОМӘТ_ДОЈ', '#REDIRECT' ),
+	'notoc'                     => array( '0', '__БЕМЫНДӘРИҸОТ__', '__NOTOC__' ),
+	'forcetoc'                  => array( '0', '__МӘҸБУРИЈӘ_МЫНДӘРИҸОТ__', '__FORCETOC__' ),
+	'toc'                       => array( '0', '__МЫНДӘРИҸОТ__', '__TOC__' ),
+	'noheader'                  => array( '0', '__БЕСӘРЛОВҺӘ__', '__NOHEADER__' ),
+	'currentmonth'              => array( '1', 'ЕСӘТНӘ_МАНГ', 'ЕСӘТНӘ_МАНГ_2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonth1'             => array( '1', 'ЕСӘТНӘ_МАНГ_1', 'CURRENTMONTH1' ),
+	'currentmonthname'          => array( '1', 'ЕСӘТНӘ_МАНГИ_НОМ', 'CURRENTMONTHNAME' ),
+	'currentmonthnamegen'       => array( '1', 'ЕСӘТНӘ_МАНГИ_НОМ_ҸИНС', 'CURRENTMONTHNAMEGEN' ),
+	'currentday'                => array( '1', 'ЕСӘТНӘ_РУЖ', 'CURRENTDAY' ),
+	'currentday2'               => array( '1', 'ЕСӘТНӘ_РУЖ_2', 'CURRENTDAY2' ),
+	'currentdayname'            => array( '1', 'ЕСӘТНӘ_РУЖИ_НОМ', 'CURRENTDAYNAME' ),
+	'currentyear'               => array( '1', 'ЕСӘТНӘ_СОР', 'CURRENTYEAR' ),
+	'currenttime'               => array( '1', 'ЕСӘТНӘ_ВАХТ', 'CURRENTTIME' ),
+	'currenthour'               => array( '1', 'ЕСӘТНӘ_СААТ', 'CURRENTHOUR' ),
+	'localmonth'                => array( '1', 'БУМИНӘ_МАНГ', 'БУМИНӘ_МАНГ_2', 'LOCALMONTH', 'LOCALMONTH2' ),
+	'localmonth1'               => array( '1', 'БУМИНӘ_МАНГ_1', 'LOCALMONTH1' ),
+	'localmonthname'            => array( '1', 'БУМИНӘ_МАНГИ_НОМ', 'LOCALMONTHNAME' ),
+	'localmonthnamegen'         => array( '1', 'БУМИНӘ_МАНГИ_НОМ_ҸИНС', 'LOCALMONTHNAMEGEN' ),
+	'localday'                  => array( '1', 'БУМИНӘ_РУЖ', 'LOCALDAY' ),
+	'localday2'                 => array( '1', 'БУМИНӘ_РУЖ_2', 'LOCALDAY2' ),
+	'localdayname'              => array( '1', 'БУМИНӘ_РУЖИ_НОМ', 'LOCALDAYNAME' ),
+	'localyear'                 => array( '1', 'БУМИНӘ_СОР', 'LOCALYEAR' ),
+	'localtime'                 => array( '1', 'БУМИНӘ_ВАХТ', 'LOCALTIME' ),
+	'localhour'                 => array( '1', 'БУМИНӘ_СААТ', 'LOCALHOUR' ),
+	'numberofpages'             => array( '1', 'СӘҺИФОН_ҒӘДӘР', 'NUMBEROFPAGES' ),
+	'numberofarticles'          => array( '1', 'МӘҒОЛОН_ҒӘДӘР', 'NUMBEROFARTICLES' ),
+	'numberoffiles'             => array( '1', 'ФАЈЛОН_ҒӘДӘР', 'NUMBEROFFILES' ),
+	'numberofusers'             => array( '1', 'ИШТИРОКӘКОН_ҒӘДӘР', 'NUMBEROFUSERS' ),
+	'numberofactiveusers'       => array( '1', 'ТИЛИКӘ_ИШТИРОКӘКОН_ҒӘДӘР', 'NUMBEROFACTIVEUSERS' ),
+	'numberofedits'             => array( '1', 'ДӘГИШОН_ҒӘДӘР', 'NUMBEROFEDITS' ),
+	'numberofviews'             => array( '1', 'ДИЈӘ_КАРДЕ_ҒӘДӘР', 'NUMBEROFVIEWS' ),
+	'pagename'                  => array( '1', 'СӘҺИФӘ_НОМ', 'PAGENAME' ),
+	'pagenamee'                 => array( '1', 'СӘҺИФӘ_НОМ_2', 'PAGENAMEE' ),
+	'namespace'                 => array( '1', 'НОМОН_МӘКОН', 'NAMESPACE' ),
+	'namespacee'                => array( '1', 'НОМОН_МӘКОН_2', 'NAMESPACEE' ),
+	'namespacenumber'           => array( '1', 'НОМОН_МӘКОН_ҒӘДӘР', 'NAMESPACENUMBER' ),
+	'talkspace'                 => array( '1', 'МЫЗОКИРОН_МӘКОН', 'TALKSPACE' ),
+	'talkspacee'                => array( '1', 'МЫЗОКИРОН_МӘКОН_2', 'TALKSPACEE' ),
+	'subjectspace'              => array( '1', 'МӘҒОЛОН_МӘКОН', 'SUBJECTSPACE', 'ARTICLESPACE' ),
+	'subjectspacee'             => array( '1', 'МӘҒОЛОН_МӘКОН_2', 'SUBJECTSPACEE', 'ARTICLESPACEE' ),
+	'fullpagename'              => array( '1', 'СӘҺИФӘ_ПУРӘ_НОМ', 'FULLPAGENAME' ),
+	'fullpagenamee'             => array( '1', 'СӘҺИФӘ_ПУРӘ_НОМ_2', 'FULLPAGENAMEE' ),
+	'subpagename'               => array( '1', 'ЖИНТОНӘДӘ_СӘҺИФӘ_НОМ', 'SUBPAGENAME' ),
+	'subpagenamee'              => array( '1', 'ЖИНТОНӘДӘ_СӘҺИФӘ_НОМ_2', 'SUBPAGENAMEE' ),
+	'basepagename'              => array( '1', 'СӘҺИФӘ_НОМИ_ӘСОС', 'BASEPAGENAME' ),
+	'basepagenamee'             => array( '1', 'СӘҺИФӘ_НОМИ_ӘСОС_2', 'BASEPAGENAMEE' ),
+	'talkpagename'              => array( '1', 'МЫЗОКИРӘ_СӘҺИФӘ_НОМ', 'TALKPAGENAME' ),
+	'talkpagenamee'             => array( '1', 'МЫЗОКИРӘ_СӘҺИФӘ_НОМ_2', 'TALKPAGENAMEE' ),
+	'subjectpagename'           => array( '1', 'МӘҒОЛӘ_СӘҺИФӘ_НОМ', 'SUBJECTPAGENAME', 'ARTICLEPAGENAME' ),
+	'subjectpagenamee'          => array( '1', 'МӘҒОЛӘ_СӘҺИФӘ_НОМ_2', 'SUBJECTPAGENAMEE', 'ARTICLEPAGENAMEE' ),
+	'msg'                       => array( '0', 'ХӘБӘ:', 'MSG:' ),
+	'subst'                     => array( '0', 'ӘВӘЗ_КАРДЕ:', 'SUBST:' ),
+	'msgnw'                     => array( '0', 'БЕВИКИ_ХӘБӘ:', 'MSGNW:' ),
+	'img_thumbnail'             => array( '1', 'миниатјур', 'thumbnail', 'thumb' ),
+	'img_manualthumb'           => array( '1', 'миниатјур=$1', 'thumbnail=$1', 'thumb=$1' ),
+	'img_right'                 => array( '1', 'росто', 'right' ),
+	'img_left'                  => array( '1', 'чәпо', 'left' ),
+	'img_none'                  => array( '1', 'бе', 'none' ),
+	'img_width'                 => array( '1', '$1пкс', '$1px' ),
+	'img_center'                => array( '1', 'мәрәнго', 'center', 'centre' ),
+	'img_page'                  => array( '1', 'сәһифә=$1', 'сәһифә_$1', 'page=$1', 'page $1' ),
+	'sitename'                  => array( '1', 'САЈТИ_НОМ', 'SITENAME' ),
+	'localurl'                  => array( '0', 'БУМИНӘ_УНВОН:', 'LOCALURL:' ),
+	'localurle'                 => array( '0', 'БУМИНӘ_УНВОН_2:', 'LOCALURLE:' ),
+	'currentweek'               => array( '1', 'ЕСӘТНӘ_ҺАФТӘ', 'CURRENTWEEK' ),
+	'currentdow'                => array( '1', 'ЕСӘТНӘ_ҺАФТӘ_РУЖ', 'CURRENTDOW' ),
+	'localweek'                 => array( '1', 'БУМИНӘ_ҺАФТӘ', 'LOCALWEEK' ),
+	'localdow'                  => array( '1', 'БУМИНӘ_ҺАФТӘ_РУЖ', 'LOCALDOW' ),
+	'revisionid'                => array( '1', 'РӘВОЈӘТИ_ID', 'REVISIONID' ),
+	'revisionday'               => array( '1', 'РӘВОЈӘТИ_РУЖ', 'REVISIONDAY' ),
+	'revisionday2'              => array( '1', 'РӘВОЈӘТИ_РУЖ_2', 'REVISIONDAY2' ),
+	'revisionmonth'             => array( '1', 'РӘВОЈӘТИ_МАНГ', 'REVISIONMONTH' ),
+	'revisionmonth1'            => array( '1', 'РӘВОЈӘТИ_МАНГ_2', 'REVISIONMONTH1' ),
+	'revisionyear'              => array( '1', 'РӘВОЈӘТИ_СОР', 'REVISIONYEAR' ),
+	'revisiontimestamp'         => array( '1', 'РӘВОЈӘТИ_ВАХТИ_ҒЕЈД', 'REVISIONTIMESTAMP' ),
+	'revisionuser'              => array( '1', 'ИШТИРОКӘКӘ_РӘВОЈӘТ', 'REVISIONUSER' ),
+	'fullurl'                   => array( '0', 'ПУРӘ_УНВОН:', 'FULLURL:' ),
+	'fullurle'                  => array( '0', 'ПУРӘ_УНВОН_2:', 'FULLURLE:' ),
+	'currentversion'            => array( '1', 'ЕСӘТНӘ_РӘВОЈӘТ', 'CURRENTVERSION' ),
+	'currenttimestamp'          => array( '1', 'ЕСӘТНӘ_ВАХТИ_ҒЕЈД', 'CURRENTTIMESTAMP' ),
+	'localtimestamp'            => array( '1', 'БУМИНӘ_ВАХТИ_ҒЕЈД', 'LOCALTIMESTAMP' ),
+	'directionmark'             => array( '1', 'НОМӘ_ИСТИҒОМӘТ', 'DIRECTIONMARK', 'DIRMARK' ),
+	'language'                  => array( '0', '#ЗЫВОН:', '#LANGUAGE:' ),
+	'contentlanguage'           => array( '1', 'МЫҒДОРИ_ЗЫВОН', 'CONTENTLANGUAGE', 'CONTENTLANG' ),
+	'pagesinnamespace'          => array( '1', 'СӘҺИФОН_БӘ_НОМОН_МӘКОНӘДӘ:', 'PAGESINNAMESPACE:', 'PAGESINNS:' ),
+	'pagesize'                  => array( '1', 'СӘҺИФӘ_ПАМЈӘ', 'PAGESIZE' ),
+	'url_wiki'                  => array( '0', 'ВИКИ', 'WIKI' ),
 );
 
 $messages = array(
@@ -39,17 +164,19 @@ $messages = array(
 'tog-hideminor' => 'Охоминә дәгишонәдә гәдә дәгишон нишо мәдә.',
 'tog-hidepatrolled' => 'Нујә дәгишон сијоһијәдә дәвинә кардә быә дәгишон нишо мәкә.',
 'tog-newpageshidepatrolled' => 'Нијони огәтеј ноғо доә быә сәһифон бә тожә сәһифон сијоһиәдә',
-'tog-usenewrc' => 'Охоминә дәгишон ән чокә сијоһи око дој (гәрәке JavaScript)',
+'tog-usenewrc' => 'Охоминә дәгишон сәһифәдә ијән ноғо доә сијоһијәдә дәгишон бә дәстон ҹо кардеј (гәрәке JavaScript)',
 'tog-numberheadings' => 'Автоматик башлығон нумрәләмиш быкә',
 'tog-showtoc' => 'Мындәриҹоти сијоһи нишо быдә (3 сәрловһәсә веј быә сәһифон)',
-'tog-watchcreations' => 'Зијод кардеј чымы офәјә быә сәһифон бә ноғо доә сијоһи',
-'tog-watchdefault' => 'Зијод кардеј демы дәгиш кардә быә сәһифон бә ноғо доә сијоһи',
-'tog-watchmoves' => 'Зијод кардеј ном дәгиш кардә быә сәһифон бә ноғо доә сијоһи',
-'tog-watchdeletion' => 'Зијод кардеј сәһифон комон аз рәдд кардәме бә ноғо доә сијоһи',
-'tog-enotifwatchlistpages' => 'Ноғо доә сијоһиәдә кејнә сәһифон дәгиш бәбен бәмы е-номә бывығанд',
+'tog-watchcreations' => 'Зијод кардеј чымы офәјә быә сәһифон ијән фајлон бә ноғо доә сијоһи',
+'tog-watchdefault' => 'Зијод кардеј демы дәгиш кардә быә сәһифон ијән фајлон бә ноғо доә сијоһи',
+'tog-watchmoves' => 'Зијод кардеј фајлон ијән ном дәгиш кардә быә сәһифон бә ноғо доә сијоһи',
+'tog-watchdeletion' => 'Зијод кардеј фајлон ијән сәһифон, комон аз рәдд кардәме бә ноғо доә сијоһи',
+'tog-enotifwatchlistpages' => 'Ноғо доә сијоһиәдә кејнә сәһифон ја фајлон дәгиш бәбен бәмы е-номә бывығанд',
 'tog-watchlisthideown' => 'Чымы дәгишон ноғо доә сијһиәдә нијо кардеј',
 'tog-watchlisthidebots' => 'Нијо кардеј ботон дәгишон ноғо доә сијоһиәдә',
 'tog-watchlisthideminor' => 'Нијо кардеј гәдә дәгишон ноғо доә сијоһиәдә',
+
+'underline-always' => 'Һежо',
 
 # Dates
 'sunday' => 'Ишамбә',
@@ -119,6 +246,7 @@ $messages = array(
 'listingcontinuesabbrev' => '(дәвом)',
 'index-category' => 'Индекс быә сәһифон.',
 'noindex-category' => 'Индекс нибыә саһифон',
+'broken-file-category' => 'Сәһифон де ко ныкардә фајлинә сәбонон',
 
 'about' => 'Тәсвир',
 'article' => 'Мәғолә',
@@ -220,7 +348,7 @@ $messages = array(
 'copyrightpage' => '{{ns:project}}:Мыәллифә һуғуғ',
 'currentevents' => 'Есәтнә һодисон',
 'currentevents-url' => 'Project: Есәтнә һодисон',
-'disclaimers' => 'Чы мәсулијјәтику имтина.',
+'disclaimers' => 'Че мәсулијјәтику имтино.',
 'disclaimerpage' => 'Project:Дејни бә гиј ныгәтеј',
 'edithelp' => 'Арајиш бо редактә кардеј',
 'edithelppage' => 'Help:Арајиш бо сәрост кардеј',
@@ -233,7 +361,7 @@ $messages = array(
 'privacy' => 'Мәхфијәти сијосәт',
 'privacypage' => 'Project:Мәхфијәти сијосәт',
 
-'badaccess' => 'Иҹазә хәта.',
+'badaccess' => 'Дастрәси ғәләт',
 'badaccess-group0' => 'Ын фәалијјәти ичра карде әзынишон.',
 
 'ok' => 'OK',
@@ -241,6 +369,7 @@ $messages = array(
 'youhavenewmessages' => 'Шымә сәјоне $1 ($2).',
 'newmessageslink' => 'нујә хәбон',
 'newmessagesdifflink' => 'охонә дәгиши',
+'newmessagesdifflinkplural' => '$1 {{PLURAL:$1|охонә дәгиши|охонә дәгишон}}',
 'editsection' => 'Сәрост кардеј',
 'editold' => 'Сәрост кардеј',
 'viewsourceold' => 'бешемонә коди дијә кардеј',
@@ -278,15 +407,16 @@ $messages = array(
 Хаһиш кардәмон че сәһифә URL-и бә [[Special:ListUsers/sysop|администратори]] бывғандәнән.',
 'missingarticle-rev' => '(рәвојәт#: $1)',
 'missingarticle-diff' => '(Фәрг: $1, $2)',
-'internalerror' => 'Дахили хәта',
-'internalerror_info' => 'Дахили хәта: $1',
-'fileappenderrorread' => 'Әлавон гејд карде быәдә"$1" һанде ныбе.',
-'formerror' => 'Хәта: Че формә мәлумотон әкс карде ғерри мумкуне.',
+'internalerror' => 'Дыләтонә ғәләт',
+'internalerror_info' => 'Дыләтонә ғәләт: $1',
+'fileappenderrorread' => 'Әловон ғејд карде быәдә"$1" һанде ныбе.',
+'formerror' => 'Сәһв: Че формә мәлумотон әкс карде ғерри мымкуне.',
 'cannotdelete-title' => 'Сәһифә әбыни рәдд кардеј "$1"',
 'badtitle' => 'Роныдоә ном',
 'badtitletext' => 'Ахтар кардә быә сәһифә ном сәһве, тәјлије, јаанки сәрост доә быәнин мијонзывонон ја мијонвики номон.
 Бе бәзне ки кали рәмзон сәрловһәдә око дој әбыни.',
 'viewsource' => 'Дијә кардеј',
+'exception-nologin' => 'Ыштәни едаштәнијоне',
 
 # Login and logout pages
 'yourname' => 'Иштирокәкә ном:',
@@ -308,6 +438,7 @@ $messages = array(
 'gotaccountlink' => 'Ыштәни едаштеј',
 'userlogin-resetlink' => 'Бә системә дәше мәлумоти јодәдә бекардәјоне?',
 'createaccountmail' => 'бә е-номә',
+'createaccountreason' => 'Сәбәб:',
 'mailmypassword' => 'Нујә парол вығандеј бә Е-номә.',
 'loginlanguagelabel' => 'Зывон: $1',
 
@@ -387,7 +518,7 @@ $messages = array(
 Ым сәһифә чоәдәнә дуз карде зәруријјәти јохләмишкәнән.
 Жинтоно нышу доә быә бычи ым сәһифә позулмуш быә.",
 'moveddeleted-notice' => 'Ым сәһифә молә быә.
-Арајиши горнә жинтоно нишо доә быән чы сәһифә молә ијән ном дәгиш кардә нывыштәјон.',
+Арајиши горнә жинтоно нишо доә быән че сәһифә молә ијән ном дәгиш кардә нывыштәјон.',
 
 # Parser/template warnings
 'post-expand-template-inclusion-warning' => "'''Дығғәт:''' Дахыл кардә быә ғәлибон сәкыштә памјә ве јоле.
@@ -429,6 +560,7 @@ $messages = array(
 'revdelete-show-file-submit' => 'Бәле',
 'revdelete-radio-set' => 'Бәле',
 'revdelete-radio-unset' => 'Не',
+'revdelete-log' => 'Сәбәб:',
 'revdel-restore' => 'Винде дәрәҹә дәгиш карде',
 'revdel-restore-deleted' => 'Рәдд кардә быә рәвојәтон',
 'revdel-restore-visible' => 'Чијә рәвојәтон',
@@ -456,7 +588,7 @@ $messages = array(
 'searchmenu-exists' => "'''Бы вики-нәхшәдә һесте сәһифә «[[:$1]]»'''",
 'searchmenu-new' => "'''Сәһифә офәјеј «[[:$1]]» бә ым вики-нахшәдә!'''",
 'searchprofile-articles' => 'Әсосә сәһифон',
-'searchprofile-project' => 'Чы араијшон ијән нахшон сәһифон',
+'searchprofile-project' => 'Че араијшон ијән нахшон сәһифон',
 'searchprofile-images' => 'Мултимедијә',
 'searchprofile-everything' => 'Һар вырәдә',
 'searchprofile-advanced' => 'һовуж',
@@ -472,14 +604,14 @@ $messages = array(
 'search-suggest' => 'Еһтимол шымә нәзәрәдә ым гәтејдәбијон: $1',
 'searchrelated' => 'ангыл кардә быә',
 'searchall' => 'Һәммәј',
-'showingresultsheader' => "{{PLURAL:$5|Нәтиҹә'''$1''' из '''$3'''|Нәтиҹон '''$1 — $2''' чы '''$3'''}} бо '''$4'''",
+'showingresultsheader' => "{{PLURAL:$5|Нәтиҹә'''$1''' из '''$3'''|Нәтиҹон '''$1 — $2''' че '''$3'''}} бо '''$4'''",
 'search-nonefound' => 'Бә шымә хәбәсә ујғун омә сәкыштә пәјдо ныбе.',
 'powersearch-field' => 'Нәве',
 'powersearch-toggleall' => 'Һәммәј',
 
 # Preferences page
-'preferences' => 'Чичсә печыније',
-'mypreferences' => 'Печыније',
+'preferences' => 'Кукон',
+'mypreferences' => 'Кукон',
 'prefsnologin' => 'Ыштәни едаштәнијоне',
 'prefsnologintext' => 'Шымә бәбе <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} ыштәни едәштән]</span> бо иштирокәкә пеғәндон дәгиш кардеј.',
 'changepassword' => 'Пароли дәгиш кардеј',
@@ -487,7 +619,9 @@ $messages = array(
 'prefs-user-pages' => 'Иштирокәкә сәһифон',
 'prefs-rc' => 'Ән нујә дәгишон',
 'prefs-changeemail' => 'Е-номә дәгиш кардеј',
+'prefs-email' => 'Е-номә кукон',
 'saveprefs' => 'Огәтеј',
+'rows' => 'Сәтырон:',
 'searchresultshead' => 'Нәве',
 'timezoneregion-america' => 'Америка',
 'timezoneregion-europe' => 'Авропа',
@@ -503,13 +637,16 @@ $messages = array(
 'prefs-help-email' => 'Е-номә унвони нывыштеј һукман ни, интаси ав бә шымә гәрәк бәбе гирам шымә пароли виро бебәкардејон.',
 'prefs-help-email-others' => 'Комәг бәка бә ҹо иштироәкон шымә е-номә унвони оныкарде, че шымә шәхси сәһифәдә быә линки де шымә әлогә огәтеј.',
 
+# User rights
+'userrights-reason' => 'Сәбәб:',
+
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'Ым сәһифә сәрост кардеј',
 
 # Recent changes
 'nchanges' => '$1 {{PLURAL:$1|дәгиши|дәгишон}}',
 'recentchanges' => 'Ән нујә дәгишон',
-'recentchanges-legend' => 'Ән нујә дәгишон печыније',
+'recentchanges-legend' => 'Ән нујә дәгишон кукон',
 'recentchanges-summary' => 'Тәмшо быкән бы сәһифәдә че вики охоминә дәгишон нишо доә быән.',
 'recentchanges-feed-description' => 'Ым каналәдә быә охонә дәгишон дығғәтәдә огәт.',
 'recentchanges-label-newpage' => 'Де ым дәгиши тожә сәһифә сохтә бе',
@@ -576,7 +713,7 @@ $messages = array(
 'filehist-current' => 'есәтнә',
 'filehist-datetime' => 'Тарых/Вахт',
 'filehist-thumb' => 'Гәдә шикил',
-'filehist-thumbtext' => 'Миниатјур бо рәвојәти чы вахтику $1',
+'filehist-thumbtext' => 'Миниатјур бо рәвојәти че вахтику $1',
 'filehist-user' => 'Иштирокәкә',
 'filehist-dimensions' => 'Објекти улгу',
 'filehist-comment' => 'Ғејд',
@@ -584,7 +721,11 @@ $messages = array(
 'linkstoimage' => '{{PLURAL:$1|сәһифә|$1 сәһифә}} сәбон вардә бә ын фајл:',
 'nolinkstoimage' => 'Бә ым фајли сәбон вардә сәһифон нин.',
 'sharedupload-desc-here' => 'Ым фајл чыјо пегәтә быә $1 ијән бәзыне истифодә бе бә ҹо нәхшонәдә.
-Мәлумот чы әчәј [$2 тәсвири сәһифәку] бә жиј доә быә.',
+Мәлумот чн әчәј [$2 тәсвири сәһифәку] бә жиј доә быә.',
+
+# File deletion
+'filedelete-comment' => 'Сәбәб:',
+'filedelete-submit' => 'Рәдд кардеј',
 
 # Random page
 'randompage' => 'Рајрастә мәғолә',
@@ -614,7 +755,7 @@ $messages = array(
 
 # Special:AllPages
 'allpages' => 'Һәммәј сәһифон',
-'alphaindexline' => 'чы $1 тоса $2',
+'alphaindexline' => 'че $1 тоса $2',
 'allarticles' => 'Һәммәј сәһифон',
 'allpagessubmit' => 'Бә вырә роснијеј',
 
@@ -647,6 +788,7 @@ $messages = array(
 'actioncomplete' => 'Һәрәкәт иҹро кардә быә',
 'actionfailed' => 'Һәрәкәт иҹро кардә бәни',
 'dellogpage' => 'Рәдд кардә быә чијон журнал',
+'deletecomment' => 'Сәбәб:',
 
 # Rollback
 'rollbacklink' => 'Окырнијеј',
@@ -654,10 +796,12 @@ $messages = array(
 # Protect
 'protectlogpage' => 'Мыдофијә журнал',
 'protectedarticle' => 'мыдофијә быә "[[$1]]"',
+'protectcomment' => 'Сәбәб:',
 
 # Undelete
 'undeletelink' => 'чәшику дәвонијеј/бәрпо кардеј',
 'undeleteviewlink' => 'тәмшо кардеј',
+'undeletecomment' => 'Сәбәб:',
 'undelete-search-submit' => 'Нәве',
 'undelete-show-file-submit' => 'Бәле',
 
@@ -704,6 +848,7 @@ $messages = array(
 'whatlinkshere-filters' => 'Филтрон',
 
 # Block/unblock
+'ipbreason' => 'Сәбәб:',
 'ipboptions' => '2 саат:2 hours,1 руж:1 day,3 руж:3 days,1 һафтә:1 week,2 һафтә:2 weeks,1 манг:1 month,3 манг:3 months,6 манг:6 months,1 сор:1 year,бемыһләт:infinite',
 'ipblocklist' => 'Бастә быә иштирокәкон',
 'blocklink' => 'Бә гырд гәтеј',
@@ -728,7 +873,8 @@ $messages = array(
 # Namespace 8 related
 'allmessagesname' => 'Хәбә',
 'allmessagesdefault' => 'Иминә огәтә быә мәтн',
-'allmessages-filter-all' => 'Һаммај',
+'allmessages-filter-all' => 'Һәммәј',
+'allmessages-filter-submit' => 'Давард',
 
 # Thumbnails
 'thumbnail-more' => 'Һејве кардеј',
@@ -737,7 +883,7 @@ $messages = array(
 # Tooltip help for the actions
 'tooltip-pt-userpage' => 'Шымә иштирокәкә сәһифә',
 'tooltip-pt-mytalk' => 'Шымә мызокирон сәһифә',
-'tooltip-pt-preferences' => 'Шымә печынијәјоне',
+'tooltip-pt-preferences' => 'Шымә кукон',
 'tooltip-pt-watchlist' => 'Сәһифон сијоһи, конҹо шымә де дығғәти дијә кардејдәјон бә дәгишон',
 'tooltip-pt-mycontris' => 'Шымә гәнҹон сијоһи',
 'tooltip-pt-login' => 'Ијо бәбе ыштәни ғејд кардовнијеј системәдә, интаси ым һукман ни',
@@ -766,7 +912,7 @@ $messages = array(
 'tooltip-t-whatlinkshere' => 'Бә ым сәһифә сәбон вардә һәммәј вики сәһифон сијоһи',
 'tooltip-t-recentchangeslinked' => 'Охонә дәгишон сәһифонәдә, бә ком сәһифон сәбон вардә ым сәһифә',
 'tooltip-feed-atom' => 'Транслјасијә кардеј бә Atom бо ым сәһифә',
-'tooltip-t-contributions' => 'Чы иштирок кардәкәси дагиш кардә быә сәһифон сијоһи',
+'tooltip-t-contributions' => 'Че иштирок кардәкәси дагиш кардә быә сәһифон сијоһи',
 'tooltip-t-emailuser' => 'Бы иштироәкә номә вығәнде',
 'tooltip-t-upload' => 'Шикилон јаанки мултимедијә фајлон бо жај',
 'tooltip-t-specialpages' => 'Хыдмәтә сәһифон сијоһи',
@@ -792,9 +938,7 @@ $messages = array(
 'tooltip-summary' => 'Кыртә тәсвир бынывыштән',
 
 # Info page
-'pageinfo-header-edits' => 'Сәрост кардеј',
-'pageinfo-header-views' => 'Тәмшо',
-'pageinfo-subjectpage' => 'Сәһифә',
+'pageinfo-header-edits' => 'Дәгиш кардә быә чијон тарых',
 
 # Browsing diffs
 'previousdiff' => '← Навынәни дәгиши',
@@ -838,11 +982,14 @@ $messages = array(
 # EXIF tags
 'exif-imagewidth' => 'Һовужи',
 'exif-imagelength' => 'Былынди',
+'exif-source' => 'Сәвон',
 'exif-languagecode' => 'Зывон',
 
 'exif-gaincontrol-0' => 'Ни',
 
 'exif-saturation-0' => 'Ади',
+
+'exif-dc-publisher' => 'Нәшрәкә',
 
 # External editor support
 'edit-externally' => 'Редактә кардеј ым фајли де заһири програм',
@@ -852,6 +999,9 @@ $messages = array(
 'watchlistall2' => 'һәммәј',
 'namespacesall' => 'һәммәј',
 'monthsall' => 'һәммәј',
+
+# Table pager
+'table_pager_limit_submit' => 'Давард',
 
 # Watchlist editing tools
 'watchlisttools-view' => 'Сәһифонәдә дәгишон сијоһику',

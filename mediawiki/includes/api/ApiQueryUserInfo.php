@@ -4,7 +4,7 @@
  *
  * Created on July 30, 2007
  *
- * Copyright © 2007 Yuri Astrakhan <Firstname><Lastname>@gmail.com
+ * Copyright © 2007 Yuri Astrakhan "<Firstname><Lastname>@gmail.com"
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,14 +76,12 @@ class ApiQueryUserInfo extends ApiQueryBase {
 		}
 
 		if ( isset( $this->prop['groups'] ) ) {
-			$autolist = ApiQueryUsers::getAutoGroups( $user );
-
-			$vals['groups'] = array_merge( $autolist, $user->getGroups() );
+			$vals['groups'] = $user->getEffectiveGroups();
 			$result->setIndexedTagName( $vals['groups'], 'g' );	// even if empty
 		}
 
 		if ( isset( $this->prop['implicitgroups'] ) ) {
-			$vals['implicitgroups'] = ApiQueryUsers::getAutoGroups( $user );
+			$vals['implicitgroups'] = $user->getAutomaticGroups();
 			$result->setIndexedTagName( $vals['implicitgroups'], 'g' );	// even if empty
 		}
 

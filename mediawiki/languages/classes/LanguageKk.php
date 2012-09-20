@@ -21,8 +21,8 @@
  * @ingroup Language
  */
 
-require_once( dirname( __FILE__ ) . '/../LanguageConverter.php' );
-require_once( dirname( __FILE__ ) . '/LanguageKk_cyrl.php' );
+require_once( __DIR__ . '/../LanguageConverter.php' );
+require_once( __DIR__ . '/LanguageKk_cyrl.php' );
 
 define( 'KK_C_UC', 'АӘБВГҒДЕЁЖЗИЙКҚЛМНҢОӨПРСТУҰҮФХҺЦЧШЩЪЫІЬЭЮЯ' ); # Kazakh Cyrillic uppercase
 define( 'KK_C_LC', 'аәбвгғдеёжзийкқлмнңоөпрстуұүфхһцчшщъыіьэюя' ); # Kazakh Cyrillic lowercase
@@ -62,7 +62,7 @@ class KkConverter extends LanguageConverter {
 	}
 
 	function loadDefaultTables() {
-		// require( dirname(__FILE__)."/../../includes/KkConversion.php" );
+		// require( __DIR__."/../../includes/KkConversion.php" );
 		// Placeholder for future implementing. Remove variables declarations
 		// after generating KkConversion.php
 		$kk2Cyrl = array();
@@ -441,20 +441,6 @@ class LanguageKk extends LanguageKk_cyrl {
 		$this->mConverter = new KkConverter( $this, 'kk', $variants, $variantfallbacks );
 
 		$wgHooks['ArticleSaveComplete'][] = $this->mConverter;
-	}
-
-	/**
-	 * Work around for right-to-left direction support in kk-arab and kk-cn
-	 *
-	 * @return bool
-	 */
-	function isRTL() {
-		$variant = $this->getPreferredVariant();
-		if ( $variant == 'kk-arab' || $variant == 'kk-cn' ) {
-			return true;
-		} else {
-			return parent::isRTL();
-		}
 	}
 
 	/**

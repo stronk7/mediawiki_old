@@ -80,7 +80,7 @@ class MonoBookTemplate extends BaseTemplate {
 
 		$this->html( 'headelement' );
 ?><div id="globalWrapper">
-<div id="column-content"><div id="content">
+<div id="column-content"><div id="content" class="mw-body-primary">
 	<a id="top"></a>
 	<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 
@@ -93,7 +93,7 @@ class MonoBookTemplate extends BaseTemplate {
 <?php } ?><?php if($this->data['newtalk'] ) { ?>
 		<div class="usermessage"><?php $this->html('newtalk')  ?></div>
 <?php } ?><?php if($this->data['showjumplinks']) { ?>
-		<div id="jump-to-nav" class="mw-jump"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div>
+		<div id="jump-to-nav" class="mw-jump"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a><?php $this->msg( 'comma-separator' ) ?><a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div>
 <?php } ?>
 		<!-- start content -->
 <?php $this->html('bodytext') ?>

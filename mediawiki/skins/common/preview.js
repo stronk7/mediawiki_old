@@ -1,128 +1,106 @@
 /**
  * Live preview script for MediaWiki
  */
-(function( $ ) {
-	window.doLivePreview = function( e ) {
+( function( mw, $ ) {
+	var doLivePreview = function( e ) {
 		e.preventDefault();
 
 		$( mw ).trigger( 'LivePreviewPrepare' );
 
-		var postData = $('#editform').formToArray();
-		postData.push( { 'name' : 'wpPreview', 'value' : '1' } );
+		var $wikiPreview = $( '#wikiPreview' );
 
-		// Hide active diff, used templates, old preview if shown
-		var copyElements = ['#wikiPreview', '.templatesUsed', '.hiddencats',
-							'#catlinks'];
-		var copySelector = copyElements.join(',');
-
-		$.each( copyElements, function(k,v) { $(v).fadeOut('fast'); } );
-
-		// Display a loading graphic
-		var loadSpinner = $('<div class="mw-ajax-loader"/>');
-		$('#wikiPreview').before( loadSpinner );
-
-		var page = $('<div/>');
-		var target = $('#editform').attr('action');
-
-		if ( !target ) {
-			target = window.location.href;
+		// this needs to be checked before we unconditionally show the preview
+		var overlaySpinner = false;
+		if ( $wikiPreview.is( ':visible' ) || $( '.mw-newarticletext:visible' ).length > 0 ) {
+			overlaySpinner = true;
 		}
 
-		page.load( target + ' ' + copySelector, postData,
-			function() {
+		// show #wikiPreview if it's hidden to be able to scroll to it
+		// (if it is hidden, it's also empty, so nothing changes in the rendering)
+		$wikiPreview.show();
+		// jump to where the preview will appear
+		$wikiPreview[0].scrollIntoView();
 
-				for( var i=0; i<copyElements.length; ++i) {
-					// For all the specified elements, find the elements in the loaded page
-					//  and the real page, empty the element in the real page, and fill it
-					//  with the content of the loaded page
-					var copyContent = page.find( copyElements[i] ).contents();
-					$(copyElements[i]).empty().append( copyContent );
-					var newClasses = page.find( copyElements[i] ).prop('class');
-					$(copyElements[i]).prop( 'class', newClasses );
-				}
+		// list of elements that will be loaded from the preview page
+		// elements absent in the preview page (such as .mw-newarticletext) will be cleared using .empty()
+		var copySelectors = [
+			'#wikiPreview', '#wikiDiff', '#catlinks', '.hiddencats', '#p-lang', // the meat
+			'.templatesUsed', '.mw-summary-preview', // editing-related
+			'.mw-newarticletext' // it is not shown during normal preview, and looks weird with throbber overlaid
+		];
+		var $copyElements = $( copySelectors.join( ',' ) );
 
-				$.each( copyElements, function(k,v) {
-					// Don't belligerently show elements that are supposed to be hidden
-					$(v).fadeIn( 'fast', function() { $(this).css('display', ''); } );
-				} );
+		var $loadSpinner = $( '<div>' ).addClass( 'mw-ajax-loader' );
+		$loadSpinner.css( 'top', '0' ); // move away from header (default is -16px)
 
-				loadSpinner.remove();
+		// If the preview is already visible, overlay the spinner on top of it.
+		if ( overlaySpinner ) {
+			$( '#mw-content-text' ).css( 'position', 'relative' ); // FIXME this seems like a bad idea
 
-				$( mw ).trigger( 'LivePreviewDone', [copyElements] );
+			$loadSpinner.css( {
+				'position': 'absolute',
+				'z-index': '3',
+				'left': '50%',
+				'margin-left': '-16px'
 			} );
-	};
-
-	// Shamelessly stolen from the jQuery form plugin, which is licensed under the GPL.
-	// http://jquery.malsup.com/form/#download
-	$.fn.formToArray = function() {
-		var a = [];
-		if (this.length == 0) return a;
-
-		var form = this[0];
-		var els = form.elements;
-		if (!els) return a;
-		for(var i=0, max=els.length; i < max; i++) {
-			var el = els[i];
-			var n = el.name;
-			if (!n) continue;
-
-			var v = $.fieldValue(el, true);
-			if (v && v.constructor == Array) {
-				for(var j=0, jmax=v.length; j < jmax; j++)
-					a.push({name: n, value: v[j]});
-			}
-			else if (v !== null && typeof v != 'undefined')
-				a.push({name: n, value: v});
 		}
 
-		if (form.clk) {
-			// input type=='image' are not found in elements array! handle it here
-			var $input = $(form.clk), input = $input[0], n = input.name;
-			if (n && !input.disabled && input.type == 'image') {
-				a.push({name: n, value: $input.val()});
-				a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+		// fade out the elements and display the throbber
+		$( '#mw-content-text' ).prepend( $loadSpinner );
+		// we can't use fadeTo because it calls show(), and we might want to keep some elements hidden
+		// (e.g. empty #catlinks)
+		$copyElements.animate( { 'opacity': 0.4 }, 'fast' );
+
+		var $previewDataHolder = $( '<div>' );
+		var target = $( '#editform' ).attr( 'action' ) || window.location.href;
+
+		// gather all the data from the form
+		var postData = $( '#editform' ).formToArray(); // formToArray: from jquery.form
+		postData.push( { 'name' : e.target.name, 'value' : '1' } );
+
+		// load new preview data
+		// FIXME this should use the action=parse API instead of loading the entire page
+		$previewDataHolder.load( target + ' ' + copySelectors.join( ',' ), postData, function() {
+			// Copy the contents of the specified elements from the loaded page to the real page.
+			// Also copy their class attributes.
+			for ( var i = 0; i < copySelectors.length; i++ ) {
+				var $from = $previewDataHolder.find( copySelectors[i] );
+				var $to = $( copySelectors[i] );
+
+				$to.empty().append( $from.contents() );
+				$to.attr( 'class', $from.attr( 'class' ) );
 			}
-		}
-		return a;
+
+			$loadSpinner.remove();
+			$copyElements.animate( { 'opacity': 1 }, 'fast' );
+
+			$( mw ).trigger( 'LivePreviewDone', [copySelectors] );
+		} );
 	};
 
-	/**
-	 * Returns the value of the field element.
-	 */
-	$.fieldValue = function(el, successful) {
-		var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
-		if (typeof successful == 'undefined') successful = true;
+	$( document ).ready( function() {
+		// construct the elements we need if they are missing (usually when action=edit)
+		// we don't need to hide them, because they are empty when created
 
-		if (successful && (!n || el.disabled || t == 'reset' || t == 'button' ||
-			(t == 'checkbox' || t == 'radio') && !el.checked ||
-			(t == 'submit' || t == 'image') && el.form && el.form.clk != el ||
-			tag == 'select' && el.selectedIndex == -1))
-				return null;
-
-		if (tag == 'select') {
-			var index = el.selectedIndex;
-			if (index < 0) return null;
-			var a = [], ops = el.options;
-			var one = (t == 'select-one');
-			var max = (one ? index+1 : ops.length);
-			for(var i=(one ? index : 0); i < max; i++) {
-				var op = ops[i];
-				if (op.selected) {
-					var v = op.value;
-					if (!v) // extra pain for IE...
-						v = (op.attributes && op.attributes['value'] &&
-							!(op.attributes['value'].specified))
-								? op.text : op.value;
-					if (one) return v;
-					a.push(v);
-				}
-			}
-			return a;
+		// interwiki links
+		if ( !document.getElementById( 'p-lang' ) && document.getElementById( 'p-tb' ) ) {
+			$( '#p-tb' ).after( $( '<div>' ).attr( 'id', 'p-lang' ) );
 		}
-		return el.value;
-	};
 
-	$(document).ready( function() {
-		$('#wpPreview').click( doLivePreview );
+		// summary preview
+		if ( $( '.mw-summary-preview' ).length === 0 ) {
+			$( '.editCheckboxes' ).before( $( '<div>' ).addClass( 'mw-summary-preview' ) );
+		}
+
+		// diff
+		if ( !document.getElementById( 'wikiDiff' ) && document.getElementById( 'wikiPreview' ) ) {
+			$( '#wikiPreview' ).after( $( '<div>' ).attr( 'id', 'wikiDiff' ) );
+		}
+
+		// diff styles are usually only loaded during, well, diff, and we might need them
+		// (mw.loader takes care of stuff if they happen to be loaded already)
+		mw.loader.load( 'mediawiki.action.history.diff' );
+
+		$( '#wpPreview, #wpDiff' ).click( doLivePreview );
 	} );
-}) ( jQuery );
+} )( mediaWiki, jQuery );

@@ -59,11 +59,17 @@ $specialPageAliases = array(
 	'Allpages'                  => array( 'Totes_les_pådjes' ),
 	'Block'                     => array( 'Bloker', 'Blocaedje' ),
 	'Categories'                => array( 'Categoreyes' ),
+	'Listusers'                 => array( 'Djivêye_des_uzeus' ),
+	'Log'                       => array( 'Djournå', 'Djournås' ),
 	'Preferences'               => array( 'Preferinces' ),
 	'Prefixindex'               => array( 'Indecse_pa_betchete' ),
 	'Search'                    => array( 'Cweri' ),
 	'Specialpages'              => array( 'Pådjes_sipeciåles' ),
 	'Statistics'                => array( 'Sitatistikes' ),
+	'Undelete'                  => array( 'Rapexhî' ),
+	'Upload'                    => array( 'Eberweter', 'Eberwetaedje' ),
+	'Userlogin'                 => array( 'Elodjaedje' ),
+	'Userlogout'                => array( 'Dislodjaedje' ),
 	'Version'                   => array( 'Modêye' ),
 	'Watchlist'                 => array( 'Pådjes_shuvowes' ),
 );
@@ -1098,6 +1104,7 @@ Ciste infôrmacion serè publike po tertos.",
 'recentchanges' => 'Dierins candjmints',
 'recentchanges-legend' => 'Tchuzes po les dierins candjmints',
 'recentchanges-summary' => "Shuvoz chal les dierins candjmints k' i gn a yeu dsu {{SITENAME}}.",
+'recentchanges-feed-description' => "Shuvoz so ç' canå ci les dierins candjmints k' i gn a yeu sol wiki.",
 'recentchanges-label-newpage' => "Ci candjmint la est èn ahivaedje d' ene nouve pådje",
 'recentchanges-label-minor' => "Ci n' est k' on ptit candjmint",
 'recentchanges-label-bot' => 'Ci candjmint la a stî fwait pa on robot',
@@ -1150,9 +1157,9 @@ Po håyner ou cweri des fitchîs k' ont ddja stî rçuvous, alez sol [[Special:F
 Les (r)eberwetaedjes sont eto metos sol [[Special:Log/upload|djournå des eberwetaedjes]], les disfaçaedjes sol [[Special:Log/delete|ci des disfaçaedjes]].
 
 Po mete on fitchî dins ene pådje, eployîz on loyén del fôme:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fitchî.jpg]]</nowiki></tt>''' po-z eployî l' modêye e grandeu oridjinnåle do fitchî
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fitchî.png|200px|thumb|left|tecse di rawete]]</nowiki></tt>''' po håyner so ene lårdjeur di 200 picsels dins ene boesse (''thumb'') sol hintche (''left''; metoz ''right'' pol mete sol droete) avou «tecse di rawete» come discrijhaedje
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fitchî.ogg]]</nowiki></tt>''' po fé on loyén viè l' fitchî, sins l' håyner",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fitchî.jpg]]</nowiki></code>''' po-z eployî l' modêye e grandeu oridjinnåle do fitchî
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fitchî.png|200px|thumb|left|tecse di rawete]]</nowiki></code>''' po håyner so ene lårdjeur di 200 picsels dins ene boesse (''thumb'') sol hintche (''left''; metoz ''right'' pol mete sol droete) avou «tecse di rawete» come discrijhaedje
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fitchî.ogg]]</nowiki></code>''' po fé on loyén viè l' fitchî, sins l' håyner",
 'uploadlog' => 'djournå des eberwetaedjes',
 'uploadlogpage' => 'Djournå des eberwetaedjes',
 'uploadlogpagetext' => 'Chal pa dzo li djivêye des dierins eberwetaedjes.
@@ -1169,7 +1176,7 @@ Loukîz al [[Special:NewFiles|galreye des noveas fitchîs]] po ene vuwe pus vizu
 'badfilename' => "Li no d' l' imådje a stî candjî a «$1».",
 'largefileserver' => "Ci fitchî ci est pus pezant ki çou k' li sierveu est apontyî po-z accepter.",
 'emptyfile' => "I shonnreut kel fitchî k' vos eberwetez soeye vude. Çoula pout esse cåze d' ene aroke di tapaedje dins l' no do fitchî. Acertinez si vos vloz evoyî po do bon ç' fitchî ci, s' i vs plait.",
-'fileexists' => "On fitchî avou ç' no la egzistêye dedja, loukîz s' i vs plait a '''<tt>[[:$1]]</tt>''' po vs acertiner ki vos vloz bén replaecî l' fitchî avou l' ci ki vos eberwetez asteure, oubén si vos l' voloz eberweter dizo èn ôte no.
+'fileexists' => "On fitchî avou ç' no la egzistêye dedja, loukîz s' i vs plait a <strong>[[:$1]]</strong> po vs acertiner ki vos vloz bén replaecî l' fitchî avou l' ci ki vos eberwetez asteure, oubén si vos l' voloz eberweter dizo èn ôte no.
 [[$1|thumb]]",
 'fileexists-forbidden' => "I gn a ddja on fitchî avou ç' no la, et n' pout nén esse sipotchî.
 Si vos l' voloz tot l' minme eberweter, rivnoz en erî et s' reberwetez l' fitchî dizo èn ôte no.
@@ -1192,6 +1199,7 @@ Rivnoz s' i vs plait en erî et s' reberwetez l' fitchî dizo èn ôte no si vos
 'upload-file-error' => 'Divintrinne aroke',
 
 'license' => 'Licince:',
+'license-header' => 'Licince',
 'nolicense' => 'Nole licince tchoezeye',
 'upload_source_file' => ' (on fitchî sol copiutrece da vosse)',
 
@@ -1411,7 +1419,7 @@ Loukîz eto [[Special:WantedCategories|les categoreyes dimandêyes]].',
 'linksearch-ok' => 'Cweri',
 'linksearch-text' => 'Des caracteres «djokers» polèt esse eployîs, metans «*.wikipedia.org».
 Mins i fåt pol moens on dominne di prumî livea, metans «*.org»<br />
-Protocoles ricnoxhous: <tt>$1</tt> (nelzès metoz nén dins vosse tchinne di cweraedje).',
+Protocoles ricnoxhous: <code>$1</code> (nelzès metoz nén dins vosse tchinne di cweraedje).',
 'linksearch-line' => "$1 est loyî a pårti d' $2",
 'linksearch-error' => "Les caracteres djokers èn polèt esse eployîs k' a l' atake d' on no d' dominne ou d' lodjoe.",
 
@@ -1974,14 +1982,10 @@ Dj' ô bén, ça permete di disfé l' candjmint et d' mete on messaedje dins l' 
 
 # Info page
 'pageinfo-title' => 'Infôrmåcion po «$1»',
-'pageinfo-header-watchlist' => 'Djivêye des shuvous',
-'pageinfo-header-views' => 'Vuwes',
-'pageinfo-subjectpage' => 'Pådje',
-'pageinfo-talkpage' => 'Pådje di copene',
+'pageinfo-views' => 'Nombe di lijhaedjes',
 'pageinfo-watchers' => 'Nombe di shuveus',
 'pageinfo-edits' => 'Nombe di candjmints',
 'pageinfo-authors' => "Nombe d' oteurs diferins",
-'pageinfo-views' => 'Nombe di lijhaedjes',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marké come patrouyî',

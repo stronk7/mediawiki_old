@@ -40,7 +40,7 @@ class MediaWiki_I18N {
 		// Hack for i18n:attributes in PHPTAL 1.0.0 dev version as of 2004-10-23
 		$value = preg_replace( '/^string:/', '', $value );
 
-		$value = wfMsg( $value );
+		$value = wfMessage( $value )->text();
 		// interpolate variables
 		$m = array();
 		while( preg_match( '/\$([0-9]*?)/sm', $value, $m ) ) {
@@ -91,7 +91,7 @@ class SkinTemplate extends Skin {
 	var $template = 'QuickTemplate';
 
 	/**
-	 * Whether this skin use OutputPage::headElement() to generate the <head>
+	 * Whether this skin use OutputPage::headElement() to generate the "<head>"
 	 * tag
 	 */
 	var $useHeadElement = false;
@@ -135,7 +135,6 @@ class SkinTemplate extends Skin {
 		global $wgDisableCounters, $wgSitename, $wgLogo, $wgHideInterlanguageLinks;
 		global $wgMaxCredits, $wgShowCreditsIfMax;
 		global $wgPageShowWatchingUsers;
-		global $wgDebugComments;
 		global $wgArticlePath, $wgScriptPath, $wgServer;
 
 		wfProfileIn( __METHOD__ );
@@ -258,7 +257,7 @@ class SkinTemplate extends Skin {
 		/* XXX currently unused, might get useful later
 		$tpl->set( 'editable', ( !$title->isSpecialPage() ) );
 		$tpl->set( 'exists', $title->getArticleID() != 0 );
-		$tpl->set( 'watch', $title->userIsWatching() ? 'unwatch' : 'watch' );
+		$tpl->set( 'watch', $user->isWatched( $title ) ? 'unwatch' : 'watch' );
 		$tpl->set( 'protect', count( $title->isProtected() ) ? 'unprotect' : 'protect' );
 		$tpl->set( 'helppage', $this->msg( 'helppage' )->text() );
 		*/
@@ -387,12 +386,6 @@ class SkinTemplate extends Skin {
 			}
 		}
 
-		if ( $wgDebugComments ) {
-			$tpl->setRef( 'debug', $out->mDebugtext );
-		} else {
-			$tpl->set( 'debug', '' );
-		}
-
 		$tpl->set( 'sitenotice', $this->getSiteNotice() );
 		$tpl->set( 'bottomscripts', $this->bottomScripts() );
 		$tpl->set( 'printfooter', $this->printSource() );
@@ -407,7 +400,7 @@ class SkinTemplate extends Skin {
 		if ( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) &&
 			in_array( $request->getVal( 'action', 'view' ), array( 'view', 'historysubmit' ) ) &&
 			( $title->exists() || $title->getNamespace() == NS_MEDIAWIKI ) ) {
-			$pageLang = $title->getPageLanguage();
+			$pageLang = $title->getPageViewLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
 			$realBodyAttribs['dir'] = $pageLang->getDir();
 			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir();
@@ -468,6 +461,7 @@ class SkinTemplate extends Skin {
 			$tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		}
 
+		$tpl->set( 'debug', '' );
 		$tpl->set( 'debughtml', $this->generateDebugHTML() );
 		$tpl->set( 'reporttime', wfReportTime() );
 
@@ -563,7 +557,8 @@ class SkinTemplate extends Skin {
 				'text' => $this->username,
 				'href' => &$this->userpageUrlDetails['href'],
 				'class' => $this->userpageUrlDetails['exists'] ? false : 'new',
-				'active' => ( $this->userpageUrlDetails['href'] == $pageurl )
+				'active' => ( $this->userpageUrlDetails['href'] == $pageurl ),
+				'dir' => 'auto'
 			);
 			$usertalkUrlDetails = $this->makeTalkUrlDetails( $this->userpage );
 			$personal_urls['mytalk'] = array(
@@ -625,37 +620,22 @@ class SkinTemplate extends Skin {
 			$is_signup = $request->getText( 'type' ) == 'signup';
 
 			# anonlogin & login are the same
+			global $wgSecureLogin;
+			$proto = $wgSecureLogin ? PROTO_HTTPS : null;
+
+			$login_id = $this->showIPinHeader() ? 'anonlogin' : 'login';
 			$login_url = array(
 				'text' => $this->msg( $loginlink )->text(),
-				'href' => self::makeSpecialUrl( 'Userlogin', $returnto ),
-				'active' => $title->isSpecial( 'Userlogin' ) && ( $loginlink == 'nav-login-createaccount' || !$is_signup )
+				'href' => self::makeSpecialUrl( 'Userlogin', $returnto, $proto ),
+				'active' => $title->isSpecial( 'Userlogin' ) && ( $loginlink == 'nav-login-createaccount' || !$is_signup ),
+				'class' => $wgSecureLogin ? 'link-https' : ''
 			);
-			if ( $this->getUser()->isAllowed( 'createaccount' ) && !$useCombinedLoginLink ) {
-				$createaccount_url = array(
-					'text' => $this->msg( 'createaccount' )->text(),
-					'href' => self::makeSpecialUrl( 'Userlogin', "$returnto&type=signup" ),
-					'active' => $title->isSpecial( 'Userlogin' ) && $is_signup
-				);
-			}
-			global $wgServer, $wgSecureLogin;
-			if( substr( $wgServer, 0, 5 ) === 'http:' && $wgSecureLogin ) {
-				$title = SpecialPage::getTitleFor( 'Userlogin' );
-				$https_url = preg_replace( '/^http:/', 'https:', $title->getFullURL() );
-				$login_url['href']  = $https_url;
-				# @todo FIXME: Class depends on skin
-				$login_url['class'] = 'link-https';
-				if ( isset( $createaccount_url ) ) {
-					$https_url = preg_replace( '/^http:/', 'https:',
-						$title->getFullURL( 'type=signup' ) );
-					$createaccount_url['href']  = $https_url;
-					# @todo FIXME: Class depends on skin
-					$createaccount_url['class'] = 'link-https';
-				}
-			}
-
-			if ( isset( $createaccount_url ) ) {
-				$personal_urls['createaccount'] = $createaccount_url;
-			}
+			$createaccount_url = array(
+				'text' => $this->msg( 'createaccount' )->text(),
+				'href' => self::makeSpecialUrl( 'Userlogin', "$returnto&type=signup", $proto ),
+				'active' => $title->isSpecial( 'Userlogin' ) && $is_signup,
+				'class' => $wgSecureLogin ? 'link-https' : ''
+			);
 
 			if( $this->showIPinHeader() ) {
 				$href = &$this->userpageUrlDetails['href'];
@@ -673,10 +653,13 @@ class SkinTemplate extends Skin {
 					'class' => $usertalkUrlDetails['exists'] ? false : 'new',
 					'active' => ( $pageurl == $href )
 				);
-				$personal_urls['anonlogin'] = $login_url;
-			} else {
-				$personal_urls['login'] = $login_url;
 			}
+
+			if ( $this->getUser()->isAllowed( 'createaccount' ) && !$useCombinedLoginLink ) {
+				$personal_urls['createaccount'] = $createaccount_url;
+			}
+
+			$personal_urls[$login_id] = $login_url;
 		}
 
 		wfRunHooks( 'PersonalUrls', array( &$personal_urls, &$title ) );
@@ -974,7 +957,7 @@ class SkinTemplate extends Skin {
 					 * a change to that procedure these messages will have to remain as
 					 * the global versions.
 					 */
-					$mode = $title->userIsWatching() ? 'unwatch' : 'watch';
+					$mode = $user->isWatched( $title ) ? 'unwatch' : 'watch';
 					$token = WatchAction::getWatchToken( $title, $user, $mode );
 					$content_navigation['actions'][$mode] = array(
 						'class' => $onPage && ( $action == 'watch' || $action == 'unwatch' ) ? 'selected' : false,
@@ -1170,7 +1153,7 @@ class SkinTemplate extends Skin {
 			if ( $revid ) {
 				$nav_urls['permalink'] = array(
 					'text' => $this->msg( 'permalink' )->text(),
-					'href' => $out->getTitle()->getLocalURL( "oldid=$revid" )
+					'href' => $this->getTitle()->getLocalURL( "oldid=$revid" )
 				);
 			}
 
@@ -1198,9 +1181,8 @@ class SkinTemplate extends Skin {
 				'href' => self::makeSpecialUrlSubpage( 'Contributions', $rootUser )
 			);
 
-			$logPage = SpecialPage::getTitleFor( 'Log' );
 			$nav_urls['log'] = array(
-				'href' => $logPage->getLocalUrl( array( 'user' => $rootUser ) )
+				'href' => self::makeSpecialUrlSubpage( 'Log', $rootUser )
 			);
 
 			if ( $this->getUser()->isAllowed( 'block' ) ) {
@@ -1420,6 +1402,7 @@ abstract class BaseTemplate extends QuickTemplate {
 		}
 		if ( isset( $this->data['nav_urls']['print'] ) && $this->data['nav_urls']['print'] ) {
 			$toolbox['print'] = $this->data['nav_urls']['print'];
+			$toolbox['print']['id'] = 't-print';
 			$toolbox['print']['rel'] = 'alternate';
 			$toolbox['print']['msg'] = 'printableversion';
 		}
@@ -1605,26 +1588,39 @@ abstract class BaseTemplate extends QuickTemplate {
 	 * Makes a link, usually used by makeListItem to generate a link for an item
 	 * in a list used in navigation lists, portlets, portals, sidebars, etc...
 	 *
-	 * $key is a string, usually a key from the list you are generating this link from
-	 * $item is an array containing some of a specific set of keys.
-	 * The text of the link will be generated either from the contents of the "text"
-	 * key in the $item array, if a "msg" key is present a message by that name will
-	 * be used, and if neither of those are set the $key will be used as a message name.
+	 * @param $key string usually a key from the list you are generating this
+	 * link from.
+	 * @param $item array contains some of a specific set of keys.
+	 *
+	 * The text of the link will be generated either from the contents of the
+	 * "text" key in the $item array, if a "msg" key is present a message by
+	 * that name will be used, and if neither of those are set the $key will be
+	 * used as a message name.
+	 *
 	 * If a "href" key is not present makeLink will just output htmlescaped text.
-	 * The href, id, class, rel, and type keys are used as attributes for the link if present.
-	 * If an "id" or "single-id" (if you don't want the actual id to be output on the link)
-	 * is present it will be used to generate a tooltip and accesskey for the link.
+	 * The "href", "id", "class", "rel", and "type" keys are used as attributes
+	 * for the link if present.
+	 *
+	 * If an "id" or "single-id" (if you don't want the actual id to be output
+	 * on the link) is present it will be used to generate a tooltip and
+	 * accesskey for the link.
+	 *
 	 * If you don't want an accesskey, set $item['tooltiponly'] = true;
-	 * $options can be used to affect the output of a link:
-	 *   You can use a text-wrapper key to specify a list of elements to wrap the
-	 *     text of a link in. This should be an array of arrays containing a 'tag' and
-	 *     optionally an 'attributes' key. If you only have one element you don't need
-	 *     to wrap it in another array. eg: To use <a><span>...</span></a> in all links
-	 *     use array( 'text-wrapper' => array( 'tag' => 'span' ) ) for your options.
-	 *   A link-class key can be used to specify additional classes to apply to all links.
-	 *   A link-fallback can be used to specify a tag to use instead of <a> if there is
-	 *   no link. eg: If you specify 'link-fallback' => 'span' than any non-link will
-	 *   output a <span> instead of just text.
+	 *
+	 * @param $options array can be used to affect the output of a link.
+	 * Possible options are:
+	 *   - 'text-wrapper' key to specify a list of elements to wrap the text of
+	 *   a link in. This should be an array of arrays containing a 'tag' and
+	 *   optionally an 'attributes' key. If you only have one element you don't
+	 *   need to wrap it in another array. eg: To use <a><span>...</span></a>
+	 *   in all links use array( 'text-wrapper' => array( 'tag' => 'span' ) )
+	 *   for your options.
+	 *   - 'link-class' key can be used to specify additional classes to apply
+	 *   to all links.
+	 *   - 'link-fallback' can be used to specify a tag to use instead of "<a>"
+	 *   if there is no link. eg: If you specify 'link-fallback' => 'span' than
+	 *   any non-link will output a "<span>" instead of just text.
+	 *
 	 * @return string
 	 */
 	function makeLink( $key, $item, $options = array() ) {
@@ -1686,17 +1682,22 @@ abstract class BaseTemplate extends QuickTemplate {
 	}
 
 	/**
-	 * Generates a list item for a navigation, portlet, portal, sidebar... etc list
-	 * $key is a string, usually a key from the list you are generating this link from
-	 * $item is an array of list item data containing some of a specific set of keys.
+	 * Generates a list item for a navigation, portlet, portal, sidebar... list
+	 *
+	 * @param $key string, usually a key from the list you are generating this link from.
+	 * @param $item array, of list item data containing some of a specific set of keys.
 	 * The "id" and "class" keys will be used as attributes for the list item,
 	 * if "active" contains a value of true a "active" class will also be appended to class.
-	 * If you want something other than a <li> you can pass a tag name such as
+	 *
+	 * @param $options array
+	 *
+	 * If you want something other than a "<li>" you can pass a tag name such as
 	 * "tag" => "span" in the $options array to change the tag used.
 	 * link/content data for the list item may come in one of two forms
 	 * A "links" key may be used, in which case it should contain an array with
-	 * a list of links to include inside the list item, see makeLink for the format
-	 * of individual links array items.
+	 * a list of links to include inside the list item, see makeLink for the
+	 * format of individual links array items.
+	 *
 	 * Otherwise the relevant keys from the list item $item array will be passed
 	 * to makeLink instead. Note however that "id" and "class" are used by the
 	 * list item directly so they will not be passed to makeLink
@@ -1704,6 +1705,7 @@ abstract class BaseTemplate extends QuickTemplate {
 	 * If you need an id or class on a single link you should include a "links"
 	 * array with just one link item inside of it.
 	 * $options is also passed on to makeLink calls
+	 *
 	 * @return string
 	 */
 	function makeListItem( $key, $item, $options = array() ) {
@@ -1877,13 +1879,7 @@ abstract class BaseTemplate extends QuickTemplate {
 	function printTrail() { ?>
 <?php $this->html( 'bottomscripts' ); /* JS call to runBodyOnloadHook */ ?>
 <?php $this->html( 'reporttime' ) ?>
-<?php if ( $this->data['debug'] ): ?>
-<!-- Debug output:
-<?php $this->text( 'debug' ); ?>
-
--->
-<?php endif;
+<?php echo MWDebug::getDebugHTML( $this->getSkin()->getContext() );
 	}
 
 }
-

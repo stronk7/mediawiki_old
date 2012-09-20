@@ -169,6 +169,7 @@ $wgIgnoredMessages = array(
 	'mostlinkedtemplates-summary',
 	'mostcategories-summary',
 	'mostimages-summary',
+	'mostinterwikis-summary',
 	'mostrevisions-summary',
 	'prefixindex-summary',
 	'shortpages-summary',
@@ -188,6 +189,7 @@ $wgIgnoredMessages = array(
 	'wantedtemplates-summary',
 	'activeusers-summary',
 	'search-summary',
+	'editpage-head-copy-warn',
 	'editpage-tos-summary',
 	'addsection-preload',
 	'addsection-editintro',
@@ -241,6 +243,9 @@ $wgIgnoredMessages = array(
 	'version-entrypoints-index-php',
 	'version-entrypoints-api-php',
 	'version-entrypoints-load-php',
+	'ipb-default-expiry',
+	'pageinfo-header',
+	'pageinfo-footer',
 );
 
 /** Optional messages, which may be translated only if changed in the target language. */
@@ -251,7 +256,6 @@ $wgOptionalMessages = array(
 	'feed-rss',
 	'unit-pixel',
 	'userrights-irreversible-marker',
-	'tog-nolangconversion',
 	'tog-noconvertlink',
 	'variantname-zh-hans',
 	'variantname-zh-hant',
@@ -474,6 +478,7 @@ $wgOptionalMessages = array(
 	'mergehistory-revisionrow',
 	'categoryviewer-pagedlinks',
 	'undelete-revisionrow',
+	'pageinfo-redirects-value',
 );
 
 /** EXIF messages, which may be set as optional in several checks, but are generally mandatory */

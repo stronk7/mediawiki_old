@@ -704,13 +704,22 @@ class ContribsPager extends ReverseChronologicalPager {
 		$join_conds = array();
 		$tables = array( 'revision', 'page', 'user' );
 		if ( $this->contribs == 'newbie' ) {
-			$tables[] = 'user_groups';
 			$max = $this->mDb->selectField( 'user', 'max(user_id)', false, __METHOD__ );
 			$condition[] = 'rev_user >' . (int)( $max - $max / 100 );
-			$condition[] = 'ug_group IS NULL';
 			$index = 'user_timestamp';
-			# @todo FIXME: Other groups may have 'bot' rights
-			$join_conds['user_groups'] = array( 'LEFT JOIN', "ug_user = rev_user AND ug_group = 'bot'" );
+			# ignore local groups with the bot right
+			# @todo FIXME: Global groups may have 'bot' rights
+			$groupsWithBotPermission = User::getGroupsWithPermission( 'bot' );
+			if( count( $groupsWithBotPermission ) ) {
+				$tables[] = 'user_groups';
+				$condition[] = 'ug_group IS NULL';
+				$join_conds['user_groups'] = array(
+					'LEFT JOIN', array(
+						'ug_user = rev_user',
+						'ug_group' => $groupsWithBotPermission
+					)
+				);
+			}
 		} else {
 			$uid = User::idFromName( $this->target );
 			if ( $uid ) {
@@ -759,21 +768,15 @@ class ContribsPager extends ReverseChronologicalPager {
 	}
 
 	function doBatchLookups() {
-		$this->mResult->rewind();
+		# Do a link batch query
+		$this->mResult->seek( 0 );
 		$revIds = array();
+		$batch = new LinkBatch();
+		# Give some pointers to make (last) links
 		foreach ( $this->mResult as $row ) {
 			if( isset( $row->rev_parent_id ) && $row->rev_parent_id ) {
 				$revIds[] = $row->rev_parent_id;
 			}
-		}
-		$this->mParentLens = Revision::getParentLengths( $this->getDatabase(), $revIds );
-		$this->mResult->rewind(); // reset
-
-		# Do a link batch query
-		$this->mResult->seek( 0 );
-		$batch = new LinkBatch();
-		# Give some pointers to make (last) links
-		foreach ( $this->mResult as $row ) {
 			if ( isset( $row->rev_id ) ) {
 				if ( $this->contribs === 'newbie' ) { // multiple users
 					$batch->add( NS_USER, $row->user_name );
@@ -782,6 +785,7 @@ class ContribsPager extends ReverseChronologicalPager {
 				$batch->add( $row->page_namespace, $row->page_title );
 			}
 		}
+		$this->mParentLens = Revision::getParentLengths( $this->getDatabase(), $revIds );
 		$batch->execute();
 		$this->mResult->seek( 0 );
 	}
@@ -815,30 +819,44 @@ class ContribsPager extends ReverseChronologicalPager {
 	function formatRow( $row ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( isset( $row->rev_id ) ) {
-			$rev = new Revision( $row );
+		$ret = '';
+		$classes = array();
+
+		/*
+		 * There may be more than just revision rows. To make sure that we'll only be processing
+		 * revisions here, let's _try_ to build a revision out of our row (without displaying
+		 * notices though) and then trying to grab data from the built object. If we succeed,
+		 * we're definitely dealing with revision data and we may proceed, if not, we'll leave it
+		 * to extensions to subscribe to the hook to parse the row.
+		 */
+		wfSuppressWarnings();
+		$rev = new Revision( $row );
+		$validRevision = $rev->getParentId() !== null;
+		wfRestoreWarnings();
+
+		if ( $validRevision ) {
 			$classes = array();
 
 			$page = Title::newFromRow( $row );
 			$link = Linker::link(
 				$page,
 				htmlspecialchars( $page->getPrefixedText() ),
-				array(),
+				array( 'class' => 'mw-contributions-title' ),
 				$page->isRedirect() ? array( 'redirect' => 'no' ) : array()
 			);
 			# Mark current revisions
 			$topmarktext = '';
+			$user = $this->getUser();
 			if ( $row->rev_id == $row->page_latest ) {
 				$topmarktext .= '<span class="mw-uctop">' . $this->messages['uctop'] . '</span>';
 				# Add rollback link
-				if ( !$row->page_is_new && $page->quickUserCan( 'rollback' )
-					&& $page->quickUserCan( 'edit' ) )
+				if ( !$row->page_is_new && $page->quickUserCan( 'rollback', $user )
+					&& $page->quickUserCan( 'edit', $user ) )
 				{
 					$this->preventClickjacking();
-					$topmarktext .= ' ' . Linker::generateRollback( $rev );
+					$topmarktext .= ' ' . Linker::generateRollback( $rev, $this->getContext() );
 				}
 			}
-			$user = $this->getUser();
 			# Is there a visible previous revision?
 			if ( $rev->userCan( Revision::DELETED_TEXT, $user ) && $rev->getParentId() !== 0 ) {
 				$difftext = Linker::linkKnown(
@@ -864,11 +882,11 @@ class ContribsPager extends ReverseChronologicalPager {
 				// For some reason rev_parent_id isn't populated for this row.
 				// Its rumoured this is true on wikipedia for some revisions (bug 34922).
 				// Next best thing is to have the total number of bytes.
-				$chardiff = ' . . ' . Linker::formatRevisionSize( $row->rev_len ) . ' . . ';
+				$chardiff = ' <span class="mw-changeslist-separator">. .</span> ' . Linker::formatRevisionSize( $row->rev_len ) . ' <span class="mw-changeslist-separator">. .</span> ';
 			} else {
 				$parentLen = isset( $this->mParentLens[$row->rev_parent_id] ) ? $this->mParentLens[$row->rev_parent_id] : 0;
-				$chardiff = ' . . ' . ChangesList::showCharacterDifference(
-						$parentLen, $row->rev_len ) . ' . . ';
+				$chardiff = ' <span class="mw-changeslist-separator">. .</span> ' . ChangesList::showCharacterDifference(
+						$parentLen, $row->rev_len, $this->getContext() ) . ' <span class="mw-changeslist-separator">. .</span> ';
 			}
 
 			$lang = $this->getLanguage();
@@ -878,7 +896,7 @@ class ContribsPager extends ReverseChronologicalPager {
 				$d = Linker::linkKnown(
 					$page,
 					htmlspecialchars( $date ),
-					array(),
+					array( 'class' => 'mw-changeslist-date' ),
 					array( 'oldid' => intval( $row->rev_id ) )
 				);
 			} else {
@@ -927,24 +945,16 @@ class ContribsPager extends ReverseChronologicalPager {
 			list( $tagSummary, $newClasses ) = ChangeTags::formatSummaryRow( $row->ts_tags, 'contributions' );
 			$classes = array_merge( $classes, $newClasses );
 			$ret .= " $tagSummary";
-
-			$classes = implode( ' ', $classes );
-			$ret = "<li class=\"$classes\">$ret</li>\n";
 		}
 
 		// Let extensions add data
-		wfRunHooks( 'ContributionsLineEnding', array( &$this, &$ret, $row ) );
+		wfRunHooks( 'ContributionsLineEnding', array( $this, &$ret, $row, &$classes ) );
+
+		$classes = implode( ' ', $classes );
+		$ret = "<li class=\"$classes\">$ret</li>\n";
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
-	}
-
-	/**
-	 * Get the Database object in use
-	 *
-	 * @return DatabaseBase
-	 */
-	public function getDatabase() {
-		return $this->mDb;
 	}
 
 	/**

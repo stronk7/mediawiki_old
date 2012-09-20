@@ -4,7 +4,7 @@
  *
  * Created on July 30, 2007
  *
- * Copyright © 2007 Roan Kattouw <Firstname>.<Lastname>@gmail.com
+ * Copyright © 2007 Roan Kattouw "<Firstname>.<Lastname>@gmail.com"
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ class ApiQueryUsers extends ApiQueryBase {
 
 				if ( isset( $this->prop['groups'] ) ) {
 					if ( !isset( $data[$name]['groups'] ) ) {
-						$data[$name]['groups'] = self::getAutoGroups( $user );
+						$data[$name]['groups'] = $user->getAutomaticGroups();
 					}
 
 					if ( !is_null( $row->ug_group ) ) {
@@ -148,7 +148,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$name]['implicitgroups'] ) ) {
-					$data[$name]['implicitgroups'] =  self::getAutoGroups( $user );
+					$data[$name]['implicitgroups'] =  $user->getAutomaticGroups();
 				}
 
 				if ( isset( $this->prop['rights'] ) ) {
@@ -249,18 +249,15 @@ class ApiQueryUsers extends ApiQueryBase {
 
 	/**
 	* Gets all the groups that a user is automatically a member of (implicit groups)
+	*
+	* @deprecated since 1.20; call User::getAutomaticGroups() directly.
 	* @param $user User
 	* @return array
 	*/
 	public static function getAutoGroups( $user ) {
-		$groups = array();
-		$groups[] = '*';
+		wfDeprecated( __METHOD__, '1.20' );
 
-		if ( !$user->isAnon() ) {
-			$groups[] = 'user';
-		}
-
-		return array_merge( $groups, Autopromote::getAutopromoteGroups( $user ) );
+		return $user->getAutomaticGroups();
 	}
 
 	public function getCacheMode( $params ) {

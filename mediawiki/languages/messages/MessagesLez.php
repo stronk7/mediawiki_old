@@ -1,5 +1,5 @@
 <?php
-/** Lezghian (Лезги)
+/** Lezghian (лезги)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -30,7 +30,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Мукьвара хьайи дегишвилера авай къаравулвал авунвай дуьзар хъувунар чуьнуьхун',
 'tog-newpageshidepatrolled' => 'ЦIийи ччинрин сиягьда къаравулвал авунвай ччинар чуьнуьхун',
 'tog-extendwatchlist' => 'ЧӀехи сиягь килигунин, кутазвай вири дегишунар, амма са эхирбур туш',
-'tog-usenewrc' => 'ЦIийи дегишвилерин сиягь кардик кутун (JavaScript герекзава)',
+'tog-usenewrc' => 'Мукьвара хьайи масакIавилерин ччина ва вилив хуьнин сиягьда  дуьзар хъувунар кIеретIриз ччара авун. (JavaScript герекзава)',
 'tog-numberheadings' => 'Кьилин цӀарариз автоматдаказ номерар эцигун',
 'tog-showtoolbar' => 'Дуьзар хъувунин алатрин кьвати къалура (JavaScript)',
 'tog-editondblclick' => 'Ччинар кьве тIампIуналди дуьзар хъувун (JavaScript герекзава)',
@@ -163,7 +163,7 @@ $messages = array(
 'vector-action-unprotect' => 'Хуьн дегишарун',
 'vector-simplesearch-preference' => 'Гегьенш жагъурунин рикIел гъун кутун (кьилди "Вектор" акунар патал)',
 'vector-view-create' => 'Туькlуьрун',
-'vector-view-edit' => 'Дуьзар хъувун',
+'vector-view-edit' => 'Расун',
 'vector-view-history' => 'Тарихдиз килигун',
 'vector-view-view' => 'Кlелун',
 'vector-view-viewsource' => 'Чешме къалурун',
@@ -223,7 +223,7 @@ $messages = array(
 'lastmodifiedat' => 'Ччинин эхиримжи масакIа хьун:  $1,  $2',
 'protectedpage' => 'Хвенвай ччин',
 'jumpto' => 'ЭлячIун иниз:',
-'jumptonavigation' => 'Навигация',
+'jumptonavigation' => 'Навигаци',
 'jumptosearch' => 'Жугъурун',
 'pool-queuefull' => 'ТIалабар кIватзавайди ацIа я',
 'pool-errorunknown' => 'Малумтушир гъалатI',
@@ -256,7 +256,7 @@ $messages = array(
 'newmessageslink' => 'цlийи чарар',
 'newmessagesdifflink' => 'Эхиримжи масакIавилер',
 'youhavenewmessagesmulti' => '"$1"-да квез цIийи чарар атанва.',
-'editsection' => 'дуьзар хъувун',
+'editsection' => 'Расун',
 'editold' => 'Дуьзар хъувун',
 'viewsourceold' => 'сифте кьилин коддиз килига',
 'editlink' => 'Дуьзар хъувун',
@@ -448,7 +448,7 @@ $messages = array(
 Квевай и ччинин туьхкlуьрунин гереквилиз килигиз тIалабзава.
 Агъадихъ и ччинин алудун ва тIвар эхцигунин журнал къалурнава.",
 'moveddeleted-notice' => 'И ччин алуднава. 
-Агъадихъ малумат патал и ччинин алудун ва тIвар эхцигунин журнал къалурнава.',
+Агъадихъ малумат патал и ччинин алудунин ва тIвар эхцигунин журнал къалурнава.',
 'log-fulllog' => 'Вири журналдиз килигун',
 'edit-conflict' => 'Дуьзар хъувунрин акьунар',
 
@@ -939,7 +939,7 @@ $messages = array(
 
 # Watchlist
 'watchlist' => 'Зи вилив хуьнин сиягь',
-'mywatchlist' => 'Зи вилив хуьнин сиягь',
+'mywatchlist' => 'Зи вилив хюнин сиягь',
 'watchlistfor2' => '$1 $2 патал',
 'addedwatchtext' => "Чар \"[[:\$1]]\" тун хъувунай куьн [[Special:Watchlist|watchlist]].                                                                                                             Къвезмай дегишунар и чарчел ва галкlанавай чарчихъ ихтилатар жеда инна, ахъатдава \"сакlус яцlу''''' инна [[Special:RecentChanges|list of recent changes]] гьам кьизил авун.",
 'removedwatchtext' => 'Чар "[[:$1]]" Идай чlурнай [[Special:Watchlist|ахтармишунин цlарар]].',
@@ -1025,7 +1025,7 @@ $messages = array(
 
 # Contributions
 'contributions' => 'Уртахди кутур крар',
-'contributions-title' => '$1 уртахдин кутур крар',
+'contributions-title' => '$1 уртахди кутур крар',
 'mycontris' => 'За кутур кар',
 'contribsub2' => '($1)-ин кутур пай  ($2)',
 'uctop' => '(вини кьил)',
@@ -1189,12 +1189,8 @@ $messages = array(
 
 # Info page
 'pageinfo-header-edits' => 'Дуьзар хъувун',
-'pageinfo-header-watchlist' => 'Гуьзетунин сиягь',
-'pageinfo-header-views' => 'Килигунар',
-'pageinfo-subjectpage' => 'Ччин',
-'pageinfo-talkpage' => 'Веревирдрин ччин',
-'pageinfo-edits' => 'Дьузар хъувунрин кьадар',
 'pageinfo-views' => 'Килигунрин кьадар',
+'pageinfo-edits' => 'Дьузар хъувунрин кьадар',
 
 # Browsing diffs
 'previousdiff' => 'Вилик алатай дуьзар хъувун',
@@ -1204,7 +1200,7 @@ $messages = array(
 'file-info-size' => '$1 × $2 пикселар, файлдин кьадар: $3, MIME жуьре: $4',
 'file-nohires' => 'Идалайни хъсан ери авайд туш',
 'svg-long-desc' => 'SVG файл, номилдаказ $1 $2 × пикселяр, файлдин кьадар: $3',
-'show-big-image' => 'Мадни хъсан еридин шикил',
+'show-big-image' => 'Цlарафа хвена тунвай жергедай',
 
 # Bad image list
 'bad_image_list' => 'Формат гьихьтинди хьана кlанда:
