@@ -102,7 +102,7 @@ class moodle_output {
     }
 
     public static function google_search() {
-        echo '<form id="global-search" method="get" action="http://moodle.org/public/search">';
+        echo '<form id="global-search" method="get" action="https://moodle.org/public/search">';
         echo '<div>';
         echo '<input type="hidden" name="cx" value="017878793330196534763:-0qxztjngoy" />';
         echo '<input type="hidden" name="cof" value="FORID:9" />';
