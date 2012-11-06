@@ -508,7 +508,7 @@ $wgGroupPermissions['*']['createaccount'] = false;     ///Added by Eloy: 06/04/2
 require_once( 'extensions/AuthMoodle.php' );
 $wgAuth = new AuthMoodle();
 $wgAuth->setAuthMoodleTablePrefix('');
-$wgAuth->setAuthMoodleDBServer('107.22.36.98');
+$wgAuth->setAuthMoodleDBServer('moodleorg.cniy2xi0z9uu.us-east-1.rds.amazonaws.com');
 $wgAuth->setAuthMoodleDBName('moodle');
 $wgAuth->setAuthMoodleUser('docs');
 $wgAuth->setAuthMoodlePassword('gnjfngjnhjgnhjg');
