@@ -456,7 +456,7 @@ $wgUseImageResize      = true;
 # $wgUseImageMagick = true;
 # $wgImageMagickConvertCommand = "/usr/bin/convert";
 ## Any extension not in this list will show warning
-$wgFileExtensions = array( 'png', 'gif', 'jpg', 'jpeg', 'dia');
+$wgFileExtensions = array( 'png', 'gif', 'jpg', 'jpeg', 'dia', 'ai');
 
 ## If you want to use image uploads under safe mode,
 ## create the directories images/archive, images/thumb and
