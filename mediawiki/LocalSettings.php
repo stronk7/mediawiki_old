@@ -87,6 +87,7 @@ if (php_sapi_name() != 'cli') {
             $mdocsver = '23';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '24') {
             $mdocsver = '24';
+            $wgEnableEmail = false;
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
             $mdocsver = '2x';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
