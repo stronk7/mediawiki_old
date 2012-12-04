@@ -169,6 +169,7 @@ function wfArrayLookup( $a, $b ) {
  * @param $value Mixed
  * @param $default Mixed
  * @param $changed Array to alter
+ * @throws MWException
  */
 function wfAppendToArrayIfNotDefault( $key, $value, $default, &$changed ) {
 	if ( is_null( $changed ) ) {
@@ -1110,6 +1111,7 @@ function wfWarn( $msg, $callerOffset = 1, $level = E_USER_NOTICE ) {
  *
  * @param $text String
  * @param $file String filename
+ * @throws MWException
  */
 function wfErrorLog( $text, $file ) {
 	if ( substr( $file, 0, 4 ) == 'udp:' ) {
@@ -1212,9 +1214,18 @@ function wfLogProfilingData() {
 	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
 		$forward .= ' anon';
 	}
+
+	// Command line script uses a FauxRequest object which does not have
+	// any knowledge about an URL and throw an exception instead.
+	try {
+		$requestUrl = $wgRequest->getRequestURL();
+	} catch ( MWException $e ) {
+		$requestUrl = 'n/a';
+	}
+
 	$log = sprintf( "%s\t%04.3f\t%s\n",
 		gmdate( 'YmdHis' ), $elapsed,
-		urldecode( $wgRequest->getRequestURL() . $forward ) );
+		urldecode( $requestUrl . $forward ) );
 
 	wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
 }
@@ -1719,6 +1730,7 @@ function wfEmptyMsg( $key ) {
  * but now throws an exception instead, with similar results.
  *
  * @param $msg String: message shown when dying.
+ * @throws MWException
  */
 function wfDebugDieBacktrace( $msg = '' ) {
 	throw new MWException( $msg );
@@ -2512,6 +2524,7 @@ function wfTempDir() {
  * @param $dir String: full path to directory to create
  * @param $mode Integer: chmod value to use, default is $wgDirectoryMode
  * @param $caller String: optional caller param for debugging.
+ * @throws MWException
  * @return bool
  */
 function wfMkdirParents( $dir, $mode = null, $caller = null ) {
@@ -2891,11 +2904,15 @@ function wfMerge( $old, $mine, $yours, &$result ) {
 	$mytextFile = fopen( $mytextName = tempnam( $td, 'merge-mine-' ), 'w' );
 	$yourtextFile = fopen( $yourtextName = tempnam( $td, 'merge-your-' ), 'w' );
 
-	fwrite( $oldtextFile, $old );
+	# NOTE: diff3 issues a warning to stderr if any of the files does not end with
+	#       a newline character. To avoid this, we normalize the trailing whitespace before
+	#       creating the diff.
+
+	fwrite( $oldtextFile, rtrim( $old ) . "\n" );
 	fclose( $oldtextFile );
-	fwrite( $mytextFile, $mine );
+	fwrite( $mytextFile, rtrim( $mine ) . "\n" );
 	fclose( $mytextFile );
-	fwrite( $yourtextFile, $yours );
+	fwrite( $yourtextFile, rtrim( $yours ) . "\n" );
 	fclose( $yourtextFile );
 
 	# Check for a conflict
@@ -3022,6 +3039,7 @@ function wfDiff( $before, $after, $params = '-u' ) {
  *
  * @param $req_ver Mixed: the version to check, can be a string, an integer, or
  *                 a float
+ * @throws MWException
  */
 function wfUsePHP( $req_ver ) {
 	$php_ver = PHP_VERSION;
@@ -3043,6 +3061,7 @@ function wfUsePHP( $req_ver ) {
  *
  * @param $req_ver Mixed: the version to check, can be a string, an integer, or
  *                 a float
+ * @throws MWException
  */
 function wfUseMW( $req_ver ) {
 	global $wgVersion;
@@ -3251,6 +3270,18 @@ function wfHttpOnlySafe() {
 }
 
 /**
+ * Check if there is sufficent entropy in php's built-in session generation
+ * @return bool true = there is sufficient entropy
+ */
+function wfCheckEntropy() {
+	return (
+			( wfIsWindows() && version_compare( PHP_VERSION, '5.3.3', '>=' ) )
+			|| ini_get( 'session.entropy_file' )
+		)
+		&& intval( ini_get( 'session.entropy_length' ) ) >= 32;
+}
+
+/**
  * Override session_id before session startup if php's built-in
  * session generation code is not secure.
  */
@@ -3264,11 +3295,7 @@ function wfFixSessionID() {
 	// - entropy_file is set or you're on Windows with php 5.3.3+
 	// - AND entropy_length is > 0
 	// We treat it as disabled if it doesn't have an entropy length of at least 32
-	$entropyEnabled = (
-			( wfIsWindows() && version_compare( PHP_VERSION, '5.3.3', '>=' ) )
-			|| ini_get( 'session.entropy_file' )
-		)
-		&& intval( ini_get( 'session.entropy_length' ) ) >= 32;
+	$entropyEnabled = wfCheckEntropy();
 
 	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
 	if ( !$entropyEnabled ) {
@@ -3549,16 +3576,6 @@ function wfGetScriptUrl() {
  */
 function wfBoolToStr( $value ) {
 	return $value ? 'true' : 'false';
-}
-
-/**
- * Load an extension messages file
- *
- * @deprecated since 1.16, warnings in 1.18, remove in 1.20
- * @codeCoverageIgnore
- */
-function wfLoadExtensionMessages() {
-	wfDeprecated( __FUNCTION__, '1.16' );
 }
 
 /**

@@ -106,7 +106,6 @@ class UploadStash {
 	 * @return UploadStashFile
 	 */
 	public function getFile( $key, $noAuth = false ) {
-
 		if ( ! preg_match( self::KEY_FORMAT_REGEX, $key ) ) {
 			throw new UploadStashBadPathException( "key '$key' is not in a proper format" );
 		}
@@ -131,8 +130,13 @@ class UploadStash {
 			$this->initFile( $key );
 
 			// fetch fileprops
-			$path = $this->fileMetadata[$key]['us_path'];
-			$this->fileProps[$key] = $this->repo->getFileProps( $path );
+			if ( strlen( $this->fileMetadata[$key]['us_props'] ) ) {
+				$this->fileProps[$key] = unserialize( $this->fileMetadata[$key]['us_props'] );
+			} else { // b/c for rows with no us_props
+				wfDebug( __METHOD__ . " fetched props for $key from file\n" );
+				$path = $this->fileMetadata[$key]['us_path'];
+				$this->fileProps[$key] = $this->repo->getFileProps( $path );
+			}
 		}
 
 		if ( ! $this->files[$key]->exists() ) {
@@ -152,7 +156,7 @@ class UploadStash {
 	/**
 	 * Getter for file metadata.
 	 *
-	 * @param key String: key under which file information is stored
+	 * @param $key String: key under which file information is stored
 	 * @return Array
 	 */
 	public function getMetadata ( $key ) {
@@ -163,7 +167,7 @@ class UploadStash {
 	/**
 	 * Getter for fileProps
 	 *
-	 * @param key String: key under which file information is stored
+	 * @param $key String: key under which file information is stored
 	 * @return Array
 	 */
 	public function getFileProps ( $key ) {
@@ -182,7 +186,7 @@ class UploadStash {
 	 * @return UploadStashFile: file, or null on failure
 	 */
 	public function stashFile( $path, $sourceType = null ) {
-		if ( ! file_exists( $path ) ) {
+		if ( !is_file( $path ) ) {
 			wfDebug( __METHOD__ . " tried to stash file at '$path', but it doesn't exist\n" );
 			throw new UploadStashBadPathException( "path doesn't exist" );
 		}
@@ -192,12 +196,10 @@ class UploadStash {
 		// we will be initializing from some tmpnam files that don't have extensions.
 		// most of MediaWiki assumes all uploaded files have good extensions. So, we fix this.
 		$extension = self::getExtensionForPath( $path );
-		if ( ! preg_match( "/\\.\\Q$extension\\E$/", $path ) ) {
+		if ( !preg_match( "/\\.\\Q$extension\\E$/", $path ) ) {
 			$pathWithGoodExtension = "$path.$extension";
-			if ( ! rename( $path, $pathWithGoodExtension ) ) {
-				throw new UploadStashFileException( "couldn't rename $path to have a better extension at $pathWithGoodExtension" );
-			}
-			$path = $pathWithGoodExtension;
+		} else {
+			$pathWithGoodExtension = $path;
 		}
 
 		// If no key was supplied, make one.  a mysql insertid would be totally reasonable here, except
@@ -221,7 +223,7 @@ class UploadStash {
 		wfDebug( __METHOD__ . " key for '$path': $key\n" );
 
 		// if not already in a temporary area, put it there
-		$storeStatus = $this->repo->storeTemp( basename( $path ), $path );
+		$storeStatus = $this->repo->storeTemp( basename( $pathWithGoodExtension ), $path );
 
 		if ( ! $storeStatus->isOK() ) {
 			// It is a convention in MediaWiki to only return one error per API exception, even if multiple errors
@@ -244,9 +246,6 @@ class UploadStash {
 		}
 		$stashPath = $storeStatus->value;
 
-		// we have renamed the file so we have to cleanup once done
-		unlink($path);
-
 		// fetch the current user ID
 		if ( !$this->isLoggedIn ) {
 			throw new UploadStashNotLoggedInException( __METHOD__ . ' No user is logged in, files must belong to users' );
@@ -262,6 +261,7 @@ class UploadStash {
 			'us_key' => $key,
 			'us_orig_path' => $path,
 			'us_path' => $stashPath, // virtual URL
+			'us_props' => serialize( $fileProps ),
 			'us_size' => $fileProps['size'],
 			'us_sha1' => $fileProps['sha1'],
 			'us_mime' => $fileProps['mime'],
@@ -319,8 +319,8 @@ class UploadStash {
 	/**
 	 * Remove a particular file from the stash.  Also removes it from the repo.
 	 *
-	 * @throws UploadStashNotLoggedInException
-	 * @throws UploadStashWrongOwnerException
+	 * @param $key
+	 * @throws UploadStashNoSuchKeyException|UploadStashNotLoggedInException|UploadStashWrongOwnerException
 	 * @return boolean: success
 	 */
 	public function removeFile( $key ) {
@@ -361,14 +361,11 @@ class UploadStash {
 
 		$dbw = $this->repo->getMasterDb();
 
-		// this gets its own transaction since it's called serially by the cleanupUploadStash maintenance script
-		$dbw->begin( __METHOD__ );
 		$dbw->delete(
 			'uploadstash',
 			array( 'us_key' => $key ),
 			__METHOD__
 		);
-		$dbw->commit( __METHOD__ );
 
 		// TODO: look into UnregisteredLocalFile and find out why the rv here is sometimes wrong (false when file was removed)
 		// for now, ignore.
@@ -419,6 +416,8 @@ class UploadStash {
 	 * with an extension.
 	 * XXX this is somewhat redundant with the checks that ApiUpload.php does with incoming
 	 * uploads versus the desired filename. Maybe we can get that passed to us...
+	 * @param $path
+	 * @throws UploadStashFileException
 	 * @return string
 	 */
 	public static function getExtensionForPath( $path ) {

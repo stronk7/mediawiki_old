@@ -50,7 +50,7 @@ class ParserOutput extends CacheTime {
 		$mTimestamp;                  # Timestamp of the revision
 		private $mIndexPolicy = '';       # 'index' or 'noindex'?  Any other value will result in no change.
 		private $mAccessedOptions = array(); # List of ParserOptions (stored in the keys)
-		private $mSecondaryDataUpdates = array(); # List of instances of SecondaryDataObject(), used to cause some information extracted from the page in a custom place.
+		private $mSecondaryDataUpdates = array(); # List of DataUpdate, used to save info from the page somewhere else.
 
 	const EDITSECTION_REGEX = '#<(?:mw:)?editsection page="(.*?)" section="(.*?)"(?:/>|>(.*?)(</(?:mw:)?editsection>))#';
 
@@ -75,6 +75,8 @@ class ParserOutput extends CacheTime {
 	/**
 	 * callback used by getText to replace editsection tokens
 	 * @private
+	 * @param $m
+	 * @throws MWException
 	 * @return mixed
 	 */
 	function replaceEditSectionLinksCallback( $m ) {
@@ -150,11 +152,35 @@ class ParserOutput extends CacheTime {
 		return (bool)$this->mNewSection;
 	}
 
+	/**
+	 * Checks, if a url is pointing to the own server
+	 *
+	 * @param $internal String the server to check against
+	 * @param $url String the url to check
+	 * @return bool
+	 */
+	static function isLinkInternal( $internal, $url ) {
+		return (bool)preg_match( '/^' .
+			# If server is proto relative, check also for http/https links
+			( substr( $internal, 0, 2 ) === '//' ? '(?:https?:)?' : '' ) .
+			preg_quote( $internal, '/' ) .
+			# check for query/path/anchor or end of link in each case
+			'(?:[\?\/\#]|$)/i',
+			$url
+		);
+	}
+
 	function addExternalLink( $url ) {
 		# We don't register links pointing to our own server, unless... :-)
 		global $wgServer, $wgRegisterInternalExternals;
-		if( $wgRegisterInternalExternals or stripos($url,$wgServer.'/')!==0)
+
+		$registerExternalLink = true;
+		if( !$wgRegisterInternalExternals ) {
+			$registerExternalLink = !self::isLinkInternal( $wgServer, $url );
+		}
+		if( $registerExternalLink ) {
 			$this->mExternalLinks[$url] = 1;
+		}
 	}
 
 	/**
@@ -320,7 +346,45 @@ class ParserOutput extends CacheTime {
 	}
 
 	/**
-	 * Set a property to be cached in the DB
+	 * Set a property to be stored in the page_props database table.
+	 *
+	 * page_props is a key value store indexed by the page ID. This allows
+	 * the parser to set a property on a page which can then be quickly
+	 * retrieved given the page ID or via a DB join when given the page
+	 * title.
+	 *
+	 * setProperty() is thus used to propagate properties from the parsed
+	 * page to request contexts other than a page view of the currently parsed
+	 * article.
+	 *
+	 * Some applications examples:
+	 *
+	 *   * To implement hidden categories, hiding pages from category listings
+	 *     by storing a property.
+	 *
+	 *   * Overriding the displayed article title.
+	 *   @see ParserOutput::setDisplayTitle()
+	 *
+	 *   * To implement image tagging, for example displaying an icon on an
+	 *     image thumbnail to indicate that it is listed for deletion on
+	 *     Wikimedia Commons.
+	 *     This is not actually implemented, yet but would be pretty cool.
+	 *
+	 * Do not use setProperty() to set a property which is only used in a
+	 * context where the ParserOutput object itself is already available, for
+	 * example a normal page view. There is no need to save such a property
+	 * in the database since it the text is already parsed. You can just hook
+	 * OutputPageParserOutput and get your data out of the ParserOutput object.
+	 *
+	 * If you are writing an extension where you want to set
+	 * a property in the parser which is used by an OutputPageParserOutput hook,
+	 * just use a custom variable within the ParserOutput object:
+	 *
+	 * @par Example:
+	 * @code
+	 *    $parser->getOutput()->my_ext_foo = '...';
+	 * @endcode
+	 *
 	 */
 	public function setProperty( $name, $value ) {
 		$this->mProperties[$name] = $value;
@@ -375,9 +439,13 @@ class ParserOutput extends CacheTime {
 	 * extracted from the page's content, including a LinksUpdate object for all links stored in
 	 * this ParserOutput object.
 	 *
+	 * @note: Avoid using this method directly, use ContentHandler::getSecondaryDataUpdates() instead! The content
+	 *        handler may provide additional update objects.
+	 *
 	 * @since 1.20
 	 *
-	 * @param $title Title of the page we're updating. If not given, a title object will be created based on $this->getTitleText()
+	 * @param $title Title The title of the page we're updating. If not given, a title object will be created
+	 *                      based on $this->getTitleText()
 	 * @param $recursive Boolean: queue jobs for recursive updates?
 	 *
 	 * @return Array. An array of instances of DataUpdate

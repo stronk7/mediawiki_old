@@ -158,7 +158,6 @@ $messages = array(
 'qbbrowse' => 'Browse/تصفّح',
 'qbedit' => 'ترمیم',
 'qbpageoptions' => 'ھیہ صفحہ',
-'qbpageinfo' => 'مفہوم',
 'qbmyoptions' => 'مہ صفحات',
 'qbspecialpages' => 'خاص صفحات',
 'faq' => 'عام معلومات',
@@ -284,6 +283,7 @@ $1',
 'toc' => 'فہرست',
 'showtoc' => 'پشاوے',
 'hidetoc' => 'کھوشتاوے',
+'collapsible-collapse' => 'خاتمہ/Collapse',
 'thisisdeleted' => 'لوڑے  یا بحال کورے $1',
 'viewdeleted' => 'لوڑے $1؟',
 'restorelink' => '{{PLURAL:$1|ای ترمیم حذف ہوی|$1 ترامیم حذف ہونی}}',
@@ -386,10 +386,7 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 
 # Login and logout pages
 'logouttext' => "'''ھنیسے تو خارج بیتی آسوس'''<br />
-تو خفی الاسم {{SITENAME}}  استعمال جاری لاکھیکو بوس، یا دوبارہ ھیہ نامو یا مختلف نامان سورا داخل دی بیکو بوس۔  ھیہ یاد آوری کورے کہ ای کما صفحات ھش [[Special:UserLogin|دوباری لاگن بوس]] غیچھی گونی کہ تو ھنیسے خارج نو بیتی آسوس، کلہ پت کہ تو تان تفصحہ (براؤزرو) ابطن (cache) صاف نوکوروس۔\",",
-'welcomecreation' => '== رحمت عزیز چترالی تتے خوشان گیے ریران، $1 ! ==
-
-تہ  کھاتہ ساوزینو بیتی شیر تو تان [[Special:Preferences|{{SITENAME}} ترجیحات]]ن مرتب کوریکو مو روخڅے.',
+تو خفی الاسم {{SITENAME}}  استعمال جاری لاکھیکو بوس، یا دوبارہ ھیہ نامو یا مختلف نامان سورا داخل دی بیکو بوس۔  ھیہ یاد آوری کورے کہ ای کما صفحات ھش <span class='plainlinks'>[\$1 دوباری لاگن بوس]</span> غیچھی گونی کہ تو ھنیسے خارج نو بیتی آسوس، کلہ پت کہ تو تان تفصحہ (براؤزرو) ابطن (cache) صاف نوکوروس۔\",",
 'yourname' => 'اسمِ رکنیت',
 'yourpassword' => 'کلمۂ شناخت(پاسورڈ)',
 'yourpasswordagain' => 'کلمۂ شناخت(پاسورڈو)دوبارہ نیویشے',
@@ -557,6 +554,14 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'moveddeleted-notice' => 'ھیہ ای حذف شدہ صفحہ شیر.
 صفحو نوشتۂ حذف شدگی و منتقلی ذیلا بطورِ حوالہ دیونو بویان.',
 
+# Parser/template warnings
+'post-expand-template-inclusion-warning' => "'''خبردار:''' سانچو سایز بو لوٹ شیر.
+بعضی سانچہ شامل نو بونی.",
+'post-expand-template-inclusion-category' => 'ھش صفحات کہ ھتیرا ٹمپلیٹ یعنی سانچو ناپ لوٹ بیتی شیر۔',
+'post-expand-template-argument-warning' => "'''خبردار:''' ھیہ صفحا ای سانچہ(ٹمپلیٹ) مشقولگی دیونو بیتی شیر وا ھمو سایز بولوٹ شیر۔
+ھمی لوان نیزونو بیتی شیر",
+'post-expand-template-argument-category' => 'ھش صفحات کہ ھتیرا بوغینو بیرو سانچان یعنی(ٹمپلیٹان) لو شینی۔',
+
 # History pages
 'viewpagelogs' => 'ھیہ صفحہو بچے نوشتہ جاتن لوڑے',
 'currentrev-asof' => 'حالیہ نظرثانی بمطابق $1',
@@ -566,6 +571,7 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'nextrevision' => '→پروشٹیو اعادہ',
 'currentrevisionlink' => 'حالیہ نظرثانی',
 'cur' => 'رائج',
+'next' => 'پروشٹیو',
 'last' => 'سابقہ',
 'histlegend' => "انتخاب: مختلف نسخان موازنہ کوریکو بچے ، پیامی خانان نشان زد کوری موڑا دیرو بٹنا کلک کورے۔
 
@@ -631,8 +637,6 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'search-interwiki-caption' => 'ملگیری منصوبہ',
 'search-interwiki-default' => '$1 نتائج:',
 'search-interwiki-more' => '(مزید)',
-'search-mwsuggest-enabled' => 'تجویزان سوم جستہ',
-'search-mwsuggest-disabled' => 'کیہ تجویز نیکی',
 'searchrelated' => 'متعلقہ',
 'searchall' => 'کھل',
 'showingresultsheader' => "{{PLURAL:$5|نتیجہ'''$1''' of '''$3'''|نتیجہ'''$1 - $2''' of '''$3'''}} بچے'''$4'''",
@@ -688,6 +692,7 @@ HTML tags لوڑے.',",
 'recentchanges-label-newpage' => 'ھیہ ترمیم نوغ صفحہ تخلیق آریر',
 'recentchanges-label-minor' => 'ھیہ ای معمولی ترمیم شیر',
 'recentchanges-label-bot' => 'ھیہ ایڈیٹو خود کار بوٹو زریعا انجام دیونو ہوی',
+'recentchanges-label-unpatrolled' => 'ھیہ ترمیمو ھمونیہ پت مراجعت(Patrolled) کورونو نو بیتی شیر',
 'rcnote' => "درج ذیل گزشتہ {{PLURAL:$2|بس|'''$2''' انوسا}} باک {{PLURAL:$1|'''ای''' تبدیلی شیر|آخری '''$1''' تبدیلی شینی}}، $5، $4.",
 'rcnotefrom' => "ھیہ موڑا '''$2''' کورونو بیرو تبدیلیان تفصیلات شینی ('''$1''' تبدیلیان پشینو بونیان)۔",
 'rclistfrom' => '$1 نوغ تبدیلیاں پشیک شروع کورے',
@@ -712,6 +717,7 @@ HTML tags لوڑے.',",
 'recentchangeslinked' => 'متعلقہ تبدیلی',
 'recentchangeslinked-toolbox' => 'موقعی تبدیلی',
 'recentchangeslinked-title' => 'متعلقہ تبدیلی "$1"',
+'recentchangeslinked-noresult' => 'ھمی صفحا موجودہ وختہ کیہ تبدیلی نیکی۔',
 'recentchangeslinked-summary' => "ھیہ ھتے تبدیلیان لسٹ شیر کہ ھیتان پھوک مدا پروشٹی ساوزینو بیتی شینی وا ھے صفحان سوم جستہ خور کیہ صفحہ چوکی شینی یا کیہ خاص زمرہ جاتو ممبرانن سوم چوکی شینی<br />
 ساوزیرو [[Special:Watchlist|موڑا صفحہ]] '''بولڈ''' شینی",
 'recentchangeslinked-page' => 'کھوار ویکیپیڈیو منصوبو صفحو لوڑے',
@@ -742,6 +748,8 @@ HTML tags لوڑے.',",
 'imagelinks' => 'مسلو روابط',
 'linkstoimage' => 'ھیہ مسلو سوم درج ذیل {{PLURAL:$1|صفحہ مربوط شیر|$1 صفحات مربوط شینی}}',
 'nolinkstoimage' => 'ھیہ کھوار ویکیپیڈیا ھش کیہ صفحات نیکی کہ ھتیت ھیہ مسل (فائلو) متعلقہ شینی',
+'sharedupload-desc-here' => 'ھیہ فائل $1 موژاری شیر وا ھیہ خور پرجیکٹہ استعمال بویان۔
+مزید معلومات ھمو [$2 فائل مشقولگی صفحہا]  دیونو بیتی شیر',
 'uploadnewversion-linktext' => 'ھیہ مسلو نوغ ورژنو اپلوڈ کورے',
 
 # Random page
@@ -749,6 +757,8 @@ HTML tags لوڑے.',",
 
 # Statistics
 'statistics' => 'اعداد و شمار',
+
+'disambiguationspage' => 'سانچہ: ڈسایمبگ',
 
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|بایٹ|بایٹس}}',
@@ -925,6 +935,7 @@ HTML tags لوڑے.',",
 
 # Block/unblock
 'blockip' => 'داخلہ ممنوع براۓ صارف',
+'ipboptions' => '2 گھنٹہ:2 hours,1 آنوس:1 day,3 بس:3 days,1 ہفتہ:1 week,2 ہفتہ:2 weeks,1 مس:1 month,3 مس:3 months,6 مس:6 months,1 سال:1 year,لامحدود:infinite',
 'ipblocklist' => 'داخلہ ممنوع براۓ صارف',
 'blocklink' => 'پاوبندی لیگاوے',
 'unblocklink' => 'پاوبندی ختم',
@@ -1056,6 +1067,8 @@ HTML tags لوڑے.',",
 * gpslongitude
 * gpsaltitude',
 
+'exif-dc-date' => 'تاریخ',
+
 # External editor support
 'edit-externally' => 'ھیہ مسلو ایڈیٹ کورے',
 'edit-externally-help' => '(See the [//www.mediawiki.org/wiki/Manual:External_editors setup instructions] for more information)
@@ -1066,6 +1079,9 @@ HTML tags لوڑے.',",
 'namespacesall' => 'تھمامو',
 'monthsall' => 'سف',
 
+# action=purge
+'confirm_purge_button' => 'OK/ٹھیک شیر',
+
 # Table pager
 'table_pager_first' => 'آویلو صفحہ',
 
@@ -1074,10 +1090,38 @@ HTML tags لوڑے.',",
 'watchlisttools-edit' => 'لوڑے یا واچ لسٹہ ترمیم کورے',
 'watchlisttools-raw' => 'نوغ واچ لسٹان ایڈیٹ کورے',
 
+# Core parser functions
+'duplicate-defaultsort' => '\'\'\'خبردار:\'\'\' ڈیفالٹ تاڑٰ(نغڑی) "$2" پروشٹیو ڈیفالٹ تاڑا "$1" لیگی شیر۔',
+
+# Special:FilePath
+'filepath-page' => 'فایل',
+'filepath-submit' => 'Go/بوغے',
+
 # Special:SpecialPages
 'specialpages' => 'اسپیشل صفحہ',
 
+# External image whitelist
+'external_image_whitelist' => ' #ھیہ لاینو ھموش تان شیکو لاکے کیچہ کہ ھیہ شیر<pre>
+#موڑا ریگولر لوان دیور((صرف ھتیتان کیاغ ھمیتان موژی شینی //) //) 
+#بیریو ھوٹوان آر ایلان سوم ھمیتان میچ کورنو بوی
+# کیاغ کہ میچ ھونی ھیتان ھوٹوان سوم پشینو بوی بصورت دیگر ھیتان لنک کیاغ کی شینی ھتیتان پشینو بوی
+#لاین کیاغ کی شروع بویان  # کومنٹ جوشونو بوی۔
+#ھیہ کیس سینسیٹو شیر۔
+
+#لینو سورا ریجیکس فریگمنٹو لاکھے. ھیہ لاینو ھموش تان شیکو لاکے کیچہ کہ ھیہ شیر۔</pre>',
+
 # Special:Tags
 'tag-filter' => '[[Special:Tags|Tag]] filter:',
+'tag-filter-submit' => 'فلٹر',
+'tags-title' => 'Tags/ٹیگز',
+
+# Special:ComparePages
+'compare-page1' => 'صفحہ 1',
+
+# Feedback
+'feedback-message' => 'پیغام',
+
+# Search suggestions
+'searchsuggest-search' => 'Search/تلاش',
 
 );

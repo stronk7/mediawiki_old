@@ -220,7 +220,6 @@ $messages = array(
 'qbbrowse' => 'Foyter',
 'qbedit' => 'Candjî',
 'qbpageoptions' => 'Cisse pådje ci',
-'qbpageinfo' => 'Contecse',
 'qbmyoptions' => 'Mes pådjes',
 'qbspecialpages' => 'Pådjes sipeciåles',
 
@@ -423,12 +422,8 @@ $2",
 # Login and logout pages
 'logouttext' => "'''Vos vs avoz dislodjî.'''
 
-Vos ploz continouwer a naivyî so {{SITENAME}} anonimmint, oudonbén [[Special:UserLogin|vos relodjî]], dizo l' minme uzeu ou dizo èn uzeu diferin.
+Vos ploz continouwer a naivyî so {{SITENAME}} anonimmint, oudonbén <span class='plainlinks'>[$1 vos relodjî]</span>, dizo l' minme uzeu ou dizo èn uzeu diferin.
 Notez ki des pådjes k' i gn a si pôrént continowuer a vey come si vos estîz elodjî, disk' a tant ki vos vudrîz l' muchete di vosse betchteu waibe.",
-'welcomecreation' => '== Bénvnowe, $1! ==
-
-Vosse conte a stî ahivé.
-Èn rovyîz nén di candjî les [[Special:Preferences|preferinces di {{SITENAME}}]] a vosse môde.',
 'yourname' => "Vosse no d' elodjaedje:",
 'yourpassword' => 'Vosse sicret',
 'yourpasswordagain' => 'Ritapez vosse sicret',
@@ -1493,10 +1488,6 @@ Si vos vloz bodjî l' pådje foû di vosse djivêye des shuvous, clitchîz so «
 
 'enotif_mailer' => 'Notifiaedje pa emile di {{SITENAME}}',
 'enotif_reset' => 'Mårker totes les pådjes come vizitêyes',
-'enotif_newpagetext' => "C' est ene nouve pådje.",
-'changed' => 'candjeye',
-'created' => 'ahivêye',
-'enotif_subject' => 'Li pådje «$PAGETITLE» so {{SITENAME}} a stî $CHANGEDORCREATED pa $PAGEEDITOR',
 'enotif_lastvisited' => 'Loukîz $1 po tos les candjmints dispoy vosse dierinne vizite.',
 'enotif_body' => 'Binamé $WATCHINGUSERNAME,
 
@@ -2360,6 +2351,10 @@ Acertinez s' i vs plait ki vos vloz vormint rifé cisse pådje ci.",
 'feedback-adding' => 'Vosse messaedje a stî håyné sol pådje...',
 'feedback-error2' => "Aroke : Li candjaedje n' a nén stî",
 'feedback-close' => 'Fwait',
+
+# Search suggestions
+'searchsuggest-search' => 'Cweri',
+'searchsuggest-containing' => 'ki contént...',
 
 # API errors
 'api-error-badaccess-groups' => "Vos n' avoz nén l' droet d' eberweter des fitchîs so ç' wiki cial",

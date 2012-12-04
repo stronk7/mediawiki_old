@@ -2,22 +2,11 @@
  * Irish (Gaeilge) language functions
  */
 
-mediaWiki.language.convertPlural = function( count, forms ) {
-	forms = mediaWiki.language.preConvertPlural( forms, 3 );
-	if ( count == 1 ) {
-		return forms[0];
-	}
-	if ( count == 2 ) {
-		return forms[1];
-	}
-	return forms[2];
-};
-
-
-mediaWiki.language.convertGrammar = function( word, form ) {
-	var grammarForms = mw.language.getData( 'ga', 'grammarForms' );
+mediaWiki.language.convertGrammar = function ( word, form ) {
+	/*jshint onecase:true */
+	var grammarForms = mediaWiki.language.getData( 'ga', 'grammarForms' );
 	if ( grammarForms && grammarForms[form] ) {
-		return grammarForms[form][word] ;
+		return grammarForms[form][word];
 	}
 	switch ( form ) {
 		case 'ainmlae':

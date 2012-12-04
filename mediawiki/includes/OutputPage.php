@@ -255,7 +255,7 @@ class OutputPage extends ContextSource {
 	function __construct( IContextSource $context = null ) {
 		if ( $context === null ) {
 			# Extensions should use `new RequestContext` instead of `new OutputPage` now.
-			wfDeprecated( __METHOD__ );
+			wfDeprecated( __METHOD__, '1.18' );
 		} else {
 			$this->setContext( $context );
 		}
@@ -611,7 +611,7 @@ class OutputPage extends ContextSource {
 
 	/**
 	 * checkLastModified tells the client to use the client-cached page if
-	 * possible. If sucessful, the OutputPage is disabled so that
+	 * possible. If successful, the OutputPage is disabled so that
 	 * any future call to OutputPage->output() have no effect.
 	 *
 	 * Side effect: sets mLastModified for Last-Modified header
@@ -851,11 +851,10 @@ class OutputPage extends ContextSource {
 		$this->getContext()->setTitle( $t );
 	}
 
-
 	/**
 	 * Replace the subtile with $str
 	 *
-	 * @param $str String|Message: new value of the subtitle
+	 * @param $str String|Message: new value of the subtitle. String should be safe HTML.
 	 */
 	public function setSubtitle( $str ) {
 		$this->clearSubtitle();
@@ -875,7 +874,7 @@ class OutputPage extends ContextSource {
 	/**
 	 * Add $str to the subtitle
 	 *
-	 * @param $str String|Message to add to the subtitle
+	 * @param $str String|Message to add to the subtitle. String should be safe HTML.
 	 */
 	public function addSubtitle( $str ) {
 		if ( $str instanceof Message ) {
@@ -1470,7 +1469,7 @@ class OutputPage extends ContextSource {
 	 * @param $interface Boolean: whether it is an interface message
 	 *								(for example disables conversion)
 	 */
-	public function addWikiTextTitle( $text, &$title, $linestart, $tidy = false, $interface = false ) {
+	public function addWikiTextTitle( $text, Title $title, $linestart, $tidy = false, $interface = false ) {
 		global $wgParser;
 
 		wfProfileIn( __METHOD__ );
@@ -1571,9 +1570,10 @@ class OutputPage extends ContextSource {
 	 * @param $interface Boolean: use interface language ($wgLang instead of
 	 *                   $wgContLang) while parsing language sensitive magic
 	 *                   words like GRAMMAR and PLURAL. This also disables
-	 *					 LanguageConverter.
+	 *                   LanguageConverter.
 	 * @param $language  Language object: target language object, will override
 	 *                   $interface
+	 * @throws MWException
 	 * @return String: HTML
 	 */
 	public function parse( $text, $linestart = true, $interface = false, $language = null ) {
@@ -1769,14 +1769,12 @@ class OutputPage extends ContextSource {
 				} else {
 					$aloption[] = 'string-contains=' . $variant;
 
-					// IE and some other browsers use another form of language code
-					// in their Accept-Language header, like "zh-CN" or "zh-TW".
+					// IE and some other browsers use BCP 47 standards in
+					// their Accept-Language header, like "zh-CN" or "zh-Hant".
 					// We should handle these too.
-					$ievariant = explode( '-', $variant );
-					if ( count( $ievariant ) == 2 ) {
-						$ievariant[1] = strtoupper( $ievariant[1] );
-						$ievariant = implode( '-', $ievariant );
-						$aloption[] = 'string-contains=' . $ievariant;
+					$variantBCP47 = wfBCP47( $variant );
+					if ( $variantBCP47 !== $variant ) {
+						$aloption[] = 'string-contains=' . $variantBCP47;
 					}
 				}
 			}
@@ -1903,7 +1901,7 @@ class OutputPage extends ContextSource {
 	 * @deprecated since 1.18 Use HttpStatus::getMessage() instead.
 	 */
 	public static function getStatusMessage( $code ) {
-		wfDeprecated( __METHOD__ );
+		wfDeprecated( __METHOD__, '1.18' );
 		return HttpStatus::getMessage( $code );
 	}
 
@@ -1994,7 +1992,9 @@ class OutputPage extends ContextSource {
 		wfRunHooks( 'AfterFinalPageOutput', array( $this ) );
 
 		$this->sendCacheControl();
+
 		ob_end_flush();
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -2057,7 +2057,7 @@ class OutputPage extends ContextSource {
 		$this->prepareErrorPage( $title );
 
 		if ( $msg instanceof Message ){
-			$this->addHTML( $msg->parse() );
+			$this->addHTML( $msg->parseAsBlock() );
 		} else {
 			$this->addWikiMsgArray( $msg, $params );
 		}
@@ -2072,8 +2072,6 @@ class OutputPage extends ContextSource {
 	 * @param $action String: action that was denied or null if unknown
 	 */
 	public function showPermissionsErrorPage( $errors, $action = null ) {
-		global $wgGroupPermissions;
-
 		// For some action (read, edit, create and upload), display a "login to do this action"
 		// error if all of the following conditions are met:
 		// 1. the user is not logged in
@@ -2082,8 +2080,8 @@ class OutputPage extends ContextSource {
 		if ( in_array( $action, array( 'read', 'edit', 'createpage', 'createtalk', 'upload' ) )
 			&& $this->getUser()->isAnon() && count( $errors ) == 1 && isset( $errors[0][0] )
 			&& ( $errors[0][0] == 'badaccess-groups' || $errors[0][0] == 'badaccess-group0' )
-			&& ( ( isset( $wgGroupPermissions['user'][$action] ) && $wgGroupPermissions['user'][$action] )
-			|| ( isset( $wgGroupPermissions['autoconfirmed'][$action] ) && $wgGroupPermissions['autoconfirmed'][$action] ) )
+			&& ( User::groupHasPermission( 'user', $action )
+			|| User::groupHasPermission( 'autoconfirmed', $action ) )
 		) {
 			$displayReturnto = null;
 
@@ -2156,6 +2154,7 @@ class OutputPage extends ContextSource {
 	 * Display an error page noting that a given permission bit is required.
 	 * @deprecated since 1.18, just throw the exception directly
 	 * @param $permission String: key required
+	 * @throws PermissionsError
 	 */
 	public function permissionRequired( $permission ) {
 		throw new PermissionsError( $permission );
@@ -2226,6 +2225,7 @@ class OutputPage extends ContextSource {
 	 * @param $protected Boolean: is this a permissions error?
 	 * @param $reasons   Array: list of reasons for this error, as returned by Title::getUserPermissionsErrors().
 	 * @param $action    String: action that was denied or null if unknown
+	 * @throws ReadOnlyError
 	 */
 	public function readOnlyPage( $source = null, $protected = false, $reasons = array(), $action = null ) {
 		$this->setRobotPolicy( 'noindex,nofollow' );
@@ -2343,11 +2343,20 @@ $templates
 	 * @param $title Title to link
 	 * @param $query Array query string parameters
 	 * @param $text String text of the link (input is not escaped)
+	 * @param $options Options array to pass to Linker
 	 */
-	public function addReturnTo( $title, $query = array(), $text = null ) {
-		$this->addLink( array( 'rel' => 'next', 'href' => $title->getFullURL() ) );
+	public function addReturnTo( $title, $query = array(), $text = null, $options = array() ) {
+		if( in_array( 'http', $options ) ) {
+			$proto = PROTO_HTTP;
+		} elseif( in_array( 'https', $options ) ) {
+			$proto = PROTO_HTTPS;
+		} else {
+			$proto = PROTO_RELATIVE;
+		}
+
+		$this->addLink( array( 'rel' => 'next', 'href' => $title->getFullURL( '', false, $proto ) ) );
 		$link = $this->msg( 'returnto' )->rawParams(
-			Linker::link( $title, $text, array(), $query ) )->escaped();
+			Linker::link( $title, $text, array(), $query, $options ) )->escaped();
 		$this->addHTML( "<p id=\"mw-returnto\">{$link}</p>\n" );
 	}
 
@@ -2451,7 +2460,7 @@ $templates
 	 */
 	private function addDefaultModules() {
 		global $wgIncludeLegacyJavaScript, $wgPreloadJavaScriptMwUtil, $wgUseAjax,
-			$wgAjaxWatch, $wgEnableMWSuggest;
+			$wgAjaxWatch, $wgResponsiveImages;
 
 		// Add base resources
 		$this->addModules( array(
@@ -2479,8 +2488,8 @@ $templates
 				$this->addModules( 'mediawiki.page.watch.ajax' );
 			}
 
-			if ( $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
-				$this->addModules( 'mediawiki.legacy.mwsuggest' );
+			if ( !$this->getUser()->getOption( 'disablesuggest', false ) ) {
+				$this->addModules( 'mediawiki.searchSuggest' );
 			}
 		}
 
@@ -2491,6 +2500,11 @@ $templates
 		# Crazy edit-on-double-click stuff
 		if ( $this->isArticle() && $this->getUser()->getOption( 'editondblclick' ) ) {
 			$this->addModules( 'mediawiki.action.view.dblClickEdit' );
+		}
+
+		// Support for high-density display images
+		if ( $wgResponsiveImages ) {
+			$this->addModules( 'mediawiki.hidpi' );
 		}
 	}
 
@@ -2904,7 +2918,7 @@ $templates
 	 * @return array
 	 */
 	public function getJSVars() {
-		global $wgUseAjax, $wgEnableMWSuggest, $wgContLang;
+		global $wgContLang;
 
 		$latestRevID = 0;
 		$pageID = 0;
@@ -2966,12 +2980,9 @@ $templates
 		);
 		if ( $wgContLang->hasVariants() ) {
 			$vars['wgUserVariant'] = $wgContLang->getPreferredVariant();
- 		}
+		}
 		foreach ( $title->getRestrictionTypes() as $type ) {
 			$vars['wgRestriction' . ucfirst( $type )] = $title->getRestrictions( $type );
-		}
-		if ( $wgUseAjax && $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
-			$vars['wgSearchNamespaces'] = SearchEngine::userNamespaces( $this->getUser() );
 		}
 		if ( $title->isMainPage() ) {
 			$vars['wgIsMainPage'] = true;
@@ -3560,7 +3571,6 @@ $templates
 		$msgSpecs = array_values( $msgSpecs );
 		$s = $wrap;
 		foreach ( $msgSpecs as $n => $spec ) {
-			$options = array();
 			if ( is_array( $spec ) ) {
 				$args = $spec;
 				$name = array_shift( $args );

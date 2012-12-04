@@ -5,6 +5,21 @@
  * Copyright © 2000, 2001 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * You may copy this code freely under the conditions of the GPL.
  *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup DifferenceEngine
  * @defgroup DifferenceEngine DifferenceEngine
@@ -311,7 +326,7 @@ class _DiffEngine {
 	 * [XOFF, XLIM) and [YOFF, YLIM) into NCHUNKS approximately equally
 	 * sized segments.
 	 *
-	 * Returns (LCS, PTS).	LCS is the length of the LCS. PTS is an
+	 * Returns (LCS, PTS). LCS is the length of the LCS. PTS is an
 	 * array of NCHUNKS+1 (X, Y) indexes giving the diving points between
 	 * sub sequences.  The first sub-sequence is contained in [X0, X1),
 	 * [Y0, Y1), the second in [X1, X2), [Y1, Y2) and so on.  Note

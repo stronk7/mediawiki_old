@@ -211,7 +211,6 @@ $messages = array(
 'qbbrowse' => 'Nabegar',
 'qbedit' => 'Eiditar',
 'qbpageoptions' => 'Esta páigina',
-'qbpageinfo' => 'Cuntesto',
 'qbmyoptions' => 'Mies páiginas',
 'qbspecialpages' => 'Páiginas speciales',
 'faq' => 'FAQ',
@@ -567,8 +566,6 @@ Legenda: (atu) = defrénças de la berson atual,
 'search-interwiki-caption' => 'Porjetos armanos',
 'search-interwiki-default' => 'Resultados de $1:',
 'search-interwiki-more' => '(mais)',
-'search-mwsuggest-enabled' => 'cun sugestones',
-'search-mwsuggest-disabled' => 'sien sugestones',
 'searchall' => 'todos',
 'nonefound' => "'''Abiso''': solo alguns spácios nominales son percurados por oumisson. Spurmenta outelizar l perfixo ''all:'' na percura, pa percurar por todos ls cuntenidos desta Biqui (até páiginas de çcusson, modelos etc), ó mesmo, outelizando l spácio nominal que queiras cumo perfixo.",
 'powersearch' => 'Percura Abançada',
@@ -877,9 +874,6 @@ Altaraçones feturas na tal páigina i páiginas de çcusson a eilha associadas 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'A begiar...',
 'unwatching' => 'A deixar de begiar...',
-
-'changed' => 'demudada',
-'created' => 'criada',
 
 # Delete
 'deletepage' => 'Botar fuora páigina',

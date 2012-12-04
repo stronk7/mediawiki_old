@@ -129,6 +129,8 @@ class SquidUpdate {
 			return;
 		}
 
+		wfDebug( "Squid purge: " . implode( ' ', $urlArr ) . "\n" );
+
 		if ( $wgHTCPMulticastRouting ) {
 			SquidUpdate::HTCPPurge( $urlArr );
 		}
@@ -249,7 +251,7 @@ class SquidUpdate {
 	static function expand( $url ) {
 		return wfExpandUrl( $url, PROTO_INTERNAL );
 	}
-	
+
 	/**
 	 * Find the HTCP routing rule to use for a given URL.
 	 * @param $url string URL to match
@@ -264,5 +266,4 @@ class SquidUpdate {
 		}
 		return false;
 	}
-	
 }

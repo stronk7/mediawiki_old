@@ -1,5 +1,5 @@
 <?php
-/** Kazakh (Cyrillic script) (‪қазақша (кирил)‬)
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -503,7 +503,6 @@ $messages = array(
 'qbbrowse' => 'Шолу',
 'qbedit' => 'Өңдеу',
 'qbpageoptions' => 'Бұл бет',
-'qbpageinfo' => 'Айнала',
 'qbmyoptions' => 'Беттерім',
 'qbspecialpages' => 'Арнайы беттер',
 'faq' => 'Жиі қойылған сауалдар',
@@ -756,11 +755,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''Жүйеден шықтыңыз.'''
 
-Жүйеге кірместен де {{SITENAME}} жобасын пайдалана аласыз, немесе баяғы не өзге қатысушы ретінде жүйеге [[Special:UserLogin|қайта кіруіңізге]] болады.
+Жүйеге кірместен де {{SITENAME}} жобасын пайдалана аласыз, немесе баяғы не өзге қатысушы ретінде жүйеге <span class='plainlinks'>[$1 қайта кіруіңізге]</span> болады.
 Аңғартпа: Кейбір беттер шолғышыңыздың кэшін тазартқанша әлі де жүйеге кіріп отырғаныңыздай көрінуі мүмкін.",
-'welcomecreation' => '== Қош келдіңіз, $1! ==
-Жаңа тіркелгіңіз жасалды.
-Өзіңіздің [[Special:Preferences|жеке баптауларыңызды]] өзгертуді ұмытпаңыз.',
 'yourname' => 'Қатысушы аты:',
 'yourpassword' => 'Құпия сөз:',
 'yourpasswordagain' => 'Құпия сөзді қайталаңыз:',
@@ -1274,8 +1270,6 @@ $3 келтірілген себебі: ''$2''",
 'search-interwiki-caption' => 'Бауырлас жобалар',
 'search-interwiki-default' => '$1 нәтиже:',
 'search-interwiki-more' => '(көбірек)',
-'search-mwsuggest-enabled' => 'ұсынымдармен',
-'search-mwsuggest-disabled' => 'ұсынымдарсыз',
 'search-relatedarticle' => 'Қатысты',
 'mwsuggest-disable' => 'AJAX ұсынымдарын өшір',
 'searcheverything-enable' => 'Белгіленген есім кеңістігінен іздеу',
@@ -1993,11 +1987,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}} ескерту хат жіберу қызметі',
 'enotif_reset' => 'Барлық бет келіп-кетілді деп белгіле',
-'enotif_newpagetext' => 'Мынау жаңа бет.',
 'enotif_impersonal_salutation' => '{{SITENAME}} қатысушысы',
-'changed' => 'өзгертті',
-'created' => 'бастады',
-'enotif_subject' => '{{SITENAME}} жобасында $PAGEEDITOR $PAGETITLE атаулы бетті $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Соңғы келіп-кетуіңізден бері болған өзгерістер үшін $1 дегенді қараңыз.',
 'enotif_lastdiff' => 'Осы өзгеріс үшін $1 дегенді қараңыз.',
 'enotif_anon_editor' => 'тіркелгісіз қатысушы $1',
@@ -3192,5 +3182,8 @@ $5
 'logentry-newusers-create2' => '$1 $3 деген аккаунт тіркеді',
 'logentry-newusers-autocreate' => '$1 аккаунты автоматты түрде тіркелді',
 'newuserlog-byemail' => 'Құпия сөз e-mail арқылы жіберілді',
+
+# Search suggestions
+'searchsuggest-search' => 'Іздеу',
 
 );

@@ -230,7 +230,6 @@ $messages = array(
 'qbbrowse' => 'Iffuglia',
 'qbedit' => 'Mudifigga',
 'qbpageoptions' => 'Prifirenzi pàgina',
-'qbpageinfo' => "Infuimmazioni i' la pàgina",
 'qbmyoptions' => "Li me' pàgini",
 'qbspecialpages' => 'Pàgini ippiziari',
 'faq' => 'FAQ (infuimmazioni e aggiuddu)',
@@ -437,9 +436,6 @@ La rasgioni frunidda è ''$2''.",
 
 Si pò sighì a usà {{SITENAME}} cumenti utenti anònimu oppuru eseguì una noba intradda, cu' lu matessi innòmu utenti o un'innòmu dibessu.
 Zerthuni pàgini pudìani continuà a apparì cumenti si la iscidda nò fùssia avvinudda finaghì nò vèni puridda la mimória cache di lu propriu nabiggadori.",
-'welcomecreation' => '== Binvinuddu, $1! ==
-
-La registhrazioni è isthadda criadda currettamenti. No dimintiggà di passunarizzà li prifirenzi di {{SITENAME}}.',
 'yourname' => 'Innòmu utenti',
 'yourpassword' => "Paràura d'órdhini",
 'yourpasswordagain' => "Ripeti la paràura d'órdhini",
@@ -790,8 +786,6 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 'search-interwiki-caption' => 'Prugetti fraddeddi',
 'search-interwiki-default' => 'Risulthaddi da $1:',
 'search-interwiki-more' => '(althru)',
-'search-mwsuggest-enabled' => 'cun suggerimenti',
-'search-mwsuggest-disabled' => 'chena suggerimenti',
 'search-relatedarticle' => 'Risulthaddi curriraddi',
 'searchrelated' => 'curriraddi',
 'searchall' => 'tutti',
@@ -1310,11 +1304,7 @@ Si daboi s'à gana d'eliminà la pàgina da la listha di l'abbaidaddi ippiziarii
 
 'enotif_mailer' => 'Sisthema di nutìfica via postha erettrònica di {{SITENAME}}',
 'enotif_reset' => 'Signa tutti li pàgini cumenti già visitaddi',
-'enotif_newpagetext' => 'Chistha è una pàgina nóba.',
 'enotif_impersonal_salutation' => 'Utenti di {{SITENAME}}',
-'changed' => 'ciambadda',
-'created' => 'criadda',
-'enotif_subject' => 'La pàgina $PAGETITLE di {{SITENAME}} è isthadda $CHANGEDORCREATED da $PAGEEDITOR',
 'enotif_lastvisited' => "Cunsultha $1 pa vidé tutti li mudìfigghi da l'ulthima visita tóia.",
 'enotif_lastdiff' => 'Vidé $1 pa visuarizzà la mudìfigga.',
 'enotif_anon_editor' => 'utenti anònimu $1',

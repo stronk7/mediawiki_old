@@ -775,6 +775,9 @@ abstract class ApiBase extends ContextSource {
 			if ( !$titleObj ) {
 				$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
 			}
+			if ( !$titleObj->canExist() ) {
+				$this->dieUsage( "Namespace doesn't allow actual pages", 'pagecannotexist' );
+			}
 			$pageObj = WikiPage::factory( $titleObj );
 			if ( $load !== false ) {
 				$pageObj->loadPageData( $load );
@@ -929,9 +932,9 @@ abstract class ApiBase extends ContextSource {
 				ApiBase::dieDebug( __METHOD__, "Boolean param $encParamName's default is set to '$default'. Boolean parameters must default to false." );
 			}
 
-			$value = $this->getRequest()->getCheck( $encParamName );
+			$value = $this->getMain()->getCheck( $encParamName );
 		} else {
-			$value = $this->getRequest()->getVal( $encParamName, $default );
+			$value = $this->getMain()->getVal( $encParamName, $default );
 
 			if ( isset( $value ) && $type == 'namespace' ) {
 				$type = MWNamespace::getValidNamespaces();

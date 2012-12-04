@@ -152,7 +152,6 @@ Pāusai en kategōrijai "$1"',
 'qbbrowse' => 'Pradirēis',
 'qbedit' => 'Redigīs',
 'qbpageoptions' => 'Šin pāusan',
-'qbpageinfo' => 'Kōnteksts',
 'qbmyoptions' => 'Majāi pāusai',
 'qbspecialpages' => 'Speciālai pāusai',
 'faq' => 'Ukadeznai prasīsenei',
@@ -376,11 +375,8 @@ Drēudisnas pagrintinsna: "$2".',
 # Login and logout pages
 'logouttext' => "'''Tū assei teinū izgūbun.'''
 
-Tū mazzi ēmpirsin sadīntun tērpautun {{SITENAME}} kāigi niengūbuns tērpautajs, anga [[Special:UserLogin|enēitwei etkūmps]] kāigi šis sūbs anga kits tērpautajs.
+Tū mazzi ēmpirsin sadīntun tērpautun {{SITENAME}} kāigi niengūbuns tērpautajs, anga <span class='plainlinks'>[$1 enēitwei etkūmps]</span> kāigi šis sūbs anga kits tērpautajs.
 Endirēis, kāi ainuntai pāusai mazzi būtwei waidīntan ikāigi tū būlai ainatīngi engūbun, ērgi tū wīrst skistinnuns lasātlas rānkas minīsnan.",
-'welcomecreation' => '== Kaīls, $1! ==
-Twājs rekkens pastāi teīktan.
-Ni izmīrstais kitawīdintun Twajjans [[Special:Preferences|pirminiskwans per {{SITENAME}}]].',
 'yourname' => 'Twajā tērpautajas pabilisnā:',
 'yourpassword' => 'Twājs kliptaswīrds:',
 'yourpasswordagain' => 'Āntrinais kliptaswīrdan',
@@ -824,8 +820,6 @@ Nawigaciōnis autengīsenin terpausnā naikinna etrīnksenin en kōlunei.',
 'search-interwiki-caption' => 'Paligwāi prōjaktai',
 'search-interwiki-default' => 'Rezultātai per $1:',
 'search-interwiki-more' => '(tūls)',
-'search-mwsuggest-enabled' => 'sen nadāsnans',
-'search-mwsuggest-disabled' => 'šlāit nadāsnans',
 'search-relatedarticle' => 'Ristan',
 'mwsuggest-disable' => 'Izklaūjais AJAX nadāsnans',
 'searcheverything-enable' => 'Laukīs en wisēimans tītelin plattibins',
@@ -1612,11 +1606,7 @@ Eraīna šisse pāusas ēnturas kitawīdinsna anga diskusiōnis pāusas sēitan 
 
 'enotif_mailer' => 'Pawakīsenis iz {{SITENAME}}',
 'enotif_reset' => 'Ebzentlis wissans pāusans per kāimalukitans',
-'enotif_newpagetext' => 'Sta ast nāunan pāusan.',
 'enotif_impersonal_salutation' => 'tērpautajs stesse {{SITENAME}}',
-'changed' => 'kitawīdintan',
-'created' => 'teīktan',
-'enotif_subject' => 'Pāusan $PAGETITLE en {{SITENAME}} pastāi $CHANGEDORCREATED pra $PAGEEDITOR',
 'enotif_lastvisited' => 'Wīdais en $1 wissans kitawīdinsnans ezze Twajjai panzdauman kāimalukisenin.',
 'enotif_lastdiff' => 'Wīdais en $1 šan kitawīdisnan.',
 'enotif_anon_editor' => 'anōnims tērpautajs $1',

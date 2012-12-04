@@ -4,6 +4,16 @@
  * Tests timestamp parsing and output.
  */
 class TimestampTest extends MediaWikiTestCase {
+
+	protected function setUp() {
+		parent::setUp();
+
+		$this->setMwGlobals( array(
+			'wgLanguageCode' => 'en',
+			'wgContLang' => Language::factory( 'en' ),
+			'wgLang' => Language::factory( 'en' ),
+		) );
+	}
 	/**
 	 * Test parsing of valid timestamps and outputing to MW format.
 	 * @dataProvider provideValidTimestamps
@@ -44,14 +54,14 @@ class TimestampTest extends MediaWikiTestCase {
 	 */
 	function testHumanOutput() {
 		$timestamp = new MWTimestamp( time() - 3600 );
-		$this->assertEquals( "1 hour ago", $timestamp->getHumanTimestamp()->toString() );
+		$this->assertEquals( "1 hour ago", $timestamp->getHumanTimestamp()->inLanguage( 'en' )->text() );
 	}
 
 	/**
 	 * Returns a list of valid timestamps in the format:
 	 * array( type, timestamp_of_type, timestamp_in_MW )
 	 */
-	function provideValidTimestamps() {
+	public static function provideValidTimestamps() {
 		return array(
 			// Various formats
 			array( TS_UNIX, '1343761268', '20120731190108' ),

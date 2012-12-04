@@ -170,7 +170,6 @@ $messages = array(
 'qbbrowse' => 'गवेषण करू',
 'qbedit' => 'सम्पादन करू',
 'qbpageoptions' => 'ई पन्ना',
-'qbpageinfo' => 'विषय',
 'qbmyoptions' => 'हमर पन्ना सभ',
 'qbspecialpages' => 'विशेष पन्ना सभ',
 'faq' => 'त्वरित प्रश्नोत्तरी',
@@ -422,11 +421,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''अहाँ निष्क्रमण कऽ गेल छी।'''
 
-अहाँ {{अन्तर्जाल}} प्रयोग अनाम भऽ कऽ सकै छी, वा अहाँ [[Special:UserLogin|log in again]] वएह आकि कोनो आन प्रयोक्ताक रूपमे सेहू प्रयोक कऽ सकै छी।
+अहाँ {{अन्तर्जाल}} प्रयोग अनाम भऽ कऽ सकै छी, वा अहाँ <span class='plainlinks'>[$1 log in again]</span> वएह आकि कोनो आन प्रयोक्ताक रूपमे सेहू प्रयोक कऽ सकै छी।
 ई मोन राखू जे किछु पन्ना एना देखा पड़ि सकैए जेना अहाँ अखनो सम्प्रवेशित होइ, जावत अहाँ अपन गवेषकक उपस्मृति मेटा नै दै छी।",
-'welcomecreation' => '== स्वागत अछि, $1! ==
-अहाँक खाता खुजि गेल अछि।
-अपन [[Special:Preferences|{{अन्तर्जाल}} preferences]] बदलब नै बिसरू।',
 'yourname' => 'प्रयोक्ता:',
 'yourpassword' => 'कूटशब्द:',
 'yourpasswordagain' => 'कूटशब्द फेरसँ टाइप करू:',
@@ -1018,8 +1014,6 @@ $3 द्वारा देल कारण अछि ''$2''",
 'search-interwiki-caption' => 'सम्बन्धित परियोजना सभ',
 'search-interwiki-default' => '$1 सभटा परिणाम:',
 'search-interwiki-more' => '(आर)',
-'search-mwsuggest-enabled' => 'सलाहक संग',
-'search-mwsuggest-disabled' => 'कोनो सलाह नै',
 'search-relatedarticle' => 'सम्बन्धी',
 'mwsuggest-disable' => 'AJAX सलाह अमान्य करू',
 'searcheverything-enable' => 'सभ नामस्थान सभमे ताकू',
@@ -1971,11 +1965,7 @@ $1',
 
 'enotif_mailer' => '{{जालस्थल}} सूचना पत्रक',
 'enotif_reset' => 'सभ पन्नाकेँ देखल चिन्हित करू',
-'enotif_newpagetext' => 'ई एकटा नव पन्ना छी।',
 'enotif_impersonal_salutation' => '{{अन्तर्जाल}} प्रयोक्ता',
-'changed' => 'बदलल गेल',
-'created' => 'बनाएल गेल',
-'enotif_subject' => '{{अन्तर्जाल}} पन्ना $PAGETITLE भेल $CHANGEDORCREATED द्वारा $PAGEEDITOR',
 'enotif_lastvisited' => 'देखू $1 अपन अन्तिम बेर अएलाक बादक परिवर्तन लेल।',
 'enotif_lastdiff' => 'ऐ परिवर्तनकेँ देखबा लेल $1 देखू।',
 'enotif_anon_editor' => 'गुप्त प्रयोक्ता $1',

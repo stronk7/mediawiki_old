@@ -195,7 +195,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__បង្ខំមាតិកា__', '__បង្ខំបញ្ជីអត្ថបទ__', '__បង្ខំអោយបង្ហាញមាតិកា__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__មាតិកា__', '__បញ្ជីអត្ថបទ__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__ផ្នែកមិនត្រូវកែប្រែ__', '__មិនមានផ្នែកកែប្រែ__', '__លាក់ផ្នែកកែប្រែ__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__លាក់បឋមកថា__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'ខែនេះ', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonthname'          => array( '1', 'ឈ្មោះខែនេះ', 'CURRENTMONTHNAME' ),
 	'currentday'                => array( '1', 'ថ្ងៃនេះ', 'CURRENTDAY' ),
@@ -406,7 +405,6 @@ $messages = array(
 'qbbrowse' => 'រាវរក',
 'qbedit' => 'កែប្រែ',
 'qbpageoptions' => 'ទំព័រនេះ',
-'qbpageinfo' => 'ព័ត៌មានទំព័រ',
 'qbmyoptions' => 'ទំព័ររបស់ខ្ញុំ',
 'qbspecialpages' => 'ទំព័រពិសេសៗ',
 'faq' => 'សំណួរដែលសួរញឹកញាប់',
@@ -419,7 +417,7 @@ $messages = array(
 'vector-action-protect' => 'ការពារ',
 'vector-action-undelete' => 'ឈប់លុបចោល',
 'vector-action-unprotect' => 'ប្ដូរការការពារ',
-'vector-simplesearch-preference' => 'ប្រើអនុសាសន៍ពាក្យចង់ស្វែងរក (សំរាប់តែសំបកវ៉ិចទ័រប៉ុណ្ណោះ)',
+'vector-simplesearch-preference' => 'ប្រើរបារស្វែងរកសាមញ្ញ (សំរាប់តែសំបកវ៉ិចទ័រប៉ុណ្ណោះ)',
 'vector-view-create' => 'បង្កើត​',
 'vector-view-edit' => 'កែប្រែ​',
 'vector-view-history' => 'មើល​ប្រវត្តិ​',
@@ -633,7 +631,8 @@ $1',
 'protectedpagetext' => 'ទំព័រនេះបានត្រូវចាក់សោមិនឱ្យកែប្រែ​។',
 'viewsourcetext' => 'អ្នកអាចមើលនិងចម្លងកូដរបស់ទំព័រនេះ៖',
 'viewyourtext' => "អ្នកអាចមើលនិងចម្លងកូដរបស់'''ការកែប្រែរបស់អ្នក'''ទៅកាន់ទំព័រនេះ៖",
-'protectedinterface' => 'ទំព័រនេះ ផ្ដល់នូវ អត្ថបទអន្តរមុខ សម្រាប់ផ្នែកទន់, និង បានត្រូវចាក់សោ ដើម្បីចៀសវាង ការបំពាន ។',
+'protectedinterface' => 'ទំព័រនេះផ្ដល់នូវអត្ថបទអន្តរមុខសម្រាប់សូហ្វវែរនៅក្នុងវិគីនេះ និងត្រូវបានចាក់សោដើម្បីចៀសវាងការបំពាន។
+ដើម្បីបន្ថែមឬផ្លាស់ប្ដូរការបកប្រែសំរាប់វិគីទាំងអស់ សូមប្រើប្រាស់ [//translatewiki.net/ translatewiki.net] ដែលជាគំរោងបកប្រែរបស់MediaWiki។',
 'editinginterface' => "'''ប្រយ័ត្ន៖''' អ្នកកំពុងតែកែប្រែទំព័រដែលបានប្រើប្រាស់​ដើម្បីផ្ដល់នូវអន្តរមុខសម្រាប់ផ្នែកទន់​។ បំលាស់ប្ដូរចំពោះទំព័រនេះ​នឹងប៉ះពាល់ដល់ទំព័រអន្តរមុខនៃអ្នកប្រើប្រាស់​ជាច្រើន ដែលប្រើប្រាស់វិបសាយនេះ។ សម្រាប់ការបកប្រែ សូមពិចារណាប្រើប្រាស់ [//translatewiki.net/wiki/Main_Page?setlang=km translatewiki.net] (បេតាវិគី) គម្រោង​អន្តរជាតូបនីយកម្ម​នៃមេឌាវិគី ។",
 'sqlhidden' => '(ការអង្កេត SQL ត្រូវបិទបាំង)',
 'cascadeprotected' => 'ទំព័រនេះត្រូវបានការពារពីការការប្រែដោយសារវាមាន{{PLURAL:$1|ទំព័រ, ដែលមាន}} ដែលត្រូវបានការពារជាមួយជំរើស"ជាបណ្ដាក់"៖
@@ -647,6 +646,7 @@ $2',
 'filereadonlyerror' => 'មិនអាចកែប្រែឯកសារ "$1" បានទេពីព្រោះថតឯកសារ "$2" ស្ថិតក្នុងម៉ូដសំរាប់តែអានប៉ុណ្ណោះ។
 
 អភិបាលដែលបានចាក់សោរវាបានផ្ដល់សេចក្ដីពន្យល់បែបនេះ៖ "$3"។',
+'exception-nologin' => 'មិនទាន់កត់ឈ្មោះចូលទេ',
 'exception-nologin-text' => 'ទំព័រឬសកម្មភាពនេះតំរូវអោយអ្នកធ្វើការកត់ឈ្មោះចូលទៅក្នុងវិគីនេះ។',
 
 # Virus scanner
@@ -657,13 +657,9 @@ $2',
 # Login and logout pages
 'logouttext' => "'''ឥឡូវនេះលោកអ្នកបានកត់ឈ្មោះចេញពីគណនីរបស់លោកអ្នកហើយ។'''
 
-អ្នកអាចបន្តប្រើប្រាស់{{SITENAME}}ក្នុងភាពអនាមិក ឬ [[Special:UserLogin|កត់ឈ្មោះចូលម្ដងទៀត]]ក្នុងនាមជាអ្នកប្រើប្រាស់ដដែលឬផ្សេងទៀត។
+អ្នកអាចបន្តប្រើប្រាស់{{SITENAME}}ក្នុងភាពអនាមិក ឬ <span class='plainlinks'>[$1 កត់ឈ្មោះចូលម្ដងទៀត]</span>ក្នុងនាមជាអ្នកប្រើប្រាស់ដដែលឬផ្សេងទៀត។
 
 សូមកត់សំគាល់ថាទំព័រមួយចំនួនប្រហែលជានៅតែបង្ហាញដូចពេលលោកអ្នកកត់ឈ្មោះចូលក្នុងគណនីរបស់លោកអ្នកដដែល។ ប្រសិនបើមានករណីនេះកើតឡើង សូមសំអាត សតិភ្ជាប់នៃកម្មវិធីរុករករបស់លោកអ្នក។",
-'welcomecreation' => '== សូមស្វាគមន៍ $1! ==
-
-គណនីរបស់អ្នកត្រូវបានបង្កើតហើយ។
-កុំភ្លេចផ្លាស់ប្ដូរ[[Special:Preferences|ចំណង់ចំណូលចិត្ត{{SITENAME}}]]របស់អ្នក។',
 'yourname' => 'អត្តនាម៖',
 'yourpassword' => 'ពាក្យសំងាត់៖',
 'yourpasswordagain' => 'វាយពាក្យសំងាត់ម្តងទៀត៖',
@@ -952,7 +948,7 @@ $2
 អ្នកអាច [[Special:Search/{{PAGENAME}}|ស្វែងរក​ចំណងជើង​នៃទំព័រនេះ]]ក្នុងទំព័រដទៃទៀត​​ ឬ [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ស្វែង​រក​កំណត់​ហេតុ​ដែល​ពាក់ព័ន្ធ] ឬ [{{fullurl:{{FULLPAGENAME}}|action=edit}} កែប្រែ​ទំព័រនេះ]។',
 'noarticletext-nopermission' => 'បច្ចុប្បន្ន គ្មានអត្ថបទណាមួយក្នុងទំព័រនេះទេ។
 
-អ្នកអាច [[Special:Search/{{PAGENAME}}|ស្វែងរក​ចំណងជើង​នៃទំព័រនេះ]] ក្នុងទំព័រ​ផ្សេងៗ ឬ<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ស្វែង​រក​កំណត់​ហេតុ​ដែល​ពាក់ព័ន្ធ]</span>។',
+អ្នកអាច [[Special:Search/{{PAGENAME}}|ស្វែងរក​ចំណងជើង​នៃទំព័រនេះ]] ក្នុងទំព័រ​ផ្សេងៗ ឬ<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ស្វែង​រក​កំណត់​ហេតុ​ដែល​ពាក់ព័ន្ធ]</span>។ ប៉ុន្តែអ្នកគ្មានសិទ្ធិក្នុងការបង្កើតទំព័រនេះទេ។',
 'userpage-userdoesnotexist' => 'គណនីអ្នកប្រើឈ្មោះ"<nowiki>$1</nowiki>" មិនទាន់បានចុះបញ្ជី។
 
 ចូរគិតម្ដងទៀតថាអ្នកចង់ បង្កើត / កែប្រែ ទំព័រនេះឬទេ។',
@@ -978,7 +974,7 @@ $2
 'updated' => '(បានបន្ទាន់សម័យ)',
 'note' => "'''ចំណាំ៖'''",
 'previewnote' => "'''សូមចាំថានេះគ្រាន់តែជា​ការបង្ហាញការមើលជាមុនប៉ុណ្ណោះ។ បំលាស់ប្ដូរ​របស់អ្នកមិនទាន់បាន​រក្សាទុកទេ!'''",
-'continue-editing' => 'បន្តធ្វើការកែប្រែ',
+'continue-editing' => 'ទៅកាន់កន្លែងសំរាប់ធ្វើការកែប្រែ',
 'previewconflict' => 'ការមើលមុននេះយោងតាមអត្ថបទក្នុងប្រអប់កែប្រែខាងលើ។ ទំព័រអត្ថបទនឹងបង្ហាញចេញបែបនេះប្រសិនបើអ្នកជ្រើសរើសរក្សាទុក។',
 'session_fail_preview' => "'''សូមអភ័យទោស! យើងមិនអាចរក្សាទុកការកែប្រែរបស់អ្នកបានទេ ដោយសារបាត់ទិន្នន័យវេនការងារ។
 
@@ -1201,7 +1197,8 @@ $1",
 'revdelete-no-change' => "'''ប្រយ័ត្ន​៖''' វត្ថុ​ដែល​មាន​កាល​បរិច្ឆេទ​ $2, $1 ត្រូវ​បាន​ស្នើ​សុំ​ការ​កំណត់​គំហើញ​រួច​ហើយ​។",
 'revdelete-reason-dropdown' => '*មូលហេតុលុបចោលទូទៅ
 ** បំពានលើកម្មសិទ្ធិបញ្ញា
-** ព័ត៌មានផ្ទាល់ខ្លួនមិនសមរម្យ
+** មតិយោបល់ឬព័ត៌មានផ្ទាល់ខ្លួនមិនសមរម្យ
+** ឈ្មោះអ្នកប្រើប្រាស់មិនសមរម្យ
 ** ព័ត៌មានបង្ខូចកេរ្តិ៍ឈ្មោះ',
 'revdelete-otherreason' => 'មូលហេតុផ្សេង​ៗ/ដទៃទៀត​៖',
 'revdelete-reasonotherlist' => 'មូលហេតុផ្សេង​ទៀត​',
@@ -1300,8 +1297,6 @@ $1",
 'search-interwiki-caption' => 'គម្រោងជាបងប្អូន',
 'search-interwiki-default' => 'លទ្ធផលពី$1៖',
 'search-interwiki-more' => '(បន្ថែមទៀត)',
-'search-mwsuggest-enabled' => 'មានសំណើ',
-'search-mwsuggest-disabled' => 'គ្មានសំណើ',
 'search-relatedarticle' => 'ទាក់ទិន',
 'mwsuggest-disable' => 'មិនប្រើសំនើAJAX',
 'searcheverything-enable' => 'ស្វែងរកនៅក្នុងលំហឈ្មោះទាំងអស់',
@@ -1397,7 +1392,7 @@ $1",
 'timezoneregion-indian' => 'មហាសមុទ្រឥណ្ឌា',
 'timezoneregion-pacific' => 'មហាសមុទ្រប៉ាស៊ីហ្វិក',
 'allowemail' => 'ទទួលអ៊ីមែលពីអ្នកប្រើប្រាស់ដទៃទៀត',
-'prefs-searchoptions' => 'ជម្រើសក្នុងការស្វែងរក',
+'prefs-searchoptions' => 'ស្វែងរក',
 'prefs-namespaces' => 'ប្រភេទ',
 'defaultns' => 'ស្វែងរក​ក្នុង​លំហឈ្មោះ​ទាំងនេះ​តាម​បែប​ផ្សេង៖',
 'default' => 'លំនាំដើម',
@@ -1911,6 +1906,7 @@ $1',
 'uploadnewversion-linktext' => 'ផ្ទុកឡើងមួយកំណែថ្មីនៃឯកសារនេះ',
 'shared-repo-from' => 'ពី $1',
 'shared-repo' => 'ឃ្លាំងរួម​',
+'upload-disallowed-here' => 'អ្នកមិនអាចសរសេរជាន់ពីលើឯកសារនេះទេ។',
 
 # File reversion
 'filerevert' => 'ត្រឡប់ $1',
@@ -1940,6 +1936,7 @@ $1',
 **ឯកសារជាន់គ្នា',
 'filedelete-edit-reasonlist' => 'មូលហេតុនៃការលុបការកែប្រែ',
 'filedelete-maintenance' => 'ការលុបឬស្តារឯកសារឡើងវិញត្រូវបានផ្អាកជាបណ្ដោះអាសន្ន​ក្នុងពេលធ្វើការថែទាំប្រព័ន្ធ។',
+'filedelete-maintenance-title' => 'មិនអាចលុបឯកសារចោល',
 
 # MIME search
 'mimesearch' => 'ស្វែងរក MIME',
@@ -1991,9 +1988,9 @@ $1',
 
 'disambiguations' => 'ទំព័រដែលភ្ជាប់ទៅទំព័រមានចំណងជើងស្រដៀងគ្នា',
 'disambiguationspage' => 'Template:ស្រដៀងគ្នា',
-'disambiguations-text' => "ទំព័រទាំងឡាយខាងក្រោមនេះភ្ជាប់ទៅកាន់'''ទំព័រពាក្យស្រដៀងគ្នា'''។
+'disambiguations-text' => "ទំព័រទាំងឡាយខាងក្រោមនេះមិនតំណភ្ជាប់យ៉ាងតិចមួយដែលភ្ជាប់ទៅកាន់'''ទំព័រពាក្យស្រដៀងគ្នា'''។
 
-ទំព័រទាំងនេះគួរតែភ្ជាប់ទៅប្រធានបទត្រឹមត្រូវតែម្ដង។<br />
+ទំព័រទាំងនេះគួរតែភ្ជាប់ទៅទំព័រត្រឹមត្រូវជាងនេះវិញ។<br />
 ទំព័រមួយត្រូវចាត់ទុកជាទំព័រពាក្យស្រដៀងគ្នា ប្រសិនបើវាប្រើទំព័រគំរូដែលភ្ជាប់មកពី[[MediaWiki:Disambiguationspage]]",
 
 'doubleredirects' => 'ទំព័របញ្ជូនបន្តទ្វេដង',
@@ -2021,6 +2018,7 @@ $1',
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|បៃ|បៃ}}',
 'ncategories' => '$1 {{PLURAL:$1|ចំណាត់ថ្នាក់ក្រុម|ចំណាត់ថ្នាក់ក្រុម}}',
+'ninterwikis' => '$1 {{PLURAL:$1|អន្តរវិគី|អន្តរវិគី}}',
 'nlinks' => '$1 {{PLURAL:$1|តំណភ្ជាប់|តំណភ្ជាប់}}',
 'nmembers' => '$1{{PLURAL:$1|សមាជិក|សមាជិក}}',
 'nrevisions' => '$1 {{PLURAL:$1|កំណែប្រែ}}',
@@ -2255,11 +2253,7 @@ $1',
 
 'enotif_mailer' => 'ភ្នាក់ងារផ្ញើអ៊ីមែលផ្ដល់ដំណឹងរបស់ {{SITENAME}}',
 'enotif_reset' => 'កត់សម្គាល់រាល់គ្រប់ទំព័រដែលបានចូលមើល',
-'enotif_newpagetext' => 'នេះជាទំព័រថ្មី។',
 'enotif_impersonal_salutation' => 'អ្នកប្រើប្រាស់ {{SITENAME}}',
-'changed' => 'បានផ្លាស់ប្តូរ',
-'created' => 'បានបង្កើត',
-'enotif_subject' => 'ទំព័រ $PAGETITLE នៃ {{SITENAME}} ត្រូវបាន $CHANGEDORCREATED ដោយ $PAGEEDITOR',
 'enotif_lastvisited' => 'ពិនិត្យ $1 ចំពោះគ្រប់បំលាស់ប្តូរ តាំងពីពេលចូលមើល ចុងក្រោយ។',
 'enotif_lastdiff' => 'សូមពិនិត្យ$1ដើម្បីមើលបំលាស់ប្តូរនេះ។',
 'enotif_anon_editor' => 'អ្នកប្រើប្រាស់អនាមិក $1',
@@ -2930,14 +2924,19 @@ $1',
 
 # Info page
 'pageinfo-title' => 'ព័ត៌មានសម្រាប់ "$1"',
+'pageinfo-not-current' => 'ព័ត៌មានប្រហែលជាអាចបង្ហាញសំរាប់តែកំណែបច្ចុប្បន្នប៉ុណ្ណោះ។',
 'pageinfo-header-basic' => 'ព័ត៌មាន​មូលដ្ឋាន​',
 'pageinfo-header-edits' => 'ប្រវត្តិកែប្រែ',
 'pageinfo-header-restrictions' => 'ការការពារទំព័រ',
 'pageinfo-header-properties' => 'លក្ខណៈសម្បត្តិទំព័រ',
 'pageinfo-display-title' => 'បង្ហាញចំណងជើង',
+'pageinfo-default-sort' => 'ពាក្យគន្លឺះសំរាប់តំរៀប',
 'pageinfo-length' => 'ប្រវែងទំព័រ (គិតជាបៃ)',
 'pageinfo-article-id' => 'អត្តលេខទំព័រ',
+'pageinfo-language' => 'ភាសារបស់ខ្លឹមសារទំព័រ',
 'pageinfo-robot-policy' => 'ស្ថានភាពម៉ាស៊ីនស្វែងរក',
+'pageinfo-robot-index' => 'អាចដាក់ក្នុងលិបិក្រម',
+'pageinfo-robot-noindex' => 'មិនអាចដាក់ក្នុងលិបិក្រម',
 'pageinfo-views' => 'ចំនួនការបើកមើល',
 'pageinfo-watchers' => 'ចំនួនអ្នកតាមដានទំព័រ',
 'pageinfo-redirects-name' => 'ចំនួនការបញ្ជូនបន្តមកកាន់ទំព័រនេះ',
@@ -2951,9 +2950,17 @@ $1',
 'pageinfo-authors' => 'ចំនួនអ្នកនិពន្ធសរុប',
 'pageinfo-recent-edits' => 'ចំនួនការកែប្រែថ្មីៗ (ក្នុងរយៈពេល $1 កន្លងទៅនេះ)',
 'pageinfo-recent-authors' => 'ចំនួនអ្នកនិពន្ធថ្មីៗនេះ',
-'pageinfo-restriction' => 'ការការពារទំព័រ ({{$1}})',
 'pageinfo-magic-words' => '{{PLURAL:$1|ពាក្យ|ពាក្យ}} វេទមន្ត ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|ចំណាត់ថ្នាក់ក្រុម|ចំណាត់ថ្នាក់ក្រុម}}ដែលបានលាក់ ($1)',
+'pageinfo-templates' => '{{PLURAL:$1|ទំព័រគំរូ|ទំព័រគំរូ}}ដែលទាញមកបញ្ចូល ($1)',
+'pageinfo-toolboxlink' => 'ព័ត៌មានអំពីទំព័រនេះ',
+'pageinfo-redirectsto' => 'បញ្ជូនបន្តទៅកាន់',
+'pageinfo-redirectsto-info' => 'ព័ត៌មាន​',
+'pageinfo-contentpage' => 'រាប់ជាទំព័រដែលមានខ្លឹមសារនៅខាងក្នុង',
+'pageinfo-contentpage-yes' => 'បាទ/ចាស',
+'pageinfo-protect-cascading' => 'ការការពារត្រូវបានដាក់ជាថ្នាក់ពីទីនេះទៅ',
+'pageinfo-protect-cascading-yes' => 'បាទ/ចាស',
+'pageinfo-protect-cascading-from' => 'ការការពារត្រូវបានដាក់ជាថ្នាក់ពី',
 
 # Skin names
 'skinname-standard' => 'បុរាណ',
@@ -3627,6 +3634,10 @@ $5
 'feedback-adding' => 'កំពុងបន្ថែមមតិយោបល់ទៅលើទំព័រ...',
 'feedback-thanks' => 'សូមអរគុណ! មតិយោបល់របស់អ្នកត្រូវបានដាក់ផ្សាយនៅលើទំព័រ "[$2 $1]"។',
 'feedback-close' => 'រួចរាល់',
+
+# Search suggestions
+'searchsuggest-search' => 'ស្វែងរក​',
+'searchsuggest-containing' => 'ដែលមានពាក្យ...',
 
 # API errors
 'api-error-badaccess-groups' => 'អ្នកគ្មានការអនុញ្ញាតអោយផ្ទុកឯកសារឡើងទៅក្នុងវិគីនេះទេ។',

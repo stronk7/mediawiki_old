@@ -149,6 +149,23 @@ class LoginForm extends SpecialPage {
 		$this->load();
 		$this->setHeaders();
 
+		global $wgSecureLogin;
+		if (
+			$this->mType !== 'signup' &&
+			$wgSecureLogin &&
+			WebRequest::detectProtocol() !== 'https'
+		) {
+			$title = $this->getFullTitle();
+			$query = array(
+				'returnto' => $this->mReturnTo,
+				'returntoquery' => $this->mReturnToQuery,
+				'wpStickHTTPS' => $this->mStickHTTPS
+			);
+			$url = $title->getFullURL( $query, false, PROTO_HTTPS );
+			$this->getOutput()->redirect( $url );
+			return;
+		}
+
 		if ( $par == 'signup' ) { # Check for [[Special:Userlogin/signup]]
 			$this->mType = 'signup';
 		}
@@ -269,6 +286,7 @@ class LoginForm extends SpecialPage {
 
 	/**
 	 * @private
+	 * @throws PermissionsError|ReadOnlyError
 	 * @return bool|User
 	 */
 	function addNewAccountInternal() {
@@ -425,7 +443,13 @@ class LoginForm extends SpecialPage {
 		}
 
 		self::clearCreateaccountToken();
-		return $this->initUser( $u, false );
+
+		$status = $this->initUser( $u, false );
+		if ( !$status->isOK() ) {
+			$this->mainLoginForm( $status->getHTML() );
+			return false;
+		}
+		return $status->value;
 	}
 
 	/**
@@ -434,13 +458,16 @@ class LoginForm extends SpecialPage {
 	 *
 	 * @param $u User object.
 	 * @param $autocreate boolean -- true if this is an autocreation via auth plugin
-	 * @return User object.
+	 * @return Status object, with the User object in the value member on success
 	 * @private
 	 */
 	function initUser( $u, $autocreate ) {
 		global $wgAuth;
 
-		$u->addToDatabase();
+		$status = $u->addToDatabase();
+		if ( !$status->isOK() ) {
+			return $status;
+		}
 
 		if ( $wgAuth->allowPasswordChange() ) {
 			$u->setPassword( $this->mPassword );
@@ -464,10 +491,9 @@ class LoginForm extends SpecialPage {
 		$u->saveSettings();
 
 		# Update user count
-		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
-		$ssUpdate->doUpdate();
+		DeferredUpdates::addUpdate( new SiteStatsUpdate( 0, 0, 0, 0, 1 ) );
 
-		return $u;
+		return Status::newGood( $u );
 	}
 
 	/**
@@ -533,7 +559,7 @@ class LoginForm extends SpecialPage {
 		}
 
 		$isAutoCreated = false;
-		if ( 0 == $u->getID() ) {
+		if ( $u->getID() == 0 ) {
 			$status = $this->attemptAutoCreate( $u );
 			if ( $status !== self::SUCCESS ) {
 				return $status;
@@ -543,8 +569,9 @@ class LoginForm extends SpecialPage {
 		} else {
 			global $wgExternalAuthType, $wgAutocreatePolicy;
 			if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
-			&& is_object( $this->mExtUser )
-			&& $this->mExtUser->authenticate( $this->mPassword ) ) {
+				&& is_object( $this->mExtUser )
+				&& $this->mExtUser->authenticate( $this->mPassword )
+			) {
 				# The external user and local user have the same name and
 				# password, so we assume they're the same.
 				$this->mExtUser->linkToLocal( $u->getID() );
@@ -713,12 +740,19 @@ class LoginForm extends SpecialPage {
 		}
 
 		wfDebug( __METHOD__ . ": creating account\n" );
-		$this->initUser( $user, true );
+		$status = $this->initUser( $user, true );
+
+		if ( !$status->isOK() ) {
+			$errors = $status->getErrorsByType( 'error' );
+			$this->mAbortLoginErrorMsg = $errors[0]['message'];
+			return self::ABORTED;
+		}
+
 		return self::SUCCESS;
 	}
 
 	function processLogin() {
-		global $wgMemc, $wgLang;
+		global $wgMemc, $wgLang, $wgSecureLogin;
 
 		switch ( $this->authenticateUserData() ) {
 			case self::SUCCESS:
@@ -730,7 +764,12 @@ class LoginForm extends SpecialPage {
 				} else {
 					$user->invalidateCache();
 				}
-				$user->setCookies();
+
+				if( $wgSecureLogin && !$this->mStickHTTPS ) {
+					$user->setCookies( null, false );
+				} else {
+					$user->setCookies();
+				}
 				self::clearLoginToken();
 
 				// Reset the throttle
@@ -746,6 +785,8 @@ class LoginForm extends SpecialPage {
 					$userLang = Language::factory( $code );
 					$wgLang = $userLang;
 					$this->getContext()->setLanguage( $userLang );
+					// Reset SessionID on Successful login (bug 40995)
+					$this->renewSessionId();
 					$this->successfulLogin();
 				} else {
 					$this->cookieRedirectCheck( 'login' );
@@ -816,7 +857,7 @@ class LoginForm extends SpecialPage {
 	 * @return Status object
 	 */
 	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext' ) {
-		global $wgServer, $wgScript, $wgNewPasswordExpiry;
+		global $wgCanonicalServer, $wgScript, $wgNewPasswordExpiry;
 
 		if ( $u->getEmail() == '' ) {
 			return Status::newFatal( 'noemail', $u->getName() );
@@ -833,7 +874,7 @@ class LoginForm extends SpecialPage {
 		$u->setNewpassword( $np, $throttle );
 		$u->saveSettings();
 		$userLanguage = $u->getOption( 'language' );
-		$m = $this->msg( $emailText, $ip, $u->getName(), $np, '<' . $wgServer . $wgScript . '>',
+		$m = $this->msg( $emailText, $ip, $u->getName(), $np, '<' . $wgCanonicalServer . $wgScript . '>',
 			round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
 		$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m );
 
@@ -858,7 +899,8 @@ class LoginForm extends SpecialPage {
 		wfRunHooks( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
 
 		if( $injected_html !== '' ) {
-			$this->displaySuccessfulLogin( 'loginsuccess', $injected_html );
+			$this->displaySuccessfulAction( $this->msg( 'loginsuccesstitle' ),
+				'loginsuccess', $injected_html );
 		} else {
 			$this->executeReturnTo( 'successredirect' );
 		}
@@ -874,7 +916,7 @@ class LoginForm extends SpecialPage {
 		# Run any hooks; display injected HTML
 		$currentUser = $this->getUser();
 		$injected_html = '';
-		$welcome_creation_msg = 'welcomecreation';
+		$welcome_creation_msg = 'welcomecreation-msg';
 
 		wfRunHooks( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
 
@@ -885,18 +927,21 @@ class LoginForm extends SpecialPage {
 		 */
 		wfRunHooks( 'BeforeWelcomeCreation', array( &$welcome_creation_msg, &$injected_html ) );
 
-		$this->displaySuccessfulLogin( $welcome_creation_msg, $injected_html );
+		$this->displaySuccessfulAction( $this->msg( 'welcomeuser', $this->getUser()->getName() ),
+			$welcome_creation_msg, $injected_html );
 	}
 
 	/**
-	 * Display a "login successful" page.
+	 * Display an "successful action" page.
+	 *
+	 * @param $title string|Message page's title
 	 * @param $msgname string
 	 * @param $injected_html string
 	 */
-	private function displaySuccessfulLogin( $msgname, $injected_html ) {
+	private function displaySuccessfulAction( $title, $msgname, $injected_html ) {
 		$out = $this->getOutput();
-		$out->setPageTitle( $this->msg( 'loginsuccesstitle' ) );
-		if( $msgname ){
+		$out->setPageTitle( $title );
+		if ( $msgname ) {
 			$out->addWikiMsg( $msgname, wfEscapeWikiText( $this->getUser()->getName() ) );
 		}
 
@@ -963,14 +1008,22 @@ class LoginForm extends SpecialPage {
 			$returnToTitle = Title::newMainPage();
 		}
 
+		if ( $wgSecureLogin && !$this->mStickHTTPS ) {
+			$options = array( 'http' );
+			$proto = PROTO_HTTP;
+		} elseif( $wgSecureLogin ) {
+			$options = array( 'https' );
+			$proto = PROTO_HTTPS;
+		} else {
+			$options = array();
+			$proto = PROTO_RELATIVE;
+		}
+
 		if ( $type == 'successredirect' ) {
-			$redirectUrl = $returnToTitle->getFullURL( $returnToQuery );
-			if( $wgSecureLogin && !$this->mStickHTTPS ) {
-				$redirectUrl = preg_replace( '/^https:/', 'http:', $redirectUrl );
-			}
+			$redirectUrl = $returnToTitle->getFullURL( $returnToQuery, false, $proto );
 			$this->getOutput()->redirect( $redirectUrl );
 		} else {
-			$this->getOutput()->addReturnTo( $returnToTitle, $returnToQuery );
+			$this->getOutput()->addReturnTo( $returnToTitle, $returnToQuery, null, $options );
 		}
 	}
 
@@ -1205,6 +1258,23 @@ class LoginForm extends SpecialPage {
 	public static function clearCreateaccountToken() {
 		global $wgRequest;
 		$wgRequest->setSessionData( 'wsCreateaccountToken', null );
+	}
+
+	/**
+	 * Renew the user's session id, using strong entropy
+	 */
+	private function renewSessionId() {
+		if ( wfCheckEntropy() ) {
+			session_regenerate_id( false );
+		} else {
+			//If we don't trust PHP's entropy, we have to replace the session manually
+			$tmp = $_SESSION;
+			session_unset();
+			session_write_close();
+			session_id( MWCryptRand::generateHex( 32 ) );
+			session_start();
+			$_SESSION = $tmp;
+		}
 	}
 
 	/**

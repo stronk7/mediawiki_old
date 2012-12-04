@@ -25,7 +25,9 @@ function getSiteParams( $conf, $wiki ) {
 class SiteConfigurationTest extends MediaWikiTestCase {
 	var $mConf;
 
-	function setUp() {
+	protected function setUp() {
+		parent::setUp();
+
 		$this->mConf = new SiteConfiguration;
 
 		$this->mConf->suffixes = array( 'wiki' );
@@ -91,7 +93,6 @@ class SiteConfigurationTest extends MediaWikiTestCase {
 
 		$GLOBALS['global'] = array( 'global' => 'global' );
 	}
-
 
 	function testSiteFromDb() {
 		$this->assertEquals(

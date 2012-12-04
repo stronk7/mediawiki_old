@@ -44,6 +44,7 @@ class Category {
 
 	/**
 	 * Set up all member variables using a database query.
+	 * @throws MWException
 	 * @return bool True on success, false on failure.
 	 */
 	protected function initialize() {
@@ -57,6 +58,9 @@ class Category {
 			# Already initialized
 			return true;
 		}
+
+		wfProfileIn( __METHOD__ );
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow(
 			'category',
@@ -64,6 +68,8 @@ class Category {
 			$where,
 			__METHOD__
 		);
+
+		wfProfileOut( __METHOD__ );
 
 		if ( !$row ) {
 			# Okay, there were no contents.  Nothing to initialize.
@@ -189,25 +195,37 @@ class Category {
 	}
 
 	/** @return mixed DB key name, or false on failure */
-	public function getName() { return $this->getX( 'mName' ); }
+	public function getName() {
+		return $this->getX( 'mName' );
+	}
 
 	/** @return mixed Category ID, or false on failure */
-	public function getID() { return $this->getX( 'mID' ); }
+	public function getID() {
+		return $this->getX( 'mID' );
+	}
 
 	/** @return mixed Total number of member pages, or false on failure */
-	public function getPageCount() { return $this->getX( 'mPages' ); }
+	public function getPageCount() {
+		return $this->getX( 'mPages' );
+	}
 
 	/** @return mixed Number of subcategories, or false on failure */
-	public function getSubcatCount() { return $this->getX( 'mSubcats' ); }
+	public function getSubcatCount() {
+		return $this->getX( 'mSubcats' );
+	}
 
 	/** @return mixed Number of member files, or false on failure */
-	public function getFileCount() { return $this->getX( 'mFiles' ); }
+	public function getFileCount() {
+		return $this->getX( 'mFiles' );
+	}
 
 	/**
 	 * @return Title|bool Title for this category, or false on failure.
 	 */
 	public function getTitle() {
-		if ( $this->mTitle ) return $this->mTitle;
+		if ( $this->mTitle ) {
+			return $this->mTitle;
+		}
 
 		if ( !$this->initialize() ) {
 			return false;
@@ -225,20 +243,22 @@ class Category {
 	 * @return TitleArray object for category members.
 	 */
 	public function getMembers( $limit = false, $offset = '' ) {
+		wfProfileIn( __METHOD__ );
+
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$conds = array( 'cl_to' => $this->getName(), 'cl_from = page_id' );
 		$options = array( 'ORDER BY' => 'cl_sortkey' );
 
 		if ( $limit ) {
-			$options[ 'LIMIT' ] = $limit;
+			$options['LIMIT'] = $limit;
 		}
 
 		if ( $offset !== '' ) {
 			$conds[] = 'cl_sortkey > ' . $dbr->addQuotes( $offset );
 		}
 
-		return TitleArray::newFromResult(
+		$result = TitleArray::newFromResult(
 			$dbr->select(
 				array( 'page', 'categorylinks' ),
 				array( 'page_id', 'page_namespace', 'page_title', 'page_len',
@@ -248,6 +268,10 @@ class Category {
 				$options
 			)
 		);
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
 	}
 
 	/**
@@ -258,7 +282,7 @@ class Category {
 		if ( !$this->initialize() ) {
 			return false;
 		}
-		return $this-> { $key } ;
+		return $this->{$key};
 	}
 
 	/**
@@ -278,8 +302,10 @@ class Category {
 			}
 		}
 
+		wfProfileIn( __METHOD__ );
+
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin( __METHOD__  );
+		$dbw->begin( __METHOD__ );
 
 		# Insert the row if it doesn't exist yet (e.g., this is being run via
 		# update.php from a pre-1.16 schema).  TODO: This will cause lots and
@@ -302,12 +328,12 @@ class Category {
 		$result = $dbw->selectRow(
 			array( 'categorylinks', 'page' ),
 			array( 'pages' => 'COUNT(*)',
-				   'subcats' => "COUNT($cond1)",
-				   'files' => "COUNT($cond2)"
+				'subcats' => "COUNT($cond1)",
+				'files' => "COUNT($cond2)"
 			),
 			array( 'cl_to' => $this->mName, 'page_id = cl_from' ),
 			__METHOD__,
-			'LOCK IN SHARE MODE'
+			array( 'LOCK IN SHARE MODE' )
 		);
 		$ret = $dbw->update(
 			'category',
@@ -320,6 +346,8 @@ class Category {
 			__METHOD__
 		);
 		$dbw->commit( __METHOD__ );
+
+		wfProfileOut( __METHOD__ );
 
 		# Now we should update our local counts.
 		$this->mPages   = $result->pages;

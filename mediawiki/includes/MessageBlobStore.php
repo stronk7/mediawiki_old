@@ -140,7 +140,7 @@ class MessageBlobStore {
 		// Save the old and new blobs for later
 		$oldBlob = $row->mr_blob;
 		$newBlob = self::generateMessageBlob( $module, $lang );
-		
+
 		$newRow = array(
 			'mr_resource' => $name,
 			'mr_lang' => $lang,
@@ -311,6 +311,7 @@ class MessageBlobStore {
 	 * @param $resourceLoader ResourceLoader object
 	 * @param $modules Array of module names
 	 * @param $lang String: language code
+	 * @throws MWException
 	 * @return array Array mapping module names to blobs
 	 */
 	private static function getFromDB( ResourceLoader $resourceLoader, $modules, $lang ) {

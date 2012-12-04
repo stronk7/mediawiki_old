@@ -9,6 +9,7 @@
  *
  * @author ILVI
  * @author Jewbask
+ * @author Maor X
  * @author Remember the dot
  * @author Runningfridgesrule
  * @author Taichi
@@ -139,7 +140,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'TrocamientosFreskos' ),
 	'Recentchangeslinked'       => array( 'TrocamientosÈnterassados' ),
 	'Revisiondelete'            => array( 'EfassarRēvizyón' ),
-	'RevisionMove'              => array( 'TaxireaRēvizyón' ),
 	'Search'                    => array( 'Buscar' ),
 	'Shortpages'                => array( 'HojasKurtas' ),
 	'Specialpages'              => array( 'HojasEspesyales' ),
@@ -315,7 +315,7 @@ $messages = array(
 'cancel' => 'Anular',
 'moredotdotdot' => 'Más...',
 'mypage' => 'Mi hoja',
-'mytalk' => 'Mi diskusyón',
+'mytalk' => 'La mi diskusyon',
 'anontalk' => 'Diskusyón para este adresso de IP',
 'navigation' => 'Navigación',
 'and' => '&#32;y',
@@ -325,7 +325,6 @@ $messages = array(
 'qbbrowse' => 'Navigar',
 'qbedit' => 'Trocar',
 'qbpageoptions' => 'Esta hoja',
-'qbpageinfo' => 'Enformasyón de hoja',
 'qbmyoptions' => 'Mis hojas',
 'qbspecialpages' => 'Hojas especiales',
 'faq' => 'DAD',
@@ -568,9 +567,9 @@ Si venites aquí por yerro, torna a la hoja de antes.',
 Puedes [[Special:Search/{{PAGENAME}}|buscar el títůlo de esta hoja]] en otras hojas,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los rējistros relatados],
 ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} trocar esta hoja]</span>.',
-'noarticletext-nopermission' => 'No ay teksto oy día en esta hoja.
-Puedes [[Special:Search/{{PAGENAME}}|buscar este títůlo de hoja]] en otras hojas,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los rejistros relasyonados]</span>.',
+'noarticletext-nopermission' => 'No ay teksto en esta oja.
+Puedes [[Special:Search/{{PAGENAME}}|bushkar este titolo de oja]] en otras pajinas,
+o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} bushkar en los rejistros relasyonados]</span>.',
 'userpage-userdoesnotexist-view' => 'El cuento del usador $1 no está enrejistrado.',
 'note' => "'''Nota:'''",
 'previewnote' => "¡Akórdate ke esto es sólo una previsualizasion i aínda no se enrejistró!'''
@@ -692,8 +691,6 @@ Leyenda: (act) = diferencias con la versión actual,
 'search-interwiki-caption' => 'Proyectos hermanos',
 'search-interwiki-default' => 'Los resultados de $1:',
 'search-interwiki-more' => '(más)',
-'search-mwsuggest-enabled' => 'con consejos',
-'search-mwsuggest-disabled' => 'no ay consejos',
 'searchrelated' => 'lisionado',
 'searchall' => 'todos',
 'showingresultsheader' => "{{PLURAL:$5|Resultado '''$1''' de '''$3'''|Resultados '''$1-$2''' de '''$3'''}} para '''$4'''",
@@ -712,7 +709,7 @@ Las búsquedas producen más o munco a buscar biervos comunes como «la» o «de
 
 # Preferences page
 'preferences' => 'Preferencias',
-'mypreferences' => 'Mis preferencias',
+'mypreferences' => 'Las mis preferensias',
 'changepassword' => 'Trocar el kóddiche',
 'prefs-skin' => 'Vista',
 'skin-preview' => 'Previstear',
@@ -896,7 +893,7 @@ La descripción en su [$2 hoja de descripción del arxivo] está amostrada debax
 
 # Watchlist
 'watchlist' => 'Mi lista de escogidas',
-'mywatchlist' => 'Mi lista de akavidamientos',
+'mywatchlist' => 'La mi lista de akavidamientos',
 'watchlistfor2' => 'Para $1 $2',
 'addedwatchtext' => "La hoja «[[:$1]]» fue ajustada a tu [[Special:Watchlist|lista de escogidas]]. Los trocamientos venideros en esta hoja i en tu hoja de diskussión associada se van indicar aí, i la hoja va aparecer '''gordo''' en la hoja de [[Special:RecentChanges|trocamientos freskos]] para hazerla más kolay de detektar.
 
@@ -969,7 +966,7 @@ A continuación se mostran las opciones actuales de la hoja '''$1''':",
 'blanknamespace' => '(Principal)',
 
 # Contributions
-'contributions' => 'Ajustamientos del empleador',
+'contributions' => 'Ajustamientos {{GENDER:$1|del usador|de la usadora}}',
 'contributions-title' => 'Ajustamientos {{GENDER:$1|del usuario|de la usuaria}} $1',
 'mycontris' => 'Mis ajustamientos',
 'contribsub2' => '$1 ($2)',

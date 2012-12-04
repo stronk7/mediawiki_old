@@ -86,8 +86,8 @@ class FSFile {
 
 	/**
 	 * Guess the MIME type from the file contents alone
-	 * 
-	 * @return string 
+	 *
+	 * @return string
 	 */
 	public function getMimeType() {
 		return MimeMagic::singleton()->guessMimeType( $this->path, false );
@@ -131,7 +131,7 @@ class FSFile {
 			# Height, width and metadata
 			$handler = MediaHandler::getHandler( $info['mime'] );
 			if ( $handler ) {
-				$tempImage = (object)array();
+				$tempImage = (object)array(); // XXX (hack for File object)
 				$info['metadata'] = $handler->getMetadata( $tempImage, $this->path );
 				$gis = $handler->getImageSize( $tempImage, $this->path, $info['metadata'] );
 				if ( is_array( $gis ) ) {
@@ -211,7 +211,7 @@ class FSFile {
 
 	/**
 	 * Get the final file extension from a file system path
-	 * 
+	 *
 	 * @param $path string
 	 * @return string
 	 */

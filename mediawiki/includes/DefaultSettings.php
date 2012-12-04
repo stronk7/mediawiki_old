@@ -59,7 +59,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion = '1.20alpha';
+$wgVersion = '1.21alpha';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -361,7 +361,9 @@ $wgImgAuthPublicTest = true;
  *                          container  : backend container name the zone is in
  *                          directory  : root path within container for the zone
  *                          url        : base URL to the root of the zone
- *                          handlerUrl : base script handled URL to the root of the zone
+ *                          urlsByExt  : map of file extension types to base URLs
+ *                                       (useful for using a different cache for videos)
+ *                          handlerUrl : base script-handled URL to the root of the zone
  *                                       (see FileRepo::getZoneHandlerUrl() function)
  *                      Zones default to using "<repo name>-<zone name>" as the container name
  *                      and default to using the container root as the zone's root directory.
@@ -529,6 +531,19 @@ $wgAllowAsyncCopyUploads = false;
  * @since 1.20
  */
 $wgCopyUploadsDomains = array();
+
+/**
+ * Enable copy uploads from Special:Upload. $wgAllowCopyUploads must also be
+ * true. If $wgAllowCopyUploads is true, but this is false, you will only be
+ * able to perform copy uploads from the API or extensions (e.g. UploadWizard).
+ */
+$wgCopyUploadsFromSpecialUpload = false;
+
+/**
+ * Proxy to use for copy upload requests.
+ * @since 1.20
+ */
+$wgCopyUploadProxy = false;
 
 /**
  * Max size for uploads, in bytes. If not set to an array, applies to all
@@ -730,6 +745,23 @@ $wgMediaHandlers = array(
 	'image/vnd.djvu' => 'DjVuHandler', // official
 	'image/x.djvu'   => 'DjVuHandler', // compat
 	'image/x-djvu'   => 'DjVuHandler', // compat
+);
+
+/**
+ * Plugins for page content model handling.
+ * Each entry in the array maps a model id to a class name.
+ *
+ * @since 1.21
+ */
+$wgContentHandlers = array(
+	// the usual case
+	CONTENT_MODEL_WIKITEXT => 'WikitextContentHandler',
+	// dumb version, no syntax highlighting
+	CONTENT_MODEL_JAVASCRIPT => 'JavaScriptContentHandler',
+	// dumb version, no syntax highlighting
+	CONTENT_MODEL_CSS => 'CssContentHandler',
+	// plain text, for use by extensions etc
+	CONTENT_MODEL_TEXT => 'TextContentHandler',
 );
 
 /**
@@ -1071,6 +1103,16 @@ $wgThumbUpright = 0.75;
 $wgDirectoryMode = 0777;
 
 /**
+ * Generate and use thumbnails suitable for screens with 1.5 and 2.0 pixel densities.
+ *
+ * This means a 320x240 use of an image on the wiki will also generate 480x360 and 640x480
+ * thumbnails, output via data-src-1-5 and data-src-2-0. Runtime JavaScript switches the
+ * images in after loading the original low-resolution versions depending on the reported
+ * window.devicePixelRatio.
+ */
+$wgResponsiveImages = true;
+
+/**
  * @name DJVU settings
  * @{
  */
@@ -1371,10 +1413,14 @@ $wgAllDBsAreLocalhost = false;
  * $wgSharedTables may be customized with a list of tables to share in the shared
  * datbase. However it is advised to limit what tables you do share as many of
  * MediaWiki's tables may have side effects if you try to share them.
- * EXPERIMENTAL
  *
  * $wgSharedPrefix is the table prefix for the shared database. It defaults to
  * $wgDBprefix.
+ *
+ * @deprecated In new code, use the $wiki parameter to wfGetLB() to access
+ *   remote databases. Using wfGetLB() allows the shared database to reside on
+ *   separate servers to the wiki's own database, with suitable configuration
+ *   of $wgLBFactoryConf.
  */
 $wgSharedDB = null;
 
@@ -1752,7 +1798,7 @@ $wgDBAhandler = 'db3';
 /**
  * Deprecated alias for $wgSessionsInObjectCache.
  *
- * @deprecated Use $wgSessionsInObjectCache
+ * @deprecated since 1.20; Use $wgSessionsInObjectCache
  */
 $wgSessionsInMemcached = false;
 
@@ -1809,9 +1855,10 @@ $wgUseLocalMessageCache = false;
 $wgLocalMessageCacheSerialized = true;
 
 /**
- * Instead of caching everything, keep track which messages are requested and
- * load only most used messages. This only makes sense if there is lots of
- * interface messages customised in the wiki (like hundreds in many languages).
+ * Instead of caching everything, only cache those messages which have
+ * been customised in the site content language. This means that
+ * MediaWiki:Foo/ja is ignored if MediaWiki:Foo doesn't exist.
+ * This option is probably only useful for translatewiki.net.
  */
 $wgAdaptiveMessageCache = false;
 
@@ -2026,6 +2073,27 @@ $wgSquidServersNoPurge = array();
 $wgMaxSquidPurgeTitles = 400;
 
 /**
+ * Whether to use a Host header in purge requests sent to the proxy servers
+ * configured in $wgSquidServers. Set this to false to support Squid
+ * configured in forward-proxy mode.
+ *
+ * If this is set to true, a Host header will be sent, and only the path
+ * component of the URL will appear on the request line, as if the request
+ * were a non-proxy HTTP 1.1 request. Varnish only supports this style of
+ * request. Squid supports this style of request only if reverse-proxy mode
+ * (http_port ... accel) is enabled.
+ *
+ * If this is set to false, no Host header will be sent, and the absolute URL
+ * will be sent in the request line, as is the standard for an HTTP proxy
+ * request in both HTTP 1.0 and 1.1. This style of request is not supported
+ * by Varnish, but is supported by Squid in either configuration (forward or
+ * reverse).
+ *
+ * @since 1.21
+ */
+$wgSquidPurgeUseHostHeader = true;
+
+/**
  * Routing configuration for HTCP multicast purging. Add elements here to
  * enable HTCP and determine which purges are sent where. If set to an empty
  * array, HTCP is disabled.
@@ -2067,13 +2135,13 @@ $wgHTCPMulticastRouting = array();
  * setting is ignored. If $wgHTCPMulticastRouting is not set and this setting
  * is, it is used to populate $wgHTCPMulticastRouting.
  *
- * @deprecated in favor of $wgHTCPMulticastRouting
+ * @deprecated since 1.20 in favor of $wgHTCPMulticastRouting
  */
 $wgHTCPMulticastAddress = false;
 
 /**
  * HTCP multicast port.
- * @deprecated in favor of $wgHTCPMulticastRouting
+ * @deprecated since 1.20 in favor of $wgHTCPMulticastRouting
  * @see $wgHTCPMulticastAddress
  */
 $wgHTCPPort = 4827;
@@ -2468,11 +2536,6 @@ $wgAllowRdfaAttributes = false;
 $wgAllowMicrodataAttributes = false;
 
 /**
- * Cleanup as much presentational html like valign -> css vertical-align as we can
- */
-$wgCleanupPresentationalAttributes = true;
-
-/**
  * Should we try to make our HTML output well-formed XML?  If set to false,
  * output will be a few bytes shorter, and the HTML will arguably be more
  * readable.  If set to true, life will be much easier for the authors of
@@ -2526,12 +2589,12 @@ $wgSiteNotice = '';
 /**
  * A subtitle to add to the tagline, for skins that have it/
  */
-$wgExtraSubtitle	= '';
+$wgExtraSubtitle = '';
 
 /**
  * If this is set, a "donate" link will appear in the sidebar. Set it to a URL.
  */
-$wgSiteSupportPage	= '';
+$wgSiteSupportPage = '';
 
 /**
  * Validate the overall output using tidy and refuse
@@ -2714,11 +2777,11 @@ $wgFooterIcons = array(
 $wgUseCombinedLoginLink = false;
 
 /**
- * Search form behavior for Vector skin only.
+ * Search form look for Vector skin only.
  *  - true = use an icon search button
  *  - false = use Go & Search buttons
  */
-$wgVectorUseSimpleSearch = false;
+$wgVectorUseSimpleSearch = true;
 
 /**
  * Watch and unwatch as an icon rather than a link for Vector skin only.
@@ -3588,13 +3651,6 @@ $wgDefaultUserOptions = array(
 	'wllimit'                 => 250,
 );
 
-/**
- * Whether or not to allow and use real name fields.
- * @deprecated since 1.16, use $wgHiddenPrefs[] = 'realname' below to disable real
- * names
- */
-$wgAllowRealName = true;
-
 /** An array of preferences to not show for the user */
 $wgHiddenPrefs = array();
 
@@ -3676,7 +3732,7 @@ $wgAllowPrefChange = array();
 /**
  * This is to let user authenticate using https when they come from http.
  * Based on an idea by George Herbert on wikitech-l:
- * http://lists.wikimedia.org/pipermail/wikitech-l/2010-October/050065.html
+ * http://lists.wikimedia.org/pipermail/wikitech-l/2010-October/050039.html
  * @since 1.17
  */
 $wgSecureLogin = false;
@@ -4270,9 +4326,21 @@ $wgProxyScriptPath = "$IP/maintenance/proxy_check.php";
 $wgProxyMemcExpiry = 86400;
 /** This should always be customised in LocalSettings.php */
 $wgSecretKey = false;
-/** big list of banned IP addresses, in the keys not the values */
+
+/**
+ * Big list of banned IP addresses.
+ *
+ * This can have the following formats:
+ * - An array of addresses, either in the values
+ *   or the keys (for backward compatibility)
+ * - A string, in that case this is the path to a file
+ *   containing the list of IP addresses, one per line
+ */
 $wgProxyList = array();
-/** deprecated */
+
+/**
+ * @deprecated since 1.14
+ */
 $wgProxyKey = false;
 
 /** @} */ # end of proxy scanner settings
@@ -4511,7 +4579,9 @@ $wgProfileOnly = false;
  * Log sums from profiling into "profiling" table in db.
  *
  * You have to create a 'profiling' table in your database before using
- * this feature, see maintenance/archives/patch-profiling.sql
+ * this feature.  Run set $wgProfileToDatabase to true in
+ * LocalSettings.php and run maintenance/update.php or otherwise
+ * manually add patch-profiling.sql to your database.
  *
  * To enable profiling, edit StartProfiler.php
  */
@@ -4689,16 +4759,10 @@ $wgCountTotalSearchHits = false;
 $wgOpenSearchTemplate = false;
 
 /**
- * Enable suggestions while typing in search boxes
- * (results are passed around in OpenSearch format)
- * Requires $wgEnableOpenSearchSuggest = true;
- */
-$wgEnableMWSuggest = false;
-
-/**
  * Enable OpenSearch suggestions requested by MediaWiki. Set this to
- * false if you've disabled MWSuggest or another suggestion script and
- * want reduce load caused by cached scripts pulling suggestions.
+ * false if you've disabled scripts that use api?action=opensearch and
+ * want reduce load caused by cached scripts still pulling suggestions.
+ * It will let the API fallback by responding with an empty array.
  */
 $wgEnableOpenSearchSuggest = true;
 
@@ -4706,14 +4770,6 @@ $wgEnableOpenSearchSuggest = true;
  * Expiry time for search suggestion responses
  */
 $wgSearchSuggestCacheExpiry = 1200;
-
-/**
- *  Template for internal MediaWiki suggestion engine, defaults to API action=opensearch
- *
- *  Placeholders: {searchTerms}, {namespaces}, {dbname}
- *
- */
-$wgMWSuggestTemplate = false;
 
 /**
  * If you've disabled search semi-permanently, this also disables updates to the
@@ -5357,14 +5413,15 @@ $wgHooks = array();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'refreshLinks' => 'RefreshLinksJob',
-	'refreshLinks2' => 'RefreshLinksJob2',
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
+	'refreshLinks'      => 'RefreshLinksJob',
+	'refreshLinks2'     => 'RefreshLinksJob2',
+	'htmlCacheUpdate'   => 'HTMLCacheUpdateJob',
 	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
-	'sendMail' => 'EmaillingJob',
-	'enotifNotify' => 'EnotifNotifyJob',
+	'sendMail'          => 'EmaillingJob',
+	'enotifNotify'      => 'EnotifNotifyJob',
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
-	'uploadFromUrl' => 'UploadFromUrlJob',
+	'uploadFromUrl'     => 'UploadFromUrlJob',
+	'null'              => 'NullJob'
 );
 
 /**
@@ -5378,6 +5435,14 @@ $wgJobClasses = array(
  *   machine on your cluster has 'outside' web access you could restrict uploadFromUrl )
  */
 $wgJobTypesExcludedFromDefaultQueue = array();
+
+/**
+ * Map of job types to configuration arrays.
+ * These settings should be global to all wikis.
+ */
+$wgJobTypeConf = array(
+	'default' => array( 'class' => 'JobQueueDB', 'order' => 'random' ),
+);
 
 /**
  * Additional functions to be performed with updateSpecialPages.
@@ -5581,8 +5646,6 @@ $wgLogActions = array(
 	'protect/modify'     => 'modifiedarticleprotection',
 	'protect/unprotect'  => 'unprotectedarticle',
 	'protect/move_prot'  => 'movedarticleprotection',
-	'rights/rights'      => 'rightslogentry',
-	'rights/autopromote' => 'rightslogentry-autopromote',
 	'upload/upload'      => 'uploadedimage',
 	'upload/overwrite'   => 'overwroteimage',
 	'upload/revert'      => 'uploadedimage',
@@ -5600,16 +5663,18 @@ $wgLogActions = array(
  * @see LogFormatter
  */
 $wgLogActionsHandlers = array(
-	'move/move'         => 'MoveLogFormatter',
-	'move/move_redir'  => 'MoveLogFormatter',
-	'delete/delete'     => 'DeleteLogFormatter',
-	'delete/restore'    => 'DeleteLogFormatter',
-	'delete/revision'   => 'DeleteLogFormatter',
-	'delete/event'      => 'DeleteLogFormatter',
-	'suppress/revision' => 'DeleteLogFormatter',
-	'suppress/event'    => 'DeleteLogFormatter',
-	'suppress/delete'   => 'DeleteLogFormatter',
-	'patrol/patrol'     => 'PatrolLogFormatter',
+	'move/move'          => 'MoveLogFormatter',
+	'move/move_redir'    => 'MoveLogFormatter',
+	'delete/delete'      => 'DeleteLogFormatter',
+	'delete/restore'     => 'DeleteLogFormatter',
+	'delete/revision'    => 'DeleteLogFormatter',
+	'delete/event'       => 'DeleteLogFormatter',
+	'suppress/revision'  => 'DeleteLogFormatter',
+	'suppress/event'     => 'DeleteLogFormatter',
+	'suppress/delete'    => 'DeleteLogFormatter',
+	'patrol/patrol'      => 'PatrolLogFormatter',
+	'rights/rights'      => 'RightsLogFormatter',
+	'rights/autopromote' => 'RightsLogFormatter',
 );
 
 /**
@@ -5909,6 +5974,7 @@ $wgAPIModules = array();
 $wgAPIMetaModules = array();
 $wgAPIPropModules = array();
 $wgAPIListModules = array();
+$wgAPIGeneratorModules = array();
 
 /**
  * Maximum amount of rows to scan in a DB query in the API
@@ -6131,20 +6197,6 @@ $wgCompiledFiles = array();
 
 /** @} */ # End of HipHop compilation }
 
-
-/************************************************************************//**
- * @name   Mobile support
- * @{
- */
-
-/**
- * Name of the class used for mobile device detection, must be inherited from
- * IDeviceDetector.
- */
-$wgDeviceDetectionClass = 'DeviceDetection';
-
-/** @} */ # End of Mobile support }
-
 /************************************************************************//**
  * @name   Miscellaneous
  * @{
@@ -6229,11 +6281,70 @@ $wgDBtestuser = ''; //db user that has permission to create and drop the test da
 $wgDBtestpassword = '';
 
 /**
+ * Associative array mapping namespace IDs to the name of the content model pages in that namespace should have by
+ * default (use the CONTENT_MODEL_XXX constants). If no special content type is defined for a given namespace,
+ * pages in that namespace will  use the CONTENT_MODEL_WIKITEXT (except for the special case of JS and CS pages).
+ *
+ * @since 1.21
+ */
+$wgNamespaceContentModels = array();
+
+/**
+ * How to react if a plain text version of a non-text Content object is requested using ContentHandler::getContentText():
+ *
+ * * 'ignore': return null
+ * * 'fail': throw an MWException
+ * * 'serialize': serialize to default format
+ *
+ * @since 1.21
+ */
+$wgContentHandlerTextFallback = 'ignore';
+
+/**
+ * Set to false to disable use of the database fields introduced by the ContentHandler facility.
+ * This way, the ContentHandler facility can be used without any additional information in the database.
+ * A page's content model is then derived solely from the page's title. This however means that changing
+ * a page's default model (e.g. using $wgNamespaceContentModels) will break the page and/or make the content
+ * inaccessible. This also means that pages can not be moved to a title that would default to a different
+ * content model.
+ *
+ * Overall, with $wgContentHandlerUseDB = false, no database updates are needed, but content handling
+ * is less robust and less flexible.
+ *
+ * @since 1.21
+ */
+$wgContentHandlerUseDB = false;
+
+/**
+ * Determines which types of text are parsed as wikitext. This does not imply that these kinds
+ * of texts are also rendered as wikitext, it only means that links, magic words, etc will have
+ * the effect on the database they would have on a wikitext page.
+ *
+ * @todo: On the long run, it would be nice to put categories etc into a separate structure,
+ * or at least parse only the contents of comments in the scripts.
+ *
+ * @since 1.21
+ */
+$wgTextModelsToParse = array(
+	CONTENT_MODEL_WIKITEXT,    // Just for completeness, wikitext will always be parsed.
+	CONTENT_MODEL_JAVASCRIPT,  // Make categories etc work, people put them into comments.
+	CONTENT_MODEL_CSS,         // Make categories etc work, people put them into comments.
+);
+
+/**
  * Whether the user must enter their password to change their e-mail address
  *
  * @since 1.20
  */
 $wgRequirePasswordforEmailChange = true;
+
+/**
+ * Register handlers for specific types of sites.
+ *
+ * @since 1.20
+ */
+$wgSiteTypes = array();
+$wgSiteTypes['mediawiki'] = 'MediaWikiSite';
 
 /**
  * For really cool vim folding this needs to be at the end:

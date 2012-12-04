@@ -113,6 +113,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	protected $debugRaw = true;
 	/** Boolean: Whether mw.loader.state() call should be omitted */
 	protected $raw = false;
+	protected $targets = array( 'desktop' );
+
 	/**
 	 * Array: Cache for mtime
 	 * @par Usage:
@@ -143,44 +145,45 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 *     to $wgScriptPath
 	 *
 	 * Below is a description for the $options array:
+	 * @throws MWException
 	 * @par Construction options:
 	 * @code
-	 * 	array(
-	 * 		// Base path to prepend to all local paths in $options. Defaults to $IP
-	 * 		'localBasePath' => [base path],
-	 * 		// Base path to prepend to all remote paths in $options. Defaults to $wgScriptPath
-	 * 		'remoteBasePath' => [base path],
-	 * 		// Equivalent of remoteBasePath, but relative to $wgExtensionAssetsPath
-	 * 		'remoteExtPath' => [base path],
-	 * 		// Scripts to always include
-	 * 		'scripts' => [file path string or array of file path strings],
-	 * 		// Scripts to include in specific language contexts
-	 * 		'languageScripts' => array(
-	 * 			[language code] => [file path string or array of file path strings],
-	 * 		),
-	 * 		// Scripts to include in specific skin contexts
-	 * 		'skinScripts' => array(
-	 * 			[skin name] => [file path string or array of file path strings],
-	 * 		),
-	 * 		// Scripts to include in debug contexts
-	 * 		'debugScripts' => [file path string or array of file path strings],
-	 * 		// Scripts to include in the startup module
-	 * 		'loaderScripts' => [file path string or array of file path strings],
-	 * 		// Modules which must be loaded before this module
-	 * 		'dependencies' => [modile name string or array of module name strings],
-	 * 		// Styles to always load
-	 * 		'styles' => [file path string or array of file path strings],
-	 * 		// Styles to include in specific skin contexts
-	 * 		'skinStyles' => array(
-	 * 			[skin name] => [file path string or array of file path strings],
-	 * 		),
-	 * 		// Messages to always load
-	 * 		'messages' => [array of message key strings],
-	 * 		// Group which this module should be loaded together with
-	 * 		'group' => [group name string],
-	 * 		// Position on the page to load this module at
-	 * 		'position' => ['bottom' (default) or 'top']
-	 * 	)
+	 *     array(
+	 *         // Base path to prepend to all local paths in $options. Defaults to $IP
+	 *         'localBasePath' => [base path],
+	 *         // Base path to prepend to all remote paths in $options. Defaults to $wgScriptPath
+	 *         'remoteBasePath' => [base path],
+	 *         // Equivalent of remoteBasePath, but relative to $wgExtensionAssetsPath
+	 *         'remoteExtPath' => [base path],
+	 *         // Scripts to always include
+	 *         'scripts' => [file path string or array of file path strings],
+	 *         // Scripts to include in specific language contexts
+	 *         'languageScripts' => array(
+	 *             [language code] => [file path string or array of file path strings],
+	 *         ),
+	 *         // Scripts to include in specific skin contexts
+	 *         'skinScripts' => array(
+	 *             [skin name] => [file path string or array of file path strings],
+	 *         ),
+	 *         // Scripts to include in debug contexts
+	 *         'debugScripts' => [file path string or array of file path strings],
+	 *         // Scripts to include in the startup module
+	 *         'loaderScripts' => [file path string or array of file path strings],
+	 *         // Modules which must be loaded before this module
+	 *         'dependencies' => [modile name string or array of module name strings],
+	 *         // Styles to always load
+	 *         'styles' => [file path string or array of file path strings],
+	 *         // Styles to include in specific skin contexts
+	 *         'skinStyles' => array(
+	 *             [skin name] => [file path string or array of file path strings],
+	 *         ),
+	 *         // Messages to always load
+	 *         'messages' => [array of message key strings],
+	 *         // Group which this module should be loaded together with
+	 *         'group' => [group name string],
+	 *         // Position on the page to load this module at
+	 *         'position' => ['bottom' (default) or 'top']
+	 *     )
 	 * @endcode
 	 */
 	public function __construct( $options = array(), $localBasePath = null,
@@ -231,6 +234,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				// Lists of strings
 				case 'dependencies':
 				case 'messages':
+				case 'targets':
 					$this->{$member} = (array) $option;
 					break;
 				// Single strings
@@ -528,7 +532,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		if ( $context->getDebug() ) {
 			$files = array_merge( $files, $this->debugScripts );
 		}
-		return $files;
+
+		return array_unique( $files );
 	}
 
 	/**
@@ -550,6 +555,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * Gets the contents of a list of JavaScript files.
 	 *
 	 * @param $scripts Array: List of file paths to scripts to read, remap and concetenate
+	 * @throws MWException
 	 * @return String: Concatenated and remapped JavaScript data from $scripts
 	 */
 	protected function readScriptFiles( array $scripts ) {
@@ -618,7 +624,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	protected function readStyleFile( $path, $flip ) {
 		$localPath = $this->getLocalPath( $path );
 		if ( !file_exists( $localPath ) ) {
-			throw new MWException( __METHOD__.": style file not found: \"$localPath\"" );
+			$msg = __METHOD__.": style file not found: \"$localPath\"";
+			wfDebugLog( 'resourceloader', $msg );
+			throw new MWException( $msg );
 		}
 		$style = file_get_contents( $localPath );
 		if ( $flip ) {
@@ -634,7 +642,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		// Get and register local file references
 		$this->localFileRefs = array_merge(
 			$this->localFileRefs,
-			CSSMin::getLocalFileReferences( $style, $dir ) );
+			CSSMin::getLocalFileReferences( $style, $dir )
+		);
 		return CSSMin::remap(
 			$style, $dir, $remoteDir, true
 		);
@@ -665,4 +674,14 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	public function getFlip( $context ) {
 		return $context->getDirection() === 'rtl';
 	}
+
+	/**
+	 * Get target(s) for the module, eg ['desktop'] or ['desktop', 'mobile']
+	 *
+	 * @return array of strings
+	 */
+	public function getTargets() {
+		return $this->targets;
+	}
+
 }

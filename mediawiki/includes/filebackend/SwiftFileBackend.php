@@ -40,6 +40,7 @@ class SwiftFileBackend extends FileBackendStore {
 	/** @var CF_Authentication */
 	protected $auth; // Swift authentication handler
 	protected $authTTL; // integer seconds
+	protected $swiftTempUrlKey; // string; shared secret value for making temp urls
 	protected $swiftAnonUser; // string; username to handle unauthenticated requests
 	protected $swiftUseCDN; // boolean; whether CloudFiles CDN is enabled
 	protected $swiftCDNExpiry; // integer; how long to cache things in the CDN
@@ -66,6 +67,8 @@ class SwiftFileBackend extends FileBackendStore {
 	 *   - swiftUser          : Swift user used by MediaWiki (account:username)
 	 *   - swiftKey           : Swift authentication key for the above user
 	 *   - swiftAuthTTL       : Swift authentication TTL (seconds)
+	 *   - swiftTempUrlKey    : Swift "X-Account-Meta-Temp-URL-Key" value on the account.
+	 *                          Do not set this until it has been set in the backend.
 	 *   - swiftAnonUser      : Swift user used for end-user requests (account:username).
 	 *                          If set, then views of public containers are assumed to go
 	 *                          through this user. If not set, then public containers are
@@ -81,7 +84,8 @@ class SwiftFileBackend extends FileBackendStore {
 	 *                             - levels : the number of hash levels (and digits)
 	 *                             - repeat : hash subdirectories are prefixed with all the
 	 *                                        parent hash directory names (e.g. "a/ab/abc")
-	 *   - cacheAuthInfo      : Whether to cache authentication tokens in APC/XCache.
+	 *   - cacheAuthInfo      : Whether to cache authentication tokens in APC, XCache, ect.
+	 *                          If those are not available, then the main cache will be used.
 	 *                          This is probably insecure in shared hosting environments.
 	 */
 	public function __construct( array $config ) {
@@ -103,6 +107,9 @@ class SwiftFileBackend extends FileBackendStore {
 		$this->swiftAnonUser = isset( $config['swiftAnonUser'] )
 			? $config['swiftAnonUser']
 			: '';
+		$this->swiftTempUrlKey = isset( $config['swiftTempUrlKey'] )
+			? $config['swiftTempUrlKey']
+			: '';
 		$this->shardViaHashLevels = isset( $config['shardViaHashLevels'] )
 			? $config['shardViaHashLevels']
 			: '';
@@ -121,9 +128,13 @@ class SwiftFileBackend extends FileBackendStore {
 		$this->connContainerCache = new ProcessCacheLRU( 300 );
 		// Cache auth token information to avoid RTTs
 		if ( !empty( $config['cacheAuthInfo'] ) ) {
-			try { // look for APC, XCache, WinCache, ect...
-				$this->srvCache = ObjectCache::newAccelerator( array() );
-			} catch ( Exception $e ) {}
+			if ( php_sapi_name() === 'cli' ) {
+				$this->srvCache = wfGetMainCache(); // preferrably memcached
+			} else {
+				try { // look for APC, XCache, WinCache, ect...
+					$this->srvCache = ObjectCache::newAccelerator( array() );
+				} catch ( Exception $e ) {}
+			}
 		}
 		$this->srvCache = $this->srvCache ? $this->srvCache : new EmptyBagOStuff();
 	}
@@ -196,12 +207,6 @@ class SwiftFileBackend extends FileBackendStore {
 		// (a) Check the destination container and object
 		try {
 			$dContObj = $this->getContainer( $dstCont );
-			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
-			{
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
-			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-create', $params['dst'] );
 			return $status;
@@ -218,8 +223,7 @@ class SwiftFileBackend extends FileBackendStore {
 			// Create a fresh CF_Object with no fields preloaded.
 			// We don't want to preserve headers, metadata, and such.
 			$obj = new CF_Object( $dContObj, $dstRel, false, false ); // skip HEAD
-			// Note: metadata keys stored as [Upper case char][[Lower case char]...]
-			$obj->metadata = array( 'Sha1base36' => $sha1Hash );
+			$obj->setMetadataValues( array( 'Sha1base36' => $sha1Hash ) );
 			// Manually set the ETag (https://github.com/rackspace/php-cloudfiles/issues/59).
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5( $params['content'] ) );
@@ -232,17 +236,17 @@ class SwiftFileBackend extends FileBackendStore {
 			if ( isset( $params['disposition'] ) ) {
 				$obj->headers['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
 			}
+			// Set any other custom headers if requested
+			if ( isset( $params['headers'] ) ) {
+				$obj->headers += $params['headers'];
+			}
 			if ( !empty( $params['async'] ) ) { // deferred
 				$op = $obj->write_async( $params['content'] );
 				$status->value = new SwiftFileOpHandle( $this, $params, 'Create', $op );
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$status->value->affectedObjects[] = $obj;
-				}
+				$status->value->affectedObjects[] = $obj;
 			} else { // actually write the object in Swift
 				$obj->write( $params['content'] );
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$this->purgeCDNCache( array( $obj ) );
-				}
+				$this->purgeCDNCache( array( $obj ) );
 			}
 		} catch ( CDNNotEnabledException $e ) {
 			// CDN not enabled; nothing to see here
@@ -282,12 +286,6 @@ class SwiftFileBackend extends FileBackendStore {
 		// (a) Check the destination container and object
 		try {
 			$dContObj = $this->getContainer( $dstCont );
-			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
-			{
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
-			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
 			return $status;
@@ -309,8 +307,7 @@ class SwiftFileBackend extends FileBackendStore {
 			// Create a fresh CF_Object with no fields preloaded.
 			// We don't want to preserve headers, metadata, and such.
 			$obj = new CF_Object( $dContObj, $dstRel, false, false ); // skip HEAD
-			// Note: metadata keys stored as [Upper case char][[Lower case char]...]
-			$obj->metadata = array( 'Sha1base36' => $sha1Hash );
+			$obj->setMetadataValues( array( 'Sha1base36' => $sha1Hash ) );
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5_file( $params['src'] ) );
 			// Use the same content type as StreamFile for security
@@ -322,6 +319,10 @@ class SwiftFileBackend extends FileBackendStore {
 			if ( isset( $params['disposition'] ) ) {
 				$obj->headers['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
 			}
+			// Set any other custom headers if requested
+			if ( isset( $params['headers'] ) ) {
+				$obj->headers += $params['headers'];
+			}
 			if ( !empty( $params['async'] ) ) { // deferred
 				wfSuppressWarnings();
 				$fp = fopen( $params['src'], 'rb' );
@@ -332,15 +333,11 @@ class SwiftFileBackend extends FileBackendStore {
 					$op = $obj->write_async( $fp, filesize( $params['src'] ), true );
 					$status->value = new SwiftFileOpHandle( $this, $params, 'Store', $op );
 					$status->value->resourcesToClose[] = $fp;
-					if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-						$status->value->affectedObjects[] = $obj;
-					}
+					$status->value->affectedObjects[] = $obj;
 				}
 			} else { // actually write the object in Swift
 				$obj->load_from_filename( $params['src'], true ); // calls $obj->write()
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$this->purgeCDNCache( array( $obj ) );
-				}
+				$this->purgeCDNCache( array( $obj ) );
 			}
 		} catch ( CDNNotEnabledException $e ) {
 			// CDN not enabled; nothing to see here
@@ -391,12 +388,6 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$sContObj = $this->getContainer( $srcCont );
 			$dContObj = $this->getContainer( $dstCont );
-			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
-			{
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
-			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
 			return $status;
@@ -415,19 +406,17 @@ class SwiftFileBackend extends FileBackendStore {
 			if ( !empty( $params['async'] ) ) { // deferred
 				$op = $sContObj->copy_object_to_async( $srcRel, $dContObj, $dstRel, null, $hdrs );
 				$status->value = new SwiftFileOpHandle( $this, $params, 'Copy', $op );
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$status->value->affectedObjects[] = $dstObj;
-				}
+				$status->value->affectedObjects[] = $dstObj;
 			} else { // actually write the object in Swift
 				$sContObj->copy_object_to( $srcRel, $dContObj, $dstRel, null, $hdrs );
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$this->purgeCDNCache( array( $dstObj ) );
-				}
+				$this->purgeCDNCache( array( $dstObj ) );
 			}
 		} catch ( CDNNotEnabledException $e ) {
 			// CDN not enabled; nothing to see here
 		} catch ( NoSuchObjectException $e ) { // source object does not exist
-			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			if ( empty( $params['ignoreMissingSource'] ) ) {
+				$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			}
 		} catch ( CloudFilesException $e ) { // some other exception?
 			$this->handleException( $e, $status, __METHOD__, $params );
 		}
@@ -469,12 +458,6 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$sContObj = $this->getContainer( $srcCont );
 			$dContObj = $this->getContainer( $dstCont );
-			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
-			{
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
-			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-move', $params['src'], $params['dst'] );
 			return $status;
@@ -495,20 +478,18 @@ class SwiftFileBackend extends FileBackendStore {
 				$op = $sContObj->move_object_to_async( $srcRel, $dContObj, $dstRel, null, $hdrs );
 				$status->value = new SwiftFileOpHandle( $this, $params, 'Move', $op );
 				$status->value->affectedObjects[] = $srcObj;
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$status->value->affectedObjects[] = $dstObj;
-				}
+				$status->value->affectedObjects[] = $dstObj;
 			} else { // actually write the object in Swift
 				$sContObj->move_object_to( $srcRel, $dContObj, $dstRel, null, $hdrs );
 				$this->purgeCDNCache( array( $srcObj ) );
-				if ( !empty( $params['overwrite'] ) ) { // file possibly mutated
-					$this->purgeCDNCache( array( $dstObj ) );
-				}
+				$this->purgeCDNCache( array( $dstObj ) );
 			}
 		} catch ( CDNNotEnabledException $e ) {
 			// CDN not enabled; nothing to see here
 		} catch ( NoSuchObjectException $e ) { // source object does not exist
-			$status->fatal( 'backend-fail-move', $params['src'], $params['dst'] );
+			if ( empty( $params['ignoreMissingSource'] ) ) {
+				$status->fatal( 'backend-fail-move', $params['src'], $params['dst'] );
+			}
 		} catch ( CloudFilesException $e ) { // some other exception?
 			$this->handleException( $e, $status, __METHOD__, $params );
 		}
@@ -579,6 +560,47 @@ class SwiftFileBackend extends FileBackendStore {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
 			}
 		}
+	}
+
+	/**
+	 * @see FileBackendStore::doDescribeInternal()
+	 * @return Status
+	 */
+	protected function doDescribeInternal( array $params ) {
+		$status = Status::newGood();
+
+		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
+		if ( $srcRel === null ) {
+			$status->fatal( 'backend-fail-invalidpath', $params['src'] );
+			return $status;
+		}
+
+		$hdrs = isset( $params['headers'] ) ? $params['headers'] : array();
+		// Set the Content-Disposition header if requested
+		if ( isset( $params['disposition'] ) ) {
+			$hdrs['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
+		}
+
+		try {
+			$sContObj = $this->getContainer( $srcCont );
+			// Get the latest version of the current metadata
+			$srcObj = $sContObj->get_object( $srcRel,
+				$this->headersFromParams( array( 'latest' => true ) ) );
+			// Merge in the metadata updates...
+			$srcObj->headers = $hdrs + $srcObj->headers;
+			$srcObj->sync_metadata(); // save to Swift
+			$this->purgeCDNCache( array( $srcObj ) );
+		} catch ( CDNNotEnabledException $e ) {
+			// CDN not enabled; nothing to see here
+		} catch ( NoSuchContainerException $e ) {
+			$status->fatal( 'backend-fail-describe', $params['src'] );
+		} catch ( NoSuchObjectException $e ) {
+			$status->fatal( 'backend-fail-describe', $params['src'] );
+		} catch ( CloudFilesException $e ) { // some other exception?
+			$this->handleException( $e, $status, __METHOD__, $params );
+		}
+
+		return $status;
 	}
 
 	/**
@@ -756,7 +778,7 @@ class SwiftFileBackend extends FileBackendStore {
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
 				'size'  => (int)$srcObj->content_length,
-				'sha1'  => $srcObj->metadata['Sha1base36']
+				'sha1'  => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( NoSuchObjectException $e ) {
@@ -777,10 +799,11 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @throws Exception cloudfiles exceptions
 	 */
 	protected function addMissingMetadata( CF_Object $obj, $path ) {
-		if ( isset( $obj->metadata['Sha1base36'] ) ) {
+		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
 		wfProfileIn( __METHOD__ );
+		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
 		$status = Status::newGood();
 		$scopeLockS = $this->getScopedFileLocks( array( $path ), LockManager::LOCK_UW, $status );
 		if ( $status->isOK() ) {
@@ -788,40 +811,91 @@ class SwiftFileBackend extends FileBackendStore {
 			if ( $tmpFile ) {
 				$hash = $tmpFile->getSha1Base36();
 				if ( $hash !== false ) {
-					$obj->metadata['Sha1base36'] = $hash;
+					$obj->setMetadataValues( array( 'Sha1base36' => $hash ) );
 					$obj->sync_metadata(); // save to Swift
 					wfProfileOut( __METHOD__ );
 					return true; // success
 				}
 			}
 		}
-		$obj->metadata['Sha1base36'] = false;
+		trigger_error( "Unable to set SHA-1 metadata for $path", E_USER_WARNING );
+		$obj->setMetadataValues( array( 'Sha1base36' => false ) );
 		wfProfileOut( __METHOD__ );
 		return false; // failed
 	}
 
 	/**
-	 * @see FileBackend::getFileContents()
-	 * @return bool|string
+	 * @see FileBackendStore::doGetFileContentsMulti()
+	 * @return Array
 	 */
-	public function getFileContents( array $params ) {
-		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
-		if ( $srcRel === null ) {
-			return false; // invalid storage path
+	protected function doGetFileContentsMulti( array $params ) {
+		$contents = array();
+
+		$ep = array_diff_key( $params, array( 'srcs' => 1 ) ); // for error logging
+		// Blindly create tmp files and stream to them, catching any exception if the file does
+		// not exist. Doing stats here is useless and will loop infinitely in addMissingMetadata().
+		foreach ( array_chunk( $params['srcs'], $params['concurrency'] ) as $pathBatch ) {
+			$cfOps = array(); // (path => CF_Async_Op)
+
+			foreach ( $pathBatch as $path ) { // each path in this concurrent batch
+				list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $path );
+				if ( $srcRel === null ) {
+					$contents[$path] = false;
+					continue;
+				}
+				$data = false;
+				try {
+					$sContObj = $this->getContainer( $srcCont );
+					$obj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
+					// Get source file extension
+					$ext = FileBackend::extensionFromPath( $path );
+					// Create a new temporary memory file...
+					$handle = fopen( 'php://temp', 'wb' );
+					if ( $handle ) {
+						$headers = $this->headersFromParams( $params );
+						if ( count( $pathBatch ) > 1 ) {
+							$cfOps[$path] = $obj->stream_async( $handle, $headers );
+							$cfOps[$path]->_file_handle = $handle; // close this later
+						} else {
+							$obj->stream( $handle, $headers );
+							rewind( $handle ); // start from the beginning
+							$data = stream_get_contents( $handle );
+							fclose( $handle );
+						}
+					} else {
+						$data = false;
+					}
+				} catch ( NoSuchContainerException $e ) {
+					$data = false;
+				} catch ( NoSuchObjectException $e ) {
+					$data = false;
+				} catch ( CloudFilesException $e ) { // some other exception?
+					$data = false;
+					$this->handleException( $e, null, __METHOD__, array( 'src' => $path ) + $ep );
+				}
+				$contents[$path] = $data;
+			}
+
+			$batch = new CF_Async_Op_Batch( $cfOps );
+			$cfOps = $batch->execute();
+			foreach ( $cfOps as $path => $cfOp ) {
+				try {
+					$cfOp->getLastResponse();
+					rewind( $cfOp->_file_handle ); // start from the beginning
+					$contents[$path] = stream_get_contents( $cfOp->_file_handle );
+				} catch ( NoSuchContainerException $e ) {
+					$contents[$path] = false;
+				} catch ( NoSuchObjectException $e ) {
+					$contents[$path] = false;
+				} catch ( CloudFilesException $e ) { // some other exception?
+					$contents[$path] = false;
+					$this->handleException( $e, null, __METHOD__, array( 'src' => $path ) + $ep );
+				}
+				fclose( $cfOp->_file_handle ); // close open handle
+			}
 		}
 
-		$data = false;
-		try {
-			$sContObj = $this->getContainer( $srcCont );
-			$obj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
-			$data = $obj->read( $this->headersFromParams( $params ) );
-		} catch ( NoSuchContainerException $e ) {
-		} catch ( NoSuchObjectException $e ) {
-		} catch ( CloudFilesException $e ) { // some other exception?
-			$this->handleException( $e, null, __METHOD__, $params );
-		}
-
-		return $data;
+		return $contents;
 	}
 
 	/**
@@ -1029,44 +1103,98 @@ class SwiftFileBackend extends FileBackendStore {
 	}
 
 	/**
-	 * @see FileBackendStore::getLocalCopy()
+	 * @see FileBackendStore::doGetLocalCopyMulti()
 	 * @return null|TempFSFile
 	 */
-	public function getLocalCopy( array $params ) {
-		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
-		if ( $srcRel === null ) {
-			return null;
-		}
+	protected function doGetLocalCopyMulti( array $params ) {
+		$tmpFiles = array();
 
-		// Blindly create a tmp file and stream to it, catching any exception if the file does
-		// not exist. Also, doing a stat here will cause infinite loops in addMissingMetadata().
-		$tmpFile = null;
-		try {
-			$sContObj = $this->getContainer( $srcCont );
-			$obj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
-			// Get source file extension
-			$ext = FileBackend::extensionFromPath( $srcRel );
-			// Create a new temporary file...
-			$tmpFile = TempFSFile::factory( 'localcopy_', $ext );
-			if ( $tmpFile ) {
-				$handle = fopen( $tmpFile->getPath(), 'wb' );
-				if ( $handle ) {
-					$obj->stream( $handle, $this->headersFromParams( $params ) );
-					fclose( $handle );
-				} else {
-					$tmpFile = null; // couldn't open temp file
+		$ep = array_diff_key( $params, array( 'srcs' => 1 ) ); // for error logging
+		// Blindly create tmp files and stream to them, catching any exception if the file does
+		// not exist. Doing a stat here is useless causes infinite loops in addMissingMetadata().
+		foreach ( array_chunk( $params['srcs'], $params['concurrency'] ) as $pathBatch ) {
+			$cfOps = array(); // (path => CF_Async_Op)
+
+			foreach ( $pathBatch as $path ) { // each path in this concurrent batch
+				list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $path );
+				if ( $srcRel === null ) {
+					$tmpFiles[$path] = null;
+					continue;
 				}
+				$tmpFile = null;
+				try {
+					$sContObj = $this->getContainer( $srcCont );
+					$obj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
+					// Get source file extension
+					$ext = FileBackend::extensionFromPath( $path );
+					// Create a new temporary file...
+					$tmpFile = TempFSFile::factory( 'localcopy_', $ext );
+					if ( $tmpFile ) {
+						$handle = fopen( $tmpFile->getPath(), 'wb' );
+						if ( $handle ) {
+							$headers = $this->headersFromParams( $params );
+							if ( count( $pathBatch ) > 1 ) {
+								$cfOps[$path] = $obj->stream_async( $handle, $headers );
+								$cfOps[$path]->_file_handle = $handle; // close this later
+							} else {
+								$obj->stream( $handle, $headers );
+								fclose( $handle );
+							}
+						} else {
+							$tmpFile = null;
+						}
+					}
+				} catch ( NoSuchContainerException $e ) {
+					$tmpFile = null;
+				} catch ( NoSuchObjectException $e ) {
+					$tmpFile = null;
+				} catch ( CloudFilesException $e ) { // some other exception?
+					$tmpFile = null;
+					$this->handleException( $e, null, __METHOD__, array( 'src' => $path ) + $ep );
+				}
+				$tmpFiles[$path] = $tmpFile;
 			}
-		} catch ( NoSuchContainerException $e ) {
-			$tmpFile = null;
-		} catch ( NoSuchObjectException $e ) {
-			$tmpFile = null;
-		} catch ( CloudFilesException $e ) { // some other exception?
-			$tmpFile = null;
-			$this->handleException( $e, null, __METHOD__, $params );
+
+			$batch = new CF_Async_Op_Batch( $cfOps );
+			$cfOps = $batch->execute();
+			foreach ( $cfOps as $path => $cfOp ) {
+				try {
+					$cfOp->getLastResponse();
+				} catch ( NoSuchContainerException $e ) {
+					$tmpFiles[$path] = null;
+				} catch ( NoSuchObjectException $e ) {
+					$tmpFiles[$path] = null;
+				} catch ( CloudFilesException $e ) { // some other exception?
+					$tmpFiles[$path] = null;
+					$this->handleException( $e, null, __METHOD__, array( 'src' => $path ) + $ep );
+				}
+				fclose( $cfOp->_file_handle ); // close open handle
+			}
 		}
 
-		return $tmpFile;
+		return $tmpFiles;
+	}
+
+	/**
+	 * @see FileBackendStore::getFileHttpUrl()
+	 * @return string|null
+	 */
+	public function getFileHttpUrl( array $params ) {
+		if ( $this->swiftTempUrlKey != '' ) { // temp urls enabled
+			list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
+			if ( $srcRel === null ) {
+				return null; // invalid path
+			}
+			try {
+				$sContObj = $this->getContainer( $srcCont );
+				$obj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
+				return $obj->get_temp_url( $this->swiftTempUrlKey, 86400, "GET" );
+			} catch ( NoSuchContainerException $e ) {
+			} catch ( CloudFilesException $e ) { // some other exception?
+				$this->handleException( $e, null, __METHOD__, $params );
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -1129,10 +1257,10 @@ class SwiftFileBackend extends FileBackendStore {
 	 * $readGrps is a list of the possible criteria for a request to have
 	 * access to read a container. Each item is one of the following formats:
 	 *   - account:user       : Grants access if the request is by the given user
-	 *   - .r:<regex>         : Grants access if the request is from a referrer host that
+	 *   - ".r:<regex>"       : Grants access if the request is from a referrer host that
 	 *                          matches the expression and the request is not for a listing.
 	 *                          Setting this to '*' effectively makes a container public.
-	 *   - .rlistings:<regex> : Grants access if the request is from a referrer host that
+	 *   -".rlistings:<regex>": Grants access if the request is from a referrer host that
 	 *                          matches the expression and the request for a listing.
 	 *
 	 * $writeGrps is a list of the possible criteria for a request to have
@@ -1242,6 +1370,7 @@ class SwiftFileBackend extends FileBackendStore {
 	protected function closeConnection() {
 		if ( $this->conn ) {
 			$this->conn->close(); // close active cURL handles in CF_Http object
+			$this->conn = null;
 			$this->sessionStarted = 0;
 			$this->connContainerCache->clear();
 		}
@@ -1255,13 +1384,6 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	private function getCredsCacheKey( $username ) {
 		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
-	}
-
-	/**
-	 * @see FileBackendStore::doClearCache()
-	 */
-	protected function doClearCache( array $paths = null ) {
-		$this->connContainerCache->clear(); // clear container object cache
 	}
 
 	/**

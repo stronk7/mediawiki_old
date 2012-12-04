@@ -60,9 +60,9 @@ $messages = array(
 'tog-previewontop' => 'Bontšha Ponopele pele ga lepokisi la diphetogo',
 'tog-previewonfirst' => 'Bontšha Ponopeleka phetogo ya pele',
 'tog-nocache' => "Thibela go tsenya matlakala go segakolodi (''cache'')",
-'tog-enotifwatchlistpages' => 'Nromele molaetša ge letlaka leo ke le tlhapetšego le eba le diphetogo',
+'tog-enotifwatchlistpages' => 'Nthomele molaetša ge letlaka leo ke le tlhapetšego le eba le diphetogo',
 'tog-enotifusertalkpages' => 'Nromele molaetša ge letlakala la Dipoledišano laka le fetoga',
-'tog-enotifminoredits' => 'Nromele email ge goba le diphetogo tše nnyenyane go matlakala',
+'tog-enotifminoredits' => 'Ethomele e-mail ge goba le diphetogo tše nnyenyane go matlakala',
 'tog-enotifrevealaddr' => 'Bonagatša email atrese go temošo tša poso',
 'tog-shownumberswatching' => 'Laetša palo bašomiši bao ba tlhapetšego',
 'tog-fancysig' => 'Tsaeno ya gose fihliwe',
@@ -195,8 +195,8 @@ $messages = array(
 'protect' => 'Lota',
 'protect_change' => 'Fetola go lotega',
 'protectthispage' => 'Lota letlakala le',
-'unprotect' => 'Tloša go lota',
-'unprotectthispage' => 'Tloša go lota letlakaleng',
+'unprotect' => 'Fetola go lota',
+'unprotectthispage' => 'Fetola go lota letlakaleng',
 'newpage' => 'Letlakala le lempsha',
 'talkpage' => 'Rêrišana ka letlakala le',
 'talkpagelinktext' => 'Bolela',
@@ -224,6 +224,7 @@ $messages = array(
 'jumpto' => 'Taboga go:',
 'jumptonavigation' => 'Tšweletšo',
 'jumptosearch' => 'fetleka',
+'pool-errorunknown' => 'Phošo yago setsebege',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'Mabapi le {{SITENAME}}',
@@ -256,6 +257,7 @@ $messages = array(
 'youhavenewmessages' => 'O na le $1 ($2).',
 'newmessageslink' => 'ya melaetša ye mefsa',
 'newmessagesdifflink' => 'phetogo ya mafelelo',
+'newmessagesdifflinkplural' => 'l{{PLURAL:$1|Phetogo tša|Diphetogo ya}}go feta',
 'youhavenewmessagesmulti' => 'O nale melaetša ye mefsa go $1',
 'editsection' => 'lokiša',
 'editold' => 'fetola',
@@ -317,9 +319,6 @@ Bega se go  [[Special:ListUsers/sysop|administrator]], o fana ka URL.',
 'namespaceprotected' => "Ga ona tokelo ya go fetola matlakala  go  '''$1''' .",
 
 # Login and logout pages
-'welcomecreation' => "Oa amogelwa, $1! ==
-
-Tšhupaleloko (''account'') ya gago e tlhodilwe. O seke wa lebala go fetola [[Special:Preferences|{{SITENAME}} dikgetho/thato tša gago]].",
 'yourname' => 'Leina la mošomiši:',
 'yourpassword' => 'Ditlhaka-tša-siphiri:',
 'yourpasswordagain' => 'Tlanya ditlhaka-tša-siphiri gape:',
@@ -454,7 +453,8 @@ oka [[Special:Search/{{PAGENAME}}|fetleka leina la letlakala]] matlakaleng a man
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} fetleka "logs"],
  goba [{{fullurl:{{FULLPAGENAME}}|action=edit}} wa fetola letlakala le]</span>.',
 'note' => "'''Ela hloko:'''",
-'previewnote' => "'''Ye ke Taetšo ya sebopego sa letlakala fela; diphetogo ga di ya bolokwa!'''",
+'previewnote' => "'''Elelwa gore ye ke taetšo ya sebopego sa letlakala fela.'''
+Diphetogo tša gago ga šetšo di bolokwa!",
 'editing' => 'O fetola $1',
 'editingsection' => 'Phetolo ya $1 (sekgoba)',
 'editingcomment' => 'O fetola $1 (sekgao se sempsha)',
@@ -541,7 +541,7 @@ fetola tshenolo',
 'revertmerge' => 'Tloša kopaganyo',
 
 # Diffs
-'history-title' => 'Histori ya diphetogo tša "$1"',
+'history-title' => 'Poeletšo ya diphetogo tša "$1"',
 'lineno' => 'Mothalo $1:',
 'compareselectedversions' => 'Bapetša diphapang tšeo di kgethilwego',
 'editundo' => 'dirolla',
@@ -582,8 +582,6 @@ fetola tshenolo',
 'search-interwiki-caption' => 'Diprojeke tša moloko',
 'search-interwiki-default' => '$1 diphetho:',
 'search-interwiki-more' => '(gape)',
-'search-mwsuggest-enabled' => 'le dikakanyo',
-'search-mwsuggest-disabled' => 'ga go dikakanyo',
 'searchrelated' => 'tswalana',
 'searchall' => 'tšohle',
 'showingresultsheader' => "{{PLURAL:$5|Sepheto '''$1''' tša '''$3'''|Dipheto '''$1 - $2''' tša '''$3'''}} tša '''$4'''",
@@ -834,10 +832,10 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 'booksources-go' => 'Sepela',
 
 # Special:Log
-'specialloguserlabel' => 'Mošomiši:',
-'speciallogtitlelabel' => 'Thaetlele:',
+'specialloguserlabel' => 'Modiri:',
+'speciallogtitlelabel' => 'Thaetlele (goba mošumiši):',
 'log' => "Di-''log''",
-'all-logs-page' => "Di-''log'' kamoka",
+'all-logs-page' => "Di-''log'' tša bohle ka moka",
 
 # Special:AllPages
 'allpages' => 'Matlakala ka moka',
@@ -858,7 +856,7 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 'deletedcontributions-title' => 'Diabe tša mošomiši tšeo di phumutšwego',
 
 # Special:LinkSearch
-'linksearch' => 'Dihlomaganyo tša ntle',
+'linksearch' => 'Fehleka dihlomaganyo tša ntle',
 'linksearch-ok' => 'Fetleka',
 'linksearch-line' => '$1 e kgokaganywa gotšwa $2',
 
@@ -875,9 +873,9 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 'emailuser' => 'Romela mošomiši yo molaetša',
 'emailpage' => 'Romela email go mošomiši',
 'noemailtitle' => 'Gago email atrese',
-'emailfrom' => 'Go tšwa go',
-'emailsubject' => 'Sebolelwa',
-'emailmessage' => 'Molaetša',
+'emailfrom' => 'Go tšwa go:',
+'emailsubject' => 'Sebolelwa:',
+'emailmessage' => 'Molaetša:',
 'emailsend' => 'Romela',
 'emailccme' => 'Nromela kopi ya melaetša.',
 'emailccsubject' => 'Kopi ya molaetša wa gago goya go $1: $2',
@@ -905,11 +903,7 @@ Ga eba o nyaka go hloša letlaka le go lenano la ditlhapetšo tša gago, šomiš
 'unwatching' => 'Tlhapetšo eya tlošwa ...',
 
 'enotif_reset' => 'Swaya matlakala kamoka awe oa etetšego',
-'enotif_newpagetext' => 'Le, ke letlakala le lempsha.',
 'enotif_impersonal_salutation' => '{{SITENAME}} mošumiši',
-'changed' => 'fetotšwe',
-'created' => 'tlhodilwe',
-'enotif_subject' => '{{SITENAME}} letkalala $PAGETITLE le $CHANGEDORCREATED ke $PAGEEDITOR',
 'enotif_lastvisited' => 'Lebelela  $1 go bona diphetogo ka moka gotloga ge go tsena la mafelelo.',
 'enotif_lastdiff' => 'Bona $1 go nyakorela phetogo ye.',
 
@@ -931,7 +925,7 @@ Lebelela $2 go hweetša sedi ka diphulo tša bjale.',
 
 # Rollback
 'rollbacklink' => 'bošetša morago',
-'editcomment' => "Ahlaahlo ya phetogo ke : \"''\$1''\".",
+'editcomment' => "Ahlaahlo ya phetogo e bile : \"''\$1''\".",
 
 # Protect
 'protectlogpage' => "''Log'' yago lota",
@@ -955,7 +949,7 @@ Seemo sa go lota ga letlakala '''$1''':",
 'protect-expiring' => 'fetatšatši ke $1 (UTC)',
 'protect-cascade' => 'Lota matlakala, akaretša le letlakala le (go lota ka kakaretšo)',
 'protect-cantedit' => 'Ga o kgone go fetola tekano ya bolotego letlakaleng le, ka ge o sena tumello yago bofetola.',
-'protect-expiry-options' => '2 diiri:2 hours,1 letšatši:1 day,3 matšatši:3 days,1 beke:1 week,2 dibeke:2 weeks,1 kgwedi:1 month,3 digkwedi:3 months,6 dikgwedi:6 months,1 ngwaga:1 year,ga efele:infinite',
+'protect-expiry-options' => 'iri:1 hour, letšatš1:1 day,beke:1 week,dibeke tše 2:2 weeks,kgwedi:1 month,dikgwedi tše 3:3 months,dikgwedi tše 6:6 months,ngwaga:1 year,gosefele (infinite):infinite',
 'restriction-type' => 'Tumello:',
 'restriction-level' => 'Seemo sago Lota:',
 
@@ -991,7 +985,7 @@ Seemo sa go lota ga letlakala '''$1''':",
 'sp-contributions-newbies' => 'Laetša diabe tša bašumiši ba bafsa fela',
 'sp-contributions-newbies-sub' => 'Tša tšhupaleloko tše mphsa',
 'sp-contributions-blocklog' => "''Log'' yago thiba",
-'sp-contributions-deleted' => 'Diabe tša mošomiši tšeo di phumutšwego',
+'sp-contributions-deleted' => 'diabe tša mošomiši tšeo di phumutšwego',
 'sp-contributions-uploads' => 'di-"upload"',
 'sp-contributions-logs' => "Di-''log''",
 'sp-contributions-talk' => 'Poledišano',

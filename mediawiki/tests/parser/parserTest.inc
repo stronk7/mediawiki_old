@@ -1,23 +1,25 @@
 <?php
-# Copyright (C) 2004, 2010 Brion Vibber <brion@pobox.com>
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
-
 /**
+ * Helper code for the MediaWiki parser test suite.
+ *
+ * Copyright © 2004, 2010 Brion Vibber <brion@pobox.com>
+ * http://www.mediawiki.org/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @todo Make this more independent of the configuration (and if possible the database)
  * @todo document
  * @file
@@ -669,7 +671,7 @@ class ParserTest {
 			'wgNoFollowLinks' => true,
 			'wgNoFollowDomainExceptions' => array(),
 			'wgThumbnailScriptPath' => false,
-			'wgUseImageResize' => false,
+			'wgUseImageResize' => true,
 			'wgLocaltimezone' => 'UTC',
 			'wgAllowExternalImages' => true,
 			'wgUseTidy' => false,
@@ -690,7 +692,6 @@ class ParserTest {
 			'wgExternalLinkTarget' => false,
 			'wgAlwaysUseTidy' => false,
 			'wgHtml5' => true,
-			'wgCleanupPresentationalAttributes' => true,
 			'wgWellFormedXml' => true,
 			'wgAllowMicrodataAttributes' => true,
 			'wgAdaptiveMessageCache' => true,
@@ -989,6 +990,16 @@ class ParserTest {
 				"$dir/thumb/3/3a/Foobar.jpg/200px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/640px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/120px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/1280px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/20px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/270px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/300px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/30px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/360px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/400px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/40px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/70px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/960px-Foobar.jpg",
 
 				"$dir/0/09/Bad.jpg",
 
@@ -1204,7 +1215,7 @@ class ParserTest {
 			}
 		}
 
-		$page->doEdit( $text, '', EDIT_NEW );
+		$page->doEditContent( ContentHandler::makeContent( $text, $title ), '', EDIT_NEW );
 
 		$wgCapitalLinks = $oldCapitalLinks;
 	}

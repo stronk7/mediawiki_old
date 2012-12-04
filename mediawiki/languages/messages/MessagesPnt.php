@@ -160,7 +160,6 @@ $messages = array(
 'qbbrowse' => 'Πλοήγησην',
 'qbedit' => 'Άλλαξον',
 'qbpageoptions' => 'Ατή η σελίδαν',
-'qbpageinfo' => 'Συμφραζόμενα',
 'qbmyoptions' => "Τ' εμά τα σελίδας",
 'qbspecialpages' => 'Ειδικά σελίδας',
 'faq' => 'Πολλά ερωτήσεις (FAQ)',
@@ -338,9 +337,6 @@ $messages = array(
 'virus-unknownscanner' => 'αναγνώριμον αντιικόν:',
 
 # Login and logout pages
-'welcomecreation' => "== Καλώς έρθετεν, $1! ==
-Η λογαρίαν εσουν εγέντον.
-Τ' άλλαγμαν τη [[Special:Preferences|{{SITENAME}} προτιμησίων]] εσουν μη νεσπάλετε.",
 'yourname' => 'Όνεμαν χρήστε:',
 'yourpassword' => 'Σημάδι:',
 'yourpasswordagain' => "Ξαν' γράψτεν το σημάδι:",
@@ -607,8 +603,6 @@ $messages = array(
 'search-interwiki-caption' => 'Αδερφικά έργα',
 'search-interwiki-default' => '$1 αποτελέσματα:',
 'search-interwiki-more' => '(πλέα)',
-'search-mwsuggest-enabled' => 'με οδηγίας',
-'search-mwsuggest-disabled' => 'θίχως οδηγίας',
 'searchall' => 'ούλαι',
 'nonefound' => "'''Σημείωση:''' Κανονικά ολίγα περιοχάς ονοματίων αραεύκουνταν μαναχόν. Βαλέστεν ''all:'' ασην λέξην εμπροστά για ίνεται το αράεμαν σ'όλεα τα σελίδας (και σελίδας καλατσεματί, πρότυπα κλπ.) ή βαλέστεν ους πρόθεμαν την περιοχήν ονοματίων π'θέλετε για να αραεύετε εκαικά.",
 'powersearch' => 'Αναλυτικόν αράεμαν',
@@ -983,8 +977,6 @@ $messages = array(
 'unwatching' => "'κ ωριάζω...",
 
 'enotif_impersonal_salutation' => '{{SITENAME}} χρήστες',
-'changed' => 'ελλάγεν',
-'created' => 'έντον',
 'enotif_anon_editor' => 'ανώνυμον χρήστες $1',
 
 # Delete
@@ -1444,5 +1436,8 @@ $messages = array(
 'htmlform-submit' => 'Στείλον',
 'htmlform-reset' => "Κλώσον τ'αλλαγάς",
 'htmlform-selectorother-other' => 'Άλλον',
+
+# Search suggestions
+'searchsuggest-search' => 'Αράεμαν',
 
 );

@@ -329,7 +329,7 @@ class BlockListPager extends TablePager {
 				break;
 
 			case 'ipb_reason':
-				$formatted = Linker::commentBlock( $value );
+				$formatted = Linker::formatComment( $value );
 				break;
 
 			case 'ipb_params':
@@ -441,7 +441,7 @@ class BlockListPager extends TablePager {
 			$name = str_replace( ' ', '_', $user->getName() );
 			$lb->add( NS_USER, $name );
 			$lb->add( NS_USER_TALK, $name );
-		} 
+		}
 
 		$lb->execute();
 		wfProfileOut( __METHOD__ );

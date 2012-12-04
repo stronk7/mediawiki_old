@@ -114,7 +114,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Mga_huling_binago', 'HulingBinago' ),
 	'Recentchangeslinked'       => array( 'Nakakawing_ng_kamakailang_pagbabago', 'Kaugnay_na_mga_pagbabago' ),
 	'Revisiondelete'            => array( 'Pagbura_ng_pagbabago' ),
-	'RevisionMove'              => array( 'Paglipat_ng_Rebisyon' ),
 	'Search'                    => array( 'Maghanap' ),
 	'Shortpages'                => array( 'Maikling_mga_pahina' ),
 	'Specialpages'              => array( 'Natatanging_mga_pahina' ),
@@ -196,7 +195,7 @@ $messages = array(
 
 'underline-always' => 'Palagi',
 'underline-never' => 'Hindi magpakailanman',
-'underline-default' => 'Tinakda ng pambasa-basa',
+'underline-default' => 'Tinakda ng pambasa-basa o balat',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Baguhin ang estilong pantitik ng lugar:',
@@ -285,7 +284,7 @@ $messages = array(
 'cancel' => 'Kanselahin',
 'moredotdotdot' => 'Damihan pa...',
 'mypage' => 'Pahina ko',
-'mytalk' => 'Usapan ko',
+'mytalk' => 'Usapan',
 'anontalk' => 'Usapan para sa IP na ito',
 'navigation' => 'Paglilibot (nabigasyon)',
 'and' => ',&#32;at',
@@ -295,7 +294,6 @@ $messages = array(
 'qbbrowse' => 'Basa-basahin',
 'qbedit' => 'Baguhin',
 'qbpageoptions' => 'Itong pahina',
-'qbpageinfo' => 'Konteksto',
 'qbmyoptions' => 'Mga pahina ko',
 'qbspecialpages' => 'Mga natatanging pahina',
 'faq' => "Mga karaniwang itinatanong (''FAQ'')",
@@ -567,11 +565,8 @@ Ang tagapangasiwang nagkandado nito ay nag-alok ng ganitong paliwanag: "$3".',
 # Login and logout pages
 'logouttext' => "'''Nakaalis ka na sa pagkakalagda.'''
 
-Maaari kang tumuloy sa paggamit ng {{SITENAME}} nang hindi nakikilala (anonimo), o maaaring kang [[Special:UserLogin|lumagda/tumala muli]] bilang kapareho o ibang tagagamit.
+Maaari kang tumuloy sa paggamit ng {{SITENAME}} nang hindi nakikilala (anonimo), o maaaring kang <span class='plainlinks'>[$1 lumagda/tumala muli]</span> bilang kapareho o ibang tagagamit.
 Tandaan na may ilang pahinang maaaring magpatuloy na nagpapakitang parang nakalagda ka pa rin, hanggang sa linisin mo ang iyong baunang pambasa-basa (''browser cache'').",
-'welcomecreation' => '== Maligayang pagdating, $1! ==
-Nilikha na ang iyong kuwenta.
-Huwag kalimutang baguhin ang iyong [[Special:Preferences|mga kagustuhan sa {{SITENAME}}]].',
 'yourname' => 'Bansag:',
 'yourpassword' => 'Hudyat:',
 'yourpasswordagain' => 'Hudyat mo uli:',
@@ -867,7 +862,7 @@ Tandaang gumagamit ang pinasadyang mga pahinang .css at .js ng mga pamagat na ma
 'note' => "'''Paunawa:'''",
 'previewnote' => "'''Tandaan na isa lamang itong paunang tingin.'''
 Hindi pa nasasagip ang mga binago mo!",
-'continue-editing' => 'Ipagpatuloy ang pamamatnugot',
+'continue-editing' => 'Pumunta sa pook ng pamamatnugot',
 'previewconflict' => 'Ipinamamalas ng paunang tinging ito ang teksto sa loob ng pangitaas na pook-patnugutan ng teksto ayon sa lilitaw na anyo nito kapag pinili mo ang pagsagip.',
 'session_fail_preview' => "'''Paumanhin! Hindi namin maproseso ang iyong pagbabago hinggil sa pagkawala ng sesyon ng datos.
 Paki ulit muli. Kung hindi ito gumana, subukang umalis sa pagkalagda at bumalik muli.'''",
@@ -1207,8 +1202,6 @@ Matatagpuan ang mga detalye sa loob ng [{{fullurl:{{#Special:Log}}/delete|page={
 'search-interwiki-caption' => 'Kapatid na mga proyekto',
 'search-interwiki-default' => '$1 mga resulta:',
 'search-interwiki-more' => '(mas marami pa)',
-'search-mwsuggest-enabled' => 'may mga mungkahi',
-'search-mwsuggest-disabled' => 'walang mga mungkahi',
 'search-relatedarticle' => 'Kaugnay',
 'mwsuggest-disable' => 'Huwag paganahin ang mga mungkahi ng AJAX',
 'searcheverything-enable' => 'Maghanap sa lahat ng ngalan-espasyo:',
@@ -1242,7 +1235,7 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 
 # Preferences page
 'preferences' => 'Mga kagustuhan',
-'mypreferences' => 'Mga nais ko',
+'mypreferences' => 'Mga nais',
 'prefs-edits' => 'Bilang ng mga pagbabago:',
 'prefsnologin' => 'Hindi nakalagda/nakatala',
 'prefsnologintext' => 'Kailangan mong <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} lumagda/tumala]</span> para makapagtakda ng mga kagustuhang ng tagagamit.',
@@ -1303,7 +1296,7 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 'timezoneregion-indian' => 'Karagatang Indyano',
 'timezoneregion-pacific' => 'Karagatang Pasipiko',
 'allowemail' => 'Pahintulutan ang e-liham mula sa ibang mga tagagamit',
-'prefs-searchoptions' => 'Mga pagpipilian para sa paghahanap',
+'prefs-searchoptions' => 'Paghahanap',
 'prefs-namespaces' => 'Mga espasyo ng pangalan',
 'defaultns' => 'O kaya maghanap sa mga pangalan ng espasyong ito:',
 'default' => 'Likas na pagtatakda',
@@ -2226,11 +2219,7 @@ Makikita doon ang lahat ng mga susunod na pagbabago sa pahinang ito pati na ang 
 
 'enotif_mailer' => 'Tagapagpadala ng mga Pahayag ng {{SITENAME}}',
 'enotif_reset' => 'Tatakan ang lahat ng pahina bilang nadalaw na',
-'enotif_newpagetext' => 'Isa itong bagong pahina.',
 'enotif_impersonal_salutation' => 'Tagagamit ng {{SITENAME}}',
-'changed' => 'binago',
-'created' => 'nilikha',
-'enotif_subject' => 'Ang pahinang $PAGETITLE sa {{SITENAME}} ay $CHANGEDORCREATED ni $PAGEEDITOR',
 'enotif_lastvisited' => 'Tingnan ang $1 para sa lahat ng mga pagbabago magmula noong huling pagdalaw mo.',
 'enotif_lastdiff' => 'Tingnan ang $1 para makita ang pagbabagong ito.',
 'enotif_anon_editor' => 'hindi nakikilalang tagagamit $1',
@@ -2450,7 +2439,7 @@ $1',
 # Contributions
 'contributions' => 'Mga ambag ng tagagamit',
 'contributions-title' => 'Mga ambag ng tagagamit na si $1',
-'mycontris' => 'Mga ambag ko',
+'mycontris' => 'Mga ambag',
 'contribsub2' => 'Para kay $1 ($2)',
 'nocontribs' => 'Walang pagbabagong nakita sa binigay na kondisyon.',
 'uctop' => ' (itaas)',
@@ -2849,7 +2838,6 @@ Sagipin mo ito sa iyong kompyuter at papaitaas na ikarga ito rito.',
 
 # JavaScriptTest
 'javascripttest' => 'Pagsubok sa JavaScript',
-'javascripttest-disabled' => 'Hindi gumagana ang tungkuling ito sa wiking ito.',
 'javascripttest-title' => 'Pinatatakbo ang mga pagsubok ng $1',
 'javascripttest-pagetext-noframework' => 'Nakalaan ang pahinang ito para sa pagpapatakbo ng mga pagsubok ng JavaScript.',
 'javascripttest-pagetext-unknownframework' => 'Hindi napag-aalamang balangkas ng pagsubok na "$1".',
@@ -2989,6 +2977,7 @@ Maaaring dahil ito sa isang kawing sa isang nakatalang hinarang dahil di-kinaisn
 
 # Info page
 'pageinfo-title' => 'Kabatiran para sa "$1"',
+'pageinfo-not-current' => 'Maaari lamang ipakita ang impormasyon para sa kasalukuyang rebisyon.',
 'pageinfo-header-basic' => 'Saligang kabatiran',
 'pageinfo-header-edits' => 'Kasaysayan ng pamamatnugot',
 'pageinfo-header-restrictions' => 'Pruteksiyon ng pahina',
@@ -3014,7 +3003,6 @@ Maaaring dahil ito sa isang kawing sa isang nakatalang hinarang dahil di-kinaisn
 'pageinfo-authors' => 'Kabuuang bilang ng magkakabukod na mga may-akda',
 'pageinfo-recent-edits' => 'Kamakailang bilang ng mga pamamatnugot (sa loob ng huling $1)',
 'pageinfo-recent-authors' => 'Kamakailang bilang ng magkakabukod na mga may-akda',
-'pageinfo-restriction' => 'Pruteksiyon ng pahina ({{lcfirst:$1}})',
 'pageinfo-magic-words' => '{{PLURAL:$1|Salita|Mga salita}}ng mahiwaga ($1)',
 'pageinfo-hidden-categories' => 'Nakatagong {{PLURAL:$1|kategorya|mga kategorya}} ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|Suleras|Mga suleras}} ($1) na nasa transklusyon (kasama sa maraming mga lugar)',
@@ -4046,9 +4034,9 @@ Ipinapakita ang mga larawan sa buong kalinawan, tuwirang sinisimulan ang ibang u
 'logentry-move-move_redir-noredirect' => 'Inilipat ni $1 ang pahinang $3 papunta sa $4 sa ibabaw ng isang pagpapunta sa iba na hindi nag-iiwan ng isang pagpapapunta sa iba',
 'logentry-patrol-patrol' => 'Minarkahan ni $1 ang rebisyong $4 ng pahinang $3 bilang napatrolya na',
 'logentry-patrol-patrol-auto' => 'Kusang minarkahan ni $1 ang rebisyong $4 ng pahinang $3 bilang napatrolya na',
-'logentry-newusers-newusers' => 'Lumikha si $1 ng isang akawnt ng tagagamit',
-'logentry-newusers-create' => 'Lumikha si $1 ng isang akawnt ng tagagamit',
-'logentry-newusers-create2' => 'Lumikha si $1 ng isang akawnt ng tagagamit na $3',
+'logentry-newusers-newusers' => 'Nilikha ang kuwenta ng tagagamit na $1',
+'logentry-newusers-create' => 'Lumikha si $1 ng isang kuwenta ng tagagamit',
+'logentry-newusers-create2' => 'Lumikha si $1 ng isang kuwenta ng tagagamit na $3',
 'logentry-newusers-autocreate' => 'Kusang nalikha ang akawnt na $1',
 'newuserlog-byemail' => 'Ipinadala ang hudyat sa pamamagitan ng e-liham',
 
@@ -4067,6 +4055,10 @@ O kaya, maaari mong gamitin ang maginhawang pormularyo sa ibaba. Ang iyong pagpu
 'feedback-close' => 'Nagawa na',
 'feedback-bugcheck' => 'Mahusay! Suriin lang na hindi pa ito isa sa [$1 nalalamang mga depekto].',
 'feedback-bugnew' => 'Sinuri ko na. Mag-ulat ng panibagong sira',
+
+# Search suggestions
+'searchsuggest-search' => 'Maghanap',
+'searchsuggest-containing' => 'naglalaman ng ...',
 
 # API errors
 'api-error-badaccess-groups' => 'Hindi ka pinapayagang makapagkarga ng mga talaksan papunta sa wiking ito.',

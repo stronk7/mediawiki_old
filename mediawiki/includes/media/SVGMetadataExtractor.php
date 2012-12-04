@@ -52,6 +52,7 @@ class SVGReader {
 	 *
 	 * Creates an SVGReader drawing from the source provided
 	 * @param $source String: URI from which to read
+	 * @throws MWException|Exception
 	 */
 	function __construct( $source ) {
 		global $wgSVGMetadataCutoff;
@@ -74,9 +75,9 @@ class SVGReader {
 			$this->reader->open( $source, null, LIBXML_NOERROR | LIBXML_NOWARNING );
 		}
 
-		// Expand entities, since Adobe Illustrator uses them for xmlns 
-		// attributes (bug 31719). Note that libxml2 has some protection 
-		// against large recursive entity expansions so this is not as 
+		// Expand entities, since Adobe Illustrator uses them for xmlns
+		// attributes (bug 31719). Note that libxml2 has some protection
+		// against large recursive entity expansions so this is not as
 		// insecure as it might appear to be.
 		$this->reader->setParserProperty( XMLReader::SUBST_ENTITIES, true );
 
@@ -113,6 +114,7 @@ class SVGReader {
 
 	/**
 	 * Read the SVG
+	 * @throws MWException
 	 * @return bool
 	 */
 	public function read() {
@@ -196,6 +198,7 @@ class SVGReader {
 	 * Read an XML snippet from an element
 	 *
 	 * @param String $metafield that we will fill with the result
+	 * @throws MWException
 	 */
 	private function readXml( $metafield=null ) {
 		$this->debug ( "Read top level metadata" );

@@ -1,0 +1,194 @@
+
+Security reminder: MediaWiki does not require PHP's register_globals. If you
+have it on, turn it '''off''' if you can.
+
+== MediaWiki 1.21 ==
+
+THIS IS NOT A RELEASE YET
+
+MediaWiki 1.21 is an alpha-quality branch and is not recommended for use in
+production.
+
+=== Configuration changes in 1.21 ===
+* (bug 29374) $wgVectorUseSimpleSearch is now enabled by default.
+* Deprecated $wgAllowRealName is removed. Use $wgHiddenPrefs[] = 'realname'
+  instead.
+
+=== New features in 1.21 ===
+* (bug 38110) Schema changes (adding or dropping tables, indicies and
+  fields) can be now be done separately from from other changes that
+  update.php makes.  This is useful in environments that use database
+  permissions to restrict schema changes but allow the DB user that
+  MediaWiki normally runs as to perform other changes that update.php
+  makes.  Schema changes can be run seperately.  See the file UPGRADE
+  for more information.
+* (bug 34876) jquery.makeCollapsible has been improved in performance.
+* Added ContentHandler facility to allow extensions to support other content
+  than wikitext. See docs/contenthandler.txt for details.
+* New feature was developed for showing high-DPI thumbnails for high-DPI mobile
+  and desktop displays (configurable with $wgResponsiveImages).
+* Added new backend to represent and store information about sites and site
+  specific configuration.
+* jQuery upgraded from 1.8.2 to 1.8.3.
+* jQuery UI upgraded from 1.8.23 to 1.8.24.
+* Added separate fa_sha1 field to filearchive table. This allows sha1
+  searches with the api in miser mode for deleted files.
+* Add initial and programmatic sorting for tablesorter.
+* Add the event "sortEnd.tablesorter", triggered after sorting has completed.
+* The Job system was refactored to allow for different backing stores for
+  queues as well as cross-wiki access to queues, among other things. The schema
+  for the DB queue was changed to support better concurrency and reduce
+  deadlock errors.
+* Added ApiQueryORM class to facilitate creation of query API modules based on
+  tables that have a corresponding ORMTable class.
+* (bug 40876) Icon for PSD (Adobe Photoshop) file types.
+* (bug 40641) Implemented Special:Version/Credits with a list of contributors.
+* (bug 7851) Implemented one-click AJAX patrolling.
+* The <data>, <time>, <meta>, and <link> elements are allowed within WikiText
+  for use with Microdata.
+* The HTML5 <mark> tag has been whitelisted.
+* Added ParserCloned hook for when the Parser object is cloned.
+* Added AlternateEditPreview hook to allow extensions to replace the page
+  preview from the edit page.
+* Added EditPage::showStandardInputs:options hook to allow extensions to add
+  new fields to the "editOptions" area of the edit form.
+* Upload stash DB schema altered to improve upload performance.
+
+=== Bug fixes in 1.21 ===
+* (bug 40353) SpecialDoubleRedirect should support interwiki redirects.
+* (bug 40352) fixDoubleRedirects.php should support interwiki redirects.
+* (bug 9237) SpecialBrokenRedirect should not list interwiki redirects.
+* (bug 34960) Drop unused fields rc_moved_to_ns and rc_moved_to_title from
+  recentchanges table.
+* (bug 32951) Do not register internal externals with absolute protocol,
+  when server has relative protocol.
+* (bug 39005) When purging proxies listed in $wgSquidServers using HTTP PURGE
+  method requests, we now send a Host header by default, for Varnish
+  compatibility. This also works with Squid in reverse-proxy mode. If you wish
+  to support Squid configured in forward-proxy mode, set
+  $wgSquidPurgeUseHostHeader to false.
+* (bug 37020) sql.php with readline eats semicolon.
+* (bug 11748) Properly handle optionally-closed HTML tags when Tidy is
+  disabled, and don't wrap HTML-syntax definition lists in paragraphs.
+* (bug 41409) Diffs while editing an old revision should again diff against the
+  current revision.
+* (bug 41494) Honor $wgLogExceptionBacktrace when logging non-API exceptions
+  caught during API execution.
+* (bug 37963) Fixed loading process for user options.
+* (bug 26995) Update filename field on Upload page after having sanitized it.
+* (bug 41793) Contribution links to users with 0 edits on Special:ListUsers
+  didn't show up red.
+* (bug 41899) A PHP notice no longer occurs when using the "rvcontinue" API
+  parameter.
+* (bug 42036) Account creation emails now contain canonical (not
+  protocol-relative) URLs.
+* (bug 41990) Fix regression: API edit with redirect=true and lacking
+  starttimestamp and basetimestamp should not cause an edit conflict.
+* (bug 41706) EditPage: Preloaded page should be converted if possible and
+  needed.
+* (bug 41886) Rowspans are no longer exploded by tablesorter until the table is
+  actually sorted.
+* (bug 2865)  User interface HTML elements don't use lang attribute
+  (completed the fix by adding the lang attribute to firstHeading).
+* (bug 42173) Removed namespace prefixes on Special:UncategorizedCategories.
+* (bug 36053) Log in "returnto" feature forgets query parameters if no
+  title parameter was specified.
+* (bug 42410) API action=edit now returns correct timestamp for the new edit.
+* (bug 14901) Email notification mistakes log action for new page creation.
+  Enotif no longer sends "page has been created" notifications for some log
+  actions. The following events now have a correct message: page creation,
+  deletion, move, restore (undeletion), change (edit).
+* (bug 457) In the sidebar of Vector, CologneBlue, Monobook, and Monobook-based
+  skins, the heading levels have been changed from (variously per skin)
+  <h4>, <h5> or <h6> to only <h3>s, with a <h2> hidden heading above them.
+  If you are styling or scripting the headings in a custom way, this change
+  will require updates to your site's CSS or JS.
+
+=== API changes in 1.21 ===
+* prop=revisions can now report the contentmodel and contentformat.
+  See docs/contenthandler.txt.
+* action=edit and action=parse now support contentmodel and contentformat
+  parameters to control the interpretation of page content.
+  See docs/contenthandler.txt for details.
+* (bug 35693) ApiQueryImageInfo now suppresses errors when unserializing metadata.
+* (bug 40111) Disable minor edit for page/section creation by API.
+* (bug 41042) Revert change to action=parse&page=... behavior when the page
+  does not exist.
+* (bug 27202) Add timestamp sort to list=allimages.
+
+=== Languages updated in 1.21 ===
+
+MediaWiki supports over 350 languages. Many localisations are updated
+regularly. Below only new and removed languages are listed, as well as
+changes to languages because of Bugzilla reports.
+
+* South Azerbaijani (azb) added.
+* (bug 30040) Autonym for nds-nl is now 'Nedersaksies' (was 'Nedersaksisch').
+* (bug 34977) Now formatted numbers in Spanish use space as separator
+  for thousands, as mandated by the Real Academia Española.
+* (bug 35031) Kurdish formatted numbers now use period and comma
+  as separators for thousands and decimals respectively.
+
+=== Other changes in 1.21 ===
+
+== Compatibility ==
+
+MediaWiki 1.21 requires PHP 5.3.2 or later.
+
+MySQL is the recommended DBMS. PostgreSQL or SQLite can also be used, but
+support for them is somewhat less mature. There is experimental support for IBM
+DB2 and Oracle.
+
+The supported versions are:
+
+* MySQL 5.0.2 or later
+* PostgreSQL 8.3 or later
+* SQLite 3.3.7 or later
+* Oracle 9.0.1 or later
+
+== Upgrading ==
+
+1.21 has several database changes since 1.20, and will not work without schema
+updates. Note that due to changes to some very large tables like the revision
+table, the schema update may take quite long (minutes on a medium sized site,
+many hours on a large site).
+
+If upgrading from before 1.11, and you are using a wiki as a commons
+repository, make sure that it is updated as well. Otherwise, errors may arise
+due to database schema changes.
+
+If upgrading from before 1.7, you may want to run refreshLinks.php to ensure
+new database fields are filled with data.
+
+If you are upgrading from MediaWiki 1.4.x or earlier, some major database
+changes are made, and there is a slightly higher chance that things could
+break. Don't forget to always back up your database before upgrading!
+
+See the file UPGRADE for more detailed upgrade instructions.
+
+For notes on 1.19.x and older releases, see HISTORY.
+
+== Online documentation ==
+
+Documentation for both end-users and site administrators is available on
+MediaWiki.org, and is covered under the GNU Free Documentation License (except
+for pages that explicitly state that their contents are in the public domain):
+
+	https://www.mediawiki.org/wiki/Documentation
+
+== Mailing list ==
+
+A mailing list is available for MediaWiki user support and discussion:
+
+	https://lists.wikimedia.org/mailman/listinfo/mediawiki-l
+
+A low-traffic announcements-only list is also available:
+
+	https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce
+
+It's highly recommended that you sign up for one of these lists if you're
+going to run a public MediaWiki, so you can be notified of security fixes.
+
+== IRC help ==
+
+There's usually someone online in #mediawiki on irc.freenode.net.

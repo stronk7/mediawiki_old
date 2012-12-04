@@ -114,7 +114,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Paubahan_pahanyarnya' ),
 	'Recentchangeslinked'       => array( 'Paubahan_tarait' ),
 	'Revisiondelete'            => array( 'Hapus_ralatan' ),
-	'RevisionMove'              => array( 'Ralatan_pamindahan' ),
 	'Search'                    => array( 'Panggagaian' ),
 	'Shortpages'                => array( 'Tungkaran_handap' ),
 	'Specialpages'              => array( 'Tungkaran_istimiwa' ),
@@ -288,7 +287,6 @@ $messages = array(
 'qbbrowse' => 'Tangadahi',
 'qbedit' => 'Babak',
 'qbpageoptions' => 'Tungkaran ini',
-'qbpageinfo' => 'Naskah aluran',
 'qbmyoptions' => 'Tungkaran ulun',
 'qbspecialpages' => 'Tungkaran istimiwa',
 'faq' => 'FAQ',
@@ -540,11 +538,8 @@ Administrator nang takunci nintu manawarakan panjalasan: "$3".',
 # Login and logout pages
 'logouttext' => "'''Pian parhatan ni sudah kaluar log.'''
 
-Pian kawa manyambung hagan mangguna'akan {{SITENAME}} kada bangaran, atawa Pian kawa [[Special:UserLogin|babuat log pulang]] sawagai pamakai nang sama atawa sawagai pamakai balain.
+Pian kawa manyambung hagan mangguna'akan {{SITENAME}} kada bangaran, atawa Pian kawa <span class='plainlinks'>[$1 babuat log pulang]</span> sawagai pamakai nang sama atawa sawagai pamakai balain.
 Catatan bahwasa babarapa tungkaran pinanya masih ha tarus manampaiakan Pian masih babuat log, sampai Pian mahabisakan timbuluk panjalajah web Pian.",
-'welcomecreation' => '==Salamat datang, $1!==
-Akun Pian sudah diulah.
-Jangan kada ingat hagan maubah [[Special:Preferences|kakatujuan {{SITENAME}}]] Pian.',
 'yourname' => 'Ngaran pamakai:',
 'yourpassword' => 'Katasunduk:',
 'yourpasswordagain' => 'Katik pulang katasunduk:',
@@ -1148,8 +1143,6 @@ Catatan bahwasa mamuruk tautan napigasi akan mambulikakan setelan kolum ngini.',
 'search-interwiki-caption' => 'Dingsanak rangka gawian',
 'search-interwiki-default' => 'Kulihan $1',
 'search-interwiki-more' => '(lagi)',
-'search-mwsuggest-enabled' => 'awan saran',
-'search-mwsuggest-disabled' => 'kadada saran',
 'search-relatedarticle' => 'Bakulaan',
 'mwsuggest-disable' => "Kada kawa'akan sasaran AJAX",
 'searcheverything-enable' => 'Panggagaian pada samunyaan ngaran kakamar',
@@ -2135,11 +2128,7 @@ Parubahan-parubahan salanjutnya pada tungkaran ini dan tungkaran pamandiran tara
 
 'enotif_mailer' => 'Panyurili pamadahan {{SITENAME}}',
 'enotif_reset' => 'Tandai samunyaan tutungkaran sudah diilangi',
-'enotif_newpagetext' => 'Ngini adalah sabuah tungkaran hanyar.',
 'enotif_impersonal_salutation' => 'Pamuruk {{SITENAME}}',
-'changed' => "ta'ubah",
-'created' => "ta'ulah",
-'enotif_subject' => 'Tungkaran $PAGETITLE pintang {{SITENAME}} sudah $CHANGEDORCREATED ulih $PAGEEDITOR',
 'enotif_lastvisited' => 'Janaki $1 gasan samunyaan parubahan mula Pian pauncitan tadi bailang.',
 'enotif_lastdiff' => 'Janaki $1 hagaan maniringi parubahan ngini.',
 'enotif_anon_editor' => 'pamuruk kada-bangaran $1',
@@ -3689,6 +3678,10 @@ Salain ngitu, Pian kawa mamuruk prmulir nyaman di bawah ngini. Kumintar Pian aka
 'feedback-close' => 'Sudah',
 'feedback-bugcheck' => 'Harat! hanyar dipariksa bahwasa ngini lainan salah asa [$1 bug nang dipinandui].',
 'feedback-bugnew' => 'Ulun mamariksa. Malapurakan sabuah bug hanyar',
+
+# Search suggestions
+'searchsuggest-search' => 'Gagai',
+'searchsuggest-containing' => 'isian ...',
 
 # API errors
 'api-error-missingresult' => 'Kasalahan intarnal: kada kawa manantuakan napakah panyalinan tuntung.',

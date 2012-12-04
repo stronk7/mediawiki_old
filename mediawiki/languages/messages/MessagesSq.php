@@ -360,7 +360,6 @@ $messages = array(
 'qbbrowse' => 'Shfletoni',
 'qbedit' => 'Redaktoni',
 'qbpageoptions' => 'Kjo faqe',
-'qbpageinfo' => 'Kontekst',
 'qbmyoptions' => 'Faqet e mia',
 'qbspecialpages' => 'Faqet speciale',
 'faq' => 'Pyetje që bëhen shpesh',
@@ -383,6 +382,7 @@ $messages = array(
 'namespaces' => 'Hapsirat e emrit',
 'variants' => 'Variante',
 
+'navigation-heading' => 'Menuja e navigimit',
 'errorpagetitle' => 'Gabim',
 'returnto' => 'Kthehuni tek $1',
 'tagline' => 'Nga {{SITENAME}}',
@@ -482,11 +482,11 @@ $1",
 'youhavenewmessagesfromusers' => 'Ju keni $1 nga {{Shumës:$3|përdorues tjetër|përdoruesit $3}} ($2).',
 'youhavenewmessagesmanyusers' => 'Ju keni 1$ nga shumë përdorues (2$).',
 'newmessageslinkplural' => '{{SHUMËS:1$|një porosi e re|porosi të reja}}',
-'newmessagesdifflinkplural' => 'i fundit {{SHUMËS:$1|ndryshimi|ndryshimet}}',
+'newmessagesdifflinkplural' => '{{PLURAL:$1|ndryshimi i|ndryshimet e}} fundit',
 'youhavenewmessagesmulti' => 'Ju keni mesazhe të reja në $1',
 'editsection' => 'redakto',
-'editold' => 'redaktoni',
-'viewsourceold' => 'Shiko tekstin',
+'editold' => 'redakto',
+'viewsourceold' => 'shiko tekstin',
 'editlink' => 'redakto',
 'viewsourcelink' => 'Shiko tekstin',
 'editsectionhint' => 'Redaktoni seksionin:
@@ -626,11 +626,11 @@ Administratori i cili e mbylli atë e dha këtë shpjegim: "$3".',
 # Login and logout pages
 'logouttext' => "'''Ju keni dalë jashtë.''' 
 
- Ju mund të vazhdoni të përdorni {{SITENAME}} në mënyrë anonime, ose mund të [[Special:UserLogin|identifikoheni përsëri]] si përdoruesi i mëparshëm ose si një përdorues tjetër. 
+ Ju mund të vazhdoni të përdorni {{SITENAME}} në mënyrë anonime, ose mund të <span class='plainlinks'>[$1 identifikoheni përsëri]</span> si përdoruesi i mëparshëm ose si një përdorues tjetër. 
  Kini parasysh që disa faqe mund të shfaqen sikur të ishit i identifikuar derisa të fshini ''cache''-in e shfletuesit tuaj.",
-'welcomecreation' => '== Mirësevini, $1! == 
- Llogaria juaj është krijuar. 
- Mos harroni të ndryshoni [[Special:Preferences|{{SITENAME}} preferencat]] tuaja.',
+'welcomeuser' => 'Mirësevini, $1!',
+'welcomecreation-msg' => 'Llogaria juaj u krijua. 
+Mos harroni të ndryshoni [[Special:Preferences|{{SITENAME}} preferencat]] tuaja.',
 'yourname' => 'Fusni nofkën tuaj',
 'yourpassword' => 'Fusni fjalëkalimin tuaj',
 'yourpasswordagain' => 'Fusni fjalëkalimin përsëri',
@@ -987,6 +987,9 @@ Duket se është grisur.',
 Ajo tanimë ekziston.',
 'defaultmessagetext' => 'Teksti i porosisë së parazgjedhur',
 
+# Content models
+'content-model-text' => 'tekst i thejshtë',
+
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Kujdes: Kjo faqe ka shumë kërkesa që kërkojnë analizë gramatikore të kushtueshme për sistemin.
 
@@ -1229,8 +1232,6 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'search-interwiki-caption' => 'Projekte simotra',
 'search-interwiki-default' => '$1 përfundime:',
 'search-interwiki-more' => '(më shumë)',
-'search-mwsuggest-enabled' => 'me këshilla',
-'search-mwsuggest-disabled' => 'pa këshilla',
 'search-relatedarticle' => 'Të ngjashme',
 'mwsuggest-disable' => 'Çmundësoi sugjerimet AJAX',
 'searcheverything-enable' => 'Kërko në të gjitha hapësirat',
@@ -2218,11 +2219,7 @@ Në qoftë se dëshironi të hiqni një faqe nga lista mbikqyrëse më vonë, sh
 
 'enotif_mailer' => 'Postieri Njoftues i {{SITENAME}}',
 'enotif_reset' => 'Shëno të gjitha faqet e vizituara',
-'enotif_newpagetext' => 'Kjo është një faqe e re.',
 'enotif_impersonal_salutation' => 'Përdorues i {{SITENAME}}',
-'changed' => 'ndryshuar',
-'created' => 'u krijua',
-'enotif_subject' => '{{SITENAME}} faqja $PAGETITLE u $CHANGEDORCREATED prej $PAGEEDITOR',
 'enotif_lastvisited' => 'Shikoni $1 për të gjitha ndryshimet që prej vizitës tuaj të fundit.',
 'enotif_lastdiff' => 'Shikoni $1 për ndryshime.',
 'enotif_anon_editor' => 'përdorues anonim $1',
@@ -2600,7 +2597,7 @@ Regjistri i bllokimeve është poshtë për referncë:',
 'blocklogtext' => 'Ky është një regjistër bllokimesh dhe çbllokimesh të përdoruesve. IP-të e bllokuara automatikisht nuk janë të dhëna. Shikoni dhe [[Special:BlockList|listën e IP-ve të bllokuara]] për një listë të bllokimeve të tanishme.',
 'unblocklogentry' => 'çbllokoi "$1"',
 'block-log-flags-anononly' => 'vetëm anonimët',
-'block-log-flags-nocreate' => 'krijimi i kontove është pamundësuar',
+'block-log-flags-nocreate' => 'krijimi i llogarive është pamundësuar',
 'block-log-flags-noautoblock' => 'vetëbllokimi është pamundësuar',
 'block-log-flags-noemail' => 'posta elektronike është e bllokuar',
 'block-log-flags-nousertalk' => 'nuk mund të redaktojë faqen e tij të diskutimit',
@@ -2853,7 +2850,6 @@ Ju lutemi provoni përsëri.',
 
 # JavaScriptTest
 'javascripttest' => 'Duke testuar JavaScript',
-'javascripttest-disabled' => 'Ky funksion nuk është mundësuar në këtë wiki.',
 'javascripttest-title' => 'Duke kryer testet $1',
 'javascripttest-pagetext-noframework' => 'Kjo faqe është rezervuar për kryerjen e testimeve JavaScript.',
 'javascripttest-pagetext-unknownframework' => 'Kornizë pune e panjohur testuese "$1".',
@@ -3802,6 +3798,10 @@ Përndryshe, ju mund të formularin e thjeshtë më poshtë. Komenti juaj do të
 'feedback-close' => 'Përfunduar',
 'feedback-bugcheck' => 'Shumë mirë! Thjesht kontrolloni që nuk është një nga [$1 problemet e njohura].',
 'feedback-bugnew' => 'E kontrollova. Raporto një problem të ri',
+
+# Search suggestions
+'searchsuggest-search' => 'Kërko',
+'searchsuggest-containing' => 'përmban ...',
 
 # API errors
 'api-error-badaccess-groups' => 'Ju nuk lejoheni të ngarkoni skeda në këtë wiki.',

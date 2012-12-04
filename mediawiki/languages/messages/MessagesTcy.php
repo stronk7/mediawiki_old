@@ -154,7 +154,6 @@ $messages = array(
 'qbbrowse' => 'ಬ್ರೌಸ್',
 'qbedit' => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
 'qbpageoptions' => 'ಈ ಪುಟ',
-'qbpageinfo' => 'ಸನ್ನಿವೇಶ',
 'qbmyoptions' => 'ಎನ್ನ ಪುಟೊಲು',
 'qbspecialpages' => 'ವಿಶೇಷ ಪುಟೊಲು',
 'faq' => 'ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
@@ -359,9 +358,6 @@ $messages = array(
 'logouttext' => 'ಈರ್ ಇತ್ತೆ ಲಾಗ್ ಔಟ್ ಆತರ್.
 ಈರ್ {{SITENAME}} ನ್ ಅನಾಮಧೇಯರಾತ್ ಉಪಯೋಗ ಮಲ್ಪೊಲಿ,ಅಥವಾ ಕೂಡ ಉಂದುವೇ ಪುದರ್‘ಡ್ ಯಾ ಬೇತೆ ಪುದರ್‘ಡ್ ಉಪಯೋಗ ಮಲ್ಪೊಲಿ.
 ಗಮನಿಸಾಲೆ: ಈರೆನ ಬ್ರೌಸರ್‘ಡ್ ಮಾಜುನಾಡೆ ಮುಟ್ಟ ಕೆಲವು ಪುಟಕ್‘ಲು ಈರ್ ಇತ್ತೆಲಾ ಲಾಗ್ ಇನ್ ಆಯಿಲೆಕ್ಕನೇ ತೋಜಾವು.',
-'welcomecreation' => '== ಸುಸ್ವಾಗತೊ, $1! ==
-ಈರೆನೆ ಅಕೌಂಟ್‘ನ್  ಶುರು ಮಲ್ತ್‘ಂಡ್.
-ಈರೆನ [[Special:Preferences|{{SITENAME}} ಪ್ರಾಶಸ್ತ್ಯೊಲೆನ್]]  ಬದಲಾವಣೆ ಮಲ್ಪರೆ ಮರಪಡೆ',
 'yourname' => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
 'yourpassword' => 'ಪಾಸ್-ವರ್ಡ್:',
 'yourpasswordagain' => 'ಪಾಸ್ವರ್ಡ್ ಪಿರ ಟೈಪ್ ಮಲ್ಪುಲೆ',
@@ -584,8 +580,6 @@ $messages = array(
 'search-interwiki-caption' => 'ಬಳಗದ ಇತರ ಯೋಜನೆಲು',
 'search-interwiki-default' => '$1 ಫಲಿತಾಂಶೊಲು:',
 'search-interwiki-more' => '(ಮಸ್ತ್)',
-'search-mwsuggest-enabled' => 'ಸಲಹೆದೊಟ್ಟಿಗೆ',
-'search-mwsuggest-disabled' => 'ಓವು ಸಲಹೆಲಾ ಇಜ್ಜಿ',
 'searchrelated' => 'ಸ೦ಬ೦ಧ ಇತ್ತಿನ',
 'searchall' => 'ಮಾತಾ',
 'powersearch' => 'ನಾಡ್’ಲೆ',

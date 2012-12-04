@@ -364,14 +364,17 @@ class Sanitizer {
 	 * @return string
 	 */
 	static function removeHTMLtags( $text, $processCallback = null, $args = array(), $extratags = array(), $removetags = array() ) {
-		global $wgUseTidy;
+		global $wgUseTidy, $wgHtml5, $wgAllowMicrodataAttributes, $wgAllowImageTag;
 
 		static $htmlpairsStatic, $htmlsingle, $htmlsingleonly, $htmlnest, $tabletags,
 			$htmllist, $listtags, $htmlsingleallowed, $htmlelementsStatic, $staticInitialised;
 
 		wfProfileIn( __METHOD__ );
 
-		if ( !$staticInitialised ) {
+		// Base our staticInitialised variable off of the global config state so that if the globals
+		// are changed (like in the secrewed up test system) we will re-initialise the settings.
+		$globalContext = implode( '-', compact( 'wgHtml5', 'wgAllowMicrodataAttributes', 'wgAllowImageTag' ) );
+		if ( !$staticInitialised || $staticInitialised != $globalContext ) {
 
 			$htmlpairsStatic = array( # Tags that must be closed
 				'b', 'bdi', 'del', 'i', 'ins', 'u', 'font', 'big', 'small', 'sub', 'sup', 'h1',
@@ -381,15 +384,22 @@ class Sanitizer {
 				'ruby', 'rt' , 'rb' , 'rp', 'p', 'span', 'abbr', 'dfn',
 				'kbd', 'samp'
 			);
+			if ( $wgHtml5 ) {
+				$htmlpairsStatic = array_merge( $htmlpairsStatic, array( 'data', 'time', 'mark' ) );
+			}
 			$htmlsingle = array(
 				'br', 'hr', 'li', 'dt', 'dd'
 			);
 			$htmlsingleonly = array( # Elements that cannot have close tags
 				'br', 'hr'
 			);
+			if ( $wgHtml5 && $wgAllowMicrodataAttributes ) {
+				$htmlsingle[] = $htmlsingleonly[] = 'meta';
+				$htmlsingle[] = $htmlsingleonly[] = 'link';
+			}
 			$htmlnest = array( # Tags that can be nested--??
 				'table', 'tr', 'td', 'th', 'div', 'blockquote', 'ol', 'ul',
-				'dl', 'font', 'big', 'small', 'sub', 'sup', 'span'
+				'li', 'dl', 'dt', 'dd', 'font', 'big', 'small', 'sub', 'sup', 'span'
 			);
 			$tabletags = array( # Can only appear inside table, we will close them
 				'td', 'th', 'tr',
@@ -401,7 +411,6 @@ class Sanitizer {
 				'li',
 			);
 
-			global $wgAllowImageTag;
 			if ( $wgAllowImageTag ) {
 				$htmlsingle[] = 'img';
 				$htmlsingleonly[] = 'img';
@@ -416,7 +425,7 @@ class Sanitizer {
 			foreach ( $vars as $var ) {
 				$$var = array_flip( $$var );
 			}
-			$staticInitialised = true;
+			$staticInitialised = $globalContext;
 		}
 		# Populate $htmlpairs and $htmlelements with the $extratags and $removetags arrays
 		$extratags = array_flip( $extratags );
@@ -510,6 +519,10 @@ class Sanitizer {
 						} elseif ( isset( $htmlsingle[$t] ) ) {
 							# Hack to not close $htmlsingle tags
 							$brace = null;
+							# Still need to push this optionally-closed tag to
+							# the tag stack so that we can match end tags
+							# instead of marking them as bad.
+							array_push( $tagstack, $t );
 						} elseif ( isset( $tabletags[$t] )
 						&& in_array( $t, $tagstack ) ) {
 							// New table tag but forgot to close the previous one
@@ -526,6 +539,10 @@ class Sanitizer {
 						# plaintext results.
 						if( is_callable( $processCallback ) ) {
 							call_user_func_array( $processCallback, array( &$params, $args ) );
+						}
+
+						if ( !Sanitizer::validateTag( $params, $t ) ) {
+							$badtag = true;
 						}
 
 						# Strip non-approved attributes from the tag
@@ -551,16 +568,24 @@ class Sanitizer {
 				preg_match( '/^(\\/?)(\\w+)([^>]*?)(\\/{0,1}>)([^<]*)$/',
 				$x, $regs );
 				@list( /* $qbar */, $slash, $t, $params, $brace, $rest ) = $regs;
+				$badtag = false;
 				if ( isset( $htmlelements[$t = strtolower( $t )] ) ) {
 					if( is_callable( $processCallback ) ) {
 						call_user_func_array( $processCallback, array( &$params, $args ) );
 					}
+
+					if ( !Sanitizer::validateTag( $params, $t ) ) {
+						$badtag = true;
+					}
+
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
-					$rest = str_replace( '>', '&gt;', $rest );
-					$text .= "<$slash$t$newparams$brace$rest";
-				} else {
-					$text .= '&lt;' . str_replace( '>', '&gt;', $x);
+					if ( !$badtag ) {
+						$rest = str_replace( '>', '&gt;', $rest );
+						$text .= "<$slash$t$newparams$brace$rest";
+						continue;
+					}
 				}
+				$text .= '&lt;' . str_replace( '>', '&gt;', $x);
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -613,111 +638,35 @@ class Sanitizer {
 	}
 
 	/**
-	 * Take an array of attribute names and values and fix some deprecated values
-	 * for the given element type.
-	 * This does not validate properties, so you should ensure that you call
-	 * validateTagAttributes AFTER this to ensure that the resulting style rule
-	 * this may add is safe.
+	 * Takes attribute names and values for a tag and the tag name and
+	 * validates that the tag is allowed to be present.
+	 * This DOES NOT validate the attributes, nor does it validate the
+	 * tags themselves. This method only handles the special circumstances
+	 * where we may want to allow a tag within content but ONLY when it has
+	 * specific attributes set.
 	 *
-	 * - Converts most presentational attributes like align into inline css
-	 *
-	 * @param $attribs Array
-	 * @param $element String
-	 * @return Array
+	 * @param $params
+	 * @param $element
 	 */
-	static function fixDeprecatedAttributes( $attribs, $element ) {
-		global $wgHtml5, $wgCleanupPresentationalAttributes;
+	static function validateTag( $params, $element ) {
+		$params = Sanitizer::decodeTagAttributes( $params );
 
-		// presentational attributes were removed from html5, we can leave them
-		// in when html5 is turned off
-		if ( !$wgHtml5 || !$wgCleanupPresentationalAttributes ) {
-			return $attribs;
-		}
-
-		$table = array( 'table' );
-		$cells = array( 'td', 'th' );
-		$colls = array( 'col', 'colgroup' );
-		$tblocks = array( 'tbody', 'tfoot', 'thead' );
-		$h = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
-
-		$presentationalAttribs = array(
-			'align' => array( 'text-align', array_merge( array( 'caption', 'hr', 'div', 'p', 'tr' ), $table, $cells, $colls, $tblocks, $h ) ),
-			'clear' => array( 'clear', array( 'br' ) ),
-			'height' => array( 'height', $cells ),
-			'nowrap' => array( 'white-space', $cells ),
-			'size' => array( 'height', array( 'hr' ) ),
-			'type' => array( 'list-style-type', array( 'li', 'ol', 'ul' ) ),
-			'valign' => array( 'vertical-align', array_merge( $cells, $colls, $tblocks ) ),
-			'width' => array( 'width', array_merge( array( 'hr', 'pre' ), $table, $cells, $colls ) ),
-		);
-
-		// Ensure that any upper case or mixed case attributes are converted to lowercase
-		foreach ( $attribs as $attribute => $value ) {
-			if ( $attribute !== strtolower( $attribute ) && array_key_exists( strtolower( $attribute ), $presentationalAttribs ) ) {
-				$attribs[strtolower( $attribute )] = $value;
-				unset( $attribs[$attribute] );
+		if ( $element == 'meta' || $element == 'link' ) {
+			if ( !isset( $params['itemprop'] ) ) {
+				// <meta> and <link> must have an itemprop="" otherwise they are not valid or safe in content
+				return false;
+			}
+			if ( $element == 'meta' && !isset( $params['content'] ) ) {
+				// <meta> must have a content="" for the itemprop
+				return false;
+			}
+			if ( $element == 'link' && !isset( $params['href'] ) ) {
+				// <link> must have an associated href=""
+				return false;
 			}
 		}
 
-		$style = "";
-		foreach ( $presentationalAttribs as $attribute => $info ) {
-			list( $property, $elements ) = $info;
-
-			// Skip if this attribute is not relevant to this element
-			if ( !in_array( $element, $elements ) ) {
-				continue;
-			}
-
-			// Skip if the attribute is not used
-			if ( !array_key_exists( $attribute, $attribs ) ) {
-				continue;
-			}
-
-			$value = $attribs[$attribute];
-
-			// For nowrap the value should be nowrap instead of whatever text is in the value
-			if ( $attribute === 'nowrap' ) {
-				$value = 'nowrap';
-			}
-
-			// clear="all" is clear: both; in css
-			if ( $attribute === 'clear' && strtolower( $value ) === 'all' ) {
-				$value = 'both';
-			}
-
-			// Size based properties should have px applied to them if they have no unit
-			if ( in_array( $attribute, array( 'height', 'width', 'size' ) ) ) {
-				if ( preg_match( '/^[\d.]+$/', $value ) ) {
-					$value = "{$value}px";
-				}
-			}
-
-			// Table align is special, it's about block alignment instead of
-			// content align (see also bug 40306)
-			if ( $attribute === 'align' && in_array( $element, $table ) ) {
-				if ( $value === 'center' ) {
-					$style .= ' margin-left: auto;';
-					$property = 'margin-right';
-					$value = 'auto';
-				} else {
-					$property = 'float';
-				}
-			}
-
-			$style .= " $property: $value;";
-
-			unset( $attribs[$attribute] );
-		}
-
-		if ( $style ) {
-			// Prepend our style rules so that they can be overridden by user css
-			if ( isset($attribs['style']) ) {
-				$style .= " " . $attribs['style'];
-			}
-			$attribs['style'] = trim($style);
-		}
-
-		return $attribs;
+		return true;
 	}
 
 	/**
@@ -821,7 +770,7 @@ class Sanitizer {
 				unset( $out['itemid'] );
 				unset( $out['itemref'] );
 			}
-			# TODO: Strip itemprop if we aren't descendants of an itemscope.
+			# TODO: Strip itemprop if we aren't descendants of an itemscope or pointed to by an itemref.
 		}
 		return $out;
 	}
@@ -912,7 +861,7 @@ class Sanitizer {
 		// Reject problematic keywords and control characters
 		if ( preg_match( '/[\000-\010\016-\037\177]/', $value ) ) {
 			return '/* invalid control char */';
-		} elseif ( preg_match( '! expression | filter\s*: | accelerator\s*: | url\s*\( !ix', $value ) ) {
+		} elseif ( preg_match( '! expression | filter\s*: | accelerator\s*: | url\s*\( | image\s*\( | image-set\s*\( !ix', $value ) ) {
 			return '/* insecure input */';
 		}
 		return $value;
@@ -968,7 +917,6 @@ class Sanitizer {
 		}
 
 		$decoded = Sanitizer::decodeTagAttributes( $text );
-		$decoded = Sanitizer::fixDeprecatedAttributes( $decoded, $element );
 		$stripped = Sanitizer::validateTagAttributes( $decoded, $element );
 
 		$attribs = array();
@@ -1183,6 +1131,7 @@ class Sanitizer {
 	 * attribs regex matches.
 	 *
 	 * @param $set Array
+	 * @throws MWException
 	 * @return String
 	 */
 	private static function getTagAttributeCallback( $set ) {
@@ -1446,10 +1395,7 @@ class Sanitizer {
 	 * @return Array
 	 */
 	static function attributeWhitelist( $element ) {
-		static $list;
-		if( !isset( $list ) ) {
-			$list = Sanitizer::setupAttributeWhitelist();
-		}
+		$list = Sanitizer::setupAttributeWhitelist();
 		return isset( $list[$element] )
 			? $list[$element]
 			: array();
@@ -1462,6 +1408,13 @@ class Sanitizer {
 	 */
 	static function setupAttributeWhitelist() {
 		global $wgAllowRdfaAttributes, $wgHtml5, $wgAllowMicrodataAttributes;
+
+		static $whitelist, $staticInitialised;
+		$globalContext = implode( '-', compact( 'wgAllowRdfaAttributes', 'wgHtml5', 'wgAllowMicrodataAttributes' ) );
+
+		if ( isset( $whitelist ) && $staticInitialised == $globalContext ) {
+			return $whitelist;
+		}
 
 		$common = array( 'id', 'class', 'lang', 'dir', 'title', 'style' );
 
@@ -1495,7 +1448,7 @@ class Sanitizer {
 
 		# Numbers refer to sections in HTML 4.01 standard describing the element.
 		# See: http://www.w3.org/TR/html4/
-		$whitelist = array (
+		$whitelist = array(
 			# 7.5.4
 			'div'        => $block,
 			'center'     => $common, # deprecated
@@ -1627,7 +1580,28 @@ class Sanitizer {
 			# HTML 5 section 4.6
 			'bdi' => $common,
 
+		);
+
+		if ( $wgHtml5 ) {
+			# HTML5 elements, defined by:
+			# http://www.whatwg.org/specs/web-apps/current-work/multipage/
+			$whitelist += array(
+				'data' => array_merge( $common, array( 'value' ) ),
+				'time' => array_merge( $common, array( 'datetime' ) ),
+				'mark' => $common,
+
+				// meta and link are only permitted by removeHTMLtags when Microdata
+				// is enabled so we don't bother adding a conditional to hide these
+				// Also meta and link are only valid in WikiText as Microdata elements
+				// (ie: validateTag rejects tags missing the attributes needed for Microdata)
+				// So we don't bother including $common attributes that have no purpose.
+				'meta' => array( 'itemprop', 'content' ),
+				'link' => array( 'itemprop', 'href' ),
 			);
+		}
+
+		$staticInitialised = $globalContext;
+
 		return $whitelist;
 	}
 

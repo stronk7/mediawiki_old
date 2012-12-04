@@ -121,6 +121,8 @@ class SpecialPasswordReset extends FormSpecialPage {
 	 * userCanExecute(), and if the data array contains 'Username', etc, then Username
 	 * resets are allowed.
 	 * @param $data array
+	 * @throws MWException
+	 * @throws ThrottledError|PermissionsError
 	 * @return Bool|Array
 	 */
 	public function onSubmit( array $data ) {
@@ -253,7 +255,7 @@ class SpecialPasswordReset extends FormSpecialPage {
 
 		$title = $this->msg( 'passwordreset-emailtitle' );
 
-		$this->result = $firstUser->sendMail( $title->escaped(), $this->email->escaped() );
+		$this->result = $firstUser->sendMail( $title->escaped(), $this->email->text() );
 
 		// Blank the email if the user is not supposed to see it
 		if( !isset( $data['Capture'] ) || !$data['Capture'] ) {

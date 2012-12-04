@@ -1,5 +1,5 @@
 <?php
-/** Kazakh (Arabic script) (‫قازاقشا (تٴوتە)‬)
+/** Kazakh (Arabic script) (قازاقشا (تٴوتە)‏)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -520,7 +520,6 @@ $messages = array(
 'qbbrowse' => 'شولۋ',
 'qbedit' => 'وڭدەۋ',
 'qbpageoptions' => 'بۇل بەت',
-'qbpageinfo' => 'اينالا',
 'qbmyoptions' => 'بەتتەرىم',
 'qbspecialpages' => 'ارنايى بەتتەر',
 'faq' => 'ٴجىيى قويىلعان ساۋالدار',
@@ -727,9 +726,6 @@ $2',
 
 جۇيەگە كىرمەستەن {{SITENAME}} جوباسىن پايدالانۋىن جالعاستىرا الاسىز, نەمەسە ٴدال سول نە وزگە قاتىسۋشى بوپ قايتا كرۋىڭىز مۇمكىن.
 اڭعارتپا: كەيبىر بەتتەر شولعىشىڭىزدىڭ بۇركەمەسىن تازارتقانشا دەيىن ٴالى دە كىرپ قالعانىڭىزداي كورىنۋى مۇمكىن.",
-'welcomecreation' => '== قوش كەلدىڭىز, $1! ==
-جاڭا تىركەلگىڭىز جاسالدى.
-{{SITENAME}} باپتالىمدارىڭىزدى وزگەرتۋىن ۇمىتپاڭىز.',
 'yourname' => 'قاتىسۋشى اتىڭىز:',
 'yourpassword' => 'قۇپىييا ٴسوزىڭىز:',
 'yourpasswordagain' => 'قۇپىييا ٴسوزدى قايتالاڭىز:',
@@ -1128,8 +1124,6 @@ $3 كەلتىرىلگەن سەبەبى: ''$2''",
 'search-interwiki-caption' => 'باۋىرلاس جوبالار',
 'search-interwiki-default' => '$1 ناتىيجە:',
 'search-interwiki-more' => '(كوبىرەك)',
-'search-mwsuggest-enabled' => 'ۇسىنىمدارمەن',
-'search-mwsuggest-disabled' => 'ۇسىنىمدارسىز',
 'search-relatedarticle' => 'قاتىستى',
 'mwsuggest-disable' => 'AJAX ۇسىنىمدارىن ٴوشىر',
 'searchrelated' => 'قاتىستى',
@@ -1756,11 +1750,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}} ەسكەرتۋ حات جىبەرۋ قىزمەتى',
 'enotif_reset' => 'بارلىق بەت كەلىپ-كەتىلدى دەپ بەلگىلە',
-'enotif_newpagetext' => 'مىناۋ جاڭا بەت.',
 'enotif_impersonal_salutation' => '{{SITENAME}} قاتىسۋشىسى',
-'changed' => 'وزگەرتتى',
-'created' => 'باستادى',
-'enotif_subject' => '{{SITENAME}} جوباسىندا $PAGEEDITOR $PAGETITLE اتاۋلى بەتتى $CHANGEDORCREATED',
 'enotif_lastvisited' => 'سوڭعى كەلىپ-كەتۋىڭىزدەن بەرى بولعان وزگەرىستەر ٴۇشىن $1 دەگەندى قاراڭىز.',
 'enotif_lastdiff' => 'وسى وزگەرىس ٴۇشىن $1 دەگەندى قاراڭىز.',
 'enotif_anon_editor' => 'تىركەلگىسىز قاتىسۋشى $1',

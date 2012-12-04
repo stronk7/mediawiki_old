@@ -208,7 +208,6 @@ $messages = array(
 'qbbrowse' => 'Uoglůndańy',
 'qbedit' => 'Sprowjej',
 'qbpageoptions' => 'Ta zajta',
-'qbpageinfo' => 'Kontekst',
 'qbmyoptions' => 'Moje zajty',
 'qbspecialpages' => 'Szpecyjalne zajty',
 'faq' => 'FAQ',
@@ -451,11 +450,8 @@ Administrator kery zawarł wćepał kůmyntorz: "$3".',
 # Login and logout pages
 'logouttext' => "'''Terozki ježeś wylůgowany'''.
 
-Možeš dali sam sprowjać zajty we {{SITENAME}} kej ńyzalůgowany užytkowńik, abo [[Special:UserLogin|zalůgować śe nazod]] kej tyn som abo inkšy užytkowńik.
+Možeš dali sam sprowjać zajty we {{SITENAME}} kej ńyzalůgowany užytkowńik, abo <span class='plainlinks'>[$1 zalůgować śe nazod]</span> kej tyn som abo inkšy užytkowńik.
 Dej pozůr, co na ńykerych zajtach přeglůndarka može dali pokozywać co ježeś zalůgowany, a bydźe tak aže uodśwjyžyš jeij cache.",
-'welcomecreation' => '== Witej, $1! ==
-Uotwarli my sam lo Ćebje kůnto.
-Ńy zapomńij poštalować [[Special:Preferences|preferencyji lo {{GRAMMAR:D.lp|{{SITENAME}}}}]].',
 'yourname' => 'Mjano użytkowńika:',
 'yourpassword' => 'Hasło:',
 'yourpasswordagain' => 'Naszkryflej ausdruk zaś',
@@ -967,8 +963,6 @@ $1',
 'search-interwiki-caption' => 'Śostřane projekty',
 'search-interwiki-default' => '$1 wyńiki:',
 'search-interwiki-more' => '(wjyncyj)',
-'search-mwsuggest-enabled' => 'ze sůgestyjůma',
-'search-mwsuggest-disabled' => 'ńy mo sůgestyji',
 'search-relatedarticle' => 'Podane',
 'mwsuggest-disable' => 'Wyuůnč sůgestyje AJAX',
 'searcheverything-enable' => 'Sznupej we wszech mjan',
@@ -1718,11 +1712,7 @@ Na tyi liśće bydźeš mjou rejer přišuych sprowjyń tyi zajty i jeji zajty g
 
 'enotif_mailer' => 'Powjadomjyńe s {{GRAMMAR:D.lp|{{SITENAME}}}}',
 'enotif_reset' => 'Uoznoč wšyjstke zajty kej uodwjydzůne',
-'enotif_newpagetext' => 'To je nowo zajta.',
 'enotif_impersonal_salutation' => 'užytkowńik {{GRAMMAR:D.lp|{{SITENAME}}}}',
-'changed' => 'pomjyńono',
-'created' => 'utwořono',
-'enotif_subject' => 'Zajta $PAGETITLE we {{GRAMMAR:MS.lp|{{SITENAME}}}} zostoua $CHANGEDORCREATED bez užytkowńika $PAGEEDITOR',
 'enotif_lastvisited' => 'Uobejřij na zajće $1 wšyjstke půmjyńańo uod Twojej uostatńij wizyty.',
 'enotif_lastdiff' => 'Uobejřij na zajće $1 te pomjyńeńe.',
 'enotif_anon_editor' => 'užytkowńik anůnimowy $1',

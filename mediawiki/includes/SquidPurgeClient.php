@@ -21,9 +21,9 @@
  */
 
 /**
- * An HTTP 1.0 client built for the purposes of purging Squid and Varnish. 
- * Uses asynchronous I/O, allowing purges to be done in a highly parallel 
- * manner. 
+ * An HTTP 1.0 client built for the purposes of purging Squid and Varnish.
+ * Uses asynchronous I/O, allowing purges to be done in a highly parallel
+ * manner.
  *
  * Could be replaced by curl_multi_exec() or some such.
  */
@@ -123,7 +123,7 @@ class SquidPurgeClient {
 		return array( $socket );
 	}
 
-	/** 
+	/**
 	 * Get the host's IP address.
 	 * Does not support IPv6 at present due to the lack of a convenient interface in PHP.
 	 */
@@ -176,11 +176,32 @@ class SquidPurgeClient {
 	 * @param $url string
 	 */
 	public function queuePurge( $url ) {
+		global $wgSquidPurgeUseHostHeader;
 		$url = SquidUpdate::expand( str_replace( "\n", '', $url ) );
-		$this->requests[] = "PURGE $url HTTP/1.0\r\n" .
-			"Connection: Keep-Alive\r\n" .
-			"Proxy-Connection: Keep-Alive\r\n" .
-			"User-Agent: " . Http::userAgent() . ' ' . __CLASS__ . "\r\n\r\n";
+		$request = array();
+		if ( $wgSquidPurgeUseHostHeader ) {
+			$url = wfParseUrl( $url );
+			$host = $url['host'];
+			if ( isset( $url['port'] ) && strlen( $url['port'] ) > 0 ) {
+				$host .= ":" . $url['port'];
+			}
+			$path = $url['path'];
+			if ( isset( $url['query'] ) && is_string( $url['query'] ) ) {
+				$path = wfAppendQuery( $path, $url['query'] );
+			}
+			$request[] = "PURGE $path HTTP/1.1";
+			$request[] = "Host: $host";
+		} else {
+			$request[] = "PURGE $url HTTP/1.0";
+		}
+		$request[] = "Connection: Keep-Alive";
+		$request[] = "Proxy-Connection: Keep-Alive";
+		$request[] = "User-Agent: " . Http::userAgent() . ' ' . __CLASS__;
+		// Two ''s to create \r\n\r\n
+		$request[] = '';
+		$request[] = '';
+
+		$this->requests[] = implode( "\r\n", $request );
 		if ( $this->currentRequestIndex === null ) {
 			$this->nextRequest();
 		}
@@ -408,7 +429,7 @@ class SquidPurgeClientPool {
 			$numReady = socket_select( $readSockets, $writeSockets, $exceptSockets, $timeout );
 			wfRestoreWarnings();
 			if ( $numReady === false ) {
-				wfDebugLog( 'squid', __METHOD__.': Error in stream_select: ' . 
+				wfDebugLog( 'squid', __METHOD__.': Error in stream_select: ' .
 					socket_strerror( socket_last_error() ) . "\n" );
 				break;
 			}

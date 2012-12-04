@@ -11,6 +11,8 @@
  * @author Justincheng12345
  * @author Omnipaedista
  * @author Shinjiman
+ * @author Simon Shek
+ * @author Super Wang
  */
 
 $specialPageAliases = array(
@@ -163,7 +165,7 @@ $messages = array(
 'tog-watchcreations' => '哨己撰',
 'tog-watchdefault' => '哨己纂',
 'tog-watchmoves' => '派哨予吾遷之頁',
-'tog-watchdeletion' => '派哨予吾除之頁',
+'tog-watchdeletion' => '派哨至吾除之頁',
 'tog-minordefault' => '慣為校',
 'tog-previewontop' => '頂草覽',
 'tog-previewonfirst' => '覽首修',
@@ -290,7 +292,6 @@ $messages = array(
 'qbbrowse' => '覽',
 'qbedit' => '纂',
 'qbpageoptions' => '此頁',
-'qbpageinfo' => '內文',
 'qbmyoptions' => '吾好',
 'qbspecialpages' => '非凡',
 'faq' => '頻答問',
@@ -409,6 +410,8 @@ $1',
 'youhavenewmessages' => '子有$1（$2）',
 'newmessageslink' => '新訊',
 'newmessagesdifflink' => '變更',
+'youhavenewmessagesfromusers' => '子有 $1 自 {{PLURAL:$3|another user|$3 簿戶也}} ($2)。',
+'youhavenewmessagesmanyusers' => '子有 $1 自多簿戶 ( $2 )',
 'youhavenewmessagesmulti' => '新訊於$1',
 'editsection' => '纂',
 'editold' => '纂',
@@ -507,6 +510,8 @@ $2',
 'namespaceprotected' => "子權未逮，莫能纂'''$1'''。",
 'ns-specialprotected' => '奇頁禁纂也。',
 'titleprotected' => "緘焉自[[User:$1|$1]]防建也。因''$2''也。",
+'invalidtitle-knownnamespace' => '無效卷題，含名域"$2"與文本"$3"',
+'exception-nologin' => '尚未登簿',
 
 # Virus scanner
 'virus-badscanner' => "壞設：不明之病掃：''$1''",
@@ -516,10 +521,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''子去簿矣'''
 
-子可匿名還覽{{SITENAME}}，或[[Special:UserLogin|復登]]同簿、異簿。
+子可匿名還覽{{SITENAME}}，或<span class='plainlinks'>[$1 復登]</span>同簿、異簿。
 未清謄本，覽器文舊，且慎之。",
-'welcomecreation' => '== $1大駕光臨! ==
-子簿增矣，敬更[[Special:Preferences|簿註]]。',
 'yourname' => '名',
 'yourpassword' => '符節',
 'yourpasswordagain' => '復核節',
@@ -581,6 +584,7 @@ $2',
 'noemailprefs' => '郵驛設而用之。',
 'emailconfirmlink' => '惠考郵驛',
 'invalidemailaddress' => '驛址不格，惠正略之。',
+'cannotchangeemail' => '電郵地址不可改于此wiki',
 'accountcreated' => '簿增矣',
 'accountcreatedtext' => '$1簿增矣',
 'createaccount-title' => '於{{SITENAME}}增簿',
@@ -614,6 +618,10 @@ $2',
 'resetpass-wrong-oldpass' => '無效之臨符或現符。
 爾或改符，或求新臨符。',
 'resetpass-temp-password' => '臨符節:',
+
+# Special:PasswordReset
+'passwordreset' => '重設符節',
+'passwordreset-legend' => '重設符節',
 
 # Edit page toolbar
 'bold_sample' => '粗體',
@@ -706,6 +714,7 @@ $2',
 'updated' => '（新）',
 'note' => "'''註'''",
 'previewnote' => "'''此乃預覽，尚未儲焉。'''",
+'continue-editing' => '續纂',
 'session_fail_preview' => "'''歉哉有變，子纂未存焉，惠再之。如復不成，[[Special:UserLogout|重登]]再試也。'''",
 'session_fail_preview_html' => "'''歉哉有變，子纂未存焉'''
 
@@ -895,7 +904,9 @@ $1",
 'revdelete-only-restricted' => '藏期於 $1 $2 之項：爾無廢有秩見之項，而無選另廢項也。',
 'revdelete-reason-dropdown' => '*常因
 ** 侵權
-** 無合之人料',
+** 無合之人料
+** 無合之簿
+** 隱謗譏',
 'revdelete-otherreason' => '它附因：',
 'revdelete-reasonotherlist' => '它因',
 'revdelete-edit-reasonlist' => '纂刪因',
@@ -939,8 +950,10 @@ $1",
 
 # Diffs
 'history-title' => '$1之誌',
+'difference-title' => '$1各本之异',
+'difference-title-multipage' => '$1、$2之异',
 'difference-multipage' => '（辨頁）',
-'lineno' => '列$1：',
+'lineno' => '第$1行：',
 'compareselectedversions' => '辨二擇',
 'showhideselectedversions' => '示／藏之擇',
 'editundo' => '悔',
@@ -985,8 +998,6 @@ $1",
 'search-interwiki-caption' => '結義金蘭',
 'search-interwiki-default' => '結果有$1：',
 'search-interwiki-more' => '（多）',
-'search-mwsuggest-enabled' => '有議',
-'search-mwsuggest-disabled' => '無議',
 'search-relatedarticle' => '關',
 'mwsuggest-disable' => '停AJAX議',
 'searcheverything-enable' => '尋全名集',
@@ -1824,11 +1835,7 @@ $1',
 
 'enotif_mailer' => '{{SITENAME}}報',
 'enotif_reset' => '令為盡閱',
-'enotif_newpagetext' => '新灶',
 'enotif_impersonal_salutation' => '貴客',
-'changed' => '易',
-'created' => '撰',
-'enotif_subject' => '{{SITENAME}}簿{$PAGEEDITOR}{$CHANGEDORCREATED}{$PAGETITLE}',
 'enotif_lastvisited' => '自子出簿，有易見$1。',
 'enotif_lastdiff' => '欲閱此易，見$1。',
 'enotif_anon_editor' => '過客$1',

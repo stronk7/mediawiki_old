@@ -178,6 +178,59 @@ class FSFileBackend extends FileBackendStore {
 	}
 
 	/**
+	 * @see FileBackendStore::doCreateInternal()
+	 * @return Status
+	 */
+	protected function doCreateInternal( array $params ) {
+		$status = Status::newGood();
+
+		$dest = $this->resolveToFSPath( $params['dst'] );
+		if ( $dest === null ) {
+			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
+			return $status;
+		}
+
+		if ( !empty( $params['async'] ) ) { // deferred
+			$tempFile = TempFSFile::factory( 'create_', 'tmp' );
+			if ( !$tempFile ) {
+				$status->fatal( 'backend-fail-create', $params['dst'] );
+				return $status;
+			}
+			$bytes = file_put_contents( $tempFile->getPath(), $params['content'] );
+			if ( $bytes === false ) {
+				$status->fatal( 'backend-fail-create', $params['dst'] );
+				return $status;
+			}
+			$cmd = implode( ' ', array(
+				wfIsWindows() ? 'COPY /B /Y' : 'cp', // (binary, overwrite)
+				wfEscapeShellArg( $this->cleanPathSlashes( $tempFile->getPath() ) ),
+				wfEscapeShellArg( $this->cleanPathSlashes( $dest ) )
+			) );
+			$status->value = new FSFileOpHandle( $this, $params, 'Create', $cmd, $dest );
+			$tempFile->bind( $status->value );
+		} else { // immediate write
+			$bytes = file_put_contents( $dest, $params['content'] );
+			if ( $bytes === false ) {
+				$status->fatal( 'backend-fail-create', $params['dst'] );
+				return $status;
+			}
+			$this->chmod( $dest );
+		}
+
+		return $status;
+	}
+
+	/**
+	 * @see FSFileBackend::doExecuteOpHandlesInternal()
+	 */
+	protected function _getResponseCreate( $errors, Status $status, array $params, $cmd ) {
+		if ( $errors !== '' && !( wfIsWindows() && $errors[0] === " " ) ) {
+			$status->fatal( 'backend-fail-create', $params['dst'] );
+			trigger_error( "$cmd\n$errors", E_USER_WARNING ); // command output
+		}
+	}
+
+	/**
 	 * @see FileBackendStore::doStoreInternal()
 	 * @return Status
 	 */
@@ -190,21 +243,9 @@ class FSFileBackend extends FileBackendStore {
 			return $status;
 		}
 
-		if ( file_exists( $dest ) ) {
-			if ( !empty( $params['overwrite'] ) ) {
-				$ok = unlink( $dest );
-				if ( !$ok ) {
-					$status->fatal( 'backend-fail-delete', $params['dst'] );
-					return $status;
-				}
-			} else {
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
-			}
-		}
-
 		if ( !empty( $params['async'] ) ) { // deferred
-			$cmd = implode( ' ', array( wfIsWindows() ? 'COPY' : 'cp',
+			$cmd = implode( ' ', array(
+				wfIsWindows() ? 'COPY /B /Y' : 'cp', // (binary, overwrite)
 				wfEscapeShellArg( $this->cleanPathSlashes( $params['src'] ) ),
 				wfEscapeShellArg( $this->cleanPathSlashes( $dest ) )
 			) );
@@ -255,21 +296,16 @@ class FSFileBackend extends FileBackendStore {
 			return $status;
 		}
 
-		if ( file_exists( $dest ) ) {
-			if ( !empty( $params['overwrite'] ) ) {
-				$ok = unlink( $dest );
-				if ( !$ok ) {
-					$status->fatal( 'backend-fail-delete', $params['dst'] );
-					return $status;
-				}
-			} else {
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
+		if ( !is_file( $source ) ) {
+			if ( empty( $params['ignoreMissingSource'] ) ) {
+				$status->fatal( 'backend-fail-copy', $params['src'] );
 			}
+			return $status; // do nothing; either OK or bad status
 		}
 
 		if ( !empty( $params['async'] ) ) { // deferred
-			$cmd = implode( ' ', array( wfIsWindows() ? 'COPY' : 'cp',
+			$cmd = implode( ' ', array(
+				wfIsWindows() ? 'COPY /B /Y' : 'cp', // (binary, overwrite)
 				wfEscapeShellArg( $this->cleanPathSlashes( $source ) ),
 				wfEscapeShellArg( $this->cleanPathSlashes( $dest ) )
 			) );
@@ -320,24 +356,16 @@ class FSFileBackend extends FileBackendStore {
 			return $status;
 		}
 
-		if ( file_exists( $dest ) ) {
-			if ( !empty( $params['overwrite'] ) ) {
-				// Windows does not support moving over existing files
-				if ( wfIsWindows() ) {
-					$ok = unlink( $dest );
-					if ( !$ok ) {
-						$status->fatal( 'backend-fail-delete', $params['dst'] );
-						return $status;
-					}
-				}
-			} else {
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
+		if ( !is_file( $source ) ) {
+			if ( empty( $params['ignoreMissingSource'] ) ) {
+				$status->fatal( 'backend-fail-move', $params['src'] );
 			}
+			return $status; // do nothing; either OK or bad status
 		}
 
 		if ( !empty( $params['async'] ) ) { // deferred
-			$cmd = implode( ' ', array( wfIsWindows() ? 'MOVE' : 'mv',
+			$cmd = implode( ' ', array(
+				wfIsWindows() ? 'MOVE /Y' : 'mv', // (overwrite)
 				wfEscapeShellArg( $this->cleanPathSlashes( $source ) ),
 				wfEscapeShellArg( $this->cleanPathSlashes( $dest ) )
 			) );
@@ -385,7 +413,8 @@ class FSFileBackend extends FileBackendStore {
 		}
 
 		if ( !empty( $params['async'] ) ) { // deferred
-			$cmd = implode( ' ', array( wfIsWindows() ? 'DEL' : 'unlink',
+			$cmd = implode( ' ', array(
+				wfIsWindows() ? 'DEL' : 'unlink',
 				wfEscapeShellArg( $this->cleanPathSlashes( $source ) )
 			) );
 			$status->value = new FSFileOpHandle( $this, $params, 'Copy', $cmd );
@@ -406,71 +435,6 @@ class FSFileBackend extends FileBackendStore {
 	protected function _getResponseDelete( $errors, Status $status, array $params, $cmd ) {
 		if ( $errors !== '' && !( wfIsWindows() && $errors[0] === " " ) ) {
 			$status->fatal( 'backend-fail-delete', $params['src'] );
-			trigger_error( "$cmd\n$errors", E_USER_WARNING ); // command output
-		}
-	}
-
-	/**
-	 * @see FileBackendStore::doCreateInternal()
-	 * @return Status
-	 */
-	protected function doCreateInternal( array $params ) {
-		$status = Status::newGood();
-
-		$dest = $this->resolveToFSPath( $params['dst'] );
-		if ( $dest === null ) {
-			$status->fatal( 'backend-fail-invalidpath', $params['dst'] );
-			return $status;
-		}
-
-		if ( file_exists( $dest ) ) {
-			if ( !empty( $params['overwrite'] ) ) {
-				$ok = unlink( $dest );
-				if ( !$ok ) {
-					$status->fatal( 'backend-fail-delete', $params['dst'] );
-					return $status;
-				}
-			} else {
-				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
-				return $status;
-			}
-		}
-
-		if ( !empty( $params['async'] ) ) { // deferred
-			$tempFile = TempFSFile::factory( 'create_', 'tmp' );
-			if ( !$tempFile ) {
-				$status->fatal( 'backend-fail-create', $params['dst'] );
-				return $status;
-			}
-			$bytes = file_put_contents( $tempFile->getPath(), $params['content'] );
-			if ( $bytes === false ) {
-				$status->fatal( 'backend-fail-create', $params['dst'] );
-				return $status;
-			}
-			$cmd = implode( ' ', array( wfIsWindows() ? 'COPY' : 'cp',
-				wfEscapeShellArg( $this->cleanPathSlashes( $tempFile->getPath() ) ),
-				wfEscapeShellArg( $this->cleanPathSlashes( $dest ) )
-			) );
-			$status->value = new FSFileOpHandle( $this, $params, 'Create', $cmd, $dest );
-			$tempFile->bind( $status->value );
-		} else { // immediate write
-			$bytes = file_put_contents( $dest, $params['content'] );
-			if ( $bytes === false ) {
-				$status->fatal( 'backend-fail-create', $params['dst'] );
-				return $status;
-			}
-			$this->chmod( $dest );
-		}
-
-		return $status;
-	}
-
-	/**
-	 * @see FSFileBackend::doExecuteOpHandlesInternal()
-	 */
-	protected function _getResponseCreate( $errors, Status $status, array $params, $cmd ) {
-		if ( $errors !== '' && !( wfIsWindows() && $errors[0] === " " ) ) {
-			$status->fatal( 'backend-fail-create', $params['dst'] );
 			trigger_error( "$cmd\n$errors", E_USER_WARNING ); // command output
 		}
 	}
@@ -644,7 +608,7 @@ class FSFileBackend extends FileBackendStore {
 
 	/**
 	 * @see FileBackendStore::getFileListInternal()
-	 * @return array|FSFileBackendFileList|null
+	 * @return Array|FSFileBackendFileList|null
 	 */
 	public function getFileListInternal( $fullCont, $dirRel, array $params ) {
 		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
@@ -662,44 +626,58 @@ class FSFileBackend extends FileBackendStore {
 	}
 
 	/**
-	 * @see FileBackendStore::getLocalReference()
-	 * @return FSFile|null
+	 * @see FileBackendStore::doGetLocalReferenceMulti()
+	 * @return Array
 	 */
-	public function getLocalReference( array $params ) {
-		$source = $this->resolveToFSPath( $params['src'] );
-		if ( $source === null ) {
-			return null;
+	protected function doGetLocalReferenceMulti( array $params ) {
+		$fsFiles = array(); // (path => FSFile)
+
+		foreach ( $params['srcs'] as $src ) {
+			$source = $this->resolveToFSPath( $src );
+			if ( $source === null || !is_file( $source ) ) {
+				$fsFiles[$src] = null; // invalid path or file does not exist
+			} else {
+				$fsFiles[$src] = new FSFile( $source );
+			}
 		}
-		return new FSFile( $source );
+
+		return $fsFiles;
 	}
 
 	/**
-	 * @see FileBackendStore::getLocalCopy()
-	 * @return null|TempFSFile
+	 * @see FileBackendStore::doGetLocalCopyMulti()
+	 * @return Array
 	 */
-	public function getLocalCopy( array $params ) {
-		$source = $this->resolveToFSPath( $params['src'] );
-		if ( $source === null ) {
-			return null;
+	protected function doGetLocalCopyMulti( array $params ) {
+		$tmpFiles = array(); // (path => TempFSFile)
+
+		foreach ( $params['srcs'] as $src ) {
+			$source = $this->resolveToFSPath( $src );
+			if ( $source === null ) {
+				$tmpFiles[$src] = null; // invalid path
+			} else {
+				// Create a new temporary file with the same extension...
+				$ext = FileBackend::extensionFromPath( $src );
+				$tmpFile = TempFSFile::factory( 'localcopy_', $ext );
+				if ( !$tmpFile ) {
+					$tmpFiles[$src] = null;
+				} else {
+					$tmpPath = $tmpFile->getPath();
+					// Copy the source file over the temp file
+					wfSuppressWarnings();
+					$ok = copy( $source, $tmpPath );
+					wfRestoreWarnings();
+					if ( !$ok ) {
+						$tmpFiles[$src] = null;
+					} else {
+						$this->chmod( $tmpPath );
+						$tmpFiles[$src] = $tmpFile;
+					}
+				}
+			}
 		}
 
-		// Create a new temporary file with the same extension...
-		$ext = FileBackend::extensionFromPath( $params['src'] );
-		$tmpFile = TempFSFile::factory( 'localcopy_', $ext );
-		if ( !$tmpFile ) {
-			return null;
-		}
-		$tmpPath = $tmpFile->getPath();
-
-		// Copy the source file over the temp file
-		$ok = copy( $source, $tmpPath );
-		if ( !$ok ) {
-			return null;
-		}
-
-		$this->chmod( $tmpPath );
-
-		return $tmpFile;
+		return $tmpFiles;
 	}
 
 	/**

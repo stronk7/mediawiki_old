@@ -27,6 +27,9 @@
  * @ingroup SpecialPage
  */
 class SpecialChangePassword extends UnlistedSpecialPage {
+
+	protected $mUserName, $mOldpass, $mNewpass, $mRetype, $mDomain;
+
 	public function __construct() {
 		parent::__construct( 'ChangePassword' );
 	}
@@ -105,6 +108,9 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		$this->getOutput()->redirect( $titleObj->getFullURL() );
 	}
 
+	/**
+	 * @param $msg string
+	 */
 	function error( $msg ) {
 		$this->getOutput()->addHTML( Xml::element('p', array( 'class' => 'error' ), $msg ) );
 	}
@@ -170,6 +176,10 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		);
 	}
 
+	/**
+	 * @param $fields array
+	 * @return string
+	 */
 	function pretty( $fields ) {
 		$out = '';
 		foreach ( $fields as $list ) {
@@ -234,7 +244,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		try {
 			$user->setPassword( $this->mNewpass );
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
-			$this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
+			$this->mNewpass = $this->mOldpass = $this->mRetype = '';
 		} catch( PasswordError $e ) {
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
 			throw new PasswordError( $e->getMessage() );

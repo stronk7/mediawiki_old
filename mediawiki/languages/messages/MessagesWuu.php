@@ -159,7 +159,6 @@ $messages = array(
 'qbbrowse' => '浏览',
 'qbedit' => '编辑',
 'qbpageoptions' => '迭只页面',
-'qbpageinfo' => '上下文',
 'qbmyoptions' => '我个选项',
 'qbspecialpages' => '特殊页面',
 'faq' => 'FAQs',
@@ -382,11 +381,8 @@ $2',
 # Login and logout pages
 'logouttext' => "侬已经登出哉。'''
 
-侬可以继续匿名使用{{SITENAME}} ，也可以再次以相同或者两样个用户名[[Special:UserLogin|登录]]。
+侬可以继续匿名使用{{SITENAME}} ，也可以再次以相同或者两样个用户名<span class='plainlinks'>[$1 登录]</span>。
 注意，有眼页面作兴还是会搭侬登出前头一样显示，一脚到侬清除浏览器缓存。",
-'welcomecreation' => '== 欢迎侬， $1！ ==
-
-侬个户头已经建立好哉。弗要忘记脱设定侬个[[Special:Preferences|{{SITENAME}}的个人参数]]噢。',
 'yourname' => '用户名:',
 'yourpassword' => '密码:',
 'yourpasswordagain' => '再拍一遍密码:',
@@ -884,8 +880,6 @@ $1",
 'search-interwiki-caption' => '姊妹项目',
 'search-interwiki-default' => '$1项结果：',
 'search-interwiki-more' => '（更多）',
-'search-mwsuggest-enabled' => '与建议',
-'search-mwsuggest-disabled' => ' 呒没建议',
 'search-relatedarticle' => '相关',
 'mwsuggest-disable' => '禁用AJAX建议',
 'searcheverything-enable' => '垃拉所有名字空间里向搜索',
@@ -1230,10 +1224,6 @@ $1",
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => '监控……',
 'unwatching' => '解除监控……',
-
-'enotif_newpagetext' => '该个是一只新页面。',
-'changed' => '改变哉',
-'created' => '建立哉',
 
 # Delete
 'deletepage' => '删脱页面',

@@ -17,11 +17,6 @@
  * @author לערי ריינהארט
  */
 
-$bookstoreList = array(
-	'Bokasolan.fo' => 'http://www.bokasolan.fo/vleitari.asp?haattur=bok.alfa&Heiti=&Hovindur=&Forlag=&innbinding=Oell&bolkur=Allir&prisur=Allir&Aarstal=Oell&mal=Oell&status=Oell&ISBN=$1',
-	'inherit' => true,
-);
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Miðil',
 	NS_SPECIAL          => 'Serstakt',
@@ -51,15 +46,6 @@ $namespaceAliases = array(
 	'Fyrimynd_kjak' => NS_TEMPLATE_TALK,
 	'Hjálp_kjak' => NS_HELP_TALK,
 	'Bólkur_kjak' => NS_CATEGORY_TALK,
-);
-
-
-$datePreferences = false;
-$defaultDateFormat = 'dmy';
-$dateFormats = array(
-	'dmy time' => 'H:i',
-	'dmy date' => 'j. M Y',
-	'dmy both' => 'j. M Y "kl." H:i',
 );
 
 $specialPageAliases = array(
@@ -107,6 +93,19 @@ $specialPageAliases = array(
 	'Version'                   => array( 'Útgáva' ),
 	'Wantedpages'               => array( 'Ynsktar síður' ),
 	'Watchlist'                 => array( 'Mítt eftirlit' ),
+);
+
+$datePreferences = false;
+$defaultDateFormat = 'dmy';
+$dateFormats = array(
+	'dmy time' => 'H:i',
+	'dmy date' => 'j. M Y',
+	'dmy both' => 'j. M Y "kl." H:i',
+);
+
+$bookstoreList = array(
+	'Bokasolan.fo' => 'http://www.bokasolan.fo/vleitari.asp?haattur=bok.alfa&Heiti=&Hovindur=&Forlag=&innbinding=Oell&bolkur=Allir&prisur=Allir&Aarstal=Oell&mal=Oell&status=Oell&ISBN=$1',
+	'inherit' => true,
 );
 
 $linkTrail = '/^([áðíóúýæøa-z]+)(.*)$/sDu';
@@ -256,7 +255,6 @@ $messages = array(
 'qbbrowse' => 'Kaga',
 'qbedit' => 'Rætta',
 'qbpageoptions' => 'Henda síðan',
-'qbpageinfo' => 'Samanhangur',
 'qbmyoptions' => 'Mínar síður',
 'qbspecialpages' => 'Serstakar síður',
 'faq' => 'OSS',
@@ -494,7 +492,7 @@ Vinarliga royn aftur um fáir minuttir.',
 'editinginterface' => "↓ '''Ávaring:''' Tú rættar eina síðu sum verður brúkt til at geva markamóts tekst til ritbúnaðin (software).
 Broytingar á hesi síðu fara at ávirka útsjóndina á brúkara markamótinum (interface) fyri aðrir brúkarar.
 Fyri at gera týðingar verður tú vinarliga biðin um at umhugsa at brúka [//translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net], sum er verkætlan fyri týðingum av MediaWiki.",
-'sqlhidden' => '↓ (SQL fyrispurningur fjaldur)',
+'sqlhidden' => '(SQL fyrispurningur fjaldur)',
 'cascadeprotected' => 'Henda síðan er vard fyri rættingum, tí hon er í fylgjandi {{PLURAL:$1|síðu, sum er|síðum, sum eru}}
 vardar við "arvaðari síðuverjing"
 $2',
@@ -514,12 +512,8 @@ Givin orsøk er "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext' => "'''Tú hevur nú ritað út.'''
-Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú [[Special:UserLogin|logga á aftur]] sum sami ella sum annar brúkari. 
+Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú <span class='plainlinks'>[\$1 logga á aftur]</span> sum sami ella sum annar brúkari. 
 Legg til merkis, at summar síður framvegis vera vístar, sum um tú enn vart loggaður á, til tú hevur reinsa tín brovsara fyri \"cache\".",
-'welcomecreation' => '== Vælkomin, $1! ==
-
-Tín konta er nú stovnað.
-Gloym ikki at broyta tínar [[Special:Preferences|{{SITENAME}} innstillingar]].',
 'yourname' => 'Títt brúkaranavn:',
 'yourpassword' => 'Títt loyniorð:',
 'yourpasswordagain' => 'Skriva loyniorð umaftur:',
@@ -1071,8 +1065,6 @@ Tú hevur ikki atgongd til hann.',
 'search-interwiki-caption' => 'Líknandi verkætlanir',
 'search-interwiki-default' => '$1 úrslit:',
 'search-interwiki-more' => '(meira)',
-'search-mwsuggest-enabled' => 'við uppskotum',
-'search-mwsuggest-disabled' => 'ongi uppskot',
 'search-relatedarticle' => 'Líknandi',
 'mwsuggest-disable' => 'Slá AJAX uppskot frá',
 'searcheverything-enable' => 'Leita í øllum navnaøkjum',
@@ -1768,9 +1760,7 @@ Vilt tú flyta síðuna undan tínum eftirliti, kanst tú trýsta á \"Strika ef
 'watching' => 'Eftirlitir...',
 'unwatching' => 'Strikar eftirlit...',
 
-'enotif_newpagetext' => 'Hetta er ein nýggj síða.',
 'enotif_impersonal_salutation' => '{{SITENAME}}brúkari',
-'created' => 'stovnað',
 
 # Delete
 'deletepage' => 'Strika síðu',
@@ -2252,6 +2242,9 @@ Hendan váttanarkoda fer úr gildi tann $4.',
 # Special:ComparePages
 'compare-page1' => 'Síða 1',
 'compare-page2' => 'Síða 2',
+
+# Search suggestions
+'searchsuggest-search' => 'Leita',
 
 # API errors
 'api-error-empty-file' => 'Fílan sum tú sendi inn var tóm.',

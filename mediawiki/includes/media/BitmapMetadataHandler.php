@@ -240,7 +240,7 @@ class BitmapMetadataHandler {
 
 		unset( $baseArray['comment'] );
 		unset( $baseArray['xmp'] );
-	
+
 		$baseArray['metadata'] = $meta->getMetadataArray();
 		$baseArray['metadata']['_MW_GIF_VERSION'] = GIFMetadataExtractor::VERSION;
 		return $baseArray;
@@ -257,6 +257,7 @@ class BitmapMetadataHandler {
 	 *
 	 * The various exceptions this throws are caught later.
 	 * @param $filename String
+	 * @throws MWException
 	 * @return Array The metadata.
 	 */
 	static public function Tiff ( $filename ) {

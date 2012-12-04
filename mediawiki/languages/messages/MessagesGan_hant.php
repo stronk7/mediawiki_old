@@ -1,5 +1,5 @@
 <?php
-/** Traditional Gan script (‪贛語（繁體）‬)
+/** Traditional Gan script (贛語（繁體）‎)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -198,7 +198,6 @@ $messages = array(
 'qbbrowse' => '查看',
 'qbedit' => '編寫',
 'qbpageoptions' => '箇頁',
-'qbpageinfo' => '箇頁信息',
 'qbmyoptions' => '我嗰頁面',
 'qbspecialpages' => '特殊頁',
 'faq' => 'FAQ',
@@ -423,10 +422,7 @@ $2',
 # Login and logout pages
 'logouttext' => "'''汝退出正哩。'''
 
-接到汝得匿名使用{{SITENAME}}，或[[Special:UserLogin|登入過]]。除非汝刪吥瀏覽器緩存，隻把子頁面可能會接到話汝係登入狀態。",
-'welcomecreation' => '== 歡迎, $1! ==
-
-建正哩汝嗰帳戶，莫誺記設置 [[Special:Preferences|{{SITENAME}}嗰個人參數]]。',
+接到汝得匿名使用{{SITENAME}}，或<span class='plainlinks'>[$1 登入過]</span>。除非汝刪吥瀏覽器緩存，隻把子頁面可能會接到話汝係登入狀態。",
 'yourname' => '用戶名：',
 'yourpassword' => '密碼：',
 'yourpasswordagain' => '輸過道密碼：',
@@ -789,8 +785,6 @@ $2',
 'search-interwiki-caption' => '姊妹計劃',
 'search-interwiki-default' => '$1隻結果：',
 'search-interwiki-more' => '（更多）',
-'search-mwsuggest-enabled' => '有建議',
-'search-mwsuggest-disabled' => '冇建議',
 'searchrelated' => '相關',
 'searchall' => '所有',
 'showingresults' => '底下從第<b>$2</b>條顯示起先嗰<b>$1</b>條結果:',
@@ -1318,11 +1312,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}}郵件報告員',
 'enotif_reset' => '拿全部文章標成已讀',
-'enotif_newpagetext' => '箇係新開嗰頁面。',
 'enotif_impersonal_salutation' => '{{SITENAME}}用戶',
-'changed' => '改卟嘞',
-'created' => '建正嘞',
-'enotif_subject' => '{{SITENAME}}有頁面 $PAGETITLE拕$PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => '眵倷上回訪問後嗰全部改動請去$1。',
 'enotif_lastdiff' => '想眵改動請去$1。',
 'enotif_anon_editor' => '匿名用戶$1',
@@ -2292,5 +2282,8 @@ $3
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|標籤]]過濾器：',
+
+# Search suggestions
+'searchsuggest-search' => '尋吖',
 
 );

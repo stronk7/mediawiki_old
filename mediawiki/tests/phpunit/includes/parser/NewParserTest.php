@@ -9,7 +9,7 @@
  */
 class NewParserTest extends MediaWikiTestCase {
 	static protected $articles = array();	// Array of test articles defined by the tests
-	/* The dataProvider is run on a different instance than the test, so it must be static
+	/* The data provider is run on a different instance than the test, so it must be static
 	 * When running tests from several files, all tests will see all articles.
 	 */
 	static protected $backendToUse;
@@ -31,9 +31,12 @@ class NewParserTest extends MediaWikiTestCase {
 
 	protected $file = false;
 
-	function setUp() {
-		global $wgContLang, $wgNamespaceProtection, $wgNamespaceAliases;
+	protected function setUp() {
+		global $wgContLang, $wgLanguageCode;
+		global $wgNamespaceProtection, $wgNamespaceAliases;
 		global $wgHooks, $IP;
+
+		$wgLanguageCode = 'en';
 		$wgContLang = Language::factory( 'en' );
 
 		//Setup CLI arguments
@@ -100,7 +103,7 @@ class NewParserTest extends MediaWikiTestCase {
 		$wgNamespaceAliases['Image_talk'] = NS_FILE_TALK;
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		foreach ( $this->savedInitialGlobals as $var => $val ) {
 			$GLOBALS[$var] = $val;
 		}
@@ -303,7 +306,7 @@ class NewParserTest extends MediaWikiTestCase {
 			'wgNoFollowLinks' => true,
 			'wgNoFollowDomainExceptions' => array(),
 			'wgThumbnailScriptPath' => false,
-			'wgUseImageResize' => false,
+			'wgUseImageResize' => true,
 			'wgUseTeX' => isset( $opts['math'] ),
 			'wgMathDirectory' => $uploadDir . '/math',
 			'wgLocaltimezone' => 'UTC',
@@ -326,7 +329,6 @@ class NewParserTest extends MediaWikiTestCase {
 			'wgExternalLinkTarget' => false,
 			'wgAlwaysUseTidy' => false,
 			'wgHtml5' => true,
-			'wgCleanupPresentationalAttributes' => true,
 			'wgWellFormedXml' => true,
 			'wgAllowMicrodataAttributes' => true,
 			'wgAdaptiveMessageCache' => true,
@@ -466,6 +468,16 @@ class NewParserTest extends MediaWikiTestCase {
 				"$base/local-thumb/3/3a/Foobar.jpg/200px-Foobar.jpg",
 				"$base/local-thumb/3/3a/Foobar.jpg/640px-Foobar.jpg",
 				"$base/local-thumb/3/3a/Foobar.jpg/120px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/1280px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/20px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/270px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/300px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/30px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/360px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/400px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/40px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/70px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/960px-Foobar.jpg",
 
 				"$base/local-public/0/09/Bad.jpg",
 				"$base/local-thumb/0/09/Bad.jpg",
@@ -522,6 +534,14 @@ class NewParserTest extends MediaWikiTestCase {
 			$this->assertTrue( true ); // XXX: don't flood output with "test made no assertions"
 			//$this->markTestSkipped( 'Filtered out by the user' );
 			return;
+		}
+
+		if ( !$this->isWikitextNS( NS_MAIN ) ) {
+			// parser tests frequently assume that the main namespace contains wikitext.
+			// @todo: When setting up pages, force the content model. Only skip if
+			//        $wgtContentModelUseDB is false.
+			$this->markTestSkipped( "Main namespace does not support wikitext,"
+					. "skipping parser test: $desc" );
 		}
 
 		wfDebug( "Running parser test: $desc\n" );

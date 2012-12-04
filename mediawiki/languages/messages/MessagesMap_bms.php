@@ -159,7 +159,6 @@ $messages = array(
 'qbbrowse' => 'Jelajahi',
 'qbedit' => 'Sunting',
 'qbpageoptions' => 'Kaca kiye',
-'qbpageinfo' => 'Konteks kaca',
 'qbmyoptions' => 'Kaca-ne inyong',
 'qbspecialpages' => 'Kaca-kaca astamiwa',
 'faq' => 'FAQ (Pitakonan sing sering ditakokna)',
@@ -409,11 +408,8 @@ Alesane yakuwe "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext' => "'''Rika uwis metu log sekang sistem.'''
 
-Rika teyeng terus nggunakna {{SITENAME}} kanthi anonim, utawa Rika teyeng [[Special:UserLogin|mlebu log maning]] nganggo jeneng panganggo sing padha utawa sejene.
+Rika teyeng terus nggunakna {{SITENAME}} kanthi anonim, utawa Rika teyeng <span class='plainlinks'>[$1 mlebu log maning]</span> nganggo jeneng panganggo sing padha utawa sejene.
 Digatekna ya, nek ana kaca sing esih terus nidokna nek rika esih mlebu log nnganti Rika mbusak singgahan nang panjelajah web-e Rika.",
-'welcomecreation' => '== Sugeng rawuh, $1! ==
-
-Akun Rika uwis digawe. Aja kelalen nata konfigurasi [[Special:Preferences|preferensi {{SITENAME}}]] Rika.',
 'yourname' => 'Jeneng panganggo:',
 'yourpassword' => 'Tembung sandhi:',
 'yourpasswordagain' => 'Balèni tembung sandhi:',
@@ -885,8 +881,6 @@ Gatèkna, angger nganggo pranala navigasi kuwe bakalan nge-reset kolom kiye.',
 'search-interwiki-caption' => 'Proyek liyane',
 'search-interwiki-default' => 'Hasil $1:',
 'search-interwiki-more' => '(terusane)',
-'search-mwsuggest-enabled' => 'nganggo saran',
-'search-mwsuggest-disabled' => 'ora ana saran',
 'search-relatedarticle' => 'Kagandhèng',
 'mwsuggest-disable' => 'Non-aktifna saran AJAX',
 'searcheverything-enable' => 'Goleti nang kabeh bilik jeneng',

@@ -37,6 +37,11 @@ div#content {
 	color: black;
 	direction: ltr;
 }
+/* Hide, but keep accessible for screen-readers */
+#mw-navigation h2 {
+	position: absolute;
+	top: -9999px;
+}
 /* Head */
 #mw-page-base {
 	height: 5em;
@@ -61,6 +66,7 @@ div#mw-head {
 	right: 0;
 	width: 100%;
 }
+div#mw-head h3,
 div#mw-head h5 {
 	margin: 0;
 	padding: 0;
@@ -74,12 +80,16 @@ div.emptyPortlet {
 	position: absolute;
 	top: 0.33em;
 	right: 0.75em;
+	/* Display on top of page tabs - bug 37158 */
+	z-index: 1;
 }
+#p-personal h3,
 #p-personal h5 {
 	display: none;
 }
 #p-personal ul {
-	list-style: none;
+	list-style-type: none;
+	list-style-image: none;
 	margin: 0;
 	padding-left: 10em; /* Keep from overlapping logo */
 }
@@ -106,7 +116,9 @@ div.emptyPortlet {
 	margin-top: 2.5em;
 }
 /* Navigation Labels */
+div.vectorTabs h3,
 div.vectorTabs h5,
+div.vectorMenu h3 span,
 div.vectorMenu h5 span {
 	display: none;
 }
@@ -129,7 +141,8 @@ div.vectorTabs ul {
 }
 div.vectorTabs ul {
 	height: 100%;
-	list-style: none;
+	list-style-type: none;
+	list-style-image: none;
 	margin: 0;
 	padding: 0;
 }
@@ -226,6 +239,7 @@ body.rtl div.vectorMenu {
 }
 /* OVERRIDDEN BY COMPLIANT BROWSERS */
 /* @noflip */
+div#mw-head div.vectorMenu h3,
 div#mw-head div.vectorMenu h5 {
 	float: left;
 	/* @embed */
@@ -233,15 +247,18 @@ div#mw-head div.vectorMenu h5 {
 	background-repeat: no-repeat;
 }
 /* This will be flipped - unlike the one above it */
+div#mw-head div.vectorMenu h3,
 div#mw-head div.vectorMenu h5 {
 	background-position: bottom left;
 	margin-left: -1px;
 }
 /* IGNORED BY IE6 */
+div#mw-head div.vectorMenu > h3,
 div#mw-head div.vectorMenu > h5 {
 	background-image: none;
 }
-div#mw-head div.vectorMenu h4 {
+div#mw-head div.vectorMenu h4,
+div.vectorMenu#p-variants #mw-vector-current-variant {
 	display: inline-block;
 	float: left;
 	font-size: 0.8em;
@@ -252,20 +269,23 @@ div#mw-head div.vectorMenu h4 {
 }
 /* OVERRIDDEN BY COMPLIANT BROWSERS */
 /* @noflip */
+div.vectorMenu h3 a,
 div.vectorMenu h5 a {
 	display: inline-block;
 	width: 24px;
-	height: 2.5em;
+	height: 1.9em;
 	text-decoration: none;
 	/* @embed */
 	background-image: url(images/tab-break.png);
 	background-repeat: no-repeat;
 }
 /* This will be flipped - unlike the one above it */
+div.vectorMenu h3 a,
 div.vectorMenu h5 a {
 	background-position: bottom right;
 }
 /* IGNORED BY IE6 */
+div.vectorMenu h3 > a,
 div.vectorMenu h5 > a {
 	display: block;
 }
@@ -302,9 +322,8 @@ div.vectorMenu ul {
 	background-color: white;
 	border: solid 1px silver;
 	border-top-width: 0;
-	list-style: none;
-	list-style-image: none;
 	list-style-type: none;
+	list-style-image: none;
 	padding: 0;
 	margin: 0;
 	margin-left: -1px;
@@ -346,6 +365,7 @@ div.vectorMenu li.selected a:visited {
 	text-decoration: none;
 }
 /* Search */
+#p-search h3,
 #p-search h5 {
 	display: none;
 }
@@ -397,6 +417,12 @@ div#simpleSearch input.placeholder {
 	color: #999;
 }
 div#simpleSearch input::-webkit-input-placeholder {
+	color: #999;
+}
+div#simpleSearch input:-moz-placeholder {
+	color: #999;
+}
+div#simpleSearch input:-ms-input-placeholder {
 	color: #999;
 }
 div#simpleSearch input#searchInput {
@@ -457,6 +483,7 @@ div#mw-panel div.portal {
 	padding-bottom: 1.5em;
 	direction: ltr;
 }
+div#mw-panel div.portal h3,
 div#mw-panel div.portal h5 {
 	font-weight: normal;
 	color: #444;
@@ -477,9 +504,8 @@ div#mw-panel div.portal div.body {
 	background-position: top left;
 }
 div#mw-panel div.portal div.body ul {
-	list-style: none;
-	list-style-image: none;
 	list-style-type: none;
+	list-style-image: none;
 	padding: 0;
 	margin: 0;
 }
@@ -509,9 +535,8 @@ div#footer {
 	direction: ltr;
 }
 div#footer ul {
-	list-style: none;
-	list-style-image: none;
 	list-style-type: none;
+	list-style-image: none;
 	margin: 0;
 	padding: 0;
 }
@@ -679,6 +704,7 @@ div#content {
 }
 
 ul {
+	list-style-type: disc;
 	/* @embed */
 	list-style-image: url(images/bullet-icon.png);
 }

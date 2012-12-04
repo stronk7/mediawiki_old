@@ -78,7 +78,7 @@ class SearchMssql extends SearchEngine {
 	 * Return a partial WHERE clause to limit the search to the given namespaces
 	 *
 	 * @return String
-	 * @private                           
+	 * @private
 	 */
 	function queryNamespaces() {
 		$namespaces = implode( ',', $this->namespaces );
@@ -146,7 +146,7 @@ class SearchMssql extends SearchEngine {
 		$match = $this->parseQuery( $filteredTerm, $fulltext );
 		$page        = $this->db->tableName( 'page' );
 		$searchindex = $this->db->tableName( 'searchindex' );
-		
+
 		return 'SELECT page_id, page_namespace, page_title, ftindex.[RANK]' .
 			"FROM $page,FREETEXTTABLE($searchindex , $match, LANGUAGE 'English') as ftindex " .
 			'WHERE page_id=ftindex.[KEY] ';
@@ -192,11 +192,11 @@ class SearchMssql extends SearchEngine {
 	 * @param $id Integer
 	 * @param $title String
 	 * @param $text String
-	 * @return bool|\ResultWrapper
+	 * @return bool|ResultWrapper
 	 */
 	function update( $id, $title, $text ) {
 		// We store the column data as UTF-8 byte order marked binary stream
-		// because we are invoking the plain text IFilter on it so that, and we want it 
+		// because we are invoking the plain text IFilter on it so that, and we want it
 		// to properly decode the stream as UTF-8.  SQL doesn't support UTF8 as a data type
 		// but the indexer will correctly handle it by this method.  Since all we are doing
 		// is passing this data to the indexer and never retrieving it via PHP, this will save space
@@ -215,7 +215,7 @@ class SearchMssql extends SearchEngine {
 	 *
 	 * @param $id Integer
 	 * @param $title String
-	 * @return bool|\ResultWrapper
+	 * @return bool|ResultWrapper
 	 */
 	function updateTitle( $id, $title ) {
 		$table = $this->db->tableName( 'searchindex' );

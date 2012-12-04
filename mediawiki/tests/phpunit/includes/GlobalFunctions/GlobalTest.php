@@ -1,22 +1,32 @@
 <?php
 
 class GlobalTest extends MediaWikiTestCase {
-	function setUp() {
-		global $wgReadOnlyFile, $wgUrlProtocols;
-		$this->originals['wgReadOnlyFile'] = $wgReadOnlyFile;
-		$this->originals['wgUrlProtocols'] = $wgUrlProtocols;
-		$wgReadOnlyFile = tempnam( wfTempDir(), "mwtest_readonly" );
-		$wgUrlProtocols[] = 'file://';
-		unlink( $wgReadOnlyFile );
+	protected function setUp() {
+		parent::setUp();
+
+		$readOnlyFile = tempnam( wfTempDir(), "mwtest_readonly" );
+		unlink( $readOnlyFile );
+
+		$this->setMwGlobals( array(
+			'wgReadOnlyFile' => $readOnlyFile,
+			'wgUrlProtocols' => array(
+				'http://',
+				'https://',
+				'mailto:',
+				'//',
+				'file://', # Non-default
+			),
+		) );
 	}
 
-	function tearDown() {
-		global $wgReadOnlyFile, $wgUrlProtocols;
+	protected function tearDown() {
+		global $wgReadOnlyFile;
+
 		if ( file_exists( $wgReadOnlyFile ) ) {
 			unlink( $wgReadOnlyFile );
 		}
-		$wgReadOnlyFile = $this->originals['wgReadOnlyFile'];
-		$wgUrlProtocols = $this->originals['wgUrlProtocols'];
+
+		parent::tearDown();
 	}
 
 	/** @dataProvider provideForWfArrayDiff2 */
@@ -27,7 +37,7 @@ class GlobalTest extends MediaWikiTestCase {
 	}
 
 	// @todo Provide more tests
-	public function provideForWfArrayDiff2() {
+	public static function provideForWfArrayDiff2() {
 		// $a $b $expected
 		return array(
 			array(
@@ -100,7 +110,7 @@ class GlobalTest extends MediaWikiTestCase {
 		$this->assertTrue( $end > $start, "Time is running backwards!" );
 	}
 
-	function dataArrayToCGI() {
+	public static function provideArrayToCGI() {
 		return array(
 			array( array(), '' ), // empty
 			array( array( 'foo' => 'bar' ), 'foo=bar' ), // string test
@@ -119,7 +129,7 @@ class GlobalTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @dataProvider dataArrayToCGI
+	 * @dataProvider provideArrayToCGI
 	 */
 	function testArrayToCGI( $array, $result ) {
 		$this->assertEquals( $result, wfArrayToCGI( $array ) );
@@ -134,7 +144,7 @@ class GlobalTest extends MediaWikiTestCase {
 				array( 'foo' => 'bar', 'baz' => 'overridden value' ) ) );
 	}
 
-	function dataCgiToArray() {
+	public static function provideCgiToArray() {
 		return array(
 			array( '', array() ), // empty
 			array( 'foo=bar', array( 'foo' => 'bar' ) ), // string
@@ -150,13 +160,13 @@ class GlobalTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @dataProvider dataCgiToArray
+	 * @dataProvider provideCgiToArray
 	 */
 	function testCgiToArray( $cgi, $result ) {
 		$this->assertEquals( $result, wfCgiToArray( $cgi ) );
 	}
 
-	function dataCgiRoundTrip() {
+	public static function provideCgiRoundTrip() {
 		return array(
 			array( '' ),
 			array( 'foo=bar' ),
@@ -170,7 +180,7 @@ class GlobalTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @dataProvider dataCgiRoundTrip
+	 * @dataProvider provideCgiRoundTrip
 	 */
 	function testCgiRoundTrip( $cgi ) {
 		$this->assertEquals( $cgi, wfArrayToCGI( wfCgiToArray( $cgi ) ) );
@@ -307,29 +317,28 @@ class GlobalTest extends MediaWikiTestCase {
 		}
 		
 	}
-	
-	
+
+
 	function testDebugFunctionTest() {
-	
+
 		global $wgDebugLogFile, $wgDebugTimestamps;
-		
+
 		$old_log_file = $wgDebugLogFile;
 		$wgDebugLogFile = tempnam( wfTempDir(), 'mw-' );
-		# @todo FIXME: This setting should be tested
+		# @todo FIXME: $wgDebugTimestamps should be tested
+		$old_wgDebugTimestamps = $wgDebugTimestamps;
 		$wgDebugTimestamps = false;
-		
-		
-		
+
+
 		wfDebug( "This is a normal string" );
 		$this->assertEquals( "This is a normal string", file_get_contents( $wgDebugLogFile ) );
 		unlink( $wgDebugLogFile );
-		
-		
+
 		wfDebug( "This is nöt an ASCII string" );
 		$this->assertEquals( "This is nöt an ASCII string", file_get_contents( $wgDebugLogFile ) );
 		unlink( $wgDebugLogFile );
-		
-		
+
+
 		wfDebug( "\00305This has böth UTF and control chars\003" );
 		$this->assertEquals( " 05This has böth UTF and control chars ", file_get_contents( $wgDebugLogFile ) );
 		unlink( $wgDebugLogFile );
@@ -337,17 +346,16 @@ class GlobalTest extends MediaWikiTestCase {
 		wfDebugMem();
 		$this->assertGreaterThan( 5000, preg_replace( '/\D/', '', file_get_contents( $wgDebugLogFile ) ) );
 		unlink( $wgDebugLogFile );
-		
+
 		wfDebugMem(true);
 		$this->assertGreaterThan( 5000000, preg_replace( '/\D/', '', file_get_contents( $wgDebugLogFile ) ) );
 		unlink( $wgDebugLogFile );
-		
-		
-		
+
+
 		$wgDebugLogFile = $old_log_file;
-		
+		$wgDebugTimestamps = $old_wgDebugTimestamps;
 	}
-	
+
 	function testClientAcceptsGzipTest() {
 		
 		$settings = array(
@@ -437,7 +445,7 @@ class GlobalTest extends MediaWikiTestCase {
 	}
 
 	/** array( shorthand, expected integer ) */
-	public function provideShorthand() {
+	public static function provideShorthand() {
 		return array(
 			# Null, empty ... 
 			array(     '', -1),
@@ -477,6 +485,88 @@ class GlobalTest extends MediaWikiTestCase {
 			array( '-0k', 0 ),
 			array( '-0M', 0 ),
 			array( '-0G', 0 ),
+		);
+	}
+
+	/**
+	 * @param String $old: Text as it was in the database
+	 * @param String $mine: Text submitted while user was editing
+	 * @param String $yours: Text submitted by the user
+	 * @param Boolean $expectedMergeResult Whether the merge should be a success
+	 * @param String $expectedText: Text after merge has been completed
+	 *
+	 * @dataProvider provideMerge()
+	 */
+	public function testMerge( $old, $mine, $yours, $expectedMergeResult, $expectedText ) {
+		$this->checkHasDiff3();
+
+		$mergedText = null;
+		$isMerged = wfMerge( $old, $mine, $yours, $mergedText );
+
+		$msg = 'Merge should be a ';
+		$msg .= $expectedMergeResult ? 'success' : 'failure';
+		$this->assertEquals( $expectedMergeResult, $isMerged, $msg );
+
+		if( $isMerged ) {
+			// Verify the merged text
+			$this->assertEquals( $expectedText, $mergedText,
+				'is merged text as expected?' );
+		}
+	}
+
+	public static function provideMerge() {
+		$EXPECT_MERGE_SUCCESS = true;
+		$EXPECT_MERGE_FAILURE = false;
+
+		return array(
+
+			// #0: clean merge
+			array(
+				// old:
+				"one one one\n" . // trimmed
+				"\n" .
+				"two two two",
+
+				// mine:
+				"one one one ONE ONE\n" .
+				"\n" .
+				"two two two\n", // with tailing whitespace
+
+				// yours:
+				"one one one\n" .
+				"\n" .
+				"two two TWO TWO", // trimmed
+
+				// ok:
+				$EXPECT_MERGE_SUCCESS,
+
+				// result:
+				"one one one ONE ONE\n" .
+				"\n" .
+				"two two TWO TWO\n", // note: will always end in a newline
+			),
+
+			// #1: conflict, fail
+			array(
+				// old:
+				"one one one", // trimmed
+
+				// mine:
+				"one one one ONE ONE\n" .
+				"\n" .
+				"bla bla\n" .
+				"\n", // with tailing whitespace
+
+				// yours:
+				"one one one\n" .
+				"\n" .
+				"two two", // trimmed
+
+				$EXPECT_MERGE_FAILURE,
+
+				// result:
+				null,
+			),
 		);
 	}
 

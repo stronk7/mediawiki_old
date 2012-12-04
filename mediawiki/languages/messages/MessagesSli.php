@@ -160,7 +160,6 @@ $messages = array(
 'qbfind' => 'Fenda',
 'qbedit' => 'Ändern',
 'qbpageoptions' => 'Seytaoptiona',
-'qbpageinfo' => 'Seytadata',
 'qbmyoptions' => 'Menne Seyta',
 'qbspecialpages' => 'Spezialseyta',
 'faq' => 'FAQ',
@@ -363,12 +362,8 @@ De Sperre wurde durch [[User:$1|$1]] miet der Begrindung ''„$2“'' eigerichte
 # Login and logout pages
 'logouttext' => "'''Du best nun obgemeldet.'''
 
-Du koast {{SITENAME}} jitz anonym wetter nutzen, oder diech erneut under damm selba oder a'm andern Nutzernoama [[Special:UserLogin|oamelda]].
+Du koast {{SITENAME}} jitz anonym wetter nutzen, oder diech erneut under damm selba oder a'm andern Nutzernoama <span class='plainlinks'>[$1 oamelda]</span>.
 Beachte, doas einige Seyta noo oazeiga kinna, doas du oagemeldet best, sulange du ne denn Browsercache gelaart host.",
-'welcomecreation' => '== Willkumma, $1! ==
-
-Dei Benutzerkonto wurde eigerichtet.
-Vergiss nä, denne [[Special:Preferences|{{SITENAME}}-Eistellunga]] oazupoassa.',
 'yourname' => 'Benutzernoame:',
 'yourpassword' => 'Passwort:',
 'yourpasswordagain' => 'Passwort wiederhola:',
@@ -798,8 +793,6 @@ Stelle sicher, doaß de Versionsgeschichte anner Seite historisch korrekt ies.',
 'search-section' => '(Obschnitt $1)',
 'search-suggest' => 'Meitest du „$1“?',
 'search-interwiki-caption' => 'Schwasterprujätte',
-'search-mwsuggest-enabled' => 'miet Vurschläga',
-'search-mwsuggest-disabled' => 'kääne Vurschläge',
 'mwsuggest-disable' => 'Vurschläge per Ajax deaktiviern',
 'searchrelated' => 'verwandt',
 'searchall' => 'olle',
@@ -1441,9 +1434,6 @@ Wenn du de Seite wieder vu denner Beobachtungsliste entferna mechtest, klicke uf
 
 'enotif_mailer' => '{{SITENAME}}-E-Mail-Benoachrichtigungsdienst',
 'enotif_reset' => 'Olle Seyta ols besucht markiern',
-'enotif_newpagetext' => 'Doas ies anne neue Seite.',
-'created' => 'erzeugt',
-'enotif_subject' => '[{{SITENAME}}] De Seite "$PAGETITLE" wurde vu $PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => "Olle Änderunga uff a'n Blick: $1",
 'enotif_lastdiff' => 'Siehe $1 noach dieser Änderung.',
 'enotif_anon_editor' => 'Anonymer Nutzer $1',

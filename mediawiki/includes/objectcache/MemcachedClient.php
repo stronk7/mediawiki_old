@@ -277,7 +277,7 @@ class MWMemcached {
 	 * @param $exp Integer: (optional) Expiration time. This can be a number of seconds
 	 * to cache for (up to 30 days inclusive).  Any timespans of 30 days + 1 second or
 	 * longer must be the timestamp of the time at which the mapping should expire. It
-	 * is safe to use timestamps in all cases, regardless of exipration
+	 * is safe to use timestamps in all cases, regardless of expiration
 	 * eg: strtotime("+3 hour")
 	 *
 	 * @return Boolean
@@ -897,7 +897,7 @@ class MWMemcached {
 					return false;
 				}
 				if ( substr( $data, -2 ) !== "\r\n" ) {
-					$this->_handle_error( $sock, 
+					$this->_handle_error( $sock,
 						'line ending missing from data block from $1' );
 					return false;
 				}
@@ -1096,7 +1096,7 @@ class MWMemcached {
 	}
 
 	/**
-	 * Read the specified number of bytes from a stream. If there is an error, 
+	 * Read the specified number of bytes from a stream. If there is an error,
 	 * mark the socket dead.
 	 *
 	 * @param $sock The socket
@@ -1137,7 +1137,7 @@ class MWMemcached {
 	function _fgets( $sock ) {
 		$result = fgets( $sock );
 		// fgets() may return a partial line if there is a select timeout after
-		// a successful recv(), so we have to check for a timeout even if we 
+		// a successful recv(), so we have to check for a timeout even if we
 		// got a string response.
 		$data = stream_get_meta_data( $sock );
 		if ( $data['timed_out'] ) {
@@ -1167,10 +1167,16 @@ class MWMemcached {
 		if ( !is_resource( $f ) ) {
 			return;
 		}
-		$n = stream_select( $r = array( $f ), $w = null, $e = null, 0, 0 );
+		$r = array( $f );
+		$w = null;
+		$e = null;
+		$n = stream_select( $r, $w, $e, 0, 0 );
 		while ( $n == 1 && !feof( $f ) ) {
 			fread( $f, 1024 );
-			$n = stream_select( $r = array( $f ), $w = null, $e = null, 0, 0 );
+			$r = array( $f );
+			$w = null;
+			$e = null;
+			$n = stream_select( $r, $w, $e, 0, 0 );
 		}
 	}
 

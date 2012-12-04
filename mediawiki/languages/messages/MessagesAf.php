@@ -54,7 +54,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__DWINGIO__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__IO__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__GEENNUWEAFDELING__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__GEENOPSKRIF__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'HUIDIGEMAAND', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'HUIDIGEMAAND1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'HUIDIGEMAANDNAAM', 'CURRENTMONTHNAME' ),
@@ -352,7 +351,6 @@ $messages = array(
 'qbbrowse' => 'Snuffel',
 'qbedit' => 'Wysig',
 'qbpageoptions' => 'Bladsyopsies',
-'qbpageinfo' => 'Bladsyinligting',
 'qbmyoptions' => 'My bladsye',
 'qbspecialpages' => 'Spesiale bladsye',
 'faq' => 'Gewilde vrae',
@@ -616,11 +614,8 @@ Die rede hiervoor is "\'\'$3\'\'".',
 # Login and logout pages
 'logouttext' => "'''U is nou uitgeteken'''
 
-U kan aanhou om {{SITENAME}} anoniem te gebruik; of u kan weer [[Special:UserLogin|inteken]] as dieselfde of 'n ander gebruiker.
+U kan aanhou om {{SITENAME}} anoniem te gebruik; of u kan weer <span class='plainlinks'>[$1 inteken]</span> as dieselfde of 'n ander gebruiker.
 Dit is moontlik dat sommige bladsye nog sal aandui dat u aangeteken is totdat u u webblaaier se kas skoonmaak.",
-'welcomecreation' => '== Welkom, $1! ==
-U rekening is geskep;
-moenie vergeet om u [[Special:Preferences|persoonlike voorkeure vir {{SITENAME}}]] te stel nie.',
 'yourname' => 'Gebruikersnaam:',
 'yourpassword' => 'Wagwoord:',
 'yourpasswordagain' => 'Herhaal wagwoord',
@@ -1229,8 +1224,6 @@ Details kan in die [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} s
 'search-interwiki-caption' => 'Suster projekte',
 'search-interwiki-default' => '$1 resultate:',
 'search-interwiki-more' => '(meer)',
-'search-mwsuggest-enabled' => 'met voorstelle',
-'search-mwsuggest-disabled' => 'geen voorstelle',
 'search-relatedarticle' => 'Verwante',
 'mwsuggest-disable' => 'Deaktiveer AJAX-voorstelle',
 'searcheverything-enable' => 'Soek in alle naamruimtes',
@@ -2245,11 +2238,7 @@ As u die bladsy later van u dophoulys wil verwyder, kliek \"verwyder van dophoul
 
 'enotif_mailer' => '{{SITENAME}} E-pos kennisgewings',
 'enotif_reset' => 'Merk alle bladsye as besoek',
-'enotif_newpagetext' => "Dis 'n nuwe bladsy.",
 'enotif_impersonal_salutation' => '{{SITENAME}} gebruiker',
-'changed' => 'verander',
-'created' => 'geskep',
-'enotif_subject' => 'Bladsy $PAGETITLE op {{SITENAME}} is $CHANGEDORCREATED deur $PAGEEDITOR',
 'enotif_lastvisited' => 'Sien $1 vir alle wysigings sedert u laaste besoek.',
 'enotif_lastdiff' => 'Sien $1 om hierdie wysiging te bekyk.',
 'enotif_anon_editor' => 'anonieme gebruiker $1',
@@ -2866,7 +2855,6 @@ Die lêer is slegs gedeeltelik opgelaai.',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript toetsing',
-'javascripttest-disabled' => 'Die funksie is nie op hierdie wiki geaktiveer nie.',
 'javascripttest-title' => 'Voer toetse uit vir $1',
 'javascripttest-pagetext-noframework' => 'Hierdie bladsy is gereserveer vir die uitvoer van JavaScript-toetse.',
 'javascripttest-pagetext-unknownframework' => 'Onbekende toetsraamwerk "$1".',
@@ -3823,6 +3811,10 @@ Anders kan u die eenvoudige vorm hieronder gebruik. U kommentaar sal by die blad
 'feedback-close' => 'Gedoen',
 'feedback-bugcheck' => 'Gaaf! Kontroleer of dit nie dalk een van die [$1 bekende foute] is nie.',
 'feedback-bugnew' => "Ek het gekontroleer. Rapporteer 'n nuwe fout.",
+
+# Search suggestions
+'searchsuggest-search' => 'Soek',
+'searchsuggest-containing' => 'bevat...',
 
 # API errors
 'api-error-badaccess-groups' => 'U word nie toegelaat om lêers te laai op hierdie wiki.',

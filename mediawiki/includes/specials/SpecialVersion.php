@@ -48,29 +48,43 @@ class SpecialVersion extends SpecialPage {
 	 * main()
 	 */
 	public function execute( $par ) {
-		global $wgSpecialVersionShowHooks;
+		global $wgSpecialVersionShowHooks, $IP;
 
 		$this->setHeaders();
 		$this->outputHeader();
 		$out = $this->getOutput();
 		$out->allowClickjacking();
 
-		$text =
-			$this->getMediaWikiCredits() .
-			$this->softwareInformation() .
-			$this->getEntryPointInfo() .
-			$this->getExtensionCredits();
-		if ( $wgSpecialVersionShowHooks ) {
-			$text .= $this->getWgHooks();
-		}
-
-		$out->addWikiText( $text );
-		$out->addHTML( $this->IPInfo() );
-
-		if ( $this->getRequest()->getVal( 'easteregg' ) ) {
-			if ( $this->showEasterEgg() ) {
-				// TODO: put something interesting here
+		if( $par !== 'Credits' ) {
+			$text =
+				$this->getMediaWikiCredits() .
+				$this->softwareInformation() .
+				$this->getEntryPointInfo() .
+				$this->getExtensionCredits();
+			if ( $wgSpecialVersionShowHooks ) {
+				$text .= $this->getWgHooks();
 			}
+
+			$out->addWikiText( $text );
+			$out->addHTML( $this->IPInfo() );
+
+			if ( $this->getRequest()->getVal( 'easteregg' ) ) {
+				if ( $this->showEasterEgg() ) {
+					// TODO: put something interesting here
+				}
+			}
+		} else {
+			// Credits sub page
+
+			// Header
+			$out->addHTML( wfMessage( 'version-credits-summary' )->parseAsBlock() );
+
+			$wikiText = file_get_contents( $IP . '/CREDITS' );
+
+			// Take everything from the first section onwards, to remove the (not localized) header
+			$wikiText = substr( $wikiText, strpos( $wikiText, '==' ) );
+
+			$out->addWikiText( $wikiText );
 		}
 	}
 
@@ -83,7 +97,7 @@ class SpecialVersion extends SpecialPage {
 		$ret = Xml::element( 'h2', array( 'id' => 'mw-version-license' ), wfMessage( 'version-license' )->text() );
 
 		// This text is always left-to-right.
-		$ret .= '<div>';
+		$ret .= '<div class="plainlinks">';
 		$ret .= "__NOTOC__
 		" . self::getCopyrightAndAuthorList() . "\n
 		" . wfMessage( 'version-license-info' )->text();
@@ -108,8 +122,10 @@ class SpecialVersion extends SpecialPage {
 			'Alexandre Emsenhuber', 'Siebrand Mazeland', 'Chad Horohoe',
 			'Roan Kattouw', 'Trevor Parscal', 'Bryan Tong Minh', 'Sam Reed',
 			'Victor Vasiliev', 'Rotem Liss', 'Platonides', 'Antoine Musso',
-			'Timo Tijhof',
-			wfMessage( 'version-poweredby-others' )->text()
+			'Timo Tijhof', 'Daniel Kinzler', 'Jeroen De Dauw',
+			'[[Special:Version/Credits|' .
+			wfMessage( 'version-poweredby-others' )->text() .
+			']]'
 		);
 
 		return wfMessage( 'version-poweredby-credits', date( 'Y' ),
@@ -136,7 +152,7 @@ class SpecialVersion extends SpecialPage {
 		wfRunHooks( 'SoftwareInfo', array( &$software ) );
 
 		$out = Xml::element( 'h2', array( 'id' => 'mw-version-software' ), wfMessage( 'version-software' )->text() ) .
-			   Xml::openElement( 'table', array( 'class' => 'wikitable', 'id' => 'sv-software' ) ) .
+			   Xml::openElement( 'table', array( 'class' => 'wikitable plainlinks', 'id' => 'sv-software' ) ) .
 				"<tr>
 					<th>" . wfMessage( 'version-software-product' )->text() . "</th>
 					<th>" . wfMessage( 'version-software-version' )->text() . "</th>
@@ -220,7 +236,7 @@ class SpecialVersion extends SpecialPage {
 	 * @return string wgVersion + a link to subversion revision of svn BASE
 	 */
 	private static function getVersionLinkedSvn() {
-		global $wgVersion, $IP;
+		global $IP;
 
 		$info = self::getSvnInfo( $IP );
 		if( !isset( $info['checkout-rev'] ) ) {
@@ -234,19 +250,33 @@ class SpecialVersion extends SpecialPage {
 		)->text();
 
 		if ( isset( $info['viewvc-url'] ) ) {
-			$version = "$wgVersion [{$info['viewvc-url']} $linkText]";
+			$version = "[{$info['viewvc-url']} $linkText]";
 		} else {
-			$version = "$wgVersion $linkText";
+			$version = $linkText;
 		}
 
-		return $version;
+		return self::getwgVersionLinked() . " $version";
+	}
+
+	/**
+	 * @return string
+	 */
+	private static function getwgVersionLinked() {
+		global $wgVersion;
+		$versionUrl = "";
+		if( wfRunHooks( 'SpecialVersionVersionUrl', array( $wgVersion, &$versionUrl ) ) ) {
+			$versionParts = array();
+			preg_match( "/^(\d+\.\d+)/", $wgVersion, $versionParts );
+			$versionUrl = "https://www.mediawiki.org/wiki/MediaWiki_{$versionParts[1]}";
+		}
+		return "[$versionUrl $wgVersion]";
 	}
 
 	/**
 	 * @return bool|string wgVersion + HEAD sha1 stripped to the first 7 chars. False on failure
 	 */
 	private static function getVersionLinkedGit() {
-		global $wgVersion, $IP;
+		global $IP;
 
 		$gitInfo = new GitInfo( $IP );
 		$headSHA1 = $gitInfo->getHeadSHA1();
@@ -259,7 +289,7 @@ class SpecialVersion extends SpecialPage {
 		if ( $viewerUrl !== false ) {
 			$shortSHA1 = "[$viewerUrl $shortSHA1]";
 		}
-		return "$wgVersion $shortSHA1";
+		return self::getwgVersionLinked() . " $shortSHA1";
 	}
 
 	/**
@@ -327,7 +357,7 @@ class SpecialVersion extends SpecialPage {
 		wfRunHooks( 'SpecialVersionExtensionTypes', array( &$this, &$extensionTypes ) );
 
 		$out = Xml::element( 'h2', array( 'id' => 'mw-version-ext' ), $this->msg( 'version-extensions' )->text() ) .
-			Xml::openElement( 'table', array( 'class' => 'wikitable', 'id' => 'sv-ext' ) );
+			Xml::openElement( 'table', array( 'class' => 'wikitable plainlinks', 'id' => 'sv-ext' ) );
 
 		// Make sure the 'other' type is set to an array.
 		if ( !array_key_exists( 'other', $wgExtensionCredits ) ) {
@@ -759,11 +789,23 @@ class SpecialVersion extends SpecialPage {
 			'version-entrypoints-load-php' => wfScript( 'load' ),
 		);
 
+		$language = $this->getLanguage();
+		$thAttribures = array(
+			'dir' => $language->getDir(),
+			'lang' => $language->getCode()
+		);
 		$out = Html::element( 'h2', array( 'id' => 'mw-version-entrypoints' ), $this->msg( 'version-entrypoints' )->text() ) .
-			Html::openElement( 'table', array( 'class' => 'wikitable', 'id' => 'mw-version-entrypoints-table' ) ) .
+			Html::openElement( 'table',
+				array(
+					'class' => 'wikitable plainlinks',
+					'id' => 'mw-version-entrypoints-table',
+					'dir' => 'ltr',
+					'lang' => 'en'
+				)
+			) .
 			Html::openElement( 'tr' ) .
-			Html::element( 'th', array(), $this->msg( 'version-entrypoints-header-entrypoint' )->text() ) .
-			Html::element( 'th', array(), $this->msg( 'version-entrypoints-header-url' )->text() ) .
+			Html::element( 'th', $thAttribures, $this->msg( 'version-entrypoints-header-entrypoint' )->text() ) .
+			Html::element( 'th', $thAttribures, $this->msg( 'version-entrypoints-header-url' )->text() ) .
 			Html::closeElement( 'tr' );
 
 		foreach ( $entryPoints as $message => $value ) {

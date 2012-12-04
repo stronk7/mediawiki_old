@@ -20,11 +20,14 @@ class MockDatabaseSqlite extends DatabaseSqliteStandalone {
 /**
  * @group sqlite
  * @group Database
+ * @group medium
  */
 class DatabaseSqliteTest extends MediaWikiTestCase {
 	var $db;
 
-	public function setUp() {
+	protected function setUp() {
+		parent::setUp();
+
 		if ( !Sqlite::isPresent() ) {
 			$this->markTestSkipped( 'No SQLite support detected' );
 		}
@@ -50,6 +53,52 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 			$i++;
 		}
 		$this->assertEquals( count( $expected ), $i, 'Unexpected number of rows' );
+	}
+
+	public static function provideAddQuotes() {
+		return array(
+			array( // #0: empty
+				'', "''"
+			),
+			array( // #1: simple
+				'foo bar', "'foo bar'"
+			),
+			array( // #2: including quote
+				'foo\'bar', "'foo''bar'"
+			),
+			array( // #3: including \0 (must be represented as hex, per https://bugs.php.net/bug.php?id=63419)
+				"x\0y",
+				"x'780079'",
+			),
+			array( // #4: blob object (must be represented as hex)
+				new Blob( "hello" ),
+				"x'68656c6c6f'",
+			),
+		);
+	}
+
+	/**
+	 * @dataProvider provideAddQuotes()
+	 */
+	public function testAddQuotes( $value, $expected ) {
+		// check quoting
+		$db = new DatabaseSqliteStandalone( ':memory:' );
+		$this->assertEquals( $expected, $db->addQuotes( $value ), 'string not quoted as expected' );
+
+		// ok, quoting works as expected, now try a round trip.
+		$re = $db->query( 'select ' . $db->addQuotes( $value ) );
+
+		$this->assertTrue( $re !== false, 'query failed' );
+
+		if ( $row = $re->fetchRow() ) {
+			if ( $value instanceof Blob ) {
+				$value = $value->fetch();
+			}
+
+			$this->assertEquals( $value, $row[0], 'string mangled by the database' );
+		} else {
+			$this->fail( 'query returned no result' );
+		}
 	}
 
 	public function testReplaceVars() {

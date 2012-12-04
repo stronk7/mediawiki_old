@@ -139,9 +139,9 @@ class ObjectCache {
 	/**
 	 * Factory function that creates a memcached client object.
 	 *
-	 * This always uses the PHP client, since the PECL client has a different 
-	 * hashing scheme and a different interpretation of the flags bitfield, so 
-	 * switching between the two clients randomly would be disasterous.
+	 * This always uses the PHP client, since the PECL client has a different
+	 * hashing scheme and a different interpretation of the flags bitfield, so
+	 * switching between the two clients randomly would be disastrous.
 	 *
 	 * @param $params array
 	 *

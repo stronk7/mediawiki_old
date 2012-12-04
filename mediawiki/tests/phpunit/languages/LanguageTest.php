@@ -1,23 +1,11 @@
 <?php
 
-class LanguageTest extends MediaWikiTestCase {
-
-	/**
-	 * @var Language
-	 */
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'en' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageTest extends LanguageClassesTestCase {
 
 	function testLanguageConvertDoubleWidthToSingleWidth() {
 		$this->assertEquals(
 			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-			$this->lang->normalizeForSearch(
+			$this->getLang()->normalizeForSearch(
 				"０１２３４５６７８９ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ"
 			),
 			'convertDoubleWidth() with the full alphabet and digits'
@@ -28,7 +16,7 @@ class LanguageTest extends MediaWikiTestCase {
 	 * @dataProvider provideFormattableTimes
 	 */
 	function testFormatTimePeriod( $seconds, $format, $expected, $desc ) {
-		$this->assertEquals( $expected, $this->lang->formatTimePeriod( $seconds, $format ), $desc );
+		$this->assertEquals( $expected, $this->getLang()->formatTimePeriod( $seconds, $format ), $desc );
 	}
 
 	function provideFormattableTimes() {
@@ -36,7 +24,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				9.45,
 				array(),
-				'9.5s',
+				'9.5 s',
 				'formatTimePeriod() rounding (<10s)'
 			),
 			array(
@@ -48,7 +36,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				9.95,
 				array(),
-				'10s',
+				'10 s',
 				'formatTimePeriod() rounding (<10s)'
 			),
 			array(
@@ -60,7 +48,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				59.55,
 				array(),
-				'1m 0s',
+				'1 min 0 s',
 				'formatTimePeriod() rounding (<60s)'
 			),
 			array(
@@ -72,7 +60,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				119.55,
 				array(),
-				'2m 0s',
+				'2 min 0 s',
 				'formatTimePeriod() rounding (<1h)'
 			),
 			array(
@@ -84,7 +72,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				3599.55,
 				array(),
-				'1h 0m 0s',
+				'1 h 0 min 0 s',
 				'formatTimePeriod() rounding (<1h)'
 			),
 			array(
@@ -96,7 +84,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				7199.55,
 				array(),
-				'2h 0m 0s',
+				'2 h 0 min 0 s',
 				'formatTimePeriod() rounding (>=1h)'
 			),
 			array(
@@ -108,7 +96,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				7199.55,
 				'avoidseconds',
-				'2h 0m',
+				'2 h 0 min',
 				'formatTimePeriod() rounding (>=1h), avoidseconds'
 			),
 			array(
@@ -120,7 +108,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				7199.55,
 				'avoidminutes',
-				'2h 0m',
+				'2 h 0 min',
 				'formatTimePeriod() rounding (>=1h), avoidminutes'
 			),
 			array(
@@ -132,7 +120,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				172799.55,
 				'avoidseconds',
-				'48h 0m',
+				'48 h 0 min',
 				'formatTimePeriod() rounding (=48h), avoidseconds'
 			),
 			array(
@@ -144,7 +132,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				259199.55,
 				'avoidminutes',
-				'3d 0h',
+				'3 d 0 h',
 				'formatTimePeriod() rounding (>48h), avoidminutes'
 			),
 			array(
@@ -156,7 +144,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				176399.55,
 				'avoidseconds',
-				'2d 1h 0m',
+				'2 d 1 h 0 min',
 				'formatTimePeriod() rounding (>48h), avoidseconds'
 			),
 			array(
@@ -168,7 +156,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				176399.55,
 				'avoidminutes',
-				'2d 1h',
+				'2 d 1 h',
 				'formatTimePeriod() rounding (>48h), avoidminutes'
 			),
 			array(
@@ -180,7 +168,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				259199.55,
 				'avoidseconds',
-				'3d 0h 0m',
+				'3 d 0 h 0 min',
 				'formatTimePeriod() rounding (>48h), avoidseconds'
 			),
 			array(
@@ -192,7 +180,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				172801.55,
 				'avoidseconds',
-				'2d 0h 0m',
+				'2 d 0 h 0 min',
 				'formatTimePeriod() rounding, (>48h), avoidseconds'
 			),
 			array(
@@ -204,7 +192,7 @@ class LanguageTest extends MediaWikiTestCase {
 			array(
 				176460.55,
 				array(),
-				'2d 1h 1m 1s',
+				'2 d 1 h 1 min 1 s',
 				'formatTimePeriod() rounding, recursion, (>48h)'
 			),
 			array(
@@ -220,31 +208,31 @@ class LanguageTest extends MediaWikiTestCase {
 	function testTruncate() {
 		$this->assertEquals(
 			"XXX",
-			$this->lang->truncate( "1234567890", 0, 'XXX' ),
+			$this->getLang()->truncate( "1234567890", 0, 'XXX' ),
 			'truncate prefix, len 0, small ellipsis'
 		);
 
 		$this->assertEquals(
 			"12345XXX",
-			$this->lang->truncate( "1234567890", 8, 'XXX' ),
+			$this->getLang()->truncate( "1234567890", 8, 'XXX' ),
 			'truncate prefix, small ellipsis'
 		);
 
 		$this->assertEquals(
 			"123456789",
-			$this->lang->truncate( "123456789", 5, 'XXXXXXXXXXXXXXX' ),
+			$this->getLang()->truncate( "123456789", 5, 'XXXXXXXXXXXXXXX' ),
 			'truncate prefix, large ellipsis'
 		);
 
 		$this->assertEquals(
 			"XXX67890",
-			$this->lang->truncate( "1234567890", -8, 'XXX' ),
+			$this->getLang()->truncate( "1234567890", -8, 'XXX' ),
 			'truncate suffix, small ellipsis'
 		);
 
 		$this->assertEquals(
 			"123456789",
-			$this->lang->truncate( "123456789", -5, 'XXXXXXXXXXXXXXX' ),
+			$this->getLang()->truncate( "123456789", -5, 'XXXXXXXXXXXXXXX' ),
 			'truncate suffix, large ellipsis'
 		);
 	}
@@ -256,7 +244,7 @@ class LanguageTest extends MediaWikiTestCase {
 		// Actual HTML...
 		$this->assertEquals(
 			$expected,
-			$this->lang->truncateHTML( $input, $len, $ellipsis )
+			$this->getLang()->truncateHTML( $input, $len, $ellipsis )
 		);
 	}
 
@@ -355,7 +343,7 @@ class LanguageTest extends MediaWikiTestCase {
 	function testSprintfDate( $format, $ts, $expected, $msg ) {
 		$this->assertEquals(
 			$expected,
-			$this->lang->sprintfDate( $format, $ts ),
+			$this->getLang()->sprintfDate( $format, $ts ),
 			"sprintfDate('$format', '$ts'): $msg"
 		);
 	}
@@ -372,7 +360,7 @@ class LanguageTest extends MediaWikiTestCase {
 
 		$this->assertEquals(
 			$expected,
-			$this->lang->sprintfDate( $format, $ts ),
+			$this->getLang()->sprintfDate( $format, $ts ),
 			"sprintfDate('$format', '$ts'): $msg"
 		);
 
@@ -680,7 +668,7 @@ class LanguageTest extends MediaWikiTestCase {
 	function testFormatSize( $size, $expected, $msg ) {
 		$this->assertEquals(
 			$expected,
-			$this->lang->formatSize( $size ),
+			$this->getLang()->formatSize( $size ),
 			"formatSize('$size'): $msg"
 		);
 	}
@@ -742,7 +730,7 @@ class LanguageTest extends MediaWikiTestCase {
 	function testFormatBitrate( $bps, $expected, $msg ) {
 		$this->assertEquals(
 			$expected,
-			$this->lang->formatBitrate( $bps ),
+			$this->getLang()->formatBitrate( $bps ),
 			"formatBitrate('$bps'): $msg"
 		);
 	}
@@ -815,7 +803,7 @@ class LanguageTest extends MediaWikiTestCase {
 	function testFormatDuration( $duration, $expected, $intervals = array() ) {
 		$this->assertEquals(
 			$expected,
-			$this->lang->formatDuration( $duration, $intervals ),
+			$this->getLang()->formatDuration( $duration, $intervals ),
 			"formatDuration('$duration'): $expected"
 		);
 	}
@@ -950,7 +938,7 @@ class LanguageTest extends MediaWikiTestCase {
 	function testCheckTitleEncoding( $s ) {
 		$this->assertEquals(
 			$s,
-			$this->lang->checkTitleEncoding($s),
+			$this->getLang()->checkTitleEncoding($s),
 			"checkTitleEncoding('$s')"
 		);
 	}
@@ -1063,6 +1051,63 @@ class LanguageTest extends MediaWikiTestCase {
 			array( 9000, 'MMMMMMMMM' ),
 			array( 9999, 'MMMMMMMMMCMXCIX'),
 			array( 10000, 'MMMMMMMMMM' ),
+		);
+	}
+
+	/**
+	 * @dataProvider providePluralData
+	 */
+	function testConvertPlural( $expected, $number, $forms ) {
+		$chosen = $this->getLang()->convertPlural( $number, $forms );
+		$this->assertEquals( $expected, $chosen );
+	}
+
+	function providePluralData() {
+		return array(
+			array( 'explicit zero', 0, array(
+				'0=explicit zero', 'singular', 'plural'
+			) ),
+			array( 'explicit one', 1, array(
+				'singular', 'plural', '1=explicit one',
+			) ),
+			array( 'singular', 1, array(
+				'singular', 'plural', '0=explicit zero',
+			) ),
+			array( 'plural', 3, array(
+				'0=explicit zero', '1=explicit one', 'singular', 'plural'
+			) ),
+		);
+	}
+
+	/**
+	 * @covers Language::translateBlockExpiry()
+	 * @dataProvider provideTranslateBlockExpiry
+	 */
+	function testTranslateBlockExpiry( $expectedData, $str, $desc ) {
+		$lang = $this->getLang();
+		if ( is_array( $expectedData ) ) {
+			list( $func, $arg ) = $expectedData;
+			$expected = $lang->$func( $arg );
+		} else {
+			$expected = $expectedData;
+		}
+		$this->assertEquals( $expected, $lang->translateBlockExpiry( $str ), $desc );
+	}
+
+	function provideTranslateBlockExpiry() {
+		return array(
+			array( '2 hours', '2 hours', 'simple data from ipboptions' ),
+			array( 'indefinite', 'infinite', 'infinite from ipboptions' ),
+			array( 'indefinite', 'infinity', 'alternative infinite from ipboptions' ),
+			array( 'indefinite', 'indefinite', 'another alternative infinite from ipboptions' ),
+			array( array( 'formatDuration', 1023 * 60 * 60 ), '1023 hours', 'relative' ),
+			array( array( 'formatDuration', -1023 ), '-1023 seconds', 'negative relative' ),
+			array( array( 'formatDuration', 0 ), 'now', 'now' ),
+			array( array( 'timeanddate', '20120102070000' ), '2012-1-1 7:00 +1 day', 'mixed, handled as absolute' ),
+			array( array( 'timeanddate', '19910203040506' ), '1991-2-3 4:05:06', 'absolute' ),
+			array( array( 'timeanddate', '19700101000000' ), '1970-1-1 0:00:00', 'absolute at epoch' ),
+			array( array( 'timeanddate', '19691231235959' ), '1969-12-31 23:59:59', 'time before epoch' ),
+			array( 'dummy', 'dummy', 'return garbage as is' ),
 		);
 	}
 }

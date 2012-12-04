@@ -46,7 +46,7 @@ class RawAction extends FormlessAction {
 	}
 
 	function onView() {
-		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType;
+		global $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType;
 
 		$this->getOutput()->disable();
 		$request = $this->getRequest();
@@ -91,7 +91,7 @@ class RawAction extends FormlessAction {
 		$response->header( 'Content-type: ' . $contentType . '; charset=UTF-8' );
 		# Output may contain user-specific data;
 		# vary generated content for open sessions on private wikis
-		$privateCache = !$wgGroupPermissions['*']['read'] && ( $smaxage == 0 || session_id() != '' );
+		$privateCache = !User::groupHasPermission( '*', 'read' ) && ( $smaxage == 0 || session_id() != '' );
 		# allow the client to cache this for 24 hours
 		$mode = $privateCache ? 'private' : 'public';
 		$response->header( 'Cache-Control: ' . $mode . ', s-maxage=' . $smaxage . ', max-age=' . $maxage );
@@ -148,10 +148,29 @@ class RawAction extends FormlessAction {
 				$request->response()->header( "Last-modified: $lastmod" );
 
 				// Public-only due to cache headers
-				$text = $rev->getText();
-				$section = $request->getIntOrNull( 'section' );
-				if ( $section !== null ) {
-					$text = $wgParser->getSection( $text, $section );
+				$content = $rev->getContent();
+
+				if ( $content === null ) {
+					// revision not found (or suppressed)
+					$text = false;
+				} elseif ( !$content instanceof TextContent ) {
+					// non-text content
+					wfHttpError( 415, "Unsupported Media Type", "The requested page uses the content model `"
+										. $content->getModel() . "` which is not supported via this interface." );
+					die();
+				} else {
+					// want a section?
+					$section = $request->getIntOrNull( 'section' );
+					if ( $section !== null ) {
+						$content = $content->getSection( $section );
+					}
+
+					if ( $content === null || $content === false ) {
+						// section not found (or section not supported, e.g. for JS and CSS)
+						$text = false;
+					} else {
+						$text = $content->getNativeData();
+					}
 				}
 			}
 		}

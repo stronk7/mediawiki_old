@@ -155,7 +155,6 @@ $messages = array(
 'qbbrowse' => 'Murur',
 'qbedit' => 'Viroiş',
 'qbpageoptions' => 'In sahifa',
-'qbpageinfo' => 'Boft',
 'qbmyoptions' => 'Sahifahoi man',
 'qbspecialpages' => 'Sahifahoi viƶa',
 'faq' => 'Savolhoi tez-tez pursidaşuda',
@@ -379,12 +378,8 @@ Daleli zikrşuda az in qaror ast ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Aknun az sistem xoriç şudaed.'''
 
-Şumo metavoned gumnom az {{SITENAME}} istifodabariro idoma dihed, jo metavoned bo hamin nomi korbariaton va jo nomi korbariji digare [[Special:UserLogin|boz vurud kuned]].
+Şumo metavoned gumnom az {{SITENAME}} istifodabariro idoma dihed, jo metavoned bo hamin nomi korbariaton va jo nomi korbariji digare <span class='plainlinks'>[$1 boz vurud kuned]</span>.
 Tavvaçūh kuned, ki ba'ze az sahifaho qablan ci tavre namoiş şuda budan hamin tavr namoiş doda meşavand, to dame ki şumo hofizai mururgaratonro pok kuned.",
-'welcomecreation' => '== Xuş omaded, $1! ==
-
-Hisobi şumo eçod şud.
-Tanzim kardani [[Special:Preferences|tarçihoti {{SITENAME}}]] xudro faromūş nakuned.',
 'yourname' => 'Nomi korbar',
 'yourpassword' => 'Kalimai ubur\\parolь',
 'yourpasswordagain' => 'Kalimai uburro boz navised',
@@ -724,8 +719,6 @@ Itminon hosil kuned, ki in taƣjir davomnokiji ta'rixiji sahifaro nigoh dorad.",
 'search-interwiki-caption' => 'Loihahoi xoharī',
 'search-interwiki-default' => '$1 natoiç:',
 'search-interwiki-more' => '(beştar)',
-'search-mwsuggest-enabled' => 'bo tavzehot',
-'search-mwsuggest-disabled' => 'biduni tavzehot',
 'search-relatedarticle' => 'Aloqamand',
 'searchrelated' => 'aloqamand',
 'searchall' => 'hama',
@@ -1301,11 +1294,7 @@ Agar şumo dertar az fehristi nazarotaton in sahifaro hazv kardan xohed, dar men
 
 'enotif_mailer' => '{{SITENAME}} Ittilorasonī poctai elektronī',
 'enotif_reset' => 'Alomatrasoni hamai sahifaho ba unvoni bozdidşuda',
-'enotif_newpagetext' => 'In sahifai nav ast',
 'enotif_impersonal_salutation' => 'Korbari {{SITENAME}}',
-'changed' => 'taƣjirjofta',
-'created' => 'eçod şud',
-'enotif_subject' => 'Sahifai {{SITENAME}} $PAGETITLE az tarafi $PAGEEDITOR $CHANGEDORCREATED şud',
 'enotif_lastvisited' => 'Baroi didani hamai taƣjirot az oxirin bore, ki sar zadaed $1ro bubined.',
 'enotif_lastdiff' => 'Baroi namoişi in taƣjir $1ro bubined.',
 'enotif_anon_editor' => 'korbari noşinos $1',

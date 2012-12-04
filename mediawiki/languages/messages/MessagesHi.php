@@ -31,6 +31,7 @@
  * @author Omprakash
  * @author Pulkitsingh01
  * @author Purodha
+ * @author Raj Singh
  * @author Rajesh
  * @author Rajivkurjee
  * @author Reedy
@@ -226,7 +227,7 @@ $messages = array(
 
 'underline-always' => 'सदैव',
 'underline-never' => 'कभी नहीं',
-'underline-default' => 'ब्राउज़र डिफ़ॉल्ट',
+'underline-default' => 'त्वचा या ब्राउज़र डिफ़ॉल्ट',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'सम्पादन क्षेत्र की मुद्रलिपि शैली:',
@@ -322,7 +323,6 @@ $messages = array(
 'qbbrowse' => 'ब्राउज़',
 'qbedit' => 'बदलें',
 'qbpageoptions' => 'यह पृष्ठ',
-'qbpageinfo' => 'पृष्ठ जानकारी',
 'qbmyoptions' => 'मेरे पृष्ठ',
 'qbspecialpages' => 'विशेष पृष्ठ',
 'faq' => 'बहुधा पूछित प्रश्न',
@@ -442,6 +442,10 @@ $1',
 'youhavenewmessages' => 'आपके लिए $1 है। ($2)',
 'newmessageslink' => 'नए सन्देश',
 'newmessagesdifflink' => 'पिछला बदलाव',
+'youhavenewmessagesfromusers' => 'आपके लिये {{PLURAL:$3|एक अन्य सदस्य का सन्देश है|$3 अन्य सदस्यों के सन्देश हैं}}। ($2)',
+'youhavenewmessagesmanyusers' => 'आपके लिये $1 हैं। ($2)',
+'newmessageslinkplural' => '{{PLURAL:$1|एक नया सन्देश|नये सन्देश}}',
+'newmessagesdifflinkplural' => 'अंतिम {{PLURAL:$1|परिवर्तन}}',
 'youhavenewmessagesmulti' => '$1 पर आपके लिए नया संदेश है',
 'editsection' => 'सम्पादन',
 'editold' => 'सम्पादन',
@@ -567,6 +571,7 @@ $2',
 इसके लिये निम्न कारण दिया गया है: "\'\'$2\'\'"',
 'invalidtitle-knownnamespace' => '"$2" नामस्थान और "$3" नाम वाला गलत शीर्षक',
 'invalidtitle-unknownnamespace' => 'अज्ञात नामस्थान संख्या $1 और नाम "$2" वाला गलत शीर्षक',
+'exception-nologin' => 'लॉग इन नहीं किया है',
 
 # Virus scanner
 'virus-badscanner' => "गलत जमाव: अज्ञात वायरस जाँचक: ''$1''",
@@ -576,16 +581,15 @@ $2',
 # Login and logout pages
 'logouttext' => "'''अब आपका सत्रांत हो चुका है।'''
 
-आप बेनामी हो के {{SITENAME}} का प्रयोग जारी रख सकते हैं, या उसी या किसी और सदस्य के तौर पर [[Special:UserLogin|फिर से सत्रारंभ]] कर सकते हैं।
+आप बेनामी हो के {{SITENAME}} का प्रयोग जारी रख सकते हैं, या उसी या किसी और सदस्य के तौर पर <span class='plainlinks'>[$1 फिर से सत्रारंभ]</span> कर सकते हैं।
 ध्यान दें कि जब तक आप अपनी ब्राउज़र कैशे खाली नहीं करते हैं, कुछ पृष्ठ अब भी ऐसे दिख सकते हैं जैसे कि आपका सत्र अभी भी चल रहा हो।",
-'welcomecreation' => '== आपका स्वागत है, $1 ! ==
-आपका खाता बनाया जा चुका है। अपनी [[Special:Preferences|{{SITENAME}} वरीयताएँ]] परिवर्तित करना न भूलिएगा।',
 'yourname' => 'सदस्यनाम:',
 'yourpassword' => 'कूटशब्द:',
 'yourpasswordagain' => 'कूटशब्द दुबारा लिखें:',
 'remembermypassword' => 'इस ब्राउज़र पर मेरा लॉगिन याद रखें (अधिकतम $1 {{PLURAL:$1|दिन|दिनों}} के लिए)',
 'securelogin-stick-https' => 'प्रवेश के बाद HTTPS से जुड़े रहें',
 'yourdomainname' => 'आपका डोमेन:',
+'password-change-forbidden' => 'आप इस विकि पर कूटशब्द नहीं बदल सकते हैं।',
 'externaldberror' => 'या तो प्रमाणिकरण डाटाबेस में त्रुटि हुई है या फिर आपको अपना बाह्य खाता अपडेट करने की अनुमति नहीं है।',
 'login' => 'लॉग इन',
 'nav-login-createaccount' => 'सत्रारंभ / खाता खोलें',
@@ -947,6 +951,9 @@ $2
 यह पहले से मौजूद है।',
 'defaultmessagetext' => 'संदेश का डिफ़ॉल्ट पाठ',
 
+# Content models
+'content-model-javascript' => 'जावास्क्रिप्ट',
+
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''चेतावनी:''' इस पृष्ठ पर बहुत अधिक संख्या में कीमती पार्सर फ़ंक्शनों का प्रयोग किया गया है।
 
@@ -1185,14 +1192,12 @@ $1",
 'search-result-size' => '$1 ({{PLURAL:$2|$2 शब्द}})',
 'search-result-category-size' => '{{PLURAL:$1|$1 सदस्य}} ({{PLURAL:$2|$2 उपश्रेणी|$2 उपश्रेणियाँ}}, {{PLURAL:$3|$3 सञ्चिका|$3 सञ्चिकाएँ}})',
 'search-result-score' => 'संबद्ध: $1%',
-'search-redirect' => '(पुनर्निर्देश $1)',
+'search-redirect' => '($1 से पुनर्निर्देशित)',
 'search-section' => '(अनुभाग $1)',
 'search-suggest' => 'कहीं आपका मतलब $1 तो नहीं था?',
 'search-interwiki-caption' => 'अन्य प्रकल्प',
 'search-interwiki-default' => '$1 के परिणाम:',
 'search-interwiki-more' => '(और)',
-'search-mwsuggest-enabled' => 'सुझाव सहित',
-'search-mwsuggest-disabled' => 'सुझाव नहीं',
 'search-relatedarticle' => 'सम्बंधित',
 'mwsuggest-disable' => 'AJAX सुझाव बंद करें',
 'searcheverything-enable' => 'सभी नामस्थानों में खोजें',
@@ -1227,7 +1232,7 @@ $1",
 
 # Preferences page
 'preferences' => 'मेरी वरीयताएँ',
-'mypreferences' => 'मेरी वरीयताएँ',
+'mypreferences' => 'मेरी पसंद',
 'prefs-edits' => 'संपादन संख्या:',
 'prefsnologin' => 'लॉग इन नहीं किया है',
 'prefsnologintext' => 'वरीयताएँ बदलने के लिए आपको <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} सत्रारंभ]</span> करना होगा।',
@@ -1962,6 +1967,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|बाइट|बाइट}}',
 'ncategories' => '{{PLURAL:$1|एक श्रेणी|$1 श्रेणियाँ}}',
+'ninterwikis' => '$1 अंतरविकी {{PLURAL:$1|कड़ी|कड़ियाँ}}',
 'nlinks' => '$1 {{PLURAL:$1|कड़ी|कड़ियाँ}}',
 'nmembers' => '$1 {{PLURAL:$1|सदस्य}}',
 'nrevisions' => '$1 {{PLURAL:$1|अवतरण}}',
@@ -2044,6 +2050,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 आप और बारीकी के लिए लॉग का प्रकार, सदस्य नाम (लघु-दीर्घ-अक्षर संवेदी), या प्रभावित पृष्ठ (लघु-दीर्घ-अक्षर संवेदी) चुन सकते हैं।',
 'logempty' => 'लॉग में ऐसी प्रविष्टि नहीं है।',
 'log-title-wildcard' => 'इस पाठ से शुरू होने वाले शीर्षक खोजें',
+'showhideselectedlogentries' => 'चयनित लॉग प्रविष्टियाँ दिखाएँ/छुपाएँ',
 
 # Special:AllPages
 'allpages' => 'सभी पृष्ठ',
@@ -2131,6 +2138,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 'mailnologin' => 'पाने वाले का एड्रेस दिया नहीं',
 'mailnologintext' => 'अन्य सदस्यों को इ-मेल भेजने के लिये [[Special:UserLogin|लॉग इन]] करना आवश्यक है और आपकी [[Special:Preferences|वरीयताओं]] में वैध ई-मेल पता होना आवश्यक है।',
 'emailuser' => 'इस सदस्य को ई-मेल भेजें',
+'emailuser-title-target' => 'इस {{GENDER:$1|सदस्य|सदस्या}} को ई-मेल करें।',
+'emailuser-title-notarget' => 'सदस्य को ई-मेल करें',
 'emailpage' => 'सदस्य को ई-मेल करें',
 'emailpagetext' => 'नीचे दिए पर्चे को जरिए आप इस सदस्य को ई-मेल भेज सकते हैं।
 आपने जो पता [[Special:Preferences|अपनी सदस्य वरीयताओं]] में दिया था वह इस ई-मेल के "भेजने वाले" के तौर पर आएगा, अतः प्राप्तकर्ता आपको सीधे जवाब दे सकेंगे।',
@@ -2202,11 +2211,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 
 'enotif_mailer' => '{{SITENAME}} सूचना इ-मेल कर्ता',
 'enotif_reset' => 'सभी पृष्ठ देखे हुए दर्शाएँ',
-'enotif_newpagetext' => 'यह नया पृष्ठ है।',
 'enotif_impersonal_salutation' => '{{SITENAME}} सदस्य',
-'changed' => 'परिवर्तित किया',
-'created' => 'बनाया',
-'enotif_subject' => '{{SITENAME}} पृष्ठ $PAGETITLE $PAGEEDITOR ने $CHANGEDORCREATED',
 'enotif_lastvisited' => 'आपकी आखिरी भेंट के बाद हुए बदलाव देखने के लिये $1 देखें।',
 'enotif_lastdiff' => 'इस बदलाव को देखने के लिये $1 देखें।',
 'enotif_anon_editor' => 'अनामक सदस्य $1',
@@ -3802,6 +3807,9 @@ $5
 'feedback-close' => 'हो गया',
 'feedback-bugcheck' => 'शानदार! जांच ले कहीं ये [ $1 known bugs] पहले से ही न हो ।',
 'feedback-bugnew' => 'मैं जाँच कीया। एक नया बग रिपोर्ट करें',
+
+# Search suggestions
+'searchsuggest-search' => 'खोज',
 
 # API errors
 'api-error-badaccess-groups' => 'आपको इस विकि के लिए फ़ाइलें अपलोड करने की अनुमति नहीं है.',

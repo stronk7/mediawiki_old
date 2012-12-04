@@ -418,7 +418,6 @@ $messages = array(
 'qbbrowse' => 'Qalleb',
 'qbedit' => 'Immodifika',
 'qbpageoptions' => 'Din il-paġna',
-'qbpageinfo' => 'Kuntest',
 'qbmyoptions' => 'Il-paġni tiegħi',
 'qbspecialpages' => 'Paġni speċjali',
 'faq' => 'Mistoqsijiet komuni',
@@ -664,11 +663,8 @@ Ir-raġuni li ġiet mogħtija kienet ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Bħalissa tinsab barra mill-kont tiegħek.'''
 
-Tista' tkompli tuża' {{SITENAME}} bħala utent anonimu, jew tista' terġa [[Special:UserLogin|tidħol]] bħala l-istess utent jew wieħed differenti.
+Tista' tkompli tuża' {{SITENAME}} bħala utent anonimu, jew tista' terġa <span class='plainlinks'>[$1 tidħol]</span> bħala l-istess utent jew wieħed differenti.
 Kun af li ċerti paġni jistgħu jkomplu jidhru bħallikieku l-illogjar 'l barra mill-kont qatt ma seħħ, sakemm ma tħassarx il-cache tal-browser.",
-'welcomecreation' => "== Merħba, $1! ==
-Il-kont tiegħek ġie maħluq.<br />
-Tinsiex tippersonalizza l-[[Special:Preferences|preferenzi]] ta' {{SITENAME}}.",
 'yourname' => 'Isem tal-utent:',
 'yourpassword' => 'Password:',
 'yourpasswordagain' => "Erġa' ikteb il-password:",
@@ -1195,7 +1191,7 @@ Nota li l-użu tal-links tan-navigazzjoni jagħmel reset tal-kolonna.",
 'mergehistory-reason' => 'Raġuni:',
 
 # Merge log
-'mergelog' => "Reġistru ta' twaħħid",
+'mergelog' => 'Twaħħid',
 'pagemerge-logentry' => "waħħad [[$1]] ma' [[$2]] (reviżjonijiet sa $3)",
 'revertmerge' => 'Infired',
 'mergelogpagetext' => "Hawn taħt hawn lista ta' l-aktar tgħaqqid riċenti ta' paġna waħda ta' storja f'oħra.",
@@ -1253,8 +1249,6 @@ Nota li l-użu tal-links tan-navigazzjoni jagħmel reset tal-kolonna.",
 'search-interwiki-caption' => 'Proġetti kuġini',
 'search-interwiki-default' => "Riżultati ta' $1:",
 'search-interwiki-more' => '(aktar)',
-'search-mwsuggest-enabled' => 'bis-suġġerimenti',
-'search-mwsuggest-disabled' => 'l-ebda suġġeriment',
 'search-relatedarticle' => 'Relatati',
 'mwsuggest-disable' => 'Neħħi suġġeriment tal-AJAX',
 'searcheverything-enable' => 'Fittex fl-ispazji tal-isem kollha',
@@ -1517,8 +1511,9 @@ Hawnhekk hawn valur iġġenerat b'mod każwali li inti tista' tuża: $1",
 # User rights log
 'rightslog' => 'Drittijiet tal-utenti',
 'rightslogtext' => "Dan huwa r-reġistru tal-modifiki ta' drittijiet tal-utenti.",
-'rightslogentry' => "biddel is-sħubija ta' $1 mill-grupp $2 għall-grupp $3",
+'rightslogentry' => "biddel is-sħubija ta' $1 minn $2 għal $3",
 'rightslogentry-autopromote' => 'ġie awtomatikament promoss minn $2 għal $3',
+'logentry-rights-rights' => "$1 biddel is-sħubija ta' $3 minn $4 għal $5",
 'rightsnone' => '(xejn)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1944,15 +1939,16 @@ Daħħal: tip/sottotip, eż. <code>image/jpeg</code>.",
 'disambiguations-text' => "Il-Paġni li jinsabu f'din lista huma parti minn '''paġna ta' diżambigwazzjoni''' b'hekk għandhom jiġu relatati mas-suġġett preċiż minflok. <br />
 Paġna tiġi stimata paġna ta' diżambigwazzjoni dawk kollha li jagħmlu użu mit-template elenkat f'[[MediaWiki:Disambiguationspage]]",
 
-'doubleredirects' => 'Riindirizzi doppji',
-'doubleredirectstext' => 'Din il-paġna telenka dawk il-paġni li jindirizzaw lejn paġna oħra ta\' riindirizzament.
-Kull filliera għandha ħolqa għall-ewwel u t-tieni riindirizz, kif ukoll fejn tirrindirizza t-tieni paġna, is-soltu magħrufa bħalha l-paġna "reali" fejn se twassal, fejn suppost l-ewwel riindirizz għandu jipponta.',
+'doubleredirects' => 'Rindirizzi doppji',
+'doubleredirectstext' => 'Din il-paġna telenka dawk il-paġni li jindirizzaw lejn paġna oħra ta\' rindirizzament.
+Kull filliera għandha ħolqa għall-ewwel u t-tieni rindirizz, kif ukoll fejn tirrindirizza t-tieni paġna, is-soltu magħrufa bħalha l-paġna "reali" fejn se twassal, fejn suppost l-ewwel rindirizz għandu jipponta.
+Daħliet <del>maqtugħa</del> saritilhom it-tiswija.',
 'double-redirect-fixed-move' => '[[$1]] ġie mmexxi awtomatikament, issa hu rindirizz għal [[$2]]',
 'double-redirect-fixed-maintenance' => "Tiswija ta' rindirizz doppju minn [[$1]] għal [[$2]].",
 'double-redirect-fixer' => "Tiswija ta' rindirizz",
 
-'brokenredirects' => 'Riindirizzi ħżiena',
-'brokenredirectstext' => 'Ir-riindirizzi segwenti għandhom ħoloq għal paġni ineżistenti:',
+'brokenredirects' => 'Rindirizzi ħżiena',
+'brokenredirectstext' => 'Ir-rindirizzi segwenti għandhom ħoloq lejn paġni li ma jeżistux:',
 'brokenredirects-edit' => 'editja',
 'brokenredirects-delete' => 'ħassar',
 
@@ -2204,11 +2200,7 @@ Jekk f'xi ħin tkun tixtieq tneħħi l-paġna mil-lista ta' osservazzjoni tiegħ
 
 'enotif_mailer' => "Sistema ta' notifikazzjoni bl-użu tal-posta elettronika fuq {{SITENAME}}",
 'enotif_reset' => 'Immarka l-paġni kollha bħala diġà viżitati',
-'enotif_newpagetext' => 'Din hija paġna ġdida.',
 'enotif_impersonal_salutation' => "Utent ta' {{SITENAME}}",
-'changed' => 'modifikata',
-'created' => 'inħolqot',
-'enotif_subject' => 'Il-Paġna $PAGETITLE ta\' {{SITENAME}} ġiet $CHANGEDORCREATED minn $PAGEEDITOR',
 'enotif_lastvisited' => 'Ara $1 għal modifiki kollha mill-aħħar żjara.',
 'enotif_lastdiff' => 'Ara $1 biex tara din l-modifika.',
 'enotif_anon_editor' => 'utent anonimu $1',
@@ -2656,9 +2648,9 @@ Jekk jogħġbok, waħħad iż-żewġ paġni manwalment.'''",
 'move-talk-subpages' => "Mexxi is-sottopaġni kollha tal-paġna ta' diskussjoni (sa $1)",
 'movepage-page-exists' => 'Il-paġna $1 diġà teżisti u ma tistax tiġi miktuba fuqha awtomatikament.',
 'movepage-page-moved' => 'Il-Paġna $1 ġiet imċaqilqa għal $2.',
-'movepage-page-unmoved' => 'Il-Paġna $1 ma setgħatx tiġi mċaqilqa għal $2.',
+'movepage-page-unmoved' => 'Il-paġna $1 ma setgħetx titmexxa lejn $2.',
 'movepage-max-pages' => "Ġie mċaqlaq in-numru massimu ta' {{PLURAL:$1|paġna u ma jistax jiġi mċaqlaq aktar awtomatikament|$1 paġni u ma jistgħux jiġu mċaqilqa aktar awtomatikament.}}",
-'movelogpage' => "Reġistru tat-tmexxija ta' paġni",
+'movelogpage' => "Tmexxija ta' paġni",
 'movelogpagetext' => "Hawn taħt jinsab lista ta' paġni mċaqilqa.",
 'movesubpage' => '{{PLURAL:$1|Sottopaġna|Sottopaġna}}',
 'movesubpagetext' => 'Din il-paġna għandha $1 {{PLURAL:$1|sottopaġna murija|sottopaġni murija}} hawn taħt:',
@@ -2793,7 +2785,6 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 
 # JavaScriptTest
 'javascripttest' => 'Testjar tal-JavaScript',
-'javascripttest-disabled' => 'Din il-funzjoni ma ġietx abilitata fuq din il-wiki.',
 'javascripttest-pagetext-noframework' => 'Din il-paġna hi riservata għall-eżekuzzjoni tat-testijiet tal-JavaScript.',
 'javascripttest-pagetext-frameworks' => 'Jekk jogħġbok agħżel wieħed mill-oqsma tal-ittestjar: $1',
 'javascripttest-pagetext-skins' => 'Agħżel aspett grafiku fuq liema tesegwixxi testijiet:',
@@ -3760,6 +3751,10 @@ Stampi huwa mogħrija b'risoluzzjoni sħiħa, tipi tal-fajl oħrajn jibdew bil-p
 'feedback-close' => 'Lest',
 'feedback-bugcheck' => 'Tajjeb ħafna! Ivverifika li mhux diġà fost id-[$1 difetti magħrufa].',
 'feedback-bugnew' => 'Ikkontrollajt. Irrapporta d-difett',
+
+# Search suggestions
+'searchsuggest-search' => 'Fittex',
+'searchsuggest-containing' => 'li tinkludi...',
 
 # API errors
 'api-error-fileexists-forbidden' => 'Fajl bl-isem "$1" diġà jeżisti, u ma jistax jiġi miktub fuqu.',

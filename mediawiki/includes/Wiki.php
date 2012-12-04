@@ -169,6 +169,7 @@ class MediaWiki {
 	 * - special pages
 	 * - normal pages
 	 *
+	 * @throws MWException|PermissionsError|BadTitleError|HttpError
 	 * @return void
 	 */
 	private function performRequest() {
@@ -177,7 +178,7 @@ class MediaWiki {
 		wfProfileIn( __METHOD__ );
 
 		$request = $this->context->getRequest();
-		$title = $this->context->getTitle();
+		$requestTitle = $title = $this->context->getTitle();
 		$output = $this->context->getOutput();
 		$user = $this->context->getUser();
 
@@ -301,7 +302,7 @@ class MediaWiki {
 				global $wgArticle;
 				$wgArticle = new DeprecatedGlobal( 'wgArticle', $article, '1.18' );
 
-				$this->performAction( $article );
+				$this->performAction( $article, $requestTitle );
 			} elseif ( is_string( $article ) ) {
 				$output->redirect( $article );
 			} else {
@@ -395,8 +396,9 @@ class MediaWiki {
 	 * Perform one of the "standard" actions
 	 *
 	 * @param $page Page
+	 * @param $requestTitle The original title, before any redirects were applied
 	 */
-	private function performAction( Page $page ) {
+	private function performAction( Page $page, Title $requestTitle ) {
 		global $wgUseSquid, $wgSquidMaxage;
 
 		wfProfileIn( __METHOD__ );
@@ -419,7 +421,7 @@ class MediaWiki {
 		if ( $action instanceof Action ) {
 			# Let Squid cache things if we can purge them.
 			if ( $wgUseSquid &&
-				in_array( $request->getFullRequestURL(), $title->getSquidURLs() )
+				in_array( $request->getFullRequestURL(), $requestTitle->getSquidURLs() )
 			) {
 				$output->setSquidMaxage( $wgSquidMaxage );
 			}
@@ -490,6 +492,23 @@ class MediaWiki {
 
 		$request = $this->context->getRequest();
 
+		if ( $request->getCookie( 'forceHTTPS' )
+			&& $request->detectProtocol() == 'http'
+			&& $request->getMethod() == 'GET'
+		) {
+			$redirUrl = $request->getFullRequestURL();
+			$redirUrl = str_replace( 'http://' , 'https://' , $redirUrl );
+
+			// Setup dummy Title, otherwise OutputPage::redirect will fail
+			$title = Title::newFromText( NS_MAIN, 'REDIR' );
+			$this->context->setTitle( $title );
+			$output = $this->context->getOutput();
+			$output->redirect( $redirUrl );
+			$output->output();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		// Send Ajax requests to the Ajax dispatcher.
 		if ( $wgUseAjax && $request->getVal( 'action', 'view' ) == 'ajax' ) {
 
@@ -555,9 +574,6 @@ class MediaWiki {
 		// Execute a job from the queue
 		$this->doJobs();
 
-		// Log message usage, if $wgAdaptiveMessageCache is set to true
-		MessageCache::logMessages();
-
 		// Log profiling data, e.g. in the database or UDP
 		wfLogProfilingData();
 
@@ -578,28 +594,51 @@ class MediaWiki {
 		if ( $wgJobRunRate <= 0 || wfReadOnly() ) {
 			return;
 		}
+
 		if ( $wgJobRunRate < 1 ) {
 			$max = mt_getrandmax();
 			if ( mt_rand( 0, $max ) > $max * $wgJobRunRate ) {
-				return;
+				return; // the higher $wgJobRunRate, the less likely we return here
 			}
 			$n = 1;
 		} else {
 			$n = intval( $wgJobRunRate );
 		}
 
-		while ( $n-- && false != ( $job = Job::pop() ) ) {
-			$output = $job->toString() . "\n";
-			$t = - microtime( true );
-			$success = $job->run();
-			$t += microtime( true );
-			$t = round( $t * 1000 );
-			if ( !$success ) {
-				$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
-			} else {
-				$output .= "Success, Time: $t ms\n";
+		$group = JobQueueGroup::singleton();
+		$types = $group->getDefaultQueueTypes();
+		shuffle( $types ); // avoid starvation
+
+		// Scan the queues for a job N times...
+		do {
+			$jobFound = false; // found a job in any queue?
+			// Find a queue with a job on it and run it...
+			foreach ( $types as $i => $type ) {
+				$queue = $group->get( $type );
+				if ( $queue->isEmpty() ) {
+					unset( $types[$i] ); // don't keep checking this queue
+					continue;
+				}
+				$job = $queue->pop();
+				if ( $job ) {
+					$jobFound = true;
+					$output = $job->toString() . "\n";
+					$t = - microtime( true );
+					$success = $job->run();
+					$queue->ack( $job ); // done
+					$t += microtime( true );
+					$t = round( $t * 1000 );
+					if ( !$success ) {
+						$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
+					} else {
+						$output .= "Success, Time: $t ms\n";
+					}
+					wfDebugLog( 'jobqueue', $output );
+					break;
+				} else {
+					unset( $types[$i] ); // don't keep checking this queue
+				}
 			}
-			wfDebugLog( 'jobqueue', $output );
-		}
+		} while ( --$n && $jobFound );
 	}
 }

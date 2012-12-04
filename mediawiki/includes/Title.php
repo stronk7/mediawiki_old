@@ -65,6 +65,7 @@ class Title {
 	var $mFragment;                   // /< Title fragment (i.e. the bit after the #)
 	var $mArticleID = -1;             // /< Article ID, fetched from the link cache on demand
 	var $mLatestID = false;           // /< ID of most recent revision
+	var $mContentModel = false;       // /< ID of the page's content model, i.e. one of the CONTENT_MODEL_XXX constants
 	private $mEstimateRevisions;      // /< Estimated number of revisions; null of not loaded
 	var $mRestrictions = array();     // /< Array of groups allowed to edit this article
 	var $mOldRestrictions = false;
@@ -200,6 +201,27 @@ class Title {
 	}
 
 	/**
+	 * Returns a list of fields that are to be selected for initializing Title objects or LinkCache entries.
+	 * Uses $wgContentHandlerUseDB to determine whether to include page_content_model.
+	 *
+	 * @return array
+	 */
+	protected static function getSelectFields() {
+		global $wgContentHandlerUseDB;
+
+		$fields = array(
+			'page_namespace', 'page_title', 'page_id',
+			'page_len', 'page_is_redirect', 'page_latest',
+		);
+
+		if ( $wgContentHandlerUseDB ) {
+			$fields[] = 'page_content_model';
+		}
+
+		return $fields;
+	}
+
+	/**
 	 * Create a new Title from an article ID
 	 *
 	 * @param $id Int the page_id corresponding to the Title to create
@@ -210,10 +232,7 @@ class Title {
 		$db = ( $flags & self::GAID_FOR_UPDATE ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$row = $db->selectRow(
 			'page',
-			array(
-				'page_namespace', 'page_title', 'page_id',
-				'page_len', 'page_is_redirect', 'page_latest',
-			),
+			self::getSelectFields(),
 			array( 'page_id' => $id ),
 			__METHOD__
 		);
@@ -239,10 +258,7 @@ class Title {
 
 		$res = $dbr->select(
 			'page',
-			array(
-				'page_namespace', 'page_title', 'page_id',
-				'page_len', 'page_is_redirect', 'page_latest',
-			),
+			self::getSelectFields(),
 			array( 'page_id' => $ids ),
 			__METHOD__
 		);
@@ -282,11 +298,16 @@ class Title {
 				$this->mRedirect = (bool)$row->page_is_redirect;
 			if ( isset( $row->page_latest ) )
 				$this->mLatestID = (int)$row->page_latest;
+			if ( isset( $row->page_content_model ) )
+				$this->mContentModel = strval( $row->page_content_model );
+			else
+				$this->mContentModel = false; # initialized lazily in getContentModel()
 		} else { // page not found
 			$this->mArticleID = 0;
 			$this->mLength = 0;
 			$this->mRedirect = false;
 			$this->mLatestID = 0;
+			$this->mContentModel = false; # initialized lazily in getContentModel()
 		}
 	}
 
@@ -312,6 +333,7 @@ class Title {
 		$t->mArticleID = ( $ns >= 0 ) ? -1 : 0;
 		$t->mUrlform = wfUrlencode( $t->mDbkeyform );
 		$t->mTextform = str_replace( '_', ' ', $title );
+		$t->mContentModel = false; # initialized lazily in getContentModel()
 		return $t;
 	}
 
@@ -362,9 +384,13 @@ class Title {
 	 *
 	 * @param $text String: Text with possible redirect
 	 * @return Title: The corresponding Title
+	 * @deprecated since 1.21, use Content::getRedirectTarget instead.
 	 */
 	public static function newFromRedirect( $text ) {
-		return self::newFromRedirectInternal( $text );
+		ContentHandler::deprecated( __METHOD__, '1.21' );
+
+		$content = ContentHandler::makeContent( $text, null, CONTENT_MODEL_WIKITEXT );
+		return $content->getRedirectTarget();
 	}
 
 	/**
@@ -375,10 +401,13 @@ class Title {
 	 *
 	 * @param $text String Text with possible redirect
 	 * @return Title
+	 * @deprecated since 1.21, use Content::getUltimateRedirectTarget instead.
 	 */
 	public static function newFromRedirectRecurse( $text ) {
-		$titles = self::newFromRedirectArray( $text );
-		return $titles ? array_pop( $titles ) : null;
+		ContentHandler::deprecated( __METHOD__, '1.21' );
+
+		$content = ContentHandler::makeContent( $text, null, CONTENT_MODEL_WIKITEXT );
+		return $content->getUltimateRedirectTarget();
 	}
 
 	/**
@@ -389,71 +418,13 @@ class Title {
 	 *
 	 * @param $text String Text with possible redirect
 	 * @return Array of Titles, with the destination last
+	 * @deprecated since 1.21, use Content::getRedirectChain instead.
 	 */
 	public static function newFromRedirectArray( $text ) {
-		global $wgMaxRedirects;
-		$title = self::newFromRedirectInternal( $text );
-		if ( is_null( $title ) ) {
-			return null;
-		}
-		// recursive check to follow double redirects
-		$recurse = $wgMaxRedirects;
-		$titles = array( $title );
-		while ( --$recurse > 0 ) {
-			if ( $title->isRedirect() ) {
-				$page = WikiPage::factory( $title );
-				$newtitle = $page->getRedirectTarget();
-			} else {
-				break;
-			}
-			// Redirects to some special pages are not permitted
-			if ( $newtitle instanceOf Title && $newtitle->isValidRedirectTarget() ) {
-				// the new title passes the checks, so make that our current title so that further recursion can be checked
-				$title = $newtitle;
-				$titles[] = $newtitle;
-			} else {
-				break;
-			}
-		}
-		return $titles;
-	}
+		ContentHandler::deprecated( __METHOD__, '1.21' );
 
-	/**
-	 * Really extract the redirect destination
-	 * Do not call this function directly, use one of the newFromRedirect* functions above
-	 *
-	 * @param $text String Text with possible redirect
-	 * @return Title
-	 */
-	protected static function newFromRedirectInternal( $text ) {
-		global $wgMaxRedirects;
-		if ( $wgMaxRedirects < 1 ) {
-			//redirects are disabled, so quit early
-			return null;
-		}
-		$redir = MagicWord::get( 'redirect' );
-		$text = trim( $text );
-		if ( $redir->matchStartAndRemove( $text ) ) {
-			// Extract the first link and see if it's usable
-			// Ensure that it really does come directly after #REDIRECT
-			// Some older redirects included a colon, so don't freak about that!
-			$m = array();
-			if ( preg_match( '!^\s*:?\s*\[{2}(.*?)(?:\|.*?)?\]{2}!', $text, $m ) ) {
-				// Strip preceding colon used to "escape" categories, etc.
-				// and URL-decode links
-				if ( strpos( $m[1], '%' ) !== false ) {
-					// Match behavior of inline link parsing here;
-					$m[1] = rawurldecode( ltrim( $m[1], ':' ) );
-				}
-				$title = Title::newFromText( $m[1] );
-				// If the title is a redirect to bad special pages or is invalid, return null
-				if ( !$title instanceof Title || !$title->isValidRedirectTarget() ) {
-					return null;
-				}
-				return $title;
-			}
-		}
-		return null;
+		$content = ContentHandler::makeContent( $text, null, CONTENT_MODEL_WIKITEXT );
+		return $content->getRedirectChain();
 	}
 
 	/**
@@ -702,6 +673,38 @@ class Title {
 	}
 
 	/**
+	 * Get the page's content model id, see the CONTENT_MODEL_XXX constants.
+	 *
+	 * @return String: Content model id
+	 */
+	public function getContentModel() {
+		if ( !$this->mContentModel ) {
+			$linkCache = LinkCache::singleton();
+			$this->mContentModel = $linkCache->getGoodLinkFieldObj( $this, 'model' );
+		}
+
+		if ( !$this->mContentModel ) {
+			$this->mContentModel = ContentHandler::getDefaultModelFor( $this );
+		}
+
+		if( !$this->mContentModel ) {
+			throw new MWException( "failed to determin content model!" );
+		}
+
+		return $this->mContentModel;
+	}
+
+	/**
+	 * Convenience method for checking a title's content model name
+	 *
+	 * @param String $id The content model ID (use the CONTENT_MODEL_XXX constants).
+	 * @return Boolean true if $this->getContentModel() == $id
+	 */
+	public function hasContentModel( $id ) {
+		return $this->getContentModel() == $id;
+	}
+
+	/**
 	 * Get the namespace text
 	 *
 	 * @return String: Namespace text
@@ -905,7 +908,7 @@ class Title {
 
 	/**
 	 * Is this the mainpage?
-	 * @note Title::newFromText seams to be sufficiently optimized by the title
+	 * @note Title::newFromText seems to be sufficiently optimized by the title
 	 * cache that we don't need to over-optimize by doing direct comparisons and
 	 * acidentally creating new bugs where $title->equals( Title::newFromText() )
 	 * ends up reporting something differently than $title->isMainPage();
@@ -934,6 +937,8 @@ class Title {
 	 * @return Bool
 	 */
 	public function isConversionTable() {
+		//@todo: ConversionTable should become a separate content model.
+
 		return $this->getNamespace() == NS_MEDIAWIKI &&
 			strpos( $this->getText(), 'Conversiontable/' ) === 0;
 	}
@@ -944,22 +949,31 @@ class Title {
 	 * @return Bool
 	 */
 	public function isWikitextPage() {
-		$retval = !$this->isCssOrJsPage() && !$this->isCssJsSubpage();
-		wfRunHooks( 'TitleIsWikitextPage', array( $this, &$retval ) );
-		return $retval;
+		return $this->hasContentModel( CONTENT_MODEL_WIKITEXT );
 	}
 
 	/**
-	 * Could this page contain custom CSS or JavaScript, based
-	 * on the title?
+	 * Could this page contain custom CSS or JavaScript for the global UI.
+	 * This is generally true for pages in the MediaWiki namespace having CONTENT_MODEL_CSS
+	 * or CONTENT_MODEL_JAVASCRIPT.
+	 *
+	 * This method does *not* return true for per-user JS/CSS. Use isCssJsSubpage() for that!
+	 *
+	 * Note that this method should not return true for pages that contain and show "inactive" CSS or JS.
 	 *
 	 * @return Bool
 	 */
 	public function isCssOrJsPage() {
-		$retval = $this->mNamespace == NS_MEDIAWIKI
-			&& preg_match( '!\.(?:css|js)$!u', $this->mTextform ) > 0;
-		wfRunHooks( 'TitleIsCssOrJsPage', array( $this, &$retval ) );
-		return $retval;
+		$isCssOrJsPage = NS_MEDIAWIKI == $this->mNamespace
+			&& ( $this->hasContentModel( CONTENT_MODEL_CSS )
+				|| $this->hasContentModel( CONTENT_MODEL_JAVASCRIPT ) );
+
+		#NOTE: this hook is also called in ContentHandler::getDefaultModel. It's called here again to make sure
+		#      hook funktions can force this method to return true even outside the mediawiki namespace.
+
+		wfRunHooks( 'TitleIsCssOrJsPage', array( $this, &$isCssOrJsPage ) );
+
+		return $isCssOrJsPage;
 	}
 
 	/**
@@ -967,7 +981,9 @@ class Title {
 	 * @return Bool
 	 */
 	public function isCssJsSubpage() {
-		return ( NS_USER == $this->mNamespace and preg_match( "/\\/.*\\.(?:css|js)$/", $this->mTextform ) );
+		return ( NS_USER == $this->mNamespace && $this->isSubpage()
+				&& ( $this->hasContentModel( CONTENT_MODEL_CSS )
+					|| $this->hasContentModel( CONTENT_MODEL_JAVASCRIPT ) ) );
 	}
 
 	/**
@@ -990,7 +1006,8 @@ class Title {
 	 * @return Bool
 	 */
 	public function isCssSubpage() {
-		return ( NS_USER == $this->mNamespace && preg_match( "/\\/.*\\.css$/", $this->mTextform ) );
+		return ( NS_USER == $this->mNamespace && $this->isSubpage()
+			&& $this->hasContentModel( CONTENT_MODEL_CSS ) );
 	}
 
 	/**
@@ -999,7 +1016,8 @@ class Title {
 	 * @return Bool
 	 */
 	public function isJsSubpage() {
-		return ( NS_USER == $this->mNamespace && preg_match( "/\\/.*\\.js$/", $this->mTextform ) );
+		return ( NS_USER == $this->mNamespace && $this->isSubpage()
+			&& $this->hasContentModel( CONTENT_MODEL_JAVASCRIPT ) );
 	}
 
 	/**
@@ -1161,7 +1179,49 @@ class Title {
 	}
 
 	/**
-	 * Get the base page name, i.e. the leftmost part before any slashes
+	 * Get the root page name text without a namespace, i.e. the leftmost part before any slashes
+	 *
+	 * @par Example:
+	 * @code
+	 * Title::newFromText('User:Foo/Bar/Baz')->getRootText();
+	 * # returns: 'Foo'
+	 * @endcode
+	 *
+	 * @return String Root name
+	 * @since 1.20
+	 */
+	public function getRootText() {
+		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
+			return $this->getText();
+		}
+
+		return strtok( $this->getText(), '/' );
+	}
+
+	/**
+	 * Get the root page name title, i.e. the leftmost part before any slashes
+	 *
+	 * @par Example:
+	 * @code
+	 * Title::newFromText('User:Foo/Bar/Baz')->getRootTitle();
+	 * # returns: Title{User:Foo}
+	 * @endcode
+	 *
+	 * @return Title Root title
+	 * @since 1.20
+	 */
+	public function getRootTitle() {
+		return Title::makeTitle( $this->getNamespace(), $this->getRootText() );
+	}
+
+	/**
+	 * Get the base page name without a namespace, i.e. the part before the subpage name
+	 *
+	 * @par Example:
+	 * @code
+	 * Title::newFromText('User:Foo/Bar/Baz')->getBaseText();
+	 * # returns: 'Foo/Bar'
+	 * @endcode
 	 *
 	 * @return String Base name
 	 */
@@ -1179,7 +1239,29 @@ class Title {
 	}
 
 	/**
+	 * Get the base page name title, i.e. the part before the subpage name
+	 *
+	 * @par Example:
+	 * @code
+	 * Title::newFromText('User:Foo/Bar/Baz')->getBaseTitle();
+	 * # returns: Title{User:Foo/Bar}
+	 * @endcode
+	 *
+	 * @return Title Base title
+	 * @since 1.20
+	 */
+	public function getBaseTitle() {
+		return Title::makeTitle( $this->getNamespace(), $this->getBaseText() );
+	}
+
+	/**
 	 * Get the lowest-level subpage name, i.e. the rightmost part after any slashes
+	 *
+	 * @par Example:
+	 * @code
+	 * Title::newFromText('User:Foo/Bar/Baz')->getSubpageText();
+	 * # returns: "Baz"
+	 * @endcode
 	 *
 	 * @return String Subpage name
 	 */
@@ -1189,6 +1271,23 @@ class Title {
 		}
 		$parts = explode( '/', $this->mTextform );
 		return( $parts[count( $parts ) - 1] );
+	}
+
+	/**
+	 * Get the title for a subpage of the current page
+	 *
+	 * @par Example:
+	 * @code
+	 * Title::newFromText('User:Foo/Bar/Baz')->getSubpage("Asdf");
+	 * # returns: Title{User:Foo/Bar/Baz/Asdf}
+	 * @endcode
+	 *
+	 * @param $text String The subpage name to add to the title
+	 * @return Title Subpage title
+	 * @since 1.20
+	 */
+	public function getSubpage( $text ) {
+		return Title::makeTitleSafe( $this->getNamespace(), $this->getText() . '/' . $text );
 	}
 
 	/**
@@ -1270,6 +1369,8 @@ class Title {
 	 *
 	 * @see self::getLocalURL
 	 * @see wfExpandUrl
+	 * @param $query
+	 * @param $query2 bool
 	 * @param $proto Protocol type to use in URL
 	 * @return String the URL
 	 */
@@ -1297,7 +1398,7 @@ class Title {
 	 *
 
 	 * @param $query string|array an optional query string,
-	 *   not used for interwiki	links. Can be specified as an associative array as well,
+	 *   not used for interwiki links. Can be specified as an associative array as well,
 	 *   e.g., array( 'action' => 'edit' ) (keys and values will be URL-escaped).
 	 *   Some query patterns will trigger various shorturl path replacements.
 	 * @param $query2 Mixed: An optional secondary query array. This one MUST
@@ -1396,13 +1497,16 @@ class Title {
 	 *
 	 * See getLocalURL for the arguments.
 	 *
+	 * @param $query
+	 * @param $query2 bool
+	 * @param $proto Protocol to use; setting this will cause a full URL to be used
 	 * @see self::getLocalURL
 	 * @return String the URL
 	 */
-	public function getLinkURL( $query = '', $query2 = false ) {
+	public function getLinkURL( $query = '', $query2 = false, $proto = PROTO_RELATIVE ) {
 		wfProfileIn( __METHOD__ );
-		if ( $this->isExternal() ) {
-			$ret = $this->getFullURL( $query, $query2 );
+		if ( $this->isExternal() || $proto !== PROTO_RELATIVE ) {
+			$ret = $this->getFullURL( $query, $query2, $proto );
 		} elseif ( $this->getPrefixedText() === '' && $this->getFragment() !== '' ) {
 			$ret = $this->getFragmentForURL();
 		} else {
@@ -1641,15 +1745,8 @@ class Title {
 
 			if ( !$user->isAllowed( 'move' ) ) {
 				// User can't move anything
-				global $wgGroupPermissions;
-				$userCanMove = false;
-				if ( isset( $wgGroupPermissions['user']['move'] ) ) {
-					$userCanMove = $wgGroupPermissions['user']['move'];
-				}
-				$autoconfirmedCanMove = false;
-				if ( isset( $wgGroupPermissions['autoconfirmed']['move'] ) ) {
-					$autoconfirmedCanMove = $wgGroupPermissions['autoconfirmed']['move'];
-				}
+				$userCanMove = User::groupHasPermission( 'user', 'move' );
+				$autoconfirmedCanMove = User::groupHasPermission( 'autoconfirmed', 'move' );
 				if ( $user->isAnon() && ( $userCanMove || $autoconfirmedCanMove ) ) {
 					// custom message if logged-in users without any special rights can move
 					$errors[] = array( 'movenologintext' );
@@ -1990,13 +2087,13 @@ class Title {
 	 * @return Array list of errors
 	 */
 	private function checkReadPermissions( $action, $user, $errors, $doExpensiveQueries, $short ) {
-		global $wgWhitelistRead, $wgGroupPermissions, $wgRevokePermissions;
+		global $wgWhitelistRead, $wgRevokePermissions;
 		static $useShortcut = null;
 
 		# Initialize the $useShortcut boolean, to determine if we can skip quite a bit of code below
 		if ( is_null( $useShortcut ) ) {
 			$useShortcut = true;
-			if ( empty( $wgGroupPermissions['*']['read'] ) ) {
+			if ( !User::groupHasPermission( '*', 'read' ) ) {
 				# Not a public wiki, so no shortcut
 				$useShortcut = false;
 			} elseif ( !empty( $wgRevokePermissions ) ) {
@@ -2826,8 +2923,18 @@ class Title {
 		if ( !$this->getArticleID( $flags ) ) {
 			return $this->mRedirect = false;
 		}
+
 		$linkCache = LinkCache::singleton();
-		$this->mRedirect = (bool)$linkCache->getGoodLinkFieldObj( $this, 'redirect' );
+		$cached = $linkCache->getGoodLinkFieldObj( $this, 'redirect' );
+		if ( $cached === null ) {
+			// TODO: check the assumption that the cache actually knows about this title
+			// and handle this, such as get the title from the database.
+			// See https://bugzilla.wikimedia.org/show_bug.cgi?id=37209
+			wfDebug( "LinkCache doesn't currently know about this title: " . $this->getPrefixedDBkey() );
+			wfDebug( wfBacktrace() );
+		}
+
+		$this->mRedirect = (bool)$cached;
 
 		return $this->mRedirect;
 	}
@@ -2848,7 +2955,15 @@ class Title {
 			return $this->mLength = 0;
 		}
 		$linkCache = LinkCache::singleton();
-		$this->mLength = intval( $linkCache->getGoodLinkFieldObj( $this, 'length' ) );
+		$cached = $linkCache->getGoodLinkFieldObj( $this, 'length' );
+		if ( $cached === null ) { # check the assumption that the cache actually knows about this title
+			# XXX: this does apparently happen, see https://bugzilla.wikimedia.org/show_bug.cgi?id=37209
+			#      as a stop gap, perhaps log this, but don't throw an exception?
+			wfDebug( "LinkCache doesn't currently know about this title: " . $this->getPrefixedDBkey() );
+			wfDebug( wfBacktrace() );
+		}
+
+		$this->mLength = intval( $cached );
 
 		return $this->mLength;
 	}
@@ -2868,7 +2983,14 @@ class Title {
 			return $this->mLatestID = 0;
 		}
 		$linkCache = LinkCache::singleton();
-		$this->mLatestID = intval( $linkCache->getGoodLinkFieldObj( $this, 'revision' ) );
+		$cached = $linkCache->getGoodLinkFieldObj( $this, 'revision' );
+		if ( $cached === null ) { # check the assumption that the cache actually knows about this title
+			# XXX: this does apparently happen, see https://bugzilla.wikimedia.org/show_bug.cgi?id=37209
+			#      as a stop gap, perhaps log this, but don't throw an exception?
+			throw new MWException( "LinkCache doesn't currently know about this title: " . $this->getPrefixedDBkey() );
+		}
+
+		$this->mLatestID = intval( $cached );
 
 		return $this->mLatestID;
 	}
@@ -2897,6 +3019,7 @@ class Title {
 		$this->mRedirect = null;
 		$this->mLength = -1;
 		$this->mLatestID = false;
+		$this->mContentModel = false;
 		$this->mEstimateRevisions = null;
 	}
 
@@ -3135,7 +3258,7 @@ class Title {
 
 		$res = $db->select(
 			array( 'page', $table ),
-			array( 'page_namespace', 'page_title', 'page_id', 'page_len', 'page_is_redirect', 'page_latest' ),
+			self::getSelectFields(),
 			array(
 				"{$prefix}_from=page_id",
 				"{$prefix}_namespace" => $this->getNamespace(),
@@ -3185,6 +3308,8 @@ class Title {
 	 * @return Array of Title objects linking here
 	 */
 	public function getLinksFrom( $options = array(), $table = 'pagelinks', $prefix = 'pl' ) {
+		global $wgContentHandlerUseDB;
+
 		$id = $this->getArticleID();
 
 		# If the page doesn't exist; there can't be any link from this page
@@ -3201,9 +3326,12 @@ class Title {
 		$namespaceFiled = "{$prefix}_namespace";
 		$titleField = "{$prefix}_title";
 
+		$fields = array( $namespaceFiled, $titleField, 'page_id', 'page_len', 'page_is_redirect', 'page_latest' );
+		if ( $wgContentHandlerUseDB ) $fields[] = 'page_content_model';
+
 		$res = $db->select(
 			array( $table, 'page' ),
-			array( $namespaceFiled, $titleField, 'page_id', 'page_len', 'page_is_redirect', 'page_latest' ),
+			$fields,
 			array( "{$prefix}_from" => $id ),
 			__METHOD__,
 			$options,
@@ -3335,7 +3463,7 @@ class Title {
 	 * @return Mixed True on success, getUserPermissionsErrors()-like array on failure
 	 */
 	public function isValidMoveOperation( &$nt, $auth = true, $reason = '' ) {
-		global $wgUser;
+		global $wgUser, $wgContentHandlerUseDB;
 
 		$errors = array();
 		if ( !$nt ) {
@@ -3366,6 +3494,15 @@ class Title {
 			 ( !$oldid ) ||
 			 ( $nt->getDBkey() == '' ) ) {
 			$errors[] = array( 'badarticleerror' );
+		}
+
+		// Content model checks
+		if ( !$wgContentHandlerUseDB &&
+				$this->getContentModel() !== $nt->getContentModel() ) {
+			// can't move a page if that would change the page's content model
+			$errors[] = array( 'bad-target-model',
+							ContentHandler::getLocalizedName( $this->getContentModel() ),
+							ContentHandler::getLocalizedName( $nt->getContentModel() ) );
 		}
 
 		// Image-specific checks
@@ -3594,7 +3731,14 @@ class Title {
 			$logType = 'move';
 		}
 
-		$redirectSuppressed = !$createRedirect;
+		if ( $createRedirect ) {
+			$contentHandler = ContentHandler::getForTitle( $this );
+			$redirectContent = $contentHandler->makeRedirectContent( $nt );
+
+			// NOTE: If this page's content model does not support redirects, $redirectContent will be null.
+		} else {
+			$redirectContent = null;
+		}
 
 		$logEntry = new ManualLogEntry( 'move', $logType );
 		$logEntry->setPerformer( $wgUser );
@@ -3602,7 +3746,7 @@ class Title {
 		$logEntry->setComment( $reason );
 		$logEntry->setParameters( array(
 			'4::target' => $nt->getPrefixedText(),
-			'5::noredir' => $redirectSuppressed ? '1': '0',
+			'5::noredir' => $redirectContent ? '0': '1',
 		) );
 
 		$formatter = LogFormatter::newFromEntry( $logEntry );
@@ -3637,7 +3781,8 @@ class Title {
 		if ( !is_object( $nullRevision ) ) {
 			throw new MWException( 'No valid null revision produced in ' . __METHOD__ );
 		}
-		$nullRevId = $nullRevision->insertOn( $dbw );
+
+		$nullRevision->insertOn( $dbw );
 
 		# Change the name of the target page:
 		$dbw->update( 'page',
@@ -3664,18 +3809,17 @@ class Title {
 		}
 
 		# Recreate the redirect, this time in the other direction.
-		if ( $redirectSuppressed ) {
+		if ( !$redirectContent ) {
 			WikiPage::onArticleDelete( $this );
 		} else {
-			$mwRedir = MagicWord::get( 'redirect' );
-			$redirectText = $mwRedir->getSynonym( 0 ) . ' [[' . $nt->getPrefixedText() . "]]\n";
 			$redirectArticle = WikiPage::factory( $this );
 			$newid = $redirectArticle->insertOn( $dbw );
 			if ( $newid ) { // sanity
 				$redirectRevision = new Revision( array(
+					'title'   => $this, // for determining the default content model
 					'page'    => $newid,
 					'comment' => $comment,
-					'text'    => $redirectText ) );
+					'content'    => $redirectContent ) );
 				$redirectRevision->insertOn( $dbw );
 				$redirectArticle->updateRevisionOn( $dbw, $redirectRevision, 0 );
 
@@ -3771,10 +3915,16 @@ class Title {
 	 * @return Bool
 	 */
 	public function isSingleRevRedirect() {
+		global $wgContentHandlerUseDB;
+
 		$dbw = wfGetDB( DB_MASTER );
+
 		# Is it a redirect?
+		$fields = array( 'page_is_redirect', 'page_latest', 'page_id' );
+		if ( $wgContentHandlerUseDB ) $fields[] = 'page_content_model';
+
 		$row = $dbw->selectRow( 'page',
-			array( 'page_is_redirect', 'page_latest', 'page_id' ),
+			$fields,
 			$this->pageCond(),
 			__METHOD__,
 			array( 'FOR UPDATE' )
@@ -3783,6 +3933,7 @@ class Title {
 		$this->mArticleID = $row ? intval( $row->page_id ) : 0;
 		$this->mRedirect = $row ? (bool)$row->page_is_redirect : false;
 		$this->mLatestID = $row ? intval( $row->page_latest ) : false;
+		$this->mContentModel = $row && isset( $row->page_content_model ) ? strval( $row->page_content_model ) : false;
 		if ( !$this->mRedirect ) {
 			return false;
 		}
@@ -3827,24 +3978,25 @@ class Title {
 		if( !is_object( $rev ) ){
 			return false;
 		}
-		$text = $rev->getText();
+		$content = $rev->getContent();
 		# Does the redirect point to the source?
 		# Or is it a broken self-redirect, usually caused by namespace collisions?
-		$m = array();
-		if ( preg_match( "/\\[\\[\\s*([^\\]\\|]*)]]/", $text, $m ) ) {
-			$redirTitle = Title::newFromText( $m[1] );
-			if ( !is_object( $redirTitle ) ||
-				( $redirTitle->getPrefixedDBkey() != $this->getPrefixedDBkey() &&
-				$redirTitle->getPrefixedDBkey() != $nt->getPrefixedDBkey() ) ) {
+		$redirTitle = $content ? $content->getRedirectTarget() : null;
+
+		if ( $redirTitle ) {
+			if ( $redirTitle->getPrefixedDBkey() != $this->getPrefixedDBkey() &&
+				$redirTitle->getPrefixedDBkey() != $nt->getPrefixedDBkey() ) {
 				wfDebug( __METHOD__ . ": redirect points to other page\n" );
 				return false;
+			} else {
+				return true;
 			}
 		} else {
-			# Fail safe
-			wfDebug( __METHOD__ . ": failsafe\n" );
+			# Fail safe (not a redirect after all. strange.)
+			wfDebug( __METHOD__ . ": failsafe: database sais " . $nt->getPrefixedDBkey() .
+						" is a redirect, but it doesn't contain a valid redirect.\n" );
 			return false;
 		}
-		return true;
 	}
 
 	/**
@@ -4323,7 +4475,7 @@ class Title {
 
 	/**
 	 * Update page_touched timestamps and send squid purge messages for
-	 * pages linking to this title.	May be sent to the job queue depending
+	 * pages linking to this title. May be sent to the job queue depending
 	 * on the number of links. Typically called on create and delete.
 	 */
 	public function touchLinks() {
@@ -4543,19 +4695,13 @@ class Title {
 		if ( $this->isSpecialPage() ) {
 			// special pages are in the user language
 			return $wgLang;
-		} elseif ( $this->isCssOrJsPage() || $this->isCssJsSubpage() ) {
-			// css/js should always be LTR and is, in fact, English
-			return wfGetLangObj( 'en' );
-		} elseif ( $this->getNamespace() == NS_MEDIAWIKI ) {
-			// Parse mediawiki messages with correct target language
-			list( /* $unused */, $lang ) = MessageCache::singleton()->figureMessage( $this->getText() );
-			return wfGetLangObj( $lang );
 		}
-		global $wgContLang;
-		// If nothing special, it should be in the wiki content language
-		$pageLang = $wgContLang;
-		// Hook at the end because we don't want to override the above stuff
-		wfRunHooks( 'PageContentLanguage', array( $this, &$pageLang, $wgLang ) );
+
+		//TODO: use the LinkCache to cache this! Note that this may depend on user settings, so the cache should be only per-request.
+		//NOTE: ContentHandler::getPageLanguage() may need to load the content to determine the page language!
+		$contentHandler = ContentHandler::getForTitle( $this );
+		$pageLang = $contentHandler->getPageLanguage( $this );
+
 		return wfGetLangObj( $pageLang );
 	}
 
@@ -4568,19 +4714,62 @@ class Title {
 	 * @return Language
 	 */
 	public function getPageViewLanguage() {
-		$pageLang = $this->getPageLanguage();
-		// If this is nothing special (so the content is converted when viewed)
-		if ( !$this->isSpecialPage()
-			&& !$this->isCssOrJsPage() && !$this->isCssJsSubpage()
-			&& $this->getNamespace() !== NS_MEDIAWIKI
-		) {
+		global $wgLang;
+
+		if ( $this->isSpecialPage() ) {
 			// If the user chooses a variant, the content is actually
 			// in a language whose code is the variant code.
-			$variant = $pageLang->getPreferredVariant();
-			if ( $pageLang->getCode() !== $variant ) {
-				$pageLang = Language::factory( $variant );
+			$variant = $wgLang->getPreferredVariant();
+			if ( $wgLang->getCode() !== $variant ) {
+				return Language::factory( $variant );
+			}
+
+			return $wgLang;
+		}
+
+		//NOTE: can't be cached persistently, depends on user settings
+		//NOTE: ContentHandler::getPageViewLanguage() may need to load the content to determine the page language!
+		$contentHandler = ContentHandler::getForTitle( $this );
+		$pageLang = $contentHandler->getPageViewLanguage( $this );
+		return $pageLang;
+	}
+
+	/**
+	 * Get a list of rendered edit notices for this page.
+	 *
+	 * Array is keyed by the original message key, and values are rendered using parseAsBlock, so
+	 * they will already be wrapped in paragraphs.
+	 *
+	 * @since 1.21
+	 * @return Array
+	 */
+	public function getEditNotices() {
+		$notices = array();
+
+		# Optional notices on a per-namespace and per-page basis
+		$editnotice_ns = 'editnotice-' . $this->getNamespace();
+		$editnotice_ns_message = wfMessage( $editnotice_ns );
+		if ( $editnotice_ns_message->exists() ) {
+			$notices[$editnotice_ns] = $editnotice_ns_message->parseAsBlock();
+		}
+		if ( MWNamespace::hasSubpages( $this->getNamespace() ) ) {
+			$parts = explode( '/', $this->getDBkey() );
+			$editnotice_base = $editnotice_ns;
+			while ( count( $parts ) > 0 ) {
+				$editnotice_base .= '-' . array_shift( $parts );
+				$editnotice_base_msg = wfMessage( $editnotice_base );
+				if ( $editnotice_base_msg->exists() ) {
+					$notices[$editnotice_base] = $editnotice_base_msg->parseAsBlock();
+				}
+			}
+		} else {
+			# Even if there are no subpages in namespace, we still don't want / in MW ns.
+			$editnoticeText = $editnotice_ns . '-' . str_replace( '/', '-', $this->getDBkey() );
+			$editnoticeMsg = wfMessage( $editnoticeText );
+			if ( $editnoticeMsg->exists() ) {
+				$notices[$editnoticeText] = $editnoticeMsg->parseAsBlock();
 			}
 		}
-		return $pageLang;
+		return $notices;
 	}
 }

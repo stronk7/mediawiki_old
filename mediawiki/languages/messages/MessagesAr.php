@@ -47,8 +47,10 @@
  * @author Riadismet
  * @author Samer
  * @author Sami Lab
+ * @author TTMTT
  * @author Tarawneh
  * @author TheEgyptian
+ * @author Tux-tn
  * @author Uwe a
  * @author Zack wadghiri
  * @author Zanatos
@@ -193,7 +195,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__لصق_فهرس__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__فهرس__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__لاتحريرقسم__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__لاعنوان__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'شهر_حالي', 'شهر_حالي2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'شهر_حالي1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'اسم_الشهر_الحالي', 'CURRENTMONTHNAME' ),
@@ -420,7 +421,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'أحدث_التغييرات' ),
 	'Recentchangeslinked'       => array( 'أحدث_التغييرات_الموصولة', 'تغييرات_مرتبطة' ),
 	'Revisiondelete'            => array( 'حذف_مراجعة' ),
-	'RevisionMove'              => array( 'نقل_مراجعة' ),
 	'Search'                    => array( 'بحث' ),
 	'Shortpages'                => array( 'صفحات_قصيرة' ),
 	'Specialpages'              => array( 'صفحات_خاصة' ),
@@ -613,7 +613,6 @@ $messages = array(
 'qbbrowse' => 'تصفح',
 'qbedit' => 'تعديل',
 'qbpageoptions' => 'هذه الصفحة',
-'qbpageinfo' => 'سياق النص',
 'qbmyoptions' => 'صفحاتي',
 'qbspecialpages' => 'الصفحات الخاصة',
 'faq' => 'الأسئلة المتكررة',
@@ -626,7 +625,7 @@ $messages = array(
 'vector-action-protect' => 'احم',
 'vector-action-undelete' => 'استرجع الحذف',
 'vector-action-unprotect' => 'غير الحماية',
-'vector-simplesearch-preference' => 'مكّن مقترحات البحث المُحسّنة (لواجهة فكتور فقط)',
+'vector-simplesearch-preference' => 'مكّن شريط البحث المبسط (لواجهة فكتور فقط)',
 'vector-view-create' => 'أنشئ',
 'vector-view-edit' => 'تعديل',
 'vector-view-history' => 'اعرض التاريخ',
@@ -732,7 +731,7 @@ $1',
 'youhavenewmessages' => 'توجد لديك $1 ($2).',
 'newmessageslink' => 'رسائل جديدة',
 'newmessagesdifflink' => 'آخر تغيير',
-'youhavenewmessagesfromusers' => 'لديك $1 من {{PLURAL:$3|مستخدم آخر|$3 مستخدمين}} ($2).',
+'youhavenewmessagesfromusers' => 'لديك $1 من {{PLURAL:$3||مستخدم واحد|مستخدمين اثنين|$3 مستخدمين|$3 مستخدماً|$3 مستخدم}} ($2).',
 'youhavenewmessagesmanyusers' => 'لديك $1 من مستخدمين كثر ($2).',
 'newmessageslinkplural' => '{{PLURAL:$1|رسالة جديدة|رسائل جديدة}}',
 'newmessagesdifflinkplural' => 'آخر {{PLURAL:$1|تغيير|تغييرات}}',
@@ -851,10 +850,11 @@ $1',
 'protectedpagetext' => 'هذه الصفحة تمت حمايتها لمنع التعديل.',
 'viewsourcetext' => 'يمكنك رؤية ونسخ مصدر هذه الصفحة:',
 'viewyourtext' => "يمكنك رؤية ونسخ مصدر ''' تعديلاتك ''' في هذه الصفحة:",
-'protectedinterface' => 'هذه الصفحة توفر نص الواجهة للبرنامج، وهي مقفلة لمنع التخريب.',
+'protectedinterface' => 'توفر هذه الصفحة نص الواجهة للبرنامج على هذا الويكي، وهي محمية لمنع سوء أستخدامها.
+لإضافة أو تغيير الترجمات لجميع مشاريع الويكي، رجاءً أستخدم [//translatewiki.net/ translatewiki.net]، مشروع الترجمة الخاص بميدياويكي.',
 'editinginterface' => "'''تحذير:''' أنت تقوم بتحرير صفحة تستخدم في الواجهة النصية للبرنامج.
-سوف تؤثر التغييرات على هذه الصفحة على مظهر واجهة المستخدم للمستخدمين الآخرين.
-للترجمات، من فضلك استخدم مشروع ترجمة ميدياويكي [//translatewiki.net/wiki/Main_Page?setlang=ar translatewiki.net].",
+سوف تؤثر التغييرات في هذه الصفحة على مظهر واجهة المستخدم للمستخدمين الآخرين على هذا الويكي.
+لإضافة أو تغيير الترجمات في جميع مشاريع الويكي، رجاءً استخدم [//translatewiki.net/ translatewiki.net]، مشروع الترجمة الخاص بميدياويكي.",
 'sqlhidden' => '(استعلام SQL مخفي)',
 'cascadeprotected' => 'تمت حماية هذه الصفحة من التعديل لأنها مدمجة في {{PLURAL:$1||الصفحة التالية، والتي|الصفحتين التاليتين، واللتين|الصفحات التالية، والتي}} تم استعمال خاصية "حماية الصفحات المدمجة" {{PLURAL:$1||بها|بهما|بها}}:
 $2',
@@ -880,11 +880,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''أنت الآن غير مسجل الدخول.'''
 
-تستطيع المتابعة باستعمال {{SITENAME}} كمجهول، أو [[Special:UserLogin|الدخول مرة أخرى]] بنفس الاسم أو باسم آخر.
+تستطيع المتابعة باستعمال {{SITENAME}} كمجهول، أو <span class='plainlinks'>[$1 الدخول مرة أخرى]</span> بنفس الاسم أو باسم آخر.
 من الممكن أن ترى بعض الصفحات كما لو أنك مسجل الدخول، وذلك حتى تقوم بإفراغ الصفحات المختزنة في المتصفح لديك.",
-'welcomecreation' => '== مرحبا، $1! ==
-تم إنشاء حسابك.
-لا تنس أن تغير [[Special:Preferences|تفضيلاتك في {{SITENAME}}]].',
 'yourname' => 'اسم المستخدم:',
 'yourpassword' => 'كلمة السر:',
 'yourpasswordagain' => 'أعد كتابة كلمة السر:',
@@ -963,7 +960,7 @@ $2',
 'emailauthenticated' => 'تم تأكيد بريدك الإلكتروني في $2 الساعة $3.',
 'emailnotauthenticated' => 'لم يتم التحقق من بريدك الإلكتروني.
 لن يتم إرسال رسائل لأي من الميزات التالية.',
-'noemailprefs' => 'حدد عنوان بريد إلكتروني في تفضيلاتك لهذه الخصائص لتعمل.',
+'noemailprefs' => 'حدد عنوان بريد إلكتروني في تفضيلاتك لتفعيل هذه الخصائص.',
 'emailconfirmlink' => 'أكد عنوان بريدك الإلكتروني',
 'invalidemailaddress' => 'لا يمكن قبول عنوان البريد الإلكتروني حيث تبدو صيغته خاطئة.
 ضع عنوانا مضبوطا أو أفرغ هذا الحقل.',
@@ -1142,7 +1139,8 @@ $2
 يمكنك [[Special:Search/{{PAGENAME}}|البحث عن عنوان هذه الصفحة]] في الصفحات الأخرى،
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} البحث في السجلات المتعلقة]،
 أو [{{fullurl:{{FULLPAGENAME}}|action=edit}} تعديل هذه الصفحة]</span>.',
-'noarticletext-nopermission' => 'لا يوجد حاليا أي نص في هذه الصفحة.يمكنك [[Special:Search/{{PAGENAME}}|البحث عن عنوان هذه الصفحة]] في الصفحات الأخرى,أو <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} بحث السجلات المتصلة]</span>.',
+'noarticletext-nopermission' => 'لا يوجد حاليا أي نص في هذه الصفحة.
+يمكنك [[Special:Search/{{PAGENAME}}|البحث عن عنوان هذه الصفحة]] في الصفحات الأخرى، أو <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} البحث في السجلات المتعلقة بها]</span>، لكنك لست مخولاً لإنشاء هذه الصفحة.',
 'missing-revision' => 'المراجعة #$1 من الصفحة المسماة "{{PAGENAME}}" غير موجودة.
 
 هذا يحدث عادة عن طريق اتباع وصلة تاريخ قديمة لصفحة تم حذفها.
@@ -1259,6 +1257,13 @@ $2
 'edit-already-exists' => 'لم يمكن إنشاء صفحة جديدة.
 هي موجودة بالفعل.',
 'defaultmessagetext' => 'نص الرسالة الافتراضي',
+'content-failed-to-parse' => 'فشل في تحليل $2 محتوى لـ $1 نموذج: $3',
+'invalid-content-data' => 'بيانات المحتوى غير صالحة',
+'content-not-allowed-here' => '"$1" المحتوى غير مسموح على صفحة [[$2]]',
+
+# Content models
+'content-model-text' => 'نص عادي',
+'content-model-javascript' => 'جافاسكربت',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''تحذير:''' هذه الصفحة تحتوي على استدعاءات دالة محلل كثيرة مكلفة.
@@ -1518,8 +1523,6 @@ $1",
 'search-interwiki-caption' => 'المشاريع الشقيقة',
 'search-interwiki-default' => '$1 نتيجة:',
 'search-interwiki-more' => '(المزيد)',
-'search-mwsuggest-enabled' => 'مع اقتراحات',
-'search-mwsuggest-disabled' => 'لا اقتراحات',
 'search-relatedarticle' => 'مرتبطة',
 'mwsuggest-disable' => 'عطل اقتراحات أجاكس',
 'searcheverything-enable' => 'ابحث في جميع النطاقات',
@@ -1618,7 +1621,7 @@ $1",
 'timezoneregion-indian' => 'المحيط الهندي',
 'timezoneregion-pacific' => 'المحيط الهادي',
 'allowemail' => 'مكن تلقي البريد الإلكتروني من المستخدمين الآخرين',
-'prefs-searchoptions' => 'خيارات البحث',
+'prefs-searchoptions' => 'البحث',
 'prefs-namespaces' => 'أسماء النطاقات',
 'defaultns' => 'أو ابحث في هذه النطاقات:',
 'default' => 'افتراضي',
@@ -1652,8 +1655,8 @@ $1",
 'email' => 'البريد الإلكتروني',
 'prefs-help-realname' => 'الاسم الحقيقي اختياري.
 لو اخترت أن توفره، فسيستخدم في الإشارة إلى عملك.',
-'prefs-help-email' => 'عنوان البريد الإلكتروني هو أمر اختياري، ولكن ستحتاج لإعادة تعيين كلمة المرور، إن نسيت كلمة المرور الخاصة بك.',
-'prefs-help-email-others' => 'يمكنك أيضا اختيار للسماح للآخرين الاتصال بك عن طريق صفحة المستخدم أو نقاش المستخدم الخاص بك دون الحاجة إلى الكشف عن الهوية الخاصة بك.',
+'prefs-help-email' => 'تحديد عنوان البريد الإلكتروني اختياري، ولكنه يلزم لإعادة تعيين كلمة المرور في حال نسيت كلمة المرور الخاصة بك.',
+'prefs-help-email-others' => 'يمكنك أيضا أن {{GENDER:$1|تسمح|تسمحي}} للآخرين الاتصال بك عن طريق وصلة في صفحة المستخدم أو نقاش المستخدم الخاصة بك. لا يكشف بريدك الإلكتروني عندما يراسلك أحد بهذه الطريقة، ولكن إذا راسلت أحداً سيرى بريدك الإلكتروني.',
 'prefs-help-email-required' => 'عنوان البريد الإلكتروني مطلوب.',
 'prefs-info' => 'المعلومات الأساسية',
 'prefs-i18n' => 'الترجمة',
@@ -2187,7 +2190,7 @@ $1',
 'shared-repo' => 'مستودع مشترك',
 'shared-repo-name-wikimediacommons' => 'ويكيميديا كومنز',
 'filepage.css' => '/* CSS المعروض هنا سيضمن في صفحات وصف الملفات، أيضا على الويكيات الأجنبية */',
-'upload-disallowed-here' => 'لأسف لا يمكنك تعديل هذه الصورة.',
+'upload-disallowed-here' => 'للأسف لا يمكنك تعديل هذه الصورة.',
 
 # File reversion
 'filerevert' => 'استرجع $1',
@@ -2544,11 +2547,7 @@ $1',
 
 'enotif_mailer' => 'نظام {{SITENAME}} البريدي للإخطارات',
 'enotif_reset' => 'علم على كل الصفحات كمزارة',
-'enotif_newpagetext' => 'هذه صفحة جديدة.',
 'enotif_impersonal_salutation' => 'مستخدم {{SITENAME}}',
-'changed' => 'غيرت',
-'created' => 'أنشئت',
-'enotif_subject' => 'صفحة {{SITENAME}} $PAGETITLE $CHANGEDORCREATED بواسطة $PAGEEDITOR',
 'enotif_lastvisited' => 'انظر $1 لكل التغييرات منذ زيارتك الأخيرة.',
 'enotif_lastdiff' => 'انظر $1 لرؤية هذا التغيير.',
 'enotif_anon_editor' => 'مستخدم مجهول $1',
@@ -2737,7 +2736,7 @@ $UNWATCHURL
 'undeletedrevisions-files' => 'أسترجعت {{PLURAL:$1||مراجعة واحدة|مراجعتان|$1 مراجعات|$1 مراجعة}}  و{{PLURAL:$2||ملف واحد|ملفان|$2 ملفات|$2 ملفًا|$2 ملف}}',
 'undeletedfiles' => 'أسترجع {{PLURAL:$1||ملف واحد|ملفان|$1 ملفات|$1 ملفًا|$1 ملف}}',
 'cannotundelete' => 'فشل الاسترجاع؛
-ربما قام شخص آخر باسترجاع الصفحة بالفعل.',
+$1',
 'undeletedpage' => "'''تم استرجاع $1'''
 
 راجع [[Special:Log/delete|سجل الحدف]] لمعاينة عمليات الحذف والاسترجاعات الحديثة.",
@@ -3047,6 +3046,7 @@ $1',
 'immobile-target-namespace-iw' => 'وصلة الإنترويكي ليست هدفاً صالحاً لنقل صفحة.',
 'immobile-source-page' => 'هذه الصفحة غير قابلة للنقل.',
 'immobile-target-page' => 'غير قادر على النقل إلى العنوان الوجهة هذا.',
+'bad-target-model' => 'الوجهة المطلوبة تستخدم نموذج محتوى مختلف. لا يمكن تحويل من $1 إلى $2.',
 'imagenocrossnamespace' => 'لا يمكن نقل الملف إلى نطاق غير نطاق الملفات',
 'nonfile-cannot-move-to-file' => 'لا يمكن نقل غير الملفات إلى نطاق الملفات',
 'imagetypemismatch' => 'امتداد الملف الجديد لا يطابق نوعه',
@@ -3175,7 +3175,6 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'اختبار جافاسكربت',
-'javascripttest-disabled' => 'هذه الخاصية معطلة.',
 'javascripttest-title' => 'تشغيل أختبارات $1',
 'javascripttest-pagetext-noframework' => 'هذه الصفحة محجوزة لإجراء أختبارات الجافا سكريبت.',
 'javascripttest-pagetext-unknownframework' => 'إطار اختبار غير معروف "$1".',
@@ -3316,7 +3315,8 @@ $1',
 'spam_deleting' => 'جميع النسخ تحوي رابطا إلى $1، يتم الحذف',
 
 # Info page
-'pageinfo-title' => 'المعلومات ل"$1"',
+'pageinfo-title' => 'المعلومات عن «$1»',
+'pageinfo-not-current' => 'لا يمكن إظهار المعلومات إلا عن المراجعة الأخيرة للصفحة',
 'pageinfo-header-basic' => 'المعلومات الأساسية',
 'pageinfo-header-edits' => 'التعديلات',
 'pageinfo-header-restrictions' => 'حماية الصفحة',
@@ -3325,26 +3325,34 @@ $1',
 'pageinfo-default-sort' => 'مفتاح الترتيب الافتراضي',
 'pageinfo-length' => 'حجم الصفحة (بالبايت)',
 'pageinfo-article-id' => 'معرف الصفحة (ID)',
+'pageinfo-language' => 'لغة محتوى الصفحة',
 'pageinfo-robot-policy' => 'الصفة في محرك البحث',
 'pageinfo-robot-index' => 'قابلة للفهرسة',
 'pageinfo-robot-noindex' => 'غير قابلة للفهرسة',
 'pageinfo-views' => 'عدد المشاهدات',
 'pageinfo-watchers' => 'عدد المراقبين',
-'pageinfo-redirects-name' => 'التوجيهات نحو هذه الصفحة',
+'pageinfo-redirects-name' => 'التحويلات إلى هذه الصفحة',
 'pageinfo-subpages-name' => 'الصفحات الفرعية لهذه الصفحة',
-'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|إعادة توجيه|إعادة توجيهات}}; $3 {{PLURAL:$3|غير إعادة توجيه|غير إعادة التوجيهات}})',
+'pageinfo-subpages-value' => '$1 ({{PLURAL:$2|لا تحويلات|تحويلة واحدة|تحويلتان|$2 تحويلات|$2 تحويلة}}؛ $3 {{PLURAL:$3|من غير  التحويلات}})',
 'pageinfo-firstuser' => 'منشئ الصفحة',
 'pageinfo-firsttime' => 'تاريخ إنشاء الصفحة',
 'pageinfo-lastuser' => 'آخر محرر',
 'pageinfo-lasttime' => 'تاريخ آخر تعديل',
 'pageinfo-edits' => 'عدد التعديلات',
 'pageinfo-authors' => 'عدد المؤلفين المختلفين',
-'pageinfo-recent-edits' => 'عدد التعديلات الأخيرة (خلال  $1 يوم/أيام)',
+'pageinfo-recent-edits' => 'عدد التعديلات الأخيرة (خلال {{PLURAL:$1||يوم واحد|يومين|$1 أيام|$1 يوماً|$1 يوم}})',
 'pageinfo-recent-authors' => 'عدد المؤلفين المختلفين الأخيرين',
-'pageinfo-restriction' => 'حماية الصفحة ($1)',
-'pageinfo-magic-words' => 'السحرية {{PLURAL:$1|الكلمة|الكلمات}} ($1)',
-'pageinfo-hidden-categories' => 'مخفية {{PLURAL:$1|فئة|فئات}} ($1)',
-'pageinfo-templates' => 'متضمنة {{PLURAL:$1|قالب|قوالب}} ($1)',
+'pageinfo-magic-words' => '{{PLURAL:$1|لا كلمات سحرية|الكلمة|الكلمات}} السحرية ($1)',
+'pageinfo-hidden-categories' => '{{PLURAL:$1|لا تصنيفات مخفية|التصنيف المخفي|التصنيفان المخفيان|التصنيفات المخفية ($1)}}',
+'pageinfo-templates' => '{{PLURAL:$1|لا قوالب مضمنة|القالب المضمن|القالبان المضمنان|القوالب المضمنة ($1)}}',
+'pageinfo-toolboxlink' => 'معلومات عن هذه الصفحة',
+'pageinfo-redirectsto' => 'تحويلة إلى',
+'pageinfo-redirectsto-info' => 'معلومات',
+'pageinfo-contentpage' => 'محسوبة كصفحة محتوى',
+'pageinfo-contentpage-yes' => 'نعم',
+'pageinfo-protect-cascading' => 'مصدر توريث  الحماية للصفحات المدمجة',
+'pageinfo-protect-cascading-yes' => 'نعم',
+'pageinfo-protect-cascading-from' => 'حماية الصفحات المدمجة موروثة من',
 
 # Skin names
 'skinname-standard' => 'كلاسيك',
@@ -3966,6 +3974,7 @@ $5
 # Scary transclusion
 'scarytranscludedisabled' => '[التضمين بالإنترويكي معطل]',
 'scarytranscludefailed' => '[البحث عن القالب فشل ل$1]',
+'scarytranscludefailed-httpstatus' => '[فشل جلب القالب لـ $1: HTTP $2]',
 'scarytranscludetoolong' => '[المسار طويل للغاية]',
 
 # Delete conflict
@@ -4328,6 +4337,10 @@ $5
 'feedback-bugcheck' => 'رائع! تحقق من أن هذه ليست إحدى [$1 العلل المعروفة].',
 'feedback-bugnew' => 'لقد تحققت. بلّغ عن علة جديدة.',
 
+# Search suggestions
+'searchsuggest-search' => 'بحث',
+'searchsuggest-containing' => 'يحتوي...',
+
 # API errors
 'api-error-badaccess-groups' => 'لا يسمح لك بتحميل الملفات إلى هذه الويكي.',
 'api-error-badtoken' => 'خطأ داخلي: رمز مميز غير صحيح.',
@@ -4372,7 +4385,7 @@ $5
 # Durations
 'duration-seconds' => '{{PLURAL:$1|أقل من ثانية|ثانية واحدة|ثانيتان|$1 ثوانٍ|$1 ثانية}}',
 'duration-minutes' => '{{PLURAL:$1|أقل من دقيقة|دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
-'duration-hours' => '({{PLURAL:$1||ساعة واحد|ساعتان|$1 ساعات|$1 ساعة}})',
+'duration-hours' => '({{PLURAL:$1||ساعة واحدة|ساعتان|$1 ساعات|$1 ساعة}})',
 'duration-days' => '{{PLURAL:$1||يوم واحد|يومان|$1 أيام|$1 يومًا|$1 يوم}}',
 'duration-weeks' => '{{PLURAL:$1||أسبوع واحد|أسبوعان|$1 أسابيع|$1 أسبوعًا|$1 أسبوع}}',
 'duration-years' => '{{PLURAL: $1||سنة واحدة|سنتان|$1 سنين|$1 سنة}}',

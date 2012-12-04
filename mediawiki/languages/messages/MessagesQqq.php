@@ -45,6 +45,7 @@
  * @author Guglani
  * @author Gustronico
  * @author Hamilton Abreu
+ * @author Harsh4101991
  * @author Helix84
  * @author Holek
  * @author Huji
@@ -68,6 +69,7 @@
  * @author MF-Warburg
  * @author Malafaya
  * @author MarkvA
+ * @author Matma Rex
  * @author MaxSem
  * @author McDutchie
  * @author Meno25
@@ -82,6 +84,8 @@
  * @author Nemo bis
  * @author Niels
  * @author Nike
+ * @author Njardarlogar
+ * @author Nnemo
  * @author Node ue
  * @author Octahedron80
  * @author Od1n
@@ -193,13 +197,23 @@ Is only shown if {{msg-mw|tog-enotifusertalkpages}} or/and {{msg-mw|tog-enotifwa
 'tog-norollbackdiff' => "Option in [[Special:Preferences]], 'Misc' tab. Only shown for users with the rollback right. By default a diff is shown below the return screen of a rollback. Checking this preference toggle will suppress that. {{Gender}}
 {{Identical|Rollback}}",
 
-'underline-always' => 'Used in [[Special:Preferences]] (under "Misc"). This option means "always underline links", there are also options "never" and "browser default". {{Gender}}
+'underline-always' => 'Used in [[Special:Preferences#mw-prefsection-rendering|Preferences]].
+
+This option means "always underline links", there are also options {{msg-mw|Underline-never}} and {{msg-mw|Underline-default}}.
+
+{{Gender}}
 {{Identical|Always}}',
-'underline-never' => 'Used in [[Special:Preferences]] (under "Misc"). This option means "never underline links", there are also options "always" and "browser default". {{Gender}}
+'underline-never' => 'Used in [[Special:Preferences#mw-prefsection-rendering|Preferences]].
 
+This option means "never underline links", there are also options {{msg-mw|Underline-always}} and {{msg-mw|Underline-default}}.
+
+{{Gender}}
 {{Identical|Never}}',
-'underline-default' => 'Used in [[Special:Preferences]] (under "Misc"). This option means "underline links as in your browser", there are also options "never" and "always". {{Gender}}
+'underline-default' => 'Used in [[Special:Preferences#mw-prefsection-rendering|Preferences]].
 
+This option means "underline links as in your user skin or your browser", there are also options {{msg-mw|Underline-never}} and {{msg-mw|Underline-always}}.
+
+{{Gender}}
 {{Identical|Browser default}}',
 
 # Font style option in Special:Preferences
@@ -332,7 +346,10 @@ Possible alternatives to the word 'content' are 'subject matter' or 'wiki subjec
 
 {{Identical|Cancel}}',
 'moredotdotdot' => '{{Identical|More...}}',
-'mytalk' => 'In the personal urls page section - right upper corner.',
+'mypage' => "A text for the link to the user's user page in the links at the top of the page.",
+'mytalk' => 'In the personal urls page section - right upper corner.
+
+Used as link title in "Personal tools" toolbar.',
 'anontalk' => 'Link to the talk page appearing in [[mw:Help:Navigation#User_Links|user links]] for each anonymous users when [[mw:Manual:$wgShowIPinHeader|$wgShowIPinHeader]] is true.',
 'navigation' => 'This is shown as a section header in the sidebar of most skins.
 
@@ -348,7 +365,8 @@ This can also appear in the credits page if the credits feature is enabled,for e
 {{Identical|Find}}',
 'qbbrowse' => '{{Identical|Browse}}',
 'qbedit' => '{{Identical|Edit}}',
-'qbmyoptions' => '{{Identical|My pages}}',
+'qbmyoptions' => 'Heading in the Cologne Blue skin user menu containing links to user (talk) page, preferences, watchlist, etc.
+{{Identical|My pages}}',
 'qbspecialpages' => '{{Identical|Special pages}}',
 'faqpage' => "FAQ is short for ''frequently asked questions''. This page is only linked on some of the old skins, not in Monobook or Modern.
 
@@ -384,6 +402,7 @@ This can also appear in the credits page if the credits feature is enabled,for e
 'namespaces' => '{{Identical|Namespace}}',
 'variants' => 'Used by the Vector skin.',
 
+'navigation-heading' => 'Heading shown above the navigation menu (sidebar) for screen-readers (or in non-standard skins).',
 'errorpagetitle' => 'Message shown in browser title bar when encountering error operation.
 
 {{Identical|Error}}',
@@ -461,6 +480,7 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 \'\'\'Note:\'\'\' This is "views" as in "appearances"/"representations", \'\'\'not\'\'\' as in "visits"/"accesses".
 {{Identical|View}}',
 'toolbox' => 'The title of the toolbox below the search menu.',
+'viewtalkpage' => 'Used in Standard (a.k.a. Classic) skin as a link to talk page for all namespaces, in edit or history mode.',
 'otherlanguages' => 'This message is shown under the toolbox. It is used if there are interwiki links added to the page, like <tt><nowiki>[[</nowiki>en:Interwiki article]]</tt>.
 {{Identical|Otherlanguages}}',
 'redirectedfrom' => 'The text displayed when a certain page is redirected to another page.
@@ -553,9 +573,9 @@ The format is: "{{int:youhavenewmessages| [[MediaWiki:Newmessageslink/{{SUBPAGEN
 {{Identical|New messages}}',
 'newmessagesdifflink' => 'This is the second link displayed in an orange rectangle when a user gets a message on his talk page. Used in message {{msg-mw|youhavenewmessages}} (as parameter $2).',
 'youhavenewmessagesfromusers' => 'New talk indicator message: the message appearing when someone edited your user talk page.
-The message takes three parameters; 
-*$1 {{msg-mw|newmessageslinkplural}}, 
-*$2 {{msg-mw|newmessagesdifflinkplural}}, and 
+The message takes three parameters;
+*$1 {{msg-mw|newmessageslinkplural}},
+*$2 {{msg-mw|newmessagesdifflinkplural}}, and
 *$3 the number of authors who have edited the talk page since the owning user last viewed it.',
 'youhavenewmessagesmanyusers' => 'New talk indicator message: the message appearing when someone edited your user talk page. Used when more than 10 users edited the user talk page since the owning user last viewed it, similar to{{msg-mw|youhavenewmessages}}. Parameters:
 * $1 is {{msg-mw|newmessageslinkplural}},
@@ -724,8 +744,10 @@ See also {{msg-mw|protectedinterface}}.',
 'exception-nologin-text' => 'Generic reason displayed on error page when a user is not logged in. Message used by the UserNotLoggedIn exception.',
 
 # Login and logout pages
-'logouttext' => 'Log out message',
-'welcomecreation' => 'The welcome message users see after registering a user account. $1 is the username of the new user.',
+'logouttext' => 'Log out message
+* $1 is an URL to [[Special:Userlogin]] containing returnto and returntoquery parameters',
+'welcomeuser' => 'Text for a welcome heading that users see after registering a user account. $1 is the username of the new user. See [[bugzilla:42215]]',
+'welcomecreation-msg' => 'A welcome message users see after registering a user account, following a welcomeuser heading. $1 is the username of the new user. Replaces welcomecreation in 1.21wmf5,see [[bugzilla:42215]]',
 'yourname' => "In user preferences
 
 <nowiki>{{</nowiki>[[Gender|GENDER]]<nowiki>}}</nowiki> is '''NOT''' supported.
@@ -1032,7 +1054,9 @@ Example: [http://translatewiki.net/w/i.php?title=Project:News&oldid=9999999 Perm
 'explainconflict' => 'Appears at the top of a page when there is an edit conflict.',
 'storedversion' => 'This is used in an edit conflict as the label for the top revision that has been stored, as opposed to your version that has not been stored which is shown at the bottom of the page.',
 'yourdiff' => '',
-'copyrightwarning' => 'Copyright warning displayed under the edit box in editor',
+'copyrightwarning' => 'Copyright warning displayed under the edit box in editor
+*$1 - ...
+*$2 - ...',
 'longpageerror' => 'Warning displayed when trying to save a text larger than the maximum size allowed',
 'protectedpagewarning' => '{{Related|Semiprotectedpagewarning}}',
 'semiprotectedpagewarning' => '{{Related|Semiprotectedpagewarning}}',
@@ -1057,6 +1081,36 @@ Please report at [[Support]] if you are unable to properly translate this messag
 'moveddeleted-notice' => 'Shown on top of a deleted page in normal view modus ([http://translatewiki.net/wiki/Test example]).',
 'edit-conflict' => "An 'Edit conflict' happens when more than one edit is being made to a page at the same time. This would usually be caused by separate individuals working on the same page. However, if the system is slow, several edits from one individual could back up and attempt to apply simultaneously - causing the conflict.",
 'defaultmessagetext' => 'Caption above the default message text shown on the left-hand side of a diff displayed after clicking “Show changes” when creating a new page in the MediaWiki: namespace',
+'content-failed-to-parse' => "Error message indicating that the page's content can not be saved because it is syntactically invalid. This may occurr for content types using serialization or a strict markup syntax.
+*$1 – content model ({{msg-mw|Content-model-wikitext}}, {{msg-mw|Content-model-javascript}}, {{msg-mw|Content-model-css}} or {{msg-mw|Content-model-text}})
+*$2 – content format as MIME type (e.g. <tt>text/css</tt>)
+*$3 – specific error message",
+'invalid-content-data' => "Error message indicating that the page's content can not be saved because it is invalid. This may occurr for content types with internal consistency constraints.",
+'content-not-allowed-here' => 'Error message indicating that the desired content model is not supported in given localtion.
+* $1 is the human readable name of the content model: {{msg-mw|Content-model-wikitext}}, {{msg-mw|Content-model-javascript}}, {{msg-mw|Content-model-css}} or {{msg-mw|Content-model-text}}
+* $2 is the title of the page in question.',
+
+# Content models
+'content-model-wikitext' => 'Name for the wikitext content model, used when decribing what type of content a page contains.
+
+This message is substituted in:
+*{{msg-mw|Bad-target-model}}
+*{{msg-mw|Content-not-allowed-here}}',
+'content-model-text' => 'Name for the plain text content model, used when decribing what type of content a page contains.
+
+This message is substituted in:
+*{{msg-mw|Bad-target-model}}
+*{{msg-mw|Content-not-allowed-here}}',
+'content-model-javascript' => 'Name for the JavaScript content model, used when decribing what type of content a page contains.
+
+This message is substituted in:
+*{{msg-mw|Bad-target-model}}
+*{{msg-mw|Content-not-allowed-here}}',
+'content-model-css' => 'Name for the CSS content model, used when decribing what type of content a page contains.
+
+This message is substituted in:
+*{{msg-mw|Bad-target-model}}
+*{{msg-mw|Content-not-allowed-here}}',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'On some (expensive) [[MetaWikipedia:Help:ParserFunctions|parser functions]] (e.g. <code><nowiki>{{#ifexist:}}</nowiki></code>) there is a limit of how many times it may be used. This is an error message shown when the limit is exceeded.
@@ -1448,7 +1502,7 @@ This is a search result (and I guess search engine) dependent messages. I do not
 'preferences' => 'Title of the Special:Preferences page.
 
 {{Identical|Preferences}}',
-'mypreferences' => 'Action link label that leads to Special:Preferences; appears in the top menu (e.g. "Username My talk My preferences My watchlist My contributions Log out").
+'mypreferences' => 'Action link label that leads to Special:Preferences; appears in the top menu (e.g. "Username Talk Preferences Watchlist Contributions Log out").
 
 {{Identical|My preferences}}',
 'prefs-edits' => 'In user preferences.',
@@ -1603,15 +1657,21 @@ Used in [[Special:Preferences]], tab "Watchlist". The display options refer to:
 'userrights-editusergroup' => '{{Identical|Edit user groups}}. Parameter:
 * $1 is a username - optional, can be used for GENDER',
 'saveusergroups' => 'Button text when editing user groups',
-'userrights-groupsmember' => 'Used when editing user groups in [[Special:Userrights]]. The messsage is followed by a list of group names.
+'userrights-groupsmember' => 'Used when editing user groups in [[Special:Userrights]]. The message is followed by a list of group names.
 
 Parameters:
-* $1 - optional, for PLURAL use, the number of items in the list following the message. Avoid PLURAL, if your language can do without.',
+* $1 - the number of items in the list following the message, for PLURAL.
+* $2 - the user name, for GENDER.',
 'userrights-groupsmember-auto' => 'Used when editing user groups in [[Special:Userrights]]. The messsage is followed by a list of group names.
 "Implicit" is for groups that the user was automatically added to (such as "autoconfirmed"); cf. {{msg-mw|userrights-groupsmember}}
 
+Parameters
+* $1 - the number of items in the list following the message, for PLURAL.
+* $2 - the user name, for GENDER.',
+'userrights-groupsmember-type' => '{{optional}}
 Parameters:
-* $1 - optional, for PLURAL use, the number of items in the list following the message. Please avoid PLURAL, if your language can do without.',
+* $1 is list of group names.
+* $2 is list of group member names. Used with labels {{msg-mw|userrights-groupsmember}} and {{msg-mw|userrights-groupsmember-auto}}',
 'userrights-groups-help' => 'Instructions displayed on [[Special:UserRights]]. Parameters:
 * $1 is a username - optional, can be used for GENDER',
 'userrights-reason' => 'Text beside log field when editing user groups
@@ -1805,6 +1865,25 @@ Similar to {{msg-mw|Gur-rightslog-entry}}',
 Parameters:
 * $2 is a comma separated list of old user groups or {{msg-mw|Rightsnone}}
 * $3 is a comma separated list of new user groups',
+'logentry-rights-rights' => '*$1 - username
+*$2 - (see below)
+*$3 - username
+*$4 - list of user groups or {{msg-mw|Rightsnone}}
+*$5 - list of user groups or {{msg-mw|Rightsnone}}
+----
+{{Logentry}}',
+'logentry-rights-rights-legacy' => '*$1 - username
+*$2 - (see below)
+*$3 - username
+----
+{{Logentry}}',
+'logentry-rights-autopromote' => '*$1 - username
+*$2 - (see below)
+*$3 - (see below)
+*$4 - comma separated list of old user groups or {{msg-mw|Rightsnone}}
+*$5 - comma separated list of new user groups
+----
+{{Logentry}}',
 'rightsnone' => 'Default rights for registered users.
 
 {{Identical|None}}',
@@ -1858,7 +1937,7 @@ This action allows editing of all of the "user rights", not just the rights of t
 'recentchanges-legend' => 'Legend of the fieldset of [[Special:RecentChanges]]',
 'recentchanges-summary' => 'Summary of [[Special:RecentChanges]].',
 'recentchanges-label-newpage' => 'Tooltip for {{msg-mw|newpageletter}}',
-'recentchanges-label-minor' => 'Tooltip for {{msg-mw|newpageletter}}',
+'recentchanges-label-minor' => 'Tooltip for {{msg-mw|minoreditletter}}',
 'recentchanges-label-bot' => 'Tooltip for {{msg-mw|boteditletter}}',
 'recentchanges-label-unpatrolled' => 'Tooltip for {{msg-mw|unpatrolledletter}}',
 'rcnote' => 'Used on [[Special:RecentChanges]].
@@ -1934,7 +2013,7 @@ Does not work under $wgMiserMode ([[mwr:48986|r48986]]).',
 
 {{Identical|Upload file}}',
 'uploadnologin' => '{{Identical|Not logged in}}',
-'uploadtext' => "{{doc-important|''thumb'' and ''left'' are magic words. Leave it untranslated!}}
+'uploadtext' => "{{doc-important|''thumb'' and ''left'' are magic words. Leave them untranslated!}}
 Text displayed when uploading a file using [[Special:Upload]].",
 'upload-permitted' => 'Used in [[Special:Upload]].',
 'upload-preferred' => 'Used in [[Special:Upload]].',
@@ -2029,6 +2108,8 @@ Extensions making use of it:
 * $1 is a storage path.',
 'backend-fail-delete' => 'Parameters:
 * $1 is a file path.',
+'backend-fail-describe' => 'Parameters:
+* $1 is a file path.',
 'backend-fail-alreadyexists' => 'Parameters:
 * $1 is a filename.',
 'backend-fail-store' => 'Parameters:
@@ -2102,7 +2183,7 @@ Used on [[Special:UploadWizard]].',
 'img-auth-accessdenied' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Access Denied
 {{Identical|Access denied}}',
 'img-auth-nopathinfo' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Missing PATH_INFO - see english description
-* This is plain text. Do not use any wiki syntax.',
+{{Doc-important|This is plain text. Do not use any wiki syntax.}}',
 'img-auth-notindir' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: When the specified path is not in upload directory.',
 'img-auth-badtitle' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Bad title, $1 is the invalid title',
 'img-auth-nologinnWL' => '[[mw:Manual:Image Authorization|Manual:Image Authorization]]: Logged in and file not whitelisted. $1 is the file not in whitelist.',
@@ -2696,10 +2777,16 @@ Similar to {{msg-mw|rcnote}} which is used on [[Special:RecentChanges]].
 'watcherrortext' => 'When a user clicked the watch/unwatch tab and the action did not succeed, this message is displayed. See also {{msg|addedwatchtext}}. and {{msg|addedwatchtext}}. This message is used raw and should not contain wikitext.',
 
 'enotif_reset' => "This should be translated as \"Mark all pages '''as''' visited\".",
-'enotif_newpagetext' => 'Part of text of a notification e-mail sent when a watched page has been created. See [[File:Screenshot_MediaWiki_e-mail_notifier.PNG|150px|right]]',
-'changed' => 'Possible value for $CHANGEDORCREATED in {{msg|enotif_subject}} and {{msg|enotif_body}}.',
-'created' => 'Possible value for $CHANGEDORCREATED in {{msg|enotif_subject}} and {{msg|enotif_body}}.',
-'enotif_subject' => '$CHANGEDORCREATED can be one of {{msg|changed}} and {{msg|created}}. Can also be {{msg-mw|blog-added}} or {{msg-mw|blog-edited}} from Wikia.',
+'enotif_subject_deleted' => 'Email notification subject for deleted pages, $1 is page title, $2 is page editor.',
+'enotif_subject_created' => 'Email notification subject for new pages, $1 is page title, $2 is page editor.',
+'enotif_subject_moved' => 'Email notification subject for pages that get moved, $1 is page title, $2 is page editor.',
+'enotif_subject_restored' => 'Email notification subject for pages that get restored, $1 is page title, $2 is page editor.',
+'enotif_subject_changed' => 'Email notification subject for pages that get changed, $1 is page title, $2 is page editor.',
+'enotif_body_intro_deleted' => 'Email notification body intro text for deleted pages, $1 is the page title, $2 is the page editor, $3 is page url.',
+'enotif_body_intro_created' => 'Email notification body intro text for new pages, $1 is the page title, $2 is the page editor, $3 is page url.',
+'enotif_body_intro_moved' => 'Email notification body intro for pages that get moved, $1 is the page title, $2 is the page editor, $3 is page url.',
+'enotif_body_intro_restored' => 'Email notification body intro for pages that get restored, $1 is the page title, $2 is the page editor, $3 is page url.',
+'enotif_body_intro_changed' => 'Email notification body intro for pages that get changed, $1 is the page title, $2 is the page editor, $3 is page url.',
 'enotif_lastvisited' => '$1 is a URL address.',
 'enotif_lastdiff' => 'E-mail notification text to the latest page differences. Parameters:
 * $1 is a link to a diff, shown as a plain link.',
@@ -2805,7 +2892,18 @@ This message was something like "unlock move protection" in the past.',
 'protect-text' => 'Intro of the protection interface. See [[meta:Protect]] for more information.',
 'protect-default' => '{{Identical|Default}}',
 'protect-fallback' => 'This message is used as an option in the protection form on wikis were extra protection levels have been configured.',
-'protect-summary-cascade' => 'Used in edit summary when cascade protecting a page.',
+'protect-level-autoconfirmed' => 'Used as protect level.
+
+See example: [http://translatewiki.net/w/i.php?title=Main_Page&action=info]',
+'protect-level-sysop' => 'Used as protect level.
+
+See example: [http://translatewiki.net/w/i.php?title=Main_Page&action=info]',
+'protect-summary-cascade' => 'Used in edit summary when cascade protecting a page. Appears in protection log. See [[Special:Log]] and [[m:Special:Log]].
+
+Also used in [[Special:ProtectedPages]] when a page is cascade protected. See example: [[m:Special:ProtectedPages]].<br />
+See also:
+*{{msg-mw|Restriction-level-sysop}}
+*{{msg-mw|Restriction-level-autoconfirmed}}',
 'protect-expiring' => 'Used in page history, and in [[Special:Protectedtitles]], [[Special:Protectedpages]], and extension FlaggedRevs.
 * $1 is a date and time
 * $2 is a date (optional)
@@ -2853,9 +2951,21 @@ Options for the duration of the page protection. Example: See e.g. [[MediaWiki:P
 {{Identical|Create}}',
 
 # Restriction levels
-'restriction-level-sysop' => "Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. An option in the drop-down box 'Restriction level' and in brackets after each page name entry. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.",
-'restriction-level-autoconfirmed' => "Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. An option in the drop-down box 'Restriction level', and in brackets after each page name entry. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.",
-'restriction-level-all' => "Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. An option in the drop-down box 'Restriction level'. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.",
+'restriction-level-sysop' => "Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. An option in the drop-down box 'Restriction level' and in brackets after each page name entry. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.
+
+*{{msg-mw|Restriction-level-sysop}}
+*{{msg-mw|Restriction-level-autoconfirmed}}
+*{{msg-mw|Restriction-level-all}}",
+'restriction-level-autoconfirmed' => "Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. An option in the drop-down box 'Restriction level', and in brackets after each page name entry. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.
+
+*{{msg-mw|Restriction-level-sysop}}
+*{{msg-mw|Restriction-level-autoconfirmed}}
+*{{msg-mw|Restriction-level-all}}",
+'restriction-level-all' => "Used on [[Special:ProtectedPages]] and [[Special:ProtectedTitles]]. An option in the drop-down box 'Restriction level'. See the [//www.mediawiki.org/wiki/Project:Protected_titles help page on Mediawiki] and on [http://meta.wikimedia.org/wiki/Protect Meta] for more information.
+
+*{{msg-mw|Restriction-level-sysop}}
+*{{msg-mw|Restriction-level-autoconfirmed}}
+*{{msg-mw|Restriction-level-all}}",
 
 # Undelete
 'undelete' => 'Name of special page for admins as displayed in [[Special:SpecialPages]].
@@ -2886,6 +2996,8 @@ Options for the duration of the page protection. Example: See e.g. [[MediaWiki:P
 {{Identical|Reset}}',
 'undeleteinvert' => '{{Identical|Invert selection}}',
 'undeletecomment' => '{{Identical|Reason}}',
+'cannotundelete' => 'Message shown when undeletion failed for some reason.
+* <code>$1</code> is the combined wikitext of messages for all errors that caused the failure.',
 'undelete-search-title' => 'Page title when showing the search form in Special:Undelete',
 'undelete-search-submit' => '{{Identical|Search}}',
 'undelete-error' => 'Page title when a page could not be undeleted',
@@ -2907,11 +3019,12 @@ Options for the duration of the page protection. Example: See e.g. [[MediaWiki:P
 
 # Namespace form on various pages
 'namespace' => 'This message is located at [[Special:Contributions]].',
-'invert' => 'Displayed in [[Special:RecentChanges|RecentChanges]], [[Special:RecentChangesLinked|RecentChangesLinked]] and [[Special:Watchlist|Watchlist]]
+'invert' => 'Displayed in [[Special:RecentChanges|RecentChanges]], [[Special:RecentChangesLinked|RecentChangesLinked]] and [[Special:Watchlist|Watchlist]].
 
-{{Identical|Invert selection}}
+This message means "Invert selection of namespace".
 
-This message has a tooltip {{msg-mw|tooltip-invert}}',
+This message has a tooltip {{msg-mw|tooltip-invert}}
+{{Identical|Invert selection}}',
 'tooltip-invert' => 'Used in [[Special:Recentchanges]] as a tooltip for the invert checkbox. See also the message {{msg-mw|invert}}',
 'namespace_association' => 'Used in [[Special:Recentchanges]] with a checkbox which selects the associated namespace to be added to the selected namespace, so that both are searched (or excluded depending on another checkbox selection). The association is between a namespace and its talk namespace.
 
@@ -2994,7 +3107,11 @@ Example line:
 'whatlinkshere-hidelinks' => 'Filter option in [[Special:WhatLinksHere]]. Parameters:
 * $1 is the {{msg-mw|hide}} or {{msg-mw|show}}',
 'whatlinkshere-hideimages' => 'Filter option in [[Special:WhatLinksHere]]. Parameters:
-* $1 is the {{msg-mw|hide}} or {{msg-mw|show}}',
+* $1 is the {{msg-mw|hide}} or {{msg-mw|show}}
+
+See also:
+*{{msg-mw|Isimage}}
+*{{msg-mw|Media_tip}}',
 'whatlinkshere-filters' => '{{Identical|Filter}}',
 
 # Block/unblock
@@ -3189,6 +3306,12 @@ Parameters:
 'immobile-target-namespace-iw' => "This message appears when attempting to move a page, if a person has typed an interwiki link as a namespace prefix in the input box labelled 'To new title'.  The special page 'Movepage' cannot be used to move a page to another wiki.
 
 'Destination' can be used instead of 'target' in this message.",
+'bad-target-model' => 'This message is shown when attempting to move a page, but the move would change the page\'s content model.
+This may be the case when [[mw:Manual:$wgContentHandlerUseDB|$wgContentHandlerUseDB]] is set to false, because then a page\'s content model is derived from the page\'s title.
+* $1: The localized name of the original page\'s content model:
+**{{msg-mw|Content-model-wikitext}}, {{msg-mw|Content-model-javascript}}, {{msg-mw|Content-model-css}} or {{msg-mw|Content-model-text}}
+* $2: The localized name of the content model used by the destination title:
+**{{msg-mw|Content-model-wikitext}}, {{msg-mw|Content-model-javascript}}, {{msg-mw|Content-model-css}} or {{msg-mw|Content-model-text}}',
 'fix-double-redirects' => 'This is a checkbox in [[Special:MovePage]] which allows to move all redirects from the old title to the new title.',
 'protectedpagemovewarning' => 'Related message: [[MediaWiki:protectedpagewarning/{{#titleparts:{{PAGENAME}}|1|2}}]]
 {{Related|Semiprotectedpagewarning}}',
@@ -3285,7 +3408,6 @@ See also:
 
 # JavaScriptTest
 'javascripttest' => 'Title of [[Special:JavaScriptTest|the special page]]',
-'javascripttest-disabled' => 'Message displayed on [[Special:JavaScriptTest]] if this feature is disabled (it is disabled by default).',
 'javascripttest-title' => 'Title of the special page when running a test suite. Parameters:
 * $1 is the name of the framework, for example QUnit.',
 'javascripttest-pagetext-unknownframework' => 'Error message when given framework id is not found. $1 is the id of the framework.',
@@ -3468,6 +3590,7 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 # Info page
 'pageinfo-title' => 'Page title for action=info. Parameters:
 * $1 is the page name',
+'pageinfo-not-current' => 'Error message displayed when information for an old revision is requested. Example: [{{fullurl:Project:News|oldid=4266597&action=info}}]',
 'pageinfo-header-basic' => 'Table section header in action=info.',
 'pageinfo-header-edits' => 'Table section header in action=info.',
 'pageinfo-header-restrictions' => 'Table section header in action=info.',
@@ -3476,15 +3599,22 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 'pageinfo-default-sort' => 'The key by which the page is sorted in categories by default.',
 'pageinfo-length' => 'The length of the page, in bytes.',
 'pageinfo-article-id' => 'The numeric identifier of the page.',
-'pageinfo-robot-policy' => 'The search engine status of the page, e.g. "marked as index".',
+'pageinfo-language' => 'Language in which the page content is written.',
+'pageinfo-robot-policy' => 'The search engine status of the page.
+*{{msg-mw|Pageinfo-robot-index}}
+*{{msg-mw|Pageinfo-robot-noindex}}',
 'pageinfo-robot-index' => 'An indication that the page is indexable.',
 'pageinfo-robot-noindex' => 'An indication that the page is not indexable.',
 'pageinfo-views' => 'The number of times the page has been viewed.',
 'pageinfo-watchers' => 'The number of users watching the page.',
-'pageinfo-redirects-name' => 'The number of redirects to the page.',
+'pageinfo-redirects-name' => "The number of redirects to the page.
+
+Used as link text, linked to '{{int:Whatlinkshere-title}}' page ([[Special:WhatLinksHere]]).",
 'pageinfo-redirects-value' => 'Parameters:
 * $1 is the number of redirects to the page.',
-'pageinfo-subpages-name' => 'The number of subpages of the page.',
+'pageinfo-subpages-name' => "The number of subpages of the page.
+
+Used as link text, linked to '{{int:Prefixindex}}' page ([[Special:PrefixIndex]]).",
 'pageinfo-subpages-value' => 'Parameters:
 * $1 is the number of subpages of the page.
 * $2 is the number of subpages of the page that are redirects.
@@ -3497,14 +3627,24 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 'pageinfo-authors' => 'The total number of users who have edited the page.',
 'pageinfo-recent-edits' => 'The number of times the page has been edited recently. $1 is a localised duration (e.g. 9 days).',
 'pageinfo-recent-authors' => 'The number of users who have edited the page recently.',
-'pageinfo-restriction' => 'Parameters:
-* $1 is the type of page protection (message restriction-$type, preferably in lowercase). If your language doesn\'t have small and capital letters, you can simply write <nowiki>$1</nowiki>.',
 'pageinfo-magic-words' => 'The list of magic words on the page. Parameters:
 * $1 is the number of magic words on the page.',
 'pageinfo-hidden-categories' => 'The list of hidden categories on the page. Parameters:
 * $1 is the number of hidden categories on the page.',
 'pageinfo-templates' => 'The list of templates transcluded within the page. Parameters:
 * $1 is the number of templates transcluded within the page.',
+'pageinfo-toolboxlink' => "Information link for the page (like 'What links here', but to action=info for the current page instead)",
+'pageinfo-redirectsto' => 'Key for the row shown if this page is a redirect.',
+'pageinfo-redirectsto-info' => 'Text to put in parentheses for the link to the action=info of the redirect target.',
+'pageinfo-contentpage' => 'Key for the row shown on [{{fullurl:News|action=info}} action=info] if this page is [[mw:Manual:Article count|counted as a content page]]',
+'pageinfo-contentpage-yes' => 'Yes, this page is a content page',
+'pageinfo-protect-cascading' => 'Key for the row which shows whether this page has cascading protection enabled
+*{{msg-mw|Pageinfo-protect-cascading}}
+*{{msg-mw|Pageinfo-protect-cascading-yes}}',
+'pageinfo-protect-cascading-yes' => 'Yes, protections are cascading from here
+*{{msg-mw|Pageinfo-protect-cascading}}
+*{{msg-mw|Pageinfo-protect-cascading-yes}}',
+'pageinfo-protect-cascading-from' => 'Key for a list of pages where protections are cascading from',
 
 # Skin names
 'skinname-standard' => '{{optional}}
@@ -3520,6 +3660,8 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 
 # Patrolling
 'markedaspatrolledtext' => '{{Identical|Markedaspatrolled}}',
+'markedaspatrollednotify' => 'Notification shown after a change has been marked as patrolled, $1 is the page title',
+'markedaspatrollederrornotify' => 'Notification shown after marking a change as patrolled failed',
 
 # Patrol log
 'patrol-log-page' => '{{doc-logpage}}',
@@ -3562,11 +3704,12 @@ Parameters:
 Start with a lowercase letter, unless the first word is “SVG”.',
 'svg-long-desc-animated' => 'Displayed under an SVG image at the image description page if the image is animated. Non-animated images use {{msg-mw|svg-long-desc}}.
 * $1 is the width in pixels
-* $2 is the height in pixels, and 
+* $2 is the height in pixels, and
 * $3 is the file size including a unit (for example "10 KB").
 
 Start with a lowercase letter, unless the first word is “SVG”.',
 'show-big-image' => 'Displayed under an image at the image description page, when it is displayed smaller there than it was uploaded.',
+'show-big-image-other' => 'Message shown under the image description page thumbnail, next to {{msg-mw|show-big-image-preview}}, if the image is in high resolution.',
 'show-big-image-size' => '
 Parameters:
 * $1 is the width of the image(s) in pixels.
@@ -3645,6 +3788,7 @@ Part of variable $1 in {{msg-mw|Ago}}
 *{{msg-mw|Minutes}}
 *{{msg-mw|Hours}}
 *{{msg-mw|Days}}',
+'just-now' => 'Phrase for indicating something happened just now.',
 
 # Bad image list
 'bad_image_list' => 'This message only appears to guide administrators to add links with the right format. This will not appear anywhere else in MediaWiki.',
@@ -4347,6 +4491,12 @@ See also [[MediaWiki:Confirmemail_body_changed]].
 'confirmemail_invalidated' => 'This is the text of the special page [[Special:InvalidateEmail|InvalidateEmail]] (with the title in {{msg-mw|Invalidateemail}}) where user goes if he chooses the cancel e-mail confirmation link from the confirmation e-mail.',
 'invalidateemail' => "This is the '''name of the special page''' where user goes if he chooses the cancel e-mail confirmation link from the confirmation e-mail.",
 
+# Scary transclusion
+'scarytranscludedisabled' => 'Shown when scary transclusion is disabled.',
+'scarytranscludefailed' => 'Shown when the HTTP request for the template failed.',
+'scarytranscludefailed-httpstatus' => 'Identical to {{msg-mw|scarytranscludefailed}}, but shows the HTTP error which was received.',
+'scarytranscludetoolong' => 'The URL was too long.',
+
 'unit-pixel' => '{{optional}}',
 
 # action=purge
@@ -4604,7 +4754,8 @@ There are no such extensions here, so look at [[wikipedia:Special:Version]] for 
 'version-parser-function-hooks' => 'Shown in [[Special:Version]]',
 'version-hook-name' => 'Shown in [[Special:Version]]',
 'version-hook-subscribedby' => 'Shown in [[Special:Version]]',
-'version-version' => '{{Identical|Version}}',
+'version-version' => '*$1 - version number
+{{Identical|Version}}',
 'version-svn-revision' => '{{optional}}
 This is being used in [[Special:Version]], preceeding the subversion revision numbers of the extensions loaded inside brackets, like this: "({{int:version-revision}} r012345")
 
@@ -4614,11 +4765,13 @@ This is being used in [[Special:Version]], preceeding the subversion revision nu
 *$1: the current year
 *$2: a list of selected MediaWiki authors',
 'version-poweredby-others' => 'Used at the very end of {{msg-mw|version-poweredby-credits}} on [[Special:Version]]. First, there\'s a long list of selected MediaWiki authors, then the word "and" (from {{msg-mw|and}}) follows and then this translation, which is supposed to credit the many other people than developer helping with MediaWiki.',
+'version-credits-summary' => 'Summary of the [[Special:Version/Credits]] sub page, which lists all developers etc. who contributed to MediaWiki. Shown at the top.',
 'version-license-info' => '[[wikipedia:GNU GPL|GNU GPL]] notice shown at [[Special:Version]]. See //www.gnu.org/licenses/old-licenses/gpl-2.0-translations.html for available translations.',
 'version-software-product' => 'Shown in [[Special:Version]]',
 'version-software-version' => '{{Identical|Version}}',
 'version-entrypoints' => 'Header on [[Special:Version]] above a table that lists the URLs of various entry points in this MediaWiki installation. Entry points are the "places" where the wiki\'s content and information can be accessed in various ways, for instance the standard index.php which shows normal pages, histories etc.',
-'version-entrypoints-header-entrypoint' => 'ପ୍ରବେଶ ବିନ୍ଦୁ',
+'version-entrypoints-header-entrypoint' => 'Header for the first column in the entry points table on [[Special:Version]].
+See also {{msg-mw|Version-entrypoints}}',
 'version-entrypoints-header-url' => 'Header for the second column in the entry points table on [[Special:Version]].',
 'version-entrypoints-articlepath' => 'A short description of the article path entry point. Links to the mediawiki.org documentation page for $wgArticlePath.',
 'version-entrypoints-scriptpath' => 'A short description of the script path entry point. Links to the mediawiki.org documentation page for $wgScriptPath.',
@@ -4812,7 +4965,13 @@ Parameter $4, the target page, is also not visible to parser functions.',
 'logentry-patrol-patrol-auto' => '{{Logentry}}
 * $4 is a formatted revision number, maybe linked to the diff.
 "Automatically" refers to users with autopatrol right who mark revisions automatically patrolled when editing.',
+'logentry-newusers-create' => '{{Logentry}}
+
+$4 is the gender of the target user.',
 'logentry-newusers-create2' => '{{Logentry}}
+
+$4 is the name of the target user.',
+'logentry-newusers-autocreate' => '{{Logentry}}
 
 $4 is the gender of the target user.',
 
@@ -4834,6 +4993,12 @@ $4 is the gender of the target user.',
 {{Identical|Done}}',
 'feedback-bugcheck' => 'Message that appears before the user submits a bug, reminding them to check for known bugs.',
 'feedback-bugnew' => 'Button label - asserts that the user has checked for existing bugs. When clicked will launch a bugzilla form to add a new bug in a new tab or window',
+
+# Search suggestions
+'searchsuggest-search' => 'Greyed out default text in the simple search box in the Vector skin. (It disappears and lets the user enter the requested search terms when the search box receives focus.)
+
+{{Identical|Search}}',
+'searchsuggest-containing' => 'Label used in the special item of the search suggestions list which gives the user an option to perform a full text search for the term.',
 
 # API errors
 'api-error-badaccess-groups' => 'API error message that can be used for client side localisation of API errors.',
@@ -4887,4 +5052,7 @@ $4 is the gender of the target user.',
 'api-error-uploaddisabled' => 'API error message that can be used for client side localisation of API errors.',
 'api-error-verification-error' => 'The word "extension" refers to the part behind the last dot in a file name, that by convention gives a hint about the kind of data format which a files contents are in.',
 
+# Unknown messages
+'svg-long-error' => 'Displayed for invalid SVG file metadata.
+* $1 is the error message.',
 );

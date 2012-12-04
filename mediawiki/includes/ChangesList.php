@@ -514,12 +514,12 @@ class ChangesList extends ContextSource {
 			if ( $this->getUser()->isAllowed('rollback') && $rc->mAttribs['page_latest'] == $rc->mAttribs['rc_this_oldid'] )
 			{
 				$rev = new Revision( array(
+					'title'     => $page,
 					'id'        => $rc->mAttribs['rc_this_oldid'],
 					'user'      => $rc->mAttribs['rc_user'],
 					'user_text' => $rc->mAttribs['rc_user_text'],
 					'deleted'   => $rc->mAttribs['rc_deleted']
 				) );
-				$rev->setTitle( $page );
 				$s .= ' '.Linker::generateRollback( $rev, $this->getContext() );
 			}
 		}
@@ -1058,8 +1058,9 @@ class EnhancedChangesList extends ChangesList {
 						array(),
 						$params
 					);
-				if( $this->isDeleted($rcObj,Revision::DELETED_TEXT) )
+				if( $this->isDeleted( $rcObj, Revision::DELETED_TEXT ) ) {
 					$link = '<span class="history-deleted">'.$link.'</span> ';
+				}
 			}
 			$r .= $link . '</span>';
 

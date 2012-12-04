@@ -345,9 +345,6 @@ $messages = array(
 
 ທ່ານ ສາມາດສືບຕໍ່ໃຊ້ {{SITENAME}} ແບບບໍ່ສະແດງຊື່, ຫຼື ທ່ານ ສາມາດ ເຊັນເຂົ້າ ອີກ ໂດຍ ຊື່ຜູ້ໃຊ້ ເກົ່າ ຫຼື ໃໝ່ ກໍ່ໄດ້.
 ກະລຸນາ ຮັບຊາບວ່າ ບາງໜ້າ ອາດຈະສືບຕໍ່ ສະແດງ ຄືວ່າ ທ່ານ ຍັງເຊັນເຂົ້າຢູ່ ຈົນກວ່າ ທ່ານ ຂໍ້ມູນບັນທຶກຊົ່ວຄາວ ໃນ ໂປຣແກຣມທ່ອງເວັບ ຂອງ ທ່ານ ຈະຖືກລຶບ.",
-'welcomecreation' => '== ຍິນດີຕ້ອນຮັບ, $1! ==
-
-ບັນຊີ ຂອງທ່ານ ຖືກສ້າງຂຶ້ນແລ້ວ. ຢ່າລືມ ຕັ້ງຄ່າ ທ່ານ ຢູ່ {{SITENAME}}.',
 'yourname' => 'ຊື່ຜູ້ໃຊ້',
 'yourpassword' => 'ລະຫັດຜ່ານ',
 'yourpasswordagain' => 'ພິມລະຫັດຜ່ານອີກ',
@@ -483,8 +480,6 @@ $messages = array(
 'search-result-size' => '$1 ({{PLURAL:$2|1 ຄຳ|$2 ຄຳ}})',
 'search-result-score' => 'ຄວາມກ່ຽວຂ້ອງ: $1%',
 'search-redirect' => '(ໂອນ $1)',
-'search-mwsuggest-enabled' => 'ແບບມີຄຳແນະນຳ',
-'search-mwsuggest-disabled' => 'ແບບບໍ່ມີຄຳແນະນຳ',
 'search-relatedarticle' => 'ກ່ຽວຂ້ອງ',
 'mwsuggest-disable' => 'ບໍ່ໃຊ້ການແນະນຳ ໂດຍ AJAX',
 'searchrelated' => 'ກ່ຽວຂ້ອງ',
@@ -726,9 +721,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'watching' => 'ພວມຕິດຕາມ...',
 'unwatching' => 'ພວມເຊົາຕິດຕາມ...',
 
-'enotif_newpagetext' => 'ນີ້ແມ່ນໜ້າໃໝ່.',
-'changed' => 'ປ່ຽນແລ້ວ',
-'created' => 'ສ້າງແລ້ວ',
 'enotif_lastvisited' => 'ເບິ່ງ $1 ເພື່ອ ທຸກໆການປ່ຽນແປງ ຕັ້ງແຕ່ເທື່ອສຸດທ້າຍ ທີ່ ທ່ານເຂົ້າຫາ.',
 
 # Delete

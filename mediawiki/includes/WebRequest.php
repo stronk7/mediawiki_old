@@ -380,10 +380,9 @@ class WebRequest {
 		return $ret;
 	}
 
-	
 	/**
 	 * Unset an arbitrary value from our get/post data.
- 	 *
+	 *
 	 * @param $key String: key name to use
 	 * @return Mixed: old value if one was present, null otherwise
 	 */
@@ -620,6 +619,7 @@ class WebRequest {
 	 * Return the path and query string portion of the request URI.
 	 * This will be suitable for use as a relative link in HTML output.
 	 *
+	 * @throws MWException
 	 * @return String
 	 */
 	public function getRequestURL() {
@@ -907,6 +907,7 @@ class WebRequest {
 	 * false if an error message has been shown and the request should be aborted.
 	 *
 	 * @param $extWhitelist array
+	 * @throws HttpError
 	 * @return bool
 	 */
 	public function checkUrlExtension( $extWhitelist = array() ) {
@@ -1046,19 +1047,26 @@ HTML;
 	 * @return String
 	 */
 	protected function getRawIP() {
-		if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-			return IP::canonicalize( $_SERVER['REMOTE_ADDR'] );
-		} else {
+		if ( !isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			return null;
 		}
+
+		if ( is_array( $_SERVER['REMOTE_ADDR'] ) || strpos( $_SERVER['REMOTE_ADDR'], ',' ) !== false ) {
+			throw new MWException( __METHOD__ . " : Could not determine the remote IP address due to multiple values." );
+		} else {
+			$ipchain = $_SERVER['REMOTE_ADDR'];
+		}
+
+		return IP::canonicalize( $ipchain );
 	}
 
 	/**
 	 * Work out the IP address based on various globals
 	 * For trusted proxies, use the XFF client IP (first of the chain)
-	 * 
+	 *
 	 * @since 1.19
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	public function getIP() {
@@ -1238,6 +1246,7 @@ class FauxRequest extends WebRequest {
 	 *   fake GET/POST values
 	 * @param $wasPosted Bool: whether to treat the data as POST
 	 * @param $session Mixed: session array or null
+	 * @throws MWException
 	 */
 	public function __construct( $data = array(), $wasPosted = false, $session = null ) {
 		if( is_array( $data ) ) {

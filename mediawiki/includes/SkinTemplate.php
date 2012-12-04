@@ -398,7 +398,7 @@ class SkinTemplate extends Skin {
 		# not for special pages or file pages AND only when viewing AND if the page exists
 		# (or is in MW namespace, because that has default content)
 		if ( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) &&
-			in_array( $request->getVal( 'action', 'view' ), array( 'view', 'historysubmit' ) ) &&
+			Action::getActionName( $this ) === 'view' &&
 			( $title->exists() || $title->getNamespace() == NS_MEDIAWIKI ) ) {
 			$pageLang = $title->getPageViewLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
@@ -423,7 +423,7 @@ class SkinTemplate extends Skin {
 					if ( strval( $ilLangName ) === '' ) {
 						$ilLangName = $l;
 					} else {
-						$ilLangName = $this->getLanguage()->ucfirst( $ilLangName );
+						$ilLangName = $this->formatLanguageName( $ilLangName );
 					}
 					$language_urls[] = array(
 						'href' => $nt->getFullURL(),
@@ -499,6 +499,18 @@ class SkinTemplate extends Skin {
 	}
 
 	/**
+	 * Format language name for use in sidebar interlanguage links list.
+	 * By default it is capitalized.
+	 *
+	 * @param $name string Language name, e.g. "English" or "español"
+	 * @return string
+	 * @private
+	 */
+	function formatLanguageName( $name ) {
+		return $this->getLanguage()->ucfirst( $name );
+	}
+
+	/**
 	 * Output the string, or print error message if it's
 	 * an error object of the appropriate type.
 	 * For the base class, assume strings all around.
@@ -529,6 +541,8 @@ class SkinTemplate extends Skin {
 	 * @return array
 	 */
 	protected function buildPersonalUrls() {
+		global $wgSecureLogin;
+
 		$title = $this->getTitle();
 		$request = $this->getRequest();
 		$pageurl = $title->getLocalURL();
@@ -541,7 +555,11 @@ class SkinTemplate extends Skin {
 		# $this->getTitle() will just give Special:Badtitle, which is
 		# not especially useful as a returnto parameter. Use the title
 		# from the request instead, if there was one.
-		$page = Title::newFromURL( $request->getVal( 'title', '' ) );
+		if ( $this->getUser()->isAllowed( 'read' ) ) {
+			$page = $this->getTitle();
+		} else {
+			$page = Title::newFromText( $request->getVal( 'title', '' ) );
+		}
 		$page = $request->getVal( 'returnto', $page );
 		$a = array();
 		if ( strval( $page ) !== '' ) {
@@ -551,6 +569,11 @@ class SkinTemplate extends Skin {
 				$a['returntoquery'] = $query;
 			}
 		}
+
+		if ( $wgSecureLogin && $request->detectProtocol() === 'https' ) {
+			$a['wpStickHTTPS'] = true;
+		}
+
 		$returnto = wfArrayToCGI( $a );
 		if( $this->loggedin ) {
 			$personal_urls['userpage'] = array(
@@ -620,7 +643,6 @@ class SkinTemplate extends Skin {
 			$is_signup = $request->getText( 'type' ) == 'signup';
 
 			# anonlogin & login are the same
-			global $wgSecureLogin;
 			$proto = $wgSecureLogin ? PROTO_HTTPS : null;
 
 			$login_id = $this->showIPinHeader() ? 'anonlogin' : 'login';
@@ -1130,6 +1152,7 @@ class SkinTemplate extends Skin {
 
 		$nav_urls['print'] = false;
 		$nav_urls['permalink'] = false;
+		$nav_urls['info'] = false;
 		$nav_urls['whatlinkshere'] = false;
 		$nav_urls['recentchangeslinked'] = false;
 		$nav_urls['contributions'] = false;
@@ -1166,6 +1189,12 @@ class SkinTemplate extends Skin {
 			$nav_urls['whatlinkshere'] = array(
 				'href' => SpecialPage::getTitleFor( 'Whatlinkshere', $this->thispage )->getLocalUrl()
 			);
+
+			$nav_urls['info'] = array(
+				'text' => $this->msg( 'pageinfo-toolboxlink' )->text(),
+				'href' => $this->getTitle()->getLocalURL( "action=info" )
+			);
+
 			if ( $this->getTitle()->getArticleID() ) {
 				$nav_urls['recentchangeslinked'] = array(
 					'href' => SpecialPage::getTitleFor( 'Recentchangeslinked', $this->thispage )->getLocalUrl()
@@ -1178,6 +1207,7 @@ class SkinTemplate extends Skin {
 			$rootUser = $user->getName();
 
 			$nav_urls['contributions'] = array(
+				'text' => $this->msg( 'contributions', $rootUser )->text(),
 				'href' => self::makeSpecialUrlSubpage( 'Contributions', $rootUser )
 			);
 
@@ -1225,7 +1255,7 @@ abstract class QuickTemplate {
 	/**
 	 * Constructor
 	 */
-	public function QuickTemplate() {
+	function __construct() {
 		$this->data = array();
 		$this->translator = new MediaWiki_I18N();
 	}
@@ -1417,6 +1447,11 @@ abstract class BaseTemplate extends QuickTemplate {
 				$toolbox['permalink']['id'] = 't-permalink';
 			}
 		}
+		if ( isset( $this->data['nav_urls']['info'] ) && $this->data['nav_urls']['info'] ) {
+			$toolbox['info'] = $this->data['nav_urls']['info'];
+			$toolbox['info']['id'] = 't-info';
+		}
+
 		wfRunHooks( 'BaseTemplateToolbox', array( &$this, &$toolbox ) );
 		wfProfileOut( __METHOD__ );
 		return $toolbox;
@@ -1720,7 +1755,7 @@ abstract class BaseTemplate extends QuickTemplate {
 			foreach ( array( 'id', 'class', 'active', 'tag' ) as $k ) {
 				unset( $link[$k] );
 			}
-			if ( isset( $item['id'] ) ) {
+			if ( isset( $item['id'] ) && !isset( $item['single-id'] ) ) {
 				// The id goes on the <li> not on the <a> for single links
 				// but makeSidebarLink still needs to know what id to use when
 				// generating tooltips and accesskeys.
@@ -1783,11 +1818,15 @@ abstract class BaseTemplate extends QuickTemplate {
 				);
 				unset( $buttonAttrs['src'] );
 				unset( $buttonAttrs['alt'] );
+				unset( $buttonAttrs['width'] );
+				unset( $buttonAttrs['height'] );
 				$imgAttrs = array(
 					'src' => $attrs['src'],
 					'alt' => isset( $attrs['alt'] )
 						? $attrs['alt']
 						: $this->translator->translate( 'searchbutton' ),
+					'width' => isset( $attrs['width'] ) ? $attrs['width'] : null,
+					'height' => isset( $attrs['height'] ) ? $attrs['height'] : null,
 				);
 				return Html::rawElement( 'button', $buttonAttrs, Html::element( 'img', $imgAttrs ) );
 			default:

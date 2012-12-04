@@ -144,6 +144,7 @@ class FileDeleteForm {
 	 * @param $reason String: reason of the deletion
 	 * @param $suppress Boolean: whether to mark all deleted versions as restricted
 	 * @param $user User object performing the request
+	 * @throws MWException
 	 * @return bool|Status
 	 */
 	public static function doDelete( &$title, &$file, &$oldimage, $reason, $suppress, User $user = null ) {
@@ -374,8 +375,9 @@ class FileDeleteForm {
 		$q = array();
 		$q['action'] = 'delete';
 
-		if( $this->oldimage )
+		if( $this->oldimage ) {
 			$q['oldimage'] = $this->oldimage;
+		}
 
 		return $this->title->getLocalUrl( $q );
 	}

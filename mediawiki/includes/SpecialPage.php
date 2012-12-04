@@ -106,19 +106,6 @@ class SpecialPage {
 	}
 
 	/**
-	 * Add a page to the list of valid special pages. This used to be the preferred
-	 * method for adding special pages in extensions. It's now suggested that you add
-	 * an associative record to $wgSpecialPages. This avoids autoloading SpecialPage.
-	 *
-	 * @param $page SpecialPage
-	 * @deprecated since 1.7, warnings in 1.17, might be removed in 1.20
-	 */
-	static function addPage( &$page ) {
-		wfDeprecated( __METHOD__, '1.7' );
-		SpecialPageFactory::getList()->{$page->mName} = $page;
-	}
-
-	/**
 	 * Add a page to a certain display group for Special:SpecialPages
 	 *
 	 * @param $page Mixed: SpecialPage or string
@@ -267,6 +254,7 @@ class SpecialPage {
 	 *
 	 * @param $name String
 	 * @param $subpage String|Bool subpage string, or false to not use a subpage
+	 * @throws MWException
 	 * @return Title object
 	 */
 	public static function getTitleFor( $name, $subpage = false ) {
@@ -363,6 +351,7 @@ class SpecialPage {
 	 *
 	 * @param $fName String Name of called method
 	 * @param $a Array Arguments to the method
+	 * @throws MWException
 	 * @deprecated since 1.17, call parent::__construct()
 	 */
 	public function __call( $fName, $a ) {
@@ -525,6 +514,19 @@ class SpecialPage {
 	}
 
 	/**
+	 * Is this page cached?
+	 * Expensive pages are cached or disabled in miser mode.
+	 * Used by QueryPage and subclasses, moved here so that
+	 * Special:SpecialPages can safely call it for all special pages.
+	 *
+	 * @return Boolean
+	 * @since 1.21
+	 */
+	public function isCached() {
+		return false;
+	}
+
+	/**
 	 * Can be overridden by subclasses with more complicated permissions
 	 * schemes.
 	 *
@@ -532,9 +534,8 @@ class SpecialPage {
 	 *   pages?
 	 */
 	public function isRestricted() {
-		global $wgGroupPermissions;
 		// DWIM: If all anons can do something, then it is not restricted
-		return $this->mRestriction != '' && empty( $wgGroupPermissions['*'][$this->mRestriction] );
+		return $this->mRestriction != '' && !User::groupHasPermission( '*', $this->mRestriction );
 	}
 
 	/**
@@ -945,8 +946,8 @@ abstract class FormSpecialPage extends SpecialPage {
 	 * Called from execute() to check if the given user can perform this action.
 	 * Failures here must throw subclasses of ErrorPageError.
 	 * @param $user User
+	 * @throws UserBlockedError
 	 * @return Bool true
-	 * @throws ErrorPageError
 	 */
 	protected function checkExecutePermissions( User $user ) {
 		$this->checkPermissions();
@@ -1029,14 +1030,12 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 		if ( $redirect instanceof Title ) {
 			$url = $redirect->getFullUrl( $query );
 			$this->getOutput()->redirect( $url );
-			wfProfileOut( __METHOD__ );
 			return $redirect;
 		// Redirect to index.php with query parameters
 		} elseif ( $redirect === true ) {
 			global $wgScript;
 			$url = $wgScript . '?' . wfArrayToCGI( $query );
 			$this->getOutput()->redirect( $url );
-			wfProfileOut( __METHOD__ );
 			return $redirect;
 		} else {
 			$class = __CLASS__;
@@ -1221,7 +1220,7 @@ abstract class RedirectSpecialArticle extends RedirectSpecialPage {
 			'ctype', 'maxage', 'smaxage',
 		);
 
-		wfRunHooks( "RedirectSpecialArticleRedirectParams", array(&$redirectParams) );
+		wfRunHooks( "RedirectSpecialArticleRedirectParams", array( &$redirectParams ) );
 		$this->mAllowedRedirectParams = $redirectParams;
 	}
 }

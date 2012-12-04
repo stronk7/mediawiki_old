@@ -262,9 +262,6 @@ For translations, please consider using [//translatewiki.net/wiki/Main_Page?setl
 
 E lava te ke hoko atu ʻo ngāueʻaki he {{SITENAME}} tatau mo e ʻetita taʻehingoa, pe te ke kau-ki-ai mo e hingoa tatau pe hingoa kehe.
 Tokanga, mahalo pē ʻe ʻi ai ha ngaahi peesi ʻoku ʻasi ko koe kei kau-ki-ai aʻu ki he taimi te ke fakaʻatā ʻa e fafaʻo fakapalausa.",
-'welcomecreation' => '== Tali fiefia, $1! ==
-
-Kuo fakatupu hoʻo tohi kau-ki-ai. ʻOua ʻe ngalo ke liliu hoʻo faʻiteliha {{SITENAME}}.',
 'yourname' => 'Hingoa ʻetita',
 'yourpassword' => 'Leatapu',
 'yourpasswordagain' => 'Toe ʻai leatapu',
@@ -438,8 +435,6 @@ Ko e ʻuhinga loka ko e $1 ia.",
 'viewprevnext' => 'Vakai ki he ($1 {{int:pipe-separator}} $2) ($3).',
 'search-suggest' => 'Mahalo pē naʻa ke fiemaʻu: $1',
 'search-interwiki-more' => '(lahi ange)',
-'search-mwsuggest-enabled' => 'mo e fokotuʻu atu',
-'search-mwsuggest-disabled' => 'taʻe fokotuʻu atu',
 'showingresults' => "ʻOku ʻasi ʻi lalo ʻa e ngaahi fua ʻoku kamata mo e #'''$2''' (aʻu ki he '''$1''').",
 'showingresultsnum' => "ʻOku ʻasi ʻi lalo ha fua ʻe '''$3''', ʻoku kamata mo e #'''$2'''.",
 'nonefound' => "Ko e ngaahi kumi naʻe ʻikai ke siaʻa. Mahalo pē te ke fiefeinga kumi ʻi he ngaahi vā hingoa kotoa (kupu, alea, sīpinga, mo e hā fua). Tānaki ''all:'' ʻi muʻa ʻo hoʻo fehuʻi.",
@@ -782,10 +777,6 @@ Kapau ʻaho ʻe taha, te ke fietoʻo ʻa e pēsí mei hoʻo hokohoko leʻo, lomi
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'ʻOku leʻo...',
 'unwatching' => 'ʻOku taʻeleʻo...',
-
-'enotif_newpagetext' => 'Ko e peesi foʻou ia.',
-'changed' => 'ʻosi liliu',
-'created' => 'kuo fakatupu',
 
 # Delete
 'deletepage' => 'Tāmateʻi peesi',

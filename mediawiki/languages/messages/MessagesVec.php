@@ -119,7 +119,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'ÙltimiCanbiamenti' ),
 	'Recentchangeslinked'       => array( 'CanbiamentiLigà' ),
 	'Revisiondelete'            => array( 'ScancelaRevision' ),
-	'RevisionMove'              => array( 'SpostaRevision' ),
 	'Search'                    => array( 'Serca' ),
 	'Shortpages'                => array( 'PaginePiCurte' ),
 	'Specialpages'              => array( 'PagineSpeciali' ),
@@ -294,7 +293,6 @@ $messages = array(
 'qbbrowse' => 'Sfoja',
 'qbedit' => 'Canbia',
 'qbpageoptions' => 'Opsion pajina',
-'qbpageinfo' => 'Informasion so ła pajina',
 'qbmyoptions' => 'Łe me pajine',
 'qbspecialpages' => 'Pagine speciali',
 'faq' => 'Domande frequenti',
@@ -548,12 +546,8 @@ L\'aministradore che ło ga blocà ga fornìo sta spiegasion: "$3".',
 # Login and logout pages
 'logouttext' => "'''Te sì 'ndà fora da la to utensa.'''
 
-Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò [[Special:UserLogin|entrar da novo]], col stesso nome utente o uno difarente.
+Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò <span class='plainlinks'>[$1 entrar da novo]</span>, col stesso nome utente o uno difarente.
 Ocio che serte pagine podarìa èssar che ti 'e vedi come se te fussi 'ncora drento col to nome de prima, fin che no te neti la ''cache'' del to browser.",
-'welcomecreation' => '== Benvegnù, $1! ==
-
-El to nome utente el xe stà creà.
-Te poli sistemarte come te vol le to [[Special:Preferences|prefarense de {{SITENAME}}]].',
 'yourname' => 'Nome utente:',
 'yourpassword' => 'Password:',
 'yourpasswordagain' => 'De novo la password:',
@@ -1139,8 +1133,6 @@ Assicùrete che la continuità storica de la pagina no la vegna alterà.',
 'search-interwiki-caption' => 'Projeti fradei',
 'search-interwiki-default' => 'Risultati da $1:',
 'search-interwiki-more' => '(altro)',
-'search-mwsuggest-enabled' => 'con sujerimenti',
-'search-mwsuggest-disabled' => 'sensa sujerimenti',
 'search-relatedarticle' => 'Ligà',
 'mwsuggest-disable' => 'Disabilita sugerimenti AJAX',
 'searcheverything-enable' => 'Serca in tuti quanti i namespace',
@@ -2060,11 +2052,7 @@ I futuri canbiamenti a sta pagina e a la so pagina de discussion i se vedarà fo
 
 'enotif_mailer' => 'Sistema de notifica via e-mail de {{SITENAME}}',
 'enotif_reset' => 'Segna tute le pagine come zà viste',
-'enotif_newpagetext' => 'Sta qua la xe na nova pàxena.',
 'enotif_impersonal_salutation' => 'Utente de {{SITENAME}}',
-'changed' => 'canbià',
-'created' => 'creà',
-'enotif_subject' => 'La pagina $PAGETITLE de {{SITENAME}} la xe stà $CHANGEDORCREATED da $PAGEEDITOR',
 'enotif_lastvisited' => 'Varda $1 par tute le modifiche da la to ultima visita.',
 'enotif_lastdiff' => 'Varda $1 par visualizar la modifica.',
 'enotif_anon_editor' => 'utente anonimo $1',
@@ -3377,5 +3365,9 @@ Le imagini le vien mostrà a la risoluzion pi granda che se pol, par i altri tip
 'logentry-newusers-create2' => '$1 ga creà na utensa $3',
 'logentry-newusers-autocreate' => "L'utensa $1 xè stà creà automategamente",
 'newuserlog-byemail' => 'password spedìa par e-mail',
+
+# Search suggestions
+'searchsuggest-search' => 'Serca',
+'searchsuggest-containing' => 'che contien...',
 
 );

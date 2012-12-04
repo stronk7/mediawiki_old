@@ -4,17 +4,11 @@ class XmlTest extends MediaWikiTestCase {
 	private static $oldLang;
 	private static $oldNamespaces;
 
-	public function setUp() {
-		global $wgLang, $wgContLang;
+	protected function setUp() {
+		parent::setUp();
 
-		self::$oldLang = $wgLang;
-		$wgLang = Language::factory( 'en' );
-
-		// Hardcode namespaces during test runs,
-		// so that html output based on existing namespaces
-		// can be properly evaluated.
-		self::$oldNamespaces = $wgContLang->getNamespaces();
-		$wgContLang->setNamespaces( array(
+		$langObj = Language::factory( 'en' );
+		$langObj->setNamespaces( array(
 			-2 => 'Media',
 			-1 => 'Special',
 			0  => '',
@@ -32,13 +26,10 @@ class XmlTest extends MediaWikiTestCase {
 			100  => 'Custom',
 			101  => 'Custom_talk',
 		) );
-	}
 
-	public function tearDown() {
-		global $wgLang, $wgContLang;
-		$wgLang = self::$oldLang;
-		
-		$wgContLang->setNamespaces( self::$oldNamespaces );
+		$this->setMwGlobals( array(
+			'wgLang' => $langObj,
+		) );
 	}
 
 	public function testExpandAttributes() {
@@ -112,9 +103,6 @@ class XmlTest extends MediaWikiTestCase {
 		$this->assertEquals( '</element>', Xml::closeElement( 'element' ), 'closeElement() shortcut' );
 	}
 
-	/**
-	 * @group Broken
-	 */
 	public function testDateMenu( ) {
 		$curYear   = intval(gmdate('Y'));
 		$prevYear  = $curYear - 1;
@@ -126,7 +114,7 @@ class XmlTest extends MediaWikiTestCase {
 		if( $nextMonth == 13 ) { $nextMonth = 1; }
 
 		$this->assertEquals(
-			'<label for="year">From year (and earlier):</label> <input name="year" size="4" value="2011" id="year" maxlength="4" /> <label for="month">From month (and earlier):</label> <select id="month" name="month" class="mw-month-selector"><option value="-1">all</option>' . "\n" .
+			'<label for="year">From year (and earlier):</label> <input id="year" maxlength="4" size="7" type="number" value="2011" name="year" /> <label for="month">From month (and earlier):</label> <select id="month" name="month" class="mw-month-selector"><option value="-1">all</option>' . "\n" .
 '<option value="1">January</option>' . "\n" .
 '<option value="2" selected="">February</option>' . "\n" .
 '<option value="3">March</option>' . "\n" .
@@ -143,7 +131,7 @@ class XmlTest extends MediaWikiTestCase {
 			"Date menu for february 2011"
 		);
 		$this->assertEquals(
-			'<label for="year">From year (and earlier):</label> <input name="year" size="4" value="2011" id="year" maxlength="4" /> <label for="month">From month (and earlier):</label> <select id="month" name="month" class="mw-month-selector"><option value="-1">all</option>' . "\n" .
+			'<label for="year">From year (and earlier):</label> <input id="year" maxlength="4" size="7" type="number" value="2011" name="year" /> <label for="month">From month (and earlier):</label> <select id="month" name="month" class="mw-month-selector"><option value="-1">all</option>' . "\n" .
 '<option value="1">January</option>' . "\n" .
 '<option value="2">February</option>' . "\n" .
 '<option value="3">March</option>' . "\n" .
@@ -165,17 +153,15 @@ class XmlTest extends MediaWikiTestCase {
 			"Date menu year is the current one when not specified"
 		);
 
-		// @todo FIXME: next month can be in the next year
-		// test failing because it is now december
+		$wantedYear = $nextMonth == 1 ? $curYear : $prevYear;
 		$this->assertEquals(
-			Xml::dateMenu( $prevYear, $nextMonth ),
+			Xml::dateMenu( $wantedYear, $nextMonth ),
 			Xml::dateMenu( '', $nextMonth ),
 			"Date menu next month is 11 months ago"
 		);
 
-		# @todo FIXME: Please note there is no year there!
 		$this->assertEquals(
-			'<label for="year">From year (and earlier):</label> <input name="year" size="4" value="" id="year" maxlength="4" /> <label for="month">From month (and earlier):</label> <select id="month" name="month" class="mw-month-selector"><option value="-1">all</option>' . "\n" .
+			'<label for="year">From year (and earlier):</label> <input id="year" maxlength="4" size="7" type="number" name="year" /> <label for="month">From month (and earlier):</label> <select id="month" name="month" class="mw-month-selector"><option value="-1">all</option>' . "\n" .
 '<option value="1">January</option>' . "\n" .
 '<option value="2">February</option>' . "\n" .
 '<option value="3">March</option>' . "\n" .

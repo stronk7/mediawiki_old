@@ -138,7 +138,7 @@ $messages = array(
 'cancel' => 'Zerick',
 'moredotdotdot' => 'Mehner…',
 'mypage' => 'Mei Blatt',
-'mytalk' => 'Mei Gschwetz-Blatt',
+'mytalk' => 'Mei Dischbedutt',
 'anontalk' => 'Gschwetz-Blatt fer die IP',
 'navigation' => 'Faahre-Gnepp',
 'and' => '&#32;unn',
@@ -147,7 +147,6 @@ $messages = array(
 'qbfind' => 'Finne',
 'qbedit' => 'Ennere',
 'qbpageoptions' => 'Des Blatt',
-'qbpageinfo' => 'Daade vun dem Blatt',
 'qbmyoptions' => 'Mei Bledder',
 'qbspecialpages' => 'Besunnere Bledder',
 'faq' => 'FAQ',
@@ -188,7 +187,7 @@ $messages = array(
 'protectthispage' => 'Des Blatt schitze',
 'newpage' => 'Neies Blatt',
 'talkpage' => 'Sell Blatt dischbediere',
-'talkpagelinktext' => 'Gschwetz',
+'talkpagelinktext' => 'Dischbedutt',
 'specialpage' => 'Besunneres Blatt',
 'personaltools' => 'Paerseenlich Gscharr',
 'articlepage' => 'Inhalt vun dem Blatt aagucke',
@@ -412,8 +411,6 @@ Paesswatt fer nau: $2',
 'search-interwiki-caption' => 'Schweschder Projects',
 'search-interwiki-default' => '$1 Results:',
 'search-interwiki-more' => '(weidere)',
-'search-mwsuggest-enabled' => 'mit Vorschläch',
-'search-mwsuggest-disabled' => 'kee Vorschläch',
 'searchall' => 'all',
 'powersearch' => 'Guck uff',
 'powersearch-ns' => 'Guck uff in Blatznaame:',
@@ -428,7 +425,7 @@ Paesswatt fer nau: $2',
 
 # Preferences page
 'preferences' => 'Paerseenlich Profil',
-'mypreferences' => 'Mei Uffschtelling',
+'mypreferences' => 'Uffschtellinge',
 'changepassword' => 'Paesswatt ennere',
 'skin-preview' => 'Aagucke',
 'prefs-personal' => 'Yuuser Profile',
@@ -694,7 +691,7 @@ Paesswatt fer nau: $2',
 
 # Watchlist
 'watchlist' => 'Mei Watsch-Lischt',
-'mywatchlist' => 'Mei Watsch-Lischt',
+'mywatchlist' => 'Watsch-Lischt',
 'watchlistfor2' => 'Vun $1 $2',
 'watch' => 'watsche',
 'watchthispage' => 'watsch des Blatt',
@@ -709,9 +706,7 @@ Paesswatt fer nau: $2',
 'watching' => 'Watsche…',
 'unwatching' => 'Nimmi watsche...',
 
-'enotif_newpagetext' => 'Sell iss en neies Blatt.',
 'enotif_impersonal_salutation' => '{{SITENAME}}-Yuuser',
-'changed' => 'gennert',
 
 # Delete
 'deletepage' => 'Blatt lesche',
@@ -767,7 +762,7 @@ Guck $2 fer e Lischt vun de letscht Leschunge.',
 'month' => 'unn Munet:',
 'year' => 'bis Yaahr:',
 
-'sp-contributions-talk' => 'Gschwetz',
+'sp-contributions-talk' => 'Dischbedutt',
 'sp-contributions-search' => 'Guck fer Ardickel',
 'sp-contributions-username' => 'IP-Adress odder Yuusernaame:',
 'sp-contributions-submit' => 'Guck uff',
@@ -1019,5 +1014,8 @@ Guck $2 fer e Lischt vun de letscht Leschunge.',
 
 # Feedback
 'feedback-message' => 'Melding:',
+
+# Search suggestions
+'searchsuggest-search' => 'Uffgucke',
 
 );

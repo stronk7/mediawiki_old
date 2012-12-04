@@ -1,5 +1,5 @@
 <?php
-/** Lushai (Mizo ţawng)
+/** Mizo (Mizo ţawng)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -156,7 +156,6 @@ $messages = array(
 'qbbrowse' => 'Fangvêl rawh',
 'qbedit' => 'Siamţhatna',
 'qbpageoptions' => 'He phêk hi',
-'qbpageinfo' => 'Thukhawchang',
 'qbmyoptions' => 'Ka phêkte',
 'qbspecialpages' => 'Phêk vohbîkte',
 'faq' => 'Zawhzin',
@@ -394,11 +393,8 @@ $2',
 
 # Login and logout pages
 'logouttext' => "'''I chhuak fel ta.'''
-Inziaklût kher lovin {{SITENAME}} hi i hmang chhunzawm thei ang, a nih loh vëk pawhin hmangtu hming pangngai emaw, a hming dang emawin [[Special:UserLogin|lût leh]] thei ang.
+Inziaklût kher lovin {{SITENAME}} hi i hmang chhunzawm thei ang, a nih loh vëk pawhin hmangtu hming pangngai emaw, a hming dang emawin <span class='plainlinks'>[$1 lût leh]</span> thei ang.
 I fangtu cache i thenfai hma chu phêk ţhenkhat intar lang a awm reng mai thei, i la  chhuak lo emaw tih mai tùrin.",
-'welcomecreation' => '==Kan lo lawm a che, $1!==
-I siangchan siam a ni ta.
-I [[Special:Preferences|{{SITENAME}}duhdàn]] siam danglam theihnghilh suh ang che.',
 'yourname' => 'Hmangtuhming:',
 'yourpassword' => 'Thurûk:',
 'yourpasswordagain' => 'Thurûk ziak nawn leh rawh le:',
@@ -731,8 +727,6 @@ Lamtawi hmante: '''({{int:cur}})'''= ennawnna thar ber nena danglamna, '''({{int
 'search-interwiki-caption' => 'Hmachhawppuite',
 'search-interwiki-default' => 'Chhuak $1:',
 'search-interwiki-more' => '(tam)',
-'search-mwsuggest-enabled' => 'rawtna telin',
-'search-mwsuggest-disabled' => 'rawtna tel lovin',
 'search-relatedarticle' => 'Laichin',
 'mwsuggest-disable' => 'AJAX rawtna tithi rawh',
 'searcheverything-enable' => 'Hminghmun zawng zawngah zawng rawh',
@@ -1153,7 +1147,7 @@ Hmangtu azira i thliarhran erawh chuan a hmangtuina a hlankai hnuhnüng ber taks
 Ahnuaih hian {{PLURAL:$1|zawmtu hmasa ber|zawmtu hmasa $1-te}} kan rawn tlar chhuak e.
 Zawmtu zawng zawng [[Special:WhatLinksHere/$2|tlarchhuahna hetah hian a awm]] e.',
 'nolinkstoimage' => 'He taksa zawmtu/hmanna phêk pakhat mah a awm lo.',
-'morelinkstoimage' => 'Hemi taksa zawmpui dang [[Special:WhatLinksHere/$1|enna}}.',
+'morelinkstoimage' => 'Hemi taksa zawmpui dang [[Special:WhatLinksHere/$1|enna]].',
 'linkstoimage-redirect' => '$1 (taksa hruailuhna) $2',
 'duplicatesoffile' => 'A hnuaia taksa{{PLURAL:$1||te}} khu hë taksa nihpui{{PLURAL:$1||te}} a{{PLURAL:$1||n}} ni ([[Special:FileDuplicateSearch/$2|chanchin kimchang]]):',
 'sharedupload' => 'Hë taksa hi $1-a mi a ni a, hna-hmachhawp dangin a hmang vè mai thei.',
@@ -1422,11 +1416,7 @@ Hetah hian [[Special:UnusedCategories|pawl hman lohho]] pholan tel a ni lo.
 'watchlist-options' => 'Ralvèn duhdàn',
 
 'enotif_reset' => 'Phêk zawng zawng tlawh tawh vek angin chhinchhiah rawh.',
-'enotif_newpagetext' => 'Hei hi phêk thar a ni.',
 'enotif_impersonal_salutation' => '{{SITENAME}} hmangtu',
-'changed' => 'tihdanglam a ni ta',
-'created' => 'siam a ni ta',
-'enotif_subject' => '{{SITENAME}} phêk $PAGETITLE tih hi $CHANGEDORCREATED,  $PAGEEDITOR bultum a ni.',
 'enotif_lastvisited' => 'I tlawh hnuhnùn ber hnu lama tihdanglam zawng zawng en i duh chuan $1 en rawh.',
 'enotif_lastdiff' => 'Hë tihdanglamna hi en tùrin $1 thlír rawh.',
 'enotif_anon_editor' => 'hmangtu hriat loh $1',
@@ -1933,5 +1923,9 @@ A bak zawng chu thuhrûk sa vek a ni ang.
 'feedback-subject' => 'Thupui:',
 'feedback-message' => 'Thu',
 'feedback-cancel' => 'Sûtna',
+
+# Search suggestions
+'searchsuggest-search' => 'Zawnna',
+'searchsuggest-containing' => 'hemi thu telna hi...',
 
 );

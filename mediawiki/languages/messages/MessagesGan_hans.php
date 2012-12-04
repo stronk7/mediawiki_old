@@ -1,5 +1,5 @@
 <?php
-/** Simplified Gan script (‪赣语（简体）‬)
+/** Simplified Gan script (赣语（简体）‎)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -176,7 +176,6 @@ $messages = array(
 'qbbrowse' => '查看',
 'qbedit' => '编写',
 'qbpageoptions' => '个页',
-'qbpageinfo' => '个页信息',
 'qbmyoptions' => '偶𠮶选项',
 'qbspecialpages' => '特殊页',
 'faq' => 'FAQ',
@@ -401,10 +400,7 @@ $2',
 # Login and logout pages
 'logouttext' => "'''汝退出正哩。'''
 
-接到汝得匿名使用{{SITENAME}}，或[[Special:UserLogin|登入过]]。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
-'welcomecreation' => '== 欢迎, $1! ==
-
-建正哩汝𠮶帐户，莫𫍧记设置 [[Special:Preferences|{{SITENAME}}𠮶个人参数]]。',
+接到汝得匿名使用{{SITENAME}}，或<span class='plainlinks'>[$1 登入过]</span>。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
 'yourname' => '用户名：',
 'yourpassword' => '密码：',
 'yourpasswordagain' => '输过道密码：',
@@ -767,8 +763,6 @@ $2',
 'search-interwiki-caption' => '姊妹计划',
 'search-interwiki-default' => '$1只结果：',
 'search-interwiki-more' => '（更多）',
-'search-mwsuggest-enabled' => '有建议',
-'search-mwsuggest-disabled' => '冇建议',
 'searchrelated' => '相关',
 'searchall' => '所有',
 'showingresults' => '底下从第<b>$2</b>条显示起先𠮶<b>$1</b>条结果:',
@@ -1296,11 +1290,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}}邮件报告员',
 'enotif_reset' => '拿全部文章标成已读',
-'enotif_newpagetext' => '个系新开𠮶页面。',
 'enotif_impersonal_salutation' => '{{SITENAME}}用户',
-'changed' => '改卟嘞',
-'created' => '建正嘞',
-'enotif_subject' => '{{SITENAME}}有页面 $PAGETITLE拖$PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => '眵倷上回访问后𠮶全部改动请去$1。',
 'enotif_lastdiff' => '想眵改动请去$1。',
 'enotif_anon_editor' => '匿名用户$1',
@@ -2241,6 +2231,7 @@ $3
 'version-hook-subscribedby' => '订阅人',
 'version-version' => '（版本 $1）',
 'version-license' => '许可证',
+'version-poweredby-credits' => "个只 Wiki 由 '''[//www.mediawiki.org/ MediaWiki]''' 驱动，版权所有 © 2001-$1 $2。",
 'version-software' => '装正𠮶软件',
 'version-software-version' => '版本',
 
@@ -2269,5 +2260,8 @@ $3
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|标签]]过滤器：',
+
+# Search suggestions
+'searchsuggest-search' => '寻吖',
 
 );

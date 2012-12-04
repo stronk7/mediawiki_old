@@ -156,7 +156,7 @@ $messages = array(
 'cancel' => 'Para',
 'moredotdotdot' => 'Barak liu...',
 'mypage' => "Ha'u-nia pájina",
-'mytalk' => "Ha'u-nia diskusaun",
+'mytalk' => 'Diskusaun',
 'anontalk' => "Diskusaun ba IP ne'e",
 'navigation' => 'Hatudu-dalan',
 'and' => '&#32;ho',
@@ -297,9 +297,6 @@ Lista ida pájina espesiál nian [[Special:SpecialPages|iha ne'e]].",
 'ns-specialprotected' => 'La ema ida bele edita pájina espesiál sira.',
 
 # Login and logout pages
-'welcomecreation' => "== Loron di'ak, $1! ==
-Agora Ita iha konta iha ne'e.
-La haluha muda Ita-nia [[Special:Preferences|preferénsia]].",
 'yourname' => "Naran uza-na'in:",
 'login' => 'Log in',
 'nav-login-createaccount' => 'Log in / kriar konta ida',
@@ -412,8 +409,6 @@ Ita-nia mudansa la armazenadu seidauk!",
 'search-result-size' => '$1 ({{PLURAL:$2|liafuan ida|liafuan $2}})',
 'search-section' => '(seksaun $1)',
 'search-interwiki-caption' => 'Projetu seluseluk sira',
-'search-mwsuggest-enabled' => 'fó sujestaun',
-'search-mwsuggest-disabled' => 'la hatudu sujestaun',
 'searchall' => 'hotu',
 'powersearch' => 'Buka',
 'powersearch-field' => 'Buka',
@@ -421,7 +416,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 
 # Preferences page
 'preferences' => 'Preferénsia',
-'mypreferences' => "Ha'u-nia preferénsia",
+'mypreferences' => 'Preferénsia',
 'prefs-rc' => 'Mudansa foufoun sira',
 'prefs-watchlist' => 'Lista hateke',
 'prefs-editing' => 'Edita',
@@ -650,7 +645,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 
 # Watchlist
 'watchlist' => "Ha'u-nia lista hateke",
-'mywatchlist' => "Ha'u-nia lista hateke",
+'mywatchlist' => 'Lista hateke',
 'removedwatchtext' => 'La hateke pájina "[[:$1]]" ona (haree [[Special:Watchlist|"lista hateke"]]).',
 'watch' => 'Hateke',
 'watchthispage' => "Hateke pájina ne'e",
@@ -662,11 +657,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 'watching' => 'Hateke...',
 'unwatching' => 'La hateke...',
 
-'enotif_newpagetext' => "Ne'e pájina foun.",
 'enotif_impersonal_salutation' => "Uza-na'in {{SITENAME}} nian",
-'changed' => 'muda ona',
-'created' => 'kria ona',
-'enotif_subject' => '$PAGEEDITOR $CHANGEDORCREATED pájina $PAGETITLE iha {{SITENAME}}',
 
 # Delete
 'deletepage' => 'Halakon pájina',
@@ -723,7 +714,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 # Contributions
 'contributions' => "Kontribuisaun uza-na'in",
 'contributions-title' => 'Kontribuisaun "$1" nian',
-'mycontris' => "Ha'u-nia kontribuisaun",
+'mycontris' => 'Kontribuisaun',
 'contribsub2' => 'Ba $1 ($2)',
 'uctop' => '(versaun atuál)',
 'month' => 'Fulan (ho molok):',

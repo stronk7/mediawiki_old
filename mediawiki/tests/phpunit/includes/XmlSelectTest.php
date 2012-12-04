@@ -5,9 +5,11 @@ class XmlSelectTest extends MediaWikiTestCase {
 	protected $select;
 
 	protected function setUp() {
+		parent::setUp();
 		$this->select = new XmlSelect();
 	}
 	protected function tearDown() {
+		parent::tearDown();
 		$this->select = null;
 	}
 
@@ -35,7 +37,7 @@ class XmlSelectTest extends MediaWikiTestCase {
 	 * Provides a fourth parameters representing the expected HTML output
 	 *
 	 */
-	public function provideConstructionParameters() {
+	public static function provideConstructionParameters() {
 		return array(
 			/**
 			 * Values are set following a 3-bit Gray code where two successive

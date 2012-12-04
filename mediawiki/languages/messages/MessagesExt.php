@@ -153,7 +153,6 @@ $messages = array(
 'qbbrowse' => 'Escrucal',
 'qbedit' => 'Eital',
 'qbpageoptions' => 'Esta páhina',
-'qbpageinfo' => 'Contestu',
 'qbmyoptions' => 'Las mis páhinas',
 'qbspecialpages' => 'Páhinas especialis',
 'faq' => 'FAQ',
@@ -377,12 +376,8 @@ La razón es la siguienti: ''$2''.",
 
 # Login and logout pages
 'logouttext' => "'''Cuenta afechá corretamenti.'''<br />
-Pueis acontinal gastandu {{SITENAME}} de holma anónima, u [[Special:UserLogin|entral ena tu cuenta]] con el mesmu ussuáriu, u con otru.
+Pueis acontinal gastandu {{SITENAME}} de holma anónima, u <span class='plainlinks'>[$1 entral ena tu cuenta]</span> con el mesmu ussuáriu, u con otru.
 Dati cuenta que hata que nu esborris el caché del tu escrucaol pué paecel que la tu cuenta acontina abierta n'angunas páginas.",
-'welcomecreation' => "== Bienviniu, $1! ==
-
-La tu cuenta d'ussuáriu á siu criá.
-Alcuerdati de chambal las tus [[Special:Preferences|preferéncias de {{SITENAME}}]].",
 'yourname' => "Nombri d'usuáriu:",
 'yourpassword' => 'Consínia:',
 'yourpasswordagain' => 'Escrebi e nuevu la consínia:',
@@ -790,8 +785,6 @@ Asigurati e qu'esti chambu mantenga la continuiá el estorial la páhina.",
 'search-interwiki-caption' => 'Proyeutus helmanus',
 'search-interwiki-default' => '$1 resurtaus:',
 'search-interwiki-more' => '(más)',
-'search-mwsuggest-enabled' => 'muestral sugeréncias',
-'search-mwsuggest-disabled' => 'nu muestral sugeréncias',
 'searchrelated' => 'relacionau',
 'searchall' => 'tó',
 'showingresults' => "Embahu se {{PLURAL:$1|muestra '''1''' resurtau qu'esmiença|muestran hata '''$1''' resurtaus qu'esmiençan}} pol #'''$2'''.",
@@ -1424,11 +1417,7 @@ Si quieis ehal de vehilal la páhina, pursa sobri \"Ehal de vehilal\".",
 
 'enotif_mailer' => 'Notificaeru pol correu e {{SITENAME}}',
 'enotif_reset' => 'Aseñalal tolas páhinas vesitás',
-'enotif_newpagetext' => 'Esta páhina es nueva.',
 'enotif_impersonal_salutation' => 'usuáriu e {{SITENAME}}',
-'changed' => 'chambau',
-'created' => 'criá',
-'enotif_subject' => '{{SITENAME}}: la páhina $PAGETITLE á siu $CHANGEDORCREATED pol $PAGEEDITOR',
 'enotif_lastvisited' => 'Vai pa $1 pa visoreal tolos chambus hechus dendi la tu úrtima vesita.',
 'enotif_lastdiff' => 'Vai pa $1 pa visoreal esti chambu.',
 'enotif_anon_editor' => 'usuáriu anónimu $1',

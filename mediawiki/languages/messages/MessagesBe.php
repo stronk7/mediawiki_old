@@ -25,25 +25,6 @@
  * @author לערי ריינהארט
  */
 
-$bookstoreList = array(
-	'OZ.by' => 'http://oz.by/search.phtml?what=books&isbn=$1',
-	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
-);
-
-$datePreferences = array(
-	'default',
-	'dmy',
-	'ISO 8601',
-);
-
-$defaultDateFormat = 'dmy';
-
-$dateFormats = array(
-	'dmy time' => 'H:i',
-	'dmy date' => 'j xg Y',
-	'dmy both' => 'H:i, j xg Y',
-);
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Мультымедыя',
 	NS_SPECIAL          => 'Адмысловае',
@@ -78,6 +59,25 @@ $magicWords = array(
 	'img_framed'                => array( '1', 'безрамкі', 'framed', 'enframed', 'frame' ),
 );
 
+$bookstoreList = array(
+	'OZ.by' => 'http://oz.by/search.phtml?what=books&isbn=$1',
+	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
+);
+
+$datePreferences = array(
+	'default',
+	'dmy',
+	'ISO 8601',
+);
+
+$defaultDateFormat = 'dmy';
+
+$dateFormats = array(
+	'dmy time' => 'H:i',
+	'dmy date' => 'j xg Y',
+	'dmy both' => 'H:i, j xg Y',
+);
+
 # Per discussion on http://translatewiki.net/wiki/Thread:Support/Customization_of number format
 $separatorTransformTable = array(
 	',' => "\xc2\xa0", # nbsp
@@ -94,7 +94,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Без паказу ўхваленых правак у нядаўніх змяненнях',
 'tog-newpageshidepatrolled' => 'Без паказу ўхваленых правак у пераліку новых старонак',
 'tog-extendwatchlist' => 'Паказваць усе змяненні, а не толькі апошнія',
-'tog-usenewrc' => 'Удасканалены выгляд (патрабуе Яваскрыпт)',
+'tog-usenewrc' => 'Групаваць змены старонкі ў спісах апошніх зменаў і назіранняў (патрабуе JavaScript)',
 'tog-numberheadings' => 'Аўта-нумараваць падзагалоўкі',
 'tog-showtoolbar' => 'Паказваць рэдактарскую стужку (Яваскрыпт)',
 'tog-editondblclick' => 'Праўка старонак па падвойным пстрыку (Яваскрыпт)',
@@ -102,10 +102,10 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Праўка падраздзелаў па правым пстрыку на загалоўку (Яваскрыпт)',
 'tog-showtoc' => 'Паказваць змест (для старонак, дзе больш за 3 падзагалоўкі)',
 'tog-rememberpassword' => 'Памятаць уваходныя даныя ў гэтым браўзеры (не даўжэй за $1 {{PLURAL:$1|дзень|дні|дзён}})',
-'tog-watchcreations' => 'Старонкі, створаныя мной, дадаюцца да назіранага',
-'tog-watchdefault' => 'Старонкі, праўленыя мной, дадаюцца да назіранага',
-'tog-watchmoves' => 'Старонкі, перанесеныя мной, дадаюцца да назіранага',
-'tog-watchdeletion' => 'Старонкі, сцёртыя мной, дадаюцца да назіранага',
+'tog-watchcreations' => 'Старонкі і файлы, створаныя мной, дадаюцца да назіранага',
+'tog-watchdefault' => 'Старонкі і файлы пасля маіх правак дадаюцца да назіранага',
+'tog-watchmoves' => 'Старонкі і файлы, перанесеныя мной пад іншую назву, дадаюцца да назіранага',
+'tog-watchdeletion' => 'Старонкі і файлы, сцёртыя мной, дадаюцца да назіранага',
 'tog-minordefault' => 'Пачынаць кожную праўку як дробную',
 'tog-previewontop' => 'Папярэдні паказ — над рэдактарскім полем',
 'tog-previewonfirst' => 'Папярэдні паказ пры першай праўцы',
@@ -231,7 +231,6 @@ $messages = array(
 'qbbrowse' => 'Выбраць',
 'qbedit' => 'Правіць',
 'qbpageoptions' => 'Гэтая старонка',
-'qbpageinfo' => 'Кантэкст',
 'qbmyoptions' => 'Свае старонкі',
 'qbspecialpages' => 'Адмысловыя старонкі',
 'faq' => 'ЧАПЫ',
@@ -481,8 +480,7 @@ $2',
 # Login and logout pages
 'logouttext' => "'''Вы выйшлі з сістэмы.'''
 
-Можна працягваць працу на {{SITENAME}} ананімна, або можна [[Special:UserLogin|ўвайсці ў сістэму ізноў]], пад тым самым або пад іншым удзельніцкім імем. Заўважце, што некаторыя старонкі могуць паказвацца так, быццам вы яшчэ не выйшлі; у такім разе трэба ачысціць кэш вашага браўзера.",
-'welcomecreation' => '== Вітаем, $1! == Ваш  рахунак быў створаны. Не забудзьцеся дапасаваць свае [[Special:Preferences|{{SITENAME}} настáўленні]].',
+Можна працягваць працу на {{SITENAME}} ананімна, або можна <span class='plainlinks'>[$1 ўвайсці ў сістэму ізноў]</span>, пад тым самым або пад іншым удзельніцкім імем. Заўважце, што некаторыя старонкі могуць паказвацца так, быццам вы яшчэ не выйшлі; у такім разе трэба ачысціць кэш вашага браўзера.",
 'yourname' => 'Імя ўдзельніка',
 'yourpassword' => 'Пароль',
 'yourpasswordagain' => 'Паўтарыце пароль',
@@ -718,7 +716,7 @@ $2
 або [{{fullurl:{{FULLPAGENAME}}|action=edit}} папрацаваць з гэтай старонкай]</span>.',
 'noarticletext-nopermission' => 'Старонка не ўтрымлівае тэксту.
 Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць гэткую назву]] ў іншых старонках,
-ці <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ў журналах]</span>.',
+ці <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ў журналах]</span>, але вы не маеце дазволу на стварэнне гэтай старонкі.',
 'userpage-userdoesnotexist' => 'Рахунак удзельніка "<nowiki>$1</nowiki>" не зарэгістраваны. Праверце, ці вы жадаеце стварыць або паправіць гэтую старонку.',
 'userpage-userdoesnotexist-view' => 'Уліковы запіс удзельніка " $1 "не зарэгістраваны.',
 'blocked-notice-logextract' => 'Гэты карыстальнік у дадзены момант заблакаваны. 
@@ -739,7 +737,7 @@ $2
 'userinvalidcssjstitle' => "'''Увага:''' Няма вокладкі з назвай \"\$1\". Памятайце, што свае старонкі .css і .js называюцца толькі малымі літарамі, такім чынам, напр., {{ns:user}}:Foo/vector.css, а не {{ns:user}}:Foo/Vector.css.",
 'updated' => '(абноўлена)',
 'note' => "'''Заўвага:'''",
-'previewnote' => "'''Гэта папярэдні паказ; праўкі яшчэ не замацаваныя!'''",
+'previewnote' => "'''Памятайце, гэта папярэдні паказ; праўкі яшчэ не замацаваныя!'''",
 'previewconflict' => 'Гэта папярэдні паказ магчымага выніку замацоўвання актуальнага стану крынічнага тэксту ў верхнім тэкставым полі.',
 'session_fail_preview' => "'''Не ўдалося апрацаваць вашую праўку, таму што сервер згубіў звесткі аб вашым сеансе.
 Паспрабуйце, калі ласка, ізноў. Калі і тады не атрымаецца, паспрабуйце [[Special:UserLogout|выйсці з сістэмы]] і зайсці ізноў.'''",
@@ -1052,8 +1050,6 @@ $1",
 'search-interwiki-caption' => 'Сумежныя праекты',
 'search-interwiki-default' => 'вынікі з $1:',
 'search-interwiki-more' => '(яшчэ)',
-'search-mwsuggest-enabled' => 'з прапановамі',
-'search-mwsuggest-disabled' => 'без прапановаў',
 'search-relatedarticle' => 'Дачыняюцца*',
 'mwsuggest-disable' => 'Не паказваць прапановаў AJAX',
 'searcheverything-enable' => 'Пошук ва ўсіх прасторах назваў',
@@ -1969,7 +1965,7 @@ $1',
 
 # Watchlist
 'watchlist' => 'Мой спіс назіранага',
-'mywatchlist' => 'Назіранае',
+'mywatchlist' => 'Спіс назіранага',
 'watchlistfor2' => 'Для $1 $2',
 'nowatchlist' => 'Ваш спіс назіранага зараз пусты.',
 'watchlistanontext' => 'Каб бачыць або правіць складнікі назіранага, трэба $1.',
@@ -2007,11 +2003,7 @@ $1',
 
 'enotif_mailer' => 'Апавяшчальнік {{SITENAME}}',
 'enotif_reset' => 'Пазначыць усе старонкі як наведаныя',
-'enotif_newpagetext' => 'Гэта новая старонка.',
 'enotif_impersonal_salutation' => 'Шаноўны ўдзельнік {{SITENAME}}',
-'changed' => 'зменена',
-'created' => 'створана',
-'enotif_subject' => 'Старонка {{SITENAME}} з назвай $PAGETITLE была $CHANGEDORCREATED удзельнікам $PAGEEDITOR',
 'enotif_lastvisited' => 'Гл. $1 каб бачыць усе мены пасля вашага апошняга наведвання.',
 'enotif_lastdiff' => 'Гл. $1 каб бачыць гэтую мену.',
 'enotif_anon_editor' => 'ананімны ўдзельнік $1',
@@ -2605,7 +2597,6 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript-тэсты',
-'javascripttest-disabled' => 'Гэта функцыя выключаная.',
 'javascripttest-title' => 'Праводзіцца тэставанне $1',
 'javascripttest-pagetext-noframework' => 'Гэта старонка зарэзервавана для запуску тэстаў JavaScript',
 'javascripttest-pagetext-unknownframework' => 'Невядомая бібліятэка тэставання «$1».',
@@ -3550,6 +3541,10 @@ MediaWiki распаўсюджваецца, спадзеючыся на прыд
 'feedback-close' => 'Зроблена.',
 'feedback-bugcheck' => 'Выдатна! Толькі праверце, што ў спісе [$1 вядомых памылак] яе няма падобнага запісу.',
 'feedback-bugnew' => 'Я праверыў. Паведаміць пра новую памылку',
+
+# Search suggestions
+'searchsuggest-search' => 'Знайсці',
+'searchsuggest-containing' => 'змяшчае...',
 
 # API errors
 'api-error-badaccess-groups' => 'У Вас няма дазволу загружаць файлы ў гэтую вікі.',

@@ -201,6 +201,13 @@ class Parser {
 	var $mUniqPrefix;
 
 	/**
+	 * @var Array with the language name of each language link (i.e. the
+	 * interwiki prefix) in the key, value arbitrary. Used to avoid sending
+	 * duplicate language links to the ParserOutput.
+	 */
+	var $mLangLinkLanguages;
+
+	/**
 	 * Constructor
 	 *
 	 * @param $conf array
@@ -237,6 +244,13 @@ class Parser {
 		foreach ( $this as $name => $value ) {
 			unset( $this->$name );
 		}
+	}
+
+	/**
+	 * Allow extensions to clean up when the parser is cloned
+	 */
+	function __clone() {
+		wfRunHooks( 'ParserCloned', array( $this ) );
 	}
 
 	/**
@@ -282,6 +296,7 @@ class Parser {
 			$this->mRevisionId = $this->mRevisionUser = null;
 		$this->mVarCache = array();
 		$this->mUser = null;
+		$this->mLangLinkLanguages = array();
 
 		/**
 		 * Prefix for temporary replacement strings for the multipass parser.
@@ -534,7 +549,7 @@ class Parser {
 	 * Also removes comments.
 	 * @return mixed|string
 	 */
-	function preprocess( $text, Title $title, ParserOptions $options, $revid = null ) {
+	function preprocess( $text, Title $title = null, ParserOptions $options, $revid = null ) {
 		wfProfileIn( __METHOD__ );
 		$this->startParse( $title, $options, self::OT_PREPROCESS, true );
 		if ( $revid !== null ) {
@@ -745,6 +760,7 @@ class Parser {
 	 *
 	 * @since 1.19
 	 *
+	 * @throws MWException
 	 * @return Language|null
 	 */
 	public function getTargetLanguage() {
@@ -1298,7 +1314,8 @@ class Parser {
 		if ( $text === false ) {
 			# Not an image, make a link
 			$text = Linker::makeExternalLink( $url,
-				$this->getConverterLanguage()->markNoConversion($url), true, 'free',
+				$this->getConverterLanguage()->markNoConversion( $url, true ),
+				true, 'free',
 				$this->getExternalLinkAttribs( $url ) );
 			# Register it in the output object...
 			# Replace unnecessary URL escape codes with their equivalent characters
@@ -1523,6 +1540,7 @@ class Parser {
 	 *
 	 * @param $text string
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	function replaceExternalLinks( $text ) {
@@ -1537,6 +1555,7 @@ class Parser {
 		$i = 0;
 		while ( $i<count( $bits ) ) {
 			$url = $bits[$i++];
+			// @todo FIXME: Unused variable.
 			$protocol = $bits[$i++];
 			$text = $bits[$i++];
 			$trail = $bits[$i++];
@@ -1595,7 +1614,25 @@ class Parser {
 		wfProfileOut( __METHOD__ );
 		return $s;
 	}
-
+	/**
+	 * Get the rel attribute for a particular external link.
+	 *
+	 * @since 1.21
+	 * @param $url String|bool optional URL, to extract the domain from for rel =>
+	 *   nofollow if appropriate
+	 * @param $title Title optional Title, for wgNoFollowNsExceptions lookups
+	 * @return string|null rel attribute for $url
+	 */
+	public static function getExternalLinkRel( $url = false, $title = null ) {
+		global $wgNoFollowLinks, $wgNoFollowNsExceptions, $wgNoFollowDomainExceptions;
+		$ns = $title ? $title->getNamespace() : false;
+		if ( $wgNoFollowLinks && !in_array( $ns, $wgNoFollowNsExceptions ) &&
+				!wfMatchesDomainList( $url, $wgNoFollowDomainExceptions ) )
+		{
+			return 'nofollow';
+		}
+		return null;
+	}
 	/**
 	 * Get an associative array of additional HTML attributes appropriate for a
 	 * particular external link.  This currently may include rel => nofollow
@@ -1608,13 +1645,8 @@ class Parser {
 	 */
 	function getExternalLinkAttribs( $url = false ) {
 		$attribs = array();
-		global $wgNoFollowLinks, $wgNoFollowNsExceptions, $wgNoFollowDomainExceptions;
-		$ns = $this->mTitle->getNamespace();
-		if ( $wgNoFollowLinks && !in_array( $ns, $wgNoFollowNsExceptions ) &&
-				!wfMatchesDomainList( $url, $wgNoFollowDomainExceptions ) )
-		{
-			$attribs['rel'] = 'nofollow';
-		}
+		$attribs['rel'] = self::getExternalLinkRel( $url, $this->mTitle );
+
 		if ( $this->mOptions->getExternalLinkTarget() ) {
 			$attribs['target'] = $this->mOptions->getExternalLinkTarget();
 		}
@@ -1726,6 +1758,8 @@ class Parser {
 
 	/**
 	 * Process [[ ]] wikilinks (RIL)
+	 * @param $s
+	 * @throws MWException
 	 * @return LinkHolderArray
 	 *
 	 * @private
@@ -1953,7 +1987,14 @@ class Parser {
 				# Interwikis
 				wfProfileIn( __METHOD__."-interwiki" );
 				if ( $iw && $this->mOptions->getInterwikiMagic() && $nottalk && Language::fetchLanguageName( $iw, null, 'mw' ) ) {
-					$this->mOutput->addLanguageLink( $nt->getFullText() );
+					// XXX: the above check prevents links to sites with identifiers that are not language codes
+
+					# Bug 24502: filter duplicates
+					if ( !isset( $this->mLangLinkLanguages[$iw] ) ) {
+						$this->mLangLinkLanguages[$iw] = true;
+						$this->mOutput->addLanguageLink( $nt->getFullText() );
+					}
+
 					$s = rtrim( $s . $prefix );
 					$s .= trim( $trail, "\n" ) == '' ? '': $prefix . $trail;
 					wfProfileOut( __METHOD__."-interwiki" );
@@ -2357,10 +2398,10 @@ class Parser {
 				wfProfileIn( __METHOD__."-paragraph" );
 				# No prefix (not in list)--go to paragraph mode
 				# XXX: use a stack for nestable elements like span, table and div
-				$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+				$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<dl|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
 				$closematch = preg_match(
 					'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
-					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/dl|<\\/?center)/iS', $t );
 				if ( $openmatch or $closematch ) {
 					$paragraphStack = false;
 					# TODO bug 5718: paragraph closed
@@ -2436,6 +2477,7 @@ class Parser {
 	 * @param $str String the string to split
 	 * @param &$before String set to everything before the ':'
 	 * @param &$after String set to everything after the ':'
+	 * @throws MWException
 	 * @return String the position of the ':', or false if none found
 	 */
 	function findColonNoLinks( $str, &$before, &$after ) {
@@ -2600,8 +2642,9 @@ class Parser {
 	 * @private
 	 *
 	 * @param $index integer
-	 * @param $frame PPFrame
+	 * @param bool|\PPFrame $frame
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	function getVariableValue( $index, $frame = false ) {
@@ -3110,6 +3153,7 @@ class Parser {
 	 *  $piece['parts']: the parameter array
 	 *  $piece['lineStart']: whether the brace was at the start of a line
 	 * @param $frame PPFrame The current frame, contains template arguments
+	 * @throws MWException
 	 * @return String: the text of the template
 	 * @private
 	 */
@@ -3593,7 +3637,13 @@ class Parser {
 			}
 
 			if ( $rev ) {
-				$text = $rev->getText();
+				$content = $rev->getContent();
+				$text = $content ? $content->getWikitextForTransclusion() : null;
+
+				if ( $text === false || $text === null ) {
+					$text = false;
+					break;
+				}
 			} elseif ( $title->getNamespace() == NS_MEDIAWIKI ) {
 				global $wgContLang;
 				$message = wfMessage( $wgContLang->lcfirst( $title->getText() ) )->inContentLanguage();
@@ -3601,16 +3651,17 @@ class Parser {
 					$text = false;
 					break;
 				}
+				$content = $message->content();
 				$text = $message->plain();
 			} else {
 				break;
 			}
-			if ( $text === false ) {
+			if ( !$content ) {
 				break;
 			}
 			# Redirect?
 			$finalTitle = $title;
-			$title = Title::newFromRedirect( $text );
+			$title = $content->getRedirectTarget();
 		}
 		return array(
 			'text' => $text,
@@ -3699,8 +3750,13 @@ class Parser {
 			return $obj->tc_contents;
 		}
 
-		$text = Http::get( $url );
-		if ( !$text ) {
+		$req = MWHttpRequest::factory( $url );
+		$status = $req->execute(); // Status object
+		if ( $status->isOK() ) {
+			$text = $req->getContent();
+		} elseif ( $req->getStatus() != 200 ) { // Though we failed to fetch the content, this status is useless.
+			return wfMessage( 'scarytranscludefailed-httpstatus', $url, $req->getStatus() /* HTTP status */ )->inContentLanguage()->text();
+		} else {
 			return wfMessage( 'scarytranscludefailed', $url )->inContentLanguage()->text();
 		}
 
@@ -3775,6 +3831,7 @@ class Parser {
 	 *     noClose    Original text did not have a close tag
 	 * @param $frame PPFrame
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	function extensionSubstitution( $params, $frame ) {
@@ -4144,10 +4201,16 @@ class Parser {
 			$safeHeadline = $this->mStripState->unstripBoth( $safeHeadline );
 
 			# Strip out HTML (first regex removes any tag not allowed)
-			# Allowed tags are <sup> and <sub> (bug 8393), <i> (bug 26375) and <b> (r105284)
-			# We strip any parameter from accepted tags (second regex)
+			# Allowed tags are:
+			# * <sup> and <sub> (bug 8393)
+			# * <i> (bug 26375)
+			# * <b> (r105284)
+			# * <span dir="rtl"> and <span dir="ltr"> (bug 35167)
+			#
+			# We strip any parameter from accepted tags (second regex), except dir="rtl|ltr" from <span>,
+			# to allow setting directionality in toc items.
 			$tocline = preg_replace(
-				array( '#<(?!/?(sup|sub|i|b)(?: [^>]*)?>).*?'.'>#', '#<(/?(sup|sub|i|b))(?: .*?)?'.'>#' ),
+				array( '#<(?!/?(span|sup|sub|i|b)(?: [^>]*)?>).*?'.'>#', '#<(/?(?:span(?: dir="(?:rtl|ltr)")?|sup|sub|i|b))(?: .*?)?'.'>#' ),
 				array( '',                          '<$1>' ),
 				$safeHeadline
 			);
@@ -4633,11 +4696,7 @@ class Parser {
 			global $wgTitle;
 			$title = $wgTitle;
 		}
-		if ( !$title ) {
-			# It's not uncommon having a null $wgTitle in scripts. See r80898
-			# Create a ghost title in such case
-			$title = Title::newFromText( 'Dwimmerlaik' );
-		}
+
 		$text = $this->preprocess( $text, $title, $options );
 
 		$executing = false;
@@ -4666,6 +4725,7 @@ class Parser {
 	 *
 	 * @param $tag Mixed: the tag to use, e.g. 'hook' for "<hook>"
 	 * @param $callback Mixed: the callback function (and object) to use for the tag
+	 * @throws MWException
 	 * @return Mixed|null The old value of the mTagHooks array associated with the hook
 	 */
 	public function setHook( $tag, $callback ) {
@@ -4696,6 +4756,7 @@ class Parser {
 	 *
 	 * @param $tag Mixed: the tag to use, e.g. 'hook' for "<hook>"
 	 * @param $callback Mixed: the callback function (and object) to use for the tag
+	 * @throws MWException
 	 * @return Mixed|null The old value of the mTagHooks array associated with the hook
 	 */
 	function setTransparentTagHook( $tag, $callback ) {
@@ -4758,6 +4819,7 @@ class Parser {
 	 *     Please read the documentation in includes/parser/Preprocessor.php for more information
 	 *     about the methods available in PPFrame and PPNode.
 	 *
+	 * @throws MWException
 	 * @return string|callback The old callback function for this name, if any
 	 */
 	public function setFunctionHook( $id, $callback, $flags = 0 ) {
@@ -4805,6 +4867,10 @@ class Parser {
 	 * Create a tag function, e.g. "<test>some stuff</test>".
 	 * Unlike tag hooks, tag functions are parsed at preprocessor level.
 	 * Unlike parser functions, their content is not preprocessed.
+	 * @param $tag
+	 * @param $callback
+	 * @param $flags
+	 * @throws MWException
 	 * @return null
 	 */
 	function setFunctionTagHook( $tag, $callback, $flags ) {
@@ -5768,6 +5834,7 @@ class Parser {
 	 * check whether it is still valid, by calling isValidHalfParsedText().
 	 *
 	 * @param $data array Serialized data
+	 * @throws MWException
 	 * @return String
 	 */
 	function unserializeHalfParsedText( $data ) {

@@ -316,7 +316,8 @@ abstract class File {
 	public function getUrl() {
 		if ( !isset( $this->url ) ) {
 			$this->assertRepoDefined();
-			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
+			$ext = $this->getExtension();
+			$this->url = $this->repo->getZoneUrl( 'public', $ext ) . '/' . $this->getUrlRel();
 		}
 		return $this->url;
 	}
@@ -1253,7 +1254,8 @@ abstract class File {
 	 */
 	function getArchiveUrl( $suffix = false ) {
 		$this->assertRepoDefined();
-		$path = $this->repo->getZoneUrl( 'public' ) . '/archive/' . $this->getHashPath();
+		$ext = $this->getExtension();
+		$path = $this->repo->getZoneUrl( 'public', $ext ) . '/archive/' . $this->getHashPath();
 		if ( $suffix === false ) {
 			$path = substr( $path, 0, -1 );
 		} else {
@@ -1272,7 +1274,8 @@ abstract class File {
 	 */
 	function getArchiveThumbUrl( $archiveName, $suffix = false ) {
 		$this->assertRepoDefined();
-		$path = $this->repo->getZoneUrl( 'thumb' ) . '/archive/' .
+		$ext = $this->getExtension();
+		$path = $this->repo->getZoneUrl( 'thumb', $ext ) . '/archive/' .
 			$this->getHashPath() . rawurlencode( $archiveName ) . "/";
 		if ( $suffix === false ) {
 			$path = substr( $path, 0, -1 );
@@ -1291,7 +1294,8 @@ abstract class File {
 	 */
 	function getThumbUrl( $suffix = false ) {
 		$this->assertRepoDefined();
-		$path = $this->repo->getZoneUrl( 'thumb' ) . '/' . $this->getUrlRel();
+		$ext = $this->getExtension();
+		$path = $this->repo->getZoneUrl( 'thumb', $ext ) . '/' . $this->getUrlRel();
 		if ( $suffix !== false ) {
 			$path .= '/' . rawurlencode( $suffix );
 		}
@@ -1386,17 +1390,21 @@ abstract class File {
 	 * The archive name should be passed through to recordUpload for database
 	 * registration.
 	 *
+	 * Options to $options include:
+	 *   - headers : name/value map of HTTP headers to use in response to GET/HEAD requests
+	 *
 	 * @param $srcPath String: local filesystem path to the source image
 	 * @param $flags Integer: a bitwise combination of:
 	 *     File::DELETE_SOURCE    Delete the source file, i.e. move
 	 *         rather than copy
+	 * @param $options Array Optional additional parameters
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 *
 	 * STUB
 	 * Overridden by LocalFile
 	 */
-	function publish( $srcPath, $flags = 0 ) {
+	function publish( $srcPath, $flags = 0, array $options = array() ) {
 		$this->readOnlyError();
 	}
 
@@ -1734,6 +1742,18 @@ abstract class File {
 
 		$fsFile = new FSFile( $path );
 		return $fsFile->getSha1Base36();
+	}
+
+	/**
+	 * @return Array HTTP header name/value map to use for HEAD/GET request responses
+	 */
+	function getStreamHeaders() {
+		$handler = $this->getHandler();
+		if ( $handler ) {
+			return $handler->getStreamHeaders( $this->getMetadata() );
+		} else {
+			return array();
+		}
 	}
 
 	/**

@@ -237,7 +237,6 @@ $messages = array(
 'qbbrowse' => 'Qaraw',
 'qbedit' => 'Üzgärtü',
 'qbpageoptions' => 'Bu bit',
-'qbpageinfo' => 'Bit turında mäğlümatlar',
 'qbmyoptions' => 'Bitlärem',
 'qbspecialpages' => 'Maxsus bitlär',
 'faq' => 'YBS',
@@ -477,11 +476,8 @@ Ul kürsätkän säbäp: ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Sez xisap yazmağızdan çıqtığız.'''
 
-Sez {{SITENAME}} proyektında anonim räweştä qala yäisä şul uq yäki başqa isem belän yañadan [[Special:UserLogin|kerä]] alasız.
+Sez {{SITENAME}} proyektında anonim räweştä qala yäisä şul uq yäki başqa isem belän yañadan <span class='plainlinks'>[$1 kerä]</span> alasız.
 Qayber bitlär Sez kergän kebek kürsätelergä mömkin. Monı beterü öçen brauzer keşın çistartığız.",
-'welcomecreation' => '== Räxim itegez, $1! ==
-Sez terkäldegez.
-Saytnıñ şäxsi [[Special:Preferences|köylänmälären]] qararğa onıtmağız.',
 'yourname' => 'Qullanuçı iseme:',
 'yourpassword' => 'Sersüz:',
 'yourpasswordagain' => 'Sersüzne qabat kertü:',
@@ -924,8 +920,6 @@ Sez idaräçe bulu säbäple, [$1 yäşerelgän yuramanı qarıy alasız]",
 'search-interwiki-caption' => 'Tuğandaş proyektlar',
 'search-interwiki-default' => '$1 näticä:',
 'search-interwiki-more' => '(tağın)',
-'search-mwsuggest-enabled' => 'kiñäşlär belän',
-'search-mwsuggest-disabled' => 'kiñäşsez',
 'search-relatedarticle' => 'Bäylängän',
 'mwsuggest-disable' => 'AJAX-yärdämne yabu',
 'searcheverything-enable' => 'Barlıq isemnär mäydanında ezläw',
@@ -1517,11 +1511,7 @@ Bu bittä häm anıñ bäxäslegendä barlıq bulaçaq üzgärtülär şunda kü
 'watching' => 'Küzätü isemlegemä östäwe…',
 'unwatching' => 'Küzätü isemlegemnän çığaruı…',
 
-'enotif_newpagetext' => 'Bu yaña bit.',
 'enotif_impersonal_salutation' => '{{SITENAME}} qullanuçı',
-'changed' => 'üzgärtelde',
-'created' => 'tözergän',
-'enotif_subject' => '{{SITENAME}} proyektınıñ $PAGETITLE bite $PAGEEDITOR tarafınnan $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Soñğı kerüegezdän soñ bulğan barlıq üzgärtülärne kürer öçen, bu sıltama aşa uzığız: $1',
 'enotif_body' => 'Xörmätle $WATCHINGUSERNAME,
 

@@ -388,8 +388,6 @@ Na tu yu tok tru nau olsem yu raitim dispela yu yet, o yu kisim long wanpela hap
 'search-suggest' => 'Yu laik tok: $1',
 'search-interwiki-default' => '$1 ol painim:',
 'search-interwiki-more' => '(moa)',
-'search-mwsuggest-enabled' => 'halivim mi',
-'search-mwsuggest-disabled' => 'nogat halivim mi',
 'searchall' => 'olgeta',
 'powersearch' => 'Mobeta Painim',
 'powersearch-legend' => 'Mobeta Painim',
@@ -655,11 +653,7 @@ Sapos yu laik rausim dispela pes long lukautbuk bilong yu bihain, paitim \"Pinis
 'unwatching' => 'Wet liklik, i raus nau long lukautbuk...',
 
 'enotif_reset' => 'Makim olgeta pes olsem mi lukim pinis',
-'enotif_newpagetext' => 'Dispela emi nupela pes.',
 'enotif_impersonal_salutation' => 'yusa long {{SITENAME}}',
-'changed' => 'i senisim',
-'created' => 'i kirapim',
-'enotif_subject' => '$PAGEEDITOR $CHANGEDORCREATED pes $PAGETITLE long {{SITENAME}}',
 'enotif_anon_editor' => 'IP yusa $1',
 
 # Delete
@@ -886,5 +880,8 @@ Yu inap lukim as tok bilong em',
 
 # HTML forms
 'htmlform-selectorother-other' => 'Narapela',
+
+# Search suggestions
+'searchsuggest-search' => 'Painim',
 
 );

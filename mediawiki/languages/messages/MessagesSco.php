@@ -159,7 +159,6 @@ $messages = array(
 'qbbrowse' => 'Brouse',
 'qbedit' => 'Edit',
 'qbpageoptions' => 'This page',
-'qbpageinfo' => 'Context',
 'qbmyoptions' => 'Ma pages',
 'qbspecialpages' => 'Byordinar pages',
 'faq' => 'ASQ',
@@ -372,10 +371,6 @@ The grunds for this are: ''$2''.",
 
 Ye can continue to uise {{SITENAME}} namelessly, or ye can log in again as the same or as a different uiser.
 Mynd that some pages micht continue tae be displayed as if ye war aye loggit in, till ye clear yer brouser cache.",
-'welcomecreation' => '== Guid tae see ye, $1! ==
-
-Yer accoont haes been creatit.
-Mynd an chynge yer [[Special:Preferences|{{SITENAME}} preferences]].',
 'yourname' => 'Yer uiser name',
 'yourpassword' => 'Passwaird:',
 'yourpasswordagain' => 'Retype passwaird:',
@@ -731,8 +726,6 @@ there micht be parteeculars in the [{{fullurl:{{#Special:Log}}/suppress|page={{F
 'search-section' => '(section $1)',
 'search-suggest' => 'Did ye mean: $1',
 'search-interwiki-more' => '(more)',
-'search-mwsuggest-enabled' => 'wi suggestions',
-'search-mwsuggest-disabled' => 'nae propone',
 'searchrelated' => 'related',
 'searchall' => 'aw',
 'showingresults' => "Shawin ablo up tae {{PLURAL:$1|'''1''' result|'''$1''' results}} stertin wi #'''$2'''.",
@@ -1101,9 +1094,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'unwatching' => 'Unwatchin...',
 
 'enotif_reset' => 'Merk aa pages visitit',
-'changed' => 'chynged',
-'created' => 'creatit',
-'enotif_subject' => '{{SITENAME}} page $PAGETITLE haes been $CHANGEDORCREATED bi $PAGEEDITOR',
 'enotif_lastvisited' => 'Hae a leuk at $1 for aa chynges sin yer last visit.',
 
 # Delete

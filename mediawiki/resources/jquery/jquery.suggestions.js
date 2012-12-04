@@ -13,11 +13,11 @@
  *
  * Options:
  *
- * fetch(query): Callback that should fetch suggestions and set the suggestions property. Executed in the context of the
- *		textbox
+ * fetch(query): Callback that should fetch suggestions and set the suggestions property.
+ *      Executed in the context of the textbox
  *		Type: Function
- * cancel: Callback function to call when any pending asynchronous suggestions fetches should be canceled.
- *		Executed in the context of the textbox
+ * cancel: Callback function to call when any pending asynchronous suggestions fetches
+ *      should be canceled. Executed in the context of the textbox
  *		Type: Function
  * special: Set of callbacks for rendering and selecting
  *		Type: Object of Functions 'render' and 'select'
@@ -33,10 +33,14 @@
  *		Type: Number, Range: 0 - 1200, Default: 120
  * submitOnClick: Whether to submit the form containing the textbox when a suggestion is clicked
  *		Type: Boolean, Default: false
- * maxExpandFactor: Maximum suggestions box width relative to the textbox width. If set to e.g. 2, the suggestions box
- *		will never be grown beyond 2 times the width of the textbox.
+ * maxExpandFactor: Maximum suggestions box width relative to the textbox width. If set
+ *      to e.g. 2, the suggestions box will never be grown beyond 2 times the width of the textbox.
  *		Type: Number, Range: 1 - infinity, Default: 3
- * positionFromLeft: Whether to position the suggestion box with the left attribute or the right
+ * expandFrom: Which direction to offset the suggestion box from.
+ *      Values 'start' and 'end' translate to left and right respectively depending on the
+ *      directionality of the current document, according to $( 'html' ).css( 'direction' ).
+ *      Type: String, default: 'auto', options: 'left', 'right', 'start', 'end', 'auto'.
+ * positionFromLeft: Sets expandFrom=left, for backwards compatibility
  *		Type: Boolean, Default: true
  * highlightInput: Whether to hightlight matched portions of the input or not
  *		Type: Boolean, Default: false
@@ -56,18 +60,22 @@ $.suggestions = {
 			context.config.cancel.call( context.data.$textbox );
 		}
 	},
+
 	/**
-	 * Restore the text the user originally typed in the textbox, before it was overwritten by highlight(). This
-	 * restores the value the currently displayed suggestions are based on, rather than the value just before
+	 * Restore the text the user originally typed in the textbox, before it
+	 * was overwritten by highlight(). This restores the value the currently
+	 * displayed suggestions are based on, rather than the value just before
 	 * highlight() overwrote it; the former is arguably slightly more sensible.
 	 */
 	restore: function ( context ) {
 		context.data.$textbox.val( context.data.prevText );
 	},
+
 	/**
-	 * Ask the user-specified callback for new suggestions. Any previous delayed call to this function still pending
-	 * will be canceled. If the value in the textbox is empty or hasn't changed since the last time suggestions were fetched, this
-	 * function does nothing.
+	 * Ask the user-specified callback for new suggestions. Any previous delayed
+	 * call to this function still pending will be canceled. If the value in the
+	 * textbox is empty or hasn't changed since the last time suggestions were fetched,
+	 * this function does nothing.
 	 * @param {Boolean} delayed Whether or not to delay this by the currently configured amount of time
 	 */
 	update: function ( context, delayed ) {
@@ -97,6 +105,7 @@ $.suggestions = {
 		}
 		$.suggestions.special( context );
 	},
+
 	special: function ( context ) {
 		// Allow custom rendering - but otherwise don't do any rendering
 		if ( typeof context.config.special.render === 'function' ) {
@@ -108,12 +117,17 @@ $.suggestions = {
 			}, 1 );
 		}
 	},
+
 	/**
 	 * Sets the value of a property, and updates the widget accordingly
 	 * @param property String Name of property
 	 * @param value Mixed Value to set property with
 	 */
 	configure: function ( context, property, value ) {
+		var newCSS,
+			$autoEllipseMe, $result, $results, $span,
+			i, expWidth, matchedText, maxWidth, text;
+
 		// Validate creation using fallback values
 		switch( property ) {
 			case 'fetch':
@@ -121,6 +135,7 @@ $.suggestions = {
 			case 'special':
 			case 'result':
 			case '$region':
+			case 'expandFrom':
 				context.config[property] = value;
 				break;
 			case 'suggestions':
@@ -134,36 +149,96 @@ $.suggestions = {
 						// Rebuild the suggestions list
 						context.data.$container.show();
 						// Update the size and position of the list
-						var newCSS = {
+						newCSS = {
 							top: context.config.$region.offset().top + context.config.$region.outerHeight(),
 							bottom: 'auto',
 							width: context.config.$region.outerWidth(),
 							height: 'auto'
 						};
-						if ( context.config.positionFromLeft ) {
+
+						// Process expandFrom, after this it is set to left or right.
+						context.config.expandFrom = ( function ( expandFrom ) {
+							var regionWidth, docWidth, regionCenter, docCenter,
+								docDir = $( document.documentElement ).css( 'direction' ),
+								$region = context.config.$region;
+
+							// Backwards compatible
+							if ( context.config.positionFromLeft ) {
+								expandFrom = 'left';
+
+							// Catch invalid values, default to 'auto'
+							} else if ( $.inArray( expandFrom, ['left', 'right', 'start', 'end', 'auto'] ) === -1 ) {
+								expandFrom = 'auto';
+							}
+
+							if ( expandFrom === 'auto' ) {
+								if ( $region.data( 'searchsuggest-expand-dir' ) ) {
+									// If the markup explicitly contains a direction, use it.
+									expandFrom = $region.data( 'searchsuggest-expand-dir' );
+								} else {
+									regionWidth = $region.outerWidth();
+									docWidth = $( document ).width();
+									if ( ( regionWidth / docWidth  ) > 0.85 ) {
+										// If the input size takes up more than 85% of the document horizontally
+										// expand the suggestions to the writing direction's native end.
+										expandFrom = 'start';
+									} else {
+										// Calculate the center points of the input and document
+										regionCenter = $region.offset().left + regionWidth / 2;
+										docCenter = docWidth / 2;
+										if ( Math.abs( regionCenter - docCenter ) / docCenter < 0.10 ) {
+											// If the input's center is within 10% of the document center
+											// use the writing direction's native end.
+											expandFrom = 'start';
+										} else {
+											// Otherwise expand the input from the closest side of the page,
+											// towards the side of the page with the most free open space
+											expandFrom = regionCenter > docCenter ? 'right' : 'left';
+										}
+									}
+								}
+							}
+
+							if ( expandFrom === 'start' ) {
+								expandFrom = docDir === 'rtl' ? 'right': 'left';
+
+							} else if ( expandFrom === 'end' ) {
+								expandFrom = docDir === 'rtl' ? 'left': 'right';
+							}
+
+							return expandFrom;
+
+						}( context.config.expandFrom ) );
+
+						if ( context.config.expandFrom === 'left' ) {
+							// Expand from left
 							newCSS.left = context.config.$region.offset().left;
 							newCSS.right = 'auto';
 						} else {
+							// Expand from right
 							newCSS.left = 'auto';
 							newCSS.right = $( 'body' ).width() - ( context.config.$region.offset().left + context.config.$region.outerWidth() );
 						}
+
 						context.data.$container.css( newCSS );
-						var $results = context.data.$container.children( '.suggestions-results' );
+						$results = context.data.$container.children( '.suggestions-results' );
 						$results.empty();
-						var expWidth = -1;
-						var $autoEllipseMe = $( [] );
-						var matchedText = null;
-						for ( var i = 0; i < context.config.suggestions.length; i++ ) {
+						expWidth = -1;
+						$autoEllipseMe = $( [] );
+						matchedText = null;
+						for ( i = 0; i < context.config.suggestions.length; i++ ) {
 							/*jshint loopfunc:true */
-							var text = context.config.suggestions[i];
-							var $result = $( '<div>' )
+							text = context.config.suggestions[i];
+							$result = $( '<div>' )
 								.addClass( 'suggestions-result' )
 								.attr( 'rel', i )
 								.data( 'text', context.config.suggestions[i] )
-								.mousemove( function ( e ) {
+								.mousemove( function () {
 									context.data.selectedWithMouse = true;
 									$.suggestions.highlight(
-										context, $(this).closest( '.suggestions-results div' ), false
+										context,
+										$(this).closest( '.suggestions-results div' ),
+										false
 									);
 								} )
 								.appendTo( $results );
@@ -182,7 +257,7 @@ $.suggestions = {
 
 								// Widen results box if needed
 								// New width is only calculated here, applied later
-								var $span = $result.children( 'span' );
+								$span = $result.children( 'span' );
 								if ( $span.outerWidth() > $result.width() && $span.outerWidth() > expWidth ) {
 									// factor in any padding, margin, or border space on the parent
 									expWidth = $span.outerWidth() + ( context.data.$container.width() - $span.parent().width());
@@ -192,11 +267,15 @@ $.suggestions = {
 						}
 						// Apply new width for results box, if any
 						if ( expWidth > context.data.$container.width() ) {
-							var maxWidth = context.config.maxExpandFactor*context.data.$textbox.width();
+							maxWidth = context.config.maxExpandFactor*context.data.$textbox.width();
 							context.data.$container.width( Math.min( expWidth, maxWidth ) );
 						}
 						// autoEllipse the results. Has to be done after changing the width
-						$autoEllipseMe.autoEllipsis( { hasSpan: true, tooltip: true, matchText: matchedText } );
+						$autoEllipseMe.autoEllipsis( {
+							hasSpan: true,
+							tooltip: true,
+							matchText: matchedText
+						} );
 					}
 				}
 				break;
@@ -216,6 +295,7 @@ $.suggestions = {
 				break;
 		}
 	},
+
 	/**
 	 * Highlight a result in the results table
 	 * @param result <tr> to highlight: jQuery object, or 'prev' or 'next'
@@ -274,13 +354,16 @@ $.suggestions = {
 			context.data.$textbox.trigger( 'change' );
 		}
 	},
+
 	/**
 	 * Respond to keypress event
 	 * @param key Integer Code of key pressed
 	 */
 	keypress: function ( e, context, key ) {
-		var wasVisible = context.data.$container.is( ':visible' ),
+		var selected,
+			wasVisible = context.data.$container.is( ':visible' ),
 			preventDefault = false;
+
 		switch ( key ) {
 			// Arrow down
 			case 40:
@@ -312,7 +395,7 @@ $.suggestions = {
 			case 13:
 				context.data.$container.hide();
 				preventDefault = wasVisible;
-				var selected = context.data.$container.find( '.suggestions-result-current' );
+				selected = context.data.$container.find( '.suggestions-result-current' );
 				if ( selected.length === 0 || context.data.selectedWithMouse ) {
 					// if nothing is selected OR if something was selected with the mouse,
 					// cancel any current requests and submit the form
@@ -344,29 +427,30 @@ $.suggestions = {
 $.fn.suggestions = function () {
 
 	// Multi-context fields
-	var returnValue;
-	var args = arguments;
+	var returnValue,
+		args = arguments;
 
 	$(this).each( function () {
+		var context, key;
 
 		/* Construction / Loading */
 
-		var context = $(this).data( 'suggestions-context' );
+		context = $(this).data( 'suggestions-context' );
 		if ( context === undefined || context === null ) {
 			context = {
 				config: {
-					'fetch' : function () {},
-					'cancel': function () {},
-					'special': {},
-					'result': {},
-					'$region': $(this),
-					'suggestions': [],
-					'maxRows': 7,
-					'delay': 120,
-					'submitOnClick': false,
-					'maxExpandFactor': 3,
-					'positionFromLeft': true,
-					'highlightInput': false
+					fetch: function () {},
+					cancel: function () {},
+					special: {},
+					result: {},
+					$region: $(this),
+					suggestions: [],
+					maxRows: 7,
+					delay: 120,
+					submitOnClick: false,
+					maxExpandFactor: 3,
+					expandFrom: 'auto',
+					highlightInput: false
 				}
 			};
 		}
@@ -377,7 +461,7 @@ $.fn.suggestions = function () {
 		if ( args.length > 0 ) {
 			if ( typeof args[0] === 'object' ) {
 				// Apply set of properties
-				for ( var key in args[0] ) {
+				for ( key in args[0] ) {
 					$.suggestions.configure( context, key, args[0][key] );
 				}
 			} else if ( typeof args[0] === 'string' ) {
@@ -409,33 +493,22 @@ $.fn.suggestions = function () {
 				$textbox: $(this),
 				selectedWithMouse: false
 			};
-			// Setup the css for positioning the results box
-			var newCSS = {
-				top: Math.round( context.data.$textbox.offset().top + context.data.$textbox.outerHeight() ),
-				width: context.data.$textbox.outerWidth(),
-				display: 'none'
-			};
-			if ( context.config.positionFromLeft ) {
-				newCSS.left = context.config.$region.offset().left;
-				newCSS.right = 'auto';
-			} else {
-				newCSS.left = 'auto';
-				newCSS.right = $( 'body' ).width() - ( context.config.$region.offset().left + context.config.$region.outerWidth() );
-			}
 
 			context.data.$container = $( '<div>' )
-				.css( newCSS )
+				.css( 'display', 'none' )
 				.addClass( 'suggestions' )
 				.append(
 					$( '<div>' ).addClass( 'suggestions-results' )
-						// Can't use click() because the container div is hidden when the textbox loses focus. Instead,
-						// listen for a mousedown followed by a mouseup on the same div
+						// Can't use click() because the container div is hidden when the
+						// textbox loses focus. Instead, listen for a mousedown followed
+						// by a mouseup on the same div.
 						.mousedown( function ( e ) {
 							context.data.mouseDownOn = $( e.target ).closest( '.suggestions-results div' );
 						} )
 						.mouseup( function ( e ) {
-							var $result = $( e.target ).closest( '.suggestions-results div' );
-							var $other = context.data.mouseDownOn;
+							var $result = $( e.target ).closest( '.suggestions-results div' ),
+								$other = context.data.mouseDownOn;
+
 							context.data.mouseDownOn = $( [] );
 							if ( $result.get( 0 ) !== $other.get( 0 ) ) {
 								return;
@@ -450,14 +523,16 @@ $.fn.suggestions = function () {
 				)
 				.append(
 					$( '<div>' ).addClass( 'suggestions-special' )
-						// Can't use click() because the container div is hidden when the textbox loses focus. Instead,
-						// listen for a mousedown followed by a mouseup on the same div
+						// Can't use click() because the container div is hidden when the
+						// textbox loses focus. Instead, listen for a mousedown followed
+						// by a mouseup on the same div.
 						.mousedown( function ( e ) {
 							context.data.mouseDownOn = $( e.target ).closest( '.suggestions-special' );
 						} )
 						.mouseup( function ( e ) {
-							var $special = $( e.target ).closest( '.suggestions-special' );
-							var $other = context.data.mouseDownOn;
+							var $special = $( e.target ).closest( '.suggestions-special' ),
+								$other = context.data.mouseDownOn;
+
 							context.data.mouseDownOn = $( [] );
 							if ( $special.get( 0 ) !== $other.get( 0 ) ) {
 								return;
@@ -476,6 +551,7 @@ $.fn.suggestions = function () {
 						} )
 				)
 				.appendTo( $( 'body' ) );
+
 			$(this)
 				// Stop browser autocomplete from interfering
 				.attr( 'autocomplete', 'off')
@@ -521,6 +597,7 @@ $.fn.suggestions = function () {
 					$.suggestions.cancel( context );
 				} );
 		}
+
 		// Store the context for next time
 		$(this).data( 'suggestions-context', context );
 	} );

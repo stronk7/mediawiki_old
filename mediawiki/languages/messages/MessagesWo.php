@@ -221,7 +221,6 @@ $messages = array(
 'qbbrowse' => 'Lemmi',
 'qbedit' => 'Soppi',
 'qbpageoptions' => 'Xëtuw tànneef',
-'qbpageinfo' => 'Xëtuw xibaar',
 'qbmyoptions' => 'Samay tànneef',
 'qbspecialpages' => 'Xëti jagleel',
 'faq' => 'Laaj yi ëpp',
@@ -450,10 +449,7 @@ Ngirte li mu joxe mooy ne « ''$2'' ».",
 # Login and logout pages
 'logouttext' => "Fi mu nekk nii génn nga.'''
 
-Man ngaa wéy di jëfandikoo {{SITENAME}} ci anam buñ la dul xamme walla nga  [[Special:UserLogin|duggewaat]] ak wenn tur wi walla ak weneen.",
-'welcomecreation' => '== Dalal-jàmm, $1 ! ==
-Sosees na sa sàq.
-Bul fatte soppi say [[Special:Preferences|{{SITENAME}} tànneef]].',
+Man ngaa wéy di jëfandikoo {{SITENAME}} ci anam buñ la dul xamme walla nga  <span class='plainlinks'>[$1 duggewaat]</span> ak wenn tur wi walla ak weneen.",
 'yourname' => 'Sa turu jëfandikukat',
 'yourpassword' => 'Sa baatujàll',
 'yourpasswordagain' => 'Bindaatal sa baatujàll',
@@ -907,8 +903,6 @@ Soo jëfandikoo lëkkalekaayu joow yi day neenal boyot yi nga jotoon a fal.',
 'search-interwiki-caption' => 'Sémbu niroowaale',
 'search-interwiki-default' => '$1 ngérte :',
 'search-interwiki-more' => '(yeneen)',
-'search-mwsuggest-enabled' => 'ak xelal',
-'search-mwsuggest-disabled' => 'ci lu dul xelal',
 'search-relatedarticle' => 'Yeneeni ngérte',
 'mwsuggest-disable' => 'Doxadil xelal yu AJAX',
 'searcheverything-enable' => 'Seet ci barabi tur yépp',
@@ -1627,11 +1621,7 @@ Coppite yiy ñëw yu xët wi ak xëtu waxtaanuwaay wi mu àndal di nañu leen fa
 'unwatching' => 'Farug toppte gi ...',
 
 'enotif_reset' => 'Fésal xët yépp niki yoo nemmeeku ba noppi',
-'enotif_newpagetext' => 'Lii aw xët wu bees la.',
 'enotif_impersonal_salutation' => 'Jëfandikukat bu {{SITENAME}}',
-'changed' => 'soppi',
-'created' => 'sosu na',
-'enotif_subject' => 'Xët wii di $PAGETITLE wu {{SITENAME}}, $PAGEEDITOR moo ko $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Nemmeekul $1 ngir gis bépp coppite dale ba sa nemmeku gu mujj.',
 'enotif_lastdiff' => 'Xoolal $1 ngir gis gii coppite.',
 'enotif_anon_editor' => 'Jëfandikukat bu binduwul $1',

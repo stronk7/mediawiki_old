@@ -63,7 +63,7 @@ class WikiExporter {
 	 * @return string
 	 */
 	public static function schemaVersion() {
-		return "0.7";
+		return "0.8";
 	}
 
 	/**
@@ -83,9 +83,9 @@ class WikiExporter {
 	 * @param $buffer Int: one of WikiExporter::BUFFER or WikiExporter::STREAM
 	 * @param $text Int: one of WikiExporter::TEXT or WikiExporter::STUB
 	 */
-	function __construct( &$db, $history = WikiExporter::CURRENT,
+	function __construct( $db, $history = WikiExporter::CURRENT,
 			$buffer = WikiExporter::BUFFER, $text = WikiExporter::TEXT ) {
-		$this->db =& $db;
+		$this->db = $db;
 		$this->history = $history;
 		$this->buffer  = $buffer;
 		$this->writer  = new XmlDumpWriter();
@@ -498,7 +498,7 @@ class XmlDumpWriter {
 			'xmlns'              => "http://www.mediawiki.org/xml/export-$ver/",
 			'xmlns:xsi'          => "http://www.w3.org/2001/XMLSchema-instance",
 			'xsi:schemaLocation' => "http://www.mediawiki.org/xml/export-$ver/ " .
-			                        "http://www.mediawiki.org/xml/export-$ver.xsd",
+			                        "http://www.mediawiki.org/xml/export-$ver.xsd", #TODO: how do we get a new version up there?
 			'version'            => $ver,
 			'xml:lang'           => $wgLanguageCode ),
 			null ) .
@@ -636,35 +636,29 @@ class XmlDumpWriter {
 
 		$out  = "    <revision>\n";
 		$out .= "      " . Xml::element( 'id', null, strval( $row->rev_id ) ) . "\n";
-		if( $row->rev_parent_id ) {
+		if( isset( $row->rev_parent_id ) && $row->rev_parent_id ) {
 			$out .= "      " . Xml::element( 'parentid', null, strval( $row->rev_parent_id ) ) . "\n";
 		}
 
 		$out .= $this->writeTimestamp( $row->rev_timestamp );
 
-		if ( $row->rev_deleted & Revision::DELETED_USER ) {
+		if ( isset( $row->rev_deleted ) && ( $row->rev_deleted & Revision::DELETED_USER ) ) {
 			$out .= "      " . Xml::element( 'contributor', array( 'deleted' => 'deleted' ) ) . "\n";
 		} else {
 			$out .= $this->writeContributor( $row->rev_user, $row->rev_user_text );
 		}
 
-		if ( $row->rev_minor_edit ) {
+		if ( isset( $row->rev_minor_edit ) && $row->rev_minor_edit ) {
 			$out .=  "      <minor/>\n";
 		}
-		if ( $row->rev_deleted & Revision::DELETED_COMMENT ) {
+		if ( isset( $row->rev_deleted ) && ( $row->rev_deleted & Revision::DELETED_COMMENT ) ) {
 			$out .= "      " . Xml::element( 'comment', array( 'deleted' => 'deleted' ) ) . "\n";
 		} elseif ( $row->rev_comment != '' ) {
 			$out .= "      " . Xml::elementClean( 'comment', array(), strval( $row->rev_comment ) ) . "\n";
 		}
 
-		if ( $row->rev_sha1 && !( $row->rev_deleted & Revision::DELETED_TEXT ) ) {
-			$out .= "      " . Xml::element('sha1', null, strval( $row->rev_sha1 ) ) . "\n";
-		} else {
-			$out .= "      <sha1/>\n";
-		}
-
 		$text = '';
-		if ( $row->rev_deleted & Revision::DELETED_TEXT ) {
+		if ( isset( $row->rev_deleted ) && ( $row->rev_deleted & Revision::DELETED_TEXT ) ) {
 			$out .= "      " . Xml::element( 'text', array( 'deleted' => 'deleted' ) ) . "\n";
 		} elseif ( isset( $row->old_text ) ) {
 			// Raw text from the database may have invalid chars
@@ -678,6 +672,34 @@ class XmlDumpWriter {
 				array( 'id' => $row->rev_text_id, 'bytes' => intval( $row->rev_len ) ),
 				"" ) . "\n";
 		}
+
+		if ( isset( $row->rev_sha1 ) && $row->rev_sha1 && !( $row->rev_deleted & Revision::DELETED_TEXT ) ) {
+			$out .= "      " . Xml::element('sha1', null, strval( $row->rev_sha1 ) ) . "\n";
+		} else {
+			$out .= "      <sha1/>\n";
+		}
+
+		if ( isset( $row->rev_content_model ) && !is_null( $row->rev_content_model )  ) {
+			$content_model = strval( $row->rev_content_model );
+		} else {
+			// probably using $wgContentHandlerUseDB = false;
+			// @todo: test!
+			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+			$content_model = ContentHandler::getDefaultModelFor( $title );
+		}
+
+		$out .= "      " . Xml::element('model', null, strval( $content_model ) ) . "\n";
+
+		if ( isset( $row->rev_content_format ) && !is_null( $row->rev_content_format ) ) {
+			$content_format = strval( $row->rev_content_format );
+		} else {
+			// probably using $wgContentHandlerUseDB = false;
+			// @todo: test!
+			$content_handler = ContentHandler::getForModelID( $content_model );
+			$content_format = $content_handler->getDefaultFormat();
+		}
+
+		$out .= "      " . Xml::element('format', null, strval( $content_format ) ) . "\n";
 
 		wfRunHooks( 'XmlDumpWriterWriteRevision', array( &$this, &$out, $row, $text ) );
 
@@ -1325,6 +1347,7 @@ class DumpNamespaceFilter extends DumpFilter {
 	/**
 	 * @param $sink DumpOutput
 	 * @param $param
+	 * @throws MWException
 	 */
 	function __construct( &$sink, $param ) {
 		parent::__construct( $sink );

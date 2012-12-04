@@ -596,6 +596,7 @@ class ZipDirectoryReader {
 	 *
 	 * @param $offset int The offset into the string at which to start unpacking.
 	 *
+	 * @throws MWException
 	 * @return array Unpacked associative array. Note that large integers in the input
 	 *    may be represented as floating point numbers in the return value, so
 	 *    the use of weak comparison is advised.
@@ -622,7 +623,6 @@ class ZipDirectoryReader {
 			} else {
 				// Unsigned little-endian integer
 				$length = intval( $type );
-				$bytes = substr( $string, $pos, $length );
 
 				// Calculate the value. Use an algorithm which automatically
 				// upgrades the value to floating point if necessary.

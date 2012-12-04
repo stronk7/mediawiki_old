@@ -248,7 +248,6 @@ $messages = array(
 'qbbrowse' => 'Padön',
 'qbedit' => 'Redakön',
 'qbpageoptions' => 'Pad at',
-'qbpageinfo' => 'Yumed',
 'qbmyoptions' => 'Pads obik',
 'qbspecialpages' => 'Pads patik',
 'faq' => 'Säks suvo pasäköls',
@@ -474,11 +473,8 @@ Kod binon: ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Esenunädol oli.'''
 
-Kanol laigebön {{SITENAME}} nennemiko, u kanol [[Special:UserLogin|nunädön oli dönu]] me gebananem ot u gebenanem votik.
+Kanol laigebön {{SITENAME}} nennemiko, u kanol <span class='plainlinks'>[$1 nunädön oli dönu]</span> me gebananem ot u gebenanem votik.
 Küpälolös, das pads anik ba nog pojenons äsva no esenunädol oli, jüs uklinükol memi no laidüpik bevüresodanaföma olik.",
-'welcomecreation' => '== Benokömö, o $1! ==
-Kal olik pejafon.
-No glömolöd ad votükön [[Special:Preferences|buükamis olik in {{SITENAME}}]].',
 'yourname' => 'Gebananem:',
 'yourpassword' => 'Letavöd:',
 'yourpasswordagain' => 'Klavolös dönu letavödi:',
@@ -931,8 +927,6 @@ Kontrololös, va votükam at okipon fovöfi padajenotema.',
 'search-interwiki-caption' => 'Svistaproyegs',
 'search-interwiki-default' => 'Seks se $1:',
 'search-interwiki-more' => '(pluikos)',
-'search-mwsuggest-enabled' => 'sa mobs',
-'search-mwsuggest-disabled' => 'nen mobs',
 'search-relatedarticle' => 'Tefik',
 'mwsuggest-disable' => 'Nemögükön mobis ela AJAX',
 'searcheverything-enable' => 'Sukolöd in nemaspads valik',
@@ -1695,11 +1689,7 @@ If vilol poso moükön padi de galädalised olik, välolös lä on knopi: „neg
 
 'enotif_mailer' => 'Nunamasit ela {{SITENAME}}',
 'enotif_reset' => 'Malön padis pevisitöl valik',
-'enotif_newpagetext' => 'Atos binon pad nulik.',
 'enotif_impersonal_salutation' => 'Geban {{SITENAME}}-a',
-'changed' => 'pevotüköl',
-'created' => 'pejafon',
-'enotif_subject' => 'In {{SITENAME}}, pad: $PAGETITLE $CHANGEDORCREATED fa el $PAGEEDITOR',
 'enotif_lastvisited' => 'Logolös eli $1 ad tuvön lisedi votükamas valik pos visit lätik ola.',
 'enotif_lastdiff' => 'Logolös eli $1 ad tuvön votükami at.',
 'enotif_anon_editor' => 'geban nennemik: $1',
@@ -2821,5 +2811,9 @@ Magods pajonons ma fomät gudikün, ragivasots votik pamaifükons stedöfo kobü
 'revdelete-restricted' => 'miedükams pelonöfükons pro guvans',
 'revdelete-unrestricted' => 'miedükams pro guvans pemoükons',
 'newuserlog-byemail' => 'letavöd pesedon me pot leäktronik',
+
+# Search suggestions
+'searchsuggest-search' => 'Suk',
+'searchsuggest-containing' => 'ninädöl...',
 
 );

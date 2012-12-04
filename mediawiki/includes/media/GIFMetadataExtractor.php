@@ -58,7 +58,7 @@ class GIFMetadataExtractor {
 		$isLooped = false;
 		$xmp = "";
 		$comment = array();
-		
+
 		if ( !$filename ) {
 			throw new Exception( "No file name specified" );
 		} elseif ( !file_exists( $filename ) || is_dir( $filename ) ) {
@@ -107,7 +107,7 @@ class GIFMetadataExtractor {
 				## Read GCT
 				self::readGCT( $fh, $bpp );
 				fread( $fh, 1 );
-				self::skipBlock( $fh );	
+				self::skipBlock( $fh );
 			} elseif ( $buf == self::$gif_extension_sep ) {
 				$buf = fread( $fh, 1 );
 				if ( strlen( $buf ) < 1 ) throw new Exception( "Ran out of input" );
@@ -182,23 +182,22 @@ class GIFMetadataExtractor {
 
 					// NETSCAPE2.0 (application name for animated gif)
 					if ( $data == 'NETSCAPE2.0' ) {
-					
 						$data = fread( $fh, 2 ); // Block length and introduction, should be 03 01
 
 						if ($data != "\x03\x01") {
 							throw new Exception( "Expected \x03\x01, got $data" );
 						}
-						
+
 						// Unsigned little-endian integer, loop count or zero for "forever"
 						$loopData = fread( $fh, 2 );
 						if ( strlen( $loopData ) < 2 ) throw new Exception( "Ran out of input" );
 						$loopData = unpack( 'v', $loopData );
 						$loopCount = $loopData[1];
-						
+
 						if ($loopCount != 1) {
 							$isLooped = true;
 						}
-						
+
 						// Read out terminator byte
 						fread( $fh, 1 );
 					} elseif ( $data == 'XMP DataXMP' ) {
@@ -260,6 +259,7 @@ class GIFMetadataExtractor {
 
 	/**
 	 * @param $data
+	 * @throws Exception
 	 * @return int
 	 */
 	static function decodeBPP( $data ) {
@@ -276,7 +276,7 @@ class GIFMetadataExtractor {
 
 	/**
 	 * @param $fh
-	 * @return
+	 * @throws Exception
 	 */
 	static function skipBlock( $fh ) {
 		while ( !feof( $fh ) ) {
@@ -290,6 +290,7 @@ class GIFMetadataExtractor {
 			fread( $fh, $block_len );
 		}
 	}
+
 	/**
 	 * Read a block. In the GIF format, a block is made up of
 	 * several sub-blocks. Each sub block starts with one byte
@@ -301,6 +302,7 @@ class GIFMetadataExtractor {
 	 *  sub-blocks in the returned value. Normally this is false,
 	 *  except XMP is weird and does a hack where you need to keep
 	 *  these length bytes.
+	 * @throws Exception
 	 * @return string The data.
 	 */
 	static function readBlock( $fh, $includeLengths = false ) {

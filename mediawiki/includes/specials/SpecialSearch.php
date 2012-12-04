@@ -423,7 +423,7 @@ class SpecialSearch extends SpecialPage {
 
 		if( $t->isKnown() ) {
 			$messageName = 'searchmenu-exists';
-		} elseif( $t->userCan( 'create' ) ) {
+		} elseif( $t->userCan( 'create', $this->getUser() ) ) {
 			$messageName = 'searchmenu-new';
 		} else {
 			$messageName = 'searchmenu-new-nocreate';
@@ -449,7 +449,9 @@ class SpecialSearch extends SpecialPage {
 		$out = $this->getOutput();
 		if( strval( $term ) !== ''  ) {
 			$out->setPageTitle( $this->msg( 'searchresults' ) );
-			$out->setHTMLTitle( $this->msg( 'pagetitle', $this->msg( 'searchresults-title', $term )->plain() ) );
+			$out->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams(
+				$this->msg( 'searchresults-title' )->rawParams( $term )->text()
+			) );
 		}
 		// add javascript specific to special:search
 		$out->addModules( 'mediawiki.special.search' );
@@ -559,7 +561,7 @@ class SpecialSearch extends SpecialPage {
 		//If page content is not readable, just return the title.
 		//This is not quite safe, but better than showing excerpts from non-readable pages
 		//Note that hiding the entry entirely would screw up paging.
-		if( !$t->userCan( 'read' ) ) {
+		if( !$t->userCan( 'read', $this->getUser() ) ) {
 			wfProfileOut( __METHOD__ );
 			return "<li>{$link}</li>\n";
 		}
@@ -667,7 +669,7 @@ class SpecialSearch extends SpecialPage {
 					return "<li>" .
 						'<table class="searchResultImage">' .
 						'<tr>' .
-						'<td width="120" style="text-align: center; vertical-align: top;">' .
+						'<td style="width: 120px; text-align: center; vertical-align: top;">' .
 						$thumb->toHtml( array( 'desc-link' => true ) ) .
 						'</td>' .
 						'<td style="vertical-align: top;">' .
@@ -682,11 +684,21 @@ class SpecialSearch extends SpecialPage {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
-		return "<li><div class='mw-search-result-heading'>{$link} {$redirect} {$section}</div> {$extract}\n" .
-			"<div class='mw-search-result-data'>{$score}{$size} - {$date}{$related}</div>" .
-			"</li>\n";
+		$html = null;
 
+		if ( wfRunHooks( 'ShowSearchHit', array (
+			$this, $result, $terms,
+			&$link, &$redirect, &$section, &$extract,
+			&$score, &$size, &$date, &$related,
+			&$html
+		) ) ) {
+			$html = "<li><div class='mw-search-result-heading'>{$link} {$redirect} {$section}</div> {$extract}\n" .
+				"<div class='mw-search-result-data'>{$score}{$size} - {$date}{$related}</div>" .
+				"</li>\n";
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $html;
 	}
 
 	/**

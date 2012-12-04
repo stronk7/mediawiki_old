@@ -48,7 +48,11 @@ class PopulateRevisionLength extends LoggedUpdateMaintenance {
 		$db = $this->getDB( DB_MASTER );
 		if ( !$db->tableExists( 'revision' ) ) {
 			$this->error( "revision table does not exist", true );
+		} else if ( !$db->fieldExists( 'revision', 'rev_sha1', __METHOD__ ) ) {
+			$this->output( "rev_sha1 column does not exist\n\n", true );
+			return false;
 		}
+
 		$this->output( "Populating rev_len column\n" );
 
 		$start = $db->selectField( 'revision', 'MIN(rev_id)', false, __METHOD__ );
@@ -74,16 +78,16 @@ class PopulateRevisionLength extends LoggedUpdateMaintenance {
 			# Go through and update rev_len from these rows.
 			foreach ( $res as $row ) {
 				$rev = new Revision( $row );
-				$text = $rev->getRawText();
-				if ( !is_string( $text ) ) {
+				$content = $rev->getContent();
+				if ( !$content ) {
 					# This should not happen, but sometimes does (bug 20757)
-					$this->output( "Text of revision {$row->rev_id} unavailable!\n" );
+					$this->output( "Content of revision {$row->rev_id} unavailable!\n" );
 					$missing++;
 				}
 				else {
 					# Update the row...
 					$db->update( 'revision',
-							 array( 'rev_len' => strlen( $text ) ),
+							 array( 'rev_len' => $content->getSize() ),
 							 array( 'rev_id' => $row->rev_id ),
 							 __METHOD__ );
 					$count++;

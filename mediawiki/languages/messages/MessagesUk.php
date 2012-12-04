@@ -37,6 +37,7 @@
  * @author VolodymyrF
  * @author Vox
  * @author Yuriy Apostol
+ * @author Ата
  * @author Дар'я Козлова
  * @author Тест
  */
@@ -206,7 +207,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__ОБОВ_ЗМІСТ__', '__ОБЯЗАТЕЛЬНОЕ_ОГЛАВЛЕНИЕ__', '__ОБЯЗ_ОГЛ__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__ЗМІСТ__', '__ОГЛАВЛЕНИЕ__', '__ОГЛ__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__БЕЗ_РЕДАГУВ_РОЗДІЛУ__', '__БЕЗ_РЕДАКТИРОВАНИЯ_РАЗДЕЛА__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__БЕЗ_ЗАГОЛОВКУ__', '__БЕЗ_ЗАГОЛОВКА__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'ПОТОЧНИЙ_МІСЯЦЬ', 'ПОТОЧНИЙ_МІСЯЦЬ_2', 'ТЕКУЩИЙ_МЕСЯЦ', 'ТЕКУЩИЙ_МЕСЯЦ_2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'ПОТОЧНИЙ_МІСЯЦЬ_1', 'ТЕКУЩИЙ_МЕСЯЦ_1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'НАЗВА_ПОТОЧНОГО_МІСЯЦЯ', 'НАЗВАНИЕ_ТЕКУЩЕГО_МЕСЯЦА', 'CURRENTMONTHNAME' ),
@@ -305,7 +305,7 @@ $magicWords = array(
 	'revisionmonth1'            => array( '1', 'МІСЯЦЬ_ВЕРСІЇ_1', 'МЕСЯЦ_ВЕРСИИ_1', 'REVISIONMONTH1' ),
 	'revisionyear'              => array( '1', 'РІК_ВЕРСІЇ', 'ГОД_ВЕРСИИ', 'REVISIONYEAR' ),
 	'revisiontimestamp'         => array( '1', 'МІТКА_ЧАСУ_ВЕРСІЇ', 'ОТМЕТКА_ВРЕМЕНИ_ВЕРСИИ', 'REVISIONTIMESTAMP' ),
-	'revisionuser'              => array( '1', 'ВЕРСІЯ_КОРИСТУВАЧА', 'ВЕРСИЯ_УЧАСНИКА', 'REVISIONUSER' ),
+	'revisionuser'              => array( '1', 'ВЕРСІЯ_КОРИСТУВАЧА', 'ВЕРСИЯ_УЧАСНИКА', 'ВЕРСИЯ_УЧАСТНИКА', 'REVISIONUSER' ),
 	'plural'                    => array( '0', 'МНОЖИНА:', 'МНОЖЕСТВЕННОЕ_ЧИСЛО:', 'PLURAL:' ),
 	'fullurl'                   => array( '0', 'ПОВНА_АДРЕСА:', 'ПОЛНЫЙ_АДРЕС:', 'FULLURL:' ),
 	'fullurle'                  => array( '0', 'ПОВНА_АДРЕСА_2:', 'ПОЛНЫЙ_АДРЕС_2:', 'FULLURLE:' ),
@@ -379,7 +379,7 @@ $messages = array(
 'tog-enotifusertalkpages' => 'Повідомляти електронною поштою про зміну моєї сторінки обговорення',
 'tog-enotifminoredits' => 'Надсилати мені електронного листа навіть при незначних редагуваннях сторінок та файлів',
 'tog-enotifrevealaddr' => 'Показувати мою поштову адресу в повідомленнях',
-'tog-shownumberswatching' => 'Показувати кількість користувачів, які додали сторінку до свого списку спостереження',
+'tog-shownumberswatching' => 'Показувати число користувачів, які додали сторінку до свого списку спостереження',
 'tog-oldsig' => 'Існуючий підпис:',
 'tog-fancysig' => 'Власна вікі-розмітка підпису (без автоматичного посилання)',
 'tog-externaleditor' => "Використовувати зовнішній редактор за умовчанням (тільки для досвідчених користувачів, вимагає спеціальних налаштувань вашого комп'ютера [//www.mediawiki.org/wiki/Manual:External_editors Детальніше.])",
@@ -401,7 +401,7 @@ $messages = array(
 
 'underline-always' => 'Завжди',
 'underline-never' => 'Ніколи',
-'underline-default' => 'Використати налаштування браузера',
+'underline-default' => 'Використовувати налаштування браузера',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Тип шрифту в полі редагування:',
@@ -480,6 +480,7 @@ $messages = array(
 'index-category' => 'Індексовані сторінки',
 'noindex-category' => 'Неіндексовані сторінки',
 'broken-file-category' => 'Сторінки, що посилаються на неіснуючі файли',
+'categoryviewer-pagedlinks' => '($1) ($2)',
 
 'linkprefix' => '/^(.*?)(„|«)$/sD',
 
@@ -488,8 +489,8 @@ $messages = array(
 'newwindow' => '(відкривається в новому вікні)',
 'cancel' => 'Скасувати',
 'moredotdotdot' => 'Детальніше…',
-'mypage' => 'Моя особиста сторінка',
-'mytalk' => 'Моя сторінка обговорення',
+'mypage' => 'Сторінка',
+'mytalk' => 'Обговорення',
 'anontalk' => 'Обговорення для цієї IP-адреси',
 'navigation' => 'Навігація',
 'and' => '&#32;і',
@@ -499,7 +500,6 @@ $messages = array(
 'qbbrowse' => 'Переглянути',
 'qbedit' => 'Редагувати',
 'qbpageoptions' => 'Налаштування сторінки',
-'qbpageinfo' => 'Інформація про сторінку',
 'qbmyoptions' => 'Мої налаштування',
 'qbspecialpages' => 'Спеціальні сторінки',
 'faq' => 'Часті питання',
@@ -512,7 +512,7 @@ $messages = array(
 'vector-action-protect' => 'Захистити',
 'vector-action-undelete' => 'Відновити',
 'vector-action-unprotect' => 'Зміна захисту',
-'vector-simplesearch-preference' => 'Увімкнути розширені пошукові підказки (лише для оформлення "Векторне")',
+'vector-simplesearch-preference' => 'Увімкнути спрощене поле пошуку (лише для оформлення "Векторне")',
 'vector-view-create' => 'Створити',
 'vector-view-edit' => 'Редагувати',
 'vector-view-history' => 'Переглянути історію',
@@ -522,6 +522,7 @@ $messages = array(
 'namespaces' => 'Простори назв',
 'variants' => 'Варіанти',
 
+'navigation-heading' => 'Навігаційне меню',
 'errorpagetitle' => 'Помилка',
 'returnto' => 'Повернення до сторінки «$1».',
 'tagline' => 'Матеріал з {{grammar:genitive|{{SITENAME}}}}',
@@ -620,6 +621,8 @@ $1',
 'youhavenewmessages' => 'Ви отримали $1 ($2).',
 'newmessageslink' => 'нові повідомлення',
 'newmessagesdifflink' => 'остання зміна',
+'youhavenewmessagesfromusers' => 'Ви отримали $1 від {{PLURAL:$3|іншого дописувача|$3 інших дописувачів}} ($2).',
+'youhavenewmessagesmanyusers' => 'Ви отримали $1 від багатьох дописувачів ($2).',
 'newmessageslinkplural' => '{{PLURAL:$1|нове повідомлення|нові повідомлення|нових повідомлень}}',
 'newmessagesdifflinkplural' => '{{PLURAL:$1|остання зміна|останні зміни|останніх змін}}',
 'youhavenewmessagesmulti' => 'Ви отримали нові повідомлення на $1',
@@ -679,9 +682,9 @@ $1',
 'dberrortext' => 'Знайдено синтаксичну помилку в запиті до бази даних.
 Це може вказувати на помилку в програмному забезпеченні.
 Останній запит до бази даних:
-<blockquote><tt>$1</tt></blockquote>
-відбувся з функції "<tt>$2</tt>".
-База даних виявила помилку "<tt>$3: $4</tt>".',
+<blockquote><code>$1</code></blockquote>
+відбувся з функції "<code>$2</code>".
+База даних виявила помилку "<samp>$3: $4</samp>".',
 'dberrortextcl' => 'Знайдено синтаксичну помилку в запиті до бази даних.
 Останній запит до бази даних:
 «$1»
@@ -724,7 +727,7 @@ $1',
 'badtitletext' => 'Запитана назва сторінки неправильна, порожня, або неправильно зазначена міжмовна чи міжвікі назва.
 Можливо, в назві використовуються недопустимі символи.',
 'perfcached' => 'Наступні дані взяті з кешу і можуть бути застарілими. В кеші зберігається не більше  {{PLURAL:$1| запису| записів}}.',
-'perfcachedts' => 'Наступні дані взяті з кешу, востаннє він оновлювався о $1. В кеші зберігається не більше {{PLURAL:$4|запису|записів}}.',
+'perfcachedts' => 'Наступні дані взяті з кешу, востаннє він оновлювався о $1. У кеші зберігається не більше $4 {{PLURAL:$4|запису|записів}}.',
 'querypage-no-updates' => 'Зміни цієї сторінки зараз заборонені. Дані тут не можуть бути оновлені зараз.',
 'wrong_wfQuery_params' => 'Неприпустима параметри функцій wfQuery()<br />
 Функція: $1<br />
@@ -733,10 +736,10 @@ $1',
 'viewsource-title' => 'Перегляд вихідного коду сторінки $1',
 'actionthrottled' => 'Обмеження за швидкістю',
 'actionthrottledtext' => 'Як захід боротьби зі спамом, установлено обмеження на багаторазове застосування цієї дії протягом короткого проміжку часу. Будь ласка, повторіть спробу через кілька хвилин.',
-'protectedpagetext' => 'Ця сторінка закрита для редагування.',
+'protectedpagetext' => 'Ця сторінка захищена від редагування та інших дій.',
 'viewsourcetext' => 'Ви можете переглянути та скопіювати початковий текст цієї сторінки:',
 'viewyourtext' => "Ви можете переглянути та скопіювати текст '''ваших редагувань''' на цій сторінці:",
-'protectedinterface' => 'Ця сторінка є частиною інтерфейсу програмного забезпечення і її можуть редагувати лише адміністратори проекту.',
+'protectedinterface' => 'Ця сторінка є частиною інтерфейсу програмного забезпечення цієї вікі і її можуть редагувати лише адміністратори проекту. Щоб додати або змінити переклади для усіх вікі, відвідайте [//translatewiki.net/ translatewiki.net], проект локалізації MediaWiki.',
 'editinginterface' => "'''Увага:''' Ви редагуєте сторінку, що є частиною текстового інтерфейсу. Зміни цієї сторінки спричинять зміну інтерфейсу для інших користувачів. Для перекладу повідомлення використовуйте [//translatewiki.net/wiki/Main_Page?setlang=uk translatewiki.net] — проект, що займається локалізацією MediaWiki.",
 'sqlhidden' => '(SQL запит приховано)',
 'cascadeprotected' => 'Сторінка захищена від змін, оскільки її включено до {{PLURAL:$1|сторінки, для якої|наступних сторінок, для яких}} установлено каскадний захист: $2',
@@ -761,16 +764,17 @@ $1',
 # Login and logout pages
 'logouttext' => "'''Тепер ви працюєте в тому ж режимі, який був до вашого входу до системи.'''
 
-Ви можете продовжувати використовувати {{grammar:accusative|{{SITENAME}}}} анонімно або знову [[Special:UserLogin|ввійти до системи]] як той самий або інший користувач. Деякі сторінки можуть відображатися, ніби ви ще представлені системі під іменем, щоб уникнути цього, оновіть кеш браузера.",
-'welcomecreation' => '== Вітаємо вас, $1! ==
-Ваш обліковий запис створено.
-Не забудьте змінити свої [[Special:Preferences|налаштування для сайту]].',
+Ви можете продовжувати використовувати {{grammar:accusative|{{SITENAME}}}} анонімно або знову <span class='plainlinks'>[$1 ввійти до системи]</span> як той самий або інший користувач. Деякі сторінки можуть відображатися, ніби ви ще представлені системі під іменем, щоб уникнути цього, оновіть кеш браузера.",
+'welcomeuser' => 'Вітаємо, $1!',
+'welcomecreation-msg' => 'Ваш акаунт було створено.
+Не забудьте змінити свої [[Special:Preferences|налаштування у {{GRAMMAR:genitive|{{SITENAME}}}}]].',
 'yourname' => "Ім'я користувача:",
 'yourpassword' => 'Пароль:',
 'yourpasswordagain' => 'Повторний набір пароля:',
 'remembermypassword' => "Запам'ятати мій обліковий запис на цьому комп'ютері (на строк не більше $1 {{PLURAL:$1|дня|днів}})",
 'securelogin-stick-https' => 'Залишайтись підключенним через HTTPS після входу',
 'yourdomainname' => 'Ваш домен:',
+'password-change-forbidden' => 'Ви не можна змінити пароль на цій вікі.',
 'externaldberror' => 'Сталася помилка при автентифікації за допомогою зовнішньої бази даних, або у вас недостатньо прав для внесення змін до свого зовнішнього облікового запису.',
 'login' => 'Вхід до системи',
 'nav-login-createaccount' => 'Вхід / реєстрація',
@@ -1016,12 +1020,16 @@ $2
 Одна IP-адреса може використовуватися декількома користувачами.
 Якщо ви — анонімний користувач і вважаєте, що отримали коментарі, адресовані не вам, будь ласка [[Special:UserLogin/signup|зареєструйтесь]] або [[Special:UserLogin|увійдіть до системи]], щоб у майбутньому уникнути можливої плутанини з іншими анонімними користувачами.''",
 'noarticletext' => 'Зараз на цій сторінці нема тексту.
-Ви можете [[Special:Search/{{PAGENAME}}|пошукати цю назву]] в інших сторінках,
+Ви можете [[Special:Search/{{PAGENAME}}|пошукати цю назву]] на інших сторінках,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пошукати в журналах]
 або [{{fullurl:{{FULLPAGENAME}}|action=edit}} створити сторінку з такою назвою]</span>.',
-'noarticletext-nopermission' => 'Зараз на цій сторінці відсутній текст.
-Ви можете [[Special:Search/{{PAGENAME}}|пошукати такий заголовок]] серед інших сторінок,
-або <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пошукати пов\'язані записи в журналах]</span>.',
+'noarticletext-nopermission' => 'Зараз на цій сторінці немає тексту.
+Ви можете [[Special:Search/{{PAGENAME}}|пошукати цю назву]] на інших сторінках,
+або <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пошукати пов\'язані записи в журналах]</span>, але ви не маєте дозволу на створення такої сторінки.',
+'missing-revision' => 'Версія #$1 сторінки «{{PAGENAME}}» не існує.
+
+Імовірно, Ви перейшли за застарілим посиланням на вилучену сторінку.
+Подробиці можна дізнатися з [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} журналу вилучень].',
 'userpage-userdoesnotexist' => 'Користувач під назвою "<nowiki>$1</nowiki>" не зареєстрований. Переконайтеся, що ви хочете створити/редагувати цю сторінку.',
 'userpage-userdoesnotexist-view' => 'Обліковий запис користувача „$1“ не зареєстровано.',
 'blocked-notice-logextract' => 'Цей користувач наразі заблокований.
@@ -1130,6 +1138,15 @@ $2
 'edit-already-exists' => 'Неможливо створити нову сторінку.
 Вона вже існує.',
 'defaultmessagetext' => 'Текст «за замовчування»',
+'content-failed-to-parse' => 'Не вдалось проаналізувати $2 як тип $1: $3',
+'invalid-content-data' => 'Неприпустимі дані',
+'content-not-allowed-here' => 'Вміст «$1» недопустимий на сторінці [[$2]]',
+
+# Content models
+'content-model-wikitext' => 'вікітекст',
+'content-model-text' => 'звичайний текст',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Увага: Ця сторінка містить дуже багато викликів ресурсомістких функцій.
@@ -1151,6 +1168,7 @@ $2
 'expansion-depth-exceeded-warning' => 'На сторінці перевищено межу глибини вкладеності',
 'parser-unstrip-loop-warning' => 'Виявлено незакритий тег (такий, як <pre>)',
 'parser-unstrip-recursion-limit' => 'Перевищено межу вкладеної рекурсії ($1) для парсера.',
+'converter-manual-rule-error' => 'Помилка в ручному правилі перетворення мови',
 
 # "Undo" feature
 'undo-success' => 'Редагування може бути скасовано.
@@ -1285,9 +1303,11 @@ $1",
 'revdelete-concurrent-change' => 'Помилка редагування запису від $2, $1: його стан змінений кимось іншим, поки ви робили свої зміни.
 Будь ласка, перевірте журнал.',
 'revdelete-only-restricted' => 'Помилка приховання запису від $2, $1: ви не можете приховати записи від перегляду адміністраторів без одночасного вибору однієї з інших опцій приховання.',
-'revdelete-reason-dropdown' => '* Типові причини вилучення
+'revdelete-reason-dropdown' => "* Типові причини вилучення
 ** Порушення авторських прав
-** Недоречна особиста інформація',
+** Недоречна особиста інформація
+** Невідповідне ім'я користувача
+** Потенційно наклепна інформація",
 'revdelete-otherreason' => 'Інша/додаткова причина:',
 'revdelete-reasonotherlist' => 'Інша причина',
 'revdelete-edit-reasonlist' => 'Редагувати причини вилучень',
@@ -1338,6 +1358,10 @@ $1",
 'editundo' => 'скасувати',
 'diff-multi' => '({{PLURAL:$1|Одна проміжна версія одного користувача не показана|$1 проміжні версії {{PLURAL:$2|одного користувача|$2 користувачів}} не показані|$1 проміжних версій {{PLURAL:$2|одного користувача|$2 користувачів}} не показані}})',
 'diff-multi-manyusers' => '({{PLURAL:$1|не показана $1 проміжна я версія|не показані $1 проміжні версії|не показано $1 проміжних версій}}, зроблених більш, ніж {{PLURAL:$2|$1 користувачем|$2 користувачами}})',
+'difference-missing-revision' => '{{PLURAL:$2|$2 версія|$2 версії|$2 версій}} для цього порівняння ($1) не {{PLURAL:$2|знайдене|знайдені}}.
+
+Імовірно, ви перейшли за застарілим посиланням на порівняння версій вилученої сторінки.
+Подробиці можна дізнатися з [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} журналу вилучень].',
 
 # Search results
 'searchresults' => 'Результати пошуку',
@@ -1380,8 +1404,6 @@ $1",
 'search-interwiki-caption' => 'Братні проекти',
 'search-interwiki-default' => '$1 результати:',
 'search-interwiki-more' => '(більше)',
-'search-mwsuggest-enabled' => 'з порадами',
-'search-mwsuggest-disabled' => 'без порад',
 'search-relatedarticle' => "Пов'язаний",
 'mwsuggest-disable' => 'Вимкнути поради AJAX',
 'searcheverything-enable' => 'Пошук у всіх просторах назв',
@@ -1415,7 +1437,7 @@ $1",
 # Preferences page
 'preferences' => 'Налаштування',
 'mypreferences' => 'Налаштування',
-'prefs-edits' => 'Число редагувань:',
+'prefs-edits' => 'Кількість редагувань:',
 'prefsnologin' => 'Ви не ввійшли в систему',
 'prefsnologintext' => 'Щоб змінити налаштування користувача, ви повинні <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} ввійти до системи]</span>.',
 'changepassword' => 'Змінити пароль',
@@ -1477,7 +1499,7 @@ $1",
 'timezoneregion-indian' => 'Індійський океан',
 'timezoneregion-pacific' => 'Тихий океан',
 'allowemail' => 'Дозволити електронну пошту від інших користувачів',
-'prefs-searchoptions' => 'Параметри пошуку',
+'prefs-searchoptions' => 'Пошук',
 'prefs-namespaces' => 'Простори назв',
 'defaultns' => 'Інакше шукати в таких просторах назв:',
 'default' => 'за умовчанням',
@@ -1651,6 +1673,9 @@ $1",
 'rightslogtext' => 'Це протокол зміни прав користувачів.',
 'rightslogentry' => 'змінив права доступу для користувача $1 з $2 на $3',
 'rightslogentry-autopromote' => 'був автоматично переведений з $2 до $3',
+'logentry-rights-rights' => '$1 {{GENDER:$1|змінив|змінила}} членство в групах для $3 із $4 на $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$1|змінив|змінила}} членство в групах для $3',
+'logentry-rights-autopromote' => '$1 було автоматично переведено із $4 в $5',
 'rightsnone' => '(нема)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1899,6 +1924,7 @@ $1',
 'backend-fail-notsame' => 'Неідентичний файл $1 вже існує.',
 'backend-fail-invalidpath' => 'Шлях для збереження $1 є недійсним.',
 'backend-fail-delete' => 'Не вдалося вилучити файл $1.',
+'backend-fail-describe' => 'Не вдалося змінити метадані для файлу «$1».',
 'backend-fail-alreadyexists' => 'Файл $1 вже існує.',
 'backend-fail-store' => 'Не вдалося зберегти файл $1 у $2.',
 'backend-fail-copy' => 'Не вдалося скопіювати файл $1 в $2.',
@@ -2052,7 +2078,7 @@ $1',
 'shared-repo' => 'спільного сховища',
 'shared-repo-name-wikimediacommons' => 'Вікісховища',
 'filepage.css' => '/* Розміщений тут CSS-код розміщений на сторінці опису файла, також і для іноземних користувачів вікі */',
-'upload-disallowed-here' => 'На жаль Ви не можете перезаписати це зображення',
+'upload-disallowed-here' => 'Ви не можете перезаписати цей файл',
 
 # File reversion
 'filerevert' => 'Повернення до старої версії $1',
@@ -2121,7 +2147,7 @@ $1',
 'statistics-pages-desc' => 'Усі сторінки у вікі, включаючи сторінки обговорень, перенаправлення тощо.',
 'statistics-files' => 'Завантажено файлів',
 'statistics-edits' => 'Кількість редагувань з моменту установки {{grammar:genitive|{{SITENAME}}}}',
-'statistics-edits-average' => 'Середня кількість редагувань на сторінку',
+'statistics-edits-average' => 'Середнє число редагувань на сторінку',
 'statistics-views-total' => 'Усього переглядів',
 'statistics-views-total-desc' => 'Перегляди неіснуючих та спеціальних сторінок не враховані',
 'statistics-views-peredit' => 'Переглядів на редагування',
@@ -2132,7 +2158,9 @@ $1',
 
 'disambiguations' => 'Сторінки, що посилаються на сторінки неоднозначності.',
 'disambiguationspage' => 'Template:disambig',
-'disambiguations-text' => "Наступні сторінки посилаються на '''багатозначні сторінки'''. Однак вони, ймовірно, повинні вказувати на відповідну конкретну статтю.<br />Сторінка вважається багатозначною, якщо на ній розміщений шаблон, назва якого є на сторінці [[MediaWiki:Disambiguationspage]].",
+'disambiguations-text' => "Наступні сторінки посилаються на '''багатозначні сторінки'''. 
+Ймовірно, вони повинні вказувати на відповідну конкретну статтю.<br />
+Сторінка вважається багатозначною, якщо на ній розміщений шаблон, назва якого є на сторінці [[MediaWiki:Disambiguationspage]].",
 
 'doubleredirects' => 'Подвійні перенаправлення',
 'doubleredirectstext' => 'На цій сторінці наведено список перенаправлень на інші перенаправлення.
@@ -2157,6 +2185,7 @@ $1',
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|байт|байти|байтів}}',
 'ncategories' => '$1 {{PLURAL:$1|категорія|категорії|категорій}}',
+'ninterwikis' => '$1 {{PLURAL:$1|інтервікі-посилання|інтервікі-посилання|інтервікі-посилань}}',
 'nlinks' => '$1 {{PLURAL:$1|посилання|посилання|посилань}}',
 'nmembers' => "$1 {{PLURAL:$1|об'єкт|об'єкти|об'єктів}}",
 'nrevisions' => '$1 {{PLURAL:$1|версія|версії|версій}}',
@@ -2185,6 +2214,7 @@ $1',
 'mostlinkedtemplates' => 'Найуживаніші шаблони',
 'mostcategories' => 'Статті з найбільшою кількістю категорій',
 'mostimages' => 'Найуживаніші зображення',
+'mostinterwikis' => 'Сторінки з найбільшою кількістю інтервікі-посилань',
 'mostrevisions' => 'Статті з найбільшою кількістю редагувань',
 'prefixindex' => 'Покажчик за початком назв сторінок',
 'prefixindex-namespace' => 'Усі сторінки з префіксом (простір назв $1)',
@@ -2195,7 +2225,7 @@ $1',
 'protectedpages' => 'Захищені сторінки',
 'protectedpages-indef' => 'Тільки безстроково захищені',
 'protectedpages-cascade' => 'Тільки каскадний захист',
-'protectedpagestext' => 'Наступні сторінки захищені від перейменування або зміни.',
+'protectedpagestext' => 'Такі сторінки захищені від перейменування або зміни.',
 'protectedpagesempty' => 'Зараз нема захищених сторінок із зазначеними параметрами',
 'protectedtitles' => 'Заборонені назви',
 'protectedtitlestext' => 'Наступні назви не дозволено використовувати',
@@ -2284,8 +2314,8 @@ $1',
 'linksearch-ns' => 'Простір назв:',
 'linksearch-ok' => 'Знайти',
 'linksearch-text' => 'Можна використовувати підстановочні символи (шаблони), наприклад, "*.wikipedia.org".
-Необхідний домен якнайменше верхнього рівня, наприклад "*.org"<br />
-Підтримувані протоколи: <code>$1</code> (не додавайте жоден з них у вашому пошуку)',
+Необхідний домен принаймні верхнього рівня, наприклад "*.org"<br />
+Підтримувані протоколи: <code>$1</code> (за замовчуванням http:// якщо жоден протокол не вказано)',
 'linksearch-line' => 'Посилання на $1 із $2',
 'linksearch-error' => 'Підстановочні знаки можуть використовуватися лише на початку адрес.',
 
@@ -2333,9 +2363,11 @@ $1',
 'mailnologin' => 'Відсутня адреса для відправки',
 'mailnologintext' => 'Ви повинні [[Special:UserLogin|ввійти до системи]] і мати підтверджену адресу електронної пошти у ваших [[Special:Preferences|налаштуваннях]], щоб мати змогу надсилати електронну пошту іншим користувачам.',
 'emailuser' => 'Надіслати листа',
+'emailuser-title-target' => 'Надіслати електронного листа {{GENDER:$1|користувачеві|користувачці}}',
+'emailuser-title-notarget' => 'Надіслати електронного листа користувачеві',
 'emailpage' => 'Лист користувачеві',
-'emailpagetext' => 'Заповнивши наведену нижче форму, можна надіслати повідомлення цьому користувачу.
-Електронна адреса, яку ви зазначили у [[Special:Preferences|своїх налаштуваннях]], буде зазначена в полі «Від кого» листа, тому одержувач матиме можливість відповісти безпосередньо вам.',
+'emailpagetext' => 'Заповнивши наведену нижче форму, можна надіслати повідомлення {{GENDER:$1|цьому користувачу|цій користувачці}}.
+Електронна адреса, яку Ви зазначили у [[Special:Preferences|своїх налаштуваннях]], буде зазначена в полі «Від кого» листа, тому одержувач матиме можливість відповісти безпосередньо вам.',
 'usermailererror' => 'При відправці повідомлення електронної пошти сталася помилка:',
 'defemailsubject' => '{{SITENAME}} - електронний лист від користувача " $1 "',
 'usermaildisabled' => 'Електронне листування між користувачами вимкнене',
@@ -2403,20 +2435,23 @@ $1',
 
 'enotif_mailer' => '{{SITENAME}} Служба сповіщення поштою',
 'enotif_reset' => 'Позначити всі сторінки як переглянуті',
-'enotif_newpagetext' => 'Це нова сторінка.',
 'enotif_impersonal_salutation' => 'Користувач {{grammar:genitive|{{SITENAME}}}}',
-'changed' => 'змінена',
-'created' => 'створена',
-'enotif_subject' => 'Сторінка проекту «{{SITENAME}}» $PAGETITLE була $CHANGEDORCREATED користувачем $PAGEEDITOR',
+'enotif_subject_deleted' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було вилучено {{GENDER:$2|користувачем|користувачкою}} $2',
+'enotif_subject_created' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було створено {{GENDER:$2|користувачем|користувачкою}} $2',
+'enotif_subject_moved' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було перейменовано {{GENDER:$2|користувачем|користувачкою}} $2',
+'enotif_subject_restored' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було відновлено {{GENDER:$2|користувачем|користувачкою}} $2',
+'enotif_subject_changed' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було змінено {{GENDER:$2|користувачем|користувачкою}} $2',
+'enotif_body_intro_deleted' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було вилучено $PAGEEDITDATE {{GENDER:$2|користувачем|користувачкою}} $2, див. поточну версію $3.',
+'enotif_body_intro_created' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було створено $PAGEEDITDATE {{GENDER:$2|користувачем|користувачкою}} $2, див. поточну версію $3.',
+'enotif_body_intro_moved' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було перейменовано $PAGEEDITDATE {{GENDER:$2|користувачем|користувачкою}} $2, див. поточну версію $3.',
+'enotif_body_intro_restored' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було відновлено $PAGEEDITDATE {{GENDER:$2|користувачем|користувачкою}} $2, див. поточну версію $3.',
+'enotif_body_intro_changed' => 'Сторінку {{GRAMMAR:genitive|{{SITENAME}}}} «$1» було змінено $PAGEEDITDATE {{GENDER:$2|користувачем|користувачкою}} $2, див. поточну версію $3.',
 'enotif_lastvisited' => 'Див. $1 для перегляду всіх змін, що відбулися після вашого останнього перегляду.',
 'enotif_lastdiff' => 'Див. $1 для ознайомлення з цією зміною.',
 'enotif_anon_editor' => 'анонімний користувач $1',
 'enotif_body' => 'Шановний $WATCHINGUSERNAME,
 
-
-$PAGEEDITDATE сторінка проекту «{{SITENAME}}» $PAGETITLE була $CHANGEDORCREATED користувачем $PAGEEDITOR, дивіться $PAGETITLE_URL як поточну версію.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Короткий опис змін: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2589,7 +2624,8 @@ $UNWATCHURL
 'undeletedrevisions' => '$1 {{PLURAL:$1|редагування|редагування|редагувань}} відновлено',
 'undeletedrevisions-files' => '$1 {{PLURAL:$1|версія|версії|версій}} та $2 {{PLURAL:$2|файл|файли|файлів}} відновлено',
 'undeletedfiles' => '$1 {{PLURAL:$1|файл|файли|файлів}} відновлено',
-'cannotundelete' => 'Не вдалося скасувати видалення, хтось інший вже міг відмінити видалення сторінки.',
+'cannotundelete' => 'Помилка відновлення:
+$1',
 'undeletedpage' => "'''Сторінка «$1» відновлена'''
 
 Див. [[Special:Log/delete|список вилучень]], щоб дізнатися про останні вилучення та відновлення.",
@@ -2620,9 +2656,9 @@ $1',
 'blanknamespace' => '(Основний)',
 
 # Contributions
-'contributions' => 'Внесок користувача',
+'contributions' => 'Внесок {{GENDER:$1|користувача|користувачки}}',
 'contributions-title' => 'Внесок користувача $1',
-'mycontris' => 'Мій внесок',
+'mycontris' => 'Внесок',
 'contribsub2' => 'Внесок $1 ($2)',
 'nocontribs' => 'Редагувань, що задовольняють заданим умовам не знайдено.',
 'uctop' => ' (остання)',
@@ -2632,7 +2668,7 @@ $1',
 'sp-contributions-newbies' => 'Показати лише внесок з нових облікових записів',
 'sp-contributions-newbies-sub' => 'Внесок новачків',
 'sp-contributions-newbies-title' => 'Внесок з нових облікових записів',
-'sp-contributions-blocklog' => 'протокол блокувань',
+'sp-contributions-blocklog' => 'журнал блокувань',
 'sp-contributions-deleted' => 'вилучені редагування користувача',
 'sp-contributions-uploads' => 'завантаження',
 'sp-contributions-logs' => 'журнали',
@@ -2890,6 +2926,7 @@ $1',
 'immobile-target-namespace-iw' => 'Інтервікі-посилання не підходить для перейменування сторінки.',
 'immobile-source-page' => 'Цю сторінку не можна перейменувати.',
 'immobile-target-page' => 'Не можна присвоїти сторінці цю назву.',
+'bad-target-model' => 'Неможливо перетворити $1 на $2: несумісні моделі даних.',
 'imagenocrossnamespace' => 'Неможливо дати файлові назву з іншого простору назв',
 'nonfile-cannot-move-to-file' => 'Не можна перейменовувати сторінки з інших просторів назв на файли',
 'imagetypemismatch' => 'Нове розширення файлу не співпадає з його типом',
@@ -2968,6 +3005,7 @@ $1',
 'import-interwiki-templates' => 'Включити всі шаблони',
 'import-interwiki-submit' => 'Імпортувати',
 'import-interwiki-namespace' => 'Цільовий простір назв:',
+'import-interwiki-rootpage' => "Коренева сторінка (необов'язково):",
 'import-upload-filename' => 'Назва файлу:',
 'import-comment' => 'Примітка:',
 'importtext' => 'Будь ласка, експортуйте сторінку з іншої вікі, використовуючи [[Special:Export|засіб експорту]], збережіть файл, а потім завантажте його сюди.',
@@ -2999,6 +3037,9 @@ $1',
 'import-error-interwiki' => 'Сторінку "$1" не імпортовано, оскільки її назва зарезервована для зовнішніх посилань (interwiki).',
 'import-error-special' => 'Сторінку "$1" не імпортовано, оскільки вона належить до особливого простору імен, що не дозволяє створення сторінок.',
 'import-error-invalid' => 'Сторінку "$1" не імпортовано, оскільки його ім\'я неприпустиме.',
+'import-options-wrong' => '{{PLURAL:$2|Неправильна опція|Неправильні опції}}: <nowiki>$1</nowiki>',
+'import-rootpage-invalid' => 'Вказана некоректна назва кореневої сторінки',
+'import-rootpage-nosubpage' => 'В просторі назв вказаної кореневої сторінки «$1» заборонені підсторінки',
 
 # Import log
 'importlogpage' => 'Журнал імпорту',
@@ -3010,7 +3051,6 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'Тестування JavaScript',
-'javascripttest-disabled' => 'Цю функцію відключено.',
 'javascripttest-title' => 'Працює  $1  випробувань',
 'javascripttest-pagetext-noframework' => 'Ця сторінка призначений для тестування JavaScript.',
 'javascripttest-pagetext-unknownframework' => 'Невідоме середовище тестування " $1 ".',
@@ -3025,7 +3065,7 @@ $1',
 'tooltip-pt-mytalk' => 'Ваша сторінка обговорення',
 'tooltip-pt-anontalk' => 'Обговорення редагувань з цієї IP-адреси',
 'tooltip-pt-preferences' => 'Ваші налаштування',
-'tooltip-pt-watchlist' => 'Список сторінок, за якими я спостерігаю',
+'tooltip-pt-watchlist' => 'Список сторінок, за змінами в яких Ви спостерігаєте',
 'tooltip-pt-mycontris' => 'Ваш внесок',
 'tooltip-pt-login' => "Тут можна зареєструватися в системі, але це не обов'язково.",
 'tooltip-pt-anonlogin' => "Тут можна зареєструватися в системі, але це не обов'язково.",
@@ -3042,10 +3082,10 @@ $1',
 'tooltip-ca-move' => 'Перейменувати цю сторінку',
 'tooltip-ca-watch' => 'Додати цю сторінку до вашого списку спостереження',
 'tooltip-ca-unwatch' => 'Вилучити цю сторінку з вашого списку спостереження',
-'tooltip-search' => 'Шукати',
+'tooltip-search' => 'Шукати у {{GRAMMAR:genitive|{{SITENAME}}}}',
 'tooltip-search-go' => 'Перейти до сторінки, що має точно таку назву (якщо вона існує)',
 'tooltip-search-fulltext' => 'Знайти сторінки, що містять зазначений текст',
-'tooltip-p-logo' => 'Головна сторінка',
+'tooltip-p-logo' => 'Перейти на головну сторінку',
 'tooltip-n-mainpage' => 'Перейти на Головну сторінку',
 'tooltip-n-mainpage-description' => 'Перейти на головну сторінку',
 'tooltip-n-portal' => 'Про проект, про те, що ви можете зробити, і що де знаходиться',
@@ -3163,14 +3203,43 @@ The wiki server can't provide data in a format your client can read.",
 
 # Info page
 'pageinfo-title' => 'Інформація про " $1 "',
+'pageinfo-not-current' => 'Вибачте, неможливо переглянути цю інформацію для старих версій.',
+'pageinfo-header-basic' => 'Основна інформація',
 'pageinfo-header-edits' => 'Історія редагувань',
+'pageinfo-header-restrictions' => 'Захист сторінки',
+'pageinfo-header-properties' => 'Властивості сторінки',
+'pageinfo-display-title' => 'Заголовок для відображення',
+'pageinfo-default-sort' => 'Ключ сортування за замовчуванням',
+'pageinfo-length' => 'Довжина сторінки (в байтах)',
+'pageinfo-article-id' => 'ID сторінки',
+'pageinfo-language' => 'Мова вмісту сторінки',
+'pageinfo-robot-policy' => 'Індексація пошуковими системами',
+'pageinfo-robot-index' => 'Індексується',
+'pageinfo-robot-noindex' => 'Не індексується',
 'pageinfo-views' => 'Кількість переглядів',
 'pageinfo-watchers' => 'Кількість спостерігачів',
+'pageinfo-redirects-name' => 'Перенаправлення на цю сторінку',
+'pageinfo-subpages-name' => 'Підсторінки цієї сторінки',
+'pageinfo-subpages-value' => '$1($2 {{PLURAL:$2|перенаправлення|перенаправлення|перенаправлень}}; $3 {{PLURAL:$3|не-перенаправлення|не-перенаправлення|не-перенаправлень}})',
+'pageinfo-firstuser' => 'Створив сторінку',
 'pageinfo-firsttime' => 'Дата створення сторінки',
 'pageinfo-lastuser' => 'Останній редактор',
 'pageinfo-lasttime' => 'Дата останньої правки',
 'pageinfo-edits' => 'Загальна кількість редагувань',
 'pageinfo-authors' => 'Загальна кількість унікальних авторів',
+'pageinfo-recent-edits' => 'Кількість поточних редагувань в історії (протягом $1)',
+'pageinfo-recent-authors' => 'Кількість авторів за останній час',
+'pageinfo-magic-words' => '{{PLURAL:$1|Магічне слово|Магічні слова}} ($1)',
+'pageinfo-hidden-categories' => '{{PLURAL:$1|Прихована категорія|Приховані категорії}} ($1)',
+'pageinfo-templates' => 'Включено {{PLURAL:$1|шаблон|шаблонів}} ($1)',
+'pageinfo-toolboxlink' => 'Інформація про сторінку',
+'pageinfo-redirectsto' => 'Перенаправляє на',
+'pageinfo-redirectsto-info' => 'інформація',
+'pageinfo-contentpage' => 'Рахується як стаття',
+'pageinfo-contentpage-yes' => 'Так',
+'pageinfo-protect-cascading' => 'Звідси розпочинається каскадний захист',
+'pageinfo-protect-cascading-yes' => 'Так',
+'pageinfo-protect-cascading-from' => 'Каскадний захист починається тут',
 
 # Skin names
 'skinname-standard' => 'Стандартне',
@@ -3193,6 +3262,8 @@ The wiki server can't provide data in a format your client can read.",
 'markedaspatrollederror' => 'Неможливо позначити як перевірену',
 'markedaspatrollederrortext' => 'Ви повинні зазначити версію, яка буде позначена як перевірена.',
 'markedaspatrollederror-noautopatrol' => 'Вам не дозволено позначати власні редагування як перевірені.',
+'markedaspatrollednotify' => 'Цю зміну у «$1» було позначено як відпатрульовану.',
+'markedaspatrollederrornotify' => 'Не вдалося поставити позначку про патрулювання.',
 
 # Patrol log
 'patrol-log-page' => 'Журнал патрулювання',
@@ -3225,6 +3296,7 @@ $1',
 'file-info-size-pages' => '$1 × $2 пікселів, розмір файлу: $3, MIME-тип: $4, $5 {{PLURAL:$5|сторінка|сторінки|сторінок}}',
 'file-nohires' => 'Нема версії з більшою роздільністю.',
 'svg-long-desc' => 'SVG-файл, номінально $1 × $2 пікселів, розмір файлу: $3',
+'svg-long-desc-animated' => 'Анімований SVG-файл, номінально $1 × $2 {{PLURAL:$2|піксель|пікселі|пікселів}}, розмір файлу: $3',
 'show-big-image' => 'Повна роздільність',
 'show-big-image-preview' => 'Розмір при попередньому перегляді: $1.',
 'show-big-image-other' => '{{PLURAL:$2|Інша роздільність|Інші роздільності}}: $1.',
@@ -3234,6 +3306,8 @@ $1',
 'file-info-png-looped' => 'закільцьований',
 'file-info-png-repeat' => 'продемонстрований $1 {{PLURAL:$1|раз|рази|разів}}',
 'file-info-png-frames' => '$1 {{PLURAL:$1|кадр|кадри|кадрів}}',
+'file-no-thumb-animation' => "'''Примітка. Через технічні обмеження, мініатюри цього файлу не будуть анімованими.'''",
+'file-no-thumb-animation-gif' => "'''Примітка. Через технічні обмеження, мініатюри GIF-зображень високої роздільності, як це, не анімуються.'''",
 
 # Special:NewFiles
 'newimages' => 'Галерея нових файлів',
@@ -3258,6 +3332,7 @@ $1',
 'hours' => '{{PLURAL:$1|$1 година|$1 години|$1 годин}}',
 'days' => '{{PLURAL:$1|$1 день|$1 дні|$1 днів}}',
 'ago' => '$1 тому',
+'just-now' => 'щойно',
 
 # Bad image list
 'bad_image_list' => 'Формат має бути наступним:
@@ -3844,6 +3919,7 @@ $5
 # Scary transclusion
 'scarytranscludedisabled' => '[«Interwiki transcluding» вимкнено]',
 'scarytranscludefailed' => '[Помилка звертання до шаблону $1]',
+'scarytranscludefailed-httpstatus' => '[Не вдалось завантажити шаблон для $1: HTTP $2]',
 'scarytranscludetoolong' => '[URL дуже довгий]',
 
 # Delete conflict
@@ -4031,6 +4107,7 @@ $5
 'version-license' => 'Ліцензія',
 'version-poweredby-credits' => "Ця Вікі працює на системі управління вмістом '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'інші',
+'version-credits-summary' => 'Нам хотілося б відзначити наступних осіб, що зробили внесок у [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki є вільним програмним забезпеченням, ви можете розповсюджувати та/або модифікувати його відповідно до умов GNU General Public License, яка опублікованя фондом вільного програмного забезпечення; або версії 2 Ліцензії, або (на Ваш розсуд) будь-якої наступної версії. 
 
 MediaWiki поширюється в надії, що вона буде корисною, але БЕЗ БУДЬ-ЯКИХ ГАРАНТІЙ, навіть без неявної гарантії КОМЕРЦІЙНОЇ ПРИДАТНОСТІ чи ПРИДАТНОСТІ ДЛЯ ПЕВНОЇ МЕТИ. Дивіться GNU General Public License для більш докладної інформації. 
@@ -4145,8 +4222,8 @@ MediaWiki поширюється в надії, що вона буде кори�
 'sqlite-no-fts' => '$1 без підтримки повнотекстового пошуку',
 
 # New logging system
-'logentry-delete-delete' => '$1 вилучив сторінку $3',
-'logentry-delete-restore' => '$1 відновив сторінку $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|вилучив|вилучила}} сторінку $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|відновив|відновила}} сторінку $3',
 'logentry-delete-event' => '$1 змінив видимість {{PLURAL:$5 запису журнала|$5 записів журналу}} на $3: $4',
 'logentry-delete-revision' => '$1 змінив видимість {{PLURAL:$5 версії|$5 версій}} на сторінці $3: $4',
 'logentry-delete-event-legacy' => '$1 змінив видимість записів журналу подій $3',
@@ -4164,15 +4241,15 @@ MediaWiki поширюється в надії, що вона буде кори�
 'revdelete-uname-unhid' => "ім'я користувача відкрито",
 'revdelete-restricted' => 'застосовані обмеження для адміністраторів',
 'revdelete-unrestricted' => 'зняті обмеження для адміністраторів',
-'logentry-move-move' => '$1 перейменував сторінку з $3 на $4',
-'logentry-move-move-noredirect' => '$1 перейменував сторінку з $3 на $4 без створення перенаправлення',
-'logentry-move-move_redir' => '$1 перейменував сторінку з $3 на $4 поверх перенаправлення',
-'logentry-move-move_redir-noredirect' => '$1 перейменував сторінку з $3 на $4 поверх перенаправлення без залишення самого перенаправлення',
+'logentry-move-move' => '$1 {{GENDER:$2|перейменував|перейменувала}} сторінку з $3 на $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|перейменував|перейменувала}} сторінку з $3 на $4 без створення перенаправлення',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|перейменував|перейменувала}} сторінку з $3 на $4 поверх перенаправлення',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|перейменував|перейменувала}} сторінку $3 на $4 поверх перенаправлення і без залишення перенаправлення',
 'logentry-patrol-patrol' => '$1 відпатрулював версію $4 сторінки $3',
 'logentry-patrol-patrol-auto' => '$1 автоматично відпатрулював версію $4 сторінки $3',
-'logentry-newusers-newusers' => '$1 створив обліковий запис користувача',
-'logentry-newusers-create' => '$1 — створений обліковий запис',
-'logentry-newusers-create2' => '$1 створив обліковий запис користувача $3',
+'logentry-newusers-newusers' => 'Створено обліковий запис $1',
+'logentry-newusers-create' => 'Створено обліковий запис $1',
+'logentry-newusers-create2' => '$1 {{GENDER:$2|створив|створила}} обліковий запис {{GENDER:$4|користувача|користувачки}} $3',
 'logentry-newusers-autocreate' => '$1 — автоматично створений обліковий запис',
 'newuserlog-byemail' => 'пароль надісланий електронною поштою',
 
@@ -4191,6 +4268,10 @@ MediaWiki поширюється в надії, що вона буде кори�
 'feedback-close' => 'Виконано',
 'feedback-bugcheck' => 'Чудово! Просто перевірте, що це не одна з вже [$1 відомих помилок].',
 'feedback-bugnew' => 'Я перевірив. Повідомити про нову помилку',
+
+# Search suggestions
+'searchsuggest-search' => 'Пошук',
+'searchsuggest-containing' => 'що містять...',
 
 # API errors
 'api-error-badaccess-groups' => 'Вам не дозволено завантажувати файли до цього вікіпроекту.',
@@ -4244,4 +4325,6 @@ MediaWiki поширюється в надії, що вона буде кори�
 'duration-centuries' => '$1 {{PLURAL:$1|століття|століття|століть}}',
 'duration-millennia' => '$1 {{PLURAL:$1|тисячоліття|тисячоліття|тисячоліть}}',
 
+# Unknown messages
+'svg-long-error' => 'неправильний SVG-файл: $1',
 );

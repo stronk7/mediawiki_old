@@ -16,8 +16,6 @@
 
 $fallback = 'ru';
 
-$linkPrefixExtension = true;
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Медиа',
 	NS_SPECIAL          => 'Ятарлă',
@@ -40,6 +38,7 @@ $namespaceNames = array(
 // Remove Russian aliases
 $namespaceGenderAliases = array();
 
+$linkPrefixExtension = true;
 $linkTrail = '/^([a-zа-яĕçăӳ"»]+)(.*)$/sDu';
 
 $messages = array(
@@ -172,7 +171,6 @@ $messages = array(
 'qbbrowse' => 'Курăм',
 'qbedit' => 'Тӳрлет',
 'qbpageoptions' => 'Страница ĕнерлевĕсем',
-'qbpageinfo' => 'Страница çинчен',
 'qbmyoptions' => 'Сирĕн ĕнĕрлевсем',
 'qbspecialpages' => 'Ятарлӑ страницӑсем',
 'faq' => 'ЫйХу',
@@ -383,9 +381,6 @@ $1',
 Сайт сире ятпа мар, IP-адрес урлă пĕлет.
 Эсир анонимла, е малтанхи евĕрлĕ çĕнĕ сеанс уçса, е  урăх ятпа ĕçлеме пултаратăр.
 Хăш-пĕр страницăсем эсир сайта кĕнĕ пек курăнма пултараççĕ, ăна тӳрлетмешкĕн браузер кэшне çĕнетĕр.',
-'welcomecreation' => '== Ырă сунса кĕтетпĕр, $1! ==
-Эсир пирĕн патăмăрта çырăнтăр.
-[[Special:Preferences|Сайт ĕнĕрлевĕсене хăвсамăра кирлĕ пек]] лартма ан манса кайăр.',
 'yourname' => 'Сирĕн ят',
 'yourpassword' => 'Вăрттăн сăмах:',
 'yourpasswordagain' => 'Вăрттăн сăмах тепре çырăр:',
@@ -926,9 +921,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'unwatching' => 'Сăнав ят-йышĕнчен кăларса пăрахасси…',
 
 'enotif_reset' => 'Пур страницăсене те пăхнă пек палăрт',
-'enotif_newpagetext' => 'Ку çĕнĕ страница',
-'changed' => 'улăштарнă',
-'created' => 'хатĕрленĕ',
 'enotif_anon_editor' => '$1 анонимлă хутшăнакан',
 
 # Delete

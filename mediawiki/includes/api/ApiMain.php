@@ -105,6 +105,7 @@ class ApiMain extends ApiBase {
 		'dbgfm' => 'ApiFormatDbg',
 		'dump' => 'ApiFormatDump',
 		'dumpfm' => 'ApiFormatDump',
+		'none' => 'ApiFormatNone',
 	);
 
 	/**
@@ -118,7 +119,7 @@ class ApiMain extends ApiBase {
 			'msg' => 'Use of the write API',
 			'params' => array()
 		),
-		'apihighlimits'	=> array(
+		'apihighlimits' => array(
 			'msg' => 'Use higher limits in API queries (Slow queries: $1 results; Fast queries: $2 results). The limits for slow queries also apply to multivalue parameters.',
 			'params' => array( ApiBase::LIMIT_SML2, ApiBase::LIMIT_BIG2 )
 		)
@@ -135,6 +136,7 @@ class ApiMain extends ApiBase {
 
 	private $mCacheMode = 'private';
 	private $mCacheControl = array();
+	private $mParamsUsed = array();
 
 	/**
 	 * Constructs an instance of ApiMain that utilizes the module and format specified by $request.
@@ -168,7 +170,7 @@ class ApiMain extends ApiBase {
 			// Remove all modules other than login
 			global $wgUser;
 
-			if ( $this->getRequest()->getVal( 'callback' ) !== null ) {
+			if ( $this->getVal( 'callback' ) !== null ) {
 				// JSON callback allows cross-site reads.
 				// For safety, strip user credentials.
 				wfDebug( "API: stripping user credentials for JSON callback\n" );
@@ -365,6 +367,7 @@ class ApiMain extends ApiBase {
 		// clear the output buffer and print just the error information
 		ob_start();
 
+		$t = microtime( true );
 		try {
 			$this->executeAction();
 		} catch ( Exception $e ) {
@@ -373,7 +376,12 @@ class ApiMain extends ApiBase {
 
 			// Log it
 			if ( !( $e instanceof UsageException ) ) {
-				wfDebugLog( 'exception', $e->getLogMessage() );
+				global $wgLogExceptionBacktrace;
+				if ( $wgLogExceptionBacktrace ) {
+					wfDebugLog( 'exception', $e->getLogMessage() . "\n" . $e->getTraceAsString() . "\n" );
+				} else {
+					wfDebugLog( 'exception', $e->getLogMessage() );
+				}
 			}
 
 			// Handle any kind of exception by outputing properly formatted error message.
@@ -400,6 +408,9 @@ class ApiMain extends ApiBase {
 			$this->mPrinter->safeProfileOut();
 			$this->printResult( true );
 		}
+
+		// Log the request whether or not there was an error
+		$this->logRequest( microtime( true ) - $t);
 
 		// Send cache headers after any code which might generate an error, to
 		// avoid sending public cache headers for errors.
@@ -816,11 +827,96 @@ class ApiMain extends ApiBase {
 		$module->profileOut();
 
 		if ( !$this->mInternalMode ) {
+			// Report unused params
+			$this->reportUnusedParams();
+
 			//append Debug information
 			MWDebug::appendDebugInfoToApiResult( $this->getContext(), $this->getResult() );
 
 			// Print result data
 			$this->printResult( false );
+		}
+	}
+
+	/**
+	 * Log the preceding request
+	 * @param $time Time in seconds
+	 */
+	protected function logRequest( $time ) {
+		$request = $this->getRequest();
+		$milliseconds = $time === null ? '?' : round( $time * 1000 );
+		$s = 'API' .
+			' ' . $request->getMethod() .
+			' ' . wfUrlencode( str_replace( ' ', '_', $this->getUser()->getName() ) ) .
+			' ' . $request->getIP() .
+			' T=' . $milliseconds .'ms';
+		foreach ( $this->getParamsUsed() as $name ) {
+			$value = $request->getVal( $name );
+			if ( $value === null ) {
+				continue;
+			}
+			$s .= ' ' . $name . '=';
+			if ( strlen( $value ) > 256 ) {
+				$encValue = $this->encodeRequestLogValue( substr( $value, 0, 256 ) );
+				$s .= $encValue . '[...]';
+			} else {
+				$s .= $this->encodeRequestLogValue( $value );
+			}
+		}
+		$s .= "\n";
+		wfDebugLog( 'api', $s, false );
+	}
+
+	/**
+	 * Encode a value in a format suitable for a space-separated log line.
+	 */
+	protected function encodeRequestLogValue( $s ) {
+		static $table;
+		if ( !$table ) {
+			$chars = ';@$!*(),/:';
+			for ( $i = 0; $i < strlen( $chars ); $i++ ) {
+				$table[ rawurlencode( $chars[$i] ) ] = $chars[$i];
+			}
+		}
+		return strtr( rawurlencode( $s ), $table );
+	}
+
+	/**
+	 * Get the request parameters used in the course of the preceding execute() request
+	 */
+	protected function getParamsUsed() {
+		return array_keys( $this->mParamsUsed );
+	}
+
+	/**
+	 * Get a request value, and register the fact that it was used, for logging.
+	 */
+	public function getVal( $name, $default = null ) {
+		$this->mParamsUsed[$name] = true;
+		return $this->getRequest()->getVal( $name, $default );
+	}
+
+	/**
+	 * Get a boolean request value, and register the fact that the parameter
+	 * was used, for logging.
+	 */
+	public function getCheck( $name ) {
+		$this->mParamsUsed[$name] = true;
+		return $this->getRequest()->getCheck( $name );
+	}
+
+	/**
+	 * Report unused parameters, so the client gets a hint in case it gave us parameters we don't know,
+	 * for example in case of spelling mistakes or a missing 'g' prefix for generators.
+	 */
+	protected function reportUnusedParams() {
+		$paramsUsed = $this->getParamsUsed();
+		$allParams = $this->getRequest()->getValueNames();
+
+		$unusedParams = array_diff( $allParams, $paramsUsed );
+		if( count( $unusedParams ) ) {
+			$s = count( $unusedParams ) > 1 ? 's' : '';
+			$this->setWarning( "Unrecognized parameter$s: '" . implode( $unusedParams, "', '" ) . "'" );
 		}
 	}
 
@@ -903,7 +999,7 @@ class ApiMain extends ApiBase {
 				'Maximum lag can be used when MediaWiki is installed on a database replicated cluster.',
 				'To save actions causing any more site replication lag, this parameter can make the client',
 				'wait until the replication lag is less than the specified value.',
-				'In case of a replag error, a HTTP 503 error is returned, with the message like',
+				'In case of a replag error, error code "maxlag" is returned, with the message like',
 				'"Waiting for $host: $lag seconds lagged\n".',
 				'See https://www.mediawiki.org/wiki/Manual:Maxlag_parameter for more information',
 			),

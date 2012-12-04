@@ -146,7 +146,6 @@ $messages = array(
 'qbbrowse' => 'Atan',
 'qbedit' => 'Tulaika',
 'qbpageoptions' => 'Este na pahina',
-'qbpageinfo' => 'Kontekstu',
 'qbmyoptions' => 'Påhina-hu siha',
 'qbspecialpages' => 'Manespesiat na påhina',
 
@@ -304,9 +303,6 @@ Ha nå'i i rason ''$2''.",
 
 Siña hao kumontinua manu'usa {{SITENAME}} sin nå'an, pat siña uma'log ta'lo pat siña un usa otra na nå'an muna'sesetbi.
 Fanapunta na pålu na påhina siha para u na'annok na ma'log-in hao, asta ki un funas iyo-mu browser cache.",
-'welcomecreation' => "== Bienbenido, $1! ==
-Mafa'tinas i kuenta-mu.
-Munga mamalefa tumulaika ga'ña-mu {{SITENAME}}.",
 'yourname' => "Nå'an ni muna'setbi:",
 'yourpassword' => 'Password:',
 'yourpasswordagain' => "Taip ta'lo i password:",
@@ -644,8 +640,6 @@ Fanapunta na para u na'nuebu i kolumna anggen un usa i inachetton nabegasion.",
 'search-interwiki-caption' => 'Proyektu siha ni mamarehu',
 'search-interwiki-default' => 'Humuyongña gi $1:',
 'search-interwiki-more' => '(mas)',
-'search-mwsuggest-enabled' => 'yan abisa',
-'search-mwsuggest-disabled' => "tåya' abisa",
 'search-relatedarticle' => 'Umachetton',
 'mwsuggest-disable' => "Na'påra i abisan AJAX",
 'searchrelated' => 'umachetton',

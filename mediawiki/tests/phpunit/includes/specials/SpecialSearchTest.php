@@ -10,9 +10,6 @@
 class SpecialSearchTest extends MediaWikiTestCase {
 	private $search;
 
-	function setUp() { }
-	function tearDown() { }
-
 	/**
 	 * @covers SpecialSearch::load
 	 * @dataProvider provideSearchOptionsTests
@@ -83,17 +80,15 @@ class SpecialSearchTest extends MediaWikiTestCase {
 				'Web request with specific NS should override user preference'
 			),
 			array(
-				$EMPTY_REQUEST, array( 'searchNs2' => 1, 'searchNs14' => 1 ),
-				'advanced', array( 2, 14 ),
-				'Bug 33583: search with no option should honor User search preferences'
-			),
-			array(
-				$EMPTY_REQUEST, array_fill_keys( array_map( function( $ns ) {
+				$EMPTY_REQUEST, array(
+					'searchNs2' => 1,
+					'searchNs14' => 1,
+				) + array_fill_keys( array_map( function( $ns ) {
 					return "searchNs$ns";
-				}, $defaultNS ), 0 ) + array( 'searchNs2' => 1, 'searchNs14' => 1 ),
+				}, $defaultNS ), 0 ),
 				'advanced', array( 2, 14 ),
 				'Bug 33583: search with no option should honor User search preferences'
-				. 'and have all other namespace disabled'
+				. ' and have all other namespace disabled'
 			),
 		);
 	}
@@ -111,6 +106,36 @@ class SpecialSearchTest extends MediaWikiTestCase {
 			$u->setOption( $name, $value );
 		}
 		return $u;
+	}
+
+	/**
+	 * Verify we do not expand search term in <title> on search result page
+	 * https://gerrit.wikimedia.org/r/4841
+	 */
+	function testSearchTermIsNotExpanded() {
+
+		# Initialize [[Special::Search]]
+		$search = new SpecialSearch();
+		$search->getContext()->setTitle( Title::newFromText('Special:Search' ) );
+		$search->load();
+
+		# Simulate a user searching for a given term
+		$term = '{{SITENAME}}';
+		$search->showResults( $term );
+
+		# Lookup the HTML page title set for that page
+		$pageTitle = $search
+			->getContext()
+			->getOutput()
+			->getHTMLTitle();
+
+		# Compare :-]
+		$this->assertRegExp(
+			'/' . preg_quote( $term ) . '/',
+			$pageTitle,
+			"Search term '{$term}' should not be expanded in Special:Search <title>"
+		);
+
 	}
 }
 

@@ -198,7 +198,6 @@ $messages = array(
 'qbbrowse' => 'Naršītė',
 'qbedit' => 'Taisītė',
 'qbpageoptions' => 'Tas poslapis',
-'qbpageinfo' => 'Konteksts',
 'qbmyoptions' => 'Mona poslapē',
 'qbspecialpages' => 'Specēlė̅jė poslapē',
 'faq' => 'DOK',
@@ -393,11 +392,8 @@ Ožklausėms: $2',
 # Login and logout pages
 'logouttext' => "'''Daba Tamsta esat atsėjongės.'''
 
-Galat ė tuoliau nauduotė {{SITENAME}} anuonimėškā aba [[Special:UserLogin|prisėjonkat]] ėš naujė šėtuo patiu a kėto nauduotuojė vardu.
+Galat ė tuoliau nauduotė {{SITENAME}} anuonimėškā aba <span class='plainlinks'>[$1 prisėjonkat]</span> ėš naujė šėtuo patiu a kėto nauduotuojė vardu.
 Pastebiejims: katruos nekatruos poslapiuos ė tuoliau gal ruodītė būktā būtomiet prisėjongės lėgė tuol, kumet ėšvalīsėt sava naršīklės dietovė (''cache'').",
-'welcomecreation' => '== Svēkė, $1! ==
-
-Tamstas paskīra bova sokorta. Neožmėrškėt pakeistė sava [[Special:Preferences|{{SITENAME}} nustatīmu]].',
 'yourname' => 'Nauduotuojė vards:',
 'yourpassword' => 'Slaptažuodis:',
 'yourpasswordagain' => 'Pakartuoket slaptažuodė:',
@@ -751,8 +747,6 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 'search-interwiki-caption' => 'Dokterėnē pruojektā',
 'search-interwiki-default' => '$1 rezoltatā:',
 'search-interwiki-more' => '(daugiau)',
-'search-mwsuggest-enabled' => 'so pasiūlīmās',
-'search-mwsuggest-disabled' => 'nie pasiūlīmu',
 'search-relatedarticle' => 'Sosėjėn',
 'mwsuggest-disable' => 'Kavuotė AJAX pasiūlīmus',
 'searchrelated' => 'sosėjėn',
@@ -1293,9 +1287,6 @@ Jēgo bikumet ožsėnuorietomiet liautėis keravuotė straipsnė, spauskat \"neb
 'unwatching' => 'Šalėnama ėš keravuojamu sāraša...',
 
 'enotif_reset' => 'Pažīmietė vėsus poslapius kāp aplonkītus',
-'enotif_newpagetext' => 'Tas īr naus poslapis.',
-'changed' => 'pakeitė',
-'created' => 'sokūrė',
 'enotif_anon_editor' => 'anuonėminis nauduotuos $1',
 
 # Delete

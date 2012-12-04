@@ -129,6 +129,17 @@ abstract class FileBackend {
 	}
 
 	/**
+	 * Get the wiki identifier used for this backend (possibly empty).
+	 * Note that this might *not* be in the same format as wfWikiID().
+	 *
+	 * @return string
+	 * @since 1.20
+	 */
+	final public function getWikiId() {
+		return $this->wikiId;
+	}
+
+	/**
 	 * Check if this backend is read-only
 	 *
 	 * @return bool
@@ -161,6 +172,7 @@ abstract class FileBackend {
 	 *  - copy
 	 *  - move
 	 *  - delete
+	 *  - describe (since 1.21)
 	 *  - null
 	 *
 	 * a) Create a new file in storage with the contents of a string
@@ -171,7 +183,8 @@ abstract class FileBackend {
 	 *         'content'             => <string of new file contents>,
 	 *         'overwrite'           => <boolean>,
 	 *         'overwriteSame'       => <boolean>,
-	 *         'disposition'         => <Content-Disposition header value>
+	 *         'disposition'         => <Content-Disposition header value>,
+	 *         'headers'             => <HTTP header name/value map> # since 1.21
 	 *     );
 	 * @endcode
 	 *
@@ -183,7 +196,8 @@ abstract class FileBackend {
 	 *         'dst'                 => <storage path>,
 	 *         'overwrite'           => <boolean>,
 	 *         'overwriteSame'       => <boolean>,
-	 *         'disposition'         => <Content-Disposition header value>
+	 *         'disposition'         => <Content-Disposition header value>,
+	 *         'headers'             => <HTTP header name/value map> # since 1.21
 	 *     )
 	 * @endcode
 	 *
@@ -195,6 +209,7 @@ abstract class FileBackend {
 	 *         'dst'                 => <storage path>,
 	 *         'overwrite'           => <boolean>,
 	 *         'overwriteSame'       => <boolean>,
+	 *         'ignoreMissingSource' => <boolean>, # since 1.21
 	 *         'disposition'         => <Content-Disposition header value>
 	 *     )
 	 * @endcode
@@ -207,6 +222,7 @@ abstract class FileBackend {
 	 *         'dst'                 => <storage path>,
 	 *         'overwrite'           => <boolean>,
 	 *         'overwriteSame'       => <boolean>,
+	 *         'ignoreMissingSource' => <boolean>, # since 1.21
 	 *         'disposition'         => <Content-Disposition header value>
 	 *     )
 	 * @endcode
@@ -220,7 +236,17 @@ abstract class FileBackend {
 	 *     )
 	 * @endcode
 	 *
-	 * f) Do nothing (no-op)
+	 * f) Update metadata for a file within storage
+	 * @code
+	 *     array(
+	 *         'op'                  => 'describe',
+	 *         'src'                 => <storage path>,
+	 *         'disposition'         => <Content-Disposition header value>,
+	 *         'headers'             => <HTTP header name/value map>
+	 *     )
+	 * @endcode
+	 *
+	 * g) Do nothing (no-op)
 	 * @code
 	 *     array(
 	 *         'op'                  => 'null',
@@ -234,10 +260,17 @@ abstract class FileBackend {
 	 *   - overwriteSame       : An error will not be given if a file already
 	 *                           exists at the destination that has the same
 	 *                           contents as the new contents to be written there.
-	 *   - disposition         : When supplied, the backend will add a Content-Disposition
+	 *   - disposition         : If supplied, the backend will return a Content-Disposition
 	 *                           header when GETs/HEADs of the destination file are made.
-	 *                           Backends that don't support file metadata will ignore this.
-	 *                           See http://tools.ietf.org/html/rfc6266 (since 1.20).
+	 *                           Backends that don't support metadata ignore this.
+	 *                           See http://tools.ietf.org/html/rfc6266. (since 1.20)
+	 *   - headers             : If supplied, the backend will return these headers when
+	 *                           GETs/HEADs of the destination file are made. Header values
+	 *                           should be smaller than 256 bytes, often options or numbers.
+	 *                           Existing headers will remain, but these will replace any
+	 *                           conflicting previous headers, and headers will be removed
+	 *                           if they are set to an empty string.
+	 *                           Backends that don't support metadata ignore this. (since 1.21)
 	 *
 	 * $opts is an associative of boolean flags, including:
 	 *   - force               : Operation precondition errors no longer trigger an abort.
@@ -252,10 +285,10 @@ abstract class FileBackend {
 	 *   - nonJournaled        : Don't log this operation batch in the file journal.
 	 *                           This limits the ability of recovery scripts.
 	 *   - parallelize         : Try to do operations in parallel when possible.
-	 *   - bypassReadOnly      : Allow writes in read-only mode (since 1.20).
+	 *   - bypassReadOnly      : Allow writes in read-only mode. (since 1.20)
 	 *   - preserveCache       : Don't clear the process cache before checking files.
 	 *                           This should only be used if all entries in the process
-	 *                           cache were added after the files were already locked (since 1.20).
+	 *                           cache were added after the files were already locked. (since 1.20)
 	 *
 	 * @remarks Remarks on locking:
 	 * File system paths given to operations should refer to files that are
@@ -378,6 +411,21 @@ abstract class FileBackend {
 	}
 
 	/**
+	 * Performs a single describe operation.
+	 * This sets $params['op'] to 'describe' and passes it to doOperation().
+	 *
+	 * @see FileBackend::doOperation()
+	 *
+	 * @param $params Array Operation parameters
+	 * @param $opts Array Operation options
+	 * @return Status
+	 * @since 1.21
+	 */
+	final public function describe( array $params, array $opts = array() ) {
+		return $this->doOperation( array( 'op' => 'describe' ) + $params, $opts );
+	}
+
+	/**
 	 * Perform a set of independent file operations on some files.
 	 *
 	 * This does no locking, nor journaling, and possibly no stat calls.
@@ -390,6 +438,7 @@ abstract class FileBackend {
 	 *  - copy
 	 *  - move
 	 *  - delete
+	 *  - describe (since 1.21)
 	 *  - null
 	 *
 	 * a) Create a new file in storage with the contents of a string
@@ -398,36 +447,44 @@ abstract class FileBackend {
 	 *         'op'                  => 'create',
 	 *         'dst'                 => <storage path>,
 	 *         'content'             => <string of new file contents>,
-	 *         'disposition'         => <Content-Disposition header value>
+	 *         'disposition'         => <Content-Disposition header value>,
+	 *         'headers'             => <HTTP header name/value map> # since 1.21
 	 *     )
 	 * @endcode
+	 *
 	 * b) Copy a file system file into storage
 	 * @code
 	 *     array(
 	 *         'op'                  => 'store',
 	 *         'src'                 => <file system path>,
 	 *         'dst'                 => <storage path>,
-	 *         'disposition'         => <Content-Disposition header value>
+	 *         'disposition'         => <Content-Disposition header value>,
+	 *         'headers'             => <HTTP header name/value map> # since 1.21
 	 *     )
 	 * @endcode
+	 *
 	 * c) Copy a file within storage
 	 * @code
 	 *     array(
 	 *         'op'                  => 'copy',
 	 *         'src'                 => <storage path>,
 	 *         'dst'                 => <storage path>,
+	 *         'ignoreMissingSource' => <boolean>, # since 1.21
 	 *         'disposition'         => <Content-Disposition header value>
 	 *     )
 	 * @endcode
+	 *
 	 * d) Move a file within storage
 	 * @code
 	 *     array(
 	 *         'op'                  => 'move',
 	 *         'src'                 => <storage path>,
 	 *         'dst'                 => <storage path>,
+	 *         'ignoreMissingSource' => <boolean>, # since 1.21
 	 *         'disposition'         => <Content-Disposition header value>
 	 *     )
 	 * @endcode
+	 *
 	 * e) Delete a file within storage
 	 * @code
 	 *     array(
@@ -436,7 +493,18 @@ abstract class FileBackend {
 	 *         'ignoreMissingSource' => <boolean>
 	 *     )
 	 * @endcode
-	 * f) Do nothing (no-op)
+	 *
+	 * f) Update metadata for a file within storage
+	 * @code
+	 *     array(
+	 *         'op'                  => 'describe',
+	 *         'src'                 => <storage path>,
+	 *         'disposition'         => <Content-Disposition header value>,
+	 *         'headers'             => <HTTP header name/value map>
+	 *     )
+	 * @endcode
+	 *
+	 * g) Do nothing (no-op)
 	 * @code
 	 *     array(
 	 *         'op'                  => 'null',
@@ -450,6 +518,13 @@ abstract class FileBackend {
 	 *                           header when GETs/HEADs of the destination file are made.
 	 *                           Backends that don't support file metadata will ignore this.
 	 *                           See http://tools.ietf.org/html/rfc6266 (since 1.20).
+	 *   - headers             : If supplied, the backend will return these headers when
+	 *                           GETs/HEADs of the destination file are made. Header values
+	 *                           should be smaller than 256 bytes, often options or numbers.
+	 *                           Existing headers will remain, but these will replace any
+	 *                           conflicting previous headers, and headers will be removed
+	 *                           if they are set to an empty string.
+	 *                           Backends that don't support metadata ignore this. (since 1.21)
 	 *
 	 * $opts is an associative of boolean flags, including:
 	 *   - bypassReadOnly      : Allow writes in read-only mode (since 1.20)
@@ -566,6 +641,20 @@ abstract class FileBackend {
 	}
 
 	/**
+	 * Performs a single quick describe operation.
+	 * This sets $params['op'] to 'describe' and passes it to doQuickOperation().
+	 *
+	 * @see FileBackend::doQuickOperation()
+	 *
+	 * @param $params Array Operation parameters
+	 * @return Status
+	 * @since 1.21
+	 */
+	final public function quickDescribe( array $params ) {
+		return $this->doQuickOperation( array( 'op' => 'describe' ) + $params );
+	}
+
+	/**
 	 * Concatenate a list of storage files into a single file system file.
 	 * The target path should refer to a file that is already locked or
 	 * otherwise safe from modification from other processes. Normally,
@@ -573,8 +662,9 @@ abstract class FileBackend {
 	 *
 	 * @param $params Array Operation parameters
 	 * $params include:
-	 *   - srcs : ordered source storage paths (e.g. chunk1, chunk2, ...)
-	 *   - dst  : file system path to 0-byte temp file
+	 *   - srcs        : ordered source storage paths (e.g. chunk1, chunk2, ...)
+	 *   - dst         : file system path to 0-byte temp file
+	 *   - parallelize : try to do operations in parallel when possible
 	 * @return Status
 	 */
 	abstract public function concatenate( array $params );
@@ -720,7 +810,29 @@ abstract class FileBackend {
 	 *   - latest : use the latest available data
 	 * @return string|bool Returns false on failure
 	 */
-	abstract public function getFileContents( array $params );
+	final public function getFileContents( array $params ) {
+		$contents = $this->getFileContentsMulti(
+			array( 'srcs' => array( $params['src'] ) ) + $params );
+
+		return $contents[$params['src']];
+	}
+
+	/**
+	 * Like getFileContents() except it takes an array of storage paths
+	 * and returns a map of storage paths to strings (or null on failure).
+	 * The map keys (paths) are in the same order as the provided list of paths.
+	 *
+	 * @see FileBackend::getFileContents()
+	 *
+	 * @param $params Array
+	 * $params include:
+	 *   - srcs        : list of source storage paths
+	 *   - latest      : use the latest available data
+	 *   - parallelize : try to do operations in parallel when possible
+	 * @return Array Map of (path name => string or false on failure)
+	 * @since 1.20
+	 */
+	abstract public function getFileContentsMulti( array $params );
 
 	/**
 	 * Get the size (bytes) of a file at a storage path in the backend.
@@ -762,13 +874,13 @@ abstract class FileBackend {
 
 	/**
 	 * Get the properties of the file at a storage path in the backend.
-	 * Returns FSFile::placeholderProps() on failure.
+	 * This gives the result of FSFile::getProps() on a local copy of the file.
 	 *
 	 * @param $params Array
 	 * $params include:
 	 *   - src    : source storage path
 	 *   - latest : use the latest available data
-	 * @return Array
+	 * @return Array Returns FSFile::placeholderProps() on failure
 	 */
 	abstract public function getFileProps( array $params );
 
@@ -807,7 +919,29 @@ abstract class FileBackend {
 	 *   - latest : use the latest available data
 	 * @return FSFile|null Returns null on failure
 	 */
-	abstract public function getLocalReference( array $params );
+	final public function getLocalReference( array $params ) {
+		$fsFiles = $this->getLocalReferenceMulti(
+			array( 'srcs' => array( $params['src'] ) ) + $params );
+
+		return $fsFiles[$params['src']];
+	}
+
+	/**
+	 * Like getLocalReference() except it takes an array of storage paths
+	 * and returns a map of storage paths to FSFile objects (or null on failure).
+	 * The map keys (paths) are in the same order as the provided list of paths.
+	 *
+	 * @see FileBackend::getLocalReference()
+	 *
+	 * @param $params Array
+	 * $params include:
+	 *   - srcs        : list of source storage paths
+	 *   - latest      : use the latest available data
+	 *   - parallelize : try to do operations in parallel when possible
+	 * @return Array Map of (path name => FSFile or null on failure)
+	 * @since 1.20
+	 */
+	abstract public function getLocalReferenceMulti( array $params );
 
 	/**
 	 * Get a local copy on disk of the file at a storage path in the backend.
@@ -820,7 +954,47 @@ abstract class FileBackend {
 	 *   - latest : use the latest available data
 	 * @return TempFSFile|null Returns null on failure
 	 */
-	abstract public function getLocalCopy( array $params );
+	final public function getLocalCopy( array $params ) {
+		$tmpFiles = $this->getLocalCopyMulti(
+			array( 'srcs' => array( $params['src'] ) ) + $params );
+
+		return $tmpFiles[$params['src']];
+	}
+
+	/**
+	 * Like getLocalCopy() except it takes an array of storage paths and
+	 * returns a map of storage paths to TempFSFile objects (or null on failure).
+	 * The map keys (paths) are in the same order as the provided list of paths.
+	 *
+	 * @see FileBackend::getLocalCopy()
+	 *
+	 * @param $params Array
+	 * $params include:
+	 *   - srcs        : list of source storage paths
+	 *   - latest      : use the latest available data
+	 *   - parallelize : try to do operations in parallel when possible
+	 * @return Array Map of (path name => TempFSFile or null on failure)
+	 * @since 1.20
+	 */
+	abstract public function getLocalCopyMulti( array $params );
+
+	/**
+	 * Return an HTTP URL to a given file that requires no authentication to use.
+	 * The URL may be pre-authenticated (via some token in the URL) and temporary.
+	 * This will return null if the backend cannot make an HTTP URL for the file.
+	 *
+	 * This is useful for key/value stores when using scripts that seek around
+	 * large files and those scripts (and the backend) support HTTP Range headers.
+	 * Otherwise, one would need to use getLocalReference(), which involves loading
+	 * the entire file on to local disk.
+	 *
+	 * @param $params Array
+	 * $params include:
+	 *   - src : source storage path
+	 * @return string|null
+	 * @since 1.21
+	 */
+	abstract public function getFileHttpUrl( array $params );
 
 	/**
 	 * Check if a directory exists at a given storage path.
@@ -996,6 +1170,17 @@ abstract class FileBackend {
 	}
 
 	/**
+	 * Get the storage path for the given container for this backend
+	 *
+	 * @param $container string Container name
+	 * @return string Storage path
+	 * @since 1.21
+	 */
+	final public function getContainerStoragePath( $container ) {
+		return $this->getRootStoragePath() . "/{$container}";
+	}
+
+	/**
 	 * Get the file journal object for this backend
 	 *
 	 * @return FileJournal
@@ -1099,6 +1284,7 @@ abstract class FileBackend {
 	 *
 	 * @param $type string One of (attachment, inline)
 	 * @param $filename string Suggested file name (should not contain slashes)
+	 * @throws MWException
 	 * @return string
 	 * @since 1.20
 	 */

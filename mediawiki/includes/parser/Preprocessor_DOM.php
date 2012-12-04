@@ -126,6 +126,7 @@ class Preprocessor_DOM implements Preprocessor {
 	 * cache may be implemented at a later date which takes further advantage of these strict
 	 * dependency requirements.
 	 *
+	 * @throws MWException
 	 * @return PPNode_DOM
 	 */
 	function preprocessToObj( $text, $flags = 0 ) {
@@ -164,7 +165,7 @@ class Preprocessor_DOM implements Preprocessor {
 		}
 
 		// Fail if the number of elements exceeds acceptable limits
-		// Do not attempt to generate the DOM 
+		// Do not attempt to generate the DOM
 		$this->parser->mGeneratedPPNodeCount += substr_count( $xml, '<' );
 		$max = $this->parser->mOptions->getMaxGeneratedPPNodeCount();
 		if ( $this->parser->mGeneratedPPNodeCount > $max ) {
@@ -796,8 +797,8 @@ class PPDStack {
  * @ingroup Parser
  */
 class PPDStackElement {
-	var $open,		        // Opening character (\n for heading)
-		$close,     	    // Matching closing character
+	var	$open,              // Opening character (\n for heading)
+		$close,             // Matching closing character
 		$count,             // Number of opening characters found (number of "=" for heading)
 		$parts,             // Array of PPDPart objects describing pipe-separated parts.
 		$lineStart;         // True if the open char appeared at the start of the input line. Not set for headings.
@@ -1673,6 +1674,7 @@ class PPNode_DOM implements PPNode {
 	 *  - index         String index
 	 *  - value         PPNode value
 	 *
+	 * @throws MWException
 	 * @return array
 	 */
 	function splitArg() {
@@ -1694,6 +1696,7 @@ class PPNode_DOM implements PPNode {
 	 * Split an "<ext>" node into an associative array containing name, attr, inner and close
 	 * All values in the resulting array are PPNodes. Inner and close are optional.
 	 *
+	 * @throws MWException
 	 * @return array
 	 */
 	function splitExt() {
@@ -1719,6 +1722,7 @@ class PPNode_DOM implements PPNode {
 
 	/**
 	 * Split a "<h>" node
+	 * @throws MWException
 	 * @return array
 	 */
 	function splitHeading() {

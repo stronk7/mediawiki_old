@@ -85,7 +85,7 @@ abstract class FileJournal {
 	/**
 	 * Log changes made by a batch file operation.
 	 * $entries is an array of log entries, each of which contains:
-	 *     op      : Basic operation name (create, store, copy, delete)
+	 *     op      : Basic operation name (create, update, delete)
 	 *     path    : The storage path of the file
 	 *     newSha1 : The final base 36 SHA-1 of the file
 	 * Note that 'false' should be used as the SHA-1 for non-existing files.
@@ -109,6 +109,21 @@ abstract class FileJournal {
 	 * @return Status
 	 */
 	abstract protected function doLogChangeBatch( array $entries, $batchId );
+
+	/**
+	 * Get the position ID of the latest journal entry
+	 *
+	 * @return integer|false
+	 */
+	final public function getCurrentPosition() {
+		return $this->doGetCurrentPosition();
+	}
+
+	/**
+	 * @see FileJournal::getCurrentPosition()
+	 * @return integer|false
+	 */
+	abstract protected function doGetCurrentPosition();
 
 	/**
 	 * Get an array of file change log entries.
@@ -169,13 +184,21 @@ abstract class FileJournal {
  */
 class NullFileJournal extends FileJournal {
 	/**
-	 * @see FileJournal::logChangeBatch()
+	 * @see FileJournal::doLogChangeBatch()
 	 * @param $entries array
 	 * @param $batchId string
 	 * @return Status
 	 */
 	protected function doLogChangeBatch( array $entries, $batchId ) {
 		return Status::newGood();
+	}
+
+	/**
+	 * @see FileJournal::doGetCurrentPosition()
+	 * @return integer|false
+	 */
+	protected function doGetCurrentPosition() {
+		return false;
 	}
 
 	/**
@@ -187,7 +210,7 @@ class NullFileJournal extends FileJournal {
 	}
 
 	/**
-	 * @see FileJournal::purgeOldLogs()
+	 * @see FileJournal::doPurgeOldLogs()
 	 * @return Status
 	 */
 	protected function doPurgeOldLogs() {

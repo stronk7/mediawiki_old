@@ -91,7 +91,7 @@ $messages = array(
 
 'underline-always' => 'Куруук',
 'underline-never' => 'Аннынан тардыма',
-'underline-default' => 'Браузер настройкатынан',
+'underline-default' => 'Браузер туруоруутунан',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Эрэдээксийэлиир түннүк бичигэ:',
@@ -187,7 +187,6 @@ $messages = array(
 'qbbrowse' => 'Көр',
 'qbedit' => 'Уларыт',
 'qbpageoptions' => 'Бу сирэй',
-'qbpageinfo' => 'Ис хоһооно',
 'qbmyoptions' => 'Мин сирэйдэрим',
 'qbspecialpages' => 'Аналлаах сирэйдэр',
 'faq' => 'FAQ',
@@ -200,7 +199,7 @@ $messages = array(
 'vector-action-protect' => 'Уларыйбат гын',
 'vector-action-undelete' => 'Төннөр',
 'vector-action-unprotect' => 'Көмүскэлин уларыт',
-'vector-simplesearch-preference' => 'Көрдөбүл этэн биэриилэрин кэҥэтиллибит барылын туруор («Векторга» эрэ)',
+'vector-simplesearch-preference' => 'Көрдөбүл устуруокатын судургу барылын туруор («Векторга» эрэ)',
 'vector-view-create' => 'Ай',
 'vector-view-edit' => 'Уларыт',
 'vector-view-history' => 'Устуоруйатын көрүү',
@@ -308,6 +307,7 @@ $1',
 'newmessagesdifflink' => 'кэлиҥҥи уларытыы',
 'youhavenewmessagesfromusers' => 'Маны $1 {{PLURAL:$3|соҕотох кыттааччыттан|$3 кыттааччыттан}} туппуккун ($2).',
 'youhavenewmessagesmanyusers' => 'Маны $1 элбэх кыттааччыттан туппуккун ($2).',
+'newmessageslinkplural' => '{{PLURAL:$1|саҥа этии|саҥа этии}}',
 'newmessagesdifflinkplural' => 'тиһэх {{PLURAL:$1|уларытыы|уларытыылар}}',
 'youhavenewmessagesmulti' => '$1, саҥа суруктар кэллилэр',
 'editsection' => 'уларыт',
@@ -361,9 +361,9 @@ $1',
 'dberrortext' => 'Билии олоҕор ыйытык синтаксииһа сыыһалаах эбит.
 Ол бырагырааммаҕар баар сыыһаттан буолуон сөп.
 Билии олоҕор бүтэһик ыйытык маннык:
-<blockquote><tt>$1</tt></blockquote>
-(бу пуунсуйаттан тахсыбыт "<tt>$2</tt>").
-Билии олоҕо сыыһаны көрдөрдө "<tt>$3: $4</tt>".',
+: <code>$1</code>
+(бу пуунсуйаттан тахсыбыт «<code>$2</code>»).
+Билии олоҕо сыыһаны көрдөрдө «<code>$3: $4</code>».',
 'dberrortextcl' => 'Билии олоҕор ыйытык синтаксииһын сыыһата таҕыста.
 Билии олоҕор бүтэһик ыйытык:
 "$1"
@@ -416,8 +416,11 @@ $1',
 'protectedpagetext' => 'Бу сирэй уларытыллыбат.',
 'viewsourcetext' => 'Эн бу сирэй төрдүн көрүөххүн уонна төгүллүөххүн сөп:',
 'viewyourtext' => "'''Бэйэҥ көннөрүүлэриҥ''' исходнигын бу сирэйгэ көрүөххүн уонна хатылаан ылыаххын сөп:",
-'protectedinterface' => 'Бу сирэй бырагыраамма холбуурун хааччыйар, онон моһуогурууттан халытан хатанан турар',
-'editinginterface' => "'''Болҕой:''' Быраҕыраамма тас көстүүтүн (интерфейсын) хааччыйар тиэкиһи уларытаары гынан эрэҕин. Бу сирэйи уларыттаххына атын кыттааччылар көрөллөрүгэр бырагыраамма көстүүтэ уларыйыа. Тылбаастыыр буоллаххына Медиавики бырайыактарын сахалыы тылбааһын [//translatewiki.net/wiki/Main_Page?setlang=sah translatewiki.net] туһан.",
+'protectedinterface' => 'Бу сирэй бырагыраамма интерфейсын биллэриитин көрдөрөр, онон моһуогурууттан халытан хатанан турар.
+Тылбааһын уларытыаххын баҕарар буоллаххына онно аналлаах тылбаас ситим-сирин туһан: MediaWiki [//translatewiki.net/ translatewiki.net]',
+'editinginterface' => "'''Болҕой:''' Быраҕыраамма тас көстүүтүн (интерфейсын) хааччыйар тиэкиһи уларытаары гынан эрэҕин.
+Бу сирэйи уларыттаххына атын кыттааччылар көрөллөрүгэр бырагыраамма көстүүтэ уларыйыа. 
+Тылбааһын уларытыаххын эбэтэр эбиэххин баҕарар буоллаххына Медиавики бырайыактарын тылбаастыыр сиргэ киир [//translatewiki.net/ translatewiki.net].",
 'sqlhidden' => '(SQL ыйытык кистэммит)',
 'cascadeprotected' => 'Бу сирэй уларыйар кыаҕа суох, тоҕо диэтэххэ уларыйара бобуллубут (каскаднай көмүскэл холбоммут) {{PLURAL:$1|сирэй бөлөҕөр|сирэйдэр бөлөхтөрүгэр}} киирэр:
 $2',
@@ -444,17 +447,15 @@ $2',
 'logouttext' => "'''Эн тиһиликтэн таҕыстыҥ.'''
 
 {{SITENAME}} ситим-сиргэ билигин урукку ааккынан буолбакка IP-аадырыһынан эрэ көстөҕүн.
-Салгыы ааккын ааттаабакка үлэлиэххин сөп, эбэтэр саҥаттан урукку ааккынан дуу, атын аатынан дуу [[Special:UserLogin|киириэххин]] сөп.
+Салгыы ааккын ааттаабакка үлэлиэххин сөп, эбэтэр саҥаттан урукку ааккынан дуу, атын аатынан дуу <span class='plainlinks'>[$1 киириэххин]</span> сөп.
 Сорох сирэйдэр өссө даҕаны эйигин урукку ааккынан көрдөрүөхтэрин сөп, ону суох гыныаххын баҕардаххына интэриниэт көрдөрөөччүҥ кээһин ыраастаа.",
-'welcomecreation' => '== Нөрүөн нөргүй, $1! ==
-Эн манна бэлиэтэнниҥ.
-[[Special:Preferences|{{SITENAME}} туруорууларын]] бэйэҕэр сөп түбэһэр гына уларытаргын умнума.',
 'yourname' => 'Кыттааччы аатыҥ:',
 'yourpassword' => 'Киирии тыла:',
 'yourpasswordagain' => 'Киирии тылгын хатылаа:',
 'remembermypassword' => 'Миигин бу көмпүүтэргэ сигээ ($1 {{PLURAL:$1|күн|күнтэн ордуга суох}})',
 'securelogin-stick-https' => 'Киирэн баран HTTPS нөҥүө холбонууну салгыырга',
 'yourdomainname' => 'Эн дөмүөнүҥ:',
+'password-change-forbidden' => 'Бу биикигэ киирии тылы уоарытар табыллыбат.',
 'externaldberror' => 'Тас киирии билиитин олоҕун сыыһата буолла, эбэтэр тас киирии билииҥ олоҕун саҥардар кыаҕыҥ суох.',
 'login' => 'Киир',
 'nav-login-createaccount' => 'Киир / бэлиэтэн',
@@ -705,8 +706,8 @@ IP-аадырыһа эрэ көстөр.
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} сурунаалларга көрдүөххүн сөп],
 эбэтэр [{{fullurl:{{FULLPAGENAME}}|action=edit}} маннык ааттаах саҥа ыстатыйаны суруйуоххун] сөп</span>.',
 'noarticletext-nopermission' => 'Билигин бу сирэй кураанах.
-Бу [[Special:Search/{{PAGENAME}}|тылы атын сирэйдэргэ көрдөөн көрүөххүн]] сөп,
-эбэтэр <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} сурунаалларга манна сыһыаннаах суруктары булуоххун сөп].</span>',
+Бу [[Special:Search/{{PAGENAME}}|ааты атын сирэйдэргэ көрдөөн көрүөххүн]] сөп,
+эбэтэр <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} сурунаалларга манна сыһыаннаах суруктары булуоххун сөп].</span> Бу сирэйи айар кыаҕыҥ суох.',
 'userpage-userdoesnotexist' => '"<nowiki>$1</nowiki>" аат бэлиэтэммэтэх. Бу сирэйи оҥорор/уларытар баҕалааххын дуо?',
 'userpage-userdoesnotexist-view' => '"$1" кыттааччы аата бэлиэтэниллибэтэх.',
 'blocked-notice-logextract' => 'Бу кыттааччы билигин бобуллубут.
@@ -1059,8 +1060,6 @@ $1",
 'search-interwiki-caption' => 'Уруулуу бырайыактар',
 'search-interwiki-default' => '$1 түмүгэ:',
 'search-interwiki-more' => '(өссө)',
-'search-mwsuggest-enabled' => 'этиилэрдээх',
-'search-mwsuggest-disabled' => 'этиилэрэ суох',
 'search-relatedarticle' => 'Сигэнэр',
 'mwsuggest-disable' => 'AJAX этэн биэриилэрин араар',
 'searcheverything-enable' => 'Туох баар аат далларыгар көрдөөһүн',
@@ -2055,11 +2054,7 @@ $1',
 
 'enotif_mailer' => '{{SITENAME}} Биллэрэр Сулууспата',
 'enotif_reset' => 'Бары сирэйдэри көрбүтүм курдук бэлиэтээ',
-'enotif_newpagetext' => 'Бу саҥа сирэй.',
 'enotif_impersonal_salutation' => '{{SITENAME}} кыттааччыта',
-'changed' => 'уларыппыт (уларытыллыбыт)',
-'created' => 'айыллыбыт',
-'enotif_subject' => '«{{SITENAME}}» $PAGETITLE кыттааччыга сыһыаннаах сирэйи $PAGEEDITOR кыттааччы $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Бутэһик киирииҥ кэнниттэн оҥоһуллубут уларыйыылары барытын көрөргө манна киир: $1.',
 'enotif_lastdiff' => 'Уларытыыны манна көрүҥ: $1.',
 'enotif_anon_editor' => 'ааттамматах кыттааччы $1',
@@ -2271,7 +2266,7 @@ $1',
 # Contributions
 'contributions' => 'Кыттааччы суруйуута (вклад)',
 'contributions-title' => '$1 кыттааччы киллэрбит уларытыылара',
-'mycontris' => 'Суруйуум тиһигэ',
+'mycontris' => 'Суруйуу тиһигэ',
 'contribsub2' => 'Вклад $1 ($2)',
 'nocontribs' => 'Эппит критерийгэр эппиэттиир уларытыылар көстүбэтилэр.',
 'uctop' => '(бүтэһик)',
@@ -2311,7 +2306,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 утаарыы',
 'whatlinkshere-hidetrans' => '$1 киллэриилэр',
 'whatlinkshere-hidelinks' => '$1 сигэ (ыйынньык)',
-'whatlinkshere-hideimages' => '$1 ойуу сигэтэ',
+'whatlinkshere-hideimages' => '$1 билэ сигэтэ',
 'whatlinkshere-filters' => 'Фильтрдар',
 
 # Block/unblock
@@ -2666,7 +2661,6 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript тургутуу',
-'javascripttest-disabled' => 'Дьайыы бу биикигэ араарыллыбат эбит.',
 'javascripttest-title' => '$1 тургутуу бара турар',
 'javascripttest-pagetext-noframework' => 'Бу сирэй JavaScript тургутууларга анаммыт.',
 'javascripttest-pagetext-unknownframework' => '"$1" тургутуу биллибэт эйгэтэ.',
@@ -3479,6 +3473,7 @@ MediaWiki туһалаах буоллун диэн тарҕатыллар, ол 
 'version-software' => 'Туруоруллубут бырагырааммалар',
 'version-software-product' => 'Бородуукта',
 'version-software-version' => 'Барыл (торум)',
+'version-entrypoints' => 'Киирэр аадырыстар (URL)',
 'version-entrypoints-header-entrypoint' => 'Киирии сирэ',
 'version-entrypoints-header-url' => 'URL',
 
@@ -3631,6 +3626,10 @@ MediaWiki туһалаах буоллун диэн тарҕатыллар, ол 
 'feedback-bugcheck' => 'Бэрт! Ол гынан баран [$1 биллэр алҕастарын] тиһилигэр майгынныыр сурук суоҕун тургут.',
 'feedback-bugnew' => 'Мин тургуттум. Атын алҕас туһунан',
 
+# Search suggestions
+'searchsuggest-search' => 'Көрдөөһүн',
+'searchsuggest-containing' => 'тыл баар ыстатыйалара...',
+
 # API errors
 'api-error-badaccess-groups' => 'Эн бу биикигэ билэ киллэрэриҥ хааччахтаммыт.',
 'api-error-badtoken' => 'Ис алҕас: Омсолоох токен.',
@@ -3647,7 +3646,8 @@ MediaWiki туһалаах буоллун диэн тарҕатыллар, ол 
 'api-error-file-too-large' => 'Ыыппыт билэҥ наһаа улахан эбит.',
 'api-error-filename-tooshort' => 'Билэҥ аата наһаа кылгас.',
 'api-error-filetype-banned' => 'Маннык көрүҥнээх билэлэр бобуулаахтар.',
-'api-error-filetype-banned-type' => '$1 — {{PLURAL:$4|билэ бобуллубут көрүҥэ|билэ бобуллубут көрүҥнэрэ}}.. Көҥүллэммит билэ {{PLURAL:$3|көрүҥэ маннык|көрүҥнэрэ манныктар}}: $2.',
+'api-error-filetype-banned-type' => '$1 — {{PLURAL:$4|билэ бобуллубут көрүҥэ|билэ бобуллубут көрүҥнэрэ}}. 
+Көҥүллэммит билэ {{PLURAL:$3|көрүҥэ маннык|көрүҥнэрэ манныктар}}: $2.',
 'api-error-filetype-missing' => 'Бу билэ тэнитиитэ (расширение) суох эбит.',
 'api-error-hookaborted' => 'Эн киллэрбит уларытыыгын кэҥэтии таҥастааччыта оннугар төннөрбүт.',
 'api-error-http' => 'Ис алҕас: Сиэрбэргэ холбонор табыллыбата.',

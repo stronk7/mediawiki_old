@@ -126,6 +126,7 @@ class CdbReader_PHP extends CdbReader {
 
 	/**
 	 * @param $fileName string
+	 * @throws MWException
 	 */
 	function __construct( $fileName ) {
 		$this->fileName = $fileName;
@@ -179,7 +180,7 @@ class CdbReader_PHP extends CdbReader {
 	protected function read( $length, $pos ) {
 		if ( fseek( $this->handle, $pos ) == -1 ) {
 			// This can easily happen if the internal pointers are incorrect
-			throw new MWException( 
+			throw new MWException(
 				'Seek failed, file "' . $this->fileName . '" may be corrupted.' );
 		}
 
@@ -198,12 +199,13 @@ class CdbReader_PHP extends CdbReader {
 	/**
 	 * Unpack an unsigned integer and throw an exception if it needs more than 31 bits
 	 * @param $s
-	 * @return
+	 * @throws MWException
+	 * @return mixed
 	 */
 	protected function unpack31( $s ) {
 		$data = unpack( 'V', $s );
 		if ( $data[1] > 0x7fffffff ) {
-			throw new MWException( 
+			throw new MWException(
 				'Error in CDB file "' . $this->fileName . '", integer too big.' );
 		}
 		return $data[1];
@@ -475,7 +477,7 @@ class CdbWriter_PHP extends CdbWriter {
 
 	/**
 	 * Clean up the temp file and throw an exception
-	 * 
+	 *
 	 * @param $msg string
 	 * @throws MWException
 	 */

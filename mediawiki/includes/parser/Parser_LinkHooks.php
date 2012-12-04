@@ -32,7 +32,7 @@ class Parser_LinkHooks extends Parser {
 	 * can automatically discard old data.
 	 */
 	const VERSION = '1.6.4';
-	
+
 	# Flags for Parser::setLinkHook
 	# Also available as global constants from Defines.php
 	const SLH_PATTERN = 1;
@@ -84,11 +84,11 @@ class Parser_LinkHooks extends Parser {
 	 * Create a link hook, e.g. [[Namepsace:...|display}}
 	 * The callback function should have the form:
 	 *    function myLinkCallback( $parser, $holders, $markers,
-	 *    	Title $title, $titleText, &$sortText = null, &$leadingColon = false ) { ... }
+	 *      Title $title, $titleText, &$sortText = null, &$leadingColon = false ) { ... }
 	 *
 	 * Or with SLH_PATTERN:
 	 *    function myLinkCallback( $parser, $holders, $markers, )
-	 *    	&$titleText, &$sortText = null, &$leadingColon = false ) { ... }
+	 *      &$titleText, &$sortText = null, &$leadingColon = false ) { ... }
 	 *
 	 * The callback may either return a number of different possible values:
 	 * String) Text result of the link
@@ -100,6 +100,7 @@ class Parser_LinkHooks extends Parser {
 	 * @param $flags Integer: a combination of the following flags:
 	 *     SLH_PATTERN   Use a regex link pattern rather than a namespace
 	 *
+	 * @throws MWException
 	 * @return callback|null The old callback function for this name, if any
 	 */
 	public function setLinkHook( $ns, $callback, $flags = 0 ) {
@@ -111,7 +112,7 @@ class Parser_LinkHooks extends Parser {
 		$this->mLinkHooks[$ns] = array( $callback, $flags );
 		return $oldVal;
 	}
-	
+
 	/**
 	 * Get all registered link hook identifiers
 	 *
@@ -120,9 +121,11 @@ class Parser_LinkHooks extends Parser {
 	function getLinkHooks() {
 		return array_keys( $this->mLinkHooks );
 	}
-	
+
 	/**
 	 * Process [[ ]] wikilinks
+	 * @param $s
+	 * @throws MWException
 	 * @return LinkHolderArray
 	 *
 	 * @private
@@ -144,7 +147,7 @@ class Parser_LinkHooks extends Parser {
 		}
 
 		$holders = new LinkHolderArray( $this );
-		
+
 		if( is_null( $this->mTitle ) ) {
 			wfProfileOut( __METHOD__ );
 			wfProfileOut( __METHOD__.'-setup' );
@@ -152,7 +155,7 @@ class Parser_LinkHooks extends Parser {
 		}
 
 		wfProfileOut( __METHOD__.'-setup' );
-		
+
 		$offset = 0;
 		$offsetStack = array();
 		$markers = new LinkMarkerReplacer( $this, $holders, array( &$this, 'replaceInternalLinksCallback' ) );
@@ -178,7 +181,7 @@ class Parser_LinkHooks extends Parser {
 				$startBracketOffset = array_pop($offsetStack);
 				# Just to clean up the code, lets place offsets on the outer ends
 				$endBracketOffset += 2;
-				
+
 				# Only do logic if we actually have a opening bracket for this
 				if( isset($startBracketOffset) ) {
 					# Extract text inside the link
@@ -203,22 +206,20 @@ class Parser_LinkHooks extends Parser {
 					# ToDO: Some LinkHooks use patterns rather than namespaces
 					# these need to be tested at this point here
 				}
-				
 			}
 			# Bump our offset to after our current bracket
 			$offset = $bracketOffset+2;
 		}
-		
-		
+
 		# Now expand our tree
 		wfProfileIn( __METHOD__.'-expand' );
 		$s = $markers->expand( $s );
 		wfProfileOut( __METHOD__.'-expand' );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $holders;
 	}
-	
+
 	function replaceInternalLinksCallback( $parser, $holders, $markers, $titleText, $paramText ) {
 		wfProfileIn( __METHOD__ );
 		$wt = isset($paramText) ? "[[$titleText|$paramText]]" : "[[$titleText]]";
@@ -230,16 +231,16 @@ class Parser_LinkHooks extends Parser {
 			wfProfileOut( __METHOD__ );
 			return $wt;
 		}
-		
+
 		# Make subpage if necessary
 		if( $this->areSubpagesAllowed() ) {
 			$titleText = $this->maybeDoSubpageLink( $titleText, $paramText );
 		}
-		
+
 		# Check for a leading colon and strip it if it is there
 		$leadingColon = $titleText[0] == ':';
 		if( $leadingColon ) $titleText = substr( $titleText, 1 );
-		
+
 		wfProfileOut( __METHOD__."-misc" );
 		# Make title object
 		wfProfileIn( __METHOD__."-title" );
@@ -251,7 +252,7 @@ class Parser_LinkHooks extends Parser {
 		}
 		$ns = $title->getNamespace();
 		wfProfileOut( __METHOD__."-title" );
-		
+
 		# Default for Namespaces is a default link
 		# ToDo: Default for patterns is plain wikitext
 		$return = true;
@@ -270,7 +271,7 @@ class Parser_LinkHooks extends Parser {
 		}
 		if( $return === true ) {
 			# True (treat as plain link) was returned, call the defaultLinkHook
-			$return = CoreLinkFunctions::defaultLinkHook( $parser, $holders, $markers, $title, 
+			$return = CoreLinkFunctions::defaultLinkHook( $parser, $holders, $markers, $title,
 				$titleText, $paramText, $leadingColon );
 		}
 		if( $return === false ) {
@@ -282,13 +283,13 @@ class Parser_LinkHooks extends Parser {
 		wfProfileOut( __METHOD__ );
 		return $return;
 	}
-	
+
 }
 
 class LinkMarkerReplacer {
-	
+
 	protected $markers, $nextId, $parser, $holders, $callback;
-	
+
 	function __construct( $parser, $holders, $callback ) {
 		$this->nextId   = 0;
 		$this->markers  = array();
@@ -296,21 +297,21 @@ class LinkMarkerReplacer {
 		$this->holders  = $holders;
 		$this->callback = $callback;
 	}
-	
+
 	function addMarker($titleText, $paramText) {
 		$id = $this->nextId++;
 		$this->markers[$id] = array( $titleText, $paramText );
 		return "<!-- LINKMARKER $id -->";
 	}
-	
+
 	function findMarker( $string ) {
 		return (bool) preg_match('/<!-- LINKMARKER [0-9]+ -->/', $string );
 	}
-	
+
 	function expand( $string ) {
 		return StringUtils::delimiterReplaceCallback( "<!-- LINKMARKER ", " -->", array( &$this, 'callback' ), $string );
 	}
-	
+
 	function callback( $m ) {
 		$id = intval($m[1]);
 		if( !array_key_exists($id, $this->markers) ) return $m[0];
@@ -320,5 +321,4 @@ class LinkMarkerReplacer {
 		array_unshift( $args, $this->parser );
 		return call_user_func_array( $this->callback, $args );
 	}
-	
 }

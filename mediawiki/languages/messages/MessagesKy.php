@@ -11,6 +11,7 @@
  * @author Aidabishkek
  * @author Amire80
  * @author Chorobek
+ * @author Growingup
  * @author Muratjumashev
  * @author Ztimur
  */
@@ -40,13 +41,13 @@ $messages = array(
 'tog-editondblclick' => 'Эки басып баракты оңдоо (JavaScript талап кылынат)',
 'tog-editsection' => 'Ар бир секция үчүн «оңдоо» шилтемеси',
 
-'underline-always' => 'Дайым',
+'underline-always' => 'Дайыма',
 'underline-never' => 'Эч качан',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Оңдоо талаасынын арибинин стили:',
-'editfont-default' => 'Серепчинин арибин колдон',
-'editfont-monospace' => 'Моножазы ариби',
+'editfont-default' => 'Браузердин шрифти',
+'editfont-monospace' => 'Моножазы шрифт',
 
 # Dates
 'sunday' => 'Жекшемби',
@@ -56,13 +57,13 @@ $messages = array(
 'thursday' => 'Бейшемби',
 'friday' => 'Жума',
 'saturday' => 'Ишемби',
-'sun' => 'Жкшмб',
-'mon' => 'Дшмб',
-'tue' => 'Шшмб',
-'wed' => 'Шршмб',
-'thu' => 'Бшмб',
+'sun' => 'Жк',
+'mon' => 'Дш',
+'tue' => 'Ше',
+'wed' => 'Ша',
+'thu' => 'Бш',
 'fri' => 'Жм',
-'sat' => 'Ишмб',
+'sat' => 'Иш',
 'january' => 'Январь (Үчтүн айы)',
 'february' => 'Февраль (Бирдин айы)',
 'march' => 'Март (Жалган куран)',
@@ -122,75 +123,75 @@ $messages = array(
 'about' => 'Тууралуу',
 'article' => 'Макала',
 'newwindow' => '(жаңы терезеде ачылат)',
-'cancel' => 'Жокко чыгар',
+'cancel' => 'Жокко чыгаруу',
 'moredotdotdot' => 'Уландысы...',
 'mypage' => 'Барагым',
-'mytalk' => 'Талкууларым',
+'mytalk' => 'Талкуулоо',
 'anontalk' => 'Бул IP дарек үчүн талкуу',
-'navigation' => 'Багыт алуу',
+'navigation' => 'Навигация',
 'and' => '&#32;жана',
 
 # Cologne Blue skin
-'qbfind' => 'Изде',
-'qbbrowse' => 'Сереп сал',
+'qbfind' => 'Табуу',
+'qbbrowse' => 'Карап чыгуу',
 'qbedit' => 'Оңдоо',
 'qbpageoptions' => 'Бул барак',
-'qbpageinfo' => 'Контекст',
 'qbmyoptions' => 'Барактарым',
 'qbspecialpages' => 'Атайын барактар',
 'faq' => 'КБС',
 'faqpage' => 'Project:КБС',
 
 # Vector skin
-'vector-action-addsection' => 'Тема кошумчала',
-'vector-action-delete' => 'Өчүр',
-'vector-action-move' => 'Аталышын өзгөрт',
-'vector-action-protect' => 'Корго',
+'vector-action-addsection' => 'Тема кошумчалоо',
+'vector-action-delete' => 'Өчүрүү',
+'vector-action-move' => 'Аталышын өзгөртуу',
+'vector-action-protect' => 'Коргоо',
 'vector-action-undelete' => 'Калыбына келтирүү',
 'vector-action-unprotect' => 'Коргоону өзгөртүү',
-'vector-view-create' => 'Башта',
-'vector-view-edit' => 'Оңдо',
-'vector-view-history' => 'Тарыхын кара',
-'vector-view-view' => 'Оку',
-'vector-view-viewsource' => 'Кайнарын кара',
+'vector-view-create' => 'Жаратуу',
+'vector-view-edit' => 'Оңдоо',
+'vector-view-history' => 'Тарыхын кароо',
+'vector-view-view' => 'Окуу',
+'vector-view-viewsource' => 'Кайнарын кароо',
 'actions' => 'Аракеттер',
 'namespaces' => 'Аталыш топтому',
 'variants' => 'Варианттар',
 
+'navigation-heading' => 'Навигация менюсу',
 'errorpagetitle' => 'Ката',
-'returnto' => '$1 барагына кайт.',
+'returnto' => '$1 барагына кайтуу.',
 'tagline' => '{{SITENAME}} дан',
 'help' => 'Жардам',
-'search' => 'Изде',
-'searchbutton' => 'Изде',
-'go' => 'Таап бер',
+'search' => 'Издөө',
+'searchbutton' => 'Издөө',
+'go' => 'Өтүү',
 'searcharticle' => 'Алга',
 'history' => 'Барактын тарыхы',
-'history_short' => 'Тарыхы',
+'history_short' => 'Тарых',
 'printableversion' => 'Басма үлгүсү',
 'permalink' => 'Туруктуу шилтеме',
 'print' => 'Басып чыгаруу',
 'view' => 'Кароо',
 'edit' => 'Оңдоо',
-'create' => 'Башта',
-'editthispage' => 'Бул баракты оңдо',
+'create' => 'Жаратуу',
+'editthispage' => 'Бул баракты оңдоо',
 'create-this-page' => 'Бул баракты түзүү',
 'delete' => 'Өчүрүү',
-'deletethispage' => 'Бул баракты өчүрүп кой',
+'deletethispage' => 'Бул баракты өчүрүү',
 'protect' => 'Коргоо',
-'protect_change' => 'өзгөрт',
+'protect_change' => 'өзгөртүү',
 'protectthispage' => 'Бул баракты коргоо',
 'unprotect' => 'Коргоону өзгөртүү',
 'newpage' => 'Жаңы барак',
 'talkpage' => 'Бул баракты талкууга алуу',
-'talkpagelinktext' => 'Талкуу',
+'talkpagelinktext' => 'талкуулоо',
 'specialpage' => 'Атайын барак',
 'personaltools' => 'Жеке аспаптар',
 'postcomment' => 'Жаңы бөлүм',
 'articlepage' => 'Макаланы кароо',
-'talk' => 'Талкуу',
+'talk' => 'Талкуулоо',
 'views' => 'Көрсөтүүлөр',
-'toolbox' => 'Аспап кутусу',
+'toolbox' => 'Аспаптар',
 'userpage' => 'Катышуучунун барагын кароо',
 'projectpage' => 'Долбоор барагын кароо',
 'imagepage' => 'Файлдын барагын кароо',
@@ -205,7 +206,7 @@ $messages = array(
 'lastmodifiedat' => 'Бул барак соңку жолу $1, $2 өзгөртүлгөн.',
 'viewcount' => 'Бул барак {{PLURAL:$1|$1|$1}} жолу ачылды.',
 'protectedpage' => 'Корголгон барак',
-'jumpto' => 'Атта:',
+'jumpto' => 'Өтүү:',
 'jumptonavigation' => 'багыттоо',
 'jumptosearch' => 'издөө',
 
@@ -219,7 +220,7 @@ $messages = array(
 'disclaimerpage' => 'Project:Жалпы жоопкерчиликтен баш тартуу',
 'edithelp' => 'Оңдоого жардам',
 'edithelppage' => 'Help:Оңдоо',
-'helppage' => 'Help:Мазмуну',
+'helppage' => 'Help:Мазмун',
 'mainpage' => 'Башбарак',
 'mainpage-description' => 'Башбарак',
 'portal' => 'Жамаат порталы',
@@ -232,15 +233,15 @@ $messages = array(
 'newmessageslink' => 'жаңы билдирүүлөр',
 'newmessagesdifflink' => 'соңку өзгөрүү',
 'youhavenewmessagesmulti' => 'Сизге $1 жаңы кат бар.',
-'editsection' => 'оңдо',
-'editold' => 'оңдо',
+'editsection' => 'оңдоо',
+'editold' => 'оңдоо',
 'viewsourceold' => 'байкоо',
-'editlink' => 'оңдо',
+'editlink' => 'оңдоо',
 'viewsourcelink' => 'Байкоо',
-'editsectionhint' => '$1 бөлүмүн оңдо',
-'toc' => 'Мазмуну',
-'showtoc' => 'Көрсөт',
-'hidetoc' => 'Жашыр',
+'editsectionhint' => '$1 бөлүмүн оңдоо',
+'toc' => 'Мазмун',
+'showtoc' => 'көрсөтүү',
+'hidetoc' => 'Жашыруу',
 'site-rss-feed' => '$1 RSS тилкеси',
 'site-atom-feed' => '$1 Atom агымы',
 'page-atom-feed' => '"$1" Atom агымы',
@@ -249,16 +250,17 @@ $messages = array(
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main' => 'Макала',
 'nstab-user' => 'Колдонуучунун барагы',
+'nstab-media' => 'Мультимедиа',
 'nstab-special' => 'Атайын барак',
 'nstab-project' => 'Долбоордун барагы',
 'nstab-image' => 'Файл',
-'nstab-mediawiki' => 'Билдирүү',
-'nstab-template' => 'Калып',
+'nstab-mediawiki' => 'Билдирме',
+'nstab-template' => 'Шаблон',
 'nstab-help' => 'Жардам',
 'nstab-category' => 'Категория',
 
 # General errors
-'error' => 'Жаңылыш',
+'error' => 'Ката',
 'missing-article' => 'Табылууга тийиш «$1» $2 деп аталган баракта текст маалыматтар базасында табылган жок.
 
 Бул сыяктуу абал өчүрүлгөн барактын өзгөрүүлөрдүн тарыхына эски шилтеме менен өткөндө учурайт.
@@ -272,7 +274,7 @@ $messages = array(
 'filecopyerror' => '"$1" файлы "$2" файлына көчүрүлбөдү.',
 'filedeleteerror' => '"$1" файлын өчүрүүгө болбоду.',
 'directorycreateerror' => '"$1" каталогун түзүүгө болбоду.',
-'filenotfound' => '"$1" файлы табылбады.',
+'filenotfound' => '"$1" файлын табууга мүмкүн эмес.',
 'fileexistserror' => '"$1" файлына жазууга болбоду: Мурдатан бар.',
 'unexpected' => 'Күтүлбөгөн маани: "$1"="$2".',
 'formerror' => 'Ката: Форманы жөнөтүүгө болбоду.',
@@ -281,13 +283,10 @@ $messages = array(
 'badtitle' => 'Ыксыз аталыш',
 'badtitletext' => 'Талап кылынган барак аталышы туура эмес, бош, же тилдер-аралык же уики-аралык аталышы туура эмес шилтемеленген.
 Балким аталышта колдонулбай турган бир же андан көп белги камтылган.',
-'viewsource' => 'Кайнарын кара',
+'viewsource' => 'Кароо',
 
 # Login and logout pages
-'welcomecreation' => '== Кош келиңиз, $1! ==
-
-Сиз катоодон өттүңүз. {{SITENAME}} түзөө киргизүүнү унутпаңыз.',
-'yourname' => 'Колдонуучунун аты',
+'yourname' => 'Колдонуучу аты',
 'yourpassword' => 'Сырсөз',
 'yourpasswordagain' => 'Сырсөздү кайра жазыңыз',
 'remembermypassword' => 'Бул браузерде каттоо маалыматтарымды эске тут (эң көп $1 {{PLURAL:$1|күн|күн}})',
@@ -300,9 +299,9 @@ $messages = array(
 'logout' => 'Чыгуу',
 'userlogout' => 'Чыгуу',
 'notloggedin' => 'Сиз системага кире элексиз',
-'nologin' => 'Каттала элексизби? $1.',
-'nologinlink' => 'Каттоону башта',
-'createaccount' => 'Жаңы колдонуучуну катта',
+'nologin' => 'Каттай элексизби? $1.',
+'nologinlink' => 'Каттоону баштоо',
+'createaccount' => 'Эсеп жазуусун жаратуу',
 'gotaccount' => 'Катталгансызбы? $1.',
 'gotaccountlink' => 'Кирүү',
 'userlogin-resetlink' => 'Кирүүчү маалыматарыңызды унутуп калдыңызбы?',
@@ -315,28 +314,50 @@ $messages = array(
 'loginsuccesstitle' => 'Сиз ийгиликтүү кирдиңиз',
 'wrongpassword' => 'Ката сырсөз киргизилди. Кайтадан аракет кылып көрүңүз.',
 'wrongpasswordempty' => 'Сырсөз киргизилген жок. Кайтадан аракет кылып көрүңүз.',
-'mailmypassword' => 'Жаңы сырсөздү электрондук дарекке жибер',
+'mailmypassword' => 'Жаңы сырсөздү e-mail аркылуу жиберүү',
 'emailconfirmlink' => 'Электрондук дарегиңизди ырастаңыз',
-'accountcreated' => 'Катталды',
+'accountcreated' => 'Эсеп жазуусу жаратылды',
 'loginlanguagelabel' => 'Тил: $1',
 
 # Change password dialog
+'resetpass' => 'Сырсөздү өзгөртүү',
 'oldpassword' => 'Эски сырсөз:',
 'newpassword' => 'Жаңы сырсөз:',
+'retypenew' => 'Жаңы сырсөздү кайта киргизиңиз:',
+'resetpass-submit-loggedin' => 'Сырсөздү өзгөртүү',
+'resetpass-submit-cancel' => 'Жокко чыгаруу',
+'resetpass-temp-password' => 'Убактылуу сырсөз:',
+
+# Special:PasswordReset
+'passwordreset' => 'Сырсөздү түшүрүү',
+'passwordreset-legend' => 'Сырсөздү түшүрүү',
+'passwordreset-username' => 'Колдонуучу аты:',
+'passwordreset-domain' => 'Домен:',
+'passwordreset-email' => 'E-mail дарек:',
+'passwordreset-emailelement' => 'Колдонуучу аты: $1
+Убактылуу сырсөз: $2',
+
+# Special:ChangeEmail
+'changeemail' => 'E-mail даректи өзгөртүү',
+'changeemail-oldemail' => 'Кезектеги e-mail дарек:',
+'changeemail-newemail' => 'Жаңы e-mail дарек:',
+'changeemail-none' => '(жок)',
+'changeemail-submit' => "E-mail'ди өзгөртүү",
+'changeemail-cancel' => 'Жокко чыгаруу',
 
 # Edit page toolbar
-'bold_sample' => 'Калың тамга',
-'bold_tip' => 'Калың тамга',
-'italic_sample' => 'Жантык тамга',
-'italic_tip' => 'Жантык тамга',
-'link_sample' => 'Шилтеменин аталышы',
+'bold_sample' => 'Кара текст',
+'bold_tip' => 'Кара текст',
+'italic_sample' => 'Курсив текст',
+'italic_tip' => 'Курсив текст',
+'link_sample' => 'Шилтеме аты',
 'link_tip' => 'Ички шилтеме',
 'extlink_sample' => 'http://www.example.com шилтеме аталышы',
 'extlink_tip' => 'Сырткы шилтемелерге (http:// префиксин койгонду унутпаңыз)',
-'headline_sample' => 'Аталыштын тексти',
+'headline_sample' => 'Ат тексти',
 'headline_tip' => '2-деңгээлдеги баш аты',
 'nowiki_sample' => 'Форматталбаган текстти бул жерге киргизиңиз',
-'nowiki_tip' => 'Уики-форматтоого көңүл бөлбө',
+'nowiki_tip' => 'Уики-форматтоого көңүл бурбоо',
 'image_tip' => 'Кыстарылган файл',
 'media_tip' => 'Файлга шилтеме',
 'sig_tip' => 'Кол тамгаңыз жана убакыт мөөрү',
@@ -345,16 +366,16 @@ $messages = array(
 # Edit pages
 'summary' => 'Кыска түшүндүрүү:',
 'minoredit' => 'Майда оңдоо',
-'watchthis' => 'Бул баракты көзөмөлдө',
-'savearticle' => 'Баракты сактап кой',
+'watchthis' => 'Бул баракты көзөмөлдөө',
+'savearticle' => 'Баракты сактоо',
 'preview' => 'Алдын ала көрүү',
-'showpreview' => 'Алдын ала көрсөт',
+'showpreview' => 'Алдын ала көрсөтүү',
 'showlivepreview' => 'Ылдам карап чыгуу',
-'showdiff' => 'Өзгөртүүлөрдү көрсөт',
+'showdiff' => 'Өзгөртүүлөрдү көрсөтүү',
 'anoneditwarning' => "'''Эскертүү:''' Сиз каттоодон өткөн жоксуз.
 IP дарегиңиз бул барактын оңдоо тарыхына жазылат.",
 'blockedtext' => 'Сиздин колдонуучу атыңыз же IP дарегиңиз тосмолонгон',
-'blockednoreason' => 'себеби көрсөтүлгөн эмес',
+'blockednoreason' => 'себеби көрсөтүлгөн жок',
 'loginreqtitle' => 'Колдонуучунун аты талап кылынат',
 'loginreqlink' => 'Кирүү',
 'accmailtitle' => 'Сырсөз жөнөтүлдү.',
@@ -371,6 +392,7 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 Сиз башка барактардан [[Special:Search/{{PAGENAME}}|ушул аталыш менен баракты издөө]] салып,
 же <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тийиштүү жазууларды таба аласыз]</span>.',
 'userpage-userdoesnotexist' => '"$1" Мындай колдонуучу катталган эмес. Ушул баракты түзүүнү же оңдогонду каалганыңыз анык болсун',
+'updated' => '(Жаңыртылды)',
 'previewnote' => "'''Бул алдын ала көрүнүшү гана болгонун эсиңизге алыңыз.'''
 Өзгөртүүлөрүңүз сактала элек!",
 'continue-editing' => 'Өзгөртүүүлөрдү улантабыз',
@@ -395,6 +417,10 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'edit-conflict' => 'Өзгөртүүлөрдүн конфликти',
 'edit-already-exists' => 'Жаңы барак түзүү мүмкүн эмес. Мындай барак бар',
 
+# Content models
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
+
 # Parser/template warnings
 'post-expand-template-inclusion-warning' => "'''Эскертүү:''' Камтылган калыптардын өлчөмү өтө чоң.
 Кээ бир калыптар камтылбайт.",
@@ -405,7 +431,7 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'parser-template-loop-warning' => 'Калыптарда айланма бар:[[$1]]',
 
 # History pages
-'viewpagelogs' => 'Бул барак үчүн тизмелерди кара',
+'viewpagelogs' => 'Бул барак үчүн журналды көрсөтүү',
 'nohistory' => 'Бул барактын өзгөртүүлөр тарыхы жок',
 'currentrev' => 'Акыркы версиясы',
 'currentrev-asof' => '$1 -га соңку версиясы',
@@ -421,7 +447,7 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'page_last' => 'акыркы',
 'histlegend' => "Айырмаларды тандоо: Салыштырыла турган версияларлын тушундагы тегеректерди белгилеп туруп \"Enter\"-ди же астындагы баскычты бас.<br />
 Түшүндүрүү: '''({{int:cur}})''' = соңку версиясынан айырма, '''({{int:last}})''' = мурунку версиясынан айырма, '''{{int:minoreditletter}}''' = майда оңдоо.",
-'history-fieldset-title' => 'Тарыхын кара',
+'history-fieldset-title' => 'Тарыхын кароо',
 'history-show-deleted' => 'Өчүрүлгөндөрдү гана',
 'histfirst' => 'Эң эски',
 'histlast' => 'Соңку',
@@ -432,69 +458,98 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'history-feed-item-nocomment' => '$1, $2 карата',
 
 # Revision deletion
-'rev-delundel' => 'көрсөт/жашыр',
-'rev-showdeleted' => 'көрсөт',
-'revdel-restore' => 'көрүнүшүн өзгөрт',
+'rev-delundel' => 'көрсөтүү/жашыруу',
+'rev-showdeleted' => 'көрсөтүү',
+'revdel-restore' => 'көрүнүшүн өзгөртүү',
 'revdel-restore-deleted' => 'өчүрүлгөн версиялар',
 'revdel-restore-visible' => 'көрүнүүчү версиялары',
+'revdelete-reasonotherlist' => 'Башка себеп',
+'revdelete-offender' => 'Барак версиясынын автору:',
+
+# History merging
+'mergehistory-from' => 'Баштапкы барак:',
+'mergehistory-submit' => 'Версияларды бириктирүү',
+'mergehistory-reason' => 'Себеп',
 
 # Merge log
-'revertmerge' => 'Бөл',
+'revertmerge' => 'Бөлүү',
 
 # Diffs
 'history-title' => '"$1" өзгөрүүлөр тарыхы',
 'lineno' => '$1 -сап:',
-'compareselectedversions' => 'Тандалган версияларды салыштыр',
-'editundo' => 'жокко чыгар',
+'compareselectedversions' => 'Тандалган версияларды салыштыруу',
+'editundo' => 'жокко чыгаруу',
 'diff-multi' => '({{PLURAL:$2|колдонуучу|$2 колдонуучу}} тарабынан жасалган {{PLURAL:$1|аралык версия|$1 аралык версия}} көрсөтүлгөн жок)',
 
 # Search results
 'searchresults' => 'Издөө жыйынтыктары',
 'searchresults-title' => '"$1" үчүн издөө жыйынтыктары',
-'prevn' => 'мурунку {{PLURAL:$1|$1}}',
+'prevn' => 'абалкы {{PLURAL:$1|$1}}',
 'nextn' => 'кийинки{{PLURAL:$1|$1}}',
-'prevn-title' => 'Мурунку $1 {{PLURAL:$1|жыйынтык|жыйынтык}}',
-'nextn-title' => 'Кийинки $1 {{PLURAL:$1|жыйынтык|жыйынтык}}',
-'shown-title' => 'Бир баракка $1 {{PLURAL:$1|жыйынтык|жыйынтык}} көрсөт',
-'viewprevnext' => '($1 {{int:pipe-separator}} $2) ($3) кара',
+'prevn-title' => 'Мурунку $1 {{PLURAL:$1|жыйынтык}}',
+'nextn-title' => 'Кийинки $1 {{PLURAL:$1|жыйынтык}}',
+'shown-title' => 'Барактан $1 {{PLURAL:$1|жыйынтыкты}} көрсөтүү',
+'viewprevnext' => '($1 {{int:pipe-separator}} $2) ($3) кароо',
+'searchmenu-legend' => 'Издөө опциялары',
 'searchmenu-exists' => "'''Бул Уикиде \"[[:\$1]]\" деп аталган барак бар.'''",
 'searchmenu-new' => "'''Бул Уикиде \"[[:\$1]]\" барагын түз!'''",
+'searchhelp-url' => 'Help:Мазмун',
 'searchprofile-articles' => 'Негизги барактар',
-'searchprofile-project' => 'Жардам жана Долбоор барактары',
+'searchprofile-project' => 'Жардам жана долбоор барактары',
 'searchprofile-images' => 'Мултимедиа',
 'searchprofile-everything' => 'Баары',
 'searchprofile-advanced' => 'Кеңейтилген',
-'searchprofile-articles-tooltip' => '$1 -де изде',
-'searchprofile-project-tooltip' => '$1 -де изде',
-'searchprofile-images-tooltip' => 'Файлдарды изде',
-'searchprofile-everything-tooltip' => 'Бардык барактарда (талкуу барактарды кошо) изде',
-'searchprofile-advanced-tooltip' => 'Белгиленген аталыш топтомдорунда изде',
+'searchprofile-articles-tooltip' => '$1 -де издөө',
+'searchprofile-project-tooltip' => '$1 -де издөө',
+'searchprofile-images-tooltip' => 'Файлдарды издөө',
+'searchprofile-everything-tooltip' => 'Баардык барактардан (талкуу барактарды кошо) издөө',
+'searchprofile-advanced-tooltip' => 'Белгиленген аталыш топтомдорунан издөө',
 'search-result-size' => '$1 ({{PLURAL:$2|1 сөз|$2 сөз}})',
 'search-result-category-size' => '{{PLURAL:$1|1 мүчө|$1 мүчө}} ({{PLURAL:$2|1 көмөк категория|$2 көмөк категория}}, {{PLURAL:$3|1 файл|$3 файл}})',
 'search-redirect' => '($1 кайра багыттоо)',
 'search-section' => '($1 бөлүмү)',
 'search-suggest' => 'Ушуну кааладыңызбы: $1',
-'search-mwsuggest-enabled' => 'сунуштар менен',
-'search-mwsuggest-disabled' => 'сунушсуз',
 'searchrelated' => 'байланыштуу',
 'searchall' => 'баары',
 'showingresultsheader' => "'''$4''' үчүн {{PLURAL:$5|'''$3''' жыйынтыктан '''$1'''-и|'''$1 - $2''' -дан '''$3''' жыйынтык}}",
 'search-nonefound' => 'Талапка төп маалымат табылган жок.',
 'powersearch' => 'Издөө',
-'powersearch-legend' => 'Кеңиртип изде',
+'powersearch-legend' => 'Кеңейтилген издөө',
+'powersearch-toggleall' => 'Баары',
+'powersearch-togglenone' => 'Эчтеке',
+
+# Quickbar
+'qbsettings' => 'Навигация панели',
+'qbsettings-none' => 'Көрсөтпөө',
 
 # Preferences page
 'preferences' => 'Ыңгайлаштыруу',
-'mypreferences' => 'Ырастоолорум',
+'mypreferences' => 'Ырастоолор',
 'prefs-edits' => 'Өзгөртүүлөрдүн саны',
 'changepassword' => 'Сырсөздү өзгөртүү',
+'skin-preview' => 'Алдын ала көрүү',
 'prefs-datetime' => 'Дата жана убакыт',
+'prefs-user-pages' => 'Катышуучунун барактары',
 'prefs-rc' => 'Соңку өзгөрүүлөр',
-'prefs-watchlist' => 'Байкоо тизме',
-'saveprefs' => 'Сактап кой',
+'prefs-watchlist' => 'Байкоо тизмеси',
+'prefs-resetpass' => 'Сырсөздү өзгөртүү',
+'saveprefs' => 'Сактоо',
 'prefs-editing' => 'Оңдоо',
 'searchresultshead' => 'Издөө',
 'localtime' => 'Жергиликтүү убакыт',
+'servertime' => 'Сервер убагы:',
+'timezoneregion-africa' => 'Африка',
+'timezoneregion-america' => 'Америка',
+'timezoneregion-antarctica' => 'Антарктика',
+'timezoneregion-arctic' => 'Арктика',
+'timezoneregion-asia' => 'Азия',
+'timezoneregion-atlantic' => 'Атлантика океаны',
+'timezoneregion-australia' => 'Австралия',
+'timezoneregion-europe' => 'Европа',
+'timezoneregion-indian' => 'Индий океаны',
+'timezoneregion-pacific' => 'Тынч океаны',
+'prefs-searchoptions' => 'Издөө',
+'default' => 'жарыяланбасча',
 'prefs-files' => 'Файлдар',
 'youremail' => 'Электрондук дарек:',
 'username' => 'Колдонуучунун аты:',
@@ -503,9 +558,15 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'yourlanguage' => 'Тил:',
 'yourvariant' => 'Вариант:',
 'yournick' => 'Такма атыңыз:',
+'yourgender' => 'Жыныс:',
+'gender-male' => 'Эркек',
+'gender-female' => 'Аял',
+'email' => 'Электрондук дарек',
 'prefs-help-email' => 'Электрондук дарек милдетүү эмес, бирок сырсөздү унутуп калсаңыз ал сырсөздү жиберүүгө керек.',
 'prefs-help-email-others' => 'Ошондой эле башкалар сиз менен колдонуучу же талкуу барактарыңыздагы шилтеме аркылуу байланыш түзүүгө уруксат берүүнү тандай аласыз.
 Электрондук дарегиңиз башка кодонуучуларга байланыш түзгөндө көрүнбөйт.',
+'prefs-info' => 'Негизги маалыматтары',
+'prefs-dateformat' => 'Дата форматы',
 'prefs-advancedediting' => 'Кеңейтилген',
 'prefs-advancedrc' => 'Кеңейтилген',
 'prefs-advancedrendering' => 'Кеңейтилген',
@@ -513,14 +574,29 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'prefs-advancedwatchlist' => 'Кеңейтилген',
 'prefs-displayrc' => 'Көрсөтүүнү тууралоо',
 
+# User rights
+'userrights-reason' => 'Себеп:',
+
 # Groups
 'group' => 'Топ:',
+'group-user' => 'Катышуучулар',
+'group-sysop' => 'Администраторлор',
 'group-bureaucrat' => 'Бюрократтар',
 
 'group-bureaucrat-member' => 'Бюрократ',
 
+# Rights
+'right-upload' => 'Файлдарды жүктөө',
+'right-delete' => 'Барактарды өчүрүү',
+
+# User rights log
+'rightsnone' => '(жок)',
+
 # Associated actions - in the sentence "You do not have permission to X"
-'action-edit' => 'бул баракты оңдо',
+'action-read' => 'бул баракты окуу',
+'action-edit' => 'бул баракты оңдоо',
+'action-createpage' => 'барактарды жаратуу',
+'action-delete' => 'бул баракты өчүрүү',
 
 # Recent changes
 'nchanges' => '$1 {{PLURAL:$1|өзгөрүү|өзгөрүү}}',
@@ -528,29 +604,29 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'recentchanges-legend' => 'Соңку өзгөртүүлөрдүн ырастоолору',
 'recentchanges-summary' => 'Уикидеги соңку өзгөрүүлөрдү ушул барактан көзөмөлдө.',
 'recentchanges-feed-description' => 'Ушул агымдагы уикидеги соңку өзгөрүүлөрдү көзөмөлдө.',
-'recentchanges-label-newpage' => 'Бул оңдоо жаңы баракты ачты',
+'recentchanges-label-newpage' => 'Бул оңдоо жаңы баракты жаратты',
 'recentchanges-label-minor' => 'Бул майда оңдоо',
 'recentchanges-label-bot' => 'Бул оңдоо бот тарабынан жасалды',
 'recentchanges-label-unpatrolled' => 'Бул оңдоо көзөмөлдөн өтө элек.',
 'rcnote' => "Ылдый жакта $5, $4 карата соңку {{PLURAL:$2|күндө|'''$2''' күндө}} жасалган {{PLURAL:$1| '''1''' өзгөрүү| '''$1''' өзгөрүү}}.",
 'rcnotefrom' => "'''$2''' -тан өзгөрүүлөр ылдый жакта ('''$1''' чейин көрсөтүлдү).",
-'rclistfrom' => '$1 күнүнөн баштап жаңы өзгөртүүлөрдү көрсөт',
+'rclistfrom' => '$1 күнүнөн баштап жаңы өзгөртүүлөрдү көрсөтүү',
 'rcshowhideminor' => 'Майда оңдоолорду $1',
 'rcshowhidebots' => 'ботторду $1',
 'rcshowhideliu' => '$1 катталган колдонуучу',
 'rcshowhideanons' => 'Жашыруун колдонуучулар $1',
 'rcshowhidepatr' => 'Көзөмөл алдындагы оңдоолорду $1',
 'rcshowhidemine' => 'Оңдоолорумду $1',
-'rclinks' => 'Соңку $2 кундө жасалган акыркы $1 өзгөртүүлөрдү көрсөт<br />$3',
+'rclinks' => 'Соңку $2 күндө жасалган акыркы $1 өзгөртүүлөрдү көрсөтүү<br />$3',
 'diff' => 'айырма',
-'hist' => 'тарыхы',
-'hide' => 'Жашыр',
-'show' => 'Көрсөт',
+'hist' => 'тарых',
+'hide' => 'Жашыруу',
+'show' => 'Көрсөтүү',
 'minoreditletter' => 'м',
 'newpageletter' => 'Ж',
 'boteditletter' => 'б',
-'rc-enhanced-expand' => 'Бөлүктөрүн көрсөт (JavaScript талап кылынат)',
-'rc-enhanced-hide' => 'Бөлүктөрүн жашыр',
+'rc-enhanced-expand' => 'Кошумча маалыматтарды көрсөтүү (JavaScript талап кылынат)',
+'rc-enhanced-hide' => 'Кошумча маалыматтарды жашыруу',
 
 # Recent changes linked
 'recentchangeslinked' => 'Тиешелүү өзгөрүүлөр',
@@ -561,42 +637,78 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'recentchangeslinked-summary' => 'Бул көрсөтүлгөн (же көрсөтүлгөн категорияга кирген) барактан шилтемеленген барактардагы жакын арада жасалган өзгөрүүлөрдүн тизмеси.
 [[Special:Watchlist|Байкоо тизмеңиз]]деги барактар калын арип менен белгиленген.',
 'recentchangeslinked-page' => 'Барактын аталышы',
-'recentchangeslinked-to' => 'Белгиленген барактан шилтемеленген барактардын ордуна өзгөртүулөрдү көрсөт',
+'recentchangeslinked-to' => 'Белгиленген барактан шилтемеленген барактардын ордуна өзгөртүулөрдү көрсөтүү',
 
 # Upload
-'upload' => 'Файл жүктөө',
-'uploadbtn' => 'Файл жүктөө',
+'upload' => 'Файлды жүктөө',
+'uploadbtn' => 'Файлды жүктөө',
+'uploaderror' => 'Жүктөө катасы',
+'uploadlog' => 'жүктөө журналы',
 'uploadlogpage' => 'Жүктөөлөрдүн тизмеси',
 'filedesc' => 'Кыска түшүндүрмө',
 'fileuploadsummary' => 'Кыска түшүндүрмө:',
 'uploadedfiles' => 'Жүктөлгөн файлдар',
-'savefile' => 'Файлды сактап кой',
+'savefile' => 'Файлды сактоо',
 'uploadedimage' => '"[[$1]]" жүктөлдү',
+'upload-source' => 'Баштапкы файл',
+'upload-description' => 'Файл баяндамасы',
 'upload-success-subj' => 'Ийгиликтүү жүктөлдү',
+
+'upload-file-error' => 'Ички ката',
+'upload-unknown-size' => 'Белгисиз өлчөм',
+
+# File backend
+'backend-fail-closetemp' => 'Убактылуу файлды жабуу оңунан чыкпай жатат.',
+
+# HTTP errors
+'http-invalid-url' => 'Туура эмес URL: $1',
 
 'license' => 'Лицензиялоо:',
 'license-header' => 'Лицензиялоо:',
 
 # Special:ListFiles
+'imgfile' => 'файл',
 'listfiles' => 'Файлдар тизмеси',
+'listfiles_date' => 'Дата',
+'listfiles_name' => 'Ат',
+'listfiles_user' => 'Катышуучу',
+'listfiles_size' => 'Өлчөм',
+'listfiles_description' => 'Баяндама',
+'listfiles_count' => 'Версиялар',
 
 # File description page
 'file-anchor-link' => 'Файл',
 'filehist' => 'Файлдын тарыхы',
 'filehist-help' => 'Файлдын ошол учурдагы көрүнүшүн кароо үчүн күнү/сааты бөлүмүнө басыңыз',
-'filehist-revert' => 'кайтарып ал',
+'filehist-deleteall' => 'баарын өчүрүү',
+'filehist-deleteone' => 'өчүрүү',
+'filehist-revert' => 'кайтаруу',
 'filehist-current' => 'учурдагы',
 'filehist-datetime' => 'Күн/Саат',
-'filehist-thumb' => 'Кичирейтилген сүрөт',
+'filehist-thumb' => 'Миниатюра',
 'filehist-thumbtext' => '$1 -дагы версиясы үчүн кичирейтилген сүрөтү',
 'filehist-user' => 'Катышуучу',
-'filehist-dimensions' => 'Өлчөмдөрү',
+'filehist-dimensions' => 'Өлчөмдөр',
+'filehist-filesize' => 'Файл өлчөмү',
 'filehist-comment' => 'Эскертүү',
+'filehist-missing' => 'Файл жок болот',
 'imagelinks' => 'Файл пайдалануу',
 'linkstoimage' => 'Бул файлга болгон {{PLURAL:$1|шилтеме|$1 шилтеме}} :',
 'nolinkstoimage' => 'Бул файлга шилтеме берген барак жок.',
 'sharedupload-desc-here' => 'Бул файл $1 -дан  жана башка долбоорлордо пайдаланылышы мүмкүн.
 Төмөндө анын [$2 файлды сыпаттоо барагы]нан сыпаттамасы көрсөтүлгөн.',
+
+# File reversion
+'filerevert-comment' => 'Себеп:',
+
+# File deletion
+'filedelete' => '$1 — өчүрүү',
+'filedelete-legend' => 'Файлды өчүрүү',
+'filedelete-comment' => 'Себеп:',
+'filedelete-submit' => 'Өчүрүү',
+
+# MIME search
+'download' => 'жүктөп алуу',
 
 # Unused templates
 'unusedtemplates' => 'Колдонулбаган нускалар',
@@ -608,31 +720,40 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 # Statistics
 'statistics' => 'Статистика',
 'statistics-header-users' => 'Колдонуучулардын статистикасы',
+'statistics-pages' => 'Барак',
 
 'disambiguationspage' => 'Template:көп маанилүү',
+
+'brokenredirects-edit' => 'оңдоо',
+'brokenredirects-delete' => 'өчүрүү',
+
+'withoutinterwiki-submit' => 'Көрсөтүү',
 
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|байт|байт}}',
 'nmembers' => '$1{{PLURAL:$1|мүчө|мүчө}}',
 'unusedcategories' => 'Колдонулбаган категориялар',
 'unusedimages' => 'Колдонулбаган файлдар',
+'popularpages' => 'Популярдуу барактар',
 'prefixindex' => 'Префикс менен бардык барактар',
 'shortpages' => 'Кыска макалалар',
 'listusers' => 'Колдонуучулар тизмеси',
 'usercreated' => "$1 күнү $2'да {{GENDER:$3|катталды}}.",
 'newpages' => 'Жаңы барактар',
+'newpages-username' => 'Колдонуучу аты:',
 'ancientpages' => 'Эң эски барактар',
 'move' => 'Аталышын өзгөртүү',
+'movethispage' => 'Бул баракты ташуу',
 'pager-newer-n' => '{{PLURAL:$1|жаңыраак 1|жаңыраак $1}}',
 'pager-older-n' => '{{PLURAL:$1|эскирээк 1|эскирээк $1}}',
 
 # Book sources
 'booksources' => 'Китеп тууралуу маалыматтар',
-'booksources-search-legend' => 'Китеп тууралуу маалыматтарды изде',
+'booksources-search-legend' => 'Китеп тууралуу маалыматтарды издөө',
 'booksources-go' => 'Алга',
 
 # Special:Log
-'specialloguserlabel' => 'Колдонуучу:',
+'specialloguserlabel' => 'Аткаруучу:',
 'speciallogtitlelabel' => 'Аталышы:',
 'log' => 'Тизмелер',
 
@@ -640,78 +761,102 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'allpages' => 'Бардык барактар',
 'alphaindexline' => '$1 -дан $2 чейин',
 'nextpage' => 'Кийинки барак ($1)',
-'allpagesfrom' => '-дан башталган барактарды көрсөт:',
+'allpagesfrom' => '-дан башталган барактарды көрсөтүү:',
 'allarticles' => 'Бардык макалалар',
-'allpagesprev' => 'Мурунку',
+'allpagesprev' => 'Абалкы',
 'allpagesnext' => 'Кийинки',
 'allpagessubmit' => 'Алга',
-'allpagesprefix' => '- префикси менен барактарды көрсөт',
+'allpagesprefix' => '- префикси менен барактарды көрсөтүү',
 
 # Special:Categories
 'categories' => 'Категориялар',
 
 # Special:LinkSearch
+'linksearch-ok' => 'Издөө',
 'linksearch-line' => '$1-га $2-дан шилтеме берилди',
+
+# Special:ListUsers
+'listusers-submit' => 'Көрсөтүү',
+'listusers-noresult' => 'Колдонуучу табылган жок.',
+'listusers-blocked' => '(блоктолду)',
+
+# Special:ActiveUsers
+'activeusers' => 'Активдүү колдонуучулардын тизмеси',
+'activeusers-hidebots' => 'Ботторду жашыруу',
+'activeusers-noresult' => 'Колдонуучулар табылган жок.',
 
 # Special:Log/newusers
 'newuserlogpage' => 'Жаңы колдонуучулардын тизмеси',
 
 # Special:ListGroupRights
+'listgrouprights-group' => 'Топ',
+'listgrouprights-rights' => 'Укутар',
 'listgrouprights-members' => '(мүчөлөрдүн тизмеси)',
 
 # E-mail user
-'emailuser' => 'Бул колдонуучуга кат жибер',
+'emailuser' => 'Бул колдонуучуга кат жиберүү',
+'emailusername' => 'Колдонуучу аты:',
+'emailusernamesubmit' => 'Жөнөтүү',
 'emailfrom' => '- дан',
-'emailmessage' => 'Кат',
+'emailto' => 'Кимге:',
+'emailsubject' => 'Тема:',
+'emailmessage' => 'Билдирме',
+'emailsend' => 'Жөнөтүү',
 
 # Watchlist
 'watchlist' => 'Көзөмөл тизмем',
-'mywatchlist' => 'Көзөмөл тизмем',
+'mywatchlist' => 'Көзөмөл тизме',
 'watchlistfor2' => '$1 үчүн $2',
 'watchnologin' => 'Катталган жок',
-'watch' => 'Көзөмөлдө',
-'unwatch' => 'Көзөлдөбө',
+'watch' => 'Көзөмөлдөө',
+'unwatch' => 'Көзөлдөбөө',
 'watchlist-details' => 'Талкуу барактарын эсепке албаганда көзөмөл тизмеңизде {{PLURAL:$1|$1 барак|$1 барак}} бар.',
 'watchlistcontains' => 'Байкоо тизмеңизде $1 {{PLURAL:$1|барак бар|барак бар}}.',
-'wlshowlast' => 'Соңку $1 саат $2 күн $3 көрсөт.',
+'wlshowlast' => 'Соңку $1 саат $2 күн $3 көрсөтүү.',
 'watchlist-options' => 'Көзөмөл тизменин ырастоолору',
 
-'changed' => 'өзгөртүлдү',
-'created' => 'түзүлдү',
-
 # Delete
-'deletepage' => 'Баракты өчүрүп кой',
+'deletepage' => 'Баракты өчүрүү',
 'confirm' => 'Ырастоо',
+'delete-legend' => 'Өчүрүү',
 'actioncomplete' => 'Иш-аракет жыйынтыкталды',
 'actionfailed' => 'Аракет натыйжасыз болду',
 'dellogpage' => 'Өчүрүлгөндөрдүн тизмеси',
 'deletecomment' => 'Себеп',
+'deletereasonotherlist' => 'Башка себеп',
 
 # Rollback
-'rollbacklink' => 'кайтар',
+'rollbacklink' => 'кайтаруу',
 
 # Protect
 'protectlogpage' => 'Коргоо тизмеси',
 'protectedarticle' => '"[[$1]]" корголгон',
+'protectcomment' => 'Себеп:',
+'restriction-type' => 'Укуктар:',
 
 # Restrictions (nouns)
 'restriction-edit' => 'Оңдоо',
+'restriction-move' => 'Ташуу',
+'restriction-create' => 'Жаратуу',
+'restriction-upload' => 'Жүктөө',
 
 # Undelete
-'undeletebtn' => 'Калыбына келтир',
-'undeletelink' => 'көрсөт/калыбына келтир',
-'undeleteviewlink' => 'көрсөт',
-'undeletecomment' => 'Түшүндүрмө:',
+'undeletebtn' => 'Калыбына келтирүү',
+'undeletelink' => 'кароо/калыбына келтирүү',
+'undeleteviewlink' => 'кароо',
+'undeletereset' => 'Түшүрүү',
+'undeletecomment' => 'Себеп:',
+'undelete-search-submit' => 'Издөө',
 
 # Namespace form on various pages
 'namespace' => 'Аталыштар мейкиндиги:',
-'invert' => 'Белгиленгенди кайтар',
+'invert' => 'Белгиленгенди текскерилетүү',
 'blanknamespace' => '(Негизги)',
 
 # Contributions
 'contributions' => 'Колдонуучунун салымдары',
 'contributions-title' => '$1 үчүн колдонуучунун салымдары',
-'mycontris' => 'Салымдарым',
+'mycontris' => 'Салымдар',
 'contribsub2' => '$1 үчүн ($2)',
 'uctop' => '(соңку)',
 'month' => 'Айынан (же андан мурун):',
@@ -721,11 +866,11 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'sp-contributions-blocklog' => 'тосмолордун тизмеси',
 'sp-contributions-uploads' => 'жүктөөлөр',
 'sp-contributions-logs' => 'тизме',
-'sp-contributions-talk' => 'талкуу',
-'sp-contributions-search' => 'Салымдарын изде',
+'sp-contributions-talk' => 'талкуулоо',
+'sp-contributions-search' => 'Салымдарымды издөө',
 'sp-contributions-username' => 'IP дареги же колдонуучунун аты:',
-'sp-contributions-toponly' => 'Соңку версиялары болгон оңдоолорду гана көрсөт',
-'sp-contributions-submit' => 'Изде',
+'sp-contributions-toponly' => 'Соңку версиялары болгон оңдоолорду гана көрсөтүү',
+'sp-contributions-submit' => 'Издөө',
 
 # What links here
 'whatlinkshere' => 'Жетелеме шилтемелер',
@@ -734,26 +879,36 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 'linkshere' => "'''[[:$1]]''' барагына шилтеме берген барактар:",
 'nolinkshere' => "'''[[:$1]]''' барагына шилтеме берген барак жок.",
 'isredirect' => 'кайра багыттоо барагы',
-'istemplate' => 'кошкуч',
+'istemplate' => 'кошуу',
 'isimage' => 'файл шилтемеси',
 'whatlinkshere-prev' => '{{PLURAL:$1|мурунку|мурунку $1}}',
 'whatlinkshere-next' => '{{PLURAL:$1|кийинки|кийинки $1}}',
 'whatlinkshere-links' => '← шилтемелер',
 'whatlinkshere-hideredirs' => 'Багыттоолорду $1',
-'whatlinkshere-hidetrans' => 'Кошкучтарды $1',
+'whatlinkshere-hidetrans' => '$1 кошуулары',
 'whatlinkshere-hidelinks' => 'Шилтемелерди $1',
 'whatlinkshere-hideimages' => 'Сүрөт шилтемелерин $1',
 'whatlinkshere-filters' => 'Чыпкалар',
 
 # Block/unblock
+'block' => 'Катышуучуну блокко салуу',
+'blockip' => 'Катышуучуну блокко салуу',
+'blockip-title' => 'Катышуучуну блокко салуу',
+'blockip-legend' => 'Катышуучуну блокко салуу',
+'ipadressorusername' => 'IP дарек же колдонуучу аты:',
 'ipbreason' => 'Себеп',
+'ipbreasonotherlist' => 'Башка себеп',
+'ipbother' => 'Башка убакыт:',
 'ipboptions' => '2 саат:2 hours,1 күн:1 day,3 күн:3 days,1 жума:1 week,2 жума:2 weeks,1 ай:1 month,3 ай:3 months,6 ай:6 months,1 жыл:1 year,мөөнөтсүз:infinite',
 'ipbotheroption' => 'башка',
 'ipblocklist' => 'Тосмолонгон колдонуучулар',
-'blocklink' => 'тосмоло',
-'unblocklink' => 'тосмолоону алып сал',
-'change-blocklink' => 'тосмолоону өзгөрт',
-'contribslink' => 'салымдары',
+'blocklist-reason' => 'Себеп',
+'ipblocklist-submit' => 'Издөө',
+'blocklink' => 'блокко салуу',
+'unblocklink' => 'блоктон алуу',
+'change-blocklink' => 'блоктоону өзгөртүү',
+'contribslink' => 'салым',
+'emaillink' => 'кат жиберүү',
 'blocklogpage' => 'Тосмоолордун тизмеси',
 'blocklogentry' => '[[$1]] тосмолонду, тосмолоо мөөнөтү: $2 $3',
 'block-log-flags-nocreate' => 'Каттоо мүмкүн эмес',
@@ -761,96 +916,116 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 # Move page
 'movelogpage' => 'Өзгөртүлгөн аталыштардын тизмеси',
 'movereason' => 'Себеп',
-'revertmove' => 'кайтарып ал',
-'delete_and_move_confirm' => 'Ооба, бул баракты өчүр',
+'revertmove' => 'кайтаруу',
+'delete_and_move_confirm' => 'Ооба, бул баракты өчүрөм',
 
 # Export
-'export' => 'Барактарды чыгар',
+'export' => 'Барактарды экспорттоо',
+'export-addcat' => 'Кошуу',
+'export-addns' => 'Кошуу',
 
 # Namespace 8 related
 'allmessages' => 'Система билдирүүлөрү',
-'allmessagesname' => 'Аталышы',
+'allmessagesname' => 'Ат',
 'allmessagesdefault' => 'Белгиленген билдирүүнүн тексти',
 'allmessagescurrent' => 'Учурдагы текст',
+'allmessages-filter-legend' => 'Фильтр',
 'allmessages-filter-all' => 'Бардыгы',
 'allmessages-language' => 'Тил:',
 'allmessages-filter-submit' => 'Алга',
 
 # Thumbnails
-'thumbnail-more' => 'Чоңойт',
+'thumbnail-more' => 'Чоңойтуу',
 'thumbnail_error' => 'Кичирейтилген сүрөттү түзүүдө ката: $1',
 
+# Special:Import
+'import-interwiki-submit' => 'Импорттоо',
+'import-upload-filename' => 'Файл аты:',
+'import-comment' => 'Эскертүү:',
+
+# Import log
+'importlogpage' => 'Импорт журналы',
+
 # Tooltip help for the actions
-'tooltip-pt-userpage' => 'Колдонуучу барагыңыз',
-'tooltip-pt-mytalk' => 'Талкуу барагыңыз',
+'tooltip-pt-userpage' => 'Катышуучу барагыңыз',
+'tooltip-pt-mytalk' => 'Талкуулоо барагыңыз',
 'tooltip-pt-preferences' => 'Ырастоолоруңуз',
 'tooltip-pt-watchlist' => 'Өзгөрүүлөрүн көзөмөлгө алган барактардын тизмеси',
 'tooltip-pt-mycontris' => 'Салымдарыңыздын тизмеси',
 'tooltip-pt-login' => 'Сизге системада катталууга сунуш кылынат, бирок милдеттүү эмес',
 'tooltip-pt-logout' => 'Чыгуу',
-'tooltip-ca-talk' => 'Барактын мазмуну боюнча талкуу',
+'tooltip-ca-talk' => 'Барактын мазмуну боюнча талкуулоо',
 'tooltip-ca-edit' => 'Сиз бул баракты оңдой аласыз. Кичи пейилдикке, сактоодон мурда алдын ала көрсөтүү нукуурун колдонуңуз.',
-'tooltip-ca-addsection' => 'Жаңы бөлүм башта',
+'tooltip-ca-addsection' => 'Жаңы бөлүмдү баштөө',
 'tooltip-ca-viewsource' => 'Бул барак корголгон.
 Сиз анын кайнарын көрө аласыз',
 'tooltip-ca-history' => 'Бул барактын мурунку оңдоолору',
-'tooltip-ca-protect' => 'Бул баракты корго',
-'tooltip-ca-delete' => 'Бул баракты өчүр',
-'tooltip-ca-move' => 'Барак аталышын өзгөрт',
+'tooltip-ca-protect' => 'Бул баракты коргоо',
+'tooltip-ca-delete' => 'Бул баракты өчүрүү',
+'tooltip-ca-move' => 'Баракты көчүрүү',
 'tooltip-ca-watch' => 'Бул баракты көзөмөл тизмеңизге кошуңуз',
 'tooltip-ca-unwatch' => 'Бул баракты көзөмөл тизмеңизден алып салыңыз',
-'tooltip-search' => '{{SITENAME}} изде',
-'tooltip-search-go' => 'Так ушундай аталыштагы баракты көрсөт',
-'tooltip-search-fulltext' => 'Ушул текст менен барактарды изде',
-'tooltip-p-logo' => 'Башбаракка кайрыл',
-'tooltip-n-mainpage' => 'Башбаракка кайрыл',
-'tooltip-n-mainpage-description' => 'Башбаракка кайрыл',
-'tooltip-n-portal' => 'Долбоор тууралуу, эмне жасай аласыз, кайсы жерде табылат',
-'tooltip-n-currentevents' => 'Учурдагы окуялар тууралуу кошумча маалымат тап',
+'tooltip-search' => '{{SITENAME}} издөө',
+'tooltip-search-go' => 'Так ушундай аталыштагы баракты көрсөтүү',
+'tooltip-search-fulltext' => 'Ушул текст менен барактарды издөө',
+'tooltip-p-logo' => 'Башбаракка өтүү',
+'tooltip-n-mainpage' => 'Башбаракка өтүү',
+'tooltip-n-mainpage-description' => 'Башбаракка өтүү',
+'tooltip-n-portal' => 'Долбоор тууралуу, эмне жасай аласыз, кайсы жерде эмне бар жөнүндө',
+'tooltip-n-currentevents' => 'Учурдагы окуялар тууралуу кошумча маалымат табуу',
 'tooltip-n-recentchanges' => 'Уикидеги соңку өзгөртүүлөрдүн тизмеси',
-'tooltip-n-randompage' => 'Туш келди баракты жүктө',
+'tooltip-n-randompage' => 'Иретсиз түрдө бир баракты ачуу',
 'tooltip-n-help' => 'Маалымат алуу үчүн',
 'tooltip-t-whatlinkshere' => 'Ушул жерге шилтемеси бар бардык уики барактардын тизмеси',
 'tooltip-t-recentchangeslinked' => 'Бул барактан шилтеме берилген барактардагы соңку өзгөрүүлөр',
 'tooltip-feed-atom' => 'Бул барак үчүн Atom агымы',
 'tooltip-t-contributions' => 'Бул колдонуучунун салымдарынын тизмеси',
-'tooltip-t-emailuser' => 'Бул колдонуучуга кат жибер',
-'tooltip-t-upload' => 'Файлдарды жүктө',
+'tooltip-t-emailuser' => 'Бул колдонуучуга кат жиберүү',
+'tooltip-t-upload' => 'Файлдарды жүктөө',
 'tooltip-t-specialpages' => 'Бардык атайын барактардын тизмеси',
 'tooltip-t-print' => 'Бул барактын басып чыгарууга ылайыктуу түрү',
 'tooltip-t-permalink' => 'Барактын бул версиясына туруктуу шилтеме',
-'tooltip-ca-nstab-main' => 'Барактын мазмунун кара',
-'tooltip-ca-nstab-user' => 'Колдонуучунун жеке барагын көрсөт',
+'tooltip-ca-nstab-main' => 'Барактын мазмунун кароо',
+'tooltip-ca-nstab-user' => 'Катышуучунун барагын көрсөтүү',
 'tooltip-ca-nstab-special' => 'Бул атайын барак, аны оңдой албайсыз',
-'tooltip-ca-nstab-project' => 'Долбоор барагын кара',
-'tooltip-ca-nstab-image' => 'Файл барагын көрсөт',
-'tooltip-ca-nstab-template' => 'Калыпты көрсөт',
-'tooltip-ca-nstab-category' => 'Категория барагын көрсөт',
-'tooltip-minoredit' => 'Муну майда оңдоо деп белгиле',
-'tooltip-save' => 'Өзгөртүүлөрдү сактап кой',
+'tooltip-ca-nstab-project' => 'Долбоор барагын көрүү',
+'tooltip-ca-nstab-image' => 'Файл барагын көрүү',
+'tooltip-ca-nstab-template' => 'Шаблонду көрүү',
+'tooltip-ca-nstab-category' => 'Категория барагын көрүү',
+'tooltip-minoredit' => 'Муну майда оңдоо деп белгилөө',
+'tooltip-save' => 'Өзгөртүүлөрдү сактоо',
 'tooltip-preview' => 'Кичи пейлдикке, өзгөртүүлөрдү алдын ала көрсөтүүнү сактоодон мурун колдонуңуз!',
-'tooltip-diff' => 'Тексттке киргизген өзгөртүүлөрдү көрсөт',
-'tooltip-compareselectedversions' => 'Бул барактын тандалган эки версиясынын айырмаларын кара',
+'tooltip-diff' => 'Тексттке киргизген өзгөртүүлөрдү көрсөтүү',
+'tooltip-compareselectedversions' => 'Бул барактын тандалган эки версиясынын айырмаларын кароо',
 'tooltip-watch' => 'Бул баракты көзөмөл тизмеңизге кошуңуз',
 'tooltip-rollback' => '"Кайтар" бир баскыч менен бул барактын соңку оңдоочусунун өзгөртүүлөрүн алып салат',
 'tooltip-undo' => 'Киргизилген оңдоону алып салат жана жокко чыгаруунун себебин белгилөөгө мүмкүнчүлүк берип алдын ала көрсөтүүнү ачат',
-'tooltip-summary' => 'Кыска корутунду киргиз',
+'tooltip-preferences-save' => 'Ырастоолорду сактоо',
+'tooltip-summary' => 'Кыска баяндаманы киргизиңиз',
 
 # Attribution
 'others' => 'башкалар',
+'creditspage' => 'Алкыштар',
+
+# Info page
+'pageinfo-header-edits' => 'Оңдоо тарыхы',
+'pageinfo-toolboxlink' => 'Барак жөнүндө маалымат',
+'pageinfo-contentpage-yes' => 'Ооба',
+'pageinfo-protect-cascading-yes' => 'Ооба',
 
 # Browsing diffs
-'previousdiff' => '← Мурунку оңдоо',
-'nextdiff' => 'Жаңы түзөтүү →',
+'previousdiff' => '← Эскисин оңдоо',
+'nextdiff' => 'Жаңысын оңдоо →',
 
 # Media information
-'file-info-size' => '$1 × $2 пиксел, файлдын көлөмү: $3, MIME тиби: $4',
+'file-info-size' => '$1 × $2 пиксель, файлдын көлөмү: $3, MIME түрү: $4',
 'file-nohires' => 'Мындан дагы толук чечилиши жок.',
 'svg-long-desc' => 'SVG файл, шарттуу түрдө $1 × $2 пиксел, файлдын көлөмү: $3',
-'show-big-image' => 'Толук чечилиши',
+'show-big-image' => 'Толук чечими',
 
 # Special:NewFiles
 'newimages' => 'Жаңы файлдардын галлереясы',
+'newimages-legend' => 'Фильтр',
 'ilsubmit' => 'Издөө',
 'bydate' => 'Күнү боюнча',
 
@@ -883,51 +1058,112 @@ IP дарегиңиз бул барактын оңдоо тарыхына жаз
 
 # EXIF tags
 'exif-artist' => 'Автор',
+'exif-filesource' => 'Файл булагы',
 'exif-contrast' => 'Контраст',
+'exif-keywords' => 'Ачкыч сөздөр',
+'exif-source' => 'Булак',
+'exif-languagecode' => 'Тил',
 
 'exif-meteringmode-0' => 'Белгисиз',
 'exif-meteringmode-255' => 'Башка',
 
 'exif-focalplaneresolutionunit-2' => 'дюйм',
 
+'exif-gaincontrol-0' => 'Жок',
+
+# Pseudotags used for GPSDestDistanceRef
+'exif-gpsdestdistance-k' => 'Километр',
+
+'exif-dc-rights' => 'Укутар',
+
 # External editor support
-'edit-externally' => 'Бул файлды сырткы программа колдонуу аркылуу оңдо',
+'edit-externally' => 'Бул файлды сырткы программа колдонуу аркылуу оңдоо',
 'edit-externally-help' => '(Толук маалымат алуу үчүн [//www.mediawiki.org/wiki/Manual:External_editors setup instructions] барагына кайрылсаңыз болот)',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'баары',
 'namespacesall' => 'баары',
 'monthsall' => 'баары',
+'limitall' => 'баары',
 
 # E-mail address confirmation
 'confirmemail' => 'Электрондук даректи ырастоо',
 'confirmemail_loggedin' => 'Электрондук дарегиңиз ырасталды.',
 
+# Delete conflict
+'recreate' => 'Кайтадан жаратуу',
+
+# action=purge
+'confirm_purge_button' => 'OK',
+
+# action=watch/unwatch
+'confirm-watch-button' => 'ОК',
+'confirm-unwatch-button' => 'ОК',
+
+# Live preview
+'livepreview-loading' => 'Жүктөө...',
+
 # Watchlist editing tools
-'watchlisttools-view' => 'Тийиштүү өзгөрүүлөрдү көрсөт',
-'watchlisttools-edit' => 'Көзөмөл тизмени кара жана оңдо',
-'watchlisttools-raw' => 'Жетиле элек көзөмөл тизмени оңдо',
+'watchlisttools-view' => 'Тийиштүү өзгөрүүлөрдү көрсөтүү',
+'watchlisttools-edit' => 'Көзөмөл тизмесин кароо жана оңдоо',
+'watchlisttools-raw' => 'Жетиле элек көзөмөл тизмени оңдоо',
 
 # Core parser functions
 'duplicate-defaultsort' => '\'\'\'Эскертүү:\'\'\' "$2" белгиленген ылгоочу ачкыч "$1" мурунку белгиленген ылгоочу ачкычты жокко чыгарат.',
 
 # Special:Version
 'version' => 'Версия',
+'version-other' => 'Башка',
+'version-license' => 'Лицензия',
+'version-software' => 'Орнотулган программалык камсыздоо',
+'version-software-product' => 'Продукт',
+'version-software-version' => 'Версия',
+'version-entrypoints-header-url' => 'URL',
+
+# Special:FilePath
+'filepath' => 'Файл жолу',
+'filepath-page' => 'Файл:',
 
 # Special:SpecialPages
 'specialpages' => 'Атайын барактар',
+'specialpages-group-pagetools' => 'Барак аспаптары',
+
+# Special:BlankPage
+'blankpage' => 'Бош барак',
 
 # External image whitelist
-'external_image_whitelist' => ' #Бул сапты болгондой калтыр<pre>
-#Туруктуу айтылыштардын бөлүмдөрүн (// арасындагы бөлүмүн гана) астына жайгаштыр 
+'external_image_whitelist' => ' #Бул сапты болгондой калтыруу<pre>
+#Туруктуу айтылыштардын бөлүмдөрүн (// арасындагы бөлүмүн гана) астына жайгаштыру 
 #Алар сырткы сүрөттөрдүн URL менен байланыштырылат
 #Ылайыктуулары сүрөт болуп көрсөтүлөт, калгандары сүрөттөргө шилтеме болуп көрсөтүлөт
 ## менен башталган саптар, түшүндүрмө болуп эсептелет
 #Баш же кичине тамга айырмасыз
 
-#Туруктуу айтылыштардын бөлүмдөрүн ушул саптын үстүнө жайгаштыр. Бул сапты болгондой калтыр.</pre>',
+#Туруктуу айтылыштардын бөлүмдөрүн ушул саптын үстүнө жайгаштыр. Бул сапты болгондой калтыруу.</pre>',
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|Энбелги]] чыпкасы:',
+'tag-filter-submit' => 'Фильтрдөө',
+'tags-title' => 'Белгилер',
+'tags-edit' => 'оңдоо',
+
+# Special:ComparePages
+'compare-submit' => 'Салыштыруу',
+
+# HTML forms
+'htmlform-submit' => 'Жөнөтүү',
+'htmlform-selectorother-other' => 'Башка',
+
+# Feedback
+'feedback-subject' => 'Тема:',
+'feedback-message' => 'Билдирме:',
+'feedback-cancel' => 'Жокко чыгаруу',
+'feedback-close' => 'Даяр',
+
+# Search suggestions
+'searchsuggest-search' => 'Издөө',
+
+# API errors
+'api-error-unknown-code' => 'Белгисиз ката: "$1".',
 
 );

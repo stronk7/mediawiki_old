@@ -163,7 +163,6 @@ $messages = array(
 'qbbrowse' => 'Sendra',
 'qbedit' => 'Tońge',
 'qbpageoptions' => 'Noa sakam',
-'qbpageinfo' => 'Sakam reaḱ thuti',
 'qbmyoptions' => 'In̕anḱ sakamko',
 'qbspecialpages' => 'Asokay teaḱ sakamko',
 'faq' => 'Baḍae kupuliko',
@@ -397,9 +396,6 @@ $2',
 'virus-unknownscanner' => 'Baṅ urum anṭvayras:',
 
 # Login and logout pages
-'welcomecreation' => '== Johar $1! ==
-Amaḱ ekaunṭ do tearena.
-Amaḱ [[Special:Preferance {{SITENAME}} pạsindko]] thir dohoe lạgit́te alom hiṛińa.',
 'yourname' => 'Beoboharicaḱ ńutum',
 'yourpassword' => 'Uku namber',
 'yourpasswordagain' => 'Arhõ oku namber olme',
@@ -650,7 +646,7 @@ Onate noa ạrgumenṭkodo bạgi giḍi hoena.",
 'last' => 'Laha renaḱ',
 'page_first' => 'Pahilaḱ',
 'page_last' => 'Mucạt́aḱ',
-'histlegend' => "Farak bachao: oka nãwã aroeko tulạoem menet́kan, onako cinhạ em kate boloḱ se latar baṭon linmẽ.<br/>
+'histlegend' => "Farak bachao: oka nãwã aroeko tulạoem menet́kan, onako cinhạ em kate boloḱ se latar baṭon linmẽ.<br />
 Unuduḱ: '''({{int:cur}})''' = nahaḱ nãwã aroeko saõte tulạo, '''({{int:last}})''' = laha reaḱ nãwã aroe sãote tulạo, '''{{int:minoreditletter}}''' = huḍiń sompadon.",
 'history-fieldset-title' => 'Sendray jaṛ',
 'history-show-deleted' => 'khạli get giḍiyaḱ koge',
@@ -973,8 +969,6 @@ Noa reaḱ pasnao katha [$2 rẽt pasnao sakam] latare emena',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Ńeloḱ kana...',
-
-'changed' => 'Bodolena',
 
 # Delete
 'deletepage' => 'Sakam get giḍikam',

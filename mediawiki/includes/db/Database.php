@@ -228,8 +228,11 @@ abstract class DatabaseBase implements DatabaseType {
 	protected $mConn = null;
 	protected $mOpened = false;
 
-	/** @var Array */
-	protected $trxIdleCallbacks = array();
+	/**
+	 * @since 1.20
+	 * @var array of Closure
+	 */
+	protected $mTrxIdleCallbacks = array();
 
 	protected $mTablePrefix;
 	protected $mFlags;
@@ -247,13 +250,36 @@ abstract class DatabaseBase implements DatabaseType {
 	protected $delimiter = ';';
 
 	/**
-	 * Remembers the function name given for starting the most recent transaction via the begin() method.
+	 * Remembers the function name given for starting the most recent transaction via begin().
 	 * Used to provide additional context for error reporting.
 	 *
 	 * @var String
 	 * @see DatabaseBase::mTrxLevel
 	 */
 	private $mTrxFname = null;
+
+	/**
+	 * Record if possible write queries were done in the last transaction started
+	 *
+	 * @var Bool
+	 * @see DatabaseBase::mTrxLevel
+	 */
+	private $mTrxDoneWrites = false;
+
+	/**
+	 * Record if the current transaction was started implicitly due to DBO_TRX being set.
+	 *
+	 * @var Bool
+	 * @see DatabaseBase::mTrxLevel
+	 */
+	private $mTrxAutomatic = false;
+
+	/**
+	 * @since 1.21
+	 * @var file handle for upgrade
+	 */
+	protected $fileHandle = null;
+
 
 # ------------------------------------------------------------------------------
 # Accessors
@@ -269,6 +295,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function getServerInfo() {
 		return $this->getServerVersion();
+	}
+
+	/**
+	 * @return string: command delimiter used by this database engine
+	 */
+	public function getDelimiter() {
+		return $this->delimiter;
 	}
 
 	/**
@@ -358,6 +391,15 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function tablePrefix( $prefix = null ) {
 		return wfSetVar( $this->mTablePrefix, $prefix );
+	}
+
+ 	/**
+	 * Set the filehandle to copy write statements to.
+	 *
+	 * @param $fh filehandle
+	 */
+	public function setFileHandle( $fh ) {
+		$this->fileHandle = $fh;
 	}
 
 	/**
@@ -506,6 +548,16 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function doneWrites() {
 		return $this->mDoneWrites;
+	}
+
+	/**
+	 * Returns true if there is a transaction open with possible write
+	 * queries or transaction idle callbacks waiting on it to finish.
+	 *
+	 * @return bool
+	 */
+	public function writesOrCallbacksPending() {
+		return $this->mTrxLevel && ( $this->mTrxDoneWrites || $this->mTrxIdleCallbacks );
 	}
 
 	/**
@@ -731,11 +783,20 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return Bool operation success. true if already closed.
 	 */
 	public function close() {
+		if ( count( $this->mTrxIdleCallbacks ) ) { // sanity
+			throw new MWException( "Transaction idle callbacks still pending." );
+		}
 		$this->mOpened = false;
 		if ( $this->mConn ) {
 			if ( $this->trxLevel() ) {
-				$this->commit( __METHOD__ );
+				if ( !$this->mTrxAutomatic ) {
+					wfWarn( "Transaction still in progress (from {$this->mTrxFname}), " .
+						" performing implicit commit before closing connection!" );
+				}
+
+				$this->commit( __METHOD__, 'flush' );
 			}
+
 			$ret = $this->closeConnection();
 			$this->mConn = false;
 			return $ret;
@@ -753,6 +814,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * @param $error String: fallback error message, used if none is given by DB
+	 * @throws DBConnectionError
 	 */
 	function reportConnectionError( $error = 'Unknown error' ) {
 		$myError = $this->lastError();
@@ -802,9 +864,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 *     comment (you can use __METHOD__ or add some extra info)
 	 * @param  $tempIgnore Boolean:   Whether to avoid throwing an exception on errors...
 	 *     maybe best to catch the exception instead?
+	 * @throws MWException
 	 * @return boolean|ResultWrapper. true for a successful write query, ResultWrapper object
 	 *     for a successful read query, or false on failure if $tempIgnore set
-	 * @throws DBQueryError Thrown when the database returns an error of any kind
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
@@ -842,12 +904,16 @@ abstract class DatabaseBase implements DatabaseType {
 		} else {
 			$userName = '';
 		}
-		$commentedSql = preg_replace( '/\s/', " /* $fname $userName */ ", $sql, 1 );
+
+		// Add trace comment to the begin of the sql string, right after the operator.
+		// Or, for one-word queries (like "BEGIN" or COMMIT") add it to the end (bug 42598)
+		$commentedSql = preg_replace( '/\s|$/', " /* $fname $userName */ ", $sql, 1 );
 
 		# If DBO_TRX is set, start a transaction
-		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
-			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK' ) {
-			# avoid establishing transactions for SHOW and SET statements too -
+		if ( ( $this->mFlags & DBO_TRX ) && !$this->mTrxLevel &&
+			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK' )
+		{
+			# Avoid establishing transactions for SHOW and SET statements too -
 			# that would delay transaction initializations to once connection
 			# is really used by application
 			$sqlstart = substr( $sql, 0, 10 ); // very much worth it, benchmark certified(tm)
@@ -857,7 +923,13 @@ abstract class DatabaseBase implements DatabaseType {
 					wfDebug("Implicit transaction start.\n");
 				}
 				$this->begin( __METHOD__ . " ($fname)" );
+				$this->mTrxAutomatic = true;
 			}
+		}
+
+		# Keep track of whether the transaction has write queries pending
+		if ( $this->mTrxLevel && !$this->mTrxDoneWrites && $this->isWriteQuery( $sql ) ) {
+			$this->mTrxDoneWrites = true;
 		}
 
 		if ( $this->debug() ) {
@@ -886,6 +958,7 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( false === $ret && $this->wasErrorReissuable() ) {
 			# Transaction is gone, like it or not
 			$this->mTrxLevel = 0;
+			$this->mTrxIdleCallbacks = array(); // cancel
 			wfDebug( "Connection lost, reconnecting...\n" );
 
 			if ( $this->ping() ) {
@@ -925,6 +998,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $sql String
 	 * @param $fname String
 	 * @param $tempIgnore Boolean
+	 * @throws DBQueryError
 	 */
 	public function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
 		# Ignore errors during error handling to avoid infinite recursion
@@ -1011,6 +1085,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * while we're doing this.
 	 *
 	 * @param $matches Array
+	 * @throws DBUnexpectedError
 	 * @return String
 	 */
 	protected function fillPreparedArg( $matches ) {
@@ -1522,6 +1597,10 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool|null
 	 */
 	public function indexExists( $table, $index, $fname = 'DatabaseBase::indexExists' ) {
+		if( !$this->tableExists( $table ) ) {
+			return null;
+		}
+
 		$info = $this->indexInfo( $table, $index, $fname );
 		if ( is_null( $info ) ) {
 			return null;
@@ -1634,6 +1713,10 @@ abstract class DatabaseBase implements DatabaseType {
 			$options = array( $options );
 		}
 
+		$fh = null;
+		if ( isset( $options['fileHandle'] ) ) {
+			$fh = $options['fileHandle'];
+		}
 		$options = $this->makeInsertOptions( $options );
 
 		if ( isset( $a[0] ) && is_array( $a[0] ) ) {
@@ -1659,6 +1742,12 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 		} else {
 			$sql .= '(' . $this->makeList( $a ) . ')';
+		}
+
+		if ( $fh !== null && false === fwrite( $fh, $sql ) ) {
+			return false;
+		} elseif ( $fh !== null ) {
+			return true;
 		}
 
 		return (bool)$this->query( $sql, $fname );
@@ -1726,7 +1815,7 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * Makes an encoded list of strings from an array
 	 * @param $a Array containing the data
-	 * @param $mode int Constant
+	 * @param int $mode Constant
 	 *      - LIST_COMMA:          comma separated, no field names
 	 *      - LIST_AND:            ANDed WHERE clause (without the WHERE). See
 	 *        the documentation for $conds in DatabaseBase::select().
@@ -1734,6 +1823,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *      - LIST_SET:            comma separated with field names, like a SET clause
 	 *      - LIST_NAMES:          comma separated field names
 	 *
+	 * @throws MWException|DBUnexpectedError
 	 * @return string
 	 */
 	public function makeList( $a, $mode = LIST_COMMA ) {
@@ -1763,7 +1853,7 @@ abstract class DatabaseBase implements DatabaseType {
 				$list .= "$value";
 			} elseif ( ( $mode == LIST_AND || $mode == LIST_OR ) && is_array( $value ) ) {
 				if ( count( $value ) == 0 ) {
-					throw new MWException( __METHOD__ . ': empty input' );
+					throw new MWException( __METHOD__ . ": empty input for field $field" );
 				} elseif ( count( $value ) == 1 ) {
 					// Special-case single values, as IN isn't terribly efficient
 					// Don't necessarily assume the single key is 0; we don't
@@ -2435,6 +2525,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *                    ANDed together in the WHERE clause
 	 * @param $fname      String: Calling function name (use __METHOD__) for
 	 *                    logs/profiling
+	 * @throws DBUnexpectedError
 	 */
 	public function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds,
 		$fname = 'DatabaseBase::deleteJoin' )
@@ -2500,6 +2591,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *               the format. Use $conds == "*" to delete all rows
 	 * @param $fname String name of the calling function
 	 *
+	 * @throws DBUnexpectedError
 	 * @return bool
 	 */
 	public function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
@@ -2598,6 +2690,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $limit Integer the SQL limit
 	 * @param $offset Integer|bool the SQL offset (default false)
 	 *
+	 * @throws DBUnexpectedError
 	 * @return string
 	 */
 	public function limitResult( $sql, $limit, $offset = false ) {
@@ -2846,31 +2939,38 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * This is useful for updates to different systems or separate transactions are needed.
 	 *
+	 * @since 1.20
+	 *
 	 * @param Closure $callback
-	 * @return void
 	 */
 	final public function onTransactionIdle( Closure $callback ) {
 		if ( $this->mTrxLevel ) {
-			$this->trxIdleCallbacks[] = $callback;
+			$this->mTrxIdleCallbacks[] = $callback;
 		} else {
 			$callback();
 		}
 	}
 
 	/**
-	 * Actually run the "on transaction idle" callbacks
+	 * Actually run the "on transaction idle" callbacks.
+	 *
+	 * @since 1.20
 	 */
 	protected function runOnTransactionIdleCallbacks() {
+		$autoTrx = $this->getFlag( DBO_TRX ); // automatic begin() enabled?
+
 		$e = null; // last exception
 		do { // callbacks may add callbacks :)
-			$callbacks = $this->trxIdleCallbacks;
-			$this->trxIdleCallbacks = array(); // recursion guard
+			$callbacks = $this->mTrxIdleCallbacks;
+			$this->mTrxIdleCallbacks = array(); // recursion guard
 			foreach ( $callbacks as $callback ) {
 				try {
+					$this->clearFlag( DBO_TRX ); // make each query its own transaction
 					$callback();
+					$this->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
 				} catch ( Exception $e ) {}
 			}
-		} while ( count( $this->trxIdleCallbacks ) );
+		} while ( count( $this->mTrxIdleCallbacks ) );
 
 		if ( $e instanceof Exception ) {
 			throw $e; // re-throw any last exception
@@ -2878,22 +2978,50 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Begin a transaction
+	 * Begin a transaction. If a transaction is already in progress, that transaction will be committed before the
+	 * new transaction is started.
+	 *
+	 * Note that when the DBO_TRX flag is set (which is usually the case for web requests, but not for maintenance scripts),
+	 * any previous database query will have started a transaction automatically.
+	 *
+	 * Nesting of transactions is not supported. Attempts to nest transactions will cause a warning, unless the current
+	 * transaction was started automatically because of the DBO_TRX flag.
 	 *
 	 * @param $fname string
 	 */
 	final public function begin( $fname = 'DatabaseBase::begin' ) {
+		global $wgDebugDBTransactions;
+
 		if ( $this->mTrxLevel ) { // implicit commit
-			wfWarn( "$fname: Transaction already in progress (from {$this->mTrxFname}), " .
-				" performing implicit commit!" );
+			if ( !$this->mTrxAutomatic ) {
+				// We want to warn about inadvertently nested begin/commit pairs, but not about auto-committing
+				// implicit transactions that were started by query() because DBO_TRX was set.
+
+				wfWarn( "$fname: Transaction already in progress (from {$this->mTrxFname}), " .
+					" performing implicit commit!" );
+			} else {
+				// if the transaction was automatic and has done write operations,
+				// log it if $wgDebugDBTransactions is enabled.
+
+				if ( $this->mTrxDoneWrites && $wgDebugDBTransactions ) {
+					wfDebug( "$fname: Automatic transaction with writes in progress (from {$this->mTrxFname}), " .
+						" performing implicit commit!\n" );
+				}
+			}
+
 			$this->doCommit( $fname );
 			$this->runOnTransactionIdleCallbacks();
 		}
+
 		$this->doBegin( $fname );
 		$this->mTrxFname = $fname;
+		$this->mTrxDoneWrites = false;
+		$this->mTrxAutomatic = false;
 	}
 
 	/**
+	 * Issues the BEGIN command to the database server.
+	 *
 	 * @see DatabaseBase::begin()
 	 * @param type $fname
 	 */
@@ -2903,19 +3031,39 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * End a transaction
+	 * Commits a transaction previously started using begin().
+	 * If no transaction is in progress, a warning is issued.
+	 *
+	 * Nesting of transactions is not supported.
 	 *
 	 * @param $fname string
+	 * @param $flush String Flush flag, set to 'flush' to disable warnings about explicitly committing implicit
+	 *        transactions, or calling commit when no transaction is in progress.
+	 *        This will silently break any ongoing explicit transaction. Only set the flush flag if you are sure
+	 *        that it is safe to ignore these warnings in your context.
 	 */
-	final public function commit( $fname = 'DatabaseBase::commit' ) {
-		if ( !$this->mTrxLevel ) {
-			wfWarn( "$fname: No transaction to commit, something got out of sync!" );
+	final public function commit( $fname = 'DatabaseBase::commit', $flush = '' ) {
+		if ( $flush != 'flush' ) {
+			if ( !$this->mTrxLevel ) {
+				wfWarn( "$fname: No transaction to commit, something got out of sync!" );
+			} elseif( $this->mTrxAutomatic ) {
+				wfWarn( "$fname: Explicit commit of implicit transaction. Something may be out of sync!" );
+			}
+		} else {
+			if ( !$this->mTrxLevel ) {
+				return; // nothing to do
+			} elseif( !$this->mTrxAutomatic ) {
+				wfWarn( "$fname: Flushing an explicit transaction, getting out of sync!" );
+			}
 		}
+
 		$this->doCommit( $fname );
 		$this->runOnTransactionIdleCallbacks();
 	}
 
 	/**
+	 * Issues the COMMIT command to the database server.
+	 *
 	 * @see DatabaseBase::commit()
 	 * @param type $fname
 	 */
@@ -2927,7 +3075,9 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Rollback a transaction.
+	 * Rollback a transaction previously started using begin().
+	 * If no transaction is in progress, a warning is issued.
+	 *
 	 * No-op on non-transactional databases.
 	 *
 	 * @param $fname string
@@ -2937,10 +3087,12 @@ abstract class DatabaseBase implements DatabaseType {
 			wfWarn( "$fname: No transaction to rollback, something got out of sync!" );
 		}
 		$this->doRollback( $fname );
-		$this->trxIdleCallbacks = array(); // cancel
+		$this->mTrxIdleCallbacks = array(); // cancel
 	}
 
 	/**
+	 * Issues the ROLLBACK command to the database server.
+	 *
 	 * @see DatabaseBase::rollback()
 	 * @param type $fname
 	 */
@@ -2963,6 +3115,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $newName String: name of table to be created
 	 * @param $temporary Boolean: whether the new table should be temporary
 	 * @param $fname String: calling function name
+	 * @throws MWException
 	 * @return Boolean: true if operation was successful
 	 */
 	public function duplicateTableStructure( $oldName, $newName, $temporary = false,
@@ -2977,6 +3130,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * @param $prefix string Only show tables with this prefix, e.g. mw_
 	 * @param $fname String: calling function name
+	 * @throws MWException
 	 */
 	function listTables( $prefix = null, $fname = 'DatabaseBase::listTables' ) {
 		throw new MWException( 'DatabaseBase::listTables is not implemented in descendant class' );
@@ -3120,14 +3274,16 @@ abstract class DatabaseBase implements DatabaseType {
 	 * on object's error ignore settings).
 	 *
 	 * @param $filename String: File name to open
-	 * @param $lineCallback Callback: Optional function called before reading each line
-	 * @param $resultCallback Callback: Optional function called for each MySQL result
-	 * @param $fname String: Calling function name or false if name should be
+	 * @param bool|callable $lineCallback Optional function called before reading each line
+	 * @param bool|callable $resultCallback Optional function called for each MySQL result
+	 * @param bool|string $fname Calling function name or false if name should be
 	 *      generated dynamically using $filename
+	 * @param bool|callable $inputCallback Callback: Optional function called for each complete line sent
+	 * @throws MWException
 	 * @return bool|string
 	 */
 	public function sourceFile(
-		$filename, $lineCallback = false, $resultCallback = false, $fname = false
+		$filename, $lineCallback = false, $resultCallback = false, $fname = false, $inputCallback = false
 	) {
 		wfSuppressWarnings();
 		$fp = fopen( $filename, 'r' );
@@ -3142,7 +3298,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		try {
-			$error = $this->sourceStream( $fp, $lineCallback, $resultCallback, $fname );
+			$error = $this->sourceStream( $fp, $lineCallback, $resultCallback, $fname, $inputCallback );
 		}
 		catch ( MWException $e ) {
 			fclose( $fp );
@@ -3191,10 +3347,10 @@ abstract class DatabaseBase implements DatabaseType {
 	 * on object's error ignore settings).
 	 *
 	 * @param $fp Resource: File handle
-	 * @param $lineCallback Callback: Optional function called before reading each line
+	 * @param $lineCallback Callback: Optional function called before reading each query
 	 * @param $resultCallback Callback: Optional function called for each MySQL result
 	 * @param $fname String: Calling function name
-	 * @param $inputCallback Callback: Optional function called for each complete line (ended with ;) sent
+	 * @param $inputCallback Callback: Optional function called for each complete query sent
 	 * @return bool|string
 	 */
 	public function sourceStream( $fp, $lineCallback = false, $resultCallback = false,
@@ -3227,20 +3383,19 @@ abstract class DatabaseBase implements DatabaseType {
 
 			if ( $done || feof( $fp ) ) {
 				$cmd = $this->replaceVars( $cmd );
-				if ( $inputCallback ) {
-					call_user_func( $inputCallback, $cmd );
-				}
-				$res = $this->query( $cmd, $fname );
 
-				if ( $resultCallback ) {
-					call_user_func( $resultCallback, $res, $this );
-				}
+				if ( ( $inputCallback && call_user_func( $inputCallback, $cmd ) ) || !$inputCallback ) {
+					$res = $this->query( $cmd, $fname );
 
-				if ( false === $res ) {
-					$err = $this->lastError();
-					return "Query \"{$cmd}\" failed with error code \"$err\".\n";
-				}
+					if ( $resultCallback ) {
+						call_user_func( $resultCallback, $res, $this );
+					}
 
+					if ( false === $res ) {
+						$err = $this->lastError();
+						return "Query \"{$cmd}\" failed with error code \"$err\".\n";
+					}
+				}
 				$cmd = '';
 			}
 		}
@@ -3513,5 +3668,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function __toString() {
 		return (string)$this->mConn;
+	}
+
+	public function __destruct() {
+		if ( count( $this->mTrxIdleCallbacks ) ) { // sanity
+			trigger_error( "Transaction idle callbacks still pending." );
+		}
 	}
 }

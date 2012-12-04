@@ -104,6 +104,7 @@ class Exif {
 	 *
 	 * @param $file String: filename.
 	 * @param $byteOrder String Type of byte ordering either 'BE' (Big Endian) or 'LE' (Little Endian). Default ''.
+	 * @throws MWException
 	 * @todo FIXME: The following are broke:
 	 * SubjectArea. Need to test the more obscure tags.
 	 *
@@ -388,7 +389,7 @@ class Exif {
 		$this->charCodeString( 'UserComment' );
 		$this->charCodeString( 'GPSProcessingMethod');
 		$this->charCodeString( 'GPSAreaInformation' );
-		
+
 		//ComponentsConfiguration should really be an array instead of a string...
 		//This turns a string of binary numbers into an array of numbers.
 
@@ -401,7 +402,7 @@ class Exif {
 			$ccVals['_type'] = 'ol'; //this is for formatting later.
 			$this->mFilteredExifData['ComponentsConfiguration'] = $ccVals;
 		}
-	
+
 		//GPSVersion(ID) is treated as the wrong type by php exif support.
 		//Go through each byte turning it into a version string.
 		//For example: "\x02\x02\x00\x00" -> "2.2.0.0"
@@ -450,8 +451,7 @@ class Exif {
 			}
 			$charCode = substr( $this->mFilteredExifData[$prop], 0, 8);
 			$val = substr( $this->mFilteredExifData[$prop], 8);
-			
-			
+
 			switch ($charCode) {
 				case "\x4A\x49\x53\x00\x00\x00\x00\x00":
 					//JIS
@@ -480,7 +480,7 @@ class Exif {
 					wfRestoreWarnings();
 				}
 			}
-			
+
 			//trim and check to make sure not only whitespace.
 			$val = trim($val);
 			if ( strlen( $val ) === 0 ) {
@@ -748,10 +748,10 @@ class Exif {
 			return false;
 		}
 		if( $count > 1 ) {
-			foreach( $val as $v ) { 
+			foreach( $val as $v ) {
 				if( !$this->validate( $section, $tag, $v, true ) ) {
-					return false; 
-				} 
+					return false;
+				}
 			}
 			return true;
 		}

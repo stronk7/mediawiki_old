@@ -188,6 +188,8 @@ class Linker {
 	 *       cons.
 	 *     'forcearticlepath': Use the article path always, even with a querystring.
 	 *       Has compatibility issues on some setups, so avoid wherever possible.
+	 *     'http': Force a full URL with http:// as the scheme.
+	 *     'https': Force a full URL with https:// as the scheme.
 	 * @return string HTML <a> attribute
 	 */
 	public static function link(
@@ -294,7 +296,16 @@ class Linker {
 			$query['action'] = 'edit';
 			$query['redlink'] = '1';
 		}
-		$ret = $target->getLinkURL( $query );
+
+		if ( in_array( 'http', $options ) ) {
+			$proto = PROTO_HTTP;
+		} elseif ( in_array( 'https', $options ) ) {
+			$proto = PROTO_HTTPS;
+		} else {
+			$proto = PROTO_RELATIVE;
+		}
+
+		$ret = $target->getLinkURL( $query, false, $proto );
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -437,6 +448,7 @@ class Linker {
 	 * @param $context IContextSource context to use to get the messages
 	 * @param $namespace int Namespace number
 	 * @param $title string Text of the title, without the namespace part
+	 * @return string
 	 */
 	public static function getInvalidTitleDescription( IContextSource $context, $namespace, $title ) {
 		global $wgContLang;
@@ -664,6 +676,7 @@ class Linker {
 		if ( !$thumb ) {
 			$s = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
 		} else {
+			self::processResponsiveImages( $file, $thumb, $hp );
 			$params = array(
 				'alt' => $fp['alt'],
 				'title' => $fp['title'],
@@ -784,6 +797,7 @@ class Linker {
 			$hp['width'] = isset( $fp['upright'] ) ? 130 : 180;
 		}
 		$thumb = false;
+		$noscale = false;
 
 		if ( !$exists ) {
 			$outerWidth = $hp['width'] + 2;
@@ -802,6 +816,7 @@ class Linker {
 			} elseif ( isset( $fp['framed'] ) ) {
 				// Use image dimensions, don't scale
 				$thumb = $file->getUnscaledThumb( $hp );
+				$noscale = true;
 			} else {
 				# Do not present an image bigger than the source, for bitmap-style images
 				# This is a hack to maintain compatibility with arbitrary pre-1.10 behaviour
@@ -835,6 +850,9 @@ class Linker {
 			$s .= wfMessage( 'thumbnail_error', '' )->escaped();
 			$zoomIcon = '';
 		} else {
+			if ( !$noscale ) {
+				self::processResponsiveImages( $file, $thumb, $hp );
+			}
 			$params = array(
 				'alt' => $fp['alt'],
 				'title' => $fp['title'],
@@ -859,6 +877,37 @@ class Linker {
 		}
 		$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
 		return str_replace( "\n", ' ', $s );
+	}
+
+	/**
+	 * Process responsive images: add 1.5x and 2x subimages to the thumbnail, where
+	 * applicable.
+	 *
+	 * @param File $file
+	 * @param MediaOutput $thumb
+	 * @param array $hp image parameters
+	 */
+	protected static function processResponsiveImages( $file, $thumb, $hp ) {
+		global $wgResponsiveImages;
+		if ( $wgResponsiveImages ) {
+			$hp15 = $hp;
+			$hp15['width'] = round( $hp['width'] * 1.5 );
+			$hp20 = $hp;
+			$hp20['width'] = $hp['width'] * 2;
+			if ( isset( $hp['height'] ) ) {
+				$hp15['height'] = round( $hp['height'] * 1.5 );
+				$hp20['height'] = $hp['height'] * 2;
+			}
+
+			$thumb15 = $file->transform( $hp15 );
+			$thumb20 = $file->transform( $hp20 );
+			if ( $thumb15->url !== $thumb->url ) {
+				$thumb->responsiveUrls['1.5'] = $thumb15->url;
+			}
+			if ( $thumb20->url !== $thumb->url ) {
+				$thumb->responsiveUrls['2'] = $thumb20->url;
+			}
+		}
 	}
 
 	/**
@@ -1026,6 +1075,9 @@ class Linker {
 	public static function userLink( $userId, $userName, $altUserName = false ) {
 		if ( $userId == 0 ) {
 			$page = SpecialPage::getTitleFor( 'Contributions', $userName );
+			if ( $altUserName === false ) {
+				$altUserName = IP::prettifyIP( $userName );
+			}
 		} else {
 			$page = Title::makeTitle( NS_USER, $userName );
 		}
@@ -1064,8 +1116,11 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
-				if ( $count == 0 ) {
+				if ( intval( $edits ) === 0 && $edits !== 0 ) {
+					$user = User::newFromId( $userId );
+					$edits = $user->getEditCount();
+				}
+				if ( $edits === 0 ) {
 					$attribs['class'] = 'new';
 				}
 			}
@@ -1321,7 +1376,18 @@ class Linker {
 		self::$commentContextTitle = $title;
 		self::$commentLocal = $local;
 		$html = preg_replace_callback(
-			'/\[\[:?(.*?)(\|(.*?))*\]\]([^[]*)/',
+			'/
+				\[\[
+				:? # ignore optional leading colon
+				([^\]|]+) # 1. link target; page names cannot include ] or |
+				(?:\|
+					# 2. a pipe-separated substring; only the last is captured
+					# Stop matching at | and ]] without relying on backtracking.
+					((?:]?[^\]|])*+)
+				)*
+				\]\]
+				([^[]*) # 3. link trail (the text up until the next link)
+			/x',
 			array( 'Linker', 'formatLinksInCommentCallback' ),
 			$comment );
 		self::$commentContextTitle = null;
@@ -1347,8 +1413,8 @@ class Linker {
 		}
 
 		# Handle link renaming [[foo|text]] will show link as "text"
-		if ( $match[3] != "" ) {
-			$text = $match[3];
+		if ( $match[2] != "" ) {
+			$text = $match[2];
 		} else {
 			$text = $match[1];
 		}
@@ -1363,7 +1429,7 @@ class Linker {
 			}
 		} else {
 			# Other kind of link
-			if ( preg_match( $wgContLang->linkTrail(), $match[4], $submatch ) ) {
+			if ( preg_match( $wgContLang->linkTrail(), $match[3], $submatch ) ) {
 				$trail = $submatch[1];
 			} else {
 				$trail = "";
@@ -1712,7 +1778,7 @@ class Linker {
 	 */
 	public static function buildRollbackLink( $rev, IContextSource $context = null ) {
 		global $wgShowRollbackEditCount, $wgMiserMode;
-		
+
 		// To config which pages are effected by miser mode
 		$disableRollbackEditCountSpecialPage = array( 'Recentchanges', 'Watchlist' );
 
@@ -1847,7 +1913,11 @@ class Linker {
 						array( 'action' => 'edit' )
 					);
 				}
-				$outText .= '<li>' . self::link( $titleObj ) . ' (' . $editLink . ') ' . $protected . '</li>';
+				$outText .= '<li>' . self::link( $titleObj )
+					. wfMessage( 'word-separator' )->escaped()
+					. wfMessage( 'parentheses' )->rawParams( $editLink )->escaped()
+					. wfMessage( 'word-separator' )->escaped()
+					. $protected . '</li>';
 			}
 			$outText .= '</ul>';
 		}
@@ -2069,7 +2139,7 @@ class Linker {
 	 */
 	static function makeBrokenLink( $title, $text = '', $query = '', $trail = '' ) {
 		wfDeprecated( __METHOD__, '1.16' );
-		
+
 		$nt = Title::newFromText( $title );
 		if ( $nt instanceof Title ) {
 			return self::makeBrokenLinkObj( $nt, $text, $query, $trail );
@@ -2080,7 +2150,7 @@ class Linker {
 	}
 
 	/**
-	 * @deprecated since 1.16 Use link()
+	 * @deprecated since 1.16 Use link(); warnings since 1.21
 	 *
 	 * Make a link for a title which may or may not be in the database. If you need to
 	 * call this lots of times, pre-fill the link cache with a LinkBatch, otherwise each
@@ -2097,8 +2167,8 @@ class Linker {
 	 * @return string
 	 */
 	static function makeLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' ) {
-		# wfDeprecated( __METHOD__, '1.16' ); // See r105985 and it's revert. Somewhere still used.
-		
+		wfDeprecated( __METHOD__, '1.21' );
+
 		wfProfileIn( __METHOD__ );
 		$query = wfCgiToArray( $query );
 		list( $inside, $trail ) = self::splitTrail( $trail );
@@ -2113,7 +2183,7 @@ class Linker {
 	}
 
 	/**
-	 * @deprecated since 1.16 Use link()
+	 * @deprecated since 1.16 Use link(); warnings since 1.21
 	 *
 	 * Make a link for a title which definitely exists. This is faster than makeLinkObj because
 	 * it doesn't have to do a database query. It's also valid for interwiki titles and special
@@ -2131,8 +2201,8 @@ class Linker {
 	static function makeKnownLinkObj(
 		$title, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = ''
 	) {
-		# wfDeprecated( __METHOD__, '1.16' ); // See r105985 and it's revert. Somewhere still used.
-		
+		wfDeprecated( __METHOD__, '1.21' );
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $text == '' ) {
@@ -2168,7 +2238,7 @@ class Linker {
 	 */
 	static function makeBrokenLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '' ) {
 		wfDeprecated( __METHOD__, '1.16' );
-		
+
 		wfProfileIn( __METHOD__ );
 
 		list( $inside, $trail ) = self::splitTrail( $trail );
@@ -2200,7 +2270,7 @@ class Linker {
 	 */
 	static function makeColouredLinkObj( $nt, $colour, $text = '', $query = '', $trail = '', $prefix = '' ) {
 		wfDeprecated( __METHOD__, '1.16' );
-		
+
 		if ( $colour != '' ) {
 			$style = self::getInternalLinkAttributesObj( $nt, $text, $colour );
 		} else {

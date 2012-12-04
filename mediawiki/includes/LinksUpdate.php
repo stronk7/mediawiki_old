@@ -49,6 +49,7 @@ class LinksUpdate extends SqlDataUpdate {
 	 * @param $title Title of the page we're updating
 	 * @param $parserOutput ParserOutput: output from a full parse of this page
 	 * @param $recursive Boolean: queue jobs for recursive updates?
+	 * @throws MWException
 	 */
 	function __construct( $title, $parserOutput, $recursive = true ) {
 		parent::__construct( false ); // no implicit transaction
@@ -71,6 +72,7 @@ class LinksUpdate extends SqlDataUpdate {
 		}
 
 		$this->mParserOutput = $parserOutput;
+
 		$this->mLinks = $parserOutput->getLinks();
 		$this->mImages = $parserOutput->getImages();
 		$this->mTemplates = $parserOutput->getTemplates();
@@ -236,26 +238,20 @@ class LinksUpdate extends SqlDataUpdate {
 	}
 
 	function queueRecursiveJobs() {
-		global $wgUpdateRowsPerJob;
 		wfProfileIn( __METHOD__ );
 
-		$cache = $this->mTitle->getBacklinkCache();
-		$batches = $cache->partition( 'templatelinks', $wgUpdateRowsPerJob );
-		if ( !$batches ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-		$jobs = array();
-		foreach ( $batches as $batch ) {
-			list( $start, $end ) = $batch;
-			$params = array(
-				'table' => 'templatelinks',
-				'start' => $start,
-				'end' => $end,
+		if ( $this->mTitle->getBacklinkCache()->hasLinks( 'templatelinks' ) ) {
+			$job = new RefreshLinksJob2(
+				$this->mTitle,
+				array(
+					'table' => 'templatelinks',
+				) + Job::newRootJobParams( // "overall" refresh links job info
+					"refreshlinks:templatelinks:{$this->mTitle->getPrefixedText()}"
+				)
 			);
-			$jobs[] = new RefreshLinksJob2( $this->mTitle, $params );
+			JobQueueGroup::singleton()->push( $job );
+			JobQueueGroup::singleton()->deduplicateRootJob( $job );
 		}
-		Job::batchInsert( $jobs );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -828,6 +824,10 @@ class LinksDeletionUpdate extends SqlDataUpdate {
 		parent::__construct( false ); // no implicit transaction
 
 		$this->mPage = $page;
+
+		if ( !$page->exists() ) {
+			throw new MWException( "Page ID not known, perhaps the page doesn't exist?" );
+		}
 	}
 
 	/**
@@ -878,5 +878,17 @@ class LinksDeletionUpdate extends SqlDataUpdate {
 				array( 'rc_type != ' . RC_LOG, 'rc_cur_id' => $id ),
 				__METHOD__ );
 		}
+	}
+
+	/**
+	 * Update all the appropriate counts in the category table.
+	 * @param $added array associative array of category name => sort key
+	 * @param $deleted array associative array of category name => sort key
+	 */
+	function updateCategoryCounts( $added, $deleted ) {
+		$a = WikiPage::factory( $this->mTitle );
+		$a->updateCategoryCounts(
+			array_keys( $added ), array_keys( $deleted )
+		);
 	}
 }

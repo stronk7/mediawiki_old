@@ -148,7 +148,6 @@ $messages = array(
 'qbbrowse' => 'Килигун',
 'qbedit' => 'Дегишарун',
 'qbpageoptions' => 'Ччинин низамарунар',
-'qbpageinfo' => 'Ччиникай малумат',
 'qbmyoptions' => 'Зи ччинар',
 'qbspecialpages' => 'Кьетlен хъувун',
 'faq' => 'Фад-фад гузвай жузунар (ФГЖ)',
@@ -304,6 +303,7 @@ $messages = array(
 'missingarticle-rev' => '(жуьре#: $1)',
 'internalerror' => 'КЪенепатан гъалатI',
 'internalerror_info' => 'КЪенепатан гъалатI $1',
+'filecopyerror' => 'Kopi aqudiz jezach fail "$1"  "$2" - diz.',
 'filerenameerror' => '«$1» файл  «$2» -з тIвар эхцигиз жезвач..',
 'badarticleerror' => 'И ччина и кар кьилиз акъудиз мумкин ттуш.',
 'cannotdelete-title' => ' "$1" ччин алудиз жезвач',
@@ -421,8 +421,8 @@ $messages = array(
 <span class="plainlinks"> [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} журналрин талукь тир кхьей затIар жугъуриз],
 ва я [{{fullurl:{{FULLPAGENAME}}|action=edit}} и тlвар алай ччин туькIуьриз жеда] </span>.',
 'noarticletext-nopermission' => 'Исятда и  ччина са текстни авач.
-Квевай [[Special:Search/{{PAGENAME}}| и тlвар алай ччин]] муькуь ччинра жугъуриз ва я
-<span class="plainlinks"> [{{fullurl: {{# Special:Log}} | page = {{FULLPAGENAMEE}}}} журналрин талукь тир кхьей затIар жугъуриз] жеда.',
+Квевай [[Special:Search/{{PAGENAME}}| и тӀвар алай ччин]] муькуь ччинра жугъуриз ва я
+<span class="plainlinks"> [{{fullurl: {{# Special:Log}} | page = {{FULLPAGENAMEE}}}} журналрин талукь тир кхьей затӀар жугъуриз] жеда.',
 'blocked-notice-logextract' => 'И уртах алайчIава блокарнава.
 Агъадихъ блокарунин журналдикай эхиримжи кхьинар къалурнава:',
 'previewnote' => "'''Рикlел хуьх хьи, им анжах сифтедин килигун я.'''  
@@ -523,7 +523,7 @@ $messages = array(
 'revertmerge' => 'Ччара авун',
 
 # Diffs
-'history-title' => '$1  -  масакIавилерин тарих',
+'history-title' => 'Masak\'avilerin q\'isa "$1"',
 'lineno' => 'ЦIар $1:',
 'compareselectedversions' => 'Хкягъай жуьреяр гекъигун',
 'editundo' => 'гьич авун',
@@ -567,8 +567,6 @@ $messages = array(
 'search-interwiki-caption' => 'Мукьва проект',
 'search-interwiki-default' => '$1(жавабар)',
 'search-interwiki-more' => '(мадни)',
-'search-mwsuggest-enabled' => 'меслятар галаз',
-'search-mwsuggest-disabled' => 'меслятар галачиз',
 'search-relatedarticle' => 'Галкlанавай',
 'searchrelated' => 'Галкlанавай',
 'searchall' => 'вири',
@@ -595,7 +593,7 @@ $messages = array(
 
 # Preferences page
 'preferences' => 'Туькlуьрун',
-'mypreferences' => 'Зи низамарунар',
+'mypreferences' => 'Zi tïķïrunar',
 'prefs-edits' => 'Дьузар хъувунрин кьадар',
 'prefsnologin' => 'Куьне гьахьнавач',
 'changepassword' => 'Парол дегишарун',
@@ -954,9 +952,6 @@ $messages = array(
 'watching' => 'Килигун...',
 'unwatching' => 'Амма клигнай',
 
-'changed' => 'дегишнава',
-'created' => 'туькIуьрнава',
-
 # Delete
 'deletepage' => 'Къакъудун хъувун',
 'confirm' => 'Тестикьун',
@@ -1057,7 +1052,7 @@ $messages = array(
 'whatlinkshere-hideredirs' => '$1 рахкъурунар',
 'whatlinkshere-hidetrans' => '$1 кутунар',
 'whatlinkshere-hidelinks' => '$1 элячlунар',
-'whatlinkshere-hideimages' => '$1 шикилриз элячIунар',
+'whatlinkshere-hideimages' => '$1 шикилриз элячӀунар',
 'whatlinkshere-filters' => 'Куьзунагар',
 
 # Block/unblock

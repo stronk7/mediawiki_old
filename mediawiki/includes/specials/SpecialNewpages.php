@@ -164,8 +164,6 @@ class SpecialNewpages extends IncludableSpecialPage {
 	}
 
 	protected function filterLinks() {
-		global $wgGroupPermissions;
-
 		// show/hide links
 		$showhide = array( $this->msg( 'show' )->escaped(), $this->msg( 'hide' )->escaped() );
 
@@ -181,8 +179,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 		}
 
 		// Disable some if needed
-		# @todo FIXME: Throws E_NOTICEs if not set; and doesn't obey hooks etc.
-		if ( $wgGroupPermissions['*']['createpage'] !== true ) {
+		if ( !User::groupHasPermission( '*', 'createpage' ) ) {
 			unset( $filters['hideliu'] );
 		}
 		if ( !$this->getUser()->useNPPatrol() ) {
@@ -328,12 +325,13 @@ class SpecialNewpages extends IncludableSpecialPage {
 			$query['rcid'] = $result->rc_id;
 		}
 
-		$plink = Linker::linkKnown(
+		// Linker::linkKnown() uses 'known' and 'noclasses' options. This breaks the colouration for stubs.
+		$plink = Linker::link(
 			$title,
 			null,
 			array( 'class' => 'mw-newpages-pagename' ),
 			$query,
-			array( 'known' ) // Set explicitly to avoid the default of 'known','noclasses'. This breaks the colouration for stubs
+			array( 'known' )
 		);
 		$histLink = Linker::linkKnown(
 			$title,
@@ -459,11 +457,12 @@ class SpecialNewpages extends IncludableSpecialPage {
 	protected function feedItemDesc( $row ) {
 		$revision = Revision::newFromId( $row->rev_id );
 		if( $revision ) {
+			//XXX: include content model/type in feed item?
 			return '<p>' . htmlspecialchars( $revision->getUserText() ) .
 				$this->msg( 'colon-separator' )->inContentLanguage()->escaped() .
 				htmlspecialchars( FeedItem::stripComment( $revision->getComment() ) ) .
 				"</p>\n<hr />\n<div>" .
-				nl2br( htmlspecialchars( $revision->getText() ) ) . "</div>";
+				nl2br( htmlspecialchars( $revision->getContent()->serialize() ) ) . "</div>";
 		}
 		return '';
 	}
@@ -488,7 +487,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 	}
 
 	function getQueryInfo() {
-		global $wgEnableNewpagesUserFilter, $wgGroupPermissions;
+		global $wgEnableNewpagesUserFilter;
 		$conds = array();
 		$conds['rc_new'] = 1;
 
@@ -510,7 +509,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 			$conds['rc_user_text'] = $user->getText();
 			$rcIndexes = 'rc_user_text';
 		# If anons cannot make new pages, don't "exclude logged in users"!
-		} elseif( $wgGroupPermissions['*']['createpage'] && $this->opts->getValue( 'hideliu' ) ) {
+		} elseif( User::groupHasPermission( '*', 'createpage' ) && $this->opts->getValue( 'hideliu' ) ) {
 			$conds['rc_user'] = 0;
 		}
 		# If this user cannot see patrolled edits or they are off, don't do dumb queries!

@@ -126,7 +126,6 @@ $messages = array(
 'qbfind' => 'დოგორი',
 'qbedit' => 'რედაქტირება',
 'qbpageoptions' => 'თე ხასჷლა',
-'qbpageinfo' => 'კონტექსტი',
 'qbmyoptions' => 'ჩქიმი ხასჷლეფი',
 'qbspecialpages' => 'გჷშაკერძაფილი ხასჷლეფი',
 'faq' => 'ბხშირი კითხვეფი',
@@ -431,8 +430,6 @@ $messages = array(
 'search-interwiki-caption' => 'ჯიმაია პროექტეფ',
 'search-interwiki-default' => 'მოღალირეფი $1-შე:',
 'search-interwiki-more' => '(უმოს)',
-'search-mwsuggest-enabled' => 'ელაჩამეფით',
-'search-mwsuggest-disabled' => 'ელაჩამეფიშ უმუშოთ',
 'searchrelated' => 'მათანგეფ',
 'searchall' => 'არძო',
 'showingresultsheader' => "{{PLURAL:$5|მოღალუ '''$1''' '''$3'''-შე|მოღალუეფ '''$1 - $2''' '''$3'''-შე}} '''$4'''-შო",
@@ -924,5 +921,8 @@ $messages = array(
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|ხინტკეფიშ]] ტკიბირი:',
+
+# Search suggestions
+'searchsuggest-search' => 'გორუა',
 
 );

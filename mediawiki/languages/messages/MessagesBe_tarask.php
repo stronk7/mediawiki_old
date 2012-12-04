@@ -1,5 +1,5 @@
 <?php
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -19,142 +19,7 @@
  * @author Тест
  */
 
-$bookstoreList = array(
-	'OZ.by' => 'http://oz.by/search.phtml?what=books&isbn=$1',
-	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
-);
-
-$datePreferences = array(
-	'default',
-	'dmy',
-	'ISO 8601',
-);
-
-$defaultDateFormat = 'dmy';
-
-$dateFormats = array(
-	'dmy time' => 'H:i',
-	'dmy date' => 'j xg Y',
-	'dmy both' => 'H:i, j xg Y',
-);
-
-$magicWords = array(
-	'redirect'                  => array( '0', '#перанакіраваньне', '#REDIRECT' ),
-	'notoc'                     => array( '0', '__БЯЗЬ_ЗЬМЕСТУ__', '__NOTOC__' ),
-	'nogallery'                 => array( '0', '__БЕЗ_ГАЛЕРЭІ__', '__NOGALLERY__' ),
-	'forcetoc'                  => array( '0', '__ЗЬМЕСТ_ПРЫМУСАМ__', '__FORCETOC__' ),
-	'toc'                       => array( '0', '__ЗЬМЕСТ__', '__TOC__' ),
-	'noeditsection'             => array( '0', '__БЕЗ_РЭДАГАВАНЬНЯ_СЭКЦЫІ__', '__NOEDITSECTION__' ),
-	'currentmonth'              => array( '1', 'БЯГУЧЫ_МЕСЯЦ', 'CURRENTMONTH', 'CURRENTMONTH2' ),
-	'currentmonthname'          => array( '1', 'НАЗВА_БЯГУЧАГА_МЕСЯЦА', 'CURRENTMONTHNAME' ),
-	'currentmonthnamegen'       => array( '1', 'НАЗВА_БЯГУЧАГА_МЕСЯЦА_Ў_РОДНЫМ_СКЛОНЕ', 'CURRENTMONTHNAMEGEN' ),
-	'currentmonthabbrev'        => array( '1', 'СКАРОЧАНАЯ_НАЗВА_БЯГУЧАГА_МЕСЯЦА', 'CURRENTMONTHABBREV' ),
-	'currentday'                => array( '1', 'БЯГУЧЫ_ДЗЕНЬ', 'CURRENTDAY' ),
-	'currentday2'               => array( '1', 'БЯГУЧЫ_ДЗЕНЬ_2', 'CURRENTDAY2' ),
-	'currentdayname'            => array( '1', 'НАЗВА_БЯГУЧАГА_ДНЯ', 'CURRENTDAYNAME' ),
-	'currentyear'               => array( '1', 'БЯГУЧЫ_ГОД', 'CURRENTYEAR' ),
-	'currenttime'               => array( '1', 'БЯГУЧЫ_ЧАС', 'CURRENTTIME' ),
-	'currenthour'               => array( '1', 'БЯГУЧАЯ_ГАДЗІНА', 'CURRENTHOUR' ),
-	'localmonth'                => array( '1', 'ЛЯКАЛЬНЫ_МЕСЯЦ', 'LOCALMONTH', 'LOCALMONTH2' ),
-	'localmonthname'            => array( '1', 'НАЗВА_ЛЯКАЛЬНАГА_МЕСЯЦА', 'LOCALMONTHNAME' ),
-	'localmonthnamegen'         => array( '1', 'НАЗВА_ЛЯКАЛЬНАГА_МЕСЯЦА_Ў_РОДНЫМ_СКЛОНЕ', 'LOCALMONTHNAMEGEN' ),
-	'localmonthabbrev'          => array( '1', 'СКАРОЧАНАЯ_НАЗВА_ЛЯКАЛЬНАГА_МЕСЯЦА', 'LOCALMONTHABBREV' ),
-	'localday'                  => array( '1', 'ЛЯКАЛЬНЫ_ДЗЕНЬ', 'LOCALDAY' ),
-	'localday2'                 => array( '1', 'ЛЯКАЛЬНЫ_ДЗЕНЬ_2', 'LOCALDAY2' ),
-	'localdayname'              => array( '1', 'НАЗВА_ЛЯКАЛЬНАГА_ДНЯ', 'LOCALDAYNAME' ),
-	'localyear'                 => array( '1', 'ЛЯКАЛЬНЫ_ГОД', 'LOCALYEAR' ),
-	'localtime'                 => array( '1', 'ЛЯКАЛЬНЫ_ЧАС', 'LOCALTIME' ),
-	'localhour'                 => array( '1', 'ЛЯКАЛЬНАЯ_ГАДЗІНА', 'LOCALHOUR' ),
-	'numberofpages'             => array( '1', 'КОЛЬКАСЬЦЬ_СТАРОНАК', 'NUMBEROFPAGES' ),
-	'numberofarticles'          => array( '1', 'КОЛЬКАСЬЦЬ_АРТЫКУЛАЎ', 'NUMBEROFARTICLES' ),
-	'numberoffiles'             => array( '1', 'КОЛЬКАСЬЦЬ_ФАЙЛАЎ', 'NUMBEROFFILES' ),
-	'numberofusers'             => array( '1', 'КОЛЬКАСЬЦЬ_УДЗЕЛЬНІКАЎ', 'NUMBEROFUSERS' ),
-	'numberofactiveusers'       => array( '1', 'КОЛЬКАСЬЦЬ_АКТЫЎНЫХ_УДЗЕЛЬНІКАЎ', 'NUMBEROFACTIVEUSERS' ),
-	'numberofedits'             => array( '1', 'КОЛЬКАСЬЦЬ_РЭДАГАВАНЬНЯЎ', 'NUMBEROFEDITS' ),
-	'numberofviews'             => array( '1', 'КОЛЬКАСЬЦЬ_ПРАГЛЯДАЎ', 'NUMBEROFVIEWS' ),
-	'pagename'                  => array( '1', 'НАЗВА_СТАРОНКІ', 'PAGENAME' ),
-	'pagenamee'                 => array( '1', 'НАЗВА_СТАРОНКІ_2', 'PAGENAMEE' ),
-	'namespace'                 => array( '1', 'ПРАСТОРА_НАЗВАЎ', 'NAMESPACE' ),
-	'namespacee'                => array( '1', 'ПРАСТОРА_НАЗВАЎ_2', 'NAMESPACEE' ),
-	'talkspace'                 => array( '1', 'ПРАСТОРА_НАЗВАЎ_АБМЕРКАВАНЬНЯ', 'TALKSPACE' ),
-	'talkspacee'                => array( '1', 'ПРАСТОРА_НАЗВАЎ_АБМЕРКАВАНЬНЯ_2', 'TALKSPACEE' ),
-	'subjectspace'              => array( '1', 'ПРАСТОРА_НАЗВАЎ_ПРАДМЕТУ', 'ПРАСТОРА_НАЗВАЎ_АРТЫКУЛА', 'SUBJECTSPACE', 'ARTICLESPACE' ),
-	'subjectspacee'             => array( '1', 'ПРАСТОРА_НАЗВАЎ_ПРАДМЕТУ_2', 'ПРАСТОРА_НАЗВАЎ_АРТЫКУЛА_2', 'SUBJECTSPACEE', 'ARTICLESPACEE' ),
-	'fullpagename'              => array( '1', 'ПОЎНАЯ_НАЗВА_СТАРОНКІ', 'FULLPAGENAME' ),
-	'fullpagenamee'             => array( '1', 'ПОЎНАЯ_НАЗВА_СТАРОНКІ_2', 'FULLPAGENAMEE' ),
-	'subpagename'               => array( '1', 'НАЗВА_ПАДСТАРОНКІ', 'SUBPAGENAME' ),
-	'subpagenamee'              => array( '1', 'НАЗВА_ПАДСТАРОНКІ_2', 'SUBPAGENAMEE' ),
-	'basepagename'              => array( '1', 'НАЗВА_БАЗАВАЙ_СТАРОНКІ', 'BASEPAGENAME' ),
-	'basepagenamee'             => array( '1', 'НАЗВА_БАЗАВАЙ_СТАРОНКІ_2', 'BASEPAGENAMEE' ),
-	'talkpagename'              => array( '1', 'НАЗВА_СТАРОНКІ_АБМЕРКАВАНЬНЯ', 'TALKPAGENAME' ),
-	'talkpagenamee'             => array( '1', 'НАЗВА_СТАРОНКІ_АБМЕРКАВАНЬНЯ_2', 'TALKPAGENAMEE' ),
-	'subjectpagename'           => array( '1', 'НАЗВА_СТАРОНКІ_ПРАДМЕТУ', 'НАЗВА_СТАРОНКІ_АРТЫКУЛА', 'SUBJECTPAGENAME', 'ARTICLEPAGENAME' ),
-	'subjectpagenamee'          => array( '1', 'НАЗВА_СТАРОНКІ_ПРАДМЕТУ_2', 'НАЗВА_СТАРОНКІ_АРТЫКУЛА_2', 'SUBJECTPAGENAMEE', 'ARTICLEPAGENAMEE' ),
-	'msg'                       => array( '0', 'ПАВЕДАМЛЕНЬНЕ:', 'MSG:' ),
-	'subst'                     => array( '0', 'ПАДСТАНОЎКА:', 'SUBST:' ),
-	'msgnw'                     => array( '0', 'ПАВЕДАМЛЕНЬНЕ_БЯЗЬ_ВІКІ:', 'MSGNW:' ),
-	'img_thumbnail'             => array( '1', 'значак', 'міні', 'thumbnail', 'thumb' ),
-	'img_manualthumb'           => array( '1', 'значак=$1', 'міні=$1', 'thumbnail=$1', 'thumb=$1' ),
-	'img_right'                 => array( '1', 'справа', 'right' ),
-	'img_left'                  => array( '1', 'зьлева', 'left' ),
-	'img_none'                  => array( '1', 'няма', 'none' ),
-	'img_width'                 => array( '1', '$1пкс', '$1px' ),
-	'img_center'                => array( '1', 'цэнтар', 'center', 'centre' ),
-	'img_framed'                => array( '1', 'рамка', 'framed', 'enframed', 'frame' ),
-	'img_page'                  => array( '1', 'старонка=$1', 'старонка $1', 'page=$1', 'page $1' ),
-	'img_top'                   => array( '1', 'зьверху', 'top' ),
-	'img_middle'                => array( '1', 'пасярэдзіне', 'middle' ),
-	'img_bottom'                => array( '1', 'зьнізу', 'bottom' ),
-	'img_link'                  => array( '1', 'спасылка=$1', 'link=$1' ),
-	'sitename'                  => array( '1', 'НАЗВА_САЙТУ', 'SITENAME' ),
-	'ns'                        => array( '0', 'ПН:', 'NS:' ),
-	'localurl'                  => array( '0', 'ЛЯКАЛЬНЫ_АДРАС:', 'LOCALURL:' ),
-	'localurle'                 => array( '0', 'ЛЯКАЛЬНЫ_АДРАС_2:', 'LOCALURLE:' ),
-	'server'                    => array( '0', 'СЭРВЭР', 'SERVER' ),
-	'servername'                => array( '0', 'НАЗВА_СЭРВЭРА', 'SERVERNAME' ),
-	'scriptpath'                => array( '0', 'ШЛЯХ_ДА_СКРЫПТА', 'SCRIPTPATH' ),
-	'grammar'                   => array( '0', 'ГРАМАТЫКА:', 'GRAMMAR:' ),
-	'gender'                    => array( '0', 'ПОЛ:', 'GENDER:' ),
-	'notitleconvert'            => array( '0', '__НЕ_КАНВЭРТАВАЦЬ_НАЗВУ__', '__NOTITLECONVERT__', '__NOTC__' ),
-	'nocontentconvert'          => array( '0', '__НЕ_КАНВЭРТАВАЦЬ_ТЭКСТ__', '__NOCONTENTCONVERT__', '__NOCC__' ),
-	'currentweek'               => array( '1', 'БЯГУЧЫ_ТЫДЗЕНЬ', 'CURRENTWEEK' ),
-	'currentdow'                => array( '1', 'БЯГУЧЫ_ДЗЕНЬ_ТЫДНЯ', 'CURRENTDOW' ),
-	'localweek'                 => array( '1', 'ЛЯКАЛЬНЫ_ТЫДЗЕНЬ', 'LOCALWEEK' ),
-	'localdow'                  => array( '1', 'ЛЯКАЛЬНЫ_ДЗЕНЬ_ТЫДНЯ', 'LOCALDOW' ),
-	'revisionid'                => array( '1', 'ID_ВЭРСІІ', 'REVISIONID' ),
-	'revisionday'               => array( '1', 'ДЗЕНЬ_ВЭРСІІ', 'REVISIONDAY' ),
-	'revisionday2'              => array( '1', 'ДЗЕНЬ_ВЭРСІІ_2', 'REVISIONDAY2' ),
-	'revisionmonth'             => array( '1', 'МЕСЯЦ_ВЭРСІІ', 'REVISIONMONTH' ),
-	'revisionyear'              => array( '1', 'ГОД_ВЭРСІІ', 'REVISIONYEAR' ),
-	'revisiontimestamp'         => array( '1', 'МОМАНТ_ЧАСУ_ВЭРСІІ', 'REVISIONTIMESTAMP' ),
-	'plural'                    => array( '0', 'МНОЖНЫ_ЛІК:', 'PLURAL:' ),
-	'fullurl'                   => array( '0', 'ПОЎНЫ_АДРАС:', 'FULLURL:' ),
-	'fullurle'                  => array( '0', 'ПОЎНЫ_АДРАС_2:', 'FULLURLE:' ),
-	'lcfirst'                   => array( '0', 'ПЕРШАЯ_ЛІТАРА_МАЛАЯ:', 'LCFIRST:' ),
-	'ucfirst'                   => array( '0', 'ПЕРШАЯ_ЛІТАРА_ВЯЛІКАЯ:', 'UCFIRST:' ),
-	'lc'                        => array( '0', 'МАЛЫМІ_ЛІТАРАМІ:', 'LC:' ),
-	'uc'                        => array( '0', 'ВЯЛІКІМІ_ЛІТАРАМІ:', 'UC:' ),
-	'raw'                       => array( '0', 'НЕАПРАЦАВАНЫ:', 'RAW:' ),
-	'displaytitle'              => array( '1', 'ПАКАЗВАЦЬ_НАЗВУ', 'DISPLAYTITLE' ),
-	'rawsuffix'                 => array( '1', 'Н', 'R' ),
-	'newsectionlink'            => array( '1', '__СПАСЫЛКА_НА_НОВУЮ_СЭКЦЫЮ__', '__NEWSECTIONLINK__' ),
-	'currentversion'            => array( '1', 'БЯГУЧАЯ_ВЭРСІЯ', 'CURRENTVERSION' ),
-	'currenttimestamp'          => array( '1', 'МОМАНТ_ЧАСУ', 'CURRENTTIMESTAMP' ),
-	'localtimestamp'            => array( '1', 'ЛЯКАЛЬНЫ_МОМАНТ_ЧАСУ', 'LOCALTIMESTAMP' ),
-	'directionmark'             => array( '1', 'СЫМБАЛЬ_НАПРАМКУ_ПІСЬМА', 'DIRECTIONMARK', 'DIRMARK' ),
-	'language'                  => array( '0', '#МОВА:', '#LANGUAGE:' ),
-	'contentlanguage'           => array( '1', 'МОВА_ЗЬМЕСТУ', 'CONTENTLANGUAGE', 'CONTENTLANG' ),
-	'pagesinnamespace'          => array( '1', 'КОЛЬКАСЬЦЬ_СТАРОНАК_У_ПРАСТОРЫ_НАЗВАЎ:', 'PAGESINNAMESPACE:', 'PAGESINNS:' ),
-	'numberofadmins'            => array( '1', 'КОЛЬКАСЬЦЬ_АДМІНІСТРАТАРАЎ', 'NUMBEROFADMINS' ),
-	'formatnum'                 => array( '0', 'ФАРМАТАВАЦЬ_ЛІК', 'FORMATNUM' ),
-	'defaultsort'               => array( '1', 'САРТЫРОЎКА_ПА_ЗМОЎЧВАНЬНІ:', 'КЛЮЧ_САРТЫРОЎКІ_ПА_ЗМОЎЧВАНЬНІ:', 'САРТЫРОЎКА_Ў_КАТЭГОРЫІ_ПА_ЗМОЎЧВАНЬНІ:', 'DEFAULTSORT:', 'DEFAULTSORTKEY:', 'DEFAULTCATEGORYSORT:' ),
-	'filepath'                  => array( '0', 'ШЛЯХ_ДА_ФАЙЛА:', 'FILEPATH:' ),
-	'tag'                       => array( '0', 'тэг', 'tag' ),
-	'hiddencat'                 => array( '1', '__СХАВАЦЬ_КАТЭГОРЫЮ__', '__HIDDENCAT__' ),
-	'pagesincategory'           => array( '1', 'КОЛЬКАСЬЦЬ_СТАРОНАК_У_КАТЭГОРЫІ', 'PAGESINCATEGORY', 'PAGESINCAT' ),
-	'pagesize'                  => array( '1', 'ПАМЕР_СТАРОНКІ', 'PAGESIZE' ),
-	'staticredirect'            => array( '1', '__СТАТЫЧНАЕ_ПЕРАНАКІРАВАНЬНЕ__', '__STATICREDIRECT__' ),
-);
+$fallback = 'be';
 
 $namespaceNames = array(
 	NS_MEDIA            => 'Мэдыя',
@@ -176,11 +41,14 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
-	'Удзельніца' => NS_USER,
-	'Гутаркі ўдзельніцы' => NS_USER_TALK,
-	'Абмеркаваньне_$1' => NS_PROJECT_TALK,
+	'Абмеркаваньне_$1' => NS_PROJECT_TALK, // legacy support for old non-inflected links
 	'Выява' => NS_FILE,
-	'Абмеркаваньне выявы' => NS_FILE_TALK,
+	'Абмеркаваньне_выявы' => NS_FILE_TALK,
+);
+
+$namespaceGenderAliases = array(
+	NS_USER      => array( 'male' => 'Удзельнік', 'female' => 'Удзельніца' ),
+	NS_USER_TALK => array( 'male' => 'Гутаркі_ўдзельніка', 'female' => 'Гутаркі_ўдзельніцы' ),
 );
 
 $specialPageAliases = array(
@@ -240,6 +108,143 @@ $specialPageAliases = array(
 	'Whatlinkshere'             => array( 'Спасылкі_на_старонку' ),
 );
 
+$magicWords = array(
+	'redirect'                  => array( '0', '#перанакіраваньне', '#REDIRECT' ),
+	'notoc'                     => array( '0', '__БЯЗЬ_ЗЬМЕСТУ__', '__NOTOC__' ),
+	'nogallery'                 => array( '0', '__БЕЗ_ГАЛЕРЭІ__', '__NOGALLERY__' ),
+	'forcetoc'                  => array( '0', '__ЗЬМЕСТ_ПРЫМУСАМ__', '__FORCETOC__' ),
+	'toc'                       => array( '0', '__ЗЬМЕСТ__', '__TOC__' ),
+	'noeditsection'             => array( '0', '__БЕЗ_РЭДАГАВАНЬНЯ_СЭКЦЫІ__', '__NOEDITSECTION__' ),
+	'currentmonth'              => array( '1', 'БЯГУЧЫ_МЕСЯЦ', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonthname'          => array( '1', 'НАЗВА_БЯГУЧАГА_МЕСЯЦА', 'CURRENTMONTHNAME' ),
+	'currentmonthnamegen'       => array( '1', 'НАЗВА_БЯГУЧАГА_МЕСЯЦА_Ў_РОДНЫМ_СКЛОНЕ', 'CURRENTMONTHNAMEGEN' ),
+	'currentmonthabbrev'        => array( '1', 'СКАРОЧАНАЯ_НАЗВА_БЯГУЧАГА_МЕСЯЦА', 'CURRENTMONTHABBREV' ),
+	'currentday'                => array( '1', 'БЯГУЧЫ_ДЗЕНЬ', 'CURRENTDAY' ),
+	'currentday2'               => array( '1', 'БЯГУЧЫ_ДЗЕНЬ_2', 'CURRENTDAY2' ),
+	'currentdayname'            => array( '1', 'НАЗВА_БЯГУЧАГА_ДНЯ', 'CURRENTDAYNAME' ),
+	'currentyear'               => array( '1', 'БЯГУЧЫ_ГОД', 'CURRENTYEAR' ),
+	'currenttime'               => array( '1', 'БЯГУЧЫ_ЧАС', 'CURRENTTIME' ),
+	'currenthour'               => array( '1', 'БЯГУЧАЯ_ГАДЗІНА', 'CURRENTHOUR' ),
+	'localmonth'                => array( '1', 'ЛЯКАЛЬНЫ_МЕСЯЦ', 'LOCALMONTH', 'LOCALMONTH2' ),
+	'localmonthname'            => array( '1', 'НАЗВА_ЛЯКАЛЬНАГА_МЕСЯЦА', 'LOCALMONTHNAME' ),
+	'localmonthnamegen'         => array( '1', 'НАЗВА_ЛЯКАЛЬНАГА_МЕСЯЦА_Ў_РОДНЫМ_СКЛОНЕ', 'LOCALMONTHNAMEGEN' ),
+	'localmonthabbrev'          => array( '1', 'СКАРОЧАНАЯ_НАЗВА_ЛЯКАЛЬНАГА_МЕСЯЦА', 'LOCALMONTHABBREV' ),
+	'localday'                  => array( '1', 'ЛЯКАЛЬНЫ_ДЗЕНЬ', 'LOCALDAY' ),
+	'localday2'                 => array( '1', 'ЛЯКАЛЬНЫ_ДЗЕНЬ_2', 'LOCALDAY2' ),
+	'localdayname'              => array( '1', 'НАЗВА_ЛЯКАЛЬНАГА_ДНЯ', 'LOCALDAYNAME' ),
+	'localyear'                 => array( '1', 'ЛЯКАЛЬНЫ_ГОД', 'LOCALYEAR' ),
+	'localtime'                 => array( '1', 'ЛЯКАЛЬНЫ_ЧАС', 'LOCALTIME' ),
+	'localhour'                 => array( '1', 'ЛЯКАЛЬНАЯ_ГАДЗІНА', 'LOCALHOUR' ),
+	'numberofpages'             => array( '1', 'КОЛЬКАСЬЦЬ_СТАРОНАК', 'NUMBEROFPAGES' ),
+	'numberofarticles'          => array( '1', 'КОЛЬКАСЬЦЬ_АРТЫКУЛАЎ', 'NUMBEROFARTICLES' ),
+	'numberoffiles'             => array( '1', 'КОЛЬКАСЬЦЬ_ФАЙЛАЎ', 'NUMBEROFFILES' ),
+	'numberofusers'             => array( '1', 'КОЛЬКАСЬЦЬ_УДЗЕЛЬНІКАЎ', 'NUMBEROFUSERS' ),
+	'numberofactiveusers'       => array( '1', 'КОЛЬКАСЬЦЬ_АКТЫЎНЫХ_УДЗЕЛЬНІКАЎ', 'NUMBEROFACTIVEUSERS' ),
+	'numberofedits'             => array( '1', 'КОЛЬКАСЬЦЬ_РЭДАГАВАНЬНЯЎ', 'NUMBEROFEDITS' ),
+	'numberofviews'             => array( '1', 'КОЛЬКАСЬЦЬ_ПРАГЛЯДАЎ', 'NUMBEROFVIEWS' ),
+	'pagename'                  => array( '1', 'НАЗВА_СТАРОНКІ', 'PAGENAME' ),
+	'pagenamee'                 => array( '1', 'НАЗВА_СТАРОНКІ_2', 'PAGENAMEE' ),
+	'namespace'                 => array( '1', 'ПРАСТОРА_НАЗВАЎ', 'NAMESPACE' ),
+	'namespacee'                => array( '1', 'ПРАСТОРА_НАЗВАЎ_2', 'NAMESPACEE' ),
+	'talkspace'                 => array( '1', 'ПРАСТОРА_НАЗВАЎ_АБМЕРКАВАНЬНЯ', 'TALKSPACE' ),
+	'talkspacee'                => array( '1', 'ПРАСТОРА_НАЗВАЎ_АБМЕРКАВАНЬНЯ_2', 'TALKSPACEE' ),
+	'subjectspace'              => array( '1', 'ПРАСТОРА_НАЗВАЎ_ПРАДМЕТУ', 'ПРАСТОРА_НАЗВАЎ_АРТЫКУЛА', 'SUBJECTSPACE', 'ARTICLESPACE' ),
+	'subjectspacee'             => array( '1', 'ПРАСТОРА_НАЗВАЎ_ПРАДМЕТУ_2', 'ПРАСТОРА_НАЗВАЎ_АРТЫКУЛА_2', 'SUBJECTSPACEE', 'ARTICLESPACEE' ),
+	'fullpagename'              => array( '1', 'ПОЎНАЯ_НАЗВА_СТАРОНКІ', 'FULLPAGENAME' ),
+	'fullpagenamee'             => array( '1', 'ПОЎНАЯ_НАЗВА_СТАРОНКІ_2', 'FULLPAGENAMEE' ),
+	'subpagename'               => array( '1', 'НАЗВА_ПАДСТАРОНКІ', 'SUBPAGENAME' ),
+	'subpagenamee'              => array( '1', 'НАЗВА_ПАДСТАРОНКІ_2', 'SUBPAGENAMEE' ),
+	'basepagename'              => array( '1', 'НАЗВА_БАЗАВАЙ_СТАРОНКІ', 'BASEPAGENAME' ),
+	'basepagenamee'             => array( '1', 'НАЗВА_БАЗАВАЙ_СТАРОНКІ_2', 'BASEPAGENAMEE' ),
+	'talkpagename'              => array( '1', 'НАЗВА_СТАРОНКІ_АБМЕРКАВАНЬНЯ', 'TALKPAGENAME' ),
+	'talkpagenamee'             => array( '1', 'НАЗВА_СТАРОНКІ_АБМЕРКАВАНЬНЯ_2', 'TALKPAGENAMEE' ),
+	'subjectpagename'           => array( '1', 'НАЗВА_СТАРОНКІ_ПРАДМЕТУ', 'НАЗВА_СТАРОНКІ_АРТЫКУЛА', 'SUBJECTPAGENAME', 'ARTICLEPAGENAME' ),
+	'subjectpagenamee'          => array( '1', 'НАЗВА_СТАРОНКІ_ПРАДМЕТУ_2', 'НАЗВА_СТАРОНКІ_АРТЫКУЛА_2', 'SUBJECTPAGENAMEE', 'ARTICLEPAGENAMEE' ),
+	'msg'                       => array( '0', 'ПАВЕДАМЛЕНЬНЕ:', 'MSG:' ),
+	'subst'                     => array( '0', 'ПАДСТАНОЎКА:', 'SUBST:' ),
+	'msgnw'                     => array( '0', 'ПАВЕДАМЛЕНЬНЕ_БЯЗЬ_ВІКІ:', 'MSGNW:' ),
+	'img_thumbnail'             => array( '1', 'значак', 'міні', 'мініяцюра', 'thumbnail', 'thumb' ),
+	'img_manualthumb'           => array( '1', 'значак=$1', 'міні=$1', 'мініяцюра=$1', 'thumbnail=$1', 'thumb=$1' ),
+	'img_right'                 => array( '1', 'справа', 'right' ),
+	'img_left'                  => array( '1', 'зьлева', 'злева', 'left' ),
+	'img_none'                  => array( '1', 'няма', 'none' ),
+	'img_width'                 => array( '1', '$1пкс', '$1px' ),
+	'img_center'                => array( '1', 'цэнтар', 'цэнтр', 'center', 'centre' ),
+	'img_framed'                => array( '1', 'рамка', 'безрамкі', 'framed', 'enframed', 'frame' ),
+	'img_page'                  => array( '1', 'старонка=$1', 'старонка $1', 'page=$1', 'page $1' ),
+	'img_top'                   => array( '1', 'зьверху', 'top' ),
+	'img_middle'                => array( '1', 'пасярэдзіне', 'middle' ),
+	'img_bottom'                => array( '1', 'зьнізу', 'bottom' ),
+	'img_link'                  => array( '1', 'спасылка=$1', 'link=$1' ),
+	'sitename'                  => array( '1', 'НАЗВА_САЙТУ', 'SITENAME' ),
+	'ns'                        => array( '0', 'ПН:', 'NS:' ),
+	'localurl'                  => array( '0', 'ЛЯКАЛЬНЫ_АДРАС:', 'LOCALURL:' ),
+	'localurle'                 => array( '0', 'ЛЯКАЛЬНЫ_АДРАС_2:', 'LOCALURLE:' ),
+	'server'                    => array( '0', 'СЭРВЭР', 'SERVER' ),
+	'servername'                => array( '0', 'НАЗВА_СЭРВЭРА', 'SERVERNAME' ),
+	'scriptpath'                => array( '0', 'ШЛЯХ_ДА_СКРЫПТА', 'SCRIPTPATH' ),
+	'grammar'                   => array( '0', 'ГРАМАТЫКА:', 'GRAMMAR:' ),
+	'gender'                    => array( '0', 'ПОЛ:', 'GENDER:' ),
+	'notitleconvert'            => array( '0', '__НЕ_КАНВЭРТАВАЦЬ_НАЗВУ__', '__NOTITLECONVERT__', '__NOTC__' ),
+	'nocontentconvert'          => array( '0', '__НЕ_КАНВЭРТАВАЦЬ_ТЭКСТ__', '__NOCONTENTCONVERT__', '__NOCC__' ),
+	'currentweek'               => array( '1', 'БЯГУЧЫ_ТЫДЗЕНЬ', 'CURRENTWEEK' ),
+	'currentdow'                => array( '1', 'БЯГУЧЫ_ДЗЕНЬ_ТЫДНЯ', 'CURRENTDOW' ),
+	'localweek'                 => array( '1', 'ЛЯКАЛЬНЫ_ТЫДЗЕНЬ', 'LOCALWEEK' ),
+	'localdow'                  => array( '1', 'ЛЯКАЛЬНЫ_ДЗЕНЬ_ТЫДНЯ', 'LOCALDOW' ),
+	'revisionid'                => array( '1', 'ID_ВЭРСІІ', 'REVISIONID' ),
+	'revisionday'               => array( '1', 'ДЗЕНЬ_ВЭРСІІ', 'REVISIONDAY' ),
+	'revisionday2'              => array( '1', 'ДЗЕНЬ_ВЭРСІІ_2', 'REVISIONDAY2' ),
+	'revisionmonth'             => array( '1', 'МЕСЯЦ_ВЭРСІІ', 'REVISIONMONTH' ),
+	'revisionyear'              => array( '1', 'ГОД_ВЭРСІІ', 'REVISIONYEAR' ),
+	'revisiontimestamp'         => array( '1', 'МОМАНТ_ЧАСУ_ВЭРСІІ', 'REVISIONTIMESTAMP' ),
+	'plural'                    => array( '0', 'МНОЖНЫ_ЛІК:', 'PLURAL:' ),
+	'fullurl'                   => array( '0', 'ПОЎНЫ_АДРАС:', 'FULLURL:' ),
+	'fullurle'                  => array( '0', 'ПОЎНЫ_АДРАС_2:', 'FULLURLE:' ),
+	'lcfirst'                   => array( '0', 'ПЕРШАЯ_ЛІТАРА_МАЛАЯ:', 'LCFIRST:' ),
+	'ucfirst'                   => array( '0', 'ПЕРШАЯ_ЛІТАРА_ВЯЛІКАЯ:', 'UCFIRST:' ),
+	'lc'                        => array( '0', 'МАЛЫМІ_ЛІТАРАМІ:', 'LC:' ),
+	'uc'                        => array( '0', 'ВЯЛІКІМІ_ЛІТАРАМІ:', 'UC:' ),
+	'raw'                       => array( '0', 'НЕАПРАЦАВАНЫ:', 'RAW:' ),
+	'displaytitle'              => array( '1', 'ПАКАЗВАЦЬ_НАЗВУ', 'DISPLAYTITLE' ),
+	'rawsuffix'                 => array( '1', 'Н', 'R' ),
+	'newsectionlink'            => array( '1', '__СПАСЫЛКА_НА_НОВУЮ_СЭКЦЫЮ__', '__NEWSECTIONLINK__' ),
+	'currentversion'            => array( '1', 'БЯГУЧАЯ_ВЭРСІЯ', 'CURRENTVERSION' ),
+	'currenttimestamp'          => array( '1', 'МОМАНТ_ЧАСУ', 'CURRENTTIMESTAMP' ),
+	'localtimestamp'            => array( '1', 'ЛЯКАЛЬНЫ_МОМАНТ_ЧАСУ', 'LOCALTIMESTAMP' ),
+	'directionmark'             => array( '1', 'СЫМБАЛЬ_НАПРАМКУ_ПІСЬМА', 'DIRECTIONMARK', 'DIRMARK' ),
+	'language'                  => array( '0', '#МОВА:', '#LANGUAGE:' ),
+	'contentlanguage'           => array( '1', 'МОВА_ЗЬМЕСТУ', 'CONTENTLANGUAGE', 'CONTENTLANG' ),
+	'pagesinnamespace'          => array( '1', 'КОЛЬКАСЬЦЬ_СТАРОНАК_У_ПРАСТОРЫ_НАЗВАЎ:', 'PAGESINNAMESPACE:', 'PAGESINNS:' ),
+	'numberofadmins'            => array( '1', 'КОЛЬКАСЬЦЬ_АДМІНІСТРАТАРАЎ', 'NUMBEROFADMINS' ),
+	'formatnum'                 => array( '0', 'ФАРМАТАВАЦЬ_ЛІК', 'FORMATNUM' ),
+	'defaultsort'               => array( '1', 'САРТЫРОЎКА_ПА_ЗМОЎЧВАНЬНІ:', 'КЛЮЧ_САРТЫРОЎКІ_ПА_ЗМОЎЧВАНЬНІ:', 'САРТЫРОЎКА_Ў_КАТЭГОРЫІ_ПА_ЗМОЎЧВАНЬНІ:', 'DEFAULTSORT:', 'DEFAULTSORTKEY:', 'DEFAULTCATEGORYSORT:' ),
+	'filepath'                  => array( '0', 'ШЛЯХ_ДА_ФАЙЛА:', 'FILEPATH:' ),
+	'tag'                       => array( '0', 'тэг', 'tag' ),
+	'hiddencat'                 => array( '1', '__СХАВАЦЬ_КАТЭГОРЫЮ__', '__HIDDENCAT__' ),
+	'pagesincategory'           => array( '1', 'КОЛЬКАСЬЦЬ_СТАРОНАК_У_КАТЭГОРЫІ', 'PAGESINCATEGORY', 'PAGESINCAT' ),
+	'pagesize'                  => array( '1', 'ПАМЕР_СТАРОНКІ', 'PAGESIZE' ),
+	'staticredirect'            => array( '1', '__СТАТЫЧНАЕ_ПЕРАНАКІРАВАНЬНЕ__', '__STATICREDIRECT__' ),
+);
+
+$bookstoreList = array(
+	'OZ.by' => 'http://oz.by/search.phtml?what=books&isbn=$1',
+	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
+);
+
+$datePreferences = array(
+	'default',
+	'dmy',
+	'ISO 8601',
+);
+
+$defaultDateFormat = 'dmy';
+
+$dateFormats = array(
+	'dmy time' => 'H:i',
+	'dmy date' => 'j xg Y',
+	'dmy both' => 'H:i, j xg Y',
+);
+
 $separatorTransformTable = array(
 	',' => "\xc2\xa0", # nbsp
 	'.' => ','
@@ -259,7 +264,7 @@ $messages = array(
 'tog-justify' => 'Выраўноўваць тэкст па шырыні старонкі',
 'tog-hideminor' => 'Хаваць дробныя зьмены ў сьпісе апошніх зьменаў',
 'tog-hidepatrolled' => 'Хаваць патруляваныя зьмены ў сьпісе апошніх зьменаў',
-'tog-newpageshidepatrolled' => 'Хаваць правераныя старонкі ў сьпісе новых старонак',
+'tog-newpageshidepatrolled' => 'Хаваць патруляваныя старонкі ў сьпісе новых старонак',
 'tog-extendwatchlist' => 'Пашырыць сьпіс назіраньня, каб ён паказваў усе зьмены, а ня толькі апошнія',
 'tog-usenewrc' => 'Групаваць зьмены старонкі ў сьпісах апошніх зьменаў і назіраньняў (патрабуе JavaScript)',
 'tog-numberheadings' => 'Аўтаматычная нумарацыя загалоўкаў',
@@ -267,11 +272,11 @@ $messages = array(
 'tog-editondblclick' => 'Рэдагаваць старонкі па падвойным пстрыку (JavaScript)',
 'tog-editsection' => 'Дазволіць рэдагаваньне асобных сэкцыяў па спасылках [рэдагаваць]',
 'tog-editsectiononrightclick' => 'Рэдагаваць сэкцыі па правым пстрыку на загалоўку (патрабуе JavaScript)',
-'tog-showtoc' => 'Паказваць зьмест (для старонак з колькасьцю сэкцый болей за 3)',
+'tog-showtoc' => 'Паказваць зьмест (для старонак з больш як 3 разьдзеламі)',
 'tog-rememberpassword' => 'Запомніць мяне ў гэтым браўзэры (ня больш за $1 {{PLURAL:$1|дзень|дні|дзён}})',
-'tog-watchcreations' => 'Дадаваць у мой сьпіс назіраньня створаныя мной старонкі і загружаныя мной файлы',
-'tog-watchdefault' => 'Дадаваць у мой сьпіс назіраньня старонкі і файлы якія я рэдагаваў',
-'tog-watchmoves' => 'Дадаваць у мой сьпіс назіраньня старонкі і файлы якія я пераносіў',
+'tog-watchcreations' => 'Дадаваць у мой сьпіс назіраньня створаныя мной старонкі і загружаныя файлы',
+'tog-watchdefault' => 'Дадаваць у мой сьпіс назіраньня старонкі і файлы, якія я рэдагаваў',
+'tog-watchmoves' => 'Дадаваць у мой сьпіс назіраньня перанесеныя мною старонкі і файлы',
 'tog-watchdeletion' => 'Дадаваць у мой сьпіс назіраньня старонкі і файлы, якія я выдаляю',
 'tog-minordefault' => 'Па змоўчаньні пазначаць усе зьмены дробнымі',
 'tog-previewontop' => 'Паказваць папярэдні прагляд старонкі над полем рэдагаваньня',
@@ -284,18 +289,18 @@ $messages = array(
 'tog-shownumberswatching' => 'Паказваць колькасьць назіральнікаў',
 'tog-oldsig' => 'Цяперашні подпіс:',
 'tog-fancysig' => 'Апрацоўваць подпіс як вікі-тэкст (без аўтаматычнай спасылкі)',
-'tog-externaleditor' => 'Выкарыстоўваць вонкавы рэдактар па змоўчваньні (толькі для адмыслоўцаў, патрэбуе спэцыяльных наладак на вашым кампутары. [//www.mediawiki.org/wiki/Manual:External_editors Падрабязнасьці.])',
-'tog-externaldiff' => 'Выкарыстоўваць вонкавую праграму параўнаньня вэрсіяў па змоўчваньні (толькі для адмыслоўцаў, патрэбуе спэцыяльных наладак на вашым кампутары. [//www.mediawiki.org/wiki/Manual:External_editors Падрабязнасьці.])',
+'tog-externaleditor' => 'Выкарыстоўваць вонкавы рэдактар па змоўчваньні (толькі для адмыслоўцаў, патрабуе спэцыяльных наладак на вашым кампутары. [//www.mediawiki.org/wiki/Manual:External_editors Падрабязнасьці.])',
+'tog-externaldiff' => 'Выкарыстоўваць вонкавую праграму параўнаньня вэрсіяў па змоўчваньні (толькі для адмыслоўцаў, патрабуе спэцыяльных наладак на вашым кампутары. [//www.mediawiki.org/wiki/Manual:External_editors Падрабязнасьці.])',
 'tog-showjumplinks' => 'Актываваць дапаможныя спасылкі «перайсьці да»',
 'tog-uselivepreview' => 'Выкарыстоўваць хуткі папярэдні прагляд (патрабуе JavaScript) (экспэрымэнтальна)',
 'tog-forceeditsummary' => 'Папярэджваць пра адсутнасьць кароткага апісаньня зьменаў',
 'tog-watchlisthideown' => 'Хаваць мае праўкі ў сьпісе назіраньня',
 'tog-watchlisthidebots' => 'Хаваць праўкі робатаў у сьпісе назіраньня',
 'tog-watchlisthideminor' => 'Хаваць дробныя праўкі ў сьпісе назіраньня',
-'tog-watchlisthideliu' => 'Хаваць праўкі зарэгістраваных удзельнікаў і ўдзельніц у сьпісе назіраньня',
+'tog-watchlisthideliu' => 'Хаваць праўкі зарэгістраваных удзельнікаў у сьпісе назіраньня',
 'tog-watchlisthideanons' => 'Хаваць праўкі ананімаў у сьпісе назіраньня',
 'tog-watchlisthidepatrolled' => 'Хаваць патруляваныя праўкі ў сьпісе назіраньня',
-'tog-ccmeonemails' => 'Дасылаць мне копіі лістоў, якія я дасылаю іншым удзельнікам і ўдзельніцам',
+'tog-ccmeonemails' => 'Дасылаць мне копіі лістоў, якія я дасылаю іншым удзельнікам',
 'tog-diffonly' => 'Не паказваць зьмест старонкі пад параўнаньнем зьменаў',
 'tog-showhiddencats' => 'Паказваць схаваныя катэгорыі',
 'tog-noconvertlink' => 'Забараніць канвэртацыю назваў спасылак',
@@ -303,12 +308,12 @@ $messages = array(
 
 'underline-always' => 'Заўсёды',
 'underline-never' => 'Ніколі',
-'underline-default' => 'Як у браўзэры',
+'underline-default' => 'Паводле браўзэра або афармленьня',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Стыль шрыфту ў полі рэдагаваньня:',
-'editfont-default' => 'Шрыфт браўзэра па змоўчваньні',
-'editfont-monospace' => 'Шрыфт з аднолькавай шырынёй сымбаляў',
+'editfont-default' => 'Паводле браўзэра',
+'editfont-monospace' => 'Роўнашырокі шрыфт',
 'editfont-sansserif' => 'Шрыфт без засечак',
 'editfont-serif' => 'Шрыфт з засечкамі',
 
@@ -351,18 +356,18 @@ $messages = array(
 'october-gen' => 'кастрычніка',
 'november-gen' => 'лістапада',
 'december-gen' => 'сьнежня',
-'jan' => '01',
-'feb' => '02',
-'mar' => '03',
-'apr' => '04',
-'may' => '05',
-'jun' => '06',
-'jul' => '07',
-'aug' => '08',
-'sep' => '09',
-'oct' => '10',
-'nov' => '11',
-'dec' => '12',
+'jan' => 'сту',
+'feb' => 'лют',
+'mar' => 'сак',
+'apr' => 'кра',
+'may' => 'тра',
+'jun' => 'чэр',
+'jul' => 'ліп',
+'aug' => 'жні',
+'sep' => 'вер',
+'oct' => 'кас',
+'nov' => 'ліс',
+'dec' => 'сьн',
 
 # Categories related messages
 'pagecategories' => '{{PLURAL:$1|Катэгорыя|Катэгорыі|Катэгорыі}}',
@@ -388,8 +393,8 @@ $messages = array(
 'newwindow' => '(адкрываецца ў новым акне)',
 'cancel' => 'Скасаваць',
 'moredotdotdot' => 'Далей…',
-'mypage' => 'Мая старонка',
-'mytalk' => 'Мае гутаркі',
+'mypage' => 'Старонка',
+'mytalk' => 'Гутаркі',
 'anontalk' => 'Гутаркі для гэтага IP-адрасу',
 'navigation' => 'Навігацыя',
 'and' => '&#32;і',
@@ -399,7 +404,6 @@ $messages = array(
 'qbbrowse' => 'Праглядзець',
 'qbedit' => 'Рэдагаваць',
 'qbpageoptions' => 'Гэтая старонка',
-'qbpageinfo' => 'Інфармацыя пра старонку',
 'qbmyoptions' => 'Мае старонкі',
 'qbspecialpages' => 'Спэцыяльныя старонкі',
 'faq' => 'Частыя пытаньні',
@@ -412,7 +416,7 @@ $messages = array(
 'vector-action-protect' => 'Абараніць',
 'vector-action-undelete' => 'Аднавіць',
 'vector-action-unprotect' => 'Зьмяніць абарону',
-'vector-simplesearch-preference' => 'Уключыць палепшаныя пошукавыя падказкі (толькі для афармленьня «Вэктар»)',
+'vector-simplesearch-preference' => 'Уключыць спрошчанае поле пошуку (толькі для афармленьня «Вэктар»)',
 'vector-view-create' => 'Стварыць',
 'vector-view-edit' => 'Рэдагаваць',
 'vector-view-history' => 'Паказаць гісторыю',
@@ -422,8 +426,9 @@ $messages = array(
 'namespaces' => 'Прасторы назваў',
 'variants' => 'Варыянты',
 
+'navigation-heading' => 'Навігацыйнае мэню',
 'errorpagetitle' => 'Памылка',
-'returnto' => 'Вярнуцца да старонкі $1.',
+'returnto' => 'Вярнуцца да старонкі «$1».',
 'tagline' => 'Зьвесткі з {{GRAMMAR:родны|{{SITENAME}}}}',
 'help' => 'Дапамога',
 'search' => 'Пошук',
@@ -511,7 +516,8 @@ $1',
 'badaccess-groups' => 'Запытанае Вамі дзеяньне дазволенае толькі ўдзельнікам {{PLURAL:$2|з групы|адной з групаў:}} $1.',
 
 'versionrequired' => 'Патрабуецца MediaWiki вэрсіі $1',
-'versionrequiredtext' => 'Для карыстаньня гэтай старонкай патрабуецца MediaWiki вэрсіі $1. Глядзіце [[Special:Version|інфармацыю пра вэрсію]].',
+'versionrequiredtext' => 'Для карыстаньня гэтай старонкай патрабуецца MediaWiki вэрсіі $1.
+Глядзіце [[Special:Version|інфармацыю пра вэрсію]].',
 
 'ok' => 'Добра',
 'pagetitle' => '$1 — {{SITENAME}}',
@@ -629,7 +635,7 @@ $1',
 'viewsource-title' => 'Прагляд крыніцы для $1',
 'actionthrottled' => 'Дзеяньне прытрыманае',
 'actionthrottledtext' => 'У межах барацьбы са спамам Вы абмежаваныя ў надта частым выкананьні гэтага дзеяньня за кароткі прамежак часу, і Вы перавысілі гэтае абмежаваньне. Калі ласка, паспрабуйце яшчэ раз празь некалькі хвілінаў.',
-'protectedpagetext' => 'Рэдагаваньне гэтай старонкі забароненае.',
+'protectedpagetext' => 'Гэтая старонка была абароненая для перадухіленьня зьменаў ці іншых дзеяньняў.',
 'viewsourcetext' => 'Вы можаце праглядаць і капіяваць крынічны тэкст гэтай старонкі:',
 'viewyourtext' => "Вы можаце праглядзець і скапіяваць крынічны тэкст '''вашых рэдагаваньняў''' на гэтую старонку:",
 'protectedinterface' => 'Гэтая старонка ўтрымлівае інтэрфэйснае паведамленьне праграмнага забесьпячэньня, і яе зьмена забаронена. Каб дадаць ці зьмяніць пераклад ва ўсіх праектах, зьвярніцеся на [//translatewiki.net/ translatewiki.net], праект для перакладу MediaWiki.',
@@ -661,10 +667,10 @@ $2',
 # Login and logout pages
 'logouttext' => "'''Вы выйшлі з сыстэмы.'''
 
-Вы можаце працягваць працу ў {{GRAMMAR:месны|{{SITENAME}}}} ананімна, альбо можаце [[Special:UserLogin|ўвайсьці ў сыстэму]] як той жа альбо іншы ўдзельнік.
+Вы можаце працягваць працу ў {{GRAMMAR:месны|{{SITENAME}}}} ананімна, альбо можаце <span class='plainlinks'>[$1 ўвайсьці ў сыстэму]</span> як той жа альбо іншы ўдзельнік.
 Некаторыя старонкі могуць паказвацца, быццам Вы ўсё яшчэ ў сыстэме. Каб гэтага пазьбегнуць, трэба ачысьціць кэш браўзэра.",
-'welcomecreation' => '== Вітаем, $1! ==
-Ваш рахунак быў створаны.
+'welcomeuser' => 'Вітаем, $1!',
+'welcomecreation-msg' => 'Ваш рахунак быў створаны.
 Не забудзьцеся зьмяніць Вашыя [[Special:Preferences|налады ў {{GRAMMAR:месны|{{SITENAME}}}}]].',
 'yourname' => 'Імя ўдзельніка:',
 'yourpassword' => 'Пароль:',
@@ -913,7 +919,7 @@ $2
 Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць гэтую назву]] ў іншых старонках, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць у адпаведных журналах падзеяў]
 альбо [{{fullurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} рэдагаваць гэтую старонку]</span>.',
 'noarticletext-nopermission' => 'Цяпер на гэтай старонцы тэкст адсутнічае.
-Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць назву гэтай старонкі]] на іншых старонках, альбо <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць зьвязаныя запісы ў журналах]</span>.',
+Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць назву гэтай старонкі]] на іншых старонках, альбо <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць зьвязаныя запісы ў журналах]</span>, але ў вас няма дазволу ствараць гэтую старонку.',
 'missing-revision' => 'Вэрсія старонкі №$1 з назвай «{{PAGENAME}}» не існуе.
 
 Звычайна гэта здараецца з-за перахода па састарэлай спасылцы на старонку, якая была выдаленая.
@@ -941,7 +947,7 @@ $2
 'note' => "'''Заўвага: '''",
 'previewnote' => "'''Гэта толькі папярэдні прагляд.'''
 Вашыя зьмены яшчэ не былі захаваныя!",
-'continue-editing' => 'Працягнуць рэдагаваньне',
+'continue-editing' => 'Перайсьці да рэдагаваньня',
 'previewconflict' => 'Гэта папярэдні прагляд тэксту зь верхняга вакна рэдагаваньня, так ён будзе выглядаць, калі Вы вырашыце яго захаваць.',
 'session_fail_preview' => "'''Не атрымалася захаваць Вашую праўку праз тое, што былі страчаныя зьвесткі пра сэсію.
 Калі ласка, паспрабуйце яшчэ раз. Калі памылка ня зьнікне, паспрабуйце [[Special:UserLogout|выйсьці з сыстэмы]] і ўвайсьці ізноў.'''",
@@ -1022,6 +1028,15 @@ $2
 'edit-already-exists' => 'Немагчыма стварыць новую старонку.
 Яна ўжо існуе.',
 'defaultmessagetext' => 'Перадвызначаны тэкст паведамленьня',
+'content-failed-to-parse' => 'Зьмест «$2» не адпавядае тыпу $1: $3.',
+'invalid-content-data' => 'Няслушныя зьвесткі',
+'content-not-allowed-here' => 'Зьмест тыпу «$1» на старонцы [[$2]] не дазволены',
+
+# Content models
+'content-model-wikitext' => 'вікі-тэкст',
+'content-model-text' => 'просты тэкст',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Папярэджаньне: гэтая старонка ўтрымлівае зашмат працаёмістых зваротаў да функцыяў парсэра.
@@ -1278,8 +1293,6 @@ $1",
 'search-interwiki-caption' => 'Сумежныя праекты',
 'search-interwiki-default' => 'вынікі з $1:',
 'search-interwiki-more' => '(яшчэ)',
-'search-mwsuggest-enabled' => 'з парадамі',
-'search-mwsuggest-disabled' => 'без парад',
 'search-relatedarticle' => 'Зьвязаны',
 'mwsuggest-disable' => 'Адключыць AJAX-падказкі',
 'searcheverything-enable' => 'Шукаць ва ўсіх прасторах назваў',
@@ -1376,7 +1389,7 @@ $1",
 'timezoneregion-indian' => 'Індыйскі акіян',
 'timezoneregion-pacific' => 'Ціхі акіян',
 'allowemail' => 'Дазволіць атрыманьне лістоў ад іншых удзельнікаў і ўдзельніц',
-'prefs-searchoptions' => 'Магчымасьці пошуку',
+'prefs-searchoptions' => 'Пошук',
 'prefs-namespaces' => 'Прасторы назваў',
 'defaultns' => 'Інакш шукаць у наступных прасторах назваў:',
 'default' => 'па змоўчваньні',
@@ -1545,6 +1558,9 @@ $1",
 'rightslogtext' => 'Гэта журнал зьменаў правоў удзельнікаў.',
 'rightslogentry' => 'зьменена прыналежнасьць $1 з групы $2 да $3',
 'rightslogentry-autopromote' => 'быў аўтаматычна падвышаны з $2 да $3',
+'logentry-rights-rights' => '$1 {{GENDER:$1|зьмяніў|зьмяніла}} прыналежнасьць $3 да групы з $4 на $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$1|зьмяніў|зьмяніла}} прыналежнасьць $3 да групаў',
+'logentry-rights-autopromote' => '$1 {{GENDER:$1|быў аўтаматычна пераведзены|была аўтаматычна пераведзеная}} з групы $4 ў $5',
 'rightsnone' => '(няма)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1774,6 +1790,7 @@ $1',
 'backend-fail-notsame' => 'Неідэнтыфікаваны файл ужо існуе $1.',
 'backend-fail-invalidpath' => '$1 не зьяўляецца слушным шляхам да сховішча.',
 'backend-fail-delete' => 'Немагчыма выдаліць файл $1.',
+'backend-fail-describe' => 'Не атрымалася зьмяніць мэтазьвесткі для файла «$1».',
 'backend-fail-alreadyexists' => 'Файл $1 ужо існуе.',
 'backend-fail-store' => 'Немагчыма захаваць файл $1 у $2.',
 'backend-fail-copy' => 'Немагчыма скапіяваць файл $1 у $2.',
@@ -1926,7 +1943,7 @@ $1',
 'shared-repo-from' => '$1',
 'shared-repo' => 'агульнага сховішча',
 'shared-repo-name-wikimediacommons' => 'Вікісховішча',
-'upload-disallowed-here' => 'На жаль Вы ня можаце перазапісаць гэтую выяву.',
+'upload-disallowed-here' => 'Вы ня можаце перазапісаць гэты файл.',
 
 # File reversion
 'filerevert' => 'Вярнуць $1',
@@ -2164,7 +2181,7 @@ $1',
 'linksearch-ok' => 'Шукаць',
 'linksearch-text' => 'Можна ўжываць сымбалі падстаноўкі, напрыклад, «*.wikipedia.org».<br />
 Неабходны дамэн першага ўзроўню, напрыклад, «*.org».<br />
-Пратаколы, якія падтрымліваюцца: <code>$1</code> (не дадавайце іх у Ваш пошук).',
+Пратаколы, якія падтрымліваюцца: <code>$1</code> (дапомна http://, калі пратакол не пазначаны).',
 'linksearch-line' => 'Спасылка на $1 з $2',
 'linksearch-error' => 'Сымбалі падстаноўкі могуць ужывацца толькі ў пачатку адрасоў.',
 
@@ -2210,13 +2227,13 @@ $1',
 'mailnologin' => 'Няма адрасу атрымальніка',
 'mailnologintext' => 'Вам неабходна [[Special:UserLogin|ўвайсьці ў сыстэму]] і мець пацьверджаны адрас электроннай пошты ў Вашых [[Special:Preferences|наладах]], каб дасылаць лісты іншым удзельнікам.',
 'emailuser' => 'Даслаць ліст',
-'emailuser-title-target' => 'Адправіць гэта па электроннай пошце  {{GENDER:$1|гэтаму ўдзельніку|гэтай удзельніцы}}',
+'emailuser-title-target' => 'Адправіць гэта па электроннай пошце {{GENDER:$1|гэтаму ўдзельніку|гэтай удзельніцы}}',
 'emailuser-title-notarget' => 'Даслаць ліст ўдзельніку ці ўдзельніцы па электроннай пошце',
 'emailpage' => 'Даслаць ліст ўдзельніку ці ўдзельніцы па электроннай пошце',
-'emailpagetext' => 'Вы можаце выкарыстоўваць форму ніжэй, каб даслаць гэтаму ўдзельніку ліст па электроннай пошце.
-Адрас электроннай пошты, які Вы пазначалі ў [[Special:Preferences|сваіх наладах]], будзе пазначаны ў полі ліста «Ад», і ўдзельнік зможа даслаць на гэты адрас адказ.',
+'emailpagetext' => 'Вы можаце выкарыстаць форму ніжэй, каб даслаць {{GENDER:$1|гэтаму ўдзельніку|гэтай удзельніцы}} ліст па электроннай пошце.
+Адрас электроннай пошты, які Вы пазначалі ў [[Special:Preferences|сваіх наладах]], будзе пазначаны ў полі ліста «Ад», і {{GENDER:$1|ўдзельнік|ўдзельніца}} зможа даслаць на гэты адрас адказ.',
 'usermailererror' => 'Пры адсыланьні пошты адбылася памылка:',
-'defemailsubject' => 'Электронная пошта {{GRAMMAR:родны|{{SITENAME}}}} ад {{GENDER:$1|удзельніка|удзельніцы}} «$1»',
+'defemailsubject' => 'Ліст з {{GRAMMAR:родны|{{SITENAME}}}} ад {{GENDER:$1|удзельніка|удзельніцы}} «$1»',
 'usermaildisabled' => 'Электронная пошта ўдзельніка адключаная',
 'usermaildisabledtext' => 'Вы ня можаце дасылаць электронныя лісты іншым удзельнікам {{GRAMMAR:родны|{{SITENAME}}}}',
 'noemailtitle' => 'Адрас электроннай пошты адсутнічае',
@@ -2265,7 +2282,7 @@ $1',
 'watchnochange' => 'Нічога з Вашага сьпісу назіраньня не зьмянілася за паказаны пэрыяд.',
 'watchlist-details' => 'У Вашым сьпісе назіраньня $1 {{PLURAL:$1|старонка|старонкі|старонак}} за выключэньнем старонак абмеркаваньня.',
 'wlheader-enotif' => '* Дасылка паведамленьняў па электроннай пошце ўключаная.',
-'wlheader-showupdated' => "* Старонкі, якія былі зьмененыя пасьля Вашага апошняга візыту, вылучаныя '''тлустым''' шрыфтам",
+'wlheader-showupdated' => "* Старонкі, якія былі зьмененыя пасьля Вашага апошняга візыту, вылучаныя '''тоўстым''' шрыфтам",
 'watchmethod-recent' => 'прагляд апошніх зьменаў у старонках са сьпісу назіраньня',
 'watchmethod-list' => 'прагляд старонак са сьпісу назіраньня дзеля апошніх зьменах',
 'watchlistcontains' => 'Ваш сьпіс назіраньня зьмяшчае $1 {{PLURAL:$1|старонка|старонкі|старонак}}.',
@@ -2281,29 +2298,31 @@ $1',
 
 'enotif_mailer' => 'Служба паштовага апавяшчэньня {{GRAMMAR:родны|{{SITENAME}}}}',
 'enotif_reset' => 'Пазначыць усе старонкі як прагледжаныя',
-'enotif_newpagetext' => 'Гэта новая старонка.',
 'enotif_impersonal_salutation' => 'Удзельнік {{GRAMMAR:родны|{{SITENAME}}}}',
-'changed' => 'зьмененая',
-'created' => 'створаная',
-'enotif_subject' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} $PAGETITLE была $CHANGEDORCREATED ўдзельнікам $PAGEEDITOR',
+'enotif_subject_deleted' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была выдаленая {{GENDER:$2|удзельнікам|удзельніцай}} $2',
+'enotif_subject_created' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была створаная {{GENDER:$2|удзельнікам|удзельніцай}} $2',
+'enotif_subject_moved' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была перанесеная {{GENDER:$2|удзельнікам|удзельніцай}} $2',
+'enotif_subject_restored' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была адноўленая {{GENDER:$2|удзельнікам|удзельніцай}} $2',
+'enotif_subject_changed' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была зьмененая {{GENDER:$2|удзельнікам|удзельніцай}} $2',
+'enotif_body_intro_deleted' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была выдаленая $PAGEEDITDATE {{GENDER:$2|удзельнікам|удзельніцай}} $2, па цяперашнюю вэрсію глядзіце $3.',
+'enotif_body_intro_created' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была створаная $PAGEEDITDATE {{GENDER:$2|удзельнікам|удзельніцай}} $2, па цяперашнюю вэрсію глядзіце $3.',
+'enotif_body_intro_moved' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была перанесеная $PAGEEDITDATE {{GENDER:$2|удзельнікам|удзельніцай}} $2, па цяперашнюю вэрсію глядзіце $3.',
+'enotif_body_intro_restored' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была адноўленая $PAGEEDITDATE {{GENDER:$2|удзельнікам|удзельніцай}} $2, па цяперашнюю вэрсію глядзіце $3.',
+'enotif_body_intro_changed' => 'Старонка {{GRAMMAR:родны|{{SITENAME}}}} «$1» была зьмененая $PAGEEDITDATE {{GENDER:$2|удзельнікам|удзельніцай}} $2, па цяперашнюю вэрсію глядзіце $3.',
 'enotif_lastvisited' => 'Глядзіце на $1 усе апошнія зьмены, якія адбыліся пасьля Вашага апошняга наведваньня.',
 'enotif_lastdiff' => 'Глядзіце $1, каб пабачыць гэтую зьмену.',
 'enotif_anon_editor' => 'ананімны ўдзельнік $1',
-'enotif_body' => 'Шаноўны $WATCHINGUSERNAME,
+'enotif_body' => 'Вітаем, $WATCHINGUSERNAME.
 
+$PAGEINTRO $NEWPAGE
 
-Старонка $PAGETITLE {{GRAMMAR:родны|{{SITENAME}}}} была $CHANGEDORCREATED $PAGEEDITDATE $PAGEEDITOR, глядзіце цяперашнюю вэрсію на $PAGETITLE_URL.
+Апісаньне зьменаў: $PAGESUMMARY $PAGEMINOREDIT
 
-$NEWPAGE
+Зьвязацца з рэдактарам:
+па электроннай пошце: $PAGEEDITOR_EMAIL
+празь вікі-старонку: $PAGEEDITOR_WIKI
 
-Кароткае апісаньне зьменаў: $PAGESUMMARY $PAGEMINOREDIT
-
-Зьвязацца з аўтарам:
-электронная пошта: $PAGEEDITOR_EMAIL
-вікі-старонка: $PAGEEDITOR_WIKI
-
-Паведамленьні ня будуць дасылацца ў выпадку паўторных рэдагаваньняў, пакуль Вы не наведаеце гэтую старонку.
-Вы можаце пазначыць сьцяжкі дасылкі паведамленьняў для ўсіх старонках назіраньня Вашага сьпісу назіраньня.
+Паведамленьні ня будуць дасылацца ў выпадку паўторных рэдагаваньняў, пакуль Вы не наведаеце гэтую старонку. Вы можаце пазначыць сьцяжкі дасылкі паведамленьняў для ўсіх старонках назіраньня Вашага сьпісу назіраньня.
 
              Сыстэма паведамленьняў {{GRAMMAR:родны|{{SITENAME}}}}
 
@@ -2335,7 +2354,7 @@ $UNWATCHURL
 'actioncomplete' => 'Дзеяньне выкананае',
 'actionfailed' => 'Дзеяньне ня выкананае',
 'deletedtext' => '«$1» была выдаленая.
-Глядзіце журнал выдаленьняў у $2.',
+Запісы пра выдаленыя старонкі зьмяшчаюцца ў $2.',
 'dellogpage' => 'Журнал выдаленьняў',
 'dellogpagetext' => 'Сьпіс апошніх выдаленьняў.',
 'deletionlog' => 'журнал выдаленьняў',
@@ -2474,7 +2493,8 @@ $UNWATCHURL
 'undeletedrevisions' => '{{PLURAL:$1|адноўленая $1 вэрсія|адноўленыя $1 вэрсіі|адноўленыя $1 вэрсіяў}}',
 'undeletedrevisions-files' => 'адноўленыя $1 {{PLURAL:$1|вэрсія|вэрсіі|вэрсіяў}} і $2 {{PLURAL:$2|файл|файлы|файлаў}}',
 'undeletedfiles' => '{{PLURAL:$1|адноўлены $1 файл|адноўленыя $1 файлы|адноўленыя $1 файлаў}}',
-'cannotundelete' => 'Аднаўленьне не адбылося; нехта іншы мог пасьпець аднавіць старонку раней.',
+'cannotundelete' => 'Памылка аднаўленьня:
+$1',
 'undeletedpage' => "'''Старонка $1 была адноўленая'''
 
 Глядзіце [[Special:Log/delete|журнал выдаленьняў]] для прагляду апошніх выдаленьняў і аднаўненьняў.",
@@ -2506,9 +2526,9 @@ $1',
 'blanknamespace' => '(Асноўная)',
 
 # Contributions
-'contributions' => 'Унёсак',
+'contributions' => 'Унёсак {{GENDER:$1|удзельніка|удзельніцы}}',
 'contributions-title' => 'Унёсак {{GENDER:$1|удзельніка|удзельніцы}} $1',
-'mycontris' => 'Мой унёсак',
+'mycontris' => 'Унёсак',
 'contribsub2' => 'Для $1 ($2)',
 'nocontribs' => 'Ня знойдзена зьменаў, якія адпавядаюць гэтым крытэрыям.',
 'uctop' => ' (апошняя)',
@@ -2555,7 +2575,7 @@ $1',
 'autoblockid' => 'Аўтаматычнае блякаваньне №$1',
 'block' => 'Заблякаваць удзельніка',
 'unblock' => 'Разблякаваць удзельніка',
-'blockip' => 'Блякаваньне ўдзельніка ці ўдзельніцы',
+'blockip' => 'Заблякаваць',
 'blockip-title' => 'Блякаваньне ўдзельніка ці ўдзельніцы',
 'blockip-legend' => 'Заблякаваць удзельніка',
 'blockiptext' => 'Наступная форма дазваляе заблякаваць магчымасьць рэдагаваньня з пэўнага IP-адрасу альбо імя ўдзельніка. Гэта трэба рабіць толькі дзеля прадухіленьня вандалізму і згодна з [[{{MediaWiki:Policy-url}}|правіламі]]. Пазначце ніжэй дакладную прычыну (напрыклад, пералічыце асобныя старонкі, на якіх былі парушэньні).',
@@ -2774,6 +2794,7 @@ $1',
 'immobile-target-namespace-iw' => 'Інтэрвікі-спасылка — няслушная назва для пераносу старонкі.',
 'immobile-source-page' => 'Гэтую старонку нельга пераносіць.',
 'immobile-target-page' => 'Немагчыма перанесьці старонку пад гэтую назву.',
+'bad-target-model' => 'Выніковая старонка выкарыстоўвае іншы тып зьместу. Немагчыма пераўтварыць $1 у $2.',
 'imagenocrossnamespace' => 'Нельга перанесьці файл у ня-файлавую прастору назваў',
 'nonfile-cannot-move-to-file' => 'Нельга перанесьці ня файл у прастору назваў файлаў',
 'imagetypemismatch' => 'Новае пашырэньне файла не адпавядае яго тыпу',
@@ -2904,7 +2925,6 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'Тэставаньне JavaScript',
-'javascripttest-disabled' => 'Гэтая функцыя не была ўключаная ў гэтай вікі.',
 'javascripttest-title' => 'Праводзіцца тэставаньне $1',
 'javascripttest-pagetext-noframework' => 'Гэтая старонка трымаецца для правядзеньня тэстаў JavaScript.',
 'javascripttest-pagetext-unknownframework' => 'Невядомая бібліятэка тэставаньня «$1».',
@@ -2914,7 +2934,7 @@ $1',
 'javascripttest-qunit-heading' => 'Набор QUnit-тэстаў для MediaWiki JavaScript',
 
 # Tooltip help for the actions
-'tooltip-pt-userpage' => 'Ваша старонка ўдзельніка',
+'tooltip-pt-userpage' => 'Вашая ўласная старонка',
 'tooltip-pt-anonuserpage' => 'Старонка ўдзельніка для IP-адрасу, зь якога Вы рэдагуеце',
 'tooltip-pt-mytalk' => 'Ваша старонка гутарак',
 'tooltip-pt-anontalk' => 'Старонка гутарак пра рэдагаваньні, зробленыя з гэтага IP-адрасу',
@@ -2947,7 +2967,7 @@ $1',
 'tooltip-n-currentevents' => 'Атрымаць інфармацыю пра актуальныя падзеі',
 'tooltip-n-recentchanges' => 'Сьпіс апошніх зьменаў у {{GRAMMAR:месны|{{SITENAME}}}}.',
 'tooltip-n-randompage' => 'Паказаць выпадковую старонку',
-'tooltip-n-help' => 'Месца, каб пра ўсё даведацца.',
+'tooltip-n-help' => 'Месца, каб пра ўсё даведацца',
 'tooltip-t-whatlinkshere' => 'Сьпіс усіх старонак, якія спасылаюцца на гэтую',
 'tooltip-t-recentchangeslinked' => 'Апошнія зьмены ў старонках, на якія спасылаецца гэтая старонка',
 'tooltip-feed-rss' => 'RSS-стужка для гэтай старонкі',
@@ -3011,6 +3031,7 @@ $1',
 
 # Info page
 'pageinfo-title' => 'Інфармацыя пра «$1»',
+'pageinfo-not-current' => 'Даруйце, мы ня можам падаць гэтыя зьвесткі для старых вэрсіяў.',
 'pageinfo-header-basic' => 'Асноўныя зьвесткі',
 'pageinfo-header-edits' => 'Рэдагаваньні',
 'pageinfo-header-restrictions' => 'Абарона старонкі',
@@ -3019,6 +3040,7 @@ $1',
 'pageinfo-default-sort' => 'Перадвызначаны ключ сартаваньня',
 'pageinfo-length' => 'Памер старонкі (у байтах)',
 'pageinfo-article-id' => 'Ідэнтыфікатар старонкі',
+'pageinfo-language' => 'Мова зьместу старонкі',
 'pageinfo-robot-policy' => 'Індэксацыя пашукавікамі',
 'pageinfo-robot-index' => 'Індэксуецца',
 'pageinfo-robot-noindex' => 'Не індэксуецца',
@@ -3035,10 +3057,17 @@ $1',
 'pageinfo-authors' => 'Колькасьць аўтараў',
 'pageinfo-recent-edits' => 'Колькасьць апошніх рэдагаваньняў (за $1)',
 'pageinfo-recent-authors' => 'Колькасьць апошніх аўтараў',
-'pageinfo-restriction' => 'Стан аховы ({{lcfirst:$1}})',
 'pageinfo-magic-words' => '{{PLURAL:$1|Магічнае слова|Магічныя словы}} ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|Схаваная катэгорыя|Схаваныя катэгорыі}} ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|Шаблён|Шаблёны}} ($1)',
+'pageinfo-toolboxlink' => 'Зьвесткі пра старонку',
+'pageinfo-redirectsto' => 'Перанакіроўвае на',
+'pageinfo-redirectsto-info' => 'інфармацыя',
+'pageinfo-contentpage' => 'Лічыцца артыкулам',
+'pageinfo-contentpage-yes' => 'Так',
+'pageinfo-protect-cascading' => 'Адсюль пачынаецца каскадная абарона',
+'pageinfo-protect-cascading-yes' => 'Так',
+'pageinfo-protect-cascading-from' => 'Каскадная абароная пачынаецца з',
 
 # Skin names
 'skinname-standard' => 'Клясычнае',
@@ -3061,6 +3090,8 @@ $1',
 'markedaspatrollederror' => 'Немагчыма пазначыць як «патруляваную»',
 'markedaspatrollederrortext' => 'Вы мусіце абраць вэрсію, каб пазначыць яе «патруляванай».',
 'markedaspatrollederror-noautopatrol' => 'Вам не дазволена пазначаць Вашыя ўласныя зьмены як «патруляваныя».',
+'markedaspatrollednotify' => 'Гэтая зьмена ў «$1» была пазначаная як патруляваная.',
+'markedaspatrollederrornotify' => 'Не атрымалася адпатруляваць старонку.',
 
 # Patrol log
 'patrol-log-page' => 'Журнал патруляваньняў',
@@ -3127,11 +3158,14 @@ $1',
 'hours' => '$1 {{PLURAL:$1|гадзіна|гадзіны|гадзінаў}}',
 'days' => '$1 {{PLURAL:$1|дзень|дні|дзён}}',
 'ago' => '$1 таму',
+'just-now' => 'толькі што',
 
 # Bad image list
 'bad_image_list' => 'Фармат наступны:
 
-Разглядаюцца толькі элемэнты сьпісу (радкі, якія пачынаюцца з *). Першая спасылка ў радку мусіць быць спасылкай на кепскую выяву. Усе наступныя спасылкі ў тым жа радку будуць разглядацца як выключэньні, напрыклад, старонкі, дзе можа зьяўляцца выява.',
+Разглядаюцца толькі элемэнты сьпісу (радкі, якія пачынаюцца з *).
+Першая спасылка ў радку мусіць быць спасылкай на кепскую выяву.
+Усе наступныя спасылкі ў тым жа радку будуць разглядацца як выключэньні, напрыклад, старонкі, дзе можа зьяўляцца выява.',
 
 # Metadata
 'metadata' => 'Мэтазьвесткі',
@@ -3615,6 +3649,7 @@ $5
 # Scary transclusion
 'scarytranscludedisabled' => '[Улучэньне інтэрвікі было адключанае]',
 'scarytranscludefailed' => '[Памылка атрыманьня шаблёну $1]',
+'scarytranscludefailed-httpstatus' => '[Памылка атрыманьня шаблёну $1: HTTP $2]',
 'scarytranscludetoolong' => '[Занадта даўгі URL-адрас]',
 
 # Delete conflict
@@ -3667,6 +3702,11 @@ $5
 'size-kilobytes' => '$1 кб',
 'size-megabytes' => '$1 Мб',
 'size-gigabytes' => '$1 Гб',
+'size-terabytes' => '$1 ТБ',
+'size-petabytes' => '$1 ПБ',
+'size-exabytes' => '$1 ЭБ',
+'size-zetabytes' => '$1 ЗБ',
+'size-yottabytes' => '$1 ЁБ',
 
 # Live preview
 'livepreview-loading' => 'Загрузка…',
@@ -3737,6 +3777,7 @@ $5
 'version-license' => 'Ліцэнзія',
 'version-poweredby-credits' => "{{SITENAME}} працуе на праграмным забесьпячэньні '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'іншыя',
+'version-credits-summary' => 'Нам вельмі хацелася б адзначыць наступных асобаў, што зрабілі ўнёсак у [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki зьяўляецца вольным праграмным забесьпячэньнем, якое Вы можаце распаўсюджваць і/ці зьмяняць на ўмовах ліцэнзіі GNU General Public License вэрсіі 2 ці болей позьняй, апублікаванай Фундацыяй вольнага праграмнага забесьпячэньня (Free Software Foundation).
 
 MediaWiki распаўсюджваецца з надзеяй, што будзе карысным, але БЕЗ АНІЯКІХ ГАРАНТЫЯЎ, нават без меркаваных гарантыяў КАМЭРЦЫЙНАЙ КАШТОЎНАСЬЦІ ці ПРЫДАТНАСЬЦІ ДА ПЭЎНАЙ МЭТЫ. Глядзіце ліцэнзію GNU General Public License для болей падрабязных зьвестак.
@@ -3748,6 +3789,8 @@ MediaWiki распаўсюджваецца з надзеяй, што будзе 
 'version-entrypoints' => 'Уваходныя адрасы',
 'version-entrypoints-header-entrypoint' => 'Пункт уваходу',
 'version-entrypoints-header-url' => 'URL',
+'version-entrypoints-articlepath' => '[https://www.mediawiki.org/wiki/Manual:$wgArticlePath Шлях да артыкула]',
+'version-entrypoints-scriptpath' => '[https://www.mediawiki.org/wiki/Manual:$wgScriptPath Пуць да скрыпту]',
 
 # Special:FilePath
 'filepath' => 'Шлях да файла',
@@ -3876,8 +3919,8 @@ MediaWiki распаўсюджваецца з надзеяй, што будзе 
 'logentry-move-move_redir-noredirect' => '$1 перанёс старонку $3 у $4 паўзьверх перанакіраваньня без пакінутага перанакіраваньня',
 'logentry-patrol-patrol' => '$1 пазначыў вэрсію $4 старонкі $3 як правераную',
 'logentry-patrol-patrol-auto' => '$1 аўтаматычна пазначыў вэрсію $4 старонкі $3 як правераную',
-'logentry-newusers-newusers' => '$1 стварыў рахунак',
-'logentry-newusers-create' => '$1 стварыў рахунак',
+'logentry-newusers-newusers' => 'Быў створаны рахунак $1',
+'logentry-newusers-create' => 'Быў створаны рахунак $1',
 'logentry-newusers-create2' => '$1 стварыў рахунак $3',
 'logentry-newusers-autocreate' => 'Рахунак $1 быў створаны аўтаматычна',
 'newuserlog-byemail' => 'Пароль адасланы па электроннай пошце',
@@ -3897,6 +3940,10 @@ MediaWiki распаўсюджваецца з надзеяй, што будзе 
 'feedback-close' => 'Выканана',
 'feedback-bugcheck' => 'Выдатна! Толькі праверце, магчыма гэтыя памылкі ўжо [$1 вядомыя].',
 'feedback-bugnew' => 'Я праверыў. Гэта новая памылка',
+
+# Search suggestions
+'searchsuggest-search' => 'Пошук',
+'searchsuggest-containing' => 'утрымлівае...',
 
 # API errors
 'api-error-badaccess-groups' => 'У Вас няма дазволу загружаць файлы ў гэтую вікі.',
@@ -3950,4 +3997,6 @@ MediaWiki распаўсюджваецца з надзеяй, што будзе 
 'duration-centuries' => '$1 {{PLURAL:$1|стагодзьдзе|стагодзьдзі|стагодзьдзяў}}',
 'duration-millennia' => '$1 {{PLURAL:$1|тысячагодзьдзе|тысячагодзьдзі|тысячагодзьдзяў}}',
 
+# Unknown messages
+'svg-long-error' => 'Няслушны SVG-файл: $1',
 );

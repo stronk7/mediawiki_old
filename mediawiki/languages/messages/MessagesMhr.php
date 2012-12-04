@@ -515,8 +515,6 @@ $messages = array(
 'search-interwiki-caption' => 'Родо проект-влак',
 'search-interwiki-default' => "$1'ште мумо:",
 'search-interwiki-more' => '(эше)',
-'search-mwsuggest-enabled' => 'темлымаш дене',
-'search-mwsuggest-disabled' => 'темлымаш деч посна',
 'searchall' => 'чыла',
 'nonefound' => "'''Ешартыш''':  Посна каласыме огыл дык, кычалмаш южо лӱм-влакын кумдыкышто эрта. Уло лӱм-влакын кумдыкышто кычалашлан(чӱктен каҥашымаш лаштык-влакым, ямдылык-влакым и туге молат) шке йодмашыштет ''all:'' префиксым кучылт, але кӱлешан лӱм-влакын кумдыкым ончыкто.",
 'search-nonefound' => 'Тыйын йодышлан нимом кычален мумо уке.',
@@ -664,7 +662,7 @@ $messages = array(
 'filehist-dimensions' => 'Кугытшо',
 'filehist-filesize' => 'Файлын кугытшо',
 'filehist-comment' => 'Файл нерген:',
-'imagelinks' => 'Файл деке кылвер-влак',
+'imagelinks' => 'Файлым кучылтмаш',
 'linkstoimage' => 'Тиде {{PLURAL:$1|$1 лаштык саде файл дене кылдалтын|$1 лаштык-влак саде файл дене кылдалтыныт}}:',
 'nolinkstoimage' => 'Тиде файл дене кылдалтше ик лаштыкат уке.',
 'sharedupload' => 'Тиде файлын верже: $1, туге гынат, тудым моло веренат кучылташ лиеш.',
@@ -721,6 +719,7 @@ $messages = array(
 'shortpages' => 'Кӱчык лаштык-влак',
 'longpages' => 'Кужу лаштык-влак',
 'protectedpages' => 'Тӧрлатымаш деч аралыме лаштык-влак',
+'usercreated' => '$1, $2 шагатлан {{GENDER:$3|регистрацийым эртен|регистрацийым эртен}}',
 'newpages' => 'У лаштык-влак',
 'newpages-username' => 'Пайдаланышын лӱмжӧ:',
 'move' => 'Кусараш',
@@ -791,8 +790,6 @@ $messages = array(
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Эскерымаш лӱмерыш ешарымаш...',
 'unwatching' => 'Эскерымаш лӱмер гыч шӧрымаш...',
-
-'enotif_newpagetext' => 'Тиде у лаштык.',
 
 # Delete
 'deletepage' => 'Лаштыкым шӧраш',
@@ -879,6 +876,7 @@ $messages = array(
 'whatlinkshere-hideredirs' => 'вес вере колтымаш-влакым $1',
 'whatlinkshere-hidetrans' => 'пуртымашым $1',
 'whatlinkshere-hidelinks' => 'кылвер-влакым $1',
+'whatlinkshere-hideimages' => 'сӱрет деке кылвер-влакым $1',
 'whatlinkshere-filters' => 'Фильтр-влак',
 
 # Block/unblock
@@ -937,6 +935,7 @@ $messages = array(
 'export' => 'Лаштык-влакым келыштараш',
 
 # Namespace 8 related
+'allmessagesname' => 'Лӱм',
 'allmessages-filter-all' => 'Чыла',
 
 # Thumbnails

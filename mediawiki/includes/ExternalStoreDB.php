@@ -26,6 +26,9 @@
  */
 class ExternalStoreDB {
 
+	/**
+	 * @param $params array
+	 */
 	function __construct( $params = array() ) {
 		$this->mParams = $params;
 	}
@@ -97,8 +100,8 @@ class ExternalStoreDB {
 	 */
 	function fetchFromURL( $url ) {
 		$path = explode( '/', $url );
-		$cluster  = $path[2];
-		$id	  = $path[3];
+		$cluster = $path[2];
+		$id = $path[3];
 		if ( isset( $path[4] ) ) {
 			$itemID = $path[4];
 		} else {
@@ -165,6 +168,7 @@ class ExternalStoreDB {
 	 *
 	 * @param $cluster String: the cluster name
 	 * @param $data String: the data item
+	 * @throws MWException
 	 * @return string URL
 	 */
 	function store( $cluster, $data ) {

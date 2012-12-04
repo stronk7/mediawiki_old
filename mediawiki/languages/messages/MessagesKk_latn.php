@@ -1,5 +1,5 @@
 <?php
-/** Kazakh (Latin script) (‪qazaqşa (latın)‬)
+/** Kazakh (Latin script) (qazaqşa (latın)‎)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -483,7 +483,6 @@ $messages = array(
 'qbbrowse' => 'Şolw',
 'qbedit' => 'Öñdew',
 'qbpageoptions' => 'Bul bet',
-'qbpageinfo' => 'Aýnala',
 'qbmyoptions' => 'Betterim',
 'qbspecialpages' => 'Arnaýı better',
 'faq' => 'Jïi qoýılğan sawaldar',
@@ -690,9 +689,6 @@ Keltirilgen sebebi: ''$2''.",
 
 Jüýege kirmesten {{SITENAME}} jobasın paýdalanwın jalğastıra alasız, nemese däl sol ne özge qatıswşı bop qaýta krwiñiz mümkin.
 Añğartpa: Keýbir better şolğışıñızdıñ bürkemesin tazartqanşa deýin äli de kirp qalğanıñızdaý körinwi mümkin.",
-'welcomecreation' => '== Qoş keldiñiz, $1! ==
-Jaña tirkelgiñiz jasaldı.
-{{SITENAME}} baptalımdarıñızdı özgertwin umıtpañız.',
 'yourname' => 'Qatıswşı atıñız:',
 'yourpassword' => 'Qupïya söziñiz:',
 'yourpasswordagain' => 'Qupïya sözdi qaýtalañız:',
@@ -1091,8 +1087,6 @@ Añğartpa: bağıttaw siltemelerin qoldanğanda bul bağan qaýta qoýıladı.'
 'search-interwiki-caption' => 'Bawırlas jobalar',
 'search-interwiki-default' => '$1 nätïje:',
 'search-interwiki-more' => '(köbirek)',
-'search-mwsuggest-enabled' => 'usınımdarmen',
-'search-mwsuggest-disabled' => 'usınımdarsız',
 'search-relatedarticle' => 'Qatıstı',
 'mwsuggest-disable' => 'AJAX usınımdarın öşir',
 'searchrelated' => 'qatıstı',
@@ -1719,11 +1713,7 @@ Bul bettiñ jäne baýlanıstı talqılaw betiniñ keleşektegi özgeristeri mı
 
 'enotif_mailer' => '{{SITENAME}} eskertw xat jiberw qızmeti',
 'enotif_reset' => 'Barlıq bet kelip-ketildi dep belgile',
-'enotif_newpagetext' => 'Mınaw jaña bet.',
 'enotif_impersonal_salutation' => '{{SITENAME}} qatıswşısı',
-'changed' => 'özgertti',
-'created' => 'bastadı',
-'enotif_subject' => '{{SITENAME}} jobasında $PAGEEDITOR $PAGETITLE atawlı betti $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Soñğı kelip-ketwiñizden beri bolğan özgerister üşin $1 degendi qarañız.',
 'enotif_lastdiff' => 'Osı özgeris üşin $1 degendi qarañız.',
 'enotif_anon_editor' => 'tirkelgisiz qatıswşı $1',

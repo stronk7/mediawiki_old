@@ -204,7 +204,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORCARTDC__', '__FORCARSUMARIO__', '__FORÇARTDC__', '__FORÇARSUMÁRIO__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__TDC__', '__SUMARIO__', '__SUMÁRIO__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__NAOEDITARSECAO__', '__NÃOEDITARSEÇÃO__', '__SEMEDITARSEÇÃO__', '__SEMEDITARSECAO__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__SEMCABECALHO__', '__SEMCABEÇALHO__', '__SEMTITULO__', '__SEMTÍTULO__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'MESATUAL', 'MESATUAL2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'MESATUAL1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'NOMEDOMESATUAL', 'CURRENTMONTHNAME' ),
@@ -314,7 +313,7 @@ $magicWords = array(
 
 $messages = array(
 # User preference toggles
-'tog-underline' => 'Sublinhar ligação:',
+'tog-underline' => 'Sublinhar links:',
 'tog-justify' => 'Justificar parágrafos',
 'tog-hideminor' => 'Ocultar edições menores nas mudanças recentes',
 'tog-hidepatrolled' => 'Ocultar edições patrulhadas nas mudanças recentes',
@@ -324,7 +323,7 @@ $messages = array(
 'tog-numberheadings' => 'Auto-numerar cabeçalhos',
 'tog-showtoolbar' => 'Mostrar barra de edição (JavaScript)',
 'tog-editondblclick' => 'Editar páginas quando houver clique duplo (JavaScript)',
-'tog-editsection' => 'Habilitar edição de seção via ligações [editar]',
+'tog-editsection' => 'Ativar a edição de seções com links [editar]',
 'tog-editsectiononrightclick' => 'Habilitar edição de seção por clique com o botão direito no título da seção (JavaScript)',
 'tog-showtoc' => 'Mostrar Tabela de Conteúdos (para páginas com mais de três cabeçalhos)',
 'tog-rememberpassword' => 'Recordar os meus dados neste navegador (por no máximo $1 {{PLURAL:$1|dia|dias}})',
@@ -342,10 +341,10 @@ $messages = array(
 'tog-enotifrevealaddr' => 'Revelar o meu endereço de email nas notificações',
 'tog-shownumberswatching' => 'Mostrar o número de usuários que estão vigiando',
 'tog-oldsig' => 'Assinatura existente:',
-'tog-fancysig' => 'Tratar assinatura como wikitexto (sem ligação automática)',
+'tog-fancysig' => 'Tratar assinatura como wikitexto (sem link automático)',
 'tog-externaleditor' => 'Utilizar editor externo por padrão (apenas para usuários avançados; requer configurações adicionais em seu computador. [//www.mediawiki.org/wiki/Manual:External_editors Mais informações.])',
 'tog-externaldiff' => 'Utilizar comparador de versões externo por padrão (apenas para usuários avançados; requer configurações adicionais em seu computador. [//www.mediawiki.org/wiki/Manual:External_editors Mais informações.])',
-'tog-showjumplinks' => 'Ativar ligações de acessibilidade "ir para"',
+'tog-showjumplinks' => 'Ativar links de acessibilidade "ir para"',
 'tog-uselivepreview' => 'Utilizar pré-visualização em tempo real (JavaScript) (Experimental)',
 'tog-forceeditsummary' => 'Avisar-me ao introduzir um sumário vazio',
 'tog-watchlisthideown' => 'Ocultar as minhas edições da lista de páginas vigiadas',
@@ -440,15 +439,15 @@ $messages = array(
 'listingcontinuesabbrev' => 'cont.',
 'index-category' => 'Páginas indexadas',
 'noindex-category' => 'Páginas não indexadas',
-'broken-file-category' => 'Páginas com ligações quebradas para arquivos',
+'broken-file-category' => 'Páginas com links inválidos para arquivos',
 
 'about' => 'Sobre',
 'article' => 'Página de conteúdo',
 'newwindow' => '(abre em uma nova janela)',
 'cancel' => 'Cancelar',
 'moredotdotdot' => 'Mais...',
-'mypage' => 'Minha página',
-'mytalk' => 'Minha discussão',
+'mypage' => 'Página',
+'mytalk' => 'Discussão',
 'anontalk' => 'Discussão para este IP',
 'navigation' => 'Navegação',
 'and' => '&#32;e',
@@ -458,7 +457,6 @@ $messages = array(
 'qbbrowse' => 'Navegar',
 'qbedit' => 'Editar',
 'qbpageoptions' => 'Esta página',
-'qbpageinfo' => 'Contexto',
 'qbmyoptions' => 'Minhas páginas',
 'qbspecialpages' => 'Páginas especiais',
 'faq' => 'FAQ',
@@ -471,7 +469,7 @@ $messages = array(
 'vector-action-protect' => 'Proteger',
 'vector-action-undelete' => 'Restaurar',
 'vector-action-unprotect' => 'Alterar a proteção',
-'vector-simplesearch-preference' => 'Ativar sugestões de busca melhoradas (apenas no tema Vector)',
+'vector-simplesearch-preference' => 'Ativar barra simplificada de buscas (apenas no skin Vector)',
 'vector-view-create' => 'Criar',
 'vector-view-edit' => 'Editar',
 'vector-view-history' => 'Ver histórico',
@@ -493,7 +491,7 @@ $messages = array(
 'history_short' => 'Histórico',
 'updatedmarker' => 'atualizado desde a minha última visita',
 'printableversion' => 'Versão para impressão',
-'permalink' => 'Ligação permanente',
+'permalink' => 'Link permanente',
 'print' => 'Imprimir',
 'view' => 'Ver',
 'edit' => 'Editar',
@@ -623,7 +621,7 @@ Veja a [[Special:Version|página sobre a versão do sistema]].',
 # Main script and global functions
 'nosuchaction' => 'Ação inexistente',
 'nosuchactiontext' => 'A ação especificada pela URL é inválida.
-Você deve ter se enganado ao digitar a URL, ou seguiu uma ligação incorreta.
+Você deve ter se enganado ao digitar a URL, ou acessou um link incorreto.
 Isso também pode indicar um erro no software usado no sítio {{SITENAME}}.',
 'nosuchspecialpage' => 'Esta página especial não existe',
 'nospecialpagetext' => '<strong>Você requisitou uma página especial inválida.</strong>
@@ -633,12 +631,12 @@ Uma lista de páginas especiais válidas poderá ser encontrada em [[Special:Spe
 # General errors
 'error' => 'Erro',
 'databaseerror' => 'Erro no banco de dados',
-'dberrortext' => 'Ocorreu um erro de sintaxe de busca no banco de dados.
-Isto pode indicar um problema com o \'\'software\'\'.
+'dberrortext' => 'Ocorreu um erro de sintaxe na busca no banco de dados.
+Isto pode indicar um bug no software.
 A última tentativa de busca no banco de dados foi:
-<blockquote><tt>$1</tt></blockquote>
-na função "<tt>$2</tt>".
-O banco de dados retornou o erro "<tt>$3: $4</tt>".',
+<blockquote><code>$1</code></blockquote>
+na função "<code>$2</code>".
+O banco de dados retornou o erro "<samp>$3: $4</samp>".',
 'dberrortextcl' => 'Ocorreu um erro de sintaxe de busca no banco de dados.
 A última tentativa de busca no banco de dados foi:
 "$1"
@@ -652,10 +650,10 @@ O banco de dados retornou o erro "$3: $4".',
 Quem fez o bloqueio oferece a seguinte explicação: $1',
 'missing-article' => 'O banco de dados não encontrou o texto de uma página que deveria ter encontrado, com o nome "$1" $2.
 
-Isso normalmente é causado ao acessar uma ligação de diferença (diff) desatualizada ou para o histórico de uma página que foi apagada.
+Isso normalmente é causado ao acessar um link de diferença (dif) desatualizado ou para o histórico de uma página que foi apagada.
 
-Se não for este o caso, você pode ter encontrado um defeito (bug) no software.
-Anote o URL e reporte o ocorrido a um [[Special:ListUsers/sysop|administrador]].',
+Se este não for o caso, você pode ter encontrado um defeito (bug) no software.
+Anote a URL e reporte o ocorrido a um [[Special:ListUsers/sysop|administrador]].',
 'missingarticle-rev' => '(revisão#: $1)',
 'missingarticle-diff' => '(Dif.: $1, $2)',
 'readonly_lag' => 'O banco de dados foi automaticamente bloqueado enquanto os servidores secundários se sincronizam com o principal',
@@ -721,11 +719,8 @@ O administrador que bloqueou ofereceu a seguinte explicação: "$3".',
 # Login and logout pages
 'logouttext' => "'''Agora você encontra-se desautenticado.'''
 
-É possível continuar usando {{SITENAME}} anonimamente ou [[Special:UserLogin|autenticar-se novamente]] com o mesmo nome de usuário ou com um nome diferente.
+É possível continuar usando {{SITENAME}} anonimamente ou <span class='plainlinks'>[$1 autenticar-se novamente]</span> com o mesmo nome de usuário ou com um nome diferente.
 Note que algumas páginas podem continuar sendo exibidas como se você ainda estivesse autenticado até que você limpe a ''cache'' do seu navegador.",
-'welcomecreation' => '== Bem-vindo(a), $1! ==
-A sua conta foi criada.
-Não se esqueça de personalizar as suas [[Special:Preferences|preferências no wiki {{SITENAME}}]].',
 'yourname' => 'Nome de usuário:',
 'yourpassword' => 'Senha:',
 'yourpasswordagain' => 'Redigite sua senha',
@@ -850,12 +845,17 @@ Você pode já ter alterado com sucesso a sua senha, ou solicitado uma nova senh
 'passwordreset-capture-help' => 'Se marcar esta caixa, o e-mail (com a senha temporária) será-lhe mostrado, além de ser enviado para o usuário.',
 'passwordreset-email' => 'Endereço de e-mail:',
 'passwordreset-emailtitle' => 'Detalhes da conta em {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Alguém (provavelmente você, do endereço IP $1) solicitou um lembrete do seu detalhes de conta para {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este e-mail:
+'passwordreset-emailtext-ip' => 'Alguém (provavelmente você, a partir do endereço IP $1)
+solicitou um lembrete dos seus detalhes de conta para {{SITENAME}} ($4).
+{{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este e-mail:
 
 $2
 
-{{PLURAL:$3|Esta senha temporária |Essas senhas temporárias}} vão expirar em {{PLURAL:$5|um dia|$5 dias}}.
-Você deve efetuar login e escolher uma nova senha agora. Se você conseguir lembrar da senha, ignore este e-mail e continue usando sua senha anterior, do contrário, prossiga com as instruções clicando na ligação.',
+{{PLURAL:$3|Esta senha temporária vai|Essas senhas temporárias vão}} expirar em {{PLURAL:$5|um dia|$5 dias}}.
+Você deve efetuar login e escolher uma nova senha agora.
+Se você conseguir lembrar da senha, ignore este e-mail e continue
+usando sua senha anterior. Caso contrário, prossiga com as instruções
+disponíveis no link.',
 'passwordreset-emailtext-user' => 'O usuário $1 da {{SITENAME}} pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este e-mail:
 
 $2
@@ -883,10 +883,10 @@ Senha temporária: $2',
 'bold_tip' => 'Texto em negrito',
 'italic_sample' => 'Texto em itálico',
 'italic_tip' => 'Texto em itálico',
-'link_sample' => 'Título da ligação',
-'link_tip' => 'Ligação interna',
-'extlink_sample' => 'http://www.example.com título da ligação',
-'extlink_tip' => 'Ligação externa (lembre-se do prefixo http://)',
+'link_sample' => 'Título do link',
+'link_tip' => 'Link interno',
+'extlink_sample' => 'http://www.example.com título do link',
+'extlink_tip' => 'Link externo (lembre-se do prefixo http://)',
 'headline_sample' => 'Conteúdo do cabeçalho',
 'headline_tip' => 'Seção de nível 2',
 'nowiki_sample' => 'Inserir texto não-formatado aqui',
@@ -894,7 +894,7 @@ Senha temporária: $2',
 'image_sample' => 'Exemplo.jpg',
 'image_tip' => 'Arquivo embutido',
 'media_sample' => 'Exemplo.ogg',
-'media_tip' => 'Ligação para o arquivo',
+'media_tip' => 'Link para o arquivo',
 'sig_tip' => 'Sua assinatura, com hora e data',
 'hr_tip' => 'Linha horizontal (use de forma moderada)',
 
@@ -962,7 +962,7 @@ Ela pode ter sido movida ou removido enquanto você estava vendo a página.',
 
 A senha para esta nova conta pode ser alterada na página ''[[Special:ChangePassword|de troca de senha]]'', após a autenticação.",
 'newarticle' => '(Nova)',
-'newarticletext' => "Você seguiu uma ligação para uma página que ainda não existe.
+'newarticletext' => "Você seguiu um link para uma página que ainda não existe.
 Para criá-la, comece escrevendo na caixa abaixo (veja [[{{MediaWiki:Helppage}}|a página de ajuda]] para mais informações).
 Se você chegou aqui por engano, clique no botão '''voltar''' do seu navegador.",
 'anontalkpagetext' => "---- ''Esta é a página de discussão para um usuário anônimo que ainda não criou uma conta ou que não a usa, de forma que temos de utilizar o endereço de IP para identificá-lo(a). Tal endereço de IP pode ser compartilhado por vários usuários. Se você é um usuário anônimo e acha que comentários irrelevantes foram direcionados a você, por gentileza, [[Special:UserLogin/signup|crie uma conta]] ou [[Special:UserLogin|autentique-se]], a fim de evitar futuras confusões com outros usuários anônimos.''",
@@ -971,7 +971,7 @@ Você pode [[Special:Search/{{PAGENAME}}|pesquisar pelo título desta página]] 
 ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} criar esta página]</span>.',
 'noarticletext-nopermission' => 'No momento, não há conteúdo nesta página
 Você pode [[Special:Search/{{PAGENAME}}|pesquisar pelo título desta página]] em outras páginas,
-ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar por registros relacionados] </span>.',
+ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar por registros relacionados] </span>. Note que, no entanto, você não tem permissão para criar esta página.',
 'missing-revision' => 'A revisão #$1 da página denominada "{{PAGENAME}}" não existe.
 
 Isto é geralmente causado por seguir um link de histórico desatualizado para uma página que foi eliminada.
@@ -1043,7 +1043,7 @@ A página não pode ser salva.",
 Pode, no entanto, copiar o seu texto num editor externo e guardá-lo para posterior envio.
 
 Quem bloqueou o banco de dados forneceu a seguinte justificativa: $1",
-'protectedpagewarning' => "'''Atenção: Esta página foi protegida para que apenas usuários com privilégios de administrado possam editá-la.'''
+'protectedpagewarning' => "'''Atenção: Esta página foi protegida para que apenas usuários com privilégios de administrador possam editá-la.'''
 A última entrada no histórico é fornecida abaixo como referência:",
 'semiprotectedpagewarning' => "'''Nota:''' Esta página foi protegida, sendo que apenas usuários registrados poderão editá-la.
 A última entrada no histórico é fornecida abaixo para referência:",
@@ -1336,8 +1336,6 @@ Os detalhes podem ser encontrados no [{{fullurl:{{#Special:Log}}/delete|page={{F
 'search-interwiki-caption' => 'Projetos irmãos',
 'search-interwiki-default' => 'Resultados de $1:',
 'search-interwiki-more' => '(mais)',
-'search-mwsuggest-enabled' => 'com sugestões',
-'search-mwsuggest-disabled' => 'sem sugestões',
 'search-relatedarticle' => 'Relacionado',
 'mwsuggest-disable' => 'Desativar sugestões AJAX',
 'searcheverything-enable' => 'Procurar em todos os espaços nominais',
@@ -1373,7 +1371,7 @@ Note que os índices do sistema de busca externo poderão conter referências de
 
 # Preferences page
 'preferences' => 'Preferências',
-'mypreferences' => 'Minhas preferências',
+'mypreferences' => 'Preferências',
 'prefs-edits' => 'Número de edições:',
 'prefsnologin' => 'Não autenticado',
 'prefsnologintext' => 'É necessário estar <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} autenticado]</span> para definir as suas preferências.',
@@ -1436,7 +1434,7 @@ Eis um valor gerado aleatoriamente que você pode usar: $1",
 'timezoneregion-indian' => 'Oceano Índico',
 'timezoneregion-pacific' => 'Oceano Pacífico',
 'allowemail' => 'Permitir que outros usuários me enviem e-mails',
-'prefs-searchoptions' => 'Opções de busca',
+'prefs-searchoptions' => 'Busca',
 'prefs-namespaces' => 'Espaços nominais',
 'defaultns' => 'Caso contrário pesquisar nestes espaços nominais:',
 'default' => 'padrão',
@@ -2357,11 +2355,7 @@ Modificações futuras em tal página e páginas de discussão a ela associadas 
 
 'enotif_mailer' => '{{SITENAME}} Email de Notificação',
 'enotif_reset' => 'Marcar todas páginas como visitadas',
-'enotif_newpagetext' => 'Esta é uma página nova.',
 'enotif_impersonal_salutation' => 'Usuário do projeto "{{SITENAME}}"',
-'changed' => 'alterada',
-'created' => 'criada',
-'enotif_subject' => '{{SITENAME}}: A página $PAGETITLE foi $CHANGEDORCREATED por $PAGEEDITOR',
 'enotif_lastvisited' => 'Consulte $1 para todas as alterações efetuadas desde a sua última visita.',
 'enotif_lastdiff' => 'Acesse $1 para ver esta alteração.',
 'enotif_anon_editor' => 'usuário anônimo $1',
@@ -2486,7 +2480,7 @@ Esta é a configuração atual para a página '''$1''':",
 'protect-summary-cascade' => 'p. progressiva',
 'protect-expiring' => 'expira em $1 (UTC)',
 'protect-expiring-local' => 'expira $1',
-'protect-expiry-indefinite' => 'indefinido',
+'protect-expiry-indefinite' => 'tempo indefinido',
 'protect-cascade' => '"Proteção progressiva" - proteja quaisquer páginas que estejam incluídas nesta.',
 'protect-cantedit' => 'Você não pode alterar o nível de proteção desta página uma vez que você não se encontra habilitado a editá-la.',
 'protect-othertime' => 'Outra duração:',
@@ -2579,7 +2573,7 @@ $1',
 # Contributions
 'contributions' => 'Contribuições {{GENDER:{{BASEPAGENAME}}|do usuário|da usuária}}',
 'contributions-title' => 'Contribuições {{GENDER:$1|do usuário|da usuária}} $1',
-'mycontris' => 'Minhas contribuições',
+'mycontris' => 'Contribuições',
 'contribsub2' => 'Para $1 ($2)',
 'nocontribs' => 'Não foram encontradas mudanças com este critério.',
 'uctop' => '(atual)',
@@ -2964,7 +2958,6 @@ Salve o arquivo no seu computador e importe-o aqui.',
 
 # JavaScriptTest
 'javascripttest' => 'Teste de JavaScript',
-'javascripttest-disabled' => 'Essa função não foi habilitada neste wiki.',
 'javascripttest-title' => 'Executando testes para $1',
 'javascripttest-pagetext-noframework' => 'Esta página é exclusiva para testes de JavaScript.',
 'javascripttest-pagetext-unknownframework' => 'A estrutura de testes "$1" é desconhecida.',
@@ -3110,7 +3103,16 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 'pageinfo-authors' => 'Número total de autores distintos',
 'pageinfo-recent-edits' => 'Número de edições recentes (nos últimos $1)',
 'pageinfo-recent-authors' => 'Número recente de autores distintos',
-'pageinfo-restriction' => 'Proteção da página ({{lcfirst:$1}})',
+'pageinfo-magic-words' => '{{PLURAL:$1|Palavra mágica|Palavras mágicas}} ($1)',
+'pageinfo-hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}} ($1)',
+'pageinfo-templates' => '{{PLURAL:$1|predefinição transcluída|predefinições transcluídas}}',
+'pageinfo-toolboxlink' => 'Informações da página',
+'pageinfo-redirectsto' => 'Redirecionar para',
+'pageinfo-redirectsto-info' => 'informações',
+'pageinfo-contentpage' => 'Contado como uma página de conteúdo',
+'pageinfo-contentpage-yes' => 'Sim',
+'pageinfo-protect-cascading' => 'Proteção em cascata ativada',
+'pageinfo-protect-cascading-yes' => 'Sim',
 
 # Skin names
 'skinname-standard' => 'Clássico',
@@ -3124,7 +3126,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar como patrulhada',
-'markaspatrolledtext' => 'Marcar esta página como verificada',
+'markaspatrolledtext' => 'Marcar esta página como patrulhada',
 'markedaspatrolled' => 'Marcado como verificado',
 'markedaspatrolledtext' => 'A revisão selecionada de [[:$1]] foi marcada como patrulhada.',
 'rcpatroldisabled' => 'Edições verificadas nas Mudanças Recentes desativadas',
@@ -3963,6 +3965,10 @@ Caso contrário, você poderá usar o formulário simplificado a seguir. Seu com
 'feedback-close' => 'Feito',
 'feedback-bugcheck' => 'Perfeito! Apenas verifique se não é um dos [$1 bugs já conhecidos].',
 'feedback-bugnew' => 'Eu verifiquei. Relatar um bug novo',
+
+# Search suggestions
+'searchsuggest-search' => 'Pesquisa',
+'searchsuggest-containing' => 'contendo...',
 
 # API errors
 'api-error-badaccess-groups' => 'Você não tem permissão para enviar arquivos para este wiki.',

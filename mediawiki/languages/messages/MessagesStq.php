@@ -189,7 +189,6 @@ $messages = array(
 'qbbrowse' => 'Bleederje',
 'qbedit' => 'Annerje',
 'qbpageoptions' => 'Disse Siede',
-'qbpageinfo' => 'Siedendoatäie',
 'qbmyoptions' => 'Mien Sieden',
 'qbspecialpages' => 'Spezialsieden',
 'faq' => 'Oafte stoalde Froagen',
@@ -443,12 +442,8 @@ Die Administrator, die dän Skrieuwtougriep speerde, roate foulgjenden Gruund an
 # Login and logout pages
 'logouttext' => "'''Du bäst nu oumälded.'''
 
-Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier [[Special:UserLogin|anmäldje]].
+Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier <span class='plainlinks'>[$1 anmäldje]</span>.
 Beoachtje, dät eenige Sieden noch anwiese konnen, dät du oumälded bäst, soloange du nit din Browsercache loosmoaked hääst.",
-'welcomecreation' => '== Wäilkuumen, $1 ==
-
-Dien Benutserkonto wuude iengjucht.
-Ferjeet nit, dien [[Special:Preferences|{{SITENAME}}-Ienstaalengen]] antoupaasjen.',
 'yourname' => 'Benutsernoome:',
 'yourpassword' => 'Paaswoud:',
 'yourpasswordagain' => 'Paaswoud wierhoalje:',
@@ -1007,8 +1002,6 @@ Staal deertruch sicher, dät ju Versionsgeskichte fon n Artikkel historisk akroa
 'search-interwiki-caption' => 'Susterprojekte',
 'search-interwiki-default' => '$1 Resultoate:',
 'search-interwiki-more' => '(wiedere)',
-'search-mwsuggest-enabled' => 'mäd Foarsleeke',
-'search-mwsuggest-disabled' => 'neen Foarsleeke',
 'search-relatedarticle' => 'Früünde',
 'mwsuggest-disable' => 'Foarsleeke truch Ajax deaktivierje',
 'searcheverything-enable' => 'Säik in aal Noomensruume',
@@ -1935,11 +1928,7 @@ Wan du die Artikkel wier fon ju Foulgelieste ou hoalje moatest, klik ap ju Siede
 
 'enotif_mailer' => '{{SITENAME}} tält Beskeed uur Email',
 'enotif_reset' => 'Markier aal besoachte Sieden',
-'enotif_newpagetext' => 'Dit is ne näie Siede.',
 'enotif_impersonal_salutation' => '{{SITENAME}} Benutser',
-'changed' => 'annerd',
-'created' => 'näi anlaid',
-'enotif_subject' => '{{SITENAME}} Siede $PAGETITLE wuude $CHANGEDORCREATED fon $PAGEEDITOR',
 'enotif_lastvisited' => 'Aal Annerengen ap aan Blik: $1',
 'enotif_lastdiff' => '$1 wiest alle Annerengen mäd aan Glap.',
 'enotif_anon_editor' => 'Anonyme Benutser $1',
@@ -3300,5 +3289,9 @@ Ne [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie fon ju ''GNU General Public License''
 'revdelete-restricted' => 'Einskränkengen jäilde uk foar Administratore',
 'revdelete-unrestricted' => 'Ienskränkengen foar Administratore wächhoald',
 'newuserlog-byemail' => 'dät Paaswoud wuud uur E-Mail fersoand',
+
+# Search suggestions
+'searchsuggest-search' => 'Säik',
+'searchsuggest-containing' => 'Fultextsäike ätter ...',
 
 );

@@ -41,7 +41,6 @@ $messages = array(
 'tog-uselivepreview' => 'Sebelize live PendiBe (bulukezi JavaScript) (yem nca)',
 'tog-watchlisthideown' => 'Cwankekile zwa afina di zwa mukoloko di kentezi',
 'tog-watchlisthidebots' => 'Cwankekile roboti di zwa mukoloko di kentezi',
-'tog-nolangconversion' => 'Dinyembulisize selti konfesyoni',
 'tog-ccmeonemails' => 'Afi di zwa dubina di melina a afi di xetewi sebelu',
 'tog-diffonly' => 'Ni sa kamukile petulo selt pre petuho',
 
@@ -125,7 +124,6 @@ $messages = array(
 'qbbrowse' => 'Nepile',
 'qbedit' => "Hloli ye ng'i",
 'qbpageoptions' => 'Bye petulo',
-'qbpageinfo' => 'Petulo tuto',
 'qbmyoptions' => 'Zwa petulona',
 'qbspecialpages' => 'Petulo zwenti',
 'faq' => 'Alabile',
@@ -735,10 +733,7 @@ A sa afi kulobala di zwa mukoloko di kentezi, tampi \"ngambu kentezi\".",
 'watching' => 'Kentezi...',
 'unwatching' => 'Dikentezi...',
 
-'enotif_newpagetext' => 'Bye sa nca petulo.',
 'enotif_impersonal_salutation' => '{{SITENAME}} sebelu',
-'changed' => 'petuhoni',
-'created' => 'hlolini',
 
 # Delete
 'deletepage' => 'Afi kulobala petulo',

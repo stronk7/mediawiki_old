@@ -2,21 +2,27 @@
 
 class ArticleTest extends MediaWikiTestCase {
 
-	private $title; // holds a Title object
-	private $article; // holds an article
+	/**
+	 * @var Title
+	 */
+	private $title;
+	/**
+	 * @var Article
+	 */
+	private $article;
 
 	/** creates a title object and its article object */
-	function setUp() {
-		$this->title   = Title::makeTitle( NS_MAIN, 'SomePage' );
+	protected function setUp() {
+		parent::setUp();
+		$this->title = Title::makeTitle( NS_MAIN, 'SomePage' );
 		$this->article = new Article( $this->title );
-
 	}
 
 	/** cleanup title object and its article object */
-	function tearDown() {
-		$this->title   = null;
+	protected function tearDown() {
+		parent::tearDown();
+		$this->title = null;
 		$this->article = null;
-
 	}
 
 	function testImplementsGetMagic() {
@@ -54,6 +60,9 @@ class ArticleTest extends MediaWikiTestCase {
 	 * Checks for the existence of the backwards compatibility static functions (forwarders to WikiPage class)
 	 */
 	function testStaticFunctions() {
+		$this->hideDeprecated( 'Article::getAutosummary' );
+		$this->hideDeprecated( 'WikiPage::getAutosummary' );
+
 		$this->assertEquals( WikiPage::selectFields(), Article::selectFields(),
 			"Article static functions" );
 		$this->assertEquals( true, is_callable( "Article::onArticleCreate" ),

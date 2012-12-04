@@ -2,7 +2,7 @@
  * Base language object with methods for storing and getting
  * language data.
  */
-( function ( mw, $ ) {
+( function ( mw ) {
 
 	var language = {
 		/**
@@ -33,7 +33,7 @@
 		 */
 		getData: function ( langCode, dataKey ) {
 			var langData = language.data;
-			if ( langData[langCode] instanceof mw.Map ) {
+			if ( langData && langData[langCode] instanceof mw.Map ) {
 				return langData[langCode].get( dataKey );
 			}
 			return undefined;
@@ -58,4 +58,4 @@
 
 	mw.language = language;
 
-}( mediaWiki, jQuery ) );
+}( mediaWiki ) );

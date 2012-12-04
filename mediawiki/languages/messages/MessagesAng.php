@@ -173,7 +173,6 @@ $messages = array(
 'qbbrowse' => 'Onbirȝe',
 'qbedit' => 'Ādihte',
 'qbpageoptions' => 'Þēos sīde',
-'qbpageinfo' => 'Ȝeƿef',
 'qbmyoptions' => 'Mīna sīdan',
 'qbspecialpages' => 'Syndriȝa sīdan',
 'faq' => 'Oftost ascoda ascunȝa',
@@ -359,11 +358,8 @@ Cȳþþuhord edƿende ƿōh "<tt>$3: $4</tt>"',
 # Login and logout pages
 'logouttext' => "'''Þū eart nū ūtmeldod.'''
 
-Þū canst ætfeolan tō brūcenne {{SITENAME}} ungecūðe, oþþe þū canst [[Special:UserLogin|inmeldian eft]] tō ylcan oþþe ōðrum brūcende.
+Þū canst ætfeolan tō brūcenne {{SITENAME}} ungecūðe, oþþe þū canst <span class='plainlinks'>[$1 inmeldian eft]</span> tō ylcan oþþe ōðrum brūcende.
 Cnāw þæt sume sīdan cunnon gelǣstende ēowod wesan swā þū wǣre gīet inmeldod, oþ þæt þū clǣnsie þīnes sēcendtōles gemynd.",
-'welcomecreation' => '== Ƿilcumen, $1! ==
-
-Þīn hordcleofa ƿearþ ȝescapen.  Ne forȝiet tō hƿierfenne þīna [[Special:Preferences|{{SITENAME}} foreberunga]].',
 'yourname' => 'Þīn brūcendnama',
 'yourpassword' => 'Þafungƿord:',
 'yourpasswordagain' => 'Þafungƿord edƿrītan:',
@@ -568,8 +564,6 @@ folcliċum āgnunge oþþe ȝelīċum frēom horde (sēo $1 for āscungum).
 'search-interwiki-caption' => 'Sƿeostorƿeorc',
 'search-interwiki-default' => '$1 becymas:',
 'search-interwiki-more' => '(mā)',
-'search-mwsuggest-enabled' => 'mid teohhungum',
-'search-mwsuggest-disabled' => 'nān teohhunga',
 'searchrelated' => 'ȝesibbed',
 'searchall' => 'eall',
 'showingresults' => 'Īewan under oþ <b>$1</b> tōhīgunga onginnenda mid #<b>$2</b>.',
@@ -880,10 +874,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'watching' => 'Ƿæccende...',
 'unwatching' => 'Unƿæccende...',
 
-'enotif_newpagetext' => 'Þēos is nīƿu sīde.',
 'enotif_impersonal_salutation' => '{{SITENAME}} brūcend',
-'changed' => 'hƿorfen',
-'created' => 'ȝescapen',
 'enotif_lastvisited' => 'Sēo $1 for eall hƿearfas siþþan þīn læst cyme.',
 'enotif_lastdiff' => 'Sēo $1 to sēonne þisne hƿearf.',
 'enotif_anon_editor' => 'uncūþ brūcend $1',

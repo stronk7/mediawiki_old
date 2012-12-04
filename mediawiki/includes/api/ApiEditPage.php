@@ -60,11 +60,9 @@ class ApiEditPage extends ApiBase {
 			if ( $titleObj->isRedirect() ) {
 				$oldTitle = $titleObj;
 
-				$titles = Title::newFromRedirectArray(
-					Revision::newFromTitle(
-						$oldTitle, false, Revision::READ_LATEST
-					)->getText( Revision::FOR_THIS_USER )
-				);
+				$titles = Revision::newFromTitle( $oldTitle, false, Revision::READ_LATEST )
+							->getContent( Revision::FOR_THIS_USER, $user )
+							->getRedirectChain();
 				// array_shift( $titles );
 
 				$redirValues = array();
@@ -84,7 +82,32 @@ class ApiEditPage extends ApiBase {
 
 				$apiResult->setIndexedTagName( $redirValues, 'r' );
 				$apiResult->addValue( null, 'redirects', $redirValues );
+
+				// Since the page changed, update $pageObj
+				$pageObj = WikiPage::factory( $titleObj );
 			}
+		}
+
+		if ( !isset( $params['contentmodel'] ) || $params['contentmodel'] == '' ) {
+			$contentHandler = $pageObj->getContentHandler();
+		} else {
+			$contentHandler = ContentHandler::getForModelID( $params['contentmodel'] );
+		}
+
+		// @todo ask handler whether direct editing is supported at all! make allowFlatEdit() method or some such
+
+		if ( !isset( $params['contentformat'] ) || $params['contentformat'] == '' ) {
+			$params['contentformat'] = $contentHandler->getDefaultFormat();
+		}
+
+		$contentFormat = $params['contentformat'];
+
+		if ( !$contentHandler->isSupportedFormat( $contentFormat ) ) {
+			$name = $titleObj->getPrefixedDBkey();
+			$model = $contentHandler->getModelID();
+
+			$this->dieUsage( "The requested format $contentFormat is not supported for content model ".
+							" $model used by $name", 'badformat' );
 		}
 
 		if ( $params['createonly'] && $titleObj->exists() ) {
@@ -103,31 +126,61 @@ class ApiEditPage extends ApiBase {
 			$this->dieUsageMsg( $errors[0] );
 		}
 
-		$articleObj = Article::newFromTitle( $titleObj, $this->getContext() );
-
 		$toMD5 = $params['text'];
 		if ( !is_null( $params['appendtext'] ) || !is_null( $params['prependtext'] ) )
 		{
-			// For non-existent pages, Article::getContent()
-			// returns an interface message rather than ''
-			// We do want getContent()'s behavior for non-existent
-			// MediaWiki: pages, though
-			if ( $articleObj->getID() == 0 && $titleObj->getNamespace() != NS_MEDIAWIKI ) {
-				$content = '';
-			} else {
-				$content = $articleObj->getContent();
+			$content = $pageObj->getContent();
+
+			if ( !$content ) {
+				if ( $titleObj->getNamespace() == NS_MEDIAWIKI ) {
+					# If this is a MediaWiki:x message, then load the messages
+					# and return the message value for x.
+					$text = $titleObj->getDefaultMessageText();
+					if ( $text === false ) {
+						$text = '';
+					}
+
+					try {
+						$content = ContentHandler::makeContent( $text, $this->getTitle() );
+					} catch ( MWContentSerializationException $ex ) {
+						$this->dieUsage( $ex->getMessage(), 'parseerror' );
+						return;
+					}
+				} else {
+					# Otherwise, make a new empty content.
+					$content = $contentHandler->makeEmptyContent();
+				}
+			}
+
+			// @todo: Add support for appending/prepending to the Content interface
+
+			if ( !( $content instanceof TextContent ) ) {
+				$mode = $contentHandler->getModelID();
+				$this->dieUsage( "Can't append to pages using content model $mode", 'appendnotsupported' );
 			}
 
 			if ( !is_null( $params['section'] ) ) {
+				if ( !$contentHandler->supportsSections() ) {
+					$modelName = $contentHandler->getModelID();
+					$this->dieUsage( "Sections are not supported for this content model: $modelName.", 'sectionsnotsupported' );
+				}
+
 				// Process the content for section edits
-				global $wgParser;
 				$section = intval( $params['section'] );
-				$content = $wgParser->getSection( $content, $section, false );
-				if ( $content === false ) {
+				$content = $content->getSection( $section );
+
+				if ( !$content ) {
 					$this->dieUsage( "There is no section {$section}.", 'nosuchsection' );
 				}
 			}
-			$params['text'] = $params['prependtext'] . $content . $params['appendtext'];
+
+			if ( !$content ) {
+				$text = '';
+			} else {
+				$text = $content->serialize( $contentFormat );
+			}
+
+			$params['text'] = $params['prependtext'] . $text . $params['appendtext'];
 			$toMD5 = $params['prependtext'] . $params['appendtext'];
 		}
 
@@ -151,18 +204,21 @@ class ApiEditPage extends ApiBase {
 				$this->dieUsageMsg( array( 'nosuchrevid', $params['undoafter'] ) );
 			}
 
-			if ( $undoRev->getPage() != $articleObj->getID() ) {
+			if ( $undoRev->getPage() != $pageObj->getID() ) {
 				$this->dieUsageMsg( array( 'revwrongpage', $undoRev->getID(), $titleObj->getPrefixedText() ) );
 			}
-			if ( $undoafterRev->getPage() != $articleObj->getID() ) {
+			if ( $undoafterRev->getPage() != $pageObj->getID() ) {
 				$this->dieUsageMsg( array( 'revwrongpage', $undoafterRev->getID(), $titleObj->getPrefixedText() ) );
 			}
 
-			$newtext = $articleObj->getUndoText( $undoRev, $undoafterRev );
-			if ( $newtext === false ) {
+			$newContent = $contentHandler->getUndoContent( $pageObj->getRevision(), $undoRev, $undoafterRev );
+
+			if ( !$newContent ) {
 				$this->dieUsageMsg( 'undo-failure' );
 			}
-			$params['text'] = $newtext;
+
+			$params['text'] = $newContent->serialize( $params['contentformat'] );
+
 			// If no summary was given and we only undid one rev,
 			// use an autosummary
 			if ( is_null( $params['summary'] ) && $titleObj->getNextRevisionID( $undoafterRev->getID() ) == $params['undo'] ) {
@@ -179,6 +235,8 @@ class ApiEditPage extends ApiBase {
 		// That interface kind of sucks, but it's workable
 		$requestArray = array(
 			'wpTextbox1' => $params['text'],
+			'format' => $contentFormat,
+			'model' => $contentHandler->getModelID(),
 			'wpEditToken' => $params['token'],
 			'wpIgnoreBlankSummary' => ''
 		);
@@ -191,12 +249,17 @@ class ApiEditPage extends ApiBase {
 			$requestArray['wpSectionTitle'] = $params['sectiontitle'];
 		}
 
+		// TODO: Pass along information from 'undoafter' as well
+		if ( $params['undo'] > 0 ) {
+			$requestArray['wpUndidRevision'] = $params['undo'];
+		}
+
 		// Watch out for basetimestamp == ''
 		// wfTimestamp() treats it as NOW, almost certainly causing an edit conflict
 		if ( !is_null( $params['basetimestamp'] ) && $params['basetimestamp'] != '' ) {
 			$requestArray['wpEdittime'] = wfTimestamp( TS_MW, $params['basetimestamp'] );
 		} else {
-			$requestArray['wpEdittime'] = $articleObj->getTimestamp();
+			$requestArray['wpEdittime'] = $pageObj->getTimestamp();
 		}
 
 		if ( !is_null( $params['starttimestamp'] ) && $params['starttimestamp'] != '' ) {
@@ -244,7 +307,12 @@ class ApiEditPage extends ApiBase {
 		// TODO: Make them not or check if they still do
 		$wgTitle = $titleObj;
 
-		$ep = new EditPage( $articleObj );
+		$articleObject = new Article( $titleObj );
+		$ep = new EditPage( $articleObject );
+
+		// allow editing of non-textual content.
+		$ep->allowNonTextContent = true;
+
 		$ep->setContextTitle( $titleObj );
 		$ep->importFormData( $req );
 
@@ -262,7 +330,7 @@ class ApiEditPage extends ApiBase {
 		}
 
 		// Do the actual save
-		$oldRevId = $articleObj->getRevIdFetched();
+		$oldRevId = $articleObject->getRevIdFetched();
 		$result = null;
 		// Fake $wgRequest for some hooks inside EditPage
 		// @todo FIXME: This interface SUCKS
@@ -277,6 +345,9 @@ class ApiEditPage extends ApiBase {
 			case EditPage::AS_HOOK_ERROR:
 			case EditPage::AS_HOOK_ERROR_EXPECTED:
 				$this->dieUsageMsg( 'hookaborted' );
+
+			case EditPage::AS_PARSE_ERROR:
+				$this->dieUsage( $status->getMessage(), 'parseerror' );
 
 			case EditPage::AS_IMAGE_REDIRECT_ANON:
 				$this->dieUsageMsg( 'noimageredirect-anon' );
@@ -329,14 +400,16 @@ class ApiEditPage extends ApiBase {
 				$r['result'] = 'Success';
 				$r['pageid'] = intval( $titleObj->getArticleID() );
 				$r['title'] = $titleObj->getPrefixedText();
-				$newRevId = $articleObj->getLatest();
+				$r['contentmodel'] = $titleObj->getContentModel();
+				$newRevId = $articleObject->getLatest();
 				if ( $newRevId == $oldRevId ) {
 					$r['nochange'] = '';
 				} else {
 					$r['oldrevid'] = intval( $oldRevId );
 					$r['newrevid'] = intval( $newRevId );
+					$pageObj->clear();
 					$r['newtimestamp'] = wfTimestamp( TS_ISO_8601,
-						$articleObj->getTimestamp() );
+						$pageObj->getTimestamp() );
 				}
 				break;
 
@@ -380,6 +453,7 @@ class ApiEditPage extends ApiBase {
 				array( 'undo-failure' ),
 				array( 'hashcheckfailed' ),
 				array( 'hookaborted' ),
+				array( 'code' => 'parseerror', 'info' => 'Failed to parse the given text.' ),
 				array( 'noimageredirect-anon' ),
 				array( 'noimageredirect-logged' ),
 				array( 'spamdetected', 'spam' ),
@@ -397,6 +471,13 @@ class ApiEditPage extends ApiBase {
 				array( 'unknownerror', 'retval' ),
 				array( 'code' => 'nosuchsection', 'info' => 'There is no section section.' ),
 				array( 'code' => 'invalidsection', 'info' => 'The section parameter must be set to an integer or \'new\'' ),
+				array( 'code' => 'sectionsnotsupported', 'info' => 'Sections are not supported for this type of page.' ),
+				array( 'code' => 'editnotsupported', 'info' => 'Editing of this type of page is not supported using '
+																. 'the text based edit API.' ),
+				array( 'code' => 'appendnotsupported', 'info' => 'This type of page can not be edited by appending '
+																. 'or prepending text.' ),
+				array( 'code' => 'badformat', 'info' => 'The requested serialization format can not be applied to '
+														. 'the page\'s content model' ),
 				array( 'customcssprotected' ),
 				array( 'customjsprotected' ),
 			)
@@ -460,6 +541,12 @@ class ApiEditPage extends ApiBase {
 				ApiBase::PARAM_TYPE => 'boolean',
 				ApiBase::PARAM_DFLT => false,
 			),
+			'contentformat' => array(
+				ApiBase::PARAM_TYPE => ContentHandler::getAllContentFormats(),
+			),
+			'contentmodel' => array(
+				ApiBase::PARAM_TYPE => ContentHandler::getContentModels(),
+			)
 		);
 	}
 
@@ -490,7 +577,7 @@ class ApiEditPage extends ApiBase {
 			'watch' => 'Add the page to your watchlist',
 			'unwatch' => 'Remove the page from your watchlist',
 			'watchlist' => 'Unconditionally add or remove the page from your watchlist, use preferences or do not change watch',
-			'md5' => array(	"The MD5 hash of the {$p}text parameter, or the {$p}prependtext and {$p}appendtext parameters concatenated.",
+			'md5' => array( "The MD5 hash of the {$p}text parameter, or the {$p}prependtext and {$p}appendtext parameters concatenated.",
 					'If set, the edit won\'t be done unless the hash is correct' ),
 			'prependtext' => "Add this text to the beginning of the page. Overrides {$p}text",
 			'appendtext' => array( "Add this text to the end of the page. Overrides {$p}text.",
@@ -498,6 +585,8 @@ class ApiEditPage extends ApiBase {
 			'undo' => "Undo this revision. Overrides {$p}text, {$p}prependtext and {$p}appendtext",
 			'undoafter' => 'Undo all revisions from undo to this one. If not set, just undo one revision',
 			'redirect' => 'Automatically resolve redirects',
+			'contentformat' => 'Content serialization format used for the input text',
+			'contentmodel' => 'Content model of the new content',
 		);
 	}
 

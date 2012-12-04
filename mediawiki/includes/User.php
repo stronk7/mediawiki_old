@@ -286,7 +286,10 @@ class User {
 				$this->loadFromId();
 				break;
 			case 'session':
-				$this->loadFromSession();
+				if( !$this->loadFromSession() ) {
+					// Loading from session failed. Load defaults.
+					$this->loadDefaults();
+				}
 				wfRunHooks( 'UserLoadAfterLoadFromSession', array( $this ) );
 				break;
 			default:
@@ -367,7 +370,7 @@ class User {
 	 *    User::getCanonicalName(), except that true is accepted as an alias
 	 *    for 'valid', for BC.
 	 *
-	 * @return User object, or false if the username is invalid
+	 * @return User|bool User object, or false if the username is invalid
 	 *    (e.g. if it contains illegal characters or is an IP address). If the
 	 *    username is not present in the database, the result will be a user object
 	 *    with a name, zero user ID and default settings.
@@ -452,11 +455,12 @@ class User {
 	 * will be loaded once more from the database when accessing them.
 	 *
 	 * @param $row Array A row from the user table
+	 * @param $data Array Further data to load into the object (see User::loadFromRow for valid keys)
 	 * @return User
 	 */
-	public static function newFromRow( $row ) {
+	public static function newFromRow( $row, $data = null ) {
 		$user = new User;
-		$user->loadFromRow( $row );
+		$user->loadFromRow( $row, $data );
 		return $user;
 	}
 
@@ -762,6 +766,7 @@ class User {
 	 *                - 'usable'     Valid for batch processes and login
 	 *                - 'creatable'  Valid for batch processes, login and account creation
 	 *
+	 * @throws MWException
 	 * @return bool|string
 	 */
 	public static function getCanonicalName( $name, $validate = 'valid' ) {
@@ -813,39 +818,16 @@ class User {
 
 	/**
 	 * Count the number of edits of a user
-	 * @todo It should not be static and some day should be merged as proper member function / deprecated -- domas
 	 *
 	 * @param $uid Int User ID to check
 	 * @return Int the user's edit count
+	 *
+	 * @deprecated since 1.21 in favour of User::getEditCount
 	 */
 	public static function edits( $uid ) {
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-		// check if the user_editcount field has been initialized
-		$field = $dbr->selectField(
-			'user', 'user_editcount',
-			array( 'user_id' => $uid ),
-			__METHOD__
-		);
-
-		if( $field === null ) { // it has not been initialized. do so.
-			$dbw = wfGetDB( DB_MASTER );
-			$count = $dbr->selectField(
-				'revision', 'count(*)',
-				array( 'rev_user' => $uid ),
-				__METHOD__
-			);
-			$dbw->update(
-				'user',
-				array( 'user_editcount' => $count ),
-				array( 'user_id' => $uid ),
-				__METHOD__
-			);
-		} else {
-			$count = $field;
-		}
-		wfProfileOut( __METHOD__ );
-		return $count;
+		wfDeprecated( __METHOD__, '1.21' );
+		$user = self::newFromId( $uid );
+		return $user->getEditCount();
 	}
 
 	/**
@@ -889,7 +871,7 @@ class User {
 		if( $loggedOut !== null ) {
 			$this->mTouched = wfTimestamp( TS_MW, $loggedOut );
 		} else {
-			$this->mTouched = '0'; # Allow any pages to be cached
+			$this->mTouched = '1'; # Allow any pages to be cached
 		}
 
 		$this->mToken = null; // Don't run cryptographic functions till we need a token
@@ -933,8 +915,7 @@ class User {
 	}
 
 	/**
-	 * Load user data from the session or login cookie. If there are no valid
-	 * credentials, initialises the user as an anonymous user.
+	 * Load user data from the session or login cookie.
 	 * @return Bool True if the user is logged in, false otherwise.
 	 */
 	private function loadFromSession() {
@@ -962,7 +943,6 @@ class User {
 		if ( $cookieId !== null ) {
 			$sId = intval( $cookieId );
 			if( $sessId !== null && $cookieId != $sessId ) {
-				$this->loadDefaults(); // Possible collision!
 				wfDebugLog( 'loginSessions', "Session user ID ($sessId) and
 					cookie user ID ($sId) don't match!" );
 				return false;
@@ -971,7 +951,6 @@ class User {
 		} elseif ( $sessId !== null && $sessId != 0 ) {
 			$sId = $sessId;
 		} else {
-			$this->loadDefaults();
 			return false;
 		}
 
@@ -981,21 +960,18 @@ class User {
 			$sName = $request->getCookie( 'UserName' );
 			$request->setSessionData( 'wsUserName', $sName );
 		} else {
-			$this->loadDefaults();
 			return false;
 		}
 
 		$proposedUser = User::newFromId( $sId );
 		if ( !$proposedUser->isLoggedIn() ) {
 			# Not a valid ID
-			$this->loadDefaults();
 			return false;
 		}
 
 		global $wgBlockDisablesLogin;
 		if( $wgBlockDisablesLogin && $proposedUser->isBlocked() ) {
 			# User blocked and we've disabled blocked user logins
-			$this->loadDefaults();
 			return false;
 		}
 
@@ -1007,7 +983,6 @@ class User {
 			$from = 'cookie';
 		} else {
 			# No session or persistent login cookie
-			$this->loadDefaults();
 			return false;
 		}
 
@@ -1019,7 +994,6 @@ class User {
 		} else {
 			# Invalid credentials
 			wfDebug( "User: can't log in from $from, invalid credentials\n" );
-			$this->loadDefaults();
 			return false;
 		}
 	}
@@ -1063,8 +1037,12 @@ class User {
 	 * Initialize this object from a row from the user table.
 	 *
 	 * @param $row Array Row from the user table to load.
+	 * @param $data Array Further user data to load into the object
+	 *
+	 *	user_groups		Array with groups out of the user_groups table
+	 *	user_properties		Array with properties out of the user_properties table
 	 */
-	public function loadFromRow( $row ) {
+	public function loadFromRow( $row, $data = null ) {
 		$all = true;
 
 		$this->mGroups = null; // deferred
@@ -1121,6 +1099,15 @@ class User {
 
 		if ( $all ) {
 			$this->mLoadedItems = true;
+		}
+
+		if ( is_array( $data ) ) {
+			if ( isset( $data['user_groups'] ) && is_array( $data['user_groups'] ) ) {
+				$this->mGroups = $data['user_groups'];
+			}
+			if ( isset( $data['user_properties'] ) && is_array( $data['user_properties'] ) ) {
+				$this->loadOptions( $data['user_properties'] );
+			}
 		}
 	}
 
@@ -1182,20 +1169,26 @@ class User {
 				}
 				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
 
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
+				$logEntry = new ManualLogEntry( 'rights', 'autopromote' );
+				$logEntry->setPerformer( $this );
+				$logEntry->setTarget( $this->getUserPage() );
+				$logEntry->setParameters( array(
+					'4::oldgroups' => $oldGroups,
+					'5::newgroups' => $newGroups,
+				) );
+				$logid = $logEntry->insert();
+				if ( $wgAutopromoteOnceLogInRC ) {
+					$logEntry->publish( $logid );
+				}
 			}
 		}
 		return $toPromote;
 	}
 
 	/**
-	 * Clear various cached data stored in this object.
+	 * Clear various cached data stored in this object. The cache of the user table
+	 * data (i.e. self::$mCacheVars) is not cleared unless $reloadFrom is given.
+	 *
 	 * @param $reloadFrom bool|String Reload user and user_groups table data from a
 	 *   given source. May be "name", "id", "defaults", "session", or false for
 	 *   no reload.
@@ -1209,6 +1202,8 @@ class User {
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
 		$this->mOptions = null;
+		$this->mOptionsLoaded = false;
+		$this->mEditCount = null;
 
 		if ( $reloadFrom ) {
 			$this->mLoadedItems = array();
@@ -1225,22 +1220,23 @@ class User {
 	public static function getDefaultOptions() {
 		global $wgNamespacesToBeSearchedDefault, $wgDefaultUserOptions, $wgContLang, $wgDefaultSkin;
 
+		static $defOpt = null;
+		if ( !defined( 'MW_PHPUNIT_TEST' ) && $defOpt !== null ) {
+			// Disabling this for the unit tests, as they rely on being able to change $wgContLang
+			// mid-request and see that change reflected in the return value of this function.
+			// Which is insane and would never happen during normal MW operation
+			return $defOpt;
+		}
+
 		$defOpt = $wgDefaultUserOptions;
 		# default language setting
-		$variant = $wgContLang->getDefaultVariant();
-		$defOpt['variant'] = $variant;
-		$defOpt['language'] = $variant;
+		$defOpt['variant'] = $wgContLang->getCode();
+		$defOpt['language'] = $wgContLang->getCode();
 		foreach( SearchEngine::searchableNamespaces() as $nsnum => $nsname ) {
 			$defOpt['searchNs'.$nsnum] = !empty( $wgNamespacesToBeSearchedDefault[$nsnum] );
 		}
 		$defOpt['skin'] = $wgDefaultSkin;
 
-		// FIXME: Ideally we'd cache the results of this function so the hook is only run once,
-		// but that breaks the parser tests because they rely on being able to change $wgContLang
-		// mid-request and see that change reflected in the return value of this function.
-		// Which is insane and would never happen during normal MW operation, but is also not
-		// likely to get fixed unless and until we context-ify everything.
-		// See also https://www.mediawiki.org/wiki/Special:Code/MediaWiki/101488#c25275
 		wfRunHooks( 'UserGetDefaultOptions', array( &$defOpt ) );
 
 		return $defOpt;
@@ -2223,13 +2219,6 @@ class User {
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
-		if ( is_null( $this->mOptions ) ) {
-			if($defaultOverride != '') {
-				return $defaultOverride;
-			}
-			$this->mOptions = User::getDefaultOptions();
-		}
-
 		# We want 'disabled' preferences to always behave as the default value for
 		# users, even if they have set the option explicitly in their settings (ie they
 		# set it, and then it was disabled removing their ability to change it).  But
@@ -2305,15 +2294,11 @@ class User {
 	 * @param $val mixed New value to set
 	 */
 	public function setOption( $oname, $val ) {
-		$this->load();
 		$this->loadOptions();
 
 		// Explicitly NULL values should refer to defaults
 		if( is_null( $val ) ) {
-			$defaultOption = self::getDefaultOption( $oname );
-			if( !is_null( $defaultOption ) ) {
-				$val = $defaultOption;
-			}
+			$val = self::getDefaultOption( $oname );
 		}
 
 		$this->mOptions[$oname] = $val;
@@ -2372,7 +2357,7 @@ class User {
 			$this->mRights = self::getGroupPermissions( $this->getEffectiveGroups() );
 			wfRunHooks( 'UserGetRights', array( $this, &$this->mRights ) );
 			// Force reindexation of rights when a hook has unset one of them
-			$this->mRights = array_values( $this->mRights );
+			$this->mRights = array_values( array_unique( $this->mRights ) );
 		}
 		return $this->mRights;
 	}
@@ -2404,6 +2389,8 @@ class User {
 			) );
 			# Hook for additional groups
 			wfRunHooks( 'UserEffectiveGroups', array( &$this, &$this->mEffectiveGroups ) );
+			// Force reindexation of groups when a hook has unset one of them
+			$this->mEffectiveGroups = array_values( array_unique( $this->mEffectiveGroups ) );
 			wfProfileOut( __METHOD__ );
 		}
 		return $this->mEffectiveGroups;
@@ -2467,16 +2454,29 @@ class User {
 	 * @return Int
 	 */
 	public function getEditCount() {
-		if( $this->getId() ) {
-			if ( !isset( $this->mEditCount ) ) {
-				/* Populate the count, if it has not been populated yet */
-				$this->mEditCount = User::edits( $this->mId );
-			}
-			return $this->mEditCount;
-		} else {
-			/* nil */
+		if ( !$this->getId() ) {
 			return null;
 		}
+
+		if ( !isset( $this->mEditCount ) ) {
+			/* Populate the count, if it has not been populated yet */
+			wfProfileIn( __METHOD__ );
+			$dbr = wfGetDB( DB_SLAVE );
+			// check if the user_editcount field has been initialized
+			$count = $dbr->selectField(
+				'user', 'user_editcount',
+				array( 'user_id' => $this->mId ),
+				__METHOD__
+			);
+
+			if( $count === null ) {
+				// it has not been initialized. do so.
+				$count = $this->initEditCount();
+			}
+			$this->mEditCount = intval( $count );
+			wfProfileOut( __METHOD__ );
+		}
+		return $this->mEditCount;
 	}
 
 	/**
@@ -2798,9 +2798,13 @@ class User {
 	 * @param $value String Value to set
 	 * @param $exp Int Expiration time, as a UNIX time value;
 	 *                   if 0 or not specified, use the default $wgCookieExpiration
+	 * @param $secure Bool
+	 *  true: Force setting the secure attribute when setting the cookie
+	 *  false: Force NOT setting the secure attribute when setting the cookie
+	 *  null (default): Use the default ($wgCookieSecure) to set the secure attribute
 	 */
-	protected function setCookie( $name, $value, $exp = 0 ) {
-		$this->getRequest()->response()->setcookie( $name, $value, $exp );
+	protected function setCookie( $name, $value, $exp = 0, $secure = null ) {
+		$this->getRequest()->response()->setcookie( $name, $value, $exp, null, null, $secure );
 	}
 
 	/**
@@ -2816,8 +2820,9 @@ class User {
 	 *
 	 * @param $request WebRequest object to use; $wgRequest will be used if null
 	 *        is passed.
+	 * @param $secure Whether to force secure/insecure cookies or use default
 	 */
-	public function setCookies( $request = null ) {
+	public function setCookies( $request = null, $secure = null ) {
 		if ( $request === null ) {
 			$request = $this->getRequest();
 		}
@@ -2856,8 +2861,17 @@ class User {
 			if ( $value === false ) {
 				$this->clearCookie( $name );
 			} else {
-				$this->setCookie( $name, $value );
+				$this->setCookie( $name, $value, 0, $secure );
 			}
+		}
+
+		/**
+		 * If wpStickHTTPS was selected, also set an insecure cookie that
+		 * will cause the site to redirect the user to HTTPS, if they access
+		 * it over HTTP. Bug 29898.
+		 */
+		if ( $request->getCheck( 'wpStickHTTPS' ) ) {
+			$this->setCookie( 'forceHTTPS', 'true', time() + 2592000, false ); //30 days
 		}
 	}
 
@@ -2881,6 +2895,7 @@ class User {
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
+		$this->clearCookie( 'forceHTTPS' );
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );
@@ -2997,7 +3012,29 @@ class User {
 	}
 
 	/**
-	 * Add this existing user object to the database
+	 * Add this existing user object to the database. If the user already
+	 * exists, a fatal status object is returned, and the user object is
+	 * initialised with the data from the database.
+	 *
+	 * Previously, this function generated a DB error due to a key conflict
+	 * if the user already existed. Many extension callers use this function
+	 * in code along the lines of:
+	 *
+	 *   $user = User::newFromName( $name );
+	 *   if ( !$user->isLoggedIn() ) {
+	 *       $user->addToDatabase();
+	 *   }
+	 *   // do something with $user...
+	 *
+	 * However, this was vulnerable to a race condition (bug 16020). By
+	 * initialising the user object if the user exists, we aim to support this
+	 * calling sequence as far as possible.
+	 *
+	 * Note that if the user exists, this function will acquire a write lock,
+	 * so it is still advisable to make the call conditional on isLoggedIn(),
+	 * and to commit the transaction after calling.
+	 *
+	 * @return Status
 	 */
 	public function addToDatabase() {
 		$this->load();
@@ -3020,14 +3057,31 @@ class User {
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
 				'user_editcount' => 0,
 				'user_touched' => $dbw->timestamp( $this->mTouched ),
-			), __METHOD__
+			), __METHOD__,
+			array( 'IGNORE' )
 		);
+		if ( !$dbw->affectedRows() ) {
+			$this->mId = $dbw->selectField( 'user', 'user_id',
+				array( 'user_name' => $this->mName ), __METHOD__ );
+			$loaded = false;
+			if ( $this->mId ) {
+				if ( $this->loadFromDatabase() ) {
+					$loaded = true;
+				}
+			}
+			if ( !$loaded ) {
+				throw new MWException( __METHOD__. ": hit a key conflict attempting " .
+					"to insert a user row, but then it doesn't exist when we select it!" );
+			}
+			return Status::newFatal( 'userexists' );
+		}
 		$this->mId = $dbw->insertId();
 
 		// Clear instance cache other than user table data, which is already accurate
 		$this->clearInstanceCache();
 
 		$this->saveOptions();
+		return Status::newGood();
 	}
 
 	/**
@@ -3629,12 +3683,25 @@ class User {
 	public static function getGroupsWithPermission( $role ) {
 		global $wgGroupPermissions;
 		$allowedGroups = array();
-		foreach ( $wgGroupPermissions as $group => $rights ) {
-			if ( isset( $rights[$role] ) && $rights[$role] ) {
+		foreach ( array_keys( $wgGroupPermissions ) as $group ) {
+			if ( self::groupHasPermission( $group, $role ) ) {
 				$allowedGroups[] = $group;
 			}
 		}
 		return $allowedGroups;
+	}
+
+	/**
+	 * Check, if the given group has the given permission
+	 *
+	 * @param $group String Group to check
+	 * @param $role String Role to check
+	 * @return bool
+	 */
+	public static function groupHasPermission( $group, $role ) {
+		global $wgGroupPermissions, $wgRevokePermissions;
+		return isset( $wgGroupPermissions[$group][$role] ) && $wgGroupPermissions[$group][$role]
+			&& !( isset( $wgRevokePermissions[$group][$role] ) && $wgRevokePermissions[$group][$role] );
 	}
 
 	/**
@@ -3875,41 +3942,61 @@ class User {
 	public function incEditCount() {
 		if( !$this->isAnon() ) {
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'user',
+			$dbw->update(
+				'user',
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
-				__METHOD__ );
+				__METHOD__
+			);
 
 			// Lazy initialization check...
 			if( $dbw->affectedRows() == 0 ) {
-				// Pull from a slave to be less cruel to servers
-				// Accuracy isn't the point anyway here
-				$dbr = wfGetDB( DB_SLAVE );
-				$count = $dbr->selectField( 'revision',
-					'COUNT(rev_user)',
-					array( 'rev_user' => $this->getId() ),
-					__METHOD__ );
-
 				// Now here's a goddamn hack...
+				$dbr = wfGetDB( DB_SLAVE );
 				if( $dbr !== $dbw ) {
 					// If we actually have a slave server, the count is
 					// at least one behind because the current transaction
 					// has not been committed and replicated.
-					$count++;
+					$this->initEditCount( 1 );
 				} else {
 					// But if DB_SLAVE is selecting the master, then the
 					// count we just read includes the revision that was
 					// just added in the working transaction.
+					$this->initEditCount();
 				}
-
-				$dbw->update( 'user',
-					array( 'user_editcount' => $count ),
-					array( 'user_id' => $this->getId() ),
-					__METHOD__ );
 			}
 		}
 		// edit count in user cache too
 		$this->invalidateCache();
+	}
+
+	/**
+	 * Initialize user_editcount from data out of the revision table
+	 *
+	 * @param $add Integer Edits to add to the count from the revision table
+	 * @return Integer Number of edits
+	 */
+	protected function initEditCount( $add = 0 ) {
+		// Pull from a slave to be less cruel to servers
+		// Accuracy isn't the point anyway here
+		$dbr = wfGetDB( DB_SLAVE );
+		$count = (int) $dbr->selectField(
+			'revision',
+			'COUNT(rev_user)',
+			array( 'rev_user' => $this->getId() ),
+			__METHOD__
+		);
+		$count = $count + $add;
+
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->update(
+			'user',
+			array( 'user_editcount' => $count ),
+			array( 'user_id' => $this->getId() ),
+			__METHOD__
+		);
+
+		return $count;
 	}
 
 	/**
@@ -4051,14 +4138,32 @@ class User {
 	}
 
 	/**
-	 * @todo document
+	 * Load the user options either from cache, the database or an array
+	 *
+	 * @param $data Rows for the current user out of the user_properties table
 	 */
-	protected function loadOptions() {
+	protected function loadOptions( $data = null ) {
+		global $wgContLang;
+
 		$this->load();
-		if ( $this->mOptionsLoaded || !$this->getId() )
+
+		if ( $this->mOptionsLoaded ) {
 			return;
+		}
 
 		$this->mOptions = self::getDefaultOptions();
+
+		if ( !$this->getId() ) {
+			// For unlogged-in users, load language/variant options from request.
+			// There's no need to do it for logged-in users: they can set preferences,
+			// and handling of page content is done by $pageLang->getPreferredVariant() and such,
+			// so don't override user's choice (especially when the user chooses site default).
+			$variant = $wgContLang->getDefaultVariant();
+			$this->mOptions['variant'] = $variant;
+			$this->mOptions['language'] = $variant;
+			$this->mOptionsLoaded = true;
+			return;
+		}
 
 		// Maybe load from the object
 		if ( !is_null( $this->mOptionOverrides ) ) {
@@ -4067,21 +4172,27 @@ class User {
 				$this->mOptions[$key] = $value;
 			}
 		} else {
-			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
-			// Load from database
-			$dbr = wfGetDB( DB_SLAVE );
+			if( !is_array( $data ) ) {
+				wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
+				// Load from database
+				$dbr = wfGetDB( DB_SLAVE );
 
-			$res = $dbr->select(
-				'user_properties',
-				array( 'up_property', 'up_value' ),
-				array( 'up_user' => $this->getId() ),
-				__METHOD__
-			);
+				$res = $dbr->select(
+					'user_properties',
+					array( 'up_property', 'up_value' ),
+					array( 'up_user' => $this->getId() ),
+					__METHOD__
+				);
 
-			$this->mOptionOverrides = array();
-			foreach ( $res as $row ) {
-				$this->mOptionOverrides[$row->up_property] = $row->up_value;
-				$this->mOptions[$row->up_property] = $row->up_value;
+				$this->mOptionOverrides = array();
+				$data = array();
+				foreach ( $res as $row ) {
+					$data[$row->up_property] = $row->up_value;
+				}
+			}
+			foreach ( $data as $property => $value ) {
+				$this->mOptionOverrides[$property] = $value;
+				$this->mOptions[$property] = $value;
 			}
 		}
 

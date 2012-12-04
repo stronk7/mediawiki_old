@@ -7,11 +7,13 @@
 class DatabaseTest extends MediaWikiTestCase {
 	var $db, $functionTest = false;
 
-	function setUp() {
+	protected function setUp() {
+		parent::setUp();
 		$this->db = wfGetDB( DB_MASTER );
 	}
 
-	function tearDown() {
+	protected function tearDown() {
+		parent::tearDown();
 		if ( $this->functionTest ) {
 			$this->dropFunctions();
 			$this->functionTest = false;
@@ -190,9 +192,6 @@ class DatabaseTest extends MediaWikiTestCase {
 			$sql );
 	}
 
-	/**
-	 * @group Broken
-	 */
 	function testStoredFunctions() {
 		if ( !in_array( wfGetDB( DB_MASTER )->getType(), array( 'mysql', 'postgres' ) ) ) {
 			$this->markTestSkipped( 'MySQL or Postgres required' );

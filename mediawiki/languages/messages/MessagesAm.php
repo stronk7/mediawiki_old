@@ -182,7 +182,6 @@ $messages = array(
 'qbbrowse' => 'ቃኝ',
 'qbedit' => 'አርም',
 'qbpageoptions' => 'ይህ ገጽ',
-'qbpageinfo' => 'አግባብ',
 'qbmyoptions' => 'የኔ ገጾች',
 'qbspecialpages' => 'ልዩ ገጾች',
 'faq' => 'ብጊየጥ (ብዙ ጊዜ የሚጠየቁ ጥያቀዎች)',
@@ -197,7 +196,7 @@ $messages = array(
 'vector-action-unprotect' => 'አለመቆለፍ',
 'vector-view-create' => 'አዲስ ፍጠር',
 'vector-view-edit' => 'አርም',
-'vector-view-history' => ' ታሪኩን አሳይ',
+'vector-view-history' => 'ታሪኩን አሳይ',
 'vector-view-view' => 'ለማንበብ',
 'vector-view-viewsource' => 'ጥሬ ኮድ ለመመልከት',
 
@@ -389,9 +388,6 @@ $2",
 
 አሁንም በቁጥር መታወቂያዎ ማዘጋጀት ይቻላል። ወይም ደግሞ እንደገና በብዕር ስምዎ መግባት ይችላሉ።
 በጥቂት ሴኮንድ ውስጥ ወደሚከተለው ገጽ በቀጥታ ይመለሳል፦",
-'welcomecreation' => '== ሰላምታ፣ $1! ==
-
-የብዕር ስምዎ ተፈጥሯል። ምርጫዎችዎን ለማስተካከል ይችላሉ።',
 'yourname' => 'Username / የብዕር ስም:',
 'yourpassword' => 'Password / መግቢያ ቃል',
 'yourpasswordagain' => 'መግቢያ ቃልዎን ዳግመኛ ይስጡ',
@@ -736,8 +732,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'search-interwiki-caption' => 'ተዛማጅ ስራዎች',
 'search-interwiki-default' => '$1 ውጤቶች፦',
 'search-interwiki-more' => '(ተጨማሪ)',
-'search-mwsuggest-enabled' => 'ከ አማራጮች ጋር',
-'search-mwsuggest-disabled' => 'አማራጭ አልተገኘለትም',
 'search-relatedarticle' => 'የተዛመደ',
 'searchrelated' => 'የተዛመደ',
 'searchall' => 'ሁሉ',
@@ -946,6 +940,7 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'recentchanges-legend' => 'የቅርብ ለውጥ አማራጮች፦',
 'recentchanges-summary' => 'በዚሁ ገጽ ላይ በቅርብ ጊዜ የወጡ አዳዲስ ለውጦች ለመከታተል ይችላሉ።',
 'recentchanges-feed-description' => 'በዚህ ዊኪ ላይ በቅርብ ግዜ የተለወጠውን በዚሁ feed መከታተል ይችላሉ',
+'recentchanges-label-minor' => 'ይህ ለውጥ ጥቃቅን ነው።',
 'rcnote' => "ከ$5 $4 እ.ኤ.አ. {{PLURAL:$2|ባለፈው 1 ቀን|ባለፉት '''$2''' ቀኖች}} {{PLURAL:$1|የተደረገው '''1''' ለውጥ እታች ይገኛል|የተደረጉት '''$1''' መጨረሻ ለውጦች እታች ይገኛሉ}}።",
 'rcnotefrom' => "ከ'''$2''' ጀምሮ የተቀየሩት ገጾች (እስከ '''$1''' ድረስ) ክዚህ በታች ይታያሉ።",
 'rclistfrom' => '(ከ $1 ጀምሮ አዲስ ለውጦቹን ለማየት)',
@@ -1363,11 +1358,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => 'የ{{SITENAME}} ኢሜል-ማስታወቂያ',
 'enotif_reset' => 'ገጾች ሁሉ የተጎበኙ ሆነው ለማመልከት',
-'enotif_newpagetext' => 'ይህ አዲስ ገጽ ነው።',
 'enotif_impersonal_salutation' => '{{SITENAME}} ተጠቃሚ',
-'changed' => 'ተለወጠ',
-'created' => 'ተፈጠረ',
-'enotif_subject' => 'የ{{SITENAME}} ገጽ $PAGETITLE  በ$PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => 'መጨረሻ ከጎበኙ ጀምሮ ለውጦችን ሁሉ ለመመልከት $1 ይዩ።',
 'enotif_lastdiff' => 'ይህን ለውጥ ለማመልከት $1 ይዩ።',
 'enotif_anon_editor' => 'ቁጥር አድራሻ $1',
@@ -1837,6 +1828,16 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'spambot_username' => 'MediaWiki የስፓም ማፅዳት',
 'spam_reverting' => 'ወደ $1 የሚወስድ መያያዣ ወደሌለበት መጨረሻ ዕትም መለሰው',
 
+# Info page
+'pageinfo-firstuser' => 'የገጹ ፈጣሪ',
+'pageinfo-firsttime' => 'የተፈጠረበት ቀን',
+'pageinfo-lastuser' => 'የመጨረሻው አራሚ',
+'pageinfo-lasttime' => 'የመጨረሻው ዕትም ቀን',
+'pageinfo-edits' => 'ጠቅላላ የእርማት ቁጥር',
+'pageinfo-toolboxlink' => 'የዚህ ገጽ መረጃ',
+'pageinfo-contentpage-yes' => 'አዎ',
+'pageinfo-protect-cascading-yes' => 'አዎ',
+
 # Patrolling
 'markaspatrolleddiff' => 'የተሳለፈ ሆኖ ማመልከት',
 'markaspatrolledtext' => 'ይህን ገጽ የተመለከተ ሆኖ ለማሳለፍ',
@@ -2266,6 +2267,10 @@ $3
 
 # New logging system
 'newuserlog-byemail' => 'ማለፊያ-ቃል በኤ-መልዕክት ተልኳል',
+
+# Search suggestions
+'searchsuggest-search' => 'ፈልግ',
+'searchsuggest-containing' => 'በመጣጥፎች ይዘት ለመፈልግ...',
 
 # API errors
 'api-error-badaccess-groups' => 'እርስዎ በዚህ ውኪ ላይ ፋይል እንድሊኩ አልተፈቀደም።',

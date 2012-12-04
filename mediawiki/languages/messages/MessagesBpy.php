@@ -13,19 +13,6 @@
 
 $fallback = 'bn';
 
-$digitTransformTable = array(
-	'0' => '০',
-	'1' => '১',
-	'2' => '২',
-	'3' => '৩',
-	'4' => '৪',
-	'5' => '৫',
-	'6' => '৬',
-	'7' => '৭',
-	'8' => '৮',
-	'9' => '৯'
-);
-
 $namespaceNames = array(
 	NS_MEDIA            => 'মিডিয়া',
 	NS_SPECIAL          => 'বিশেষ',
@@ -43,6 +30,19 @@ $namespaceNames = array(
 	NS_HELP_TALK        => 'পাংলাকর_য়্যারী',
 	NS_CATEGORY         => 'থাক',
 	NS_CATEGORY_TALK    => 'থাকর_য়্যারী',
+);
+
+$digitTransformTable = array(
+	'0' => '০',
+	'1' => '১',
+	'2' => '২',
+	'3' => '৩',
+	'4' => '৪',
+	'5' => '৫',
+	'6' => '৬',
+	'7' => '৭',
+	'8' => '৮',
+	'9' => '৯'
 );
 
 $messages = array(
@@ -190,7 +190,6 @@ $messages = array(
 'qbbrowse' => 'বুলিয়া চা',
 'qbedit' => 'পতানি',
 'qbpageoptions' => 'পাতা এহানর সারুক',
-'qbpageinfo' => 'পাতা এহানর পৌ',
 'qbmyoptions' => 'মর পছন',
 'qbspecialpages' => 'বিশেষ পাতাহানি',
 'faq' => 'আঙলাক',
@@ -434,10 +433,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''তি খানি আগে তর একাউন্টহাত্ত নিকুরিসত।'''
 
-এ পরিস্থিতিত তি বেনাঙল {{SITENAME}} ব্যবহার করানি পারর, নাইলে আরাক নাঙল [[Special:UserLogin|বারো হমানি]] পারর।
+এ পরিস্থিতিত তি বেনাঙল {{SITENAME}} ব্যবহার করানি পারর, নাইলে আরাক নাঙল <span class='plainlinks'>[$1 বারো হমানি]</span> পারর।
 খিয়াল থ, কোন কোন পাতা তি আগর অংতাত আসত বুলিয়া দেখা দিতে পারে। অসারে ইলে তি ব্রাওজারর ক্যাশ সেঙকরে বেলা (clear browser cache)।",
-'welcomecreation' => '==সম্ভাষা, $1! ==
-তর একাউন্টহান হঙিল। তর [[Special:Preferences|{{SITENAME}} পছনহান]] সিলানি না পাহুরিস।',
 'yourname' => 'আতাকুরার নাংহান (Username)',
 'yourpassword' => 'খন্তাচাবিগ (password)',
 'yourpasswordagain' => 'খন্তাচাবিগ (password) আরাকমু ইকর',
@@ -865,8 +862,6 @@ $2',
 'search-interwiki-caption' => 'বনক প্রকল্পহানি',
 'search-interwiki-default' => '$1 ফলাফলহানি:',
 'search-interwiki-more' => '(আরাকউ)',
-'search-mwsuggest-enabled' => 'পরামর্শল',
-'search-mwsuggest-disabled' => 'পরামর্শ নেই',
 'search-relatedarticle' => 'সাকেই আসে',
 'mwsuggest-disable' => 'AJAXরে থা নাদি',
 'searcheverything-enable' => 'হাব্বি নাঙথাকে বিসারা',
@@ -1281,8 +1276,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'চা...',
 'unwatching' => 'নাউচা...',
-
-'changed' => 'পতেসে',
 
 # Delete
 'deletepage' => 'পাতাহান পুস',
@@ -1736,5 +1729,9 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'revdelete-restricted' => 'ডান্ডিকরেকুরাগরাঙ সীমাবদ্ধতাহানি ফলা',
 'revdelete-unrestricted' => 'ডান্ডিকরেকুরাগরাঙ সীমাবদ্ধতাহানি নেইকর',
 'newuserlog-byemail' => 'ই-মেইলর মা পেঠাদিয়াসি পাসৱার্ডগ',
+
+# Search suggestions
+'searchsuggest-search' => 'বিসারা',
+'searchsuggest-containing' => 'আসেতা...',
 
 );

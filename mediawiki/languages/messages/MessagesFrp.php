@@ -151,7 +151,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORCIÉR_LO_SOMÈRO__', '__FORCIÉR_LA_TRÂBLA__', '__FORCERSOMMAIRE__', '__FORCERTDM__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__SOMÈRO__', '__TRÂBLA__', '__SOMMAIRE__', '__TDM__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__SÈCCION_QUE_PÔT_PAS_ÉTRE_CHANGIÊ__', '__SECTIONNONEDITABLE__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__NION_EN_TÉTA__', '__AUCUNENTETE__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'MÊS_D_ORA', 'MÊS_D_ORA_2', 'MOISACTUEL', 'MOIS2ACTUEL', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'MÊS_D_ORA_1', 'MOIS1ACTUEL', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'NOM_DU_MÊS_D_ORA', 'NOMMOISACTUEL', 'CURRENTMONTHNAME' ),
@@ -454,7 +453,6 @@ $messages = array(
 'qbbrowse' => 'Fâre dèfelar',
 'qbedit' => 'Changiér',
 'qbpageoptions' => 'Ceta pâge',
-'qbpageinfo' => 'Contèxto',
 'qbmyoptions' => 'Mes pâges',
 'qbspecialpages' => 'Pâges spèciâles',
 'faq' => 'Quèstions sovent posâyes',
@@ -467,7 +465,7 @@ $messages = array(
 'vector-action-protect' => 'Protègiér',
 'vector-action-undelete' => 'Refâre',
 'vector-action-unprotect' => 'Changiér la protèccion',
-'vector-simplesearch-preference' => 'Activar les idês de rechèrche bônâyes (solament por « Vèctor »)',
+'vector-simplesearch-preference' => 'Activar la bârra de rechèrche simplifiâye (solament por l’habelyâjo « Vèctor »)',
 'vector-view-create' => 'Fâre',
 'vector-view-edit' => 'Changiér',
 'vector-view-history' => 'Fâre vêre l’historico',
@@ -516,7 +514,7 @@ $messages = array(
 'views' => 'Visualisacions',
 'toolbox' => 'Bouèta d’outils',
 'userpage' => 'Vêde la pâge utilisator',
-'projectpage' => 'Vêde la pâge du projèt',
+'projectpage' => 'Vêde la pâge projèt',
 'imagepage' => 'Vêde la pâge du fichiér',
 'mediawikipage' => 'Vêde la pâge du mèssâjo',
 'templatepage' => 'Vêde la pâge du modèlo',
@@ -574,7 +572,7 @@ Vêde la [[Special:Version|pâge de les vèrsions]].',
 'youhavenewmessages' => 'Vos avéd de $1 ($2).',
 'newmessageslink' => 'mèssâjos novéls',
 'newmessagesdifflink' => 'dèrriér changement',
-'youhavenewmessagesfromusers' => 'Vos avéd $1 {{PLURAL:$3|d’un ôtro utilisator|de $3 ôtros utilisators}} ($2).',
+'youhavenewmessagesfromusers' => 'Vos avéd $1 {{PLURAL:$3|d’un ôtr’utilisator|de $3 ôtros utilisators}} ($2).',
 'youhavenewmessagesmanyusers' => 'Vos avéd $1 d’un mouél d’utilisators ($2).',
 'newmessageslinkplural' => '{{PLURAL:$1|un mèssâjo novél|de mèssâjos novéls}}',
 'newmessagesdifflinkplural' => '{{PLURAL:$1|dèrriér changement|dèrriérs changements}}',
@@ -677,7 +675,7 @@ Contint sûrament yon ou ben un mouél de caractèros que pôvont pas étre empl
 'perfcached' => 'Cetes donâs sont en cacho et pôvont pas étre a jorn. Por lo més {{PLURAL:$1|yon rèsultat est disponiblo|$1 rèsultats sont disponiblos}} dedens lo cacho.',
 'perfcachedts' => 'Cetes donâs sont en cacho et sont étâyes betâyes a jorn por lo dèrriér côp a $1. Por lo més {{PLURAL:$1|yon rèsultat est disponiblo|$1 rèsultats sont disponiblos}} dedens lo cacho.',
 'querypage-no-updates' => 'Ora les mises a jorn por ceta pâge sont dèsactivâyes.
-Les donâs ce-desot sont pas betâyes a jorn.',
+Les donâs ique seront pas betâyes a jorn.',
 'wrong_wfQuery_params' => 'Paramètros fôx dessus wfQuery()<br />
 Fonccion : $1<br />
 Demanda : $2',
@@ -689,16 +687,17 @@ Volyéd tornar èprovar dens un tôrn.',
 'protectedpagetext' => 'Ceta pâge est étâye protègiêye por empachiér son changement.',
 'viewsourcetext' => 'Vos pouede vêre et pués copiyér lo tèxto sôrsa de ceta pâge :',
 'viewyourtext' => "Vos pouede vêre et pués copiyér lo tèxto sôrsa de '''voutros changements''' a ceta pâge :",
-'protectedinterface' => 'Ceta pâge balye de tèxto d’entèrface por la programeria et est vêr protègiêye por èvitar los abus.',
+'protectedinterface' => 'Cela pâge-que balye de tèxto d’entèrface por la programeria sur ceti vouiqui, et est vêr protègiêye por èvitar los abus.
+Por apondre ou ben changiér des traduccions sur tôs los vouiquis, volyéd empleyér [//translatewiki.net/ translatewiki.net], lo projèt de localisacion de MediaWiki.',
 'editinginterface' => "'''Atencion :''' vos éte aprés changiér na pâge empleyêye por fâre lo tèxto d’entèrface de la programeria.
-Los changements sè cognetront sur totes ou ben doux-três pâges visibles per los ôtros utilisators.
-Por les traduccions, nos vos envitens a empleyér [//translatewiki.net/wiki/Main_Page?setlang=frp translatewiki.net], lo projèt de localisacion de MediaWiki.",
+Los changements sè cognetront sur l’aparence de l’entèrface utilisator por los ôtros utilisators de ceti vouiqui.
+Por apondre ou ben changiér des traduccions sur tôs los vouiquis, volyéd empleyér [//translatewiki.net/ translatewiki.net], lo projèt de localisacion de MediaWiki.",
 'sqlhidden' => '(Demanda SQL cachiêye)',
 'cascadeprotected' => 'Cela pâge-que est protègiêye perce qu’el est encllua dedens {{PLURAL:$1|ceta pâge, qu’est étâye protègiêye|cetes pâges, que sont étâyes protègiêyes}} avouéc lo chouèx « protèccion en cascâda » activâ :
 $2',
 'namespaceprotected' => "Vos avéd pas la pèrmission de changiér les pâges de l’èspâço de noms « '''$1''' ».",
-'customcssprotected' => 'Vos avéd pas la pèrmission de changiér cela pâge CSS, perce que contint la configuracion a sè d’un ôtro utilisator.',
-'customjsprotected' => 'Vos avéd pas la pèrmission de changiér cela pâge JavaScript, perce que contint la configuracion a sè d’un ôtro utilisator.',
+'customcssprotected' => 'Vos avéd pas la pèrmission de changiér cela pâge CSS, perce que contint la configuracion a sè d’un ôtr’utilisator.',
+'customjsprotected' => 'Vos avéd pas la pèrmission de changiér cela pâge JavaScript, perce que contint la configuracion a sè d’un ôtr’utilisator.',
 'ns-specialprotected' => 'Les pâges spèciâles pôvont pas étre changiêyes.',
 'titleprotected' => "Cél titro est étâ protègiê a la crèacion per [[User:$1|$1]].
 La rêson balyêye est « ''$2'' ».",
@@ -712,11 +711,8 @@ La rêson balyêye est « ''$2'' ».",
 # Login and logout pages
 'logouttext' => "'''Ora vos éte dèbranchiê{{GENDER:||ye|(ye)}}.'''
 
-Vos pouede continuar a empleyér {{SITENAME}} de façon anonima ou ben [[Special:UserLogin|vos tornar branchiér]] desot lo mémo nom ou un ôtro.
+Vos pouede continuar a empleyér {{SITENAME}} de façon anonima ou ben <span class='plainlinks'>[$1 vos tornar branchiér]</span> desot lo mémo nom ou un ôtro.
 Notâd qu’y at des pâges que pôvont étre oncor fêtes vêre coment se vos érâd adés branchiê{{GENDER:||ye|(ye)}}, tant que vos èfaciéd lo cacho de voutron navigator.",
-'welcomecreation' => '== Benvegnua, $1 ! ==
-Voutron compto est étâ fêt.
-Oubliâd pas de pèrsonalisar voutres [[Special:Preferences|prèferences dessus {{SITENAME}}]].',
 'yourname' => 'Nom d’utilisator :',
 'yourpassword' => 'Contresegno :',
 'yourpasswordagain' => 'Confirmâd lo contresegno :',
@@ -786,7 +782,7 @@ pouede ignorar ceti mèssâjo et continuar a empleyér voutron viely contresegno
 'passwordsent' => 'Un contresegno novél est étâ mandâ a l’adrèce èlèctronica de l’utilisator « $1 ».
 Vos volyéd tornar branchiér aprés l’avêr reçu.',
 'blocked-mailpassword' => 'Voutron adrèce IP est blocâye en ècritura, la fonccion de sovegnence du contresegno est vêr dèsactivâye por èvitar los abus.',
-'eauthentsent' => 'Un mèssâjo de confirmacion est étâ mandâ a l’adrèce endicâye.
+'eauthentsent' => 'Un mèssâjo de confirmacion est étâ mandâ a l’adrèce èlèctronica endicâye.
 Devant qu’un ôtro mèssâjo seye mandâ a ceti compto, vos devréd siuvre les enstruccions du mèssâjo et pués confirmar que lo compto est franc lo voutro.',
 'throttled-mailpassword' => 'Un mèssâjo de sovegnence de voutron contresegno est ja étâ mandâ pendent {{PLURAL:$1|l’hora passâye|les $1 hores passâyes}}.
 Por èvitar los abus, solament yon mèssâjo de sovegnence serat mandâ per {{PLURAL:$1|hora|entèrvalo de $1 hores}}.',
@@ -795,8 +791,8 @@ Por èvitar los abus, solament yon mèssâjo de sovegnence serat mandâ per {{PL
 Du côp la crèacion de compto est étâye dèsactivâye temporèrament por cel’adrèce IP.',
 'emailauthenticated' => 'Voutron adrèce èlèctronica est étâye ôtentifiâye lo $2 a $3.',
 'emailnotauthenticated' => 'Voutron adrèce èlèctronica est p’oncor ôtentifiâye.
-Nion mèssâjo serat mandâ por châcuna de cetes fonccions.',
-'noemailprefs' => 'Spècifiâd n’adrèce èlèctronica dens voutres prèferences por empleyér cetes fonccions.',
+Nion mèssâjo serat mandâ por châcuna de cetes fonccionalitâts.',
+'noemailprefs' => 'Spècifiâd n’adrèce èlèctronica dens voutres prèferences por empleyér cetes fonccionalitâts.',
 'emailconfirmlink' => 'Confirmâd voutron adrèce èlèctronica',
 'invalidemailaddress' => 'Cet’adrèce èlèctronica pôt pas étre accèptâye perce que semble avêr un format fôx.
 Volyéd buchiér n’adrèce bien formatâye ou ben lèssiér cél champ vouedo.',
@@ -912,39 +908,39 @@ Contresegno temporèro : $2',
 # Edit pages
 'summary' => 'Rèsumâ :',
 'subject' => 'Chousa / titro :',
-'minoredit' => 'Petiôt changement',
+'minoredit' => 'O est un petiôt changement',
 'watchthis' => 'Siuvre ceta pâge',
 'savearticle' => 'Sôvar la pâge',
 'preview' => 'Prèvisualisacion',
-'showpreview' => 'Fâre vêre una prèvisualisacion',
-'showlivepreview' => 'Apèrçu vito fêt',
+'showpreview' => 'Fâre vêre na prèvisualisacion',
+'showlivepreview' => 'Apèrçu rapido',
 'showdiff' => 'Fâre vêre los changements',
-'anoneditwarning' => "'''Atencion :''' vos éte pas branchiê.
-Voutra adrèce IP serat encartâ dens l’historico de ceta pâge.",
-'anonpreviewwarning' => "''Vos éte pas branchiê. Sôvar encarterat voutra adrèce IP dens l’historico des changements de la pâge.''",
-'missingsummary' => "'''Rapèl :''' vos éd p’oncor balyê lo rèsumâ de voutron changement.
-Se vos tornâd clicar dessus « {{int:savearticle}} », voutron changement serat sôvâ sen novél avèrtissement.",
-'missingcommenttext' => 'Volyéd fâre voutron comentèro ce-desot.',
-'missingcommentheader' => "'''Rapèl :''' vos éd p’oncor balyê de sujèt ou ben de titro a ceti comentèro.
-Se vos tornâd clicar dessus « {{int:savearticle}} », voutron changement serat sôvâ sen titro.",
-'summary-preview' => 'Prèvisualisacion du rèsumâ :',
-'subject-preview' => 'Prèvisualisacion du sujèt / titro :',
-'blockedtitle' => 'L’usanciér est blocâ.',
-'blockedtext' => "'''Voutron compto usanciér ou ben voutra adrèce IP at étâ blocâ.'''
+'anoneditwarning' => "'''Atencion :''' vos éte pas branchiê(ye).
+Voutron adrèce IP serat encartâye dedens l’historico des changements de ceta pâge.",
+'anonpreviewwarning' => "''Vos éte pas branchiê(ye). Sôvar encarterat voutron adrèce IP dedens l’historico des changements de ceta pâge.''",
+'missingsummary' => "'''Sovegnence :''' vos éd balyê gins de rèsumâ de changement.
+Se vos tornâd clicar sur lo boton « {{int:savearticle}} », voutron changement serat sôvâ sen rèsumâ.",
+'missingcommenttext' => 'Volyéd buchiér un comentèro ce-desot.',
+'missingcommentheader' => "'''Sovegnence :''' vos éd balyê gins de chousa / titro a ceti comentèro.
+Se vos tornâd clicar sur lo boton « {{int:savearticle}} », voutron changement serat sôvâ sen chousa / titro.",
+'summary-preview' => 'Apèrçu du rèsumâ :',
+'subject-preview' => 'Apèrçu de la chousa / du titro :',
+'blockedtitle' => 'L’utilisator est blocâ',
+'blockedtext' => "'''Voutron nom d’utilisator ou ben voutron adrèce IP est étâ(ye) blocâ(ye).'''
 
-Lo blocâjo at étâ fêt per $1.
-La rêson balyê est ceta : ''$2''.
+Lo blocâjo est étâ fêt per $1.
+La rêson balyêye est ''$2''.
 
 * Comencement du blocâjo : $8
 * Èxpiracion du blocâjo : $6
 * Compto blocâ : $7
 
-Vos vos pouede veriér vers $1 ou ben yon des ôtros [[{{MediaWiki:Grouppage-sysop}}|administrators]] por nen discutar.
-Vos pouede pas utilisar la fonccionalitât « Lui mandar un mèssâjo » a muens que vos èyâd una adrèce èlèctronica valida encartâ dens voutres [[Special:Preferences|prèferences]] et que la fonccionalitât èye pas étâ dèsactivâ.
-Voutra adrèce IP d’ora est $3, et lo numerô de blocâjo est $5.
-Volyéd spècefiar cetes endicacions dens totes les requétes que vos faréd.",
-'autoblockedtext' => "Voutra adrèce IP at étâ blocâ ôtomaticament perce qu’el at étâ utilisâ per un ôtro usanciér, lui-mémo blocâ per $1.
-La rêson balyê est ceta :
+Vos vos pouede veriér vers $1 ou ben un ôtr’[[{{MediaWiki:Grouppage-sysop}}|administrator]] por nen discutar.
+Vos pouede pas empleyér la fonccionalitât « Lui mandar un mèssâjo » a muens qu’un’adrèce èlèctronica valida est spècifiâye dens voutres [[Special:Preferences|prèferences]] et que vos éte pas étâ blocâ de l’empleyér.
+Voutron adrèce IP d’ora est $3, et lo numerô de blocâjo est $5.
+Volyéd encllure tôs los dètalys ce-dessus dedens quinta que seye demanda que vos faréd.",
+'autoblockedtext' => "Voutron adrèce IP est étâye blocâye ôtomaticament perce qu’el est étâye empleyêye per un ôtr’utilisator, lui-mémo blocâ per $1.
+La rêson balyêye est :
 
 :''$2''
 
@@ -954,12 +950,12 @@ La rêson balyê est ceta :
 
 Vos vos pouede veriér vers $1 ou ben yon des ôtros [[{{MediaWiki:Grouppage-sysop}}|administrators]] por nen discutar.
 
-Notâd que vos porréd pas utilisar la fonccionalitât « Lui mandar un mèssâjo » a muens que vos èyâd una adrèce èlèctronica valida encartâ dens voutres [[Special:Preferences|prèferences]] et que la fonccionalitât èye pas étâ dèsactivâ.
+Notâd que vos porréd pas empleyér la fonccionalitât « Lui mandar un mèssâjo » a muens que vos avéd n’adrèce èlèctronica valida encartâye dens voutres [[Special:Preferences|prèferences]] et que vos éte pas étâ blocâ de l’empleyér.
 
-Voutra adrèce IP d’ora est $3, et lo numerô de blocâjo est $5.
-Volyéd spècefiar cetes endicacions dens totes les requétes que vos faréd.",
-'blockednoreason' => 'gins de rêson balyê',
-'whitelistedittext' => 'Vos dête étre $1 por avêr la pèrmission de changiér lo contegnu.',
+Voutron adrèce IP d’ora est $3, et lo numerô de blocâjo est $5.
+Volyéd encllure tôs los dètalys ce-dessus dedens quinta que seye demanda que vos faréd.",
+'blockednoreason' => 'gins de rêson balyêye',
+'whitelistedittext' => 'Vos vos dête $1 por povêr changiér les pâges.',
 'confirmedittext' => 'Vos dête confirmar voutra adrèce èlèctronica devant que changiér les pâges.
 Volyéd buchiér et pués validar voutra adrèce èlèctronica dens voutres [[Special:Preferences|prèferences]].',
 'nosuchsectiontitle' => 'Empossiblo de trovar la sèccion',
@@ -1345,8 +1341,6 @@ Notâd bien que l’usâjo des lims de navigacion tornerat inicialisar cela colo
 'search-interwiki-caption' => 'Projèts frâres',
 'search-interwiki-default' => 'Rèsultats dessus $1 :',
 'search-interwiki-more' => '(més)',
-'search-mwsuggest-enabled' => 'avouéc consèlys',
-'search-mwsuggest-disabled' => 'sen consèlys',
 'search-relatedarticle' => 'Raportâ',
 'mwsuggest-disable' => 'Dèsactivar los consèlys AJAX',
 'searcheverything-enable' => 'Rechèrchiér dens tôs los èspâços de noms',
@@ -1445,7 +1439,7 @@ Vê-que una valor fêta per hasârd que vos pouede utilisar : $1',
 'timezoneregion-indian' => 'Ocèan endien',
 'timezoneregion-pacific' => 'Ocèan pacefico',
 'allowemail' => 'Ôtorisar l’èxpèdicion de mèssâjos que vegnont d’ôtros usanciérs',
-'prefs-searchoptions' => 'Chouèx de rechèrche',
+'prefs-searchoptions' => 'Rechèrche',
 'prefs-namespaces' => 'Èspâços de noms',
 'defaultns' => 'Ôtrament rechèrchiér dens cetos èspâços de noms :',
 'default' => 'per dèfôt',
@@ -2353,11 +2347,7 @@ Los changements a vegnir de ceta pâge et de sa pâge de discussion y seront lis
 
 'enotif_mailer' => 'Sistèmo de notificacion per mèssageria èlèctronica de {{SITENAME}}',
 'enotif_reset' => 'Marcar totes les pâges coment visitâs',
-'enotif_newpagetext' => 'O est una pâge novèla.',
 'enotif_impersonal_salutation' => 'Usanciér de {{SITENAME}}',
-'changed' => 'changiê',
-'created' => 'fêta',
-'enotif_subject' => 'La pâge « $PAGETITLE » de {{SITENAME}} at étâ $CHANGEDORCREATED per $PAGEEDITOR',
 'enotif_lastvisited' => 'Vêde $1 por tôs los changements dês voutra dèrriére visita.',
 'enotif_lastdiff' => 'Vêde $1 por vêre cél changement.',
 'enotif_anon_editor' => 'usanciér pas encartâ $1',
@@ -2985,7 +2975,6 @@ Volyéd tornar èprovar.',
 
 # JavaScriptTest
 'javascripttest' => 'Èprôva de JavaScript',
-'javascripttest-disabled' => 'Cela fonccion-que est pas étâye activâye sur ceti vouiqui.',
 'javascripttest-title' => 'Èprôves de $1 en cors',
 'javascripttest-qunit-intro' => 'Vêde la [$1 documentacion de les èprôves] dessus mediawiki.org.',
 'javascripttest-qunit-heading' => 'Suita d’èprôva QUnit de JavaScript dessus MediaWiki',
@@ -4062,6 +4051,10 @@ Les émâges sont montrâs dens lor plêna rèsolucion, los ôtros fichiérs son
 'feedback-close' => 'Fêt',
 'feedback-bugcheck' => 'Formidâblo ! Controlâd simplament qu’o est pas yona de les [$1 cofieries ja cognues].',
 'feedback-bugnew' => 'J’é controlâ. Signalar una cofierie novèla',
+
+# Search suggestions
+'searchsuggest-search' => 'Rechèrchiér',
+'searchsuggest-containing' => 'que contint...',
 
 # API errors
 'api-error-badaccess-groups' => 'Vos éte pas ôtorisâ a tèlèchargiér des fichiérs sur ceti vouiqui.',

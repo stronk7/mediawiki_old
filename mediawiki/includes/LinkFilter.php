@@ -23,7 +23,7 @@
 
 /**
  * Some functions to help implement an external link filter for spam control.
- * 
+ *
  * @todo implement the filter. Currently these are just some functions to help
  * maintenance/cleanupSpam.php remove links to a single specified domain. The
  * next thing is to implement functions for checking a given page against a big
@@ -34,13 +34,22 @@
 class LinkFilter {
 
 	/**
-	 * Check whether $text contains a link to $filterEntry
+	 * Check whether $content contains a link to $filterEntry
 	 *
-	 * @param $text String: text to check
+	 * @param $content Content: content to check
 	 * @param $filterEntry String: domainparts, see makeRegex() for more details
 	 * @return Integer: 0 if no match or 1 if there's at least one match
 	 */
-	static function matchEntry( $text, $filterEntry ) {
+	static function matchEntry( Content $content, $filterEntry ) {
+		if ( !( $content instanceof TextContent ) ) {
+			//TODO: handle other types of content too.
+			//      Maybe create ContentHandler::matchFilter( LinkFilter ).
+			//      Think about a common base class for LinkFilter and MagicWord.
+			return 0;
+		}
+
+		$text = $content->getNativeData();
+
 		$regex = LinkFilter::makeRegex( $filterEntry );
 		return preg_match( $regex, $text );
 	}
@@ -110,17 +119,17 @@ class LinkFilter {
 		// Reverse the labels in the hostname, convert to lower case
 		// For emails reverse domainpart only
 		if ( $prot == 'mailto:' && strpos($host, '@') ) {
-			// complete email adress 
+			// complete email adress
 			$mailparts = explode( '@', $host );
 			$domainpart = strtolower( implode( '.', array_reverse( explode( '.', $mailparts[1] ) ) ) );
 			$host = $domainpart . '@' . $mailparts[0];
 			$like = array( "$prot$host", $db->anyString() );
 		} elseif ( $prot == 'mailto:' ) {
 			// domainpart of email adress only. do not add '.'
-			$host = strtolower( implode( '.', array_reverse( explode( '.', $host ) ) ) );	
-			$like = array( "$prot$host", $db->anyString() );			
+			$host = strtolower( implode( '.', array_reverse( explode( '.', $host ) ) ) );
+			$like = array( "$prot$host", $db->anyString() );
 		} else {
-			$host = strtolower( implode( '.', array_reverse( explode( '.', $host ) ) ) );	
+			$host = strtolower( implode( '.', array_reverse( explode( '.', $host ) ) ) );
 			if ( substr( $host, -1, 1 ) !== '.' ) {
 				$host .= '.';
 			}

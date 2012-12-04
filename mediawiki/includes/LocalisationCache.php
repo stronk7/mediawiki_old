@@ -168,6 +168,7 @@ class LocalisationCache {
 	 * for $wgLocalisationCacheConf.
 	 *
 	 * @param $conf Array
+	 * @throws MWException
 	 */
 	function __construct( $conf ) {
 		global $wgCacheDirectory;
@@ -378,7 +379,7 @@ class LocalisationCache {
 		}
 
 		$deps = $this->store->get( $code, 'deps' );
-		$keys = $this->store->get( $code, 'list', 'messages' );
+		$keys = $this->store->get( $code, 'list' );
 		$preload = $this->store->get( $code, 'preload' );
 		// Different keys may expire separately, at least in LCStore_Accel
 		if ( $deps === null || $keys === null || $preload === null ) {
@@ -404,6 +405,7 @@ class LocalisationCache {
 	/**
 	 * Initialise a language in this object. Rebuild the cache if necessary.
 	 * @param $code
+	 * @throws MWException
 	 */
 	protected function initLanguage( $code ) {
 		if ( isset( $this->initialisedLangs[$code] ) ) {
@@ -474,6 +476,7 @@ class LocalisationCache {
 	 * Read a PHP file containing localisation data.
 	 * @param $_fileName
 	 * @param $_fileType
+	 * @throws MWException
 	 * @return array
 	 */
 	protected function readPHPFile( $_fileName, $_fileType ) {
@@ -659,6 +662,7 @@ class LocalisationCache {
 	 * Load localisation data for a given language for both core and extensions
 	 * and save it to the persistent cache store and the process cache
 	 * @param $code
+	 * @throws MWException
 	 */
 	public function recache( $code ) {
 		global $wgExtensionMessagesFiles;

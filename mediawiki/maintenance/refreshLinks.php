@@ -206,8 +206,6 @@ class RefreshLinks extends Maintenance {
 	 * @param $id int The page_id
 	 */
 	public static function fixLinksFromArticle( $id ) {
-		global $wgParser, $wgContLang;
-
 		$page = WikiPage::newFromID( $id );
 
 		LinkCache::singleton()->clear();
@@ -216,18 +214,16 @@ class RefreshLinks extends Maintenance {
 			return;
 		}
 
-		$text = $page->getRawText();
-		if ( $text === false ) {
+		$content = $page->getContent( Revision::RAW );
+		if ( null === false ) {
 			return;
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin( __METHOD__ );
 
-		$options = ParserOptions::newFromUserAndLang( new User, $wgContLang );
-		$parserOutput = $wgParser->parse( $text, $page->getTitle(), $options, true, true, $page->getLatest() );
-		$update = new LinksUpdate( $page->getTitle(), $parserOutput, false );
-		$update->doUpdate();
+		$updates = $content->getSecondaryDataUpdates( $page->getTitle() );
+		DataUpdate::runUpdates( $updates );
 
 		$dbw->commit( __METHOD__ );
 	}

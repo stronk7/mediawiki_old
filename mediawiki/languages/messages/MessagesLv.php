@@ -193,7 +193,6 @@ $messages = array(
 'qbbrowse' => 'Navigācija',
 'qbedit' => 'Izmainīšana',
 'qbpageoptions' => 'Šī lapa',
-'qbpageinfo' => 'Konteksts',
 'qbmyoptions' => 'Manas lapas',
 'qbspecialpages' => 'Īpašās lapas',
 'faq' => 'BUJ',
@@ -307,9 +306,10 @@ $1',
 
 'ok' => 'Labi',
 'retrievedfrom' => 'Saturs iegūts no "$1"',
-'youhavenewmessages' => 'Tev ir $1 (skat. $2).',
+'youhavenewmessages' => 'Tev ir $1 (skatīt $2).',
 'newmessageslink' => 'jauns vēstījums',
 'newmessagesdifflink' => 'pēdējā izmaiņa',
+'newmessageslinkplural' => '{{PLURAL:$1|jauns vēstījums|jauni vēstījumi}}',
 'newmessagesdifflinkplural' => '{{PLURAL:$1|pēdējā izmaiņa|pēdējās izmaiņas}}',
 'youhavenewmessagesmulti' => 'Tev ir jauns ziņojums: $1',
 'editsection' => 'labot',
@@ -428,11 +428,8 @@ Norādītais iemesls bija ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Tu esi izgājis no {{grammar:ģenitīvs|{{SITENAME}}}}.'''
 
-Vari turpināt to izmantot anonīmi, vari [[Special:UserLogin|atgriezties]] kā cits lietotājs vai varbūt tas pats.
+Vari turpināt to izmantot anonīmi, vari <span class='plainlinks'>[$1 atgriezties]</span> kā cits lietotājs vai varbūt tas pats.
 Ņem vērā, ka arī pēc iziešanas, dažas lapas var tikt parādītas tā, it kā tu vēl būtu iekšā, līdz tiks iztīrīta pārlūka kešatmiņa.",
-'welcomecreation' => '== Laipni lūdzam, $1! ==
-
-Tavs lietotāja konts ir izveidots. Neaizmirsti, ka ir iespējams mainīt [[Special:Preferences|{{grammar:ģenitīvs|{{SITENAME}}}} izmantošanas izvēles]].',
 'yourname' => 'Tavs lietotājvārds',
 'yourpassword' => 'Tava parole:',
 'yourpasswordagain' => 'Atkārto paroli',
@@ -932,8 +929,6 @@ $1",
 'search-interwiki-caption' => 'Citi projekti',
 'search-interwiki-default' => 'Rezultāti no $1:',
 'search-interwiki-more' => '(vairāk)',
-'search-mwsuggest-enabled' => 'ar ieteikumiem',
-'search-mwsuggest-disabled' => 'bez ieteikumiem',
 'search-relatedarticle' => 'Saistītais',
 'mwsuggest-disable' => 'Atslēgt AJAX ieteikumus',
 'searcheverything-enable' => 'Meklēt visās nosaukumvietās',
@@ -1814,11 +1809,7 @@ Ja vēlāk pārdomāsi un nevēlēsies vairs uzraudzīt šo lapu, klikšķini uz
 
 'enotif_mailer' => '{{SITENAME}} paziņojumu izsūtīšana',
 'enotif_reset' => 'Atzīmēt visas lapas kā apskatītas',
-'enotif_newpagetext' => 'Šī ir jauna lapa.',
 'enotif_impersonal_salutation' => '{{SITENAME}} lietotājs',
-'changed' => 'izmainīja',
-'created' => 'izveidoja',
-'enotif_subject' => '{{grammar:ģenitīvs|{{SITENAME}}}} lapu $PAGETITLE $CHANGEDORCREATED lietotājs $PAGEEDITOR',
 'enotif_lastvisited' => '$1 lai apskatītos visas izmaiņas kopš tava pēdējā apmeklējuma.',
 'enotif_lastdiff' => '$1 lai apskatītos šo izmaiņu.',
 'enotif_anon_editor' => 'anonīms lietotājs $1',
@@ -3098,6 +3089,10 @@ Var arī lietot [[Special:EditWatchlist|standarta izmainīšanas lapu]].',
 'feedback-thanks' => 'Paldies! Jūsu atsauksmes ir ievietotas lapā "[$2  $1]".',
 'feedback-close' => 'Gatavs',
 'feedback-bugnew' => 'Es pārbaudīju. Ziņot par jaunu kļūdu',
+
+# Search suggestions
+'searchsuggest-search' => 'Meklēt',
+'searchsuggest-containing' => 'Meklējamā frāze:',
 
 # API errors
 'api-error-filename-tooshort' => 'Faila nosaukums ir pārāk īss.',

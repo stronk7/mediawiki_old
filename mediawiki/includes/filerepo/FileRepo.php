@@ -127,6 +127,9 @@ class FileRepo {
 			if ( !isset( $this->zones[$zone]['directory'] ) ) {
 				$this->zones[$zone]['directory'] = '';
 			}
+			if ( !isset( $this->zones[$zone]['urlsByExt'] ) ) {
+				$this->zones[$zone]['urlsByExt'] = array();
+			}
 		}
 	}
 
@@ -196,14 +199,17 @@ class FileRepo {
 	/**
 	 * Get the URL corresponding to one of the four basic zones
 	 *
-	 * @param $zone String: one of: public, deleted, temp, thumb
+	 * @param $zone String One of: public, deleted, temp, thumb
+	 * @param $ext String|null Optional file extension
 	 * @return String or false
 	 */
-	public function getZoneUrl( $zone ) {
-		if ( isset( $this->zones[$zone]['url'] )
-			&& in_array( $zone, array( 'public', 'temp', 'thumb' ) ) )
-		{
-			return $this->zones[$zone]['url']; // custom URL
+	public function getZoneUrl( $zone, $ext = null ) {
+		if ( in_array( $zone, array( 'public', 'temp', 'thumb' ) ) ) { // standard public zones
+			if ( $ext !== null && isset( $this->zones[$zone]['urlsByExt'][$ext] ) ) {
+				return $this->zones[$zone]['urlsByExt'][$ext]; // custom URL for extension/zone
+			} elseif ( isset( $this->zones[$zone]['url'] ) ) {
+				return $this->zones[$zone]['url']; // custom URL for zone
+			}
 		}
 		switch ( $zone ) {
 			case 'public':
@@ -1021,18 +1027,25 @@ class FileRepo {
 	 * Returns a FileRepoStatus object. On success, the value contains "new" or
 	 * "archived", to indicate whether the file was new with that name.
 	 *
+	 * Options to $options include:
+	 *   - headers : name/value map of HTTP headers to use in response to GET/HEAD requests
+	 *
 	 * @param $srcPath String: the source file system path, storage path, or URL
 	 * @param $dstRel String: the destination relative path
 	 * @param $archiveRel String: the relative path where the existing file is to
 	 *        be archived, if there is one. Relative to the public zone root.
 	 * @param $flags Integer: bitfield, may be FileRepo::DELETE_SOURCE to indicate
 	 *        that the source file should be deleted if possible
+	 * @param $options Array Optional additional parameters
 	 * @return FileRepoStatus
 	 */
-	public function publish( $srcPath, $dstRel, $archiveRel, $flags = 0 ) {
+	public function publish(
+		$srcPath, $dstRel, $archiveRel, $flags = 0, array $options = array()
+	) {
 		$this->assertWritableRepo(); // fail out if read-only
 
-		$status = $this->publishBatch( array( array( $srcPath, $dstRel, $archiveRel ) ), $flags );
+		$status = $this->publishBatch(
+			array( array( $srcPath, $dstRel, $archiveRel, $options ) ), $flags );
 		if ( $status->successCount == 0 ) {
 			$status->ok = false;
 		}
@@ -1048,13 +1061,14 @@ class FileRepo {
 	/**
 	 * Publish a batch of files
 	 *
-	 * @param $triplets Array: (source, dest, archive) triplets as per publish()
+	 * @param $ntuples Array: (source, dest, archive) triplets or
+	 *        (source, dest, archive, options) 4-tuples as per publish().
 	 * @param $flags Integer: bitfield, may be FileRepo::DELETE_SOURCE to indicate
 	 *        that the source files should be deleted if possible
 	 * @throws MWException
 	 * @return FileRepoStatus
 	 */
-	public function publishBatch( array $triplets, $flags = 0 ) {
+	public function publishBatch( array $ntuples, $flags = 0 ) {
 		$this->assertWritableRepo(); // fail out if read-only
 
 		$backend = $this->backend; // convenience
@@ -1069,8 +1083,9 @@ class FileRepo {
 		$operations = array();
 		$sourceFSFilesToDelete = array(); // cleanup for disk source files
 		// Validate each triplet and get the store operation...
-		foreach ( $triplets as $i => $triplet ) {
-			list( $srcPath, $dstRel, $archiveRel ) = $triplet;
+		foreach ( $ntuples as $i => $ntuple ) {
+			list( $srcPath, $dstRel, $archiveRel ) = $ntuple;
+			$options = isset( $ntuple[3] ) ? $ntuple[3] : array();
 			// Resolve source to a storage path if virtual
 			$srcPath = $this->resolveToStoragePath( $srcPath );
 			if ( !$this->validateFilename( $dstRel ) ) {
@@ -1094,47 +1109,48 @@ class FileRepo {
 				return $this->newFatal( 'directorycreateerror', $archiveDir );
 			}
 
-			// Archive destination file if it exists
-			if ( $backend->fileExists( array( 'src' => $dstPath ) ) ) {
-				// Check if the archive file exists
-				// This is a sanity check to avoid data loss. In UNIX, the rename primitive
-				// unlinks the destination file if it exists. DB-based synchronisation in
-				// publishBatch's caller should prevent races. In Windows there's no
-				// problem because the rename primitive fails if the destination exists.
-				if ( $backend->fileExists( array( 'src' => $archivePath ) ) ) {
-					$operations[] = array( 'op' => 'null' );
-					continue;
-				} else {
-					$operations[] = array(
-						'op'           => 'move',
-						'src'          => $dstPath,
-						'dst'          => $archivePath
-					);
-				}
-				$status->value[$i] = 'archived';
-			} else {
-				$status->value[$i] = 'new';
-			}
+			// Set any desired headers to be use in GET/HEAD responses
+			$headers = isset( $options['headers'] ) ? $options['headers'] : array();
+
+			// Archive destination file if it exists.
+			// This will check if the archive file also exists and fail if does.
+			// This is a sanity check to avoid data loss. On Windows and Linux,
+			// copy() will overwrite, so the existence check is vulnerable to
+			// race conditions unless an functioning LockManager is used.
+			// LocalFile also uses SELECT FOR UPDATE for synchronization.
+			$operations[] = array(
+				'op'                  => 'copy',
+				'src'                 => $dstPath,
+				'dst'                 => $archivePath,
+				'ignoreMissingSource' => true
+			);
+
 			// Copy (or move) the source file to the destination
 			if ( FileBackend::isStoragePath( $srcPath ) ) {
 				if ( $flags & self::DELETE_SOURCE ) {
 					$operations[] = array(
-						'op'           => 'move',
-						'src'          => $srcPath,
-						'dst'          => $dstPath
+						'op'        => 'move',
+						'src'       => $srcPath,
+						'dst'       => $dstPath,
+						'overwrite' => true, // replace current
+						'headers'   => $headers
 					);
 				} else {
 					$operations[] = array(
-						'op'           => 'copy',
-						'src'          => $srcPath,
-						'dst'          => $dstPath
+						'op'        => 'copy',
+						'src'       => $srcPath,
+						'dst'       => $dstPath,
+						'overwrite' => true, // replace current
+						'headers'   => $headers
 					);
 				}
 			} else { // FS source path
 				$operations[] = array(
-					'op'           => 'store',
-					'src'          => $srcPath,
-					'dst'          => $dstPath
+					'op'        => 'store',
+					'src'       => $srcPath,
+					'dst'       => $dstPath,
+					'overwrite' => true, // replace current
+					'headers'   => $headers
 				);
 				if ( $flags & self::DELETE_SOURCE ) {
 					$sourceFSFilesToDelete[] = $srcPath;
@@ -1143,8 +1159,17 @@ class FileRepo {
 		}
 
 		// Execute the operations for each triplet
-		$opts = array( 'force' => true );
-		$status->merge( $backend->doOperations( $operations, $opts ) );
+		$status->merge( $backend->doOperations( $operations ) );
+		// Find out which files were archived...
+		foreach ( $ntuples as $i => $ntuple ) {
+			list( $srcPath, $dstRel, $archiveRel ) = $ntuple;
+			$archivePath = $this->getZonePath( 'public' ) . "/$archiveRel";
+			if ( $this->fileExists( $archivePath ) ) {
+				$status->value[$i] = 'archived';
+			} else {
+				$status->value[$i] = 'new';
+			}
+		}
 		// Cleanup for disk source files...
 		foreach ( $sourceFSFilesToDelete as $file ) {
 			wfSuppressWarnings();
@@ -1318,9 +1343,13 @@ class FileRepo {
 	 * e.g. s/z/a/ for sza251lrxrc1jad41h5mgilp8nysje52.jpg
 	 *
 	 * @param $key string
+	 * @throws MWException
 	 * @return string
 	 */
 	public function getDeletedHashPath( $key ) {
+		if ( strlen( $key ) < 31 ) {
+			throw new MWException( "Invalid storage key '$key'." );
+		}
 		$path = '';
 		for ( $i = 0; $i < $this->deletedHashLevels; $i++ ) {
 			$path .= $key[$i] . '/';
@@ -1389,6 +1418,17 @@ class FileRepo {
 	public function getFileTimestamp( $virtualUrl ) {
 		$path = $this->resolveToStoragePath( $virtualUrl );
 		return $this->backend->getFileTimestamp( array( 'src' => $path ) );
+	}
+
+	/**
+	 * Get the size of a file with a given virtual URL/storage path
+	 *
+	 * @param $virtualUrl string
+	 * @return integer|bool False on failure
+	 */
+	public function getFileSize( $virtualUrl ) {
+		$path = $this->resolveToStoragePath( $virtualUrl );
+		return $this->backend->getFileSize( array( 'src' => $path ) );
 	}
 
 	/**

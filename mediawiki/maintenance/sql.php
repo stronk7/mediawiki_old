@@ -63,24 +63,36 @@ class MwSql extends Maintenance {
 		}
 
 		$wholeLine = '';
-		while ( ( $line = Maintenance::readconsole() ) !== false ) {
+		$newPrompt = '> ';
+		$prompt    = $newPrompt;
+		while ( ( $line = Maintenance::readconsole( $prompt ) ) !== false ) {
+			if( !$line ) {
+				# User simply pressed return key
+				continue;
+			}
 			$done = $dbw->streamStatementEnd( $wholeLine, $line );
 
 			$wholeLine .= $line;
 
 			if ( !$done ) {
+				$wholeLine .= ' ';
+				$prompt = '    -> ';
 				continue;
 			}
 			if ( $useReadline ) {
-				readline_add_history( $wholeLine );
+				# Delimiter is eated by streamStatementEnd, we add it
+				# up in the history (bug 37020)
+				readline_add_history( $wholeLine . $dbw->getDelimiter() );
 				readline_write_history( $historyFile );
 			}
 			try{
 				$res = $dbw->query( $wholeLine );
 				$this->sqlPrintResult( $res, $dbw );
+				$prompt    = $newPrompt;
 				$wholeLine = '';
 			} catch (DBQueryError $e) {
-				$this->error( $e, true );
+				$doDie = ! Maintenance::posix_isatty( 0 );
+				$this->error( $e, $doDie );
 			}
 		}
 	}

@@ -180,7 +180,6 @@ $messages = array(
 'qbbrowse' => 'Ἀλάου',
 'qbedit' => 'Μεταγράφειν',
 'qbpageoptions' => 'Ἥδε ἡ δέλτος',
-'qbpageinfo' => 'Συγκείμενον',
 'qbmyoptions' => 'Οἱ δέλτοι μου',
 'qbspecialpages' => 'Εἰδικαὶ δέλτοι',
 'faq' => 'Τὰ πολλάκις αἰτηθέντα',
@@ -413,11 +412,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''Νῦν γὰρ ἀποσυνδεδεμένος εἰ.'''
 
-Ἔξεστί σοι χρῆσθαι τῷ {{SITENAME}} ἀνωνύμως, ἢ ἔξεστί σοι [[Special:UserLogin|συνδεῖσθαι πάλιν]] ὡς ὁ αὐτὸς ἢ ὡς ἄλλος χρώμενος.
+Ἔξεστί σοι χρῆσθαι τῷ {{SITENAME}} ἀνωνύμως, ἢ ἔξεστί σοι <span class='plainlinks'>[$1 συνδεῖσθαι πάλιν]</span> ὡς ὁ αὐτὸς ἢ ὡς ἄλλος χρώμενος.
 Δέλτοι τινὲς δέ, ἐνδεχομένως, δειχθήσονται ὡς ἂν ἀκμὴν συνδεδεμένος ᾖς, μέχρι ὅτε καθαίρῃς τὴν λανθάνουσαν μνήμην τοῦ προγράμματος πλοηγήσεώς σου.",
-'welcomecreation' => '== Ὡς εὖ παρέστης, $1! ==
-
-Λογισμός σὸς πεποίηται. Μέμνησο μεταβάλλειν τὰς τοῦ [[Special:Preferences|{{SITENAME}} προαιρέσεις σου]].',
 'yourname' => 'Ὄνομα χρωμένου:',
 'yourpassword' => 'Σῆμα:',
 'yourpasswordagain' => 'Ἀνατυπῶσαι σύνθημα:',
@@ -823,8 +819,6 @@ $1",
 'search-interwiki-caption' => 'Ἀδελφὰ σχέδια',
 'search-interwiki-default' => '$1 ἀποτελέσματα:',
 'search-interwiki-more' => '(πλείω)',
-'search-mwsuggest-enabled' => "μεθ'ὑποδείξεων",
-'search-mwsuggest-disabled' => 'οὐκ αἵτινες ὑποδείξεις',
 'search-relatedarticle' => 'Σχετικά',
 'mwsuggest-disable' => 'Μὴ ἐνεργαὶ αἱ ὑποδείξεις AJAX',
 'searcheverything-enable' => 'Ζήτησις ἐν πᾶσι τοῖς ὀνοματοχώροις',
@@ -1568,11 +1562,7 @@ $1",
 
 'enotif_mailer' => 'Σύστημα εἰδήσεως τοῦ {{SITENAME}} μέσῳ ἐπιστολῶν',
 'enotif_reset' => 'Σημαίνειν ἁπάσας τὰς ἐπεσκοπημένας δέλτους',
-'enotif_newpagetext' => 'Ἥδε νέα δέλτος ἐστίν.',
 'enotif_impersonal_salutation' => 'Χρώμενος τῷ {{SITENAME}}',
-'changed' => 'ἠλλαγμένη',
-'created' => 'ποιηθέν',
-'enotif_subject' => 'Ἡ τοῦ {{SITENAME}} δέλτος $PAGETITLE ἐποιἠθη $CHANGEDORCREATED ὑπὸ τὸν $PAGEEDITOR',
 'enotif_lastvisited' => 'Ἴδε $1 διὰ ἁπάσας τὰς ἀλλαγὰς ἐκ τῆς ὑστάτης ἐπισκέψεώς σου.',
 'enotif_lastdiff' => 'Ἴδε $1 διὰ τὸ ὁρᾶν τήνδε τὴν ἀλλαγήν.',
 'enotif_anon_editor' => 'ἀνώνυμος χρώμενος $1',
@@ -2716,5 +2706,9 @@ $5
 
 # Feedback
 'feedback-cancel' => 'Ἀκυροῦν',
+
+# Search suggestions
+'searchsuggest-search' => 'Ζητεῖν',
+'searchsuggest-containing' => 'περιέχον...',
 
 );

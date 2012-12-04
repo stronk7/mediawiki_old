@@ -3,7 +3,8 @@
 class ZipDirectoryReaderTest extends MediaWikiTestCase {
 	var $zipDir, $entries;
 
-	function setUp() {
+	protected function setUp() {
+		parent::setUp();
 		$this->zipDir = __DIR__ . '/../data/zip';
 	}
 

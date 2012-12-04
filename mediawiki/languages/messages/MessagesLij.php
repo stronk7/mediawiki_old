@@ -232,7 +232,6 @@ $messages = array(
 'qbfind' => 'Attrêuva',
 'qbedit' => 'Cangia',
 'qbpageoptions' => "Opsioîn de 'sta paggina",
-'qbpageinfo' => 'Informassion inscia paggina',
 'qbmyoptions' => 'E mæ paggine',
 'qbspecialpages' => 'Pagine speçiä',
 'faq' => 'Domande frequenti',
@@ -379,9 +378,6 @@ Pe favô ti peu segnalâ quello che l'é sucesso a in [[Special:ListUsers/sysop|
 'viewsourcetext' => "O l'è poscibbile vedde e copiâ o còddice sorgente de 'sta paggina:",
 
 # Login and logout pages
-'welcomecreation' => "== Benvegnûo, $1! ==
-
-O teu account o l'è stæto creòu bén. No te ascordâ de cangiâ e teu {{SITENAME}}.[[Special:Preferences|preferençe de {{SITENAME}}]].",
 'yourname' => 'Nomme',
 'yourpassword' => 'Pòula segretta:',
 'yourpasswordagain' => 'Scrivi tórna a pòula segrétta:',
@@ -908,7 +904,6 @@ Ti te peu strinza a vista se ti te çerni un tipo de registro, un nomme de un ut
 'watching' => 'Inti osservæ speçiâli...',
 'unwatching' => 'Scassâ da-i osservæ speçiâli',
 
-'changed' => 'cangiâ',
 'enotif_anon_editor' => 'ûtente anònnimo $1',
 
 # Delete

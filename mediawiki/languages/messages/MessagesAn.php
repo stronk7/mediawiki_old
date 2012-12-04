@@ -276,7 +276,6 @@ $messages = array(
 'qbbrowse' => 'Navegar',
 'qbedit' => 'Editar',
 'qbpageoptions' => 'Ista pachina',
-'qbpageinfo' => 'Contexto',
 'qbmyoptions' => 'Pachinas propias',
 'qbspecialpages' => 'Pachinas especials',
 'faq' => 'Preguntas freqüents (FAQ)',
@@ -522,10 +521,7 @@ A razón data ye ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Ha rematato a sesión.'''
 
-Puede continar navegando por {{SITENAME}} anonimament, u puede [[Special:UserLogin|encetar]] una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
-'welcomecreation' => "== ¡Bienveniu(da), $1! ==
-S'ha creyato a suya cuenta.
-No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITENAME}}]].",
+Puede continar navegando por {{SITENAME}} anonimament, u puede <span class='plainlinks'>[$1 encetar]</span> una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
 'yourname' => "Nombre d'usuario:",
 'yourpassword' => "Clau d'acceso:",
 'yourpasswordagain' => 'Torne a escribir a clau:',
@@ -1085,8 +1081,6 @@ Asegure-se que iste cambio no trencará a continidat de l'historial d'a pachina.
 'search-interwiki-caption' => 'Prochectos chermans',
 'search-interwiki-default' => '$1 resultaus:',
 'search-interwiki-more' => '(más)',
-'search-mwsuggest-enabled' => 'con socherencias',
-'search-mwsuggest-disabled' => 'garra socherencia',
 'search-relatedarticle' => 'Relacionato',
 'mwsuggest-disable' => "Desactivar as socherencias d'AJAX",
 'searcheverything-enable' => 'Mirar en totz os espacios de nombres',
@@ -2057,11 +2051,7 @@ L\'adreza de correu-e que endicó en as suyas [[Special:Preferences|preferencias
 
 'enotif_mailer' => 'Sistema de notificación por correu de {{SITENAME}}',
 'enotif_reset' => 'Marcar todas as pachinas como vesitatas',
-'enotif_newpagetext' => 'Ista ye una nueva pachina.',
 'enotif_impersonal_salutation' => 'usuario de {{SITENAME}}',
-'changed' => 'editata',
-'created' => 'creyata',
-'enotif_subject' => 'A pachina $PAGETITLE de {{SITENAME}} ha estato $CHANGEDORCREATED por $PAGEEDITOR',
 'enotif_lastvisited' => 'Vaiga ta $1 ta veyer totz os cambeos dende a suya zaguer vesita.',
 'enotif_lastdiff' => 'Vaiga ta $1 ta veyer iste cambeo.',
 'enotif_anon_editor' => 'usuario anonimo $1',
@@ -2651,7 +2641,6 @@ Alce-lo en o suyo ordenador y cargue-lo aquí.",
 
 # JavaScriptTest
 'javascripttest' => 'Prebatinas de JavaScript',
-'javascripttest-disabled' => 'Ista función ye desactivata.',
 'javascripttest-title' => 'Fendo as prebas de $1',
 'javascripttest-pagetext-noframework' => 'Ista pachina ye reservada ta fer as prebas de JavaScrip.',
 'javascripttest-pagetext-unknownframework' => 'Bastida de prebas "$1" desconoixida.',
@@ -3632,6 +3621,10 @@ Si no, puet usar o siguient formulario. O suyo comentario será adhibiu a la pac
 'feedback-close' => 'Feito',
 'feedback-bugcheck' => 'Perfecto! Comprebe nomás que no sía un [$1 fallo conoixiu].',
 'feedback-bugnew' => "L'he comprebau. Informar d'un nuevo fallo.",
+
+# Search suggestions
+'searchsuggest-search' => 'Mirar',
+'searchsuggest-containing' => 'que contién...',
 
 # API errors
 'api-error-badaccess-groups' => 'No puetz cargar fichers en iste wiki.',

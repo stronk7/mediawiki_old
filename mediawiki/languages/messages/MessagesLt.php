@@ -315,7 +315,7 @@ $messages = array(
 'newwindow' => '(atsidaro naujame lange)',
 'cancel' => 'Atšaukti',
 'moredotdotdot' => 'Daugiau...',
-'mypage' => 'Mano puslapis',
+'mypage' => 'Naudotojo puslapis',
 'mytalk' => 'Mano aptarimas',
 'anontalk' => 'Šio IP aptarimas',
 'navigation' => 'Naršymas',
@@ -326,7 +326,6 @@ $messages = array(
 'qbbrowse' => 'Naršymas',
 'qbedit' => 'Taisyti',
 'qbpageoptions' => 'Šis puslapis',
-'qbpageinfo' => 'Kontekstas',
 'qbmyoptions' => 'Mano puslapiai',
 'qbspecialpages' => 'Specialieji puslapiai',
 'faq' => 'DUK',
@@ -588,11 +587,8 @@ Ją užrakinęs administratorius pateikė šį paaiškinimą: "$3".',
 # Login and logout pages
 'logouttext' => "'''Dabar jūs esate atsijungęs.'''
 
-Galite toliau naudoti {{SITENAME}} anonimiškai arba [[Special:UserLogin|prisijunkite]] iš naujo tuo pačiu ar kitu naudotoju.
+Galite toliau naudoti {{SITENAME}} anonimiškai arba <span class='plainlinks'>[$1 prisijunkite]</span> iš naujo tuo pačiu ar kitu naudotoju.
 Pastaba: kai kuriuose puslapiuose ir toliau gali rodyti, kad esate prisijungęs iki tol, kol išvalysite savo naršyklės podėlį.",
-'welcomecreation' => '== Sveiki, $1! ==
-
-Jūsų paskyra buvo sukurta. Nepamirškite pakeisti savo [[Special:Preferences|{{SITENAME}} nustatymų]].',
 'yourname' => 'Naudotojo vardas:',
 'yourpassword' => 'Slaptažodis:',
 'yourpasswordagain' => 'Pakartokite slaptažodį:',
@@ -1178,8 +1174,6 @@ Prašome patikrinti sąrašus.',
 'search-interwiki-caption' => 'Dukteriniai projektai',
 'search-interwiki-default' => '$1 rezultatai:',
 'search-interwiki-more' => '(daugiau)',
-'search-mwsuggest-enabled' => 'su pasiūlymais',
-'search-mwsuggest-disabled' => 'nėra pasiūlymų',
 'search-relatedarticle' => 'Susiję',
 'mwsuggest-disable' => 'Slėpti AJAX pasiūlymus',
 'searcheverything-enable' => 'Ieškoti visose vardų srityse',
@@ -2151,11 +2145,7 @@ taip pat bus '''paryškinti''' [[Special:RecentChanges|naujausių keitimų sąra
 
 'enotif_mailer' => '{{SITENAME}} Pranešimų sistema',
 'enotif_reset' => 'Pažymėti visus puslapius kaip aplankytus',
-'enotif_newpagetext' => 'Tai naujas puslapis.',
 'enotif_impersonal_salutation' => '{{SITENAME}} naudotojau',
-'changed' => 'pakeitė',
-'created' => 'sukurė',
-'enotif_subject' => '{{SITENAME}} projekte $PAGEEDITOR $CHANGEDORCREATED $PAGETITLE',
 'enotif_lastvisited' => 'Užeikite į $1, jei norite matyti pakeitimus nuo paskutiniojo apsilankymo.',
 'enotif_lastdiff' => 'Užeikite į $1, jei norite pamatyti šį pakeitimą.',
 'enotif_anon_editor' => 'anoniminis naudotojas $1',
@@ -2778,7 +2768,6 @@ Išsaugokite jį savo kompiuteryje ir įkelkite jį čia.',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript testavimas',
-'javascripttest-disabled' => 'Ši funkcija šiame wiki projekte neįjungta.',
 'javascripttest-title' => 'Vykdomas $1 testavimas',
 'javascripttest-pagetext-noframework' => 'Šis puslapis yra skirtas vykdyti JavaScript testavimus.',
 'javascripttest-pagetext-unknownframework' => 'Nežinoma "$1" testavimo struktūra.',
@@ -3750,6 +3739,9 @@ Kitu atveju, galite naudotis žemiau esančia paprastesne forma. Jūsų komentar
 'feedback-close' => 'Atlikta',
 'feedback-bugcheck' => 'Puiku! Tiesiog patikrinkite, ar tai ne viena [$1 jau žinomų klaidų].',
 'feedback-bugnew' => 'Patikrinau. Pranešti apie naują klaidą',
+
+# Search suggestions
+'searchsuggest-search' => 'Ieškoti',
 
 # API errors
 'api-error-badaccess-groups' => 'Jums neleidžiama įkelti failus į šią wiki.',

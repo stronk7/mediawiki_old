@@ -235,7 +235,6 @@ süi titul dai sezziún (JavaScript)',
 'qbbrowse' => 'Sföja',
 'qbedit' => 'Mudifega',
 'qbpageoptions' => 'Opzión de la pagina',
-'qbpageinfo' => 'Infurmazión revard a la pagina',
 'qbmyoptions' => 'I mè paginn',
 'qbspecialpages' => 'Paginn special',
 'faq' => 'FAQ',
@@ -420,10 +419,8 @@ Per piasè, fa raport a 'n'[[Special:ListUsers/sysop|aministradur]], cun la nota
 # Login and logout pages
 'logouttext' => "'''Adess a sii descuness.'''
 
-A pudé andà inanz a druvà la {{SITENAME}} in manera anònima, o a pudé [[Special:UserLogin|cunètev anmò]] cun l'istess suranomm o cun un suranomm diferent.
+A pudé andà inanz a druvà la {{SITENAME}} in manera anònima, o a pudé <span class='plainlinks'>[$1 cunètev anmò]</span> cun l'istess suranomm o cun un suranomm diferent.
 Tegné cünt che certi paginn pödass che i seguiten a vedess tant 'me se a füdìssuv anmò cuness, fin quand che hii nò vudaa 'l ''cache'' del voster browser.",
-'welcomecreation' => "== Benvegnüü, $1! ==
-'L to cünt l'è staa pruntaa. Desmenteghet mía de mudifegà i to [[Special:Preferences|preferenz de {{SITENAME}}]].",
 'yourname' => 'El to suranóm:',
 'yourpassword' => "Parola d'urdin",
 'yourpasswordagain' => "Mett dent ammò la parola d'urdin",
@@ -628,8 +625,6 @@ Per infurmazion, varda ind el [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGE
 'search-interwiki-caption' => 'Pruget fredej',
 'search-interwiki-default' => '$1 resültaa',
 'search-interwiki-more' => '(püssee)',
-'search-mwsuggest-enabled' => 'cun sügeriment',
-'search-mwsuggest-disabled' => 'senza sügeriment',
 'nonefound' => "''''Tenzión''': la ricerca la vegn fada in utumategh dumà per un quaj namespace.
 Pröa a giuntagh denanz a la tò ricerca ''all:'' per cercà in tücc i namespace (cumpres i discüssión, i mudel, etc...) o dupra el namespace vursüü 'me prefiss.",
 'powersearch' => 'Truvá',
@@ -977,9 +972,6 @@ i vegnarann segnalaa chichinscì e la pagina la se vedarà cun caràter '''grev'
 'watching' => "Giuntà ai pagin da ten d'ögg...",
 'unwatching' => "Eliminà dai pagin da ten d'ögg...",
 
-'enotif_newpagetext' => "Chesta-chí l'è una pàgina növa.",
-'changed' => 'cambiaa',
-'enotif_subject' => 'La pagina $PAGETITLE de {{SITENAME}} l\'è stada $CHANGEDORCREATED da $PAGEEDITOR',
 'enotif_lastvisited' => 'Varda $1 per vedè tüt i mudifegh da la tua ültema vìsita.',
 'enotif_body' => 'Cara $WATCHINGUSERNAME,
 

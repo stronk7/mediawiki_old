@@ -51,10 +51,15 @@ deleted file archives, and any custom skins.
 
 === Perform the database upgrade ===
 
+As of 1.21, it is possible to separate schema changes (i.e. adding,
+dropping, or changing tables, fields, or indices) from all other
+database changes (e.g. populating fields).  If you need this
+capability, see "From the command line" below.
+
 ==== From the web ====
 
-If you browse to the web-based installation script (usually at 
-/mw-config/index.php) from your wiki installation you can follow the script and 
+If you browse to the web-based installation script (usually at
+/mw-config/index.php) from your wiki installation you can follow the script and
 upgrade your database in place.
 
 ==== From the command line ====
@@ -63,6 +68,12 @@ From the command line, browse to the "maintenance" directory and run the
 update.php script to check and update the schema. This will insert missing
 tables, update existing tables, and move data around as needed. In most cases,
 this is successful and nothing further needs to be done.
+
+If you need to separate out the schema changes so they can be run
+by someone with more privileges, then you can use the --schema option
+to produce a text file with the necessary commands.  You can use
+--schema, --noschema, $wgAllowSchemaUpdates as well as proper database
+permissions to enforce this separation.
 
 === Check configuration settings ===
 
@@ -141,7 +152,7 @@ the web upgrader.
 
 If you absolutely cannot make the UTF-8 upgrade work, you can try
 doing it by hand: dump your old database, convert the dump file
-using iconv as described here: 
+using iconv as described here:
 http://portal.suse.com/sdb/en/2004/05/jbartsh_utf-8.html
 and then reimport it. You can also convert filenames using convmv,
 but note that the old directory hashes will no longer be valid,

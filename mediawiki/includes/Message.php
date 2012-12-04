@@ -203,6 +203,11 @@ class Message {
 	protected $title = null;
 
 	/**
+	 * Content object representing the message
+	 */
+	protected $content = null;
+
+	/**
 	 * @var string
 	 */
 	protected $message;
@@ -332,6 +337,7 @@ class Message {
 	 * turned off.
 	 * @since 1.17
 	 * @param $lang Mixed: language code or Language object.
+	 * @throws MWException
 	 * @return Message: $this
 	 */
 	public function inLanguage( $lang ) {
@@ -405,6 +411,18 @@ class Message {
 	}
 
 	/**
+	 * Returns the message as a Content object.
+	 * @return Content
+	 */
+	public function content() {
+		if ( !$this->content ) {
+			$this->content = new MessageContent( $this->key );
+		}
+
+		return $this->content;
+	}
+
+	/**
 	 * Returns the message parsed from wikitext to HTML.
 	 * @since 1.17
 	 * @return String: HTML
@@ -418,6 +436,15 @@ class Message {
 				return '<' . $key . '>';
 			}
 			return '&lt;' . $key . '&gt;';
+		}
+
+		# Replace $* with a list of parameters for &uselang=qqx.
+		if ( strpos( $string, '$*' ) !== false ) {
+			$paramlist = '';
+			if ( $this->parameters !== array() ) {
+				$paramlist = ': $' . implode( ', $', range( 1, count( $this->parameters ) ) );
+			}
+			$string = str_replace( '$*', $paramlist, $string );
 		}
 
 		# Replace parameters before text parsing
@@ -530,7 +557,7 @@ class Message {
 	/**
 	 * Check whether a message does not exist, is an empty string, or is "-"
 	 * @since 1.18
-	 * @return Bool: true if is is and false if not
+	 * @return Bool: true if it is and false if not
 	 */
 	public function isDisabled() {
 		$message = $this->fetchMessage();
@@ -579,7 +606,6 @@ class Message {
 	 * @since 1.18
 	 * @param $param String|Array: Parameter as defined in this class.
 	 * @return Tuple(type, value)
-	 * @throws MWException
 	 */
 	protected function extractParam( $param ) {
 		if ( is_array( $param ) && isset( $param['raw'] ) ) {
@@ -591,7 +617,11 @@ class Message {
 		} elseif ( !is_array( $param ) ) {
 			return array( 'before', $param );
 		} else {
-			throw new MWException( "Invalid message parameter" );
+			trigger_error(
+				"Invalid message parameter: " . htmlspecialchars( serialize( $param ) ),
+				E_USER_WARNING
+			);
+			return array( 'before', '[INVALID]' );
 		}
 	}
 
@@ -602,7 +632,8 @@ class Message {
 	 * @return string Wikitext parsed into HTML
 	 */
 	protected function parseText( $string ) {
-		return MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language )->getText();
+		$out = MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language );
+		return is_object( $out ) ? $out->getText() : $out;
 	}
 
 	/**
@@ -618,6 +649,7 @@ class Message {
 	/**
 	 * Wrapper for what ever method we use to get message contents
 	 * @since 1.17
+	 * @throws MWException
 	 * @return string
 	 */
 	protected function fetchMessage() {

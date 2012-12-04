@@ -13,6 +13,7 @@
  * @author Fryed-peach
  * @author Jfblanc
  * @author Kaganer
+ * @author McDutchie
  * @author Spacebirdy
  * @author Горан Анђелковић
  * @author לערי ריינהארט
@@ -152,7 +153,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORÇARTAULA__', '__FORÇARSOMARI__', '__FORÇARTDM__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__TAULA__', '__SOMARI__', '__TDM__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__SECCIONNONEDITABLA__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__PASCAPDENTÈSTA__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'MESCORRENT', 'MESACTUAL', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonthname'          => array( '1', 'NOMMESCORRENT', 'NOMMESACTUAL', 'CURRENTMONTHNAME' ),
 	'currentmonthnamegen'       => array( '1', 'NOMGENMESCORRENT', 'NOMGENMESACTUAL', 'CURRENTMONTHNAMEGEN' ),
@@ -436,7 +436,6 @@ $messages = array(
 'qbbrowse' => 'Far desfilar',
 'qbedit' => 'Modificar',
 'qbpageoptions' => 'Opcions de la pagina',
-'qbpageinfo' => 'Pagina d’entresenhas',
 'qbmyoptions' => 'Mas opcions',
 'qbspecialpages' => 'Paginas especialas',
 'faq' => 'FAQ',
@@ -679,11 +678,8 @@ Lo motiu avançat es « ''$2'' ».",
 # Login and logout pages
 'logouttext' => "'''Ara, sètz desconnect{{GENDER:||at|ada}}..'''
 
-Podètz contunhar d'utilizar {{SITENAME}} anonimament, o vos podètz [[Special:UserLogin|tornar connectar]] jol meteis nom o amb un autre nom.
+Podètz contunhar d'utilizar {{SITENAME}} anonimament, o vos podètz <span class='plainlinks'>[$1 tornar connectar]</span> jol meteis nom o amb un autre nom.
 Notatz que d'unas paginas pòdon èsser encara afichadas coma s'eratz encara connect{{GENDER:||at|ada}}, fins al moment qu'escafaretz l'amagatal de vòstre navigador.",
-'welcomecreation' => "== Benvenguda, $1 ! ==
-Vòstre compte d'utilizaire es estat creat.
-Doblidetz pas de personalizar vòstras [[Special:Preferences|{{SITENAME}} preferéncias]].",
 'yourname' => "Vòstre nom d'utilizaire :",
 'yourpassword' => 'Vòstre senhal :',
 'yourpasswordagain' => 'Picatz vòstre senhal tornarmai :',
@@ -1222,8 +1218,6 @@ Asseguratz-vos qu'aqueste cambiament pòsca conservar la continuitat de l'istori
 'search-interwiki-caption' => 'Projèctes fraires',
 'search-interwiki-default' => '$1 resultats :',
 'search-interwiki-more' => '(mai)',
-'search-mwsuggest-enabled' => 'amb suggestions',
-'search-mwsuggest-disabled' => 'sens suggestion',
 'search-relatedarticle' => 'Relatat',
 'mwsuggest-disable' => 'Desactivar las suggestions AJAX',
 'searcheverything-enable' => 'Recercar dins totes los espacis de noms',
@@ -1320,7 +1314,7 @@ Vaquí una valor generada aleatòriament que podètz utilizar : $1',
 'timezoneregion-indian' => 'Ocean Indian',
 'timezoneregion-pacific' => 'Ocean Pacific',
 'allowemail' => 'Autorizar lo mandadís de corrièr electronic venent d’autres utilizaires',
-'prefs-searchoptions' => 'Opcions de recèrca',
+'prefs-searchoptions' => 'Recèrca',
 'prefs-namespaces' => 'Noms d’espacis',
 'defaultns' => 'Autrament recercar dins aquestes espacis de noms :',
 'default' => 'defaut',
@@ -2129,11 +2123,7 @@ Las modificacions venentas d\'aquesta pagina e de la pagina de discussion associ
 
 'enotif_mailer' => 'Sistèma d’expedicion de notificacion de {{SITENAME}}',
 'enotif_reset' => 'Marcar totas las paginas coma visitadas',
-'enotif_newpagetext' => 'Aquò es una pagina novèla.',
 'enotif_impersonal_salutation' => 'Utilizaire de {{SITENAME}}',
-'changed' => 'modificada',
-'created' => 'creada',
-'enotif_subject' => 'La pagina $PAGETITLE de {{SITENAME}} es estada $CHANGEDORCREATED per $PAGEEDITOR',
 'enotif_lastvisited' => 'Consultatz $1 per totes los cambiaments dempuèi vòstra darrièra visita.',
 'enotif_lastdiff' => 'Consultatz $1 per veire aquesta modificacion.',
 'enotif_anon_editor' => 'utilizaire anonim $1',
@@ -3448,5 +3438,9 @@ Picatz lo nom del fichièr sens lo prefix « {{ns:file}}: »",
 'revdelete-restricted' => 'aplicar las restriccions als administrators',
 'revdelete-unrestricted' => 'restriccions levadas pels administrators',
 'newuserlog-byemail' => 'senhal mandat per corrièr electronic',
+
+# Search suggestions
+'searchsuggest-search' => 'Recercar',
+'searchsuggest-containing' => 'que conten...',
 
 );

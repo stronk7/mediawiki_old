@@ -40,18 +40,10 @@ class SpecialJavaScriptTest extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgEnableJavaScriptTest;
-
 		$out = $this->getOutput();
 
 		$this->setHeaders();
 		$out->disallowUserJs();
-
-		// Abort early if we're disabled
-		if ( $wgEnableJavaScriptTest !== true ) {
-			$out->addWikiMsg( 'javascripttest-disabled' );
-			return;
-		}
 
 		$out->addModules( 'mediawiki.special.javaScriptTest' );
 
@@ -112,6 +104,7 @@ class SpecialJavaScriptTest extends SpecialPage {
 	 * be thrown.
 	 * @param $html String: The raw HTML.
 	 * @param $state String: State, one of 'noframework', 'unknownframework' or 'frameworkfound'
+	 * @throws MWException
 	 * @return string
 	 */
 	private function wrapSummaryHtml( $html, $state ) {
@@ -164,10 +157,4 @@ HTML;
 		// $wgJavaScriptTestConfig in DefaultSettings.php
 		$out->addJsConfigVars( 'QUnitTestSwarmInjectJSPath', $wgJavaScriptTestConfig['qunit']['testswarm-injectjs'] );
 	}
-
-	public function isListed(){
-		global $wgEnableJavaScriptTest;
-		return $wgEnableJavaScriptTest === true;
-	}
-
 }

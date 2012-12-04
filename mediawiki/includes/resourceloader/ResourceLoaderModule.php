@@ -77,7 +77,7 @@ abstract class ResourceLoaderModule {
 	}
 
 	/**
-	 * Set this module's name. This is called by ResourceLodaer::register()
+	 * Set this module's name. This is called by ResourceLoader::register()
 	 * when registering the module. Other code should not call this.
 	 *
 	 * @param $name String: Name
@@ -91,7 +91,7 @@ abstract class ResourceLoaderModule {
 	 * with ResourceLoader::register()
 	 *
 	 * @return Int ResourceLoaderModule class constant, the subclass default
-	 *     if not set manuall
+	 *     if not set manually
 	 */
 	public function getOrigin() {
 		return $this->origin;
@@ -172,7 +172,9 @@ abstract class ResourceLoaderModule {
 	 * Get all CSS for this module for a given skin.
 	 *
 	 * @param $context ResourceLoaderContext: Context object
-	 * @return Array: List of CSS strings keyed by media type
+	 * @return Array: List of CSS strings or array of CSS strings keyed by media type.
+	 *  like array( 'screen' => '.foo { width: 0 }' );
+	 *  or array( 'screen' => array( '.foo { width: 0 }' ) );
 	 */
 	public function getStyles( ResourceLoaderContext $context ) {
 		// Stub, override expected
@@ -332,8 +334,9 @@ abstract class ResourceLoaderModule {
 	 */
 	public function getMsgBlobMtime( $lang ) {
 		if ( !isset( $this->msgBlobMtime[$lang] ) ) {
-			if ( !count( $this->getMessages() ) )
+			if ( !count( $this->getMessages() ) ) {
 				return 0;
+			}
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$msgBlobMtime = $dbr->selectField( 'msg_resource', 'mr_timestamp', array(
@@ -373,7 +376,7 @@ abstract class ResourceLoaderModule {
 	 * NOTE: The mtime of the module's messages is NOT automatically included.
 	 * If you want this to happen, you'll need to call getMsgBlobMtime()
 	 * yourself and take its result into consideration.
-	 * 
+	 *
 	 * @param $context ResourceLoaderContext: Context object
 	 * @return Integer: UNIX timestamp
 	 */
@@ -424,10 +427,10 @@ abstract class ResourceLoaderModule {
 			try {
 				$parser->parse( $contents, $fileName, 1 );
 				$result = $contents;
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
 				// We'll save this to cache to avoid having to validate broken JS over and over...
 				$err = $e->getMessage();
-				$result = "throw new Error(" . Xml::encodeJsVar("JavaScript parse error: $err") . ");";
+				$result = "throw new Error(" . Xml::encodeJsVar( "JavaScript parse error: $err" ) . ");";
 			}
 
 			$cache->set( $key, $result );
@@ -447,4 +450,13 @@ abstract class ResourceLoaderModule {
 		return self::$jsParser;
 	}
 
+	/**
+	 * Get target(s) for the module, eg ['desktop'] or ['desktop', 'mobile']
+	 * Default implementation hardcodes 'desktop'.
+	 *
+	 * @return array of strings
+	 */
+	public function getTargets() {
+		return array( 'desktop' );
+	}
 }

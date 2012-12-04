@@ -89,7 +89,6 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addTable', 'module_deps',       'patch-module_deps.sql' ),
 			array( 'addTable', 'uploadstash',       'patch-uploadstash.sql' ),
 			array( 'addTable', 'user_former_groups','patch-user_former_groups.sql' ),
-			array( 'addTable', 'config',            'patch-config.sql' ),
 			array( 'addTable', 'external_user',     'patch-external_user.sql' ),
 
 			# Needed before new field
@@ -101,6 +100,8 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'archive',       'ar_len',               'INTEGER' ),
 			array( 'addPgField', 'archive',       'ar_page_id',           'INTEGER' ),
 			array( 'addPgField', 'archive',       'ar_parent_id',         'INTEGER' ),
+			array( 'addPgField', 'archive',       'ar_content_model',     'TEXT' ),
+			array( 'addPgField', 'archive',       'ar_content_format',    'TEXT' ),
 			array( 'addPgField', 'categorylinks', 'cl_sortkey_prefix',    "TEXT NOT NULL DEFAULT ''"),
 			array( 'addPgField', 'categorylinks', 'cl_collation',         "TEXT NOT NULL DEFAULT 0"),
 			array( 'addPgField', 'categorylinks', 'cl_type',              "TEXT NOT NULL DEFAULT 'page'"),
@@ -114,6 +115,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'ipblocks',      'ipb_enable_autoblock', 'SMALLINT NOT NULL DEFAULT 1' ),
 			array( 'addPgField', 'ipblocks',      'ipb_parent_block_id',            'INTEGER DEFAULT NULL REFERENCES ipblocks(ipb_id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED' ),
 			array( 'addPgField', 'filearchive',   'fa_deleted',           'SMALLINT NOT NULL DEFAULT 0' ),
+			array( 'addPgField', 'filearchive',   'fa_sha1',              "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'logging',       'log_deleted',          'SMALLINT NOT NULL DEFAULT 0' ),
 			array( 'addPgField', 'logging',       'log_id',               "INTEGER NOT NULL PRIMARY KEY DEFAULT nextval('logging_log_id_seq')" ),
 			array( 'addPgField', 'logging',       'log_params',           'TEXT' ),
@@ -125,6 +127,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'oldimage',      'oi_metadata',          "BYTEA NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'oldimage',      'oi_minor_mime',        "TEXT NOT NULL DEFAULT 'unknown'" ),
 			array( 'addPgField', 'oldimage',      'oi_sha1',              "TEXT NOT NULL DEFAULT ''" ),
+			array( 'addPgField', 'page',          'page_content_model',   'TEXT' ),
 			array( 'addPgField', 'page_restrictions', 'pr_id',            "INTEGER NOT NULL UNIQUE DEFAULT nextval('page_restrictions_pr_id_seq')" ),
 			array( 'addPgField', 'profiling',     'pf_memory',            'NUMERIC(18,10) NOT NULL DEFAULT 0' ),
 			array( 'addPgField', 'recentchanges', 'rc_deleted',           'SMALLINT NOT NULL DEFAULT 0' ),
@@ -139,6 +142,8 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'revision',      'rev_deleted',          'SMALLINT NOT NULL DEFAULT 0' ),
 			array( 'addPgField', 'revision',      'rev_len',              'INTEGER' ),
 			array( 'addPgField', 'revision',      'rev_parent_id',        'INTEGER DEFAULT NULL' ),
+			array( 'addPgField', 'revision',      'rev_content_model',    'TEXT' ),
+			array( 'addPgField', 'revision',      'rev_content_format',   'TEXT' ),
 			array( 'addPgField', 'site_stats',    'ss_active_users',      "INTEGER DEFAULT '-1'" ),
 			array( 'addPgField', 'user_newtalk',  'user_last_timestamp',  'TIMESTAMPTZ' ),
 			array( 'addPgField', 'logging',       'log_user_text',        "TEXT NOT NULL DEFAULT ''" ),
@@ -149,6 +154,10 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'archive',       'ar_sha1',              "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'uploadstash',   'us_chunk_inx',         "INTEGER NULL" ),
 			array( 'addPgField', 'job',           'job_timestamp',        "TIMESTAMPTZ" ),
+			array( 'addPgField', 'job',           'job_random',           "INTEGER NOT NULL DEFAULT 0" ),
+			array( 'addPgField', 'job',           'job_token',            "TEXT NOT NULL DEFAULT ''" ),
+			array( 'addPgField', 'job',           'job_token_timestamp',  "TIMESTAMPTZ" ),
+			array( 'addPgField', 'job',           'job_sha1',             "TEXT NOT NULL DEFAULT ''" ),
 
 			# type changes
 			array( 'changeField', 'archive',       'ar_deleted',      'smallint', '' ),
@@ -222,6 +231,9 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgIndex', 'logging',       'logging_page_id_time',   '(log_page,log_timestamp)' ),
 			array( 'addPgIndex', 'iwlinks',       'iwl_prefix_title_from',  '(iwl_prefix, iwl_title, iwl_from)' ),
 			array( 'addPgIndex', 'job',           'job_timestamp_idx',      '(job_timestamp)' ),
+			array( 'addPgIndex', 'job',           'job_sha1',               '(job_sha1)' ),
+			array( 'addPgIndex', 'job',           'job_cmd_token',          '(job_cmd, job_token, job_random)' ),
+			array( 'addPgIndex', 'filearchive',   'fa_sha1',                '(fa_sha1)' ),
 
 			array( 'checkIndex', 'pagelink_unique', array(
 				array('pl_from', 'int4_ops', 'btree', 0),

@@ -6,7 +6,7 @@
  */
 class UploadFromUrlTest extends ApiTestCase {
 
-	public function setUp() {
+	protected function setUp() {
 		global $wgEnableUploads, $wgAllowCopyUploads, $wgAllowAsyncCopyUploads;
 		parent::setUp();
 
@@ -20,7 +20,7 @@ class UploadFromUrlTest extends ApiTestCase {
 		}
 	}
 
-	protected function doApiRequest( Array $params, Array $unused = null, $appendModule = false, User $user = null ) {
+	protected function doApiRequest( array $params, array $unused = null, $appendModule = false, User $user = null ) {
 		$sessionId = session_id();
 		session_write_close();
 

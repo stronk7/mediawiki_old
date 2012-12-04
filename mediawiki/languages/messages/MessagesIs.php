@@ -238,7 +238,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Fela yfirfarnar breytingar í nýlegum breytingum',
 'tog-newpageshidepatrolled' => 'Fela yfirfarnar breytingar í listanum yfir nýjar síður',
 'tog-extendwatchlist' => 'Sýna allar breytingar á vaktlistanum, ekki einungis þær nýjustu',
-'tog-usenewrc' => 'Endurbættar auknar nýlegar breytingar (þarfnast JavaScript)',
+'tog-usenewrc' => 'Flokka breytingar eftir síðu í nýlegum breytingum og vaktlista (þarfnast JavaScript)',
 'tog-numberheadings' => 'Númera fyrirsagnir sjálfkrafa',
 'tog-showtoolbar' => 'Sýna breytingarverkfærastiku (JavaScript)',
 'tog-editondblclick' => 'Breyta síðum þegar tvísmellt er (JavaScript)',
@@ -279,7 +279,7 @@ $messages = array(
 
 'underline-always' => 'Alltaf',
 'underline-never' => 'Aldrei',
-'underline-default' => 'skv. vafrastillingu',
+'underline-default' => 'Fletta eða vafra sjálfkrafa',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Breyta leturgerð í textareitum',
@@ -366,7 +366,7 @@ $messages = array(
 'newwindow' => '(opnast í nýjum glugga)',
 'cancel' => 'Hætta við',
 'moredotdotdot' => 'Meira...',
-'mypage' => 'Mín síða',
+'mypage' => 'Síða',
 'mytalk' => 'Spjall',
 'anontalk' => 'Spjallsíða þessa vistfangs.',
 'navigation' => 'Flakk',
@@ -377,7 +377,6 @@ $messages = array(
 'qbbrowse' => 'Flakka',
 'qbedit' => 'Breyta',
 'qbpageoptions' => 'Þessi síða',
-'qbpageinfo' => 'Samhengi',
 'qbmyoptions' => 'Mínar síður',
 'qbspecialpages' => 'Kerfissíður',
 'faq' => 'Algengar spurningar',
@@ -390,7 +389,7 @@ $messages = array(
 'vector-action-protect' => 'Vernda',
 'vector-action-undelete' => 'Hætta við eyðingu',
 'vector-action-unprotect' => 'Breyta verndunarstigi',
-'vector-simplesearch-preference' => 'Virkja leitaruppástungur (eingöngu fyrir vector þema)',
+'vector-simplesearch-preference' => 'Virkja einfaldaða leitarstiku (Vector-þemað eingöngu)',
 'vector-view-create' => 'Skapa',
 'vector-view-edit' => 'Breyta',
 'vector-view-history' => 'Breytingaskrá',
@@ -400,6 +399,7 @@ $messages = array(
 'namespaces' => 'Nafnrými',
 'variants' => 'Útgáfur',
 
+'navigation-heading' => 'Leiðsagnarval',
 'errorpagetitle' => 'Villa',
 'returnto' => 'Aftur á: $1.',
 'tagline' => 'Úr {{SITENAME}}',
@@ -637,17 +637,18 @@ Möppudýrið sem læsti skránni gaf þessa ástæðu: "\'\'$3\'\'".',
 # Login and logout pages
 'logouttext' => "'''Þú hefur verið skráð(ur) út.'''
 
-Þú getur haldið áfram að nota {{SITENAME}} óþekkt(ur), eða þú getur [[Special:UserLogin|skráð þig inn aftur]] sem sami eða annar notandi.
+Þú getur haldið áfram að nota {{SITENAME}} óþekkt(ur), eða þú getur <span class='plainlinks'>[$1 skráð þig inn aftur]</span> sem sami eða annar notandi.
 Athugaðu að sumar síður kunna að birtast líkt og þú sért ennþá skráð(ur) inn, þangað til að þú hreinsar skyndiminnið í vafranum þínum.",
-'welcomecreation' => '== Velkomin(n), $1! ==
-Aðgangurinn þinn hefur verið búinn til.
-Ekki gleyma að breyta [[Special:Preferences|{{SITENAME}}-stillingunum]] þínum.',
+'welcomeuser' => 'Velkomin(n), $1!',
+'welcomecreation-msg' => 'Aðgangurinn þinn hefur verið búinn til.
+Ekki gleyma að breyta [[Special:Preferences|{{SITENAME}} stillingunum]] þínum.',
 'yourname' => 'Notandanafn:',
 'yourpassword' => 'Lykilorð:',
 'yourpasswordagain' => 'Endurrita lykilorð:',
 'remembermypassword' => 'Muna innskráninguna mína í þessum vafra (í allt að $1 {{PLURAL:$1|dag|daga}})',
 'securelogin-stick-https' => 'Halda öllum samskiptum áfram yfir HTTPS eftir að þú skráir þig inn',
 'yourdomainname' => 'Þitt lén:',
+'password-change-forbidden' => 'Þú getur ekki breytt lykilorðum á þessum wiki.',
 'externaldberror' => 'Uppfærsla mistókst. Annaðhvort varð villa í gagnasafninu eða að þér sé óheimilt að uppfæra aðra aðganga.',
 'login' => 'Innskrá',
 'nav-login-createaccount' => 'Innskrá / Búa til aðgang',
@@ -893,9 +894,8 @@ Ef þú ert óþekktur notandi og finnst að óviðkomandi athugasemdum hafa ver
 'noarticletext' => 'Enginn texti er á þessari síðu enn sem komið er.
 Þú getur [[Special:Search/{{PAGENAME}}|leitað í öðrum síðum]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leitað í tengdum skrám], eða [{{fullurl:{{FULLPAGENAME}}|action=edit}} breytt henni sjálfur]</span>.',
-'noarticletext-nopermission' => 'Enginn texti er á þessari síðu enn sem komið er.
-Þú getur [[Special:Search/{{PAGENAME}}|leitað í öðrum síðum]],
-eða <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leitað í tengdum skrám]</span>.',
+'noarticletext-nopermission' => 'Það er enginn texti á þessari síðu eins og er.
+Þú getur [[Special:Search/{{PAGENAME}}|leitað að þessum titli]] í öðrum síðum, eða <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leitað í tengdum skrám]</span>, en þú hefur ekki réttindi til þess að stofna þessa síðu.',
 'missing-revision' => 'Útgáfa #$1 síðunnar „{{PAGENAME}}" er ekki til.
 
 Þetta gerist oftast þegar úreld breytingarskrá tengir á síðu sem hefur verið eytt. Frekari upplýsingar eru í [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} eyðingarskránni].',
@@ -904,12 +904,11 @@ Gjörðu svo vel og athugaðu hvort að þú viljir skapa/breyta þessari síðu
 'userpage-userdoesnotexist-view' => 'Notandinn "$1" er ekki skráður.',
 'blocked-notice-logextract' => 'Þessi notandi er í banni.
 Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til skýringar:',
-'clearyourcache' => "Athugaðu - Eftir vistun, má vera að þú þurfir að komast hjá skyndiminni vafrans til að sjá breytingarnar.'''
-'''Mozilla / Firefox / Safari:''' haltu ''Shift'' og smelltu á ''Reload'', eða ýttu á annaðhvort ''Ctrl-F5'' eða ''Ctrl-R'' (''Command-R'' á Mac)
-'''Google Chrome: '''smelltu á ''Ctrl-Shift-R'' (''Command-Shift-R'' á Mac)
-'''Konqueror: '''smelltu á ''Reload'' eða ýttu á ''F5'' 
-'''Opera:''' hreinsaðu skyndiminnið í ''Tools → Prefernces'';
-'''Internet Explorer:''' haltu ''Ctrl'' og smelltu á ''Refresh'', eða ýttu á ''Ctrl-F5''.",
+'clearyourcache' => "'''Athugaðu:''' Eftir vistun kann að vera að þú þurfir að komast hjá skyndiminni vafrans þíns til að sjá breytingarnar.
+* '''Firefox / Safari:''' Haltu ''Shift'' samtímis og þú smellir á ''Endurhlaða (Reload)'', eða ýttu á annaðhvort ''Ctrl-F5'' eða ''Ctrl-R'' (''⌘-R'' á Mac)
+* '''Google Chrome:''' Ýttu á ''Ctrl-Shift-R'' (''⌘-Shift-R'' á Mac)
+* '''Internet Explorer:''' Haltu ''Ctrl'' samtímis og þú smellir á ''Endurnýja (Refresh)'', eða ýttu á ''Ctrl-F5''
+* '''Opera:''' Hreinsaðu skyndiminnið í ''Verkfæri (Tools) → Stillingar (Preferences)''",
 'usercssyoucanpreview' => "'''Ath:''' Hægt er að nota „{{int:showpreview}}“ hnappinn til að prófa CSS-kóða áður en hann er vistaður.",
 'userjsyoucanpreview' => "'''Ath:''' Hægt er að nota \"{{int:showpreview}}\" hnappinn til að prófa JavaScript-kóða áður en hann er vistaður.",
 'usercsspreview' => "'''Mundu að þú ert aðeins að forskoða CSS-kóðann þinn.'''
@@ -924,7 +923,7 @@ Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til sk
 'updated' => '(Uppfært)',
 'note' => "'''Athugið:'''",
 'previewnote' => "'''Það sem sést hér er aðeins forskoðun og hefur ekki enn verið vistað!'''",
-'continue-editing' => 'Halda áfram að breyta',
+'continue-editing' => 'Fara á breytingasvæði',
 'previewconflict' => 'Þessi forskoðun endurspeglar textann í efra breytingarsvæði eins og hann myndi líta út ef þú vistar.',
 'session_fail_preview' => "'''Því miður! Gat ekki unnið úr breytingum þínum vegna týndra lotugagna.
 Vinsamlegast reyndu aftur síðar. Ef það virkar ekki heldur skaltu reyna að skrá þig út og inn á ný.'''",
@@ -999,6 +998,12 @@ Svo virðist sem henni hafi verið eytt.',
 'edit-already-exists' => 'Gat ekki skapað nýja síðu.
 Hún er nú þegar til.',
 'defaultmessagetext' => 'Sjálfgefinn skilaboða texti',
+
+# Content models
+'content-model-wikitext' => 'wiki-texti',
+'content-model-text' => 'hreinn texti',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''Viðvörun:''' Þessi síða inniheldur of mörg vinnslufrek aðgerðar þáttunar köll.
@@ -1131,9 +1136,10 @@ Ekki er hægt að fela hana.',
 'revdelete-no-change' => "'''Viðvörun:''' Breytingin frá $1 $2 hefur þegar umbeðnar sýnileika stillingar.",
 'revdelete-only-restricted' => 'Mistókst að fela breytingu frá $1 $2: Þú getur ekki falið breytingu fyrir möppudýrum án þess að velja eina af hinum sýnileika stillingunum.',
 'revdelete-reason-dropdown' => '*Algengar eyðingarástæður
-** Höfundarréttarbrot
-** Óviðeigandi persónuuplýsingar
-** Mögulega ærumleiðandi upplýsingar',
+**Höfundarréttarbrot
+**Óviðeigandi athugasemdir eða persónuuplýsingar
+**Óviðeigandi notandanafn
+**Mögulega ærumleiðandi upplýsingar',
 'revdelete-otherreason' => 'Aðrar/fleiri ástæður:',
 'revdelete-reasonotherlist' => 'Önnur ástæða',
 'revdelete-edit-reasonlist' => 'Eyðingarástæður',
@@ -1159,8 +1165,8 @@ Sjáðu til þess að þessi breyting sameini breytingarskrárnar samfellt.',
 
 # Diffs
 'history-title' => '$1: Breytingaskrá',
-'difference-title' => '$1: Munur á milli útgáfa',
-'difference-title-multipage' => '$1 og $2: Munur á milli síðna',
+'difference-title' => 'Munur á milli breytinga „$1“',
+'difference-title-multipage' => 'Munur á milli síðna „$1“ og „$2“',
 'difference-multipage' => '(Munur á milli síðna)',
 'lineno' => 'Lína $1:',
 'compareselectedversions' => 'Bera saman valdar útgáfur',
@@ -1187,7 +1193,7 @@ Sjáðu til þess að þessi breyting sameini breytingarskrárnar samfellt.',
 'shown-title' => 'Sýna $1 {{PLURAL:$1|niðurstöðu|niðurstöður}} á hverri síðu',
 'viewprevnext' => 'Skoða ($1 {{int:pipe-separator}} $2) ($3).',
 'searchmenu-legend' => 'Leitarvalmöguleikar',
-'searchmenu-exists' => "'''Það er síða að nafni „[[$1]]“ á þessum wiki'''",
+'searchmenu-exists' => "'''Það er síða að nafni „[[:$1]]“ á þessum wiki'''",
 'searchmenu-new' => "'''Skapaðu síðuna \"[[:\$1]]\" á þessum wiki!'''",
 'searchhelp-url' => 'Help:Efnisyfirlit',
 'searchmenu-prefix' => '[[Special:PrefixIndex/$1|Leita að síðum með þessu forskeyti]]',
@@ -1210,8 +1216,6 @@ Sjáðu til þess að þessi breyting sameini breytingarskrárnar samfellt.',
 'search-interwiki-caption' => 'Systurverkefni',
 'search-interwiki-default' => '$1 útkomur:',
 'search-interwiki-more' => '(fleiri)',
-'search-mwsuggest-enabled' => 'með uppástungum',
-'search-mwsuggest-disabled' => 'engar uppástungur',
 'search-relatedarticle' => 'Tengt',
 'mwsuggest-disable' => 'Gera AJAX-uppástungur óvirkar',
 'searcheverything-enable' => 'Leita í öllum nafnrýmum',
@@ -1246,7 +1250,7 @@ Athugaðu að skrár þeirra yfir {{SITENAME}}-efni kunna að vera úreltar.',
 
 # Preferences page
 'preferences' => 'Stillingar',
-'mypreferences' => 'Stillingar',
+'mypreferences' => 'Mínar stillingar',
 'prefs-edits' => 'Fjöldi breytinga:',
 'prefsnologin' => 'Ekki innskráður',
 'prefsnologintext' => 'Þú verður að vera <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} skráð(ur) inn]</span> til að breyta notandastillingum.',
@@ -1308,7 +1312,7 @@ Hér er gildi sem var valið af handahófi sem þú getur notað: $1',
 'timezoneregion-indian' => 'Indlandshaf',
 'timezoneregion-pacific' => 'Kyrrahaf',
 'allowemail' => 'Virkja tölvupóst frá öðrum notendum',
-'prefs-searchoptions' => 'Leitarvalmöguleikar',
+'prefs-searchoptions' => 'Leit',
 'prefs-namespaces' => 'Nafnrými',
 'defaultns' => 'Leita í þessum nafnrýmum sjálfgefið:',
 'default' => 'sjálfgefið',
@@ -1327,7 +1331,7 @@ Ekki er hægt að taka þessa breytingu til baka.',
 'prefs-registration' => 'Nýskráningartími:',
 'yourrealname' => 'Fullt nafn:',
 'yourlanguage' => 'Viðmótstungumál:',
-'yourvariant' => 'Útgáfa:',
+'yourvariant' => 'Afbrigði efnismáls:',
 'prefs-help-variant' => 'Þín sérvalda útgáfa eða réttritun til að birta innihald síðna í.',
 'yournick' => 'Undirskrift:',
 'prefs-help-signature' => 'Ummæli á spjallsíðum eiga að vera skrifuð undir með "<nowiki>~~~~</nowiki>" sem verður breytt í undirskrift þína og dagsetningu.',
@@ -2117,7 +2121,7 @@ Studdar samskiptareglur: <code>$1</code> (ekki bæta neinum af þessum í leitin
 'emailpagetext' => 'Hafi notandi tilgreint netfang í stillingunum sínum er hægt að senda póst til hans hér.
 Póstfangið sem þú tilgreindir í [[Special:Preferences|stillingunum þínum]] birtist í "Frá:" hluta tölvupóstsins, svo að viðtakandi þess geti svarað beint til þín.',
 'usermailererror' => 'Póst hlutur skilaði villu:',
-'defemailsubject' => '{{SITENAME}} netfang notanda "$1"',
+'defemailsubject' => '{{SITENAME}} skilaboð frá notandanum "$1"',
 'usermaildisabled' => 'Netfang notenda er óvirkt',
 'usermaildisabledtext' => 'Þú getur ekki sent tölvupóst til annara notenda á þessum wiki',
 'noemailtitle' => 'Ekkert póstfang',
@@ -2146,7 +2150,7 @@ Póstfangið sem þú tilgreindir í [[Special:Preferences|stillingunum þínum]
 
 # Watchlist
 'watchlist' => 'Vaktlistinn',
-'mywatchlist' => 'Vaktlistinn',
+'mywatchlist' => 'Vaktlisti',
 'watchlistfor2' => 'Eftir $1 $2',
 'nowatchlist' => 'Vaktlistinn er tómur.',
 'watchlistanontext' => 'Vinsamlegast $1 til að skoða eða breyta vaktlistanum þínum.',
@@ -2181,32 +2185,27 @@ Frekari breytingar á henni eða spallsíðu hennar munu verða sýndar þar, og
 'watcherrortext' => 'Villa kom upp við breytingu á stillingum vaktlistans fyrir "$1".',
 
 'enotif_reset' => 'Merkja allar síður sem skoðaðar',
-'enotif_newpagetext' => 'Þetta er ný síða.',
 'enotif_impersonal_salutation' => '{{SITENAME}}notandi',
-'changed' => 'breytt',
-'created' => 'búin til',
-'enotif_subject' => '$PAGETITLE á {{SITENAME}} hefur verið $CHANGEDORCREATED af $PAGEEDITOR',
 'enotif_lastvisited' => 'Heimsóttu eftirfarandi tengil til að sjá allar breytingar síðan 
 þú heimsóttir síðuna síðast:
   $1',
 'enotif_lastdiff' => 'Einnig getur þú heimsótt eftirfarandi tengil til að skoða þessa breytingu:
   $1',
-'enotif_anon_editor' => 'ónefndur notandi $1',
+'enotif_anon_editor' => 'ónefndum notanda $1',
 'enotif_body' => 'Kæri $WATCHINGUSERNAME,
 
-Það lítur út fyrir að þú hafir ný skilaboð á {{SITENAME}} $PAGETITLE.
-Hún hefur verið $CHANGEDORCREATED $PAGEEDITDATE af 
+Síðan „$PAGETITLE” sem þú hefur beðið um að fylgjast með á {{SITENAME}} hefur verið $CHANGEDORCREATED $PAGEEDITDATE af 
 $PAGEEDITOR. Breytingarágripið var:
 
    $PAGESUMMARY
 
-Þetta er tengill á spjallsíðuna þína:
+Þetta er tengill á síðuna:
 
    $PAGETITLE_URL
 
 $NEWPAGE
 
-Til þess að hafa samband við $PAGEEDITOR, heimsóttu:
+Til þess að hafa samband við $PAGEEDITOR, smelltu á:
 
    $PAGEEDITOR_WIKI
 
@@ -2218,12 +2217,12 @@ Kveðja,
 
 --
 
-Til þess að breyta stillingum um hvenær þú færð sendar tilkynningar, heimsóttu:
+Til þess að breyta stillingum um hvenær þú færð sendar tilkynningar, smelltu á:
 
 {{canonicalurl:{{#special:Preferences}}}}
 
 
-Til þess að hætta að fylgjast með $PAGETITLE, heimsóttu:
+Til þess að hætta að fylgjast með „$PAGETITLE”, smelltu á:
 
 $UNWATCHURL',
 
@@ -2455,7 +2454,7 @@ Síðasta færsla vistfangsins úr bönnunarskrá er sýnd hér fyrir neðan til
 'whatlinkshere-hideredirs' => '$1 tilvísanir',
 'whatlinkshere-hidetrans' => '$1 ítengingar',
 'whatlinkshere-hidelinks' => '$1 tengla',
-'whatlinkshere-hideimages' => '$1 myndatenglar',
+'whatlinkshere-hideimages' => '$1 skrátenglar',
 'whatlinkshere-filters' => 'Síur',
 
 # Block/unblock
@@ -2718,7 +2717,7 @@ Ef síðari möguleikinn á við getur þú einnig notað tengil, til dæmis
 'allmessagesdefault' => 'Sjálfgefinn skilaboða texti',
 'allmessagescurrent' => 'Núverandi texti',
 'allmessagestext' => 'Þetta er listi yfir kerfismeldingar í Melding-nafnrýminu.
-Gjörðu svo vel og heimsæktu [//www.mediawiki.org/wiki/Localisation MediaWiki-staðfæringuna] og [//translatewiki.net translatewiki.net] ef þú vilt taka þátt í almennri MediaWiki-staðfæringu.',
+Vinsamlegast heimsæktu [//www.mediawiki.org/wiki/Localisation MediaWiki-staðfæringuna] og [//translatewiki.net translatewiki.net] ef þú vilt taka þátt í almennri MediaWiki-staðfæringu.',
 'allmessagesnotsupportedDB' => "Það er ekki hægt að nota '''{{ns:special}}:Allmessages''' því '''\$wgUseDatabaseMessages''' hefur verið gerð óvirk.",
 'allmessages-filter-legend' => 'Sía',
 'allmessages-filter' => 'Sía með breytingarstöðu:',
@@ -2796,7 +2795,6 @@ Vinsamlegast reyndu aftur.',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript prófun',
-'javascripttest-disabled' => 'Þessi möguleiki hefur ekki verið virkjaður á þessum wiki.',
 'javascripttest-pagetext-skins' => 'Veldu þema sem á að keyra prófanirnar á:',
 
 # Tooltip help for the actions
@@ -3671,6 +3669,10 @@ Ef ekki, þá getur þú notað einfalt eyðublað hér fyrir neðan. Athugasemd
 'feedback-close' => 'Búið',
 'feedback-bugcheck' => 'Frábært! Athugaðu hvort þessi villa hafi verið [$1 tilkynnt áður].',
 'feedback-bugnew' => 'Ég athugaði það. Tilkynna nýja villu.',
+
+# Search suggestions
+'searchsuggest-search' => 'Leita',
+'searchsuggest-containing' => 'sem innihalda ...',
 
 # API errors
 'api-error-badaccess-groups' => 'Þú hefur ekki leyfi til að hlaða inn skrám.',

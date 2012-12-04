@@ -4,7 +4,8 @@
 ( function ( mw, $ ) {
 	'use strict';
 
-	var isPageReady = false,
+	var notification,
+		isPageReady = false,
 		isInitialized = false,
 		preReadyNotifQueue = [],
 		/**
@@ -88,7 +89,9 @@
 			// Other notification elements matching the same tag
 			$tagMatches,
 			outerHeight,
-			placeholderHeight;
+			placeholderHeight,
+			autohideCount,
+			notif;
 
 		if ( this.isOpen ) {
 			return;
@@ -164,10 +167,11 @@
 						}
 					} );
 
+			notif = this;
+
 			// Create a clear placeholder we can use to make the notifications around the notification that is being
 			// replaced expand or contract gracefully to fit the height of the new notification.
-			var self = this;
-			self.$replacementPlaceholder = $( '<div>' )
+			notif.$replacementPlaceholder = $( '<div>' )
 				// Set the height to the space the previous notification or placeholder took
 				.css( 'height', outerHeight )
 				// Make sure that this placeholder is at the very end of this tagged notification group
@@ -181,7 +185,7 @@
 							// Reset the notification position after we've finished the space animation
 							// However do not do it if the placeholder was removed because another tagged
 							// notification went and closed this one.
-							if ( self.$replacementPlaceholder ) {
+							if ( notif.$replacementPlaceholder ) {
 								$notification.css( 'position', '' );
 							}
 							// Finally, remove the placeholder from the DOM
@@ -206,7 +210,7 @@
 		// By default a notification is paused.
 		// If this notification is within the first {autoHideLimit} notifications then
 		// start the auto-hide timer as soon as it's created.
-		var autohideCount = $area.find( '.mw-notification-autohide' ).length;
+		autohideCount = $area.find( '.mw-notification-autohide' ).length;
 		if ( autohideCount <= notification.autoHideLimit ) {
 			this.resume();
 		}
@@ -291,8 +295,19 @@
 			} )
 			// Fix the top/left position to the current computed position from which we
 			// can animate upwards.
-			.css( this.$notification.position() )
-			// Animate opacity and top to create fade upwards animation for notification closing
+			.css( this.$notification.position() );
+
+		// This needs to be done *after* notification's position has been made absolute.
+		if ( options.placeholder ) {
+			// Insert a placeholder with a height equal to the height of the
+			// notification plus it's vertical margins in place of the notification
+			var $placeholder = $( '<div>' )
+				.css( 'height', this.$notification.outerHeight( true ) )
+				.insertBefore( this.$notification );
+		}
+
+		// Animate opacity and top to create fade upwards animation for notification closing
+		this.$notification
 			.animate( {
 				opacity: 0,
 				top: '-=35'
@@ -311,14 +326,6 @@
 					}
 				}
 			} );
-
-		if ( options.placeholder ) {
-			// Insert a placeholder with a height equal to the height of the
-			// notification plus it's vertical margins in place of the notification
-			var $placeholder = $( '<div>' )
-				.css( 'height', this.$notification.outerHeight( true ) )
-				.insertBefore( this.$notification );
-		}
 	};
 
 	/**
@@ -368,7 +375,7 @@
 		}
 	}
 
-	var notification = {
+	notification = {
 		/**
 		 * Pause auto-hide timers for all notifications.
 		 * Notifications will not auto-hide until resume is called.

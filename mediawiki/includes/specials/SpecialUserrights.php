@@ -62,6 +62,7 @@ class UserrightsPage extends SpecialPage {
 	 * Depending on the submit button used, call a form or a save function.
 	 *
 	 * @param $par Mixed: string if any subpage provided, else null
+	 * @throws UserBlockedError|PermissionsError
 	 */
 	public function execute( $par ) {
 		// If the visitor doesn't have permissions to assign or remove
@@ -244,16 +245,16 @@ class UserrightsPage extends SpecialPage {
 	 * Add a rights log entry for an action.
 	 */
 	function addLogEntry( $user, $oldGroups, $newGroups, $reason ) {
-		$log = new LogPage( 'rights' );
-
-		$log->addEntry( 'rights',
-			$user->getUserPage(),
-			$reason,
-			array(
-				$this->makeGroupNameListForLog( $oldGroups ),
-				$this->makeGroupNameListForLog( $newGroups )
-			)
-		);
+		$logEntry = new ManualLogEntry( 'rights', 'rights' );
+		$logEntry->setPerformer( $this->getUser() );
+		$logEntry->setTarget( $user->getUserPage() );
+		$logEntry->setComment( $reason );
+		$logEntry->setParameters( array(
+			'4::oldgroups' => $oldGroups,
+			'5::newgroups' => $newGroups,
+		) );
+		$logid = $logEntry->insert();
+		$logEntry->publish( $logid );
 	}
 
 	/**
@@ -354,7 +355,16 @@ class UserrightsPage extends SpecialPage {
 		}
 	}
 
+	/**
+	 * Make a list of group names to be stored as parameter for log entries
+	 *
+	 * @deprecated in 1.21; use LogFormatter instead.
+	 * @param $ids array
+	 * @return string
+	 */
 	function makeGroupNameListForLog( $ids ) {
+		wfDeprecated( __METHOD__, '1.21' );
+
 		if( empty( $ids ) ) {
 			return '';
 		} else {
@@ -409,27 +419,41 @@ class UserrightsPage extends SpecialPage {
 	 */
 	protected function showEditUserGroupsForm( $user, $groups ) {
 		$list = array();
+		$membersList = array();
 		foreach( $groups as $group ) {
 			$list[] = self::buildGroupLink( $group );
+			$membersList[] = self::buildGroupMemberLink( $group );
 		}
 
-		$autolist = array();
+		$autoList = array();
+		$autoMembersList = array();
 		if ( $user instanceof User ) {
 			foreach( Autopromote::getAutopromoteGroups( $user ) as $group ) {
-				$autolist[] = self::buildGroupLink( $group );
+				$autoList[] = self::buildGroupLink( $group );
+				$autoMembersList[] = self::buildGroupMemberLink( $group );
 			}
 		}
 
+		$language = $this->getLanguage();
+		$displayedList = $this->msg( 'userrights-groupsmember-type',
+			$language->listToText( $list ),
+			$language->listToText( $membersList )
+		)->plain();
+		$displayedAutolist = $this->msg( 'userrights-groupsmember-type',
+			$language->listToText( $autoList ),
+			$language->listToText( $autoMembersList )
+		)->plain();
+
 		$grouplist = '';
 		$count = count( $list );
-		if( $count > 0 ) {
+		if ( $count > 0 ) {
 			$grouplist = $this->msg( 'userrights-groupsmember', $count, $user->getName() )->parse();
-			$grouplist = '<p>' . $grouplist  . ' ' . $this->getLanguage()->listToText( $list ) . "</p>\n";
+			$grouplist = '<p>' . $grouplist  . ' ' . $displayedList . "</p>\n";
 		}
-		$count = count( $autolist );
-		if( $count > 0 ) {
+		$count = count( $autoList );
+		if ( $count > 0 ) {
 			$autogrouplistintro = $this->msg( 'userrights-groupsmember-auto', $count, $user->getName() )->parse();
-			$grouplist .= '<p>' . $autogrouplistintro  . ' ' . $this->getLanguage()->listToText( $autolist ) . "</p>\n";
+			$grouplist .= '<p>' . $autogrouplistintro  . ' ' . $displayedAutolist . "</p>\n";
 		}
 
 		$userToolLinks = Linker::userToolLinks(
@@ -479,10 +503,17 @@ class UserrightsPage extends SpecialPage {
 	 * @return string
 	 */
 	private static function buildGroupLink( $group ) {
-		static $cache = array();
-		if( !isset( $cache[$group] ) )
-			$cache[$group] = User::makeGroupLinkHtml( $group, htmlspecialchars( User::getGroupName( $group ) ) );
-		return $cache[$group];
+		return User::makeGroupLinkHtml( $group, User::getGroupName( $group ) );
+	}
+
+	/**
+	 * Format a link to a group member description page
+	 *
+	 * @param $group string
+	 * @return string
+	 */
+	private static function buildGroupMemberLink( $group ) {
+		return User::makeGroupLinkHtml( $group, User::getGroupMember( $group ) );
 	}
 
 	/**
@@ -534,7 +565,7 @@ class UserrightsPage extends SpecialPage {
 		}
 
 		# Build the HTML table
-		$ret .=	Xml::openElement( 'table', array( 'class' => 'mw-userrights-groups' ) ) .
+		$ret .= Xml::openElement( 'table', array( 'class' => 'mw-userrights-groups' ) ) .
 			"<tr>\n";
 		foreach( $columns as $name => $column ) {
 			if( $column === array() )

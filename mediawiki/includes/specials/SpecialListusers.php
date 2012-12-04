@@ -36,7 +36,9 @@ class UsersPager extends AlphabeticPager {
 
 	/**
 	 * @param $context IContextSource
-	 * @param $par null|array
+	 * @param $par array (Default null)
+	 * @param $including boolean Whether this page is being transcluded in
+	 * another page
 	 */
 	function __construct( IContextSource $context = null, $par = null, $including = null ) {
 		if ( $context ) {
@@ -89,7 +91,7 @@ class UsersPager extends AlphabeticPager {
 		$conds = array();
 		// Don't show hidden names
 		if( !$this->getUser()->isAllowed( 'hideuser' ) ) {
-			$conds[] = 'ipb_deleted IS NULL';
+			$conds[] = 'ipb_deleted IS NULL OR ipb_deleted = 0';
 		}
 
 		$options = array();
@@ -129,7 +131,6 @@ class UsersPager extends AlphabeticPager {
 				'user_groups' => array( 'LEFT JOIN', 'user_id=ug_user' ),
 				'ipblocks' => array( 'LEFT JOIN', array(
 					'user_id=ipb_user',
-					'ipb_deleted' => 1,
 					'ipb_auto' => 0
 				)),
 			),
@@ -152,7 +153,7 @@ class UsersPager extends AlphabeticPager {
 		$userName = $row->user_name;
 
 		$ulinks = Linker::userLink( $row->user_id, $userName );
-		$ulinks .= Linker::userToolLinks( $row->user_id, $userName );
+		$ulinks .= Linker::userToolLinksRedContribs( $row->user_id, $userName, intval( $row->edits ) );
 
 		$lang = $this->getLanguage();
 
@@ -185,9 +186,10 @@ class UsersPager extends AlphabeticPager {
 			$created = $this->msg( 'usercreated', $d, $t, $row->user_name )->escaped();
 			$created = ' ' . $this->msg( 'parentheses' )->rawParams( $created )->escaped();
 		}
+		$blocked = !is_null( $row->ipb_deleted ) ? ' ' . $this->msg( 'listusers-blocked', $userName )->escaped() : '';
 
 		wfRunHooks( 'SpecialListusersFormatRow', array( &$item, $row ) );
-		return Html::rawElement( 'li', array(), "{$item}{$edits}{$created}" );
+		return Html::rawElement( 'li', array(), "{$item}{$edits}{$created}{$blocked}" );
 	}
 
 	function doBatchLookups() {
@@ -298,14 +300,13 @@ class UsersPager extends AlphabeticPager {
 /**
  * @ingroup SpecialPage
  */
-class SpecialListUsers extends SpecialPage {
+class SpecialListUsers extends IncludableSpecialPage {
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		parent::__construct( 'Listusers' );
-		$this->mIncludable = true;
 	}
 
 	/**

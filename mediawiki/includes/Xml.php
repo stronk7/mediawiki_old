@@ -59,6 +59,7 @@ class Xml {
 	 * The values are passed to Sanitizer::encodeAttribute.
 	 * Return null if no attributes given.
 	 * @param $attribs Array of attributes for an XML element
+	 * @throws MWException
 	 * @return null|string
 	 */
 	public static function expandAttributes( $attribs ) {
@@ -207,7 +208,7 @@ class Xml {
 
 	/**
 	 * Construct a language selector appropriate for use in a form or preferences
-	 * 
+	 *
 	 * @param string $selected The language code of the selected language
 	 * @param boolean $customisedOnly If true only languages which have some content are listed
 	 * @param string $inLanguage The ISO code of the language to display the select list in (optional)
@@ -575,7 +576,8 @@ class Xml {
 	 */
 	public static function textarea( $name, $content, $cols = 40, $rows = 5, $attribs = array() ) {
 		return self::element( 'textarea',
-					array(	'name' => $name,
+					array(
+						'name' => $name,
 						'id' => $name,
 						'cols' => $cols,
 						'rows' => $rows

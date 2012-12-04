@@ -394,7 +394,7 @@ class ApiQueryInfo extends ApiQueryBase {
 			}
 		}
 
-		if ( $this->fld_talkid && isset( $this->talkids[$ns][$dbkey] ) )	{
+		if ( $this->fld_talkid && isset( $this->talkids[$ns][$dbkey] ) ) {
 			$pageInfo['talkid'] = $this->talkids[$ns][$dbkey];
 		}
 
@@ -406,7 +406,7 @@ class ApiQueryInfo extends ApiQueryBase {
 			$pageInfo['fullurl'] = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
 			$pageInfo['editurl'] = wfExpandUrl( $title->getFullURL( 'action=edit' ), PROTO_CURRENT );
 		}
-		if ( $this->fld_readable && $title->userCan( 'read' ) ) {
+		if ( $this->fld_readable && $title->userCan( 'read', $this->getUser() ) ) {
 			$pageInfo['readable'] = '';
 		}
 

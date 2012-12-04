@@ -16,6 +16,7 @@
 
 $fallback = 'fa';
 
+$rtl = true;
 
 $namespaceNames = array(
 	NS_MEDIA            => 'مدیا',
@@ -274,7 +275,6 @@ $messages = array(
 'qbbrowse' => 'بروز',
 'qbedit' => 'اصلاح',
 'qbpageoptions' => 'صفحه',
-'qbpageinfo' => 'متن',
 'qbmyoptions' => 'منی صفحات',
 'qbspecialpages' => 'حاصین صفحات',
 'faq' => 'ب.ج.س',
@@ -511,9 +511,6 @@ $2',
 
 شما تونیت چه {{SITENAME}} ناشناس استفاده کنیت یا شما تونیت دگه وراد بیت گون دگه یا هما کاربر.
 توجه بیت که لهتی صفحات شاید په داب هما وهدی که شما وراد بوتتیت پیش درگ بند تا وهدی که ذخیره بروزر وتی پاک کنیت.",
-'welcomecreation' => '== وش آتکی،$1! ==
-شمی حساب شر بیت.
- مه شموشیت وتی [[Special:Preferences|{{SITENAME}} ترجیحات]] ترجیحات عوض کنیت',
 'yourname' => 'نام کاربری',
 'yourpassword' => 'کلمه رمز',
 'yourpasswordagain' => 'کلمه رمز دگه نویس',
@@ -982,8 +979,6 @@ $1",
 'search-interwiki-caption' => 'پروژه آن گوهار',
 'search-interwiki-default' => '$1 نتایج:',
 'search-interwiki-more' => '(گیشتر)',
-'search-mwsuggest-enabled' => 'گون پیشنهاد',
-'search-mwsuggest-disabled' => 'هچ پیشنهاد',
 'search-relatedarticle' => 'مربوطین',
 'mwsuggest-disable' => 'پیشنهادات آژاکسیء غیر فعال کن',
 'searcheverything-enable' => 'گردگ ته کل فضانامان',
@@ -1791,11 +1786,7 @@ PICT # misc.
 
 'enotif_mailer' => '{{SITENAME}} ایمیل دیم دهوک اخطاری',
 'enotif_reset' => 'نشان کن کل صفحات په داب چارتگین',
-'enotif_newpagetext' => 'شی یک نوکین صفحه ایت.',
 'enotif_impersonal_salutation' => '{{SITENAME}} کاربر',
-'changed' => 'عوض بوت.',
-'created' => 'شربوتت',
-'enotif_subject' => '{{SITENAME}} صفحه $PAGETITLE بوتت $CHANGEDORCREATED گون $PAGEEDITOR',
 'enotif_lastvisited' => 'بچار  $1 په کلین تغییرات چه شمی آهری چارگ.',
 'enotif_lastdiff' => 'بچار $1 په گندگ ای تغییر.',
 'enotif_anon_editor' => 'ناشناس کاربر $1',

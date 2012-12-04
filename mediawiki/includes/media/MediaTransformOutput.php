@@ -33,6 +33,13 @@ abstract class MediaTransformOutput {
 	var $file;
 
 	var $width, $height, $url, $page, $path;
+
+	/**
+	 * @var array Associative array mapping optional supplementary image files
+	 * from pixel density (eg 1.5 or 2) to additional URLs.
+	 */
+	public $responsiveUrls = array();
+
 	protected $storagePath = false;
 
 	/**
@@ -189,7 +196,10 @@ abstract class MediaTransformOutput {
 	 * @return array
 	 */
 	public function getDescLinkAttribs( $title = null, $params = '' ) {
-		$query = $this->page ? ( 'page=' . urlencode( $this->page ) ) : '';
+		$query = '';
+		if ( $this->page && $this->page !== 1 ) {
+			  $query = 'page=' . urlencode( $this->page );
+		}
 		if( $params ) {
 			$query .= $query ? '&'.$params : $params;
 		}
@@ -281,6 +291,7 @@ class ThumbnailImage extends MediaTransformOutput {
 	 * For images, desc-link and file-link are implemented as a click-through. For
 	 * sounds and videos, they may be displayed in other ways.
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	function toHtml( $options = array() ) {
@@ -323,13 +334,18 @@ class ThumbnailImage extends MediaTransformOutput {
 			'alt' => $alt,
 			'src' => $this->url,
 			'width' => $this->width,
-			'height' => $this->height,
+			'height' => $this->height
 		);
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
+		}
+
+		// Additional densities for responsive images, if specified.
+		if ( !empty( $this->responsiveUrls ) ) {
+			$attribs['srcset'] = Html::srcSet( $this->responsiveUrls );
 		}
 		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}

@@ -14,6 +14,7 @@
  * @author O.bangash
  * @author Rachitrali
  * @author Reedy
+ * @author Tahir mq
  * @author Wisesabre
  * @author ZxxZxxZ
  * @author לערי ריינהארט
@@ -184,7 +185,6 @@ $messages = array(
 'qbbrowse' => 'تصفّح',
 'qbedit' => 'ترمیم',
 'qbpageoptions' => 'صفحۂ ہٰذا',
-'qbpageinfo' => 'مفہوم',
 'qbmyoptions' => 'میرے صفحات',
 'qbspecialpages' => 'خاص صفحات',
 'faq' => 'معلوماتِ عامہ',
@@ -195,6 +195,7 @@ $messages = array(
 'vector-action-delete' => 'حذف کرو',
 'vector-action-move' => 'منتقل کرو',
 'vector-action-protect' => 'محفوظ کرو',
+'vector-action-undelete' => 'بحال',
 'vector-action-unprotect' => 'تحفظ میں تبدیلی',
 'vector-view-create' => 'تخلیق',
 'vector-view-edit' => 'ترمیم',
@@ -215,6 +216,7 @@ $messages = array(
 'searcharticle' => 'چلو',
 'history' => 'تاریخچہ ء صفحہ',
 'history_short' => 'تاریخچہ',
+'updatedmarker' => 'میری آخری آمد تک جدید',
 'printableversion' => 'قابل طبع نسخہ',
 'permalink' => 'مستقل کڑی',
 'print' => 'طباعت',
@@ -233,7 +235,7 @@ $messages = array(
 'unprotectthispage' => 'اِسے صفحے کی تحفظ تبدیل کریں',
 'newpage' => 'نیا صفحہ',
 'talkpage' => 'اس صفحہ پر تبادلۂ خیال کریں',
-'talkpagelinktext' => 'گفتگو',
+'talkpagelinktext' => 'تبادلۂ خیال',
 'specialpage' => 'خصوصی صفحہ',
 'personaltools' => 'ذاتی اوزار',
 'postcomment' => 'اگلا حصّہ',
@@ -263,6 +265,7 @@ $messages = array(
 برائے مہربانی! صفحہ دیکھنے کیلئے دوبارہ کوشش کرنے سے پہلے ذرا انتظار فرمالیجئے.
 
 $1',
+'pool-errorunknown' => 'نامعلوم خطا',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'کا تعارف {{SITENAME}}',
@@ -276,8 +279,8 @@ $1',
 'edithelp' => 'معاونت براۓ ترمیم',
 'edithelppage' => 'Help:ترمیم',
 'helppage' => 'Help:فہرست',
-'mainpage' => 'سرورق',
-'mainpage-description' => 'سرورق',
+'mainpage' => 'صفحہ اول',
+'mainpage-description' => 'صفحہ اول',
 'policy-url' => 'Project:حکمتِ عملی',
 'portal' => 'دیوان عام',
 'portal-url' => 'Project:دیوان عام',
@@ -300,6 +303,7 @@ $1',
 'youhavenewmessages' => 'آپکے لیۓ ایک $1 ہے۔ ($2)',
 'newmessageslink' => 'نئے پیغامات',
 'newmessagesdifflink' => 'تـجـدیـد مـاقـبل آخـر سے فـرق',
+'newmessagesdifflinkplural' => 'آخری {{PLURAL:$1|تبدیلی|تبدیلیاں}}',
 'youhavenewmessagesmulti' => 'ء$1 پر آپ کیلئے نئے پیغامات ہیں',
 'editsection' => 'ترمیم',
 'editsection-brackets' => '[$1]',
@@ -311,6 +315,7 @@ $1',
 'toc' => 'فہرست',
 'showtoc' => 'دکھائیں',
 'hidetoc' => 'چھپائیں',
+'collapsible-expand' => 'توسیع',
 'thisisdeleted' => 'دیکھیں یا بحال کریں $1؟',
 'viewdeleted' => 'دیکھیں $1؟',
 'restorelink' => '{{PLURAL:$1|ایک ترمیم حذف ہوچکی|$1 ترامیم حذف ہوچکیں}}',
@@ -320,10 +325,12 @@ $1',
 'site-rss-feed' => '$1 آر.ایس.ایس فیڈ',
 'site-atom-feed' => '$1 اٹوم فیڈ',
 'page-rss-feed' => '"$1" آر.ایس.ایس فیڈ',
-'page-atom-feed' => '"$1" اٹوم فیڈ',
+'page-atom-feed' => '"$1" اٹوم خورد',
 'feed-atom' => 'اٹوم',
 'feed-rss' => 'آر ایس ایس',
 'red-link-title' => '$1 (صفحہ موجود نہیں)',
+'sort-descending' => 'ترتیب نزولی',
+'sort-ascending' => 'ترتیب صعودی',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main' => 'صفحہ',
@@ -389,6 +396,7 @@ Warning: Page may not contain recent updates.',
 'badarticleerror' => 'اس صفحہ پر یہ عمل انجام نہیں دیا جاسکتا۔',
 'cannotdelete' => 'صفحہ یا ملف $1 کو حذف نہیں کیا جاسکتا.
 ہوسکتا ہے کہ اسے پہلے ہی کسی نے حذف کردیا ہو.',
+'cannotdelete-title' => 'صفحہ ھذف نہیں کیا جا سکتا "$1"',
 'badtitle' => 'خراب عنوان',
 'badtitletext' => 'درخواست شدہ صفحہ کا عنوان ناقص، خالی، یا کوئی غلط ربط شدہ بین لسانی یا بین ویکی عنوان ہے.
 شاید اِس میں ایک یا زیادہ ایسے حروف موجود ہوں جو عنوانات میں استعمال نہیں ہوسکتے.',
@@ -409,6 +417,7 @@ Warning: Page may not contain recent updates.',
 'ns-specialprotected' => 'خاص صفحات کی تدوین نہیں کی جاسکتی.',
 'titleprotected' => 'اس عنوان کو [[User:$1|$1]] نے تخلیق سے محفوظ کیا ہے.
 وجہ یہ بتائی گئی ہے: "\'\'$2\'\'"',
+'exception-nologin' => 'غیر داخل نوشتہ',
 
 # Virus scanner
 'virus-badscanner' => "خراب وضعیت: انجان وائرسی مفراس: ''$1''",
@@ -418,14 +427,13 @@ Warning: Page may not contain recent updates.',
 # Login and logout pages
 'logouttext' => "'''اب آپ خارج ہوچکے ہیں'''
 
-آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے [[Special:UserLogin|دوبارہ داخلِ نوشتہ]] بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
-'welcomecreation' => '== خوش آمدید، $1 ! ==
-آپ کا کھاتہ بنا دیا گیا ہے۔ اپنی [[Special:Preferences|{{SITENAME}} ترجیحات]] مرتب کرنا مت بھولئے گا.',
+آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے <span class='plainlinks'>[$1 دوبارہ داخلِ نوشتہ]</span> بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
 'yourname' => 'اسمِ رکنیت',
 'yourpassword' => 'کلمۂ شناخت',
 'yourpasswordagain' => 'کلمۂ شناخت دوبارہ لکھیں',
 'remembermypassword' => 'اِس متصفح پر میرے داخلِ نوشتگی معلومات یاد رکھو (زیادہ سے زیادہ $1 {{PLURAL:$1|دِن|ایام}} کیلئے)',
 'yourdomainname' => 'آپکا ڈومین',
+'password-change-forbidden' => 'آپ اس ویکی پر پارلفظ (پاس روڈ) تبدیل نہیں کر سکتے',
 'externaldberror' => 'یا تو توثیقی ڈیٹابیس میں خطا واقع ہوئی اور یا آپ کو بیرونی کھاتہ بتاریخ کرنے کی اِجازت نہیں ہے.',
 'login' => 'داخل ہوں',
 'nav-login-createaccount' => 'کھاتہ کھولیں یا اندراج کریں',
@@ -511,6 +519,9 @@ Warning: Page may not contain recent updates.',
 دوبارہ کوشش کرنے سے پہلے انتظار فرمائیے.',
 'loginlanguagelabel' => 'زبان: $1',
 
+# E-mail sending
+'user-mail-no-addy' => 'برقی ڈاک بھیجنے کی کوشش بغیر برقی ڈاک پتہ',
+
 # Change password dialog
 'resetpass' => 'پارلفظ تبدیل کریں',
 'resetpass_announce' => 'آپ ایک برقی ارسال کردہ عارضی رمز کے ساتھ داخل ہوئے ہیں.
@@ -533,6 +544,15 @@ Warning: Page may not contain recent updates.',
 # Special:PasswordReset
 'passwordreset' => 'پارلفظ کی بازتعینی',
 'passwordreset-username' => 'اسمِ صارف:',
+'passwordreset-domain' => 'ساحہ:',
+'passwordreset-email' => 'برقی ڈاک پتہ:',
+
+# Special:ChangeEmail
+'changeemail-oldemail' => 'حالیہ برقی ڈاک پتہ:',
+'changeemail-newemail' => 'نیا برقی ڈاک پتہ:',
+'changeemail-none' => '(کوئی نہیں)',
+'changeemail-submit' => 'برقی ڈاک تبدیل کریں',
+'changeemail-cancel' => 'منسوخ',
 
 # Edit page toolbar
 'bold_sample' => 'دبیز متن',
@@ -606,7 +626,7 @@ $1 نے پابندی لگائی تھی.
 'noarticletext' => 'اِس صفحہ میں فی الحال کوئی متن موجود نہیں ہے.
 آپ دیگں صفحات میں [[Special:Search/{{PAGENAME}}|اِس صفحہ کے عنوان کیلئے تلاش کرسکتے ہیں]]، <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} متعلقہ نوشتہ جات تلاش کرسکتے ہیں],
 یا [{{fullurl:{{FULLPAGENAME}}|action=edit}} اِس صفحہ میں ترمیم کرسکتے ہیں]</span>',
-'noarticletext-nopermission' => 'اِس صفحہ میں فی الحال کوئی متن موجود نہیں ہے.
+'noarticletext-nopermission' => 'اس صفحہ میں فی الحال کوئی متن موجود نہیں ہے.
 آپ دیگں صفحات میں [[Special:Search/{{PAGENAME}}|اِس صفحہ کے عنوان کیلئے]] یا <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} متعلقہ نوشتہ جات تلاش کرسکتے ہیں]</span>',
 'updated' => '(اپ ڈیٹڈ)',
 'note' => "'''نوٹ:'''",
@@ -625,6 +645,7 @@ $1 نے پابندی لگائی تھی.
 \"محفوظ\" کا بٹن ٹک کرنے سے '''صرف''' بالائی متن محفوظ ہوگا.",
 'yourtext' => 'آپ کی تحریر',
 'storedversion' => 'ذخیرہ شدہ نظرثانی',
+'nonunicodebrowser' => '"انتباہ: آپ کا براؤزر یونی کوڈ کے مطابق نہیں ہے."',
 'editingold' => "'''انتباہ: آپ اس صفحے کا ایک پرانا مسودہ مرتب کررہے ہیں۔ اگر آپ اسے محفوظ کرتے ہیں تو اس صفحے کے اس پرانے مسودے سے اب تک کی جانے والی تمام تدوین ضائع ہو جاۓ گی۔'''",
 'yourdiff' => 'تضادات',
 'copyrightwarning' => "یہ یادآوری کرلیجیۓ کہ {{SITENAME}} میں تمام تحریری شراکت جی این یو آزاد مسوداتی اجازہ ($2)کے تحت تصور کی جاتی ہے (مزید تفصیل کیلیۓ $1 دیکھیۓ)۔ اگر آپ اس بات سے متفق نہیں کہ آپکی تحریر میں ترمیمات کری جائیں اور اسے آزادانہ (جیسے ضرورت ہو) استعمال کیا جاۓ تو براۓ کرم اپنی تصانیف یہاں داخل نہ کیجیۓ۔ اگر آپ یہاں اپنی تحریر جمع کراتے ہیں تو آپ اس بات کا بھی اقرار کر رہے ہیں کہ، اسے آپ نے خود تصنیف کیا ہے یا دائرہ ءعام (پبلک ڈومین) سے حاصل کیا ہے یا اس جیسے کسی اور آذاد وسیلہ سے۔'''بلااجازت ایسا کام داخل نہ کیجیۓ جسکا حق ِطبع و نشر محفوظ ہو!'''",
@@ -654,6 +675,10 @@ $1 نے پابندی لگائی تھی.
 'edit-no-change' => 'آپ کی تدوین کو نظرانداز کردیا گیا، کیونکہ متن میں کوئی تبدیلی نہیں ہوئی تھی.',
 'edit-already-exists' => 'نیا صفحہ تخلیق نہیں کیا جاسکتا.
 یہ پہلے سے موجود ہے.',
+
+# Content models
+'content-model-text' => 'سادہ متن',
+'content-model-javascript' => 'جاوا اسکرپٹ',
 
 # History pages
 'viewpagelogs' => 'اس صفحہ کیلیے نوشتہ جات دیکھیے',
@@ -749,6 +774,7 @@ $1",
 
 # Diffs
 'history-title' => '"$1" کا نظرثانی تاریخچہ',
+'difference-multipage' => '(فرق مابین صفحات)',
 'lineno' => 'لکیر $1:',
 'compareselectedversions' => 'منتخب متـن کا موازنہ',
 'editundo' => 'استرجع',
@@ -790,8 +816,6 @@ $1",
 'search-interwiki-caption' => 'ساتھی منصوبے',
 'search-interwiki-default' => '$1 نتائج:',
 'search-interwiki-more' => '(مزید)',
-'search-mwsuggest-enabled' => 'بمع تجاویز',
-'search-mwsuggest-disabled' => 'تجاویز نہیں',
 'search-relatedarticle' => 'متعلقہ',
 'mwsuggest-disable' => 'AJAX تجاویز غیرفعال',
 'searchrelated' => 'متعلقہ',
@@ -804,6 +828,7 @@ $1",
 'powersearch-ns' => 'جائے نام میں تلاش:',
 'powersearch-redir' => 'فہرستِ رجوع مکرر',
 'powersearch-field' => 'تلاش برائے',
+'powersearch-togglelabel' => 'جانچ',
 'powersearch-toggleall' => 'تمام',
 'powersearch-togglenone' => 'کوئی نہیں',
 'search-external' => 'بیرونی تلاش',
@@ -826,6 +851,7 @@ $1",
 'skin-preview' => 'پیش منظر',
 'datedefault' => 'کوئی ترجیحات نہیں',
 'prefs-datetime' => 'تاریخ و وقت',
+'prefs-user-pages' => 'صارف صفحات',
 'prefs-personal' => 'نمایۂ صارف',
 'prefs-rc' => 'حالیہ تبدیلیاں',
 'prefs-watchlist' => 'زیرِنظر فہرست',
@@ -845,6 +871,7 @@ $1",
 'rows' => 'صفیں:',
 'columns' => 'قطاریں:',
 'searchresultshead' => 'تلاش',
+'stub-threshold-disabled' => 'غیر فعال',
 'recentchangesdays' => 'حالیہ تبدیلیوں میں دکھائی جانے والے ایّام:',
 'recentchangesdays-max' => '(زیادہ سے زیادہ $1 {{PLURAL:$1|دن|ایام}})',
 'recentchangescount' => 'دکھائی جانے والی ترامیم کی تعداد:',
@@ -900,13 +927,27 @@ HTML tags جانچئے.',
 'prefs-i18n' => 'بین الاقوامیت',
 'prefs-signature' => 'دستخط',
 'prefs-dateformat' => 'شکلبندِ تاریخ',
+'prefs-advancedediting' => 'اعلی اختیارات',
+'prefs-advancedrc' => 'اعلی اختیارات',
+'prefs-advancedrendering' => 'اعلی اختیارات',
+'prefs-advancedsearchoptions' => 'اعلی اختیارات',
+'prefs-advancedwatchlist' => 'اعلی اختیارات',
+'prefs-diffs' => 'فروق',
 
 # User rights
 'userrights' => 'حقوقِ صارف کی نظامت',
 'userrights-lookup-user' => 'گروہائے صارف کا انتظام',
 'userrights-user-editname' => 'کوئی اسم‌صارف داخل کیجئے:',
+'editusergroup' => 'ترمیم گروہائے صارف',
 'editinguser' => "تبدیلئ حقوق برائے صارف '''[[صارف:$1|$1]]''' $2",
+'userrights-editusergroup' => 'ترمیم گروہائے صارف',
+'saveusergroups' => 'گروہائے صارف محفوظ',
 'userrights-groupsmember' => 'رکنِ:',
+'userrights-groupsmember-auto' => 'اعتباری صارف در',
+'userrights-groups-help' => 'آپ ان گروہان میں تبدیلی کرسکتے ہیں جن سے صارف متعلق ہے: 
+* نشان زد خانہ کا مطلب یہ ہے کہ صارف کا تعلق اس گروہ سے ہے۔ 
+* غیر نشان زد خانہ کا مطلب یہ ہے کہ صارف کا تعلق اس گروہ سے نہیں ہے۔ 
+* یہ * علامت اس بات کا اشارہ ہے کہ آپ اس گروہ کو نہیں ہٹا سکتے جسے ایک مرتبہ آپ نے شامل کردیا ہو، یا اس کے بر عکس۔',
 'userrights-reason' => 'وجہ:',
 'userrights-no-interwiki' => 'دوسرے ویکیوں پر حقوقِ صارف میں ترمیم کی آپ کو اجازت نہیں ہے.',
 'userrights-changeable-col' => 'مجموعات جو آپ تبدیل کرسکتے ہیں',
@@ -915,16 +956,35 @@ HTML tags جانچئے.',
 # Groups
 'group' => 'گروہ:',
 'group-user' => 'صارفین',
+'group-autoconfirmed' => 'خود توثیق شدہ صارفین',
 'group-bot' => 'روبالات',
 'group-sysop' => 'منتظمین',
+'group-bureaucrat' => 'مامورین اداری',
+'group-suppress' => 'نگران',
 'group-all' => '(تمام)',
 
 'group-user-member' => 'صارف',
 'group-autoconfirmed-member' => 'خودتصدیق شدہ صارف',
 'group-bot-member' => 'خودکار صارف',
 'group-sysop-member' => 'منتظم',
+'group-bureaucrat-member' => '{{GENDER:$1|مامور اداری}}',
+'group-suppress-member' => '{{GENDER:$1|نگران}}',
 
+'grouppage-user' => '{{ns:project}}:صارفین',
+'grouppage-autoconfirmed' => '{{ns:project}}:خود توثیق شدہ صارف',
+'grouppage-bot' => '{{ns:project}}:روبہ جات',
 'grouppage-sysop' => '{{ns:project}}:منتظمین',
+
+# Rights
+'right-upload' => 'ملفات زبراثقال (اپ لوڈ) کریں',
+'right-delete' => 'صفحات حذف کریں',
+'right-sendemail' => 'دیگر صارفین کو برقی ڈاک بھیجیں',
+
+# User rights log
+'rightslog' => 'نوشتہ صارفی اختیارات',
+'rightslogtext' => 'یہ صارفی اختیارات میں تبدیلیوں کا نوشتہ ہے۔',
+'rightslogentry' => 'گروہ رکنیت میں برائے $1 از $2 تا $3 تبدیلی ہوئی',
+'rightsnone' => '(کچھ نہیں)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'اس صفحہ میں ترمیم کریں',
@@ -956,7 +1016,7 @@ HTML tags جانچئے.',
 'minoreditletter' => 'م',
 'newpageletter' => 'نیا ..',
 'boteditletter' => ' خودکار',
-'rc-enhanced-expand' => 'تفصیلات دِکھاؤ (JavaScript چاہئے)',
+'rc-enhanced-expand' => 'تفصیلات دِکھائیں (JavaScript درکار)',
 'rc-enhanced-hide' => 'تفصیلات چھپائیے',
 
 # Recent changes linked
@@ -1063,6 +1123,7 @@ HTML tags جانچئے.',
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|لکمہ|لکمہ جات}}',
 'ncategories' => '{{PLURAL:$1|زمرہ|زمرہ جات}} $1',
+'nmembers' => '{{PLURAL:$1|رکن|اراکین}}',
 'lonelypages' => 'يتيم صفحات',
 'lonelypagestext' => 'مندرجہ ذیل صفحات وہ صفحات ہیں جنھیں اس وکی میں موجود صفحوں سے کوئی ربط حاصل نہیں ہوپارہا۔',
 'uncategorizedpages' => 'بے زمرہ صفحات',
@@ -1152,10 +1213,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'wlshowlast' => 'دکھائیں آخری $1 گھنٹے $2 دن $3',
 'watchlist-options' => 'اختیارات برائے زیرِنظرفہرست',
 
-'enotif_newpagetext' => 'یہ نیا صفحہ ہے.',
-'changed' => 'تبدیل کردیاگیا',
-'created' => 'بنا دیا گیا',
-
 # Delete
 'deletepage' => 'صفحہ ضائع کریں',
 'confirm' => 'یقین',
@@ -1194,10 +1251,17 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Undelete
 'undelete' => 'ضائع کردہ صفحات دیکھیں',
 'undeletepage' => 'معائنہ خذف شدہ صفحات',
+'undeletepagetitle' => "'''ذیل میں [[:$1|$1]] کے حذف شدہ ترامیم درج ہیں۔'''",
 'viewdeletedpage' => 'حذف شدہ صفحات دیکھیے',
+'undelete-fieldset-title' => 'ترامیم بحال کریں',
+'undeletehistory' => 'اگر آپ اس صفحہ کو بحال کرتے ہیں، تو اس صفحہ کے تاریخچہ میں تمام ترامیم بھی بحال ہوجائیگی۔
+اگر حذف شدگی کے بعد کوئی نیا صفحہ اسی نام سے تخلیق کیا گیا ہو، تو تمام بحال شدہ ترامیم گذشتہ تاریخچہ میں ظاہر ہوگی۔',
+'undeleterevdel' => 'بحالیٔ صفحہ کا اقدام مکمل نہیں ہوگا اگر اس کا تنیجہ صفحہ کے اوپر کے حصہ کی ترمیم یا ملف کا اعادہ جزوی طور پر حذف کیا جارہا ہو۔
+ایسی صورت میں لازمی طور آپ حالیہ حذف شدہ اعادے کو ظاہر کریں۔',
 'undeletebtn' => 'بحال',
 'undeletelink' => 'دیکھو/بحال کرو',
 'undeleteviewlink' => 'دکھاؤ',
+'undeleteinvert' => 'انتخاب بالعکس',
 'undeletecomment' => 'وجہ:',
 
 # Namespace form on various pages
@@ -1232,11 +1296,13 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'linkshere' => "'''[[:$1]]''' سے درج ذیل صفحات مربوط ہیں:",
 'nolinkshere' => "'''[[:$1]]''' سے کوئی روابط نہیں۔",
 'isredirect' => 'لوٹایا گیا صفحہ',
+'istemplate' => 'شامل شدہ',
 'isimage' => 'ربطِ ملف',
 'whatlinkshere-links' => 'روابط',
 'whatlinkshere-hideredirs' => 'رجوع مکررات $1',
+'whatlinkshere-hidetrans' => 'تضمینات',
 'whatlinkshere-hidelinks' => 'روابط $1',
-'whatlinkshere-hideimages' => 'روابطِ تصویر $1',
+'whatlinkshere-hideimages' => 'روابطِ تصاویر $1',
 'whatlinkshere-filters' => 'فلٹرذ',
 
 # Block/unblock
@@ -1254,6 +1320,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'proxyblocksuccess' => 'کردیا.',
 
 # Move page
+'move-page' => 'منتقلی',
 'move-page-legend' => 'منتقلئ صفحہ',
 'movepagetext' => "نیچے دیا گیا تشکیلہ (فـارم) استعمال کرکے اس صفحہ کا عنوان دوبارہ منتخب کیا جاسکتا ہے، ساتھ ہی اس سے منسلک تاریخچہ بھی نۓ نام پر منتقل ہوجاۓ گا۔ اسکے بعد سے اس صفحے کا پرانا نام ، نۓ نام کی جانب -- لوٹایا گیا صفحہ -- کی حیثیت اختیار کرلے گا۔ لیکن یادآوری کرلیجیۓ دیگر صفحات پر ، پرانے صفحہ کی جانب دیۓ گۓ روابط (لنکس) تبدیل نہیں ہونگے؛ اس بات کو یقینی بنانا ضروری ہے کہ کوئی دوہرا یا شکستہ -- پلٹایا گیا ربط -- نہ رہ جاۓ۔
 
@@ -1263,6 +1330,18 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 ''' انـتـبـاہ !'''
  کسی اہم اور مقبول صفحہ کی منتقلی ، غیرمتوقع اور پریشان کن بھی ہی ہوسکتی ہے اس لیۓ ؛ منتقلی سے قبل براہ کرم یقین کرلیجۓ کہ آپ اسکے منطقی نتائج سے باخبر ہیں۔",
+'movepagetext-noredirectfixer' => "درج ذیل ورقہ کے ذریعہ صفحہ کو نیا نام دیا جاسکتا ہے، اس کے ساتھ صفحہ کا تاریخچہ بھی منتقل ہوجائیگا۔
+نئے عنوان کے جانب قدیم عنوان کو رجوع مکرر کردیا جائیگا۔
+
+یقین کرلیں کہ [[Special:DoubleRedirects|مکرر]] یا [[Special:BrokenRedirects|شکستہ رجوع مکررات]] موجود نہیں ہیں۔
+آپ اس بات کو یقینی بنانے کے ذمہ دار ہیں کہ روابط انہیں جگہوں سے مربوط ہیں جن کو فرض کیا گیا ہے۔
+
+خیال رہے کہ یہ صفحہ منتقل '''نہیں''' ہوگا اگر نئے عنوان کے ساتھ صفحہ پہلے سے موجود ہو، سوائے اس کے کہ صفحہ خالی ہو اور اس کا گذشتہ ترمیمی تاریخچہ موجود نہ ہو۔
+اس کا مطلب ہے آپ سے اگر غلطی ہوجائے تو آپ صفحہ کو اسی جگہ لوٹا سکتے ہیں، تاہم موجود صفحہ پر برتحریر (overwrite) نہیں کرسکتے۔
+
+'''انتباہ!'''
+کسی اہم اور مقبول صفحہ کی منتقلی، غیرمتوقع اور پریشان کن بھی ہی ہوسکتی ہے اس لیۓ؛ 
+منتقلی سے قبل براہ کرم یقین کرلیجۓ کہ آپ اسکے منطقی نتائج سے باخبر ہیں۔",
 'movearticle' => 'مـنـتـقـل کـریں',
 'newtitle' => 'نـیــا عـنــوان',
 'move-watch' => 'صفحہ زیر نظر',
@@ -1301,7 +1380,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'tooltip-pt-mytalk' => 'آپ کا صفحۂ گفتگو',
 'tooltip-pt-preferences' => 'آپ کی ترجیحات',
 'tooltip-pt-watchlist' => 'اُن صفحات کی فہرست جن کی تبدیلیاں آپ کی زیرِنظر ہیں',
-'tooltip-pt-mycontris' => 'آپ کے مساہمات کی فہرست',
+'tooltip-pt-mycontris' => 'آپ کی شراکت کی فہرست',
 'tooltip-pt-login' => 'آپ کیلئے داخلِ نوشتہ ہونا اچھا ہے؛ تاہم، یہ ضروری نہیں',
 'tooltip-pt-logout' => 'خارجِ نوشتہ ہوجائیں',
 'tooltip-ca-talk' => 'مضمون بارے تبادلۂ خیال',
@@ -1357,6 +1436,9 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'anonymous' => '{{SITENAME}} گمنام صارف',
 'others' => 'دیگر',
 
+# Patrolling
+'markaspatrolledtext' => 'اس صفحہ کو بطور مراجعت شدہ نشان زد کریں',
+
 # Image deletion
 'deletedrevision' => 'حذف شدہ پرانی ترمیم $1۔',
 
@@ -1365,6 +1447,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'nextdiff' => 'صفحہ کا نام:',
 
 # Media information
+'file-info-size' => '
+$1 × $2 عکصر (پکسلز)، حجم ملف: $3، MIME قسم: $4',
 'file-nohires' => 'اس سے بڑی تصمیم دستیاب نہیں۔',
 'show-big-image' => 'مکمل تصمیم',
 
@@ -1441,5 +1525,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 # Special:SpecialPages
 'specialpages' => 'خصوصی صفحات',
+
+# Search suggestions
+'searchsuggest-search' => 'تلاش',
 
 );

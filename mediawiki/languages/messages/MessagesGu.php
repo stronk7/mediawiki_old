@@ -14,9 +14,11 @@
  * @author Dineshjk
  * @author Dsvyas
  * @author Haritosh
+ * @author Harsh4101991
  * @author Jay
  * @author Kaganer
  * @author KartikMistry
+ * @author Kondi
  * @author Metrix1312
  * @author Mohit.dalal
  * @author Nehal
@@ -172,7 +174,7 @@ $messages = array(
 'tog-nocache' => 'બ્રાઉઝરનું પેજ કેશિંગ અક્રિય કરો',
 'tog-enotifwatchlistpages' => 'મારી ધ્યાનસૂચિમાંનું પાનુ અને ફાઇલમાં ફેરફાર થાય ત્યારે મને ઇ-મેલ મોકલો',
 'tog-enotifusertalkpages' => 'મારી ચર્ચાનાં પાનામાં ફેરફાર થાય ત્યારે મને ઇ-મેલ મોકલો',
-'tog-enotifminoredits' => 'પાનાં અનેફાઇલ્સમાં નાનાં ફેરફાર થાય તો પણ મને ઇ-મેલ મોકલો',
+'tog-enotifminoredits' => 'પાનાં અને ફાઇલ્સમાં નાનાં ફેરફાર થાય તો પણ મને ઇ-મેલ મોકલો',
 'tog-enotifrevealaddr' => 'નોટીફીકેશનના ઇમેલમાં મારૂ ઇમેલ એડ્રેસ બતાવો',
 'tog-shownumberswatching' => 'ધ્યાનમાં રાખતા સભ્યોની સંખ્યા બતાવો',
 'tog-oldsig' => 'હાલના હસ્તાક્ષર',
@@ -229,7 +231,7 @@ $messages = array(
 'july' => 'જુલાઇ',
 'august' => 'ઓગસ્ટ',
 'september' => 'સપ્ટેમ્બર',
-'october' => 'ઓકટોબર',
+'october' => 'ઓક્ટોબર',
 'november' => 'નવેમ્બર',
 'december' => 'ડિસેમ્બર',
 'january-gen' => 'જાન્યુઆરી',
@@ -241,7 +243,7 @@ $messages = array(
 'july-gen' => 'જુલાઇ',
 'august-gen' => 'ઓગસ્ટ',
 'september-gen' => 'સપ્ટેમ્બર',
-'october-gen' => 'ઓકટોબર',
+'october-gen' => 'ઓક્ટોબર',
 'november-gen' => 'નવેમ્બર',
 'december-gen' => 'ડિસેમ્બર',
 'jan' => 'જાન્યુ',
@@ -294,7 +296,6 @@ $messages = array(
 'qbbrowse' => 'બ્રાઉઝ',
 'qbedit' => 'ફેરફાર કરો',
 'qbpageoptions' => 'આ પાનું',
-'qbpageinfo' => 'સંદર્ભ',
 'qbmyoptions' => 'મારાં પાનાં',
 'qbspecialpages' => 'ખાસ પાનાં',
 'faq' => 'FAQ
@@ -418,7 +419,9 @@ $1',
 'youhavenewmessages' => 'તમારા માટે $1 ($2).',
 'newmessageslink' => 'નવીન સંદેશ',
 'newmessagesdifflink' => 'છેલ્લો ફેરફાર',
-'newmessageslinkplural' => '{{PLURAL:$1|નવો સંદેશ|નવાં સંદેશાઓ}}',
+'youhavenewmessagesfromusers' => 'આપને માટે {{PLURAL:$3|અન્ય સભ્ય|$3 અન્ય સભ્યો}} તરફથી $1 છે. ($2).',
+'youhavenewmessagesmanyusers' => 'આપને માટે $1 છે. ($2)',
+'newmessageslinkplural' => '{{PLURAL:$1|નવો સંદેશો|નવા સંદેશા}}',
 'newmessagesdifflinkplural' => 'છેલ્લા {{PLURAL:$1|ફેરફાર|ફેરફારો}}',
 'youhavenewmessagesmulti' => '$1 ઉપર તમારા માટે નવો સંદેશ છે.',
 'editsection' => 'ફેરફાર કરો',
@@ -531,10 +534,11 @@ Query: $2',
 'protectedpagetext' => 'ફેરફારો થતાં રોકવા માટે આ પાનું સુરક્ષિત કરવામાં આવ્યું છે.',
 'viewsourcetext' => 'આપ આ પાનાનો મૂળ સ્રોત નિહાળી શકો છો અને તેની નકલ (copy) પણ કરી શકો છો:',
 'viewyourtext' => "આપ આ પાનાનાં '''આપનાં સંપાદનો'''નો મૂળ સ્રોત નિહાળી શકો છો અને તેની નકલ (copy) પણ કરી શકો છો:",
-'protectedinterface' => 'આ પાનું સોફ્ટવેર માટે ઇન્ટરફેઇસ ટેક્સટ આપે છે, અને તેને દુરુપયોગ રોકવા માટે સ્થગિત કર્યું છે.',
+'protectedinterface' => 'આ પાનું સોફ્ટવેર માટે ઇન્ટરફેઇસ ટેક્સટ આપે છે, અને તેને દુરુપયોગ રોકવા માટે સ્થગિત કર્યું છે.
+બધાંજ વિકિ માટે ભાષાંતર ઉમેરવા કે બદલવા માટે, કૃપા કરી [//translatewiki.net/ translatewiki.net], મિડિયાવિકિ સ્થાનિયકરણ પ્રકલ્પ, વાપરો.',
 'editinginterface' => "'''ચેતવણી:''' તમે જે પાનામાં ફેરફાર કરી રહ્યા છો તે પાનું સોફ્ટવેર માટે ઇન્ટરફેસ ટેક્સટ પુરી પાડે છે.
-અહીંનો બદલાવ બીજા સભ્યોના ઇન્ટરફેસનાં દેખાવ ઉપર અસરકર્તા બનશે.
-ભાષાંતર કરવા માટે કૃપા કરી [//translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net] -- મિડિયાવિકી લોકલાઇઝેશન પ્રકલ્પ વાપરો.",
+અહીંનો બદલાવ આ વિકિ પર ઉપસ્થિત અન્ય સભ્યોના ઇન્ટરફેસનાં દેખાવ ઉપર અસરકર્તા બનશે.
+બધાંજ વિકિ માટે ભાષાંતર ઉમેરવા કે બદલવા માટે કૃપા કરી [//translatewiki.net/ translatewiki.net], મિડિયાવિકી સ્થાનિયકરણ પ્રકલ્પ, વાપરો.",
 'sqlhidden' => '(છુપી SQL ક્વેરી)',
 'cascadeprotected' => 'આ પાના પર ફેરફાર પ્રતિબંધિત છે કેમ કે આ પાનું  {{PLURAL:$1|એવું પાનું|એવા પાના}} માં શામિલ છે જેમાં અનુવર્તી (પગથિયામય)સંરક્ષણ સક્રીય છે :
 $2',
@@ -557,11 +561,8 @@ $2',
 # Login and logout pages
 'logouttext' => "'''તમે (લોગ આઉટ કરીને) બહાર નિકળી ચુક્યા છો.'''
 
-તમે અનામી તરીકે {{SITENAME}} વાપરવાનું ચાલુ રાખી શકો છો, કે પછી તેના તે જ કે અલગ સભ્ય તરીકે [[Special:UserLogin|ફરી પ્રવેશ]] કરી શકો છો.
+તમે અનામી તરીકે {{SITENAME}} વાપરવાનું ચાલુ રાખી શકો છો, કે પછી તેના તે જ કે અલગ સભ્ય તરીકે <span class='plainlinks'>[$1 ફરી પ્રવેશ]</span> કરી શકો છો.
 ધ્યાન રાખો કે જ્યાં સુધી તમે તમારા બ્રાઉઝરનો  કૅશ સાફ નહીં કરો ત્યાં સુધી કેટલાક પાનાં તમે પ્રવેશી ચુક્યા છો તેમ બતાવશે.",
-'welcomecreation' => '== તમારૂં સ્વાગત છે $1! ==
-તમારૂં ખાતું બની ગયું છે.
-તમારી [[Special:Preferences|{{SITENAME}} પસંદ]] બદલવાનું ભૂલશો નહીં.',
 'yourname' => 'સભ્ય નામ:',
 'yourpassword' => 'ગુપ્ત સંજ્ઞા:',
 'yourpasswordagain' => 'ગુપ્ત સંજ્ઞા (પાસવર્ડ) ફરી લખો',
@@ -820,8 +821,7 @@ $2
 તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો],
 અથવા  [{{fullurl:{{FULLPAGENAME}}|action=edit}} આ પાનામાં ફેરફાર કરી] માહિતિ ઉમેરવાનું શરૂ કરી શકો છો</span>.',
 'noarticletext-nopermission' => 'આ પાનામાં હાલમાં કોઇ માહિતિ નથી.
-તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો],
-અથવા  [{{fullurl:{{FULLPAGENAME}}|action=edit}} આ પાનામાં ફેરફાર કરી] માહિતિ ઉમેરવાનું શરૂ કરી શકો છો</span>.',
+તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, અથવા <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો], પરંતુ તમને આ પાનું બનાવવાની મંજૂરી નથી.',
 'userpage-userdoesnotexist' => 'સભ્ય ખાતું "<nowiki>$1</nowiki>"ની નોંધણીનથી થઈ.
 શું તમે ખરેખર આ પાનાની રચના કે ફેરફાર કરવા માંગો છો',
 'userpage-userdoesnotexist-view' => 'સભ્યના ખાતા $1 ની નોંધણી નથી થઈ',
@@ -848,7 +848,7 @@ $2
 'note' => "'''નોંધ:'''",
 'previewnote' => "'''આ ફક્ત પૂર્વાવલોકન છે;'''
 તમારા ફેરફારો હજુ સાચવવામાં નથી આવ્યા!",
-'continue-editing' => 'વાંચવાનું ચાલુ રાખો',
+'continue-editing' => 'ફેરફાર કરવાનું ચાલુ રાખો',
 'previewconflict' => 'જો તમે આ પાનું સાચવશો તો આ પ્રિવ્યુમાં દેખાય છે તેવું સચવાશે.',
 'session_fail_preview' => "'''અફસોસ છે! સત્ર માહિતી ખોઇ દેવાને કારણે અમે તમારું કાર્ય સાચવી ન શક્યાં.'''
 કૃપયા ફરી પ્રયત્ન કરો.
@@ -932,6 +932,11 @@ $2
 'edit-already-exists' => 'નવું પાનું બનાવી ન શકાયું
 તે પહેલેથી હાજર છે.',
 'defaultmessagetext' => 'મૂળભૂત સંદેશ લખાણ',
+
+# Content models
+'content-model-wikitext' => 'વિકિલખાણ',
+'content-model-text' => 'સાદું લખાણ',
+'content-model-javascript' => 'જાવાસ્ક્રિપ્ટ',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''ચેતવણી:''' આ પાનું ખૂબ ખર્ચાળ પદચ્છેદ સૂત્ર ધરાવે છે.
@@ -1180,8 +1185,6 @@ $1",
 'search-interwiki-caption' => 'બંધુ પ્રકલ્પ',
 'search-interwiki-default' => '$1 પરીણામો:',
 'search-interwiki-more' => '(વધુ)',
-'search-mwsuggest-enabled' => 'સુઝાવ સહિત',
-'search-mwsuggest-disabled' => 'સુઝાવ વિના',
 'search-relatedarticle' => 'શોધ સંબંધિત',
 'mwsuggest-disable' => 'AJAX સુઝાવો નિષ્ક્રીય કરો',
 'searcheverything-enable' => 'નામસ્થળોમાં શોધો:',
@@ -1280,7 +1283,7 @@ $1",
 'timezoneregion-indian' => 'હિંદ મહાસાગર',
 'timezoneregion-pacific' => 'પ્રશાંત મહાસાગર',
 'allowemail' => 'અન્ય સભ્યો તરફથી આવતા ઇ-મેલને પરવાનગી આપો',
-'prefs-searchoptions' => 'શોધ વિકલ્પો',
+'prefs-searchoptions' => 'શોધો',
 'prefs-namespaces' => 'નામ અવકાશો',
 'defaultns' => 'અન્યથા આ નામ અવકાશ માં શોધો',
 'default' => 'મૂળ વિકલ્પ',
@@ -1955,18 +1958,19 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'wantedfiles' => 'ઇચ્છિત ફાઈલો',
 'wantedfiletext-cat' => 'નીચેની ફાઈલ વપરાઈ છે પણ તે વિહરમન નથી. ફાઈલ અહીં હોવા તેવી ફાઈલોને પણ પરદેશી રીપોસીટરીમાંથી ફાઈલો યાદીમાં જોઈ શકાય છે. આવા પુનરાવર્તનોને  <del>struck out</del> કાઢી નાખવામાં આવશે.વધારામાં, અસ્તિત્વમાં નહોય તેવી ફાઈલધરાવતાં પાનાની યાદી [[:$1]].',
 'wantedfiletext-nocat' => 'નીચેની ફાઈલ વપરાઈ છે પણ તે અસ્તિત્વમાં નથી. ફાઈલ અહીં હોવા તેવી ફાઈલોને પણ પરદેશી રીપોસીટરીમાંથી ફાઈલો યાદીમાં જોઈ શકાય છે. આવા પુનરાવર્તનોને  <del>struck out</del> કાઢી નાખવામાં આવશે.',
-'wantedtemplates' => 'જોઈતા ઢાંચા',
+'wantedtemplates' => 'ઇચ્છિત ઢાંચા',
 'mostlinked' => 'સૌથી વધુ કડીઓ દ્વારા જોડાયેલ પાનું',
 'mostlinkedcategories' => 'સૌથી વધુ શ્રેણીઓ દ્વારા જોડાયેલ પાનું',
 'mostlinkedtemplates' => 'સૌથી વધુ ઢાંચાઓ  દ્વારા જોડાયેલ પાનું',
 'mostcategories' => 'સૌથી વધુ શ્રેણીઓ ધરાવતાં પાનાં',
 'mostimages' => 'સૌથી વધુ કડીઓ દ્વારા જોડાયેલી ફાઇલ',
+'mostinterwikis' => 'સૌથી વધુ આંતરવિકી કડીઓ ધરાવતાં પાના',
 'mostrevisions' => 'સૌથી વધુ ફેરફાર થયેલા પાનાં',
 'prefixindex' => 'પૂર્વાક્ષર સૂચિ',
 'prefixindex-namespace' => 'શરૂઆતમાં ($1 namespace) ધરાવતા પાનાં',
 'shortpages' => 'નાનાં પાનાં',
 'longpages' => 'લાંબા પાનાઓ',
-'deadendpages' => 'લેખ સમાપ્તિ પાના',
+'deadendpages' => 'મૃતાંત પાના',
 'deadendpagestext' => 'નીચેના પાના {{SITENAME}}ના અન્ય પાનાને કડીઓ દ્વારા નથી જોડતાં.',
 'protectedpages' => 'સંરક્ષિત પાનાઓ',
 'protectedpages-indef' => 'ફક્ત અનિશ્ચિત સુરક્ષા ધરાવતા પાના',
@@ -2054,8 +2058,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'sp-deletedcontributions-contribs' => 'યોગદાન',
 
 # Special:LinkSearch
-'linksearch' => 'બાહ્ય કડીઓ શોધ',
-'linksearch-pat' => 'શોધા આલેખ',
+'linksearch' => 'બાહ્ય કડીઓ શોધો',
+'linksearch-pat' => 'શોધ આલેખ',
 'linksearch-ns' => 'નામાવકાશ:',
 'linksearch-ok' => 'શોધ',
 'linksearch-text' => '"*.wikipedia.org" જેવા વાઈલ્ડાકાર્ડ અહીં વાપર્યા હોઈ શકે છે.
@@ -2106,6 +2110,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'mailnologin' => 'મેળવનારનું સરનામું નથી',
 'mailnologintext' => 'અન્ય સભ્યને ઇ-મેલ મોકલવા માટે તમે [[Special:UserLogin|logged in]] પ્રવેશ કરેલ હોવો જોઈએ અને તમારા[[Special:Preferences|preferences]] વિકલ્પોમાં તમારા ઈ-મેલ સરનામાની પુષ્ટિ થયેલી હોવી જોઈએ',
 'emailuser' => 'સભ્યને ઇ-મેલ કરો',
+'emailuser-title-notarget' => 'ઇ-મેલ વપરાશકર્તા',
 'emailpage' => 'ઈ-મેલ સભ્ય',
 'emailpagetext' => 'તમે નીચે દર્શાવેલ ફોર્મ વાપરી ઇ-મેલ મોકલી શકો છો.
 તમે તમારી માહિતીમાં [[Special:Preferences|your user preferences]] જે ઇ-મેલ લખ્યો હશે  તે દ્વારા ના નામ હેઠળ દેખાશે, જેથી ઇ-મેલ મેળવનાર તમને સંદેશાનો જવાબ આપી શકશે.',
@@ -2175,11 +2180,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 
 'enotif_mailer' => '{{SITENAME}} સૂચના ઈ-મેલ પાઠક',
 'enotif_reset' => 'બધા પાનાને મુલાકાત લેવાયેલા અંકિત કરો',
-'enotif_newpagetext' => 'આ નવું પાનું છે.',
 'enotif_impersonal_salutation' => '{{SITENAME}} સભ્ય',
-'changed' => 'બદલ્યું',
-'created' => 'બનાવ્યું',
-'enotif_subject' => '{{SITENAME}} નું પાનું $PAGETITLE $PAGEEDITOR દ્વારા $CHANGEDORCREATED',
 'enotif_lastvisited' => 'તમારી પાછલી મુલાકાત પછી થયેલા બધા ફેરફારો માટે $1 જુઓ',
 'enotif_lastdiff' => 'આ ફેરફાર જોવા $1 જુઓ',
 'enotif_anon_editor' => 'અનામિ સભ્ય $1',
@@ -2375,8 +2376,8 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'undeletedrevisions' => '{{PLURAL:$1|૧ સંપાદન|$1 સંપાદનો}} પુન સ્થાપિત કરાયા',
 'undeletedrevisions-files' => '{{PLURAL:$1|1 ફેરફાર|$1 ફેરફારો}} અને {{PLURAL:$2|1 ફાઈલા|$2 ફાઈલો}} પુનઃસ્થાપિત',
 'undeletedfiles' => '{{PLURAL:$1|1 ફાઇલ|$1 ફાઇલો}} પુનઃસ્થાપિત',
-'cannotundelete' => 'પુનર્જીવિત કરવાનું કાર્ય અસફળ; 
-કોઇકે આ પાનાને પહેલેથી પુનર્જીવિત કર્યું હોઈ શકે.',
+'cannotundelete' => 'પુનર્જીવિત કરવાનું કાર્ય અસફળ:
+$1',
 'undeletedpage' => "'''$1 પુનઃસ્થાપિત કરાયા'''
 
 તાજેતરમાં હટાવેલા કે પુનઃસ્થાપિત થયેલા ફેરફારની નોંધ નો સંદર્ભ અહીં ઉપ્લબ્ધ [[Special:Log/delete|deletion log]].",
@@ -2813,7 +2814,6 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 
 # JavaScriptTest
 'javascripttest' => 'જાવા સ્ક્રીપ્ટ પરીક્ષણ',
-'javascripttest-disabled' => 'આ સૂત્ર (ફંકશન) આ વિકિ પર કાર્યરત કરાયેલું નથી.',
 'javascripttest-title' => '$1 પરીક્ષણ જારી',
 'javascripttest-pagetext-noframework' => 'આ પાનું જાવા સ્ક્રીપ્ટ ચલાવવા આરક્ષિત છે.',
 'javascripttest-pagetext-unknownframework' => 'અજાણ ચકાસણી ફ્રેમવર્ક "$1".',
@@ -2919,10 +2919,15 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 # Info page
 'pageinfo-title' => ' $1 પાના ની માહિતી નૂ મથાડૂ',
 'pageinfo-header-edits' => 'ઇતિહાસ સંપાદન',
+'pageinfo-length' => 'પૃષ્ઠની લંબાઇ (બાઇટમાં)',
 'pageinfo-views' => 'જોનારાની સંખ્યા',
 'pageinfo-watchers' => 'પાના નીરીક્ષકોની સંખ્યા',
 'pageinfo-edits' => 'કુલ સંપાદનોની સંખ્યા',
 'pageinfo-authors' => 'ક્ષેત્રના લેખકોની કુલ સંખ્યા',
+'pageinfo-toolboxlink' => 'પૃષ્ઠમાહિતી',
+'pageinfo-redirectsto-info' => 'માહિતી',
+'pageinfo-contentpage-yes' => 'હા',
+'pageinfo-protect-cascading-yes' => 'હા',
 
 # Patrolling
 'markaspatrolleddiff' => 'નિરીક્ષીત અંકિત કરો',
@@ -3756,6 +3761,10 @@ $5
 'feedback-close' => 'સંપન્ન',
 'feedback-bugcheck' => 'સરસ! જરા જોઈ લેશો કે આ  પહેલેથી જ હાજર [$1 known bugs] નથીને?',
 'feedback-bugnew' => 'મેં તપાસ્યું.  નવી ત્રુટીની જાણ કરો.',
+
+# Search suggestions
+'searchsuggest-search' => 'શોધો',
+'searchsuggest-containing' => 'ધરાવતી...',
 
 # API errors
 'api-error-badaccess-groups' => 'આ વિકિ પર ફાઈલ ચઢાવવાની પરવાનગી તમને નથી.',

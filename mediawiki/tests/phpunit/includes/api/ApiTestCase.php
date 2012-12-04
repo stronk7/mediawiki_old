@@ -8,7 +8,7 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 	 */
 	protected $apiContext;
 
-	function setUp() {
+	protected function setUp() {
 		global $wgContLang, $wgAuth, $wgMemc, $wgRequest, $wgUser, $wgServer;
 
 		parent::setUp();
@@ -17,6 +17,8 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 		$wgContLang = Language::factory( 'en' );
 		$wgAuth = new StubObject( 'wgAuth', 'AuthPlugin' );
 		$wgRequest = new FauxRequest( array() );
+
+		ApiQueryInfo::resetTokenCache(); // tokens are invalid because we cleared the session
 
 		self::$users = array(
 			'sysop' => new TestUser(
@@ -39,15 +41,31 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 
 	}
 
-	protected function doApiRequest( Array $params, Array $session = null, $appendModule = false, User $user = null ) {
+	/**
+	 * Does the API request and returns the result.
+	 *
+	 * The returned value is an array containing
+	 * - the result data (array)
+	 * - the request (WebRequest)
+	 * - the session data of the request (array)
+	 * - if $appendModule is true, the Api module $module
+	 *
+	 * @param array $params
+	 * @param array|null $session
+	 * @param bool $appendModule
+	 * @param User|null $user
+	 *
+	 * @return array
+	 */
+	protected function doApiRequest( array $params, array $session = null, $appendModule = false, User $user = null ) {
 		global $wgRequest, $wgUser;
 
 		if ( is_null( $session ) ) {
-			# re-use existing global session by default
+			// re-use existing global session by default
 			$session = $wgRequest->getSessionArray();
 		}
 
-		# set up global environment
+		// set up global environment
 		if ( $user ) {
 			$wgUser = $user;
 		}
@@ -55,21 +73,22 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 		$wgRequest = new FauxRequest( $params, true, $session );
 		RequestContext::getMain()->setRequest( $wgRequest );
 
-		# set up local environment
+		// set up local environment
 		$context = $this->apiContext->newTestContext( $wgRequest, $wgUser );
 
 		$module = new ApiMain( $context, true );
 
-		# run it!
+		// run it!
 		$module->execute();
 
-		# construct result
+		// construct result
 		$results = array(
 			$module->getResultData(),
 			$context->getRequest(),
 			$context->getRequest()->getSessionArray()
 		);
-		if( $appendModule ) {
+
+		if ( $appendModule ) {
 			$results[] = $module;
 		}
 
@@ -84,7 +103,7 @@ abstract class ApiTestCase extends MediaWikiLangTestCase {
 	 * @param $session Array|null: session array
 	 * @param $user User|null A User object for the context
 	 */
-	protected function doApiRequestWithToken( Array $params, Array $session = null, User $user = null ) {
+	protected function doApiRequestWithToken( array $params, array $session = null, User $user = null ) {
 		global $wgRequest;
 
 		if ( $session === null ) {
