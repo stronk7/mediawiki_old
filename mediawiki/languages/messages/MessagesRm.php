@@ -1,5 +1,5 @@
 <?php
-/** Romansh (Rumantsch)
+/** Romansh (rumantsch)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -43,7 +43,7 @@ $messages = array(
 'tog-hidepatrolled'           => 'Zuppentar midadas controlladas en las «ultimas midadas»',
 'tog-newpageshidepatrolled'   => 'Zuppentar paginas controlladas en las «paginas novas»',
 'tog-extendwatchlist'         => "Extender la glista d'observaziun per mussar tut las midadas e betg be las ultimas",
-'tog-usenewrc'                => "Duvrar la versiun extendida da las ''Ultimas midadas'' (basegna JavaScript)",
+'tog-usenewrc'                => "Gruppar las midadas tenor pagina en las ''ultimas midadas'' ed la ''glista d'observaziun'' (basegna JavaScript)",
 'tog-numberheadings'          => 'Numerar automaticamain ils titels',
 'tog-showtoolbar'             => "Mussa la trav d'utensils (basegna JavaScript)",
 'tog-editondblclick'          => 'Modifitgar paginas cun in clic dubel (basegna JavaScript)',
@@ -51,17 +51,17 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Activar la pussaivladad da modifitgar secziuns cun in clic dretg (basegna JavaScript)',
 'tog-showtoc'                 => 'Mussar ina tabla da cuntegn sin paginas cun dapli che trais tetels',
 'tog-rememberpassword'        => "S'annunziar permanantamain cun quest navigatur (per maximalmain $1 {{PLURAL:$1|di|dis}})",
-'tog-watchcreations'          => "Observar paginas ch'jau hai creà",
-'tog-watchdefault'            => "Observar paginas ch'jau hai edità",
-'tog-watchmoves'              => "Observar paginas ch'jau hai spustà",
-'tog-watchdeletion'           => "Observar paginas ch'jau hai stizzà",
+'tog-watchcreations'          => "Agiuntar paginas ch'jeu creesch e datotecas ch'jau transferesch a la glista d'observaziun",
+'tog-watchdefault'            => "Agiuntar paginas e datotecas ch'jau modifitgesch a la glista d'observaziun",
+'tog-watchmoves'              => "Agiuntar paginas e datotecas ch'jau hai spustà a la glista d'observaziun",
+'tog-watchdeletion'           => "Agiuntar paginas e datotecas ch'jau hai stizzà a la glista d'observaziun",
 'tog-minordefault'            => 'Marcar tut las modificaziuns per ordinari sco pitschnas',
 'tog-previewontop'            => "Mussar la prevista sur il champ d'endatziun",
 'tog-previewonfirst'          => "Adina mussar la prevista suenter l'emprima modificaziun",
 'tog-nocache'                 => 'Impedir che tes navigatur memorisescha las paginas en il cache',
-'tog-enotifwatchlistpages'    => "Trametta in e-mail sch'ina pagina sin mia glista d'observaziun vegn midada",
+'tog-enotifwatchlistpages'    => "Ma trametter in e-mail sch'ina pagina u ina datoteca sin mia glista d'observaziun vegn midada",
 'tog-enotifusertalkpages'     => "Trametta in e-mail sch'i ha dà midadas sin mia pagina da discussiun.",
-'tog-enotifminoredits'        => 'Trametta era in e-mail tar pitschnas midadas da las paginas',
+'tog-enotifminoredits'        => 'Era ma trametter in e-mail en cas da midadas pitschnas vid paginas u datotecas',
 'tog-enotifrevealaddr'        => "Mussar mia adressa dad e-mail en e-mails d'avis",
 'tog-shownumberswatching'     => "Mussar il dumber d'utilisaders che obervan questa pagina",
 'tog-oldsig'                  => 'Signatura actuala:',
@@ -170,7 +170,7 @@ $messages = array(
 'cancel'        => 'refusar las midadas',
 'moredotdotdot' => 'Dapli...',
 'mypage'        => 'mia pagina',
-'mytalk'        => 'Mia pagina da discussiun',
+'mytalk'        => 'discussiun',
 'anontalk'      => 'Pagina da discussiun da questa IP',
 'navigation'    => 'Navigaziun',
 'and'           => '&#32;e',
@@ -193,7 +193,7 @@ $messages = array(
 'vector-action-protect'          => 'Bloccar',
 'vector-action-undelete'         => 'Restituir',
 'vector-action-unprotect'        => 'Midar la protecziun',
-'vector-simplesearch-preference' => 'Activar las propostas per tschertgar extendidas (be per il skin Vector)',
+'vector-simplesearch-preference' => 'Activar la trav da tschertgar simplifitgada (be per il skin Vector)',
 'vector-view-create'             => 'Crear',
 'vector-view-edit'               => 'Modifitgar',
 'vector-view-history'            => 'Cronologia',
@@ -355,9 +355,9 @@ Ina glista da las paginas spezialas existentas chattais vus sut [[Special:Specia
 'dberrortext'          => 'In sbagl da la sintaxa da la dumonda a la banca da datas è capità.
 Quai po esser in sbagl en la software.
 L\'ultima dumonda per la banca da datas era:
-<blockquote><tt>$1</tt></blockquote>
-ord la funcziun "<tt>$2</tt>".
-La banca da datas ha rapportà l\'errur "<tt>$3: $4</tt>".',
+<blockquote><code>$1</code></blockquote>
+ord la funcziun "<code>$2</code>".
+La banca da datas ha rapportà l\'errur "<samp>$3: $4</samp>".',
 'dberrortextcl'        => 'In sbagl da la sintaxa da la dumonda a la banca da datas è capità.
 L\'ultima dumonda per la banca da datas era:
 "$1"
@@ -410,8 +410,10 @@ Query: $2',
 Emprova danovamain en in per minutas.',
 'protectedpagetext'    => "Questa pagina è vegnida bloccada per evitar ch'ella vegn modifitgada.",
 'viewsourcetext'       => 'Ti pos guardar e copiar il code-fundamental da questa pagina:',
-'protectedinterface'   => "Questa pagina cuntegna text per l'interfatscha da la software ed è protegida per evitar abus.",
-'editinginterface'     => "'''Attenziun:''' Questa pagina cuntegna text che vegn duvra da la software MediaWiki. Midadas influenzeschan directamain l'interfatscha da l'utilisader. Sche ti vuls far translaziuns u correcturas: Studegia da far quai sin [//translatewiki.net/wiki/Main_Page?setlang=rm translatewiki.net], per che las midadas pon vegnidas surprendidas da tut ils projects.",
+'protectedinterface'   => "Questa pagina cuntegna ils texts per l'interfatscha da la software ed è protegida per evitar abus.",
+'editinginterface'     => "'''Attenziun:''' Questa pagina cuntegna text che vegn duvra en la interfatscha da questa software. 
+Midadas influenzeschan directamain l'interfatscha per tut ils utilisaders sin questa vichi. 
+Sche ti vuls far translaziuns u correcturas per tut las vichis, lura utilisescha [//translatewiki.net/ translatewiki.net], il project per translatar MediaWiki.",
 'sqlhidden'            => '(Zuppentà la dumonda da SQL)',
 'cascadeprotected'     => "Questa pagina è protegida da modificaziuns perquai ch'ella è integrada en suandanta{{PLURAL:$1| pagina, ch'è protegida|s paginas, ch'èn protegidas}} entras l'opziun «protecziun ertada»: 
 $2",
@@ -447,7 +449,7 @@ Betg emblida da midar tias [[Special:Preferences|preferenzas da {{SITENAME}}]].'
 'userlogin'                  => "T'annunziar / registrar",
 'userloginnocreate'          => "T'annunziar",
 'logout'                     => 'Sortir',
-'userlogout'                 => 'Sortir',
+'userlogout'                 => 'sortir',
 'notloggedin'                => "Betg s'annunzià",
 'nologin'                    => "Anc nagin conto? '''$1'''.",
 'nologinlink'                => "Crear in conto d'utilisader",
@@ -678,7 +680,6 @@ L'ultima endataziun dal log da bloccar vegn mussà sutvart sco referenza:",
 * '''Firefox / Safari:''' Tegnair ''Shift'' durant cliccar ''chargiar danovamain'', u smatgar ''Ctrl-F5'' u ''Ctrl-R'' (''⌘-R'' sin in Mac)
 * '''Google Chrome:''' Smatgar ''Ctrl-Shift-R'' (''⌘-Shift-R'' sin in Mac)
 * '''Internet Explorer:''' Tegnair ''Ctrl'' durant cliccar ''Rechargiar,'' u smatgar ''Ctrl-F5''
-* '''Konqueror:''' Cliccar ''Rechargiar'' ni smatgar ''F5''
 * '''Opera:''' Stizzar il cache sut ''Tools → Preferences''",
 'usercssyoucanpreview'             => "'''Tip:''' Utilisescha il buttun \"{{int:showpreview}}\" per testar tes nov CSS avant che memorisar.",
 'userjsyoucanpreview'              => "'''Tip:''' Utilisescha il buttun \"{{int:showpreview}}\" per testar tes nov JavaScript avant che memorisar.",
@@ -854,20 +855,20 @@ Ti pos anc adina [$1 contemplar questa versiun].",
 'rev-deleted-text-view'       => "Questa versiun da la pagina è vegnida '''stizzada'''.
 Ti pos la vesair; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log da stizzar].",
 'rev-suppressed-text-view'    => "Questa versiun da la pagina è vegnida '''supprimida'''.
-Sco administratur pos ti la vesair; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}}  log da supprimer].",
+Ti pos la vesair; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}}  log da supprimer].",
 'rev-deleted-no-diff'         => "Ti na pos betg guardar quest diff perquai ch'ina da las versiuns è vegnida '''stizzada'''.
 Detagls pos ti chattar en [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log da stizzar].",
 'rev-suppressed-no-diff'      => "Ti na pos betg guardar quest diff perquai ch'ina da las versiuns è vegnida '''stizzada'''.",
 'rev-deleted-unhide-diff'     => "Ina da las versiuns da quest diff è vegnida '''stizzada'''.
 Detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log da stizzar].
-Sco administratur pos ti anc adina [$1 contemplar quest diff].",
+Ti pos anc adina [$1 contemplar quest diff] sche ti vuls cuntinuar.",
 'rev-suppressed-unhide-diff'  => "Ina da las versiuns da quest diff è vegnida '''supprimida'''.
 Detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log da supprimer].
-Sco administratur pos ti anc adina [$1 contemplar quest diff] sche ti vuls cuntinuar.",
+Ti pos anc adina [$1 contemplar quest diff] sche ti vuls cuntinuar.",
 'rev-deleted-diff-view'       => "Ina da las versiuns da quest diff è vegnida '''stizzada'''.
-Sco administratur pos ti vesair quest diff; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log da stizzar].",
+Ti pos vesair quest diff; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log da stizzar].",
 'rev-suppressed-diff-view'    => "Ina da las versiuns da quest diff è vegnida '''supprimida'''.
-Sco administratur pos ti vesair quest diff; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}}  log da supprimer].",
+Ti pos vesair quest diff; detagls pon vegnir chattads en il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}}  log da supprimer].",
 'rev-delundel'                => 'mussar/zuppentar',
 'rev-showdeleted'             => 'mussar',
 'revisiondelete'              => 'Stizzar/restituir versiuns',
@@ -882,21 +883,67 @@ Sco administratur pos ti vesair quest diff; detagls pon vegnir chattads en il [{
 'revdelete-show-file-submit'  => 'Gea',
 'revdelete-selected'          => "'''{{PLURAL:$2|Versiun tschernida|Versiuns tschernidas}} da [[:$1]]:'''",
 'logdelete-selected'          => "'''{{PLURAL:$1|Elements dal log tschernì|Elements dal log tschernids}}:'''",
+'revdelete-text'              => "'''Versiuns ed ocurrenzas stizzadas cumparan era vinavant en la cronologia ed en ils protocols, dentant èn parts dal cuntegn betg accessibels al public.'''
+Auters administraturs sin {{SITENAME}} vegnan tuttina ad avair access al cuntegn zuppentà e pon restaurar puspè la pagina, sch'i na vegnan betg definidas restricziuns supplementaras.",
+'revdelete-confirm'           => 'Confermescha che ti vuls far quai, che ti chapeschas las consequenzas e che ti fas quai en accordanza cun [[{{MediaWiki:Policy-url}}|las directivas]].',
+'revdelete-suppress-text'     => "Ti duessas '''be''' supprimer en quests cas: 
+* Infurmaziuns offendentas
+* Infurmaziuns persunalas deplazzadas
+*: ''Adressas e numers da telefon, numers d'AVS, etc.''",
+'revdelete-legend'            => 'Definir restricziuns da la visibilitad',
+'revdelete-hide-text'         => 'Zuppetar il text da la versiun',
+'revdelete-hide-image'        => 'Zuppentar il cuntegn da la datoteca',
+'revdelete-hide-name'         => "Zuppentar l'acziun ed la destinaziun",
+'revdelete-hide-comment'      => 'Zuppentar la resumaziun da la midada',
+'revdelete-hide-user'         => "Zuppentar il num d'utilisader/l'adressa IP da l'autur",
+'revdelete-hide-restricted'   => 'Supprimer las datas per administraturs sco per auters',
+'revdelete-radio-same'        => '(na betg midar)',
 'revdelete-radio-set'         => 'Gea',
 'revdelete-radio-unset'       => 'Na',
+'revdelete-suppress'          => 'Supprimer il motiv per administraturs sco per auters',
+'revdelete-unsuppress'        => 'Allontanar las restricziuns per versiuns restauradas',
 'revdelete-log'               => 'Motiv:',
+'revdelete-submit'            => 'Applitar a {{PLURAL:$1|la versiun tschernida|las versiuns tschernidas}}',
+'revdelete-success'           => "'''Actualià cun success la visibilitad da la versiun.'''",
+'revdelete-failure'           => "'''Betg pussaivel da midar la visibilitad da la versiun:'''
+$1",
+'logdelete-success'           => "'''Definì cun success la visibilitad dal protocol.'''",
+'logdelete-failure'           => "'''Betg pussaivel da midar la visibilitad dal protocol:'''
+$1",
 'revdel-restore'              => 'midar la visibilitad',
 'revdel-restore-deleted'      => 'versiuns stizzadas',
 'revdel-restore-visible'      => 'versiuns visiblas',
 'pagehist'                    => 'Istorgia da las versiuns',
+'deletedhist'                 => 'Cronologia da stizzar',
 'revdelete-content'           => 'Cuntegn',
 'revdelete-summary'           => 'resumaziun da la midada',
 'revdelete-uname'             => "num d'utilisader",
+'revdelete-restricted'        => 'applitgà restricziuns per administraturs',
+'revdelete-unrestricted'      => 'allontanà restricziuns per administraturs',
 'revdelete-log-message'       => '$1 per $2 versiun{{PLURAL:$2||s}}',
+'revdelete-hide-current'      => "Errur cun zuppentar l'element datà ils $1 las $2: Quai è la versiun actuala. 
+Ella na po betg vegnir zuppentada.",
+'revdelete-show-no-access'    => 'Errur cun mussar l\'element datà ils $1 las $2: Quest element è vegnì marcà sco "restrenschì".
+Ti n\'has nagin access ad ella.',
+'revdelete-modify-no-access'  => 'Errur cun modifitgar l\'element datà ils $1 las $2: Quest element è vegnì marcà sco "restrenschì".
+Ti n\'has nagin access ad ella.',
+'revdelete-modify-missing'    => "Errur cun modifitgar l'element cun l'ID $1: El manca en la banca da datas!",
+'revdelete-no-change'         => "'''Attenziun:''' L'element datà ils $1 las $2 ha gia giu la configuraziun da visibilitad dumandada.",
+'revdelete-concurrent-change' => "Errur cun modifitgar l'element datà ils $1 las $2: Il status para dad avair midà dad insatgi durant che ti has empruvà da modifitgar el. 
+Controllescha per plaschair ils protocols.",
+'revdelete-only-restricted'   => "Errur cun zuppentar l'element datà ils $1 las$2: Ti na pos betg zuppentar elements dad administraturs senza era tscherner ina da las autras opziuns da visibilitad.",
+'revdelete-reason-dropdown'   => "*Motivs generals per stizzar
+** Violaziun da dretgs d'autur
+** Commentari nunadattà u infurmaziuns persunalas
+** Num d'utilisader betg adattà
+** Infurmaziuns potenzialmain disfamantas",
 'revdelete-otherreason'       => 'Auter/ulteriur motiv:',
 'revdelete-reasonotherlist'   => 'Auter motiv',
 'revdelete-edit-reasonlist'   => 'Modifitgar ils motivs per stizzar',
 'revdelete-offender'          => 'Autur da la versiun:',
+
+# Suppression log
+'suppressionlog' => 'Protocol da suppressiuns',
 
 # History merging
 'mergehistory'                     => 'Unir la cronologia da paginas',
@@ -930,7 +977,7 @@ Fa stim che navigar cun agid da las coalliziuns reinizialisescha tia tscherna.',
 'mergelogpagetext'   => "Sutvart è ina glista da las ultimas cronologias ch'èn vegnidas unidas cun autras.",
 
 # Diffs
-'history-title'            => 'Cronica da versiuns da "$1"',
+'history-title'            => '$1: Cronologia da las versiuns',
 'difference'               => '(differenza tranter versiuns)',
 'difference-multipage'     => '(Differenzas tranter las paginas)',
 'lineno'                   => 'Lingia $1:',
@@ -1016,7 +1063,7 @@ Considerescha che lur index da {{SITENAME}} po cuntegnair datas ch'èn betg pli 
 
 # Preferences page
 'preferences'                 => 'Preferenzas',
-'mypreferences'               => 'Mias preferenzas',
+'mypreferences'               => 'preferenzas',
 'prefs-edits'                 => 'Dumber da las modificaziuns:',
 'prefsnologin'                => "Betg t'annunzià",
 'prefsnologintext'            => 'Ti stos esser <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} t\'annunzià]</span> per midar tias preferenzas.',
@@ -1024,7 +1071,9 @@ Considerescha che lur index da {{SITENAME}} po cuntegnair datas ch'èn betg pli 
 'prefs-skin'                  => 'Skin',
 'skin-preview'                => 'Prevista',
 'datedefault'                 => 'Nagina preferenza',
+'prefs-beta'                  => 'Funcziuns da Beta',
 'prefs-datetime'              => 'Data e temp',
+'prefs-labs'                  => 'Funcziuns experimentalas',
 'prefs-personal'              => "Profil da l'utilisader",
 'prefs-rc'                    => 'Ultimas midadas',
 'prefs-watchlist'             => "Glista d'observaziun",
@@ -1069,7 +1118,7 @@ Considerescha che lur index da {{SITENAME}} po cuntegnair datas ch'èn betg pli 
 'timezoneregion-indian'       => 'Ocean Indic',
 'timezoneregion-pacific'      => 'Ocean pacific',
 'allowemail'                  => 'Retschaiver e-mails dad auters utilisaders',
-'prefs-searchoptions'         => 'Opziuns da tschertgar',
+'prefs-searchoptions'         => 'Tschertgar',
 'prefs-namespaces'            => 'Tips da pagina',
 'defaultns'                   => 'Uschiglio tschertgar en quests tips da pagina:',
 'default'                     => 'Standard',
@@ -1103,6 +1152,8 @@ Questa infurmaziun è publica.',
 'email'                       => 'E-mail',
 'prefs-help-realname'         => "Opziun: Qua pos inditgar in surnum che vegn inditga empè da tes num d'utilisader en tias suttascripziuns cun '''<nowiki>--~~~~</nowiki>'''.",
 'prefs-help-email'            => "L'adressa dad e-mail è opziunala, pussibilitescha dentant da trametter in nov pled-clav en cass da sperdita.",
+'prefs-help-email-others'     => 'Ti pos era decider che auters ta pon contactar per e-mail entras in link sin tia pagina da discussion.
+Tia adressa dad e-mail na vegn betg mussada sche auters utilisaders ta contacteschan.',
 'prefs-help-email-required'   => "Inditgar in'adressa dad e-mail è obligatoric.",
 'prefs-info'                  => 'Infurmaziuns da basa',
 'prefs-i18n'                  => 'Internaziunalisaziun',
@@ -1141,7 +1192,7 @@ Questa infurmaziun è publica.',
 'userrights-no-interwiki'      => "Ti n'has betg la permissiun da midar dretgs d'utilisaders sin autras wikis.",
 'userrights-nodatabase'        => "La banca da datas $1 n'exista betg u n'è betg locala.",
 'userrights-nologin'           => "Ti stos [[Special:UserLogin|t'annunziar]] cun in conto d'aministratur per modifitgar ils dretgs d'utilisader.",
-'userrights-notallowed'        => "Tes conto d'utilisader n'ha betg la permissiun dad agiuntar dretgs d'utilisaders.",
+'userrights-notallowed'        => "Tes conto d'utilisader n'ha betg la permissiun dad agiuntar u allontanar dretgs d'utilisaders.",
 'userrights-changeable-col'    => 'Gruppas che ti pos modifitgar',
 'userrights-unchangeable-col'  => 'Gruppas che ti nas pos betg modifitgar',
 
@@ -1152,7 +1203,7 @@ Questa infurmaziun è publica.',
 'group-bot'           => 'Bots',
 'group-sysop'         => 'Administraturs',
 'group-bureaucrat'    => 'Birocrat',
-'group-suppress'      => 'Oversights',
+'group-suppress'      => 'Supervisurs',
 'group-all'           => '(tuts)',
 
 'group-user-member'          => 'Utilisader',
@@ -1333,9 +1384,9 @@ Il log da stizzar e spustar vegn mussà sutvart:",
 Per contemplar u tschertgar datotecas gia chargiada si, visita la pagina [[Special:FileList|glista da datotecas chargiadas si]]. Tut las datotecas che vegnan chargiadas si èn era notads en il [[Special:Log/upload|log da chargiar si]], quellas ch'èn vegnidas stizzadas en il [[Special:Log/delete|log dal stizzar]].
 
 Per integrar ina datoteca en in artitgel pos ti per exempel duvrar in dals suandants cumonds:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' per utilisar la versiun cumplaina da la datoteca
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' per utilisar in maletg da la ladezza da 200 pixels en in champ da la vart sanestra cun la descripziun 'alt text'
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' per directamain far ina colliaziun a la datoteca senza integrar la datoteca",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' per utilisar la versiun cumplaina da la datoteca
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></code>''' per utilisar in maletg da la ladezza da 200 pixels en in champ da la vart sanestra cun la descripziun 'alt text'
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' per directamain far ina colliaziun a la datoteca senza integrar la datoteca",
 'upload-permitted'            => 'Tips da datotecas lubids: $1.',
 'upload-preferred'            => 'Tips da datotecas preferids: $1.',
 'upload-prohibited'           => 'Tips da datotecas betg lubids: $1.',
@@ -1379,21 +1430,21 @@ questa datoteca è $2 gronda.",
 'emptyfile'                   => "La datoteca che ti has chargià si para dad esser vida.
 Quai po esser pervia d'in sbagl da tippar en il num da datoteca.
 Controllescha sche ti vuls propi chargiar si questa datoteca.",
-'fileexists'                  => "Ina datoteca cun quest num exista gia. Controllescha '''<tt>[[:$1]]</tt>''' sche ti n'es betg segir sche ti vuls midar ella.
+'fileexists'                  => "Ina datoteca cun quest num exista gia. Controllescha <strong>[[:$1]]</strong> sche ti n'es betg segir sche ti vuls midar ella.
 [[$1|thumb]]",
-'filepageexists'              => "La pagina da descripziun per questa datoteca è vegnida creada ils '''<tt>[[:$1]]</tt>''' ma i n'exista anc nagina datoteca cun quest num. 
+'filepageexists'              => "La pagina da descripziun per questa datoteca è vegnida creada ils <strong>[[:$1]]</strong> ma i n'exista anc nagina datoteca cun quest num. 
 La resumaziun che ti endatescha na vegn betg a cumparair sin la pagina da descripziun.
 Per che tia resumaziun cumpara là, stos ti modifitar manualmain la pagina da descripziun.
 [[$1|thumb]]",
 'fileexists-extension'        => "I exista gia ina datoteca cun in num sumegliant: [[$2|thumb]]
-* Num da la datoteca che duai vegnir chargiada si: '''<tt>[[:$1]]</tt>'''
-* Num da la datoteca ch'exista gia: '''<tt>[[:$2]]</tt>'''
+* Num da la datoteca che duai vegnir chargiada si: <strong>[[:$1]]</strong>
+* Num da la datoteca ch'exista gia: <strong>[[:$2]]</strong>
 Tscherna per plaschair in auter num.",
 'fileexists-thumbnail-yes'    => "Quest maletg para dad esser in maletg da grondezza reducida ''(Maletg da prevista)''.
 [[$1|thumb]]
-Controllescha per plaschair la datoteca ''<tt>[[:$1]]</tt>'''.
+Controllescha per plaschair la datoteca ''<strong>[[:$1]]</strong>.
 Sche la datoteca menziunada survart è il medem maletg en grondezza originala n'èsi betg necessari da chargiar si in maletg da pervista.",
-'file-thumbnail-no'           => "Il num da la datoteca cumenza cun '''<tt>$1</tt>''', perquai para quai dad esser in maletg da grondezza reducida ''(Maletg da prevista)''.
+'file-thumbnail-no'           => "Il num da la datoteca cumenza cun <strong>$1</strong>, perquai para quai dad esser in maletg da grondezza reducida ''(Maletg da prevista)''.
 Controllescha sche ti has era il maletg en grondezza originala e chargia si quel sut il num original.",
 'fileexists-forbidden'        => 'I exista gia ina datoteca cun quest num che na po betg vegnir recuvrida. 
 Sche ti vuls anc adina chargiar si tia datoteca, turna per plaschair anavos e tscherna in auter nu. 
@@ -1423,8 +1474,23 @@ Controllescha per plaschair l'opziun <code>file_uploads</code>.",
 'upload-description'          => 'Descripziun da la datoteca',
 'upload-options'              => 'Opziuns per chargiar si',
 'watchthisupload'             => 'Observar questa datoteca',
+'upload-success-subj'         => 'Transferì cun success',
+'upload-success-msg'          => 'Tes transfer da [$2] è stà cun success. La datoteca è disponibla qua: [[:{{ns:file}}:$1]]',
+'upload-failure-subj'         => 'Probelm cun transferir',
+'upload-failure-msg'          => 'I è capitada ina errur durant transferir da [$2]:
+$1',
+'upload-warning-subj'         => 'Avertiment da transferir',
+'upload-warning-msg'          => 'Ina errur è capitada cun tes transfer da [$2]. Ti pos returnar al [[Special:Upload/stash/$1|formular per transferir]] per curreger quest problem.',
 
 'upload-proto-error'        => 'Protocol nuncorrect',
+'upload-proto-error-text'   => 'Il transfer da servers externs basegna URLs che cumenzan cun <code>http://</code> u <code>ftp://</code>.',
+'upload-file-error'         => 'Errur interna',
+'upload-file-error-text'    => 'Ina errur interna è capitada durant empruvar da crear ina datoteca temporara sin il server. 
+Contactescha per plaschair in [[Special:ListUsers/sysop|administratur]].',
+'upload-misc-error'         => 'Errur da transferir nunenconuschenta',
+'upload-misc-error-text'    => "Ina errur nunenconuschenta è capitada durant transferir. 
+Controllescha per plaschair che l'URL è valida ed accessibla ed emprova anc ina giada.
+Sch'il problem exista anc adina, contactescha in [[Special:ListUsers/sysop|administratur]].",
 'upload-too-many-redirects' => 'La URL ha cuntegnì memia blers renviaments',
 'upload-unknown-size'       => 'Grondezza nunenconuschenta',
 'upload-http-error'         => 'In sbagl da HTTP è capità: $1',
@@ -1433,7 +1499,7 @@ Controllescha per plaschair l'opziun <code>file_uploads</code>.",
 'img-auth-accessdenied' => "Refusà l'access",
 'img-auth-nopathinfo'   => "PATH_INFO manca.
 Tes server n'è betg configurà per surdar questa infurmaziun.
-I basa forsa sin CGI è na sustegna betg img_auth.
+El basa forsa sin CGI è na sustegna betg img_auth.
 Consultescha https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
 'img-auth-nologinnWL'   => 'Ti n\'ès betg t\'annunzia ed "$1" n\'è betg sin la glista alva.',
 'img-auth-nofile'       => 'Datoteca "$1" n\'exista betg.',
@@ -1538,7 +1604,7 @@ La descripziun da sia [$2 pagina da descripziun da datotecas] vegn mussada sutva
 # MIME search
 'mimesearch'         => 'tschertgar tenor tip da MIME',
 'mimesearch-summary' => 'Questa pagina permetta da filtrar datotecas tenor lur tip MIME.
-Endatar il term da tschertgar en la furma tip/suttip, p.ex. <tt>image/jpeg</tt>.',
+Endatar il term da tschertgar en la furma tip/suttip, p.ex. <code>image/jpeg</code>.',
 'mimetype'           => 'Tip MIME:',
 'download'           => 'telechargiar',
 
@@ -1583,7 +1649,7 @@ Betg emblida da controllar sche autras colliaziuns mainan als models avant ch'al
 'statistics-users-active-desc' => "Utilisaders che han fatg almain ina acziun {{PLURAL:$1|l'ultim di|ils ultims $1 dis}}",
 'statistics-mostpopular'       => 'Paginas visitadas il pli savens',
 
-'disambiguations'     => 'Paginas per la decleraziun da noziuns',
+'disambiguations'     => 'Paginas cun colliaziuns sin paginas per la decleraziun da noziuns',
 'disambiguationspage' => 'Template:disambiguiziun',
 
 'doubleredirects'            => 'Renviaments dubels',
@@ -1664,8 +1730,8 @@ I renviescha uss a [[$2]].',
 'booksources-go'            => 'Leger',
 
 # Special:Log
-'specialloguserlabel'  => 'Utilisader:',
-'speciallogtitlelabel' => 'Titel:',
+'specialloguserlabel'  => 'Acziun exequida da:',
+'speciallogtitlelabel' => 'Destinaziun (titel u utilisader):',
 'log'                  => 'logs / cudesch da navigaziun',
 'all-logs-page'        => 'Tut ils logs publics',
 
@@ -1694,13 +1760,13 @@ I renviescha uss a [[$2]].',
 'sp-deletedcontributions-contribs' => 'contribuziuns',
 
 # Special:LinkSearch
-'linksearch'       => 'Colliaziuns externas',
+'linksearch'       => 'Tschertgar colliaziuns externas',
 'linksearch-pat'   => 'Muster da tschertgar:',
 'linksearch-ns'    => 'Tip da pagina:',
 'linksearch-ok'    => 'Tschertgar',
-'linksearch-text'  => 'Sin questa pagina pos ti tschertgar paginas che cuntegnan colliaziuns a tschertas websites. 
-Uschenumnadas wildcards sco p.ex. "*.wikipedia.org" pon vegnir utilisadas.<br />
-Protocols sustegnids: <tt>$1</tt>',
+'linksearch-text'  => 'Tegnaplazzas sco "*.wikipedia.org" pon vegnir utilisads.
+Dovra almain ina top-level domain, per exempel "*.org".<br />
+Protocols sustegnids: <code>$1</code> (n\'agiunta betg quels a tia tschertga).',
 'linksearch-line'  => '$1 è collià davent da la pagina $2',
 'linksearch-error' => "Wildcards pon esser be a l'entschatta dal num da host.",
 
@@ -1782,8 +1848,8 @@ L'adressa dad e-mail che ti has endatà en [[Special:Preferences|tias preferenza
 'usermessage-editor'  => 'Messenger dal sistem',
 
 # Watchlist
-'watchlist'            => "Mia glista d'observaziun",
-'mywatchlist'          => "Mia glista d'observaziun",
+'watchlist'            => "glista d'observaziun",
+'mywatchlist'          => "glista d'observaziun",
 'watchlistfor2'        => 'Per $1 $2',
 'nowatchlist'          => "Ti n'has nagins elements sin tia glista d'observaziun.",
 'watchlistanontext'    => "Ti stos $1 per vesair u modifitgar elements sin tia glista d'observaziun",
@@ -1971,6 +2037,8 @@ L'archiv vegn eventualmain svidà periodicamain.",
 'undeleteextrahelp'         => "Per restituir l'entira cronologia d'ina pagina, lascha inactiv tut las chaschettas e cllicca sin '''''{{int:undeletebtn}}'''''.
 Per restituir be tschertgas part, activescha las chaschettas correspundentas per las versiuns che duain vegnir restituidas e clicca sin '''''{{int:undeletebtn}}'''''.",
 'undeleterevisions'         => 'Archivà $1 {{PLURAL:$1|versiun|versiuns}} archived',
+'undeletehistory'           => "Sche ti restaureschas ina pagina vegnan tut las versiuns en la coronologia era restauradas. 
+Sch'ina nova pagina cun il medem num è vegnida creada dapi che la pagina è vegnida stizzada, vegnan las versiuns restauradas cumparir avant en la cronologia.",
 'undelete-nodiff'           => 'Chattà naginas versiuns anteriuras.',
 'undeletebtn'               => 'restituir',
 'undeletelink'              => 'mussar/restituir',
@@ -1993,7 +2061,7 @@ Per restituir be tschertgas part, activescha las chaschettas correspundentas per
 # Contributions
 'contributions'       => "Contribuziuns da l'utilisader",
 'contributions-title' => "Contribuziuns d'utilisader da $1",
-'mycontris'           => 'Mias contribuziuns',
+'mycontris'           => 'contribuziuns',
 'contribsub2'         => 'Per $1 ($2)',
 'nocontribs'          => 'Chattà naginas modificaziuns che correspundan a quests criteris.',
 'uctop'               => '(actual)',
@@ -2070,7 +2138,7 @@ Inditgescha sutvart in motiv (per exempel pos ti inditgar paginas ch'èn vegnida
 'badipaddress'                    => "L'adressa IP è nunvalida",
 'blockipsuccesssub'               => 'Bloccà cun success',
 'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] è vegnì bloccà.<br />
-Sin [[Special:BlockList|la glista dad IPs bliccadas]] pos ti repassar tut las bloccadas.',
+La [[Special:BlockList|glista da bloccadas]] mussa tut las bloccadas.',
 'ipb-edit-dropdown'               => 'Modifitgar ils motivs per bloccar',
 'ipb-unblock-addr'                => 'Debloccar $1',
 'ipb-unblock'                     => 'Debloccar in utilisader u ina adressa IP',
@@ -2458,14 +2526,14 @@ Probablamien è quai capità pervia dad in link ad ina pagina externa ch'è sin 
 
 # Info page
 'pageinfo-title'            => 'Infurmaziuns per "$1"',
-'pageinfo-header-edits'     => 'Midadas',
+'pageinfo-header-edits'     => 'Cronologia da las midadas',
 'pageinfo-header-watchlist' => "Glista d'observaziun",
 'pageinfo-header-views'     => 'Visitas',
 'pageinfo-subjectpage'      => 'Pagina',
 'pageinfo-talkpage'         => 'Pagina da discussiun',
-'pageinfo-watchers'         => 'Dumber dad observaturs',
+'pageinfo-watchers'         => 'Dumber dad observaturs da la pagina',
 'pageinfo-edits'            => 'Dumber da midadas',
-'pageinfo-authors'          => 'Dumber dad auturs differents',
+'pageinfo-authors'          => 'Dumber total dad auturs differents',
 'pageinfo-views'            => 'Dumber da visitas',
 'pageinfo-viewsperedit'     => 'Visitas per midada',
 
@@ -2755,9 +2823,9 @@ Sche la datoteca è vegnida midada dal status original èn tscherts detagls even
 'exif-orientation-3' => 'Rotà per 180°',
 'exif-orientation-4' => 'Reflectà verticalmain',
 'exif-orientation-5' => "Rotà 90° en senn cuntrari a l'ura e reflectà verticalmain",
-'exif-orientation-6' => "Rotà 90° en senn da l'ura",
+'exif-orientation-6' => "Rotà 90° en senn cuntrari a l'ura",
 'exif-orientation-7' => "Rotà 90° en senn da l'ura e reflectà verticalmain",
-'exif-orientation-8' => "Rotà 90° en senn cuntrari a l'ura",
+'exif-orientation-8' => "Rotà 90° en senn da l'ura",
 
 'exif-planarconfiguration-1' => 'Format grop (chunky)',
 'exif-planarconfiguration-2' => 'Format planar',
@@ -2993,7 +3061,7 @@ sbittar la confermaziun da l\'adressa dad e-mail:
 
 $5
 
-Quai code da confermaziun vegn a scrudar ils $6 las $7.',
+Quai code da confermaziun vegn a scrudar ils $4.',
 'confirmemail_invalidated'  => "La confermaziun da l'adressa dad e-mail è vegnida stizzada",
 'invalidateemail'           => "Stizzar la confermaziun da l'adressa dad e-mail",
 
@@ -3150,7 +3218,7 @@ Endatescha il num da datoteca senza il prefix "{{ns:file}}:".',
 * <span class="mw-specialpagecached">Paginas spezialas en il cache (pon esser antiquadas).</span>',
 'specialpages-group-maintenance' => 'Rapports da mantegnamant',
 'specialpages-group-other'       => 'Autras paginas spezialas',
-'specialpages-group-login'       => "T'annunziar / registrar",
+'specialpages-group-login'       => "S'annunziar / crear in conto",
 'specialpages-group-changes'     => 'Ultimas midadas e logs',
 'specialpages-group-media'       => 'Rapports ed elements multimedials',
 'specialpages-group-users'       => 'Utilisaders e dretgs',

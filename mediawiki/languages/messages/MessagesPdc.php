@@ -8,6 +8,7 @@
  * @file
  *
  * @author Kaganer
+ * @author Krinkle
  * @author Xqt
  * @author לערי ריינהארט
  */
@@ -126,6 +127,7 @@ $messages = array(
 'subcategories'                  => 'Unnerabdeeling',
 'category-media-header'          => 'Media in Abdeeling „$1“',
 'category-empty'                 => "''Die Abdeeling hot zu daere Zeit kene Bledder oder Feils.''",
+'hidden-categories'              => '{{PLURAL:$1|Versteckelte Abdeeling|Verstecktelte Abdeelinge}}',
 'category-article-count-limited' => '{{PLURAL:$1|Sell Blatt iss|Selle $1 Bledder sin}} in daer Abdeeling drin:',
 'category-file-count-limited'    => '{{PLURAL:$1|Sell Feil iss|Selle $1 Feils sin}} in daer Abdeeling drin:',
 'listingcontinuesabbrev'         => '(weider)',
@@ -136,7 +138,7 @@ $messages = array(
 'cancel'        => 'Zerick',
 'moredotdotdot' => 'Mehner…',
 'mypage'        => 'Mei Blatt',
-'mytalk'        => 'Mei Gschwetz-Blatt',
+'mytalk'        => 'Mei Dischbedutt',
 'anontalk'      => 'Gschwetz-Blatt fer die IP',
 'navigation'    => 'Faahre-Gnepp',
 'and'           => '&#32;unn',
@@ -186,7 +188,7 @@ $messages = array(
 'protectthispage'  => 'Des Blatt schitze',
 'newpage'          => 'Neies Blatt',
 'talkpage'         => 'Sell Blatt dischbediere',
-'talkpagelinktext' => 'Gschwetz',
+'talkpagelinktext' => 'Dischbedutt',
 'specialpage'      => 'Besunneres Blatt',
 'personaltools'    => 'Paerseenlich Gscharr',
 'articlepage'      => 'Inhalt vun dem Blatt aagucke',
@@ -276,6 +278,7 @@ Wenns des net iss, hoscht verleicht en Fehler in de Daadebank gfunne. Bitte meld
 'missingarticle-diff' => '(Unnerschidd zwische Versione: $1, $2)',
 'internalerror'       => 'Interner Fehler',
 'internalerror_info'  => 'Interner Fehler: $1',
+'badtitle'            => 'Tidl net gildich',
 'viewsourcefor'       => 'fer $1',
 'ns-specialprotected' => 'Besunnere Bledder sinn net zum Ennere.',
 
@@ -425,8 +428,8 @@ Paesswatt fer nau: $2',
 'qbsettings-none' => 'Ken',
 
 # Preferences page
-'preferences'              => 'paerseenlich Profil',
-'mypreferences'            => 'Mei Uffschtelling',
+'preferences'              => 'Paerseenlich Profil',
+'mypreferences'            => 'Uffschtellinge',
 'changepassword'           => 'Paesswatt ennere',
 'skin-preview'             => 'Aagucke',
 'prefs-personal'           => 'Yuuser Profile',
@@ -688,7 +691,7 @@ Paesswatt fer nau: $2',
 
 # Watchlist
 'watchlist'         => 'Mei Watsch-Lischt',
-'mywatchlist'       => 'Mei Watsch-Lischt',
+'mywatchlist'       => 'Watsch-Lischt',
 'watchlistfor2'     => 'Vun $1 $2',
 'watch'             => 'watsche',
 'watchthispage'     => 'watsch des Blatt',
@@ -762,7 +765,7 @@ Guck $2 fer e Lischt vun de letscht Leschunge.',
 'month'               => 'unn Munet:',
 'year'                => 'bis Yaahr:',
 
-'sp-contributions-talk'     => 'Gschwetz',
+'sp-contributions-talk'     => 'Dischbedutt',
 'sp-contributions-search'   => 'Guck fer Ardickel',
 'sp-contributions-username' => 'IP-Adress odder Yuusernaame:',
 'sp-contributions-submit'   => 'Guck uff',

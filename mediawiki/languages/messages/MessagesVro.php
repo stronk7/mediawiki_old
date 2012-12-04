@@ -10,6 +10,7 @@
  * @author Kaganer
  * @author Niklas Laxström
  * @author Pikne
+ * @author Reedy
  * @author Sulev Iva (Võrok)
  * @author Trixt
  * @author Võrok
@@ -176,7 +177,7 @@ $messages = array(
 'cancel'        => 'Jätäq katski',
 'moredotdotdot' => 'Viil...',
 'mypage'        => 'Muq lehekülg',
-'mytalk'        => 'Mu arotus',
+'mytalk'        => 'Arotus',
 'anontalk'      => 'Seo puutri võrgoaadrõsi arotus',
 'navigation'    => 'Juhtminõ',
 'and'           => '&#32;ja',
@@ -644,7 +645,7 @@ Ku klõpsahtat nuppi \"{{int:savearticle}}\", sis pästetäs '''õnnõ''' ülemb
 'copyrightwarning2'                => "Rehkendäq tuud, et kõiki seo lehe pääle tettüid kirotuisi ja toimõnduisi või kiä taht muutaq vai ärq kistutaq. Ku sa taha-i, et su tüüd armuhiitmäldä ümbre tetäs ja uma ärqnägemise perrä pruugitas, sis pästku-i taad siiäq. Sa piät ka lubama, et kirotit uma jutu esiq vai võtit kopimiskeelüldä paigast (täpsämbält kaeq $1). '''PANGU-I TAAHA TEGIJÄÕIGUISIGA KAIDSÕTUT MATÕRJAALI ILMA LUALDA!'''",
 'longpageerror'                    => "'''VIGA: Lehe suurus om $1 kilobaiti. Taad saa-i pästäq, selle et kõgõ suurõmb lubat suurus om $2 kilobaiti.'''",
 'readonlywarning'                  => "'''HOIATUS: Teedüskogo om huuldustöie jaos lukku pant, nii et parhilla saa-i paranduisi pästäq. Võit teksti alalõ hoitaq tekstifailin ja pästäq taa siiäq peränpoolõ.'''",
-'protectedpagewarning'             => '<center><small>Taa leht om lukun. Taad saavaq toimõndaq õnnõ kõrraldajaõiguisiga pruukjaq.</small></center>',
+'protectedpagewarning'             => 'Taa leht om lukun. Taad saavaq toimõndaq õnnõ kõrraldajaõiguisiga pruukjaq.',
 'semiprotectedpagewarning'         => 'Seod lehte saavaq muutaq õnnõ nimega sisse lännüq pruukjaq.',
 'cascadeprotectedwarning'          => 'Taad lehte võivaq toimõndaq õnnõ kõrraldajaõiguisiga pruukjaq, selle et taa kuulus $1 järgmädse kaidsõdu lehe hulka:',
 'templatesused'                    => 'Seo lehe pääl om pruugit {{PLURAL:$1|näüdüst|näüdüssit}}:',
@@ -664,6 +665,11 @@ Võit toimõndaq olõmanolõvit lehti vai [[Special:UserLogin|minnäq nimega sis
 
 Kas tahat taad lehte tõtõstõ toimõndaq? Kaeq ka sissekirotust seo lehe ärqkistutamisõ kotsilõ:",
 'edit-conflict'                    => 'Samaaignõ toimõndus.',
+
+# Parser/template warnings
+'post-expand-template-inclusion-warning'  => "'''Hoiatus:''' Pruugitavidõ näüdüsside maht om pall'o suur.
+Tuuperäst ossa näüdüssit näüdädä-äi.",
+'post-expand-template-inclusion-category' => 'Leheküleq, mil om näüdüsside mahupiir ületet',
 
 # "Undo" feature
 'undo-success' => "Tagasivõtminõ läts' kõrda. Kaeq üle, kas taa om tuu, midä sa tetäq tahtsõt ja pästäq muutusõq.",
@@ -814,6 +820,7 @@ Lisateedüst või ollaq [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAME
 'nonefound'                        => "'''Hoiatus''':  Otsitas õnnõ üten jaon nimeruumõn.
 Ku tahat otsiq kõrraga kõigist nimeruumidest (ka arotuskülgi päält, näüdüssist jne) pruugiq
 otsisõna iin edejakku ''all:''. Ütest kimmäst nimeruumist otsmisõs pruugiq edejakus tuu nimeruumi nimme.",
+'search-nonefound'                 => 'Perräküsümisele löüdä-äs vastust.',
 'powersearch'                      => 'Otsminõ',
 'powersearch-legend'               => 'Laendõt otsminõ',
 'powersearch-ns'                   => 'Otsminõ nimeruumõst:',
@@ -832,7 +839,7 @@ otsisõna iin edejakku ''all:''. Ütest kimmäst nimeruumist otsmisõs pruugiq e
 
 # Preferences page
 'preferences'               => 'Säädmine',
-'mypreferences'             => 'Mu säädmiseq',
+'mypreferences'             => 'Säädmiseq',
 'prefs-edits'               => 'Tõimõndamiisi arv:',
 'prefsnologin'              => 'Sa olõ-i nimega sisse lännüq',
 'prefsnologintext'          => 'Et säädmiisi tetäq, tulõ sul [[Special:UserLogin|nimega sisse minnäq]].',
@@ -1041,17 +1048,17 @@ Helüteedüstü puhul: <b>[[media:teedüstü.ogg]]</b>.
 'large-file'                  => 'Teedüstüq tohe-i ollaq suurõmbaq, ku $1, a taa teedüstü om $2.',
 'largefileserver'             => 'Teedüstü om suurõmb ku server lupa.',
 'emptyfile'                   => "Teedüstü, midä sa proovõq üles laatiq paistus ollõv tühi. Kaeq üle, et kirotit nime õigõhe ja et taa olõ-i serverile pall'o suur.",
-'fileexists'                  => "Sama nimega teedüstü om jo olõman.
-Katso '''<tt>[[:$1]]</tt>''', ku sa olõ-i kimmäs, et tahat taad muutaq.
-[[$1|thumb]]",
-'fileexists-extension'        => "Sääntse nimega teedüstü om jo olõman: [[$2|thumb]]
-* Üleslaaditava teedüstü nimi: '''<tt>[[:$1]]</tt>'''
-* Olõmanolõva teedüstü nimi: '''<tt>[[:$2]]</tt>'''
-Ainugõnõ vaih om laendusõ suurõ/väiku algustähe man. Kaeq perrä, kas naaq ommaq üts ja tuusama teedüstü.",
+'fileexists'                  => 'Sama nimega teedüstü om jo olõman.
+Katso <strong>[[:$1]]</strong>, ku sa olõ-i kimmäs, et tahat taad muutaq.
+[[$1|thumb]]',
+'fileexists-extension'        => 'Sääntse nimega teedüstü om jo olõman: [[$2|thumb]]
+* Üleslaaditava teedüstü nimi: <strong>[[:$1]]</strong>
+* Olõmanolõva teedüstü nimi: <strong>[[:$2]]</strong>
+Ainugõnõ vaih om laendusõ suurõ/väiku algustähe man. Kaeq perrä, kas naaq ommaq üts ja tuusama teedüstü.',
 'fileexists-thumbnail-yes'    => "Taa paistus ollõv vähändet pilt ''(thumbnail)''. [[$1|thumb]]
-Kaeq teedüstü '''<tt>[[:$1]]</tt>'''üle.
+Kaeq teedüstü <strong>[[:$1]]</strong>üle.
 Ku ülekaet teedüstü om sama pilt alguperälidsen suurusõn, sis olõ-i vaia eräle vähändedüt pilti üles laatiq.",
-'file-thumbnail-no'           => "Teedüstü nimi nakkas pääle '''<tt>$1</tt>'''. Taa paistus ollõv vähändet pilt ''(thumbnail)''. Ku sul om olõman taa pilt tävven suurusõn, sis laadiq üles tuu, ku olõ-i, sis muudaq teedüstü nimi ärq.",
+'file-thumbnail-no'           => "Teedüstü nimi nakkas pääle <strong>$1</strong>. Taa paistus ollõv vähändet pilt ''(thumbnail)''. Ku sul om olõman taa pilt tävven suurusõn, sis laadiq üles tuu, ku olõ-i, sis muudaq teedüstü nimi ärq.",
 'fileexists-forbidden'        => 'Sääntse nimega teedüstü om jo olõman. Pästäq teedüstü tõõsõ nimega. Parhillanõ teedüstü: [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'Sama nimega teedüstü om jo olõman jaetuidõ teedüstüide hulgan. Pästäq teedüstü mõnõ tõõsõ nime ala. Parhillanõ teedüstü: [[File:$1|thumb|center|$1]]',
 'uploadwarning'               => 'Üleslaatmishoiatus',
@@ -1082,7 +1089,7 @@ Ku ülekaet teedüstü om sama pilt alguperälidsen suurusõn, sis olõ-i vaia e
 'upload-curl-error28-text' => 'Taa aadrõsi päält saa-s ao pääle vastust. Oodaq vähä ja prooviq vahtsõst.',
 
 'license'            => 'Litsents:',
-'license-header'     => 'Litsents:',
+'license-header'     => 'Litsents',
 'nolicense'          => 'Olõ-i litsentsi valit',
 'license-nopreview'  => '(Saa-i kaiaq)',
 'upload_source_url'  => ' (avalik tüütäv võrgoaadrõs)',
@@ -1113,10 +1120,11 @@ Ku ülekaet teedüstü om sama pilt alguperälidsen suurusõn, sis olõ-i vaia e
 'filehist-dimensions'       => 'Suurus',
 'filehist-filesize'         => 'Teedüstü suurus',
 'filehist-comment'          => 'Seletüs:',
-'imagelinks'                => 'Teedüstülingiq',
+'imagelinks'                => 'Teedüstüpruukminõ',
 'linkstoimage'              => 'Taa pildi pääle {{PLURAL:$1|näütäs lehekülg|näütäseq leheküleq}}:',
 'nolinkstoimage'            => 'Taa pildi pääle näütä-i ütski lehekülg.',
 'sharedupload'              => 'Seo teedüstü om peri lättest $1 ni taad võivaq pruukiq ka tõõsõq vikiq.',
+'sharedupload-desc-here'    => 'Seo om jaet teedüstü lättest $1 ja seod saa pruukiq ka tõisin projekten. Teedüstü [$2 seletüs] om ant allpuul.',
 'uploadnewversion-linktext' => 'Laadiq taa teedüstü vahtsõnõ kujo',
 
 # File reversion
@@ -1136,7 +1144,7 @@ Ku ülekaet teedüstü om sama pilt alguperälidsen suurusõn, sis olõ-i vaia e
 
 # MIME search
 'mimesearch'         => 'MIME-otsminõ',
-'mimesearch-summary' => 'Taa lehe pääl saat otsiq teedüstüid näide MIME-tüübi perrä. Kirodaq: sisutüüp/alltüüp, nt <tt>image/jpeg</tt>.',
+'mimesearch-summary' => 'Taa lehe pääl saat otsiq teedüstüid näide MIME-tüübi perrä. Kirodaq: sisutüüp/alltüüp, nt <code>image/jpeg</code>.',
 'mimetype'           => 'MIME-tüüp:',
 'download'           => 'laat',
 
@@ -1321,7 +1329,7 @@ ja sul piät umin [[Special:Preferences|säädmiisin]] olõma e-postiaadrõs, et
 
 # Watchlist
 'watchlist'            => 'Perräkaemisnimekiri',
-'mywatchlist'          => 'mu perräkaemisnimekiri',
+'mywatchlist'          => 'Perräkaemisnimekiri',
 'nowatchlist'          => 'Perräkaemisnimekiri om tühi.',
 'watchlistanontext'    => 'Perräkaemisnimekirä pruukmisõs $1.',
 'watchnologin'         => 'Olõ-i nimega sisse mint',
@@ -1501,7 +1509,7 @@ Perämäidsi kistutuisi ja tagasitegemiisi saat kaiaq [[Special:Log/delete|kistu
 # Contributions
 'contributions'       => 'Pruukja kirotusõq',
 'contributions-title' => 'Pruukja $1 toimõndusõq',
-'mycontris'           => 'Mu kirotusõq',
+'mycontris'           => 'Hindä kirotusõq',
 'contribsub2'         => 'Pruukja "$1 ($2)" kirotusõq',
 'nocontribs'          => 'Sääntsit muutmiisi es lövväq.',
 'uctop'               => '(kõgõ vahtsõmb)',
@@ -1572,7 +1580,7 @@ Perämäidsi kistutuisi ja tagasitegemiisi saat kaiaq [[Special:Log/delete|kistu
 'ipusubmit'                   => 'Lõpõdaq kinniqpidämine ärq',
 'unblocked'                   => 'Pruukja [[User:$1|$1]] kinniqpidämine om ärq lõpõtõt',
 'unblocked-id'                => '$1 kinniqpidämine võeti maaha',
-'ipblocklist'                 => 'Kinniqpeetüisi IP-aadrõssidõ ja pruukjanimmi nimekiri',
+'ipblocklist'                 => 'Kinniqpeetüq pruukjaq',
 'ipblocklist-legend'          => 'Otsiq kinniqpeetüt pruukjat',
 'ipblocklist-submit'          => 'Otsiq',
 'infiniteblock'               => 'igäveste',
@@ -2190,7 +2198,7 @@ $1",
 'trackbackdeleteok' => "Artikli pääle pantuisi linke näütämine (''trackback'') kistutõdi ärq.",
 
 # Delete conflict
-'deletedwhileediting' => "<center>'''Hoiatus''': taa leht om ärq kistutõt päält tuud, ku sa taad toimõndama naksit!</center>",
+'deletedwhileediting' => "'''Hoiatus''': taa leht om ärq kistutõt päält tuud, ku sa taad toimõndama naksit!",
 'confirmrecreate'     => "Pruukja '''[[User:$1|$1]]''' ([[User talk:$1|arotus]]) kistut' taa lehe ärq päält tuud, ku sa naksit taad toimõndama. Põhjus oll':
 : ''$2''
 Olõq hää, kinnüdäq, et tahat taad lehte vahtsõst luvvaq.",

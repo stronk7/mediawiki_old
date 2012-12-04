@@ -9,6 +9,7 @@
  *
  * @author Als-Holder
  * @author M-sch
+ * @author Manuae
  * @author SPS
  * @author Xqt
  */
@@ -24,6 +25,20 @@ $messages = array(
 'underline-default' => 'Des nemme, was em Broweser gsaacht hoscht.',
 
 # Dates
+'sunday'        => 'Sundaach',
+'monday'        => 'Mondaach',
+'tuesday'       => 'Dienschdaach',
+'wednesday'     => 'Midwoch',
+'thursday'      => 'Dunnaschdaach',
+'friday'        => 'Fraidaach',
+'saturday'      => 'Somschdaach',
+'sun'           => 'Su',
+'mon'           => 'Mo',
+'tue'           => 'Di',
+'wed'           => 'Mi',
+'thu'           => 'Du',
+'fri'           => 'Fr',
+'sat'           => 'So',
 'january'       => 'Jänner',
 'february'      => 'Fewwer',
 'march'         => 'März',
@@ -31,7 +46,7 @@ $messages = array(
 'may_long'      => 'Mai',
 'june'          => 'Juni',
 'july'          => 'Juli',
-'august'        => 'Auguscht',
+'august'        => 'Auguschd',
 'september'     => 'Sebdember',
 'october'       => 'Ogdower',
 'november'      => 'November',
@@ -75,7 +90,7 @@ $messages = array(
 'newwindow'  => '(werd im e naie Fenschter uffgmacht)',
 'cancel'     => 'Abbreche',
 'mytalk'     => 'Gebabbel mit dir',
-'navigation' => 'Navigation',
+'navigation' => 'Nawigadzion',
 
 # Cologne Blue skin
 'qbfind'      => 'Finne',
@@ -83,13 +98,18 @@ $messages = array(
 'qbmyoptions' => 'Mai Saide',
 
 # Vector skin
-'vector-action-move' => 'Verschiewe',
-'vector-view-edit'   => 'Bearwaide',
+'vector-action-delete'  => 'Lesche',
+'vector-action-move'    => 'Verschiewe',
+'vector-action-protect' => 'Schitze',
+'vector-view-edit'      => 'Bearwaide',
+'vector-view-history'   => 'Dadaigschischd',
+'vector-view-view'      => 'Lese',
+'actions'               => 'Agzione',
 
 'errorpagetitle'   => 'Fehler',
 'returnto'         => 'Zrick zu $1.',
 'tagline'          => 'Vun {{SITENAME}}',
-'help'             => 'Hilfe',
+'help'             => 'Hilf',
 'search'           => 'Suche',
 'searchbutton'     => 'Suche',
 'go'               => 'Adiggel',
@@ -106,18 +126,18 @@ $messages = array(
 'undelete_short'   => '{{PLURAL:$1|ä Ännerung|$1 Ännerunge}} widderherschdelle',
 'protect'          => 'schitze',
 'protect_change'   => 'ännere',
-'unprotect'        => 'Widder freigewwe',
+'unprotect'        => 'Saideschudz änare',
 'newpage'          => 'Naie Said',
 'talkpage'         => 'Iwwer die Said dischbediere',
 'talkpagelinktext' => 'Dischbediere',
 'personaltools'    => 'Perseenliche Werkzeische',
 'talk'             => 'Dischbediere',
 'views'            => 'Wievielmol aageguckt',
-'toolbox'          => 'Werkzaich',
-'otherlanguages'   => 'In annere Sproche',
+'toolbox'          => 'Werkzaisch',
+'otherlanguages'   => 'In annere Schbroche',
 'redirectedfrom'   => '(Wairrerglaidet vun $1)',
 'redirectpagesub'  => 'Wairerlaidungssaid',
-'lastmodifiedat'   => 'Die Said isch zum ledschde Mol gänneret woore am $1, am $2.',
+'lastmodifiedat'   => 'Die Said isch zum ledschde Mol gänneret worre am $1, am $2.',
 'viewcount'        => 'Die Seid isch bis jetzerd {{PLURAL:$1|$1|$1}} mol uffgerufe worre.',
 'jumpto'           => 'Spring zu:',
 'jumptonavigation' => 'Navigation',
@@ -128,7 +148,8 @@ $messages = array(
 'aboutpage'            => 'Project:Iwwer',
 'copyright'            => 'Was do drin schdeht isch unner $1 verfiechbar.',
 'copyrightpage'        => '{{ns:project}}:Urhewerrecht',
-'currentevents'        => 'Was grad so bassiert isch',
+'currentevents'        => 'Was grad so bassierd isch',
+'currentevents-url'    => 'Brojegd: Leschdi Eraigniss',
 'disclaimers'          => 'Hafdungsausschluß',
 'disclaimerpage'       => 'Project:Impressum',
 'edithelp'             => 'Hilf fer s Bearwaide',
@@ -137,7 +158,7 @@ $messages = array(
 'mainpage'             => 'Hääptsaid',
 'mainpage-description' => 'Startseid',
 'portal'               => '{{SITENAME}}-Pordal',
-'privacy'              => 'Dadeschutz',
+'privacy'              => 'Dadeschuds',
 'privacypage'          => 'Project:Daadeschutz',
 
 'badaccess' => 'Kää ausraichende Recht',
@@ -150,7 +171,7 @@ $messages = array(
 'editold'             => 'bearwaide',
 'editlink'            => 'bearwaide',
 'viewsourcelink'      => 'Quell aagucke',
-'editsectionhint'     => 'Abschnitt ännere: $1',
+'editsectionhint'     => 'Abschnidd ännere: $1',
 'toc'                 => 'Inhald',
 'showtoc'             => 'zaiche',
 'hidetoc'             => 'versteggeln',
@@ -158,7 +179,7 @@ $messages = array(
 'site-atom-feed'      => '$1 Atom Feed',
 'page-rss-feed'       => '"$1" RSS Feed',
 'page-atom-feed'      => '"$1" Atom Feed',
-'red-link-title'      => '$1 (Said gebbt s nid)',
+'red-link-title'      => '$1 (Said gebbds nid)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Said',
@@ -175,7 +196,7 @@ $messages = array(
 # General errors
 'missing-article'    => 'De Text fer „$1“ $2 isch in de Datebank nit gfunne worre.
 
-Normalerwais hääßt des, dass die Said glescht woore isch.
+Normalerwais hääßt des, dass die Said gleschd worre isch.
 
 Wenn s des nit isch, hoscht villaicht en Fehler in de Datebank gfunne.
 Bitte meld des an e [[Special:ListUsers/sysop|Adminischtrator]], un gebb d URL dezu aa.',
@@ -220,7 +241,7 @@ S kann sai, dass es ää odder meh Zaiche drin hot, wu im Titel vun de Said nid 
 'minoredit'                        => 'Des ischt e klänni Bearwaidung',
 'watchthis'                        => 'Die Said beowachde',
 'savearticle'                      => 'Said schbeichere',
-'preview'                          => 'Vorschau',
+'preview'                          => 'Voaschau',
 'showpreview'                      => 'Vorschau zaische',
 'showlivepreview'                  => 'Live-Vorschau',
 'showdiff'                         => 'Ännerunge zaische',
@@ -232,10 +253,12 @@ Zum die Said aaleche, kannscht do in dem Käschtel unne aafange mid schraiwe (gu
 Wenn do nid hin hoscht welle, no druck in Daim Browser uff '''Zrick'''.",
 'noarticletext'                    => 'Uff derre Said gebbt\'s noch kää Text. Du kannscht uff annere Saide [[Special:Search/{{PAGENAME}}|den Aitrach suche]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de Logbuchaidrach suche, wu dezu ghert],
 orrer [{{fullurl:{{FULLPAGENAME}}|action=edit}} die Said bearwaide]</span>.',
-'previewnote'                      => "'''Denk dran, dass des numme e Vorschau isch.'''
-Dai Ännerunge sinn no nid gspaichert worre!",
+'previewnote'                      => "'''Deng'g droa, dass des numme e Vorschau isch.'''
+Doi Ännerunge sinn no nid gschbaichert worre!",
 'editing'                          => 'Am $1 bearwaide',
 'editingsection'                   => '$1 bearwaide (Abschnitt)',
+'yourtext'                         => 'Doin Tegschd',
+'yourdiff'                         => 'Unaschied',
 'copyrightwarning'                 => "Bitte gebb acht, dass alle Baidräch zu {{SITENAME}} unner $2 vereffentlicht werre (guck $1 fer mehr Details).
 Wenn du nit willhsct, dass deswu du gschriwwe hoscht, gänneret un kopiert werre kann, dann duu s do nit naischraiwe.<br />
 du gebbscht do au zu, dass Du des selwerscht gschriwwe hoscht orrer vun ere effentliche, fraie Quell ('''public domain''')orrer vun ere ähnliche fraie Quell her hoscht.
@@ -246,11 +269,11 @@ du gebbscht do au zu, dass Du des selwerscht gschriwwe hoscht orrer vun ere effe
 'template-semiprotected'           => '(halb-gschitzt)',
 'hiddencategories'                 => 'Die Said ghert zu {{PLURAL:$1|1 versteckelte Kategorie|$1 versteckelte Kategorie}}:',
 'permissionserrorstext-withaction' => 'Du därfscht nid $2, aus {{PLURAL:$1|dem Grund|denne Grind}}:',
-'moveddeleted-notice'              => 'Die Said isch glescht worre.
-De Leschaidrach fer die Said isch do unne aagewwe als Quell.',
+'moveddeleted-notice'              => 'Die Said isch gleschd worre.
+De Leschaidrach fa die Said isch do unne als Kwell aagewwe.',
 
 # History pages
-'viewpagelogs'           => 'D Lochbiecher fer die Said aagucke',
+'viewpagelogs'           => 'Lochbicher fer die Said aagucke',
 'currentrev-asof'        => 'Aktuelle Version vun $1',
 'revisionasof'           => 'Version vun $1',
 'previousrevision'       => '← Ältere Versione',
@@ -267,15 +290,18 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 'histlast'               => 'Naischte',
 
 # Revision deletion
-'rev-delundel'     => 'zaich/versteckel',
-'revdelete-submit' => 'Uff die aussgewählt {{PLURAL:$1|Version|Versione}} owende',
-'revdel-restore'   => 'Sichtbarkeit ännere',
+'rev-delundel'               => 'zaich/versteckel',
+'revdelete-show-file-submit' => 'Ja',
+'revdelete-radio-set'        => 'Ja',
+'revdelete-radio-unset'      => 'Nä',
+'revdelete-submit'           => 'Uff die aussgewählt {{PLURAL:$1|Version|Versione}} owende',
+'revdel-restore'             => 'Sichtbarkeit ännere',
 
 # Merge log
 'revertmerge' => 'Zammefiehrung rickgängich mache',
 
 # Diffs
-'history-title'           => 'Versionsgschicht vun "$1"',
+'history-title'           => 'Änarungsgschischd vun "$1"',
 'difference'              => '(Unnerschied zwische de Versione)',
 'lineno'                  => 'Zail $1:',
 'compareselectedversions' => 'Die Versione mitenonner vergleiche',
@@ -292,6 +318,7 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 'prevn'                     => 'voriche {{PLURAL:$1|$1}}',
 'nextn'                     => 'negschte {{PLURAL:$1|$1}}',
 'viewprevnext'              => 'Gugg ($1 {{int:pipe-separator}} $2) ($3)',
+'searchprofile-everything'  => 'Alles',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 Word|$2 Wärder}})',
 'search-redirect'           => '(Wairerlaitung $1)',
 'search-section'            => '(Abschnitt $1)',
@@ -313,11 +340,12 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 'qbsettings-none' => 'Kään',
 
 # Preferences page
-'preferences'   => 'Optione',
-'mypreferences' => 'Mai Aistellunge',
-'saveprefs'     => 'Oischdellunge schbeichere',
-'resetprefs'    => 'Oischdellunge verwerfe',
-'guesstimezone' => 'Aus em Browser iwwernemme',
+'preferences'    => 'Optione',
+'mypreferences'  => 'Mai Aistellunge',
+'saveprefs'      => 'Oischdellunge schbeichere',
+'resetprefs'     => 'Oischdellunge verwerfe',
+'guesstimezone'  => 'Aus em Browser iwwernemme',
+'gender-unknown' => 'Ghoim gkalde',
 
 # Groups
 'group'            => 'Grubb:',
@@ -341,7 +369,7 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 
 # Recent changes
 'nchanges'                       => '$1 {{PLURAL:$1|Ännerung|Ännerunge}}',
-'recentchanges'                  => 'Was zuletschd gemacht worre isch',
+'recentchanges'                  => 'Was zuletschd gemachd worre isch',
 'recentchanges-legend'           => 'Optione vun de Aazaich',
 'recentchanges-feed-description' => 'Di letschte Ännerunge vun {{SITENAME}} in des Feed aigewwe.',
 'rcnote'                         => "Aagezaicht {{PLURAL:$1|werd '''1''' Ännerung|werre die letschte '''$1''' Ännerunge}} {{PLURAL:$2|vum letschte Dach|in de letschte '''$2''' Dache}} (Stand: $4, $5)",
@@ -354,8 +382,8 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 'rclinks'                        => 'Zeich die letschte $1 Ännerunge in de letschte $2 Dache<br />$3',
 'diff'                           => 'Unnerschied',
 'hist'                           => 'Gschicht',
-'hide'                           => 'versteggeln',
-'show'                           => 'zaiche',
+'hide'                           => 'vaschdeggle',
+'show'                           => 'zaische',
 'minoreditletter'                => 'k',
 'newpageletter'                  => 'N',
 'boteditletter'                  => 'B',
@@ -373,7 +401,7 @@ Saide uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'recentchangeslinked-to'      => 'Zaisch Ännerunge uff Saide, wu do her verlinkt sinn',
 
 # Upload
-'upload'        => 'Hochlade',
+'upload'        => 'Nufflade',
 'uploadbtn'     => 'Datei hochlade',
 'uploadlogpage' => 'Dateie-Logbuch',
 'savefile'      => 'Datei schbeichere',
@@ -383,6 +411,7 @@ Saide uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'file-anchor-link'          => 'Datei',
 'filehist'                  => 'Dateigschicht',
 'filehist-help'             => 'Drick uff e Zaidpunkt zum aazääche, wie s dort ausgsähne hot.',
+'filehist-revert'           => 'zuriggsedze',
 'filehist-current'          => 'aktuell',
 'filehist-datetime'         => 'Zaidpunkt',
 'filehist-thumb'            => 'Vorschaubild',
@@ -390,7 +419,7 @@ Saide uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'filehist-user'             => 'Benutzer',
 'filehist-dimensions'       => 'Moß',
 'filehist-comment'          => 'Kommentar',
-'imagelinks'                => 'Dateilinks',
+'imagelinks'                => 'Dadaivawendung',
 'linkstoimage'              => 'Die {{PLURAL:$1|Said verwaist|$1 Saire verwaise}} uff die Datei:',
 'sharedupload'              => 'Die Datei isch vun $1 un s kann sai, dass se ach vun annere Projekt gebraucht werd.',
 'uploadnewversion-linktext' => 'E naiere Version vun derre Datei hochlade',
@@ -418,12 +447,12 @@ Saide uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'pager-older-n' => '{{PLURAL:$1|vorich 1|voriche $1}}',
 
 # Book sources
-'booksources'               => 'Buchquelle',
+'booksources'               => 'Buchqwelle',
 'booksources-search-legend' => 'No Buchquelle suche',
 'booksources-go'            => 'Geh',
 
 # Special:Log
-'log' => 'Logbiecher',
+'log' => 'Logbicher',
 
 # Special:AllPages
 'allpages'       => 'Alle Saide',
@@ -516,11 +545,12 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot kää Aifluss uf
 'restriction-move' => 'Verschiewe',
 
 # Undelete
-'undelete'         => 'Widderherschdelle',
-'undeletebtn'      => 'Widderherschdelle',
-'undeletelink'     => 'aagucke/wirrer herstelle',
-'undeletereset'    => 'Zuricksetze',
-'undeletedarticle' => 'hot "[[$1]]" wirrer hergstellt',
+'undelete'                  => 'Widderherschdelle',
+'undeletebtn'               => 'Widderherschdelle',
+'undeletelink'              => 'aagucke/wirrer herstelle',
+'undeletereset'             => 'Zuricksetze',
+'undeletedarticle'          => 'hot "[[$1]]" wirrer hergstellt',
+'undelete-show-file-submit' => 'Ja',
 
 # Namespace form on various pages
 'namespace'      => 'Nomensraum',
@@ -550,7 +580,7 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot kää Aifluss uf
 'linkshere'                => "Die Saide verlinke zu '''[[:$1]]''':",
 'isredirect'               => 'Wairerlaitungsaid',
 'istemplate'               => 'Vorlacheaibindung',
-'isimage'                  => 'Bildlink',
+'isimage'                  => "Dadailing'g",
 'whatlinkshere-prev'       => '{{PLURAL:$1|vorich|voriche $1}}',
 'whatlinkshere-next'       => '{{PLURAL:$1|negscht|negschte $1}}',
 'whatlinkshere-links'      => '← Links',
@@ -564,9 +594,9 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot kää Aifluss uf
 'ipbsubmit'                => 'Benutzer bloggiere',
 'ipboptions'               => '2 Stunne:2 hours,1 Dach:1 day,3 Dache:3 days,1 Woch:1 week,2 Woche:2 weeks,1 Monet:1 month,3 Monet:3 months,6 Monet:6 months,1 Johr:1 year,Fer immer:infinite',
 'ipusubmit'                => 'Die Adreß freigewwe',
-'ipblocklist'              => 'Gsperrte IP-Adresse un Benutzername',
+'ipblocklist'              => 'Gschberrdi IP-Adress un Benudzernome',
 'blocklink'                => 'sperre',
-'unblocklink'              => 'Sperr uffhewwe',
+'unblocklink'              => 'Sperr uffhewe',
 'change-blocklink'         => 'Sperr ännere',
 'contribslink'             => 'Baidräch',
 'blocklogpage'             => 'Sperrlogbuch',
@@ -579,8 +609,8 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot kää Aifluss uf
 'unlockbtn' => 'Dadebonk freigewwe',
 
 # Move page
-'move-page-legend' => 'Said verschiewe',
-'movepagetext'     => "Mid dem Format kannscht ener Said e naie Name gewwe, debai werre alle alde Versione uff de nai Name verschowe.
+'move-page-legend'        => 'Said verschiewe',
+'movepagetext'            => "Mid dem Format kannscht ener Said e naie Name gewwe, debai werre alle alde Versione uff de nai Name verschowe.
 Aus em Alde Name werd e Wairerlaidungssaid´zum naie Name.
 Wairerlaidungssaide, wu uff de ald Name umlaire, kannscht automatisch aktualisiere.
 Wenn De des nid willsch, no guck uff [[Special:DoubleRedirects|doppelte]] orrer [[Special:BrokenRedirects|kaputte Wairerlaidunge]].
@@ -592,30 +622,31 @@ Des hääßt, Du kannscht ke Said, wu s schun gebbt, iwwerschraiwe.
 '''WARNUNG!'''
 Des isch e wichdiche Ännerung fer e Said un kann ziehmlich unerwartet sai fer wichdiche Saide;
 bitte mach des numme, wenn Du die Folche vun derre Aktion kannsch abschätze.",
-'movepagetalktext' => "D Dischbediersaid werd ach mid verschowe, '''ausser:'''
+'movepagetalktext'        => "D Dischbediersaid werd ach mid verschowe, '''ausser:'''
 * Du verschiebsch die Saide in e annere Namensraum, odder
 * s gebbt schun e Dischbediersaid mi dem Name, orrer
 * Du wählsch unne d Option, se nid z verschiewe.
 
 In denne Fäll misst mer d Dischbediersaid vun Hand kopiere.",
-'movearticle'      => 'Said verschiewe:',
-'newtitle'         => 'Zum naie Titel:',
-'move-watch'       => 'Die Said beowachde',
-'movepagebtn'      => 'Said verschiewe',
-'pagemovedsub'     => 'Verschiewung hot geklappt',
-'movepage-moved'   => '\'\'\'"$1" isch verschowe worre uff "$2"\'\'\'',
-'articleexists'    => 'E Said mid dem Name gebbt s schun, orrer de Name, wu du gewählt hoscht, isch nid gildich.
+'movearticle'             => 'Said verschiewe:',
+'newtitle'                => 'Zum naie Titel:',
+'move-watch'              => 'Die Said beowachde',
+'movepagebtn'             => 'Said verschiewe',
+'pagemovedsub'            => 'Verschiewung hot geklappt',
+'movepage-moved'          => '\'\'\'"$1" isch verschowe worre uff "$2"\'\'\'',
+'articleexists'           => 'E Said mid dem Name gebbt s schun, orrer de Name, wu du gewählt hoscht, isch nid gildich.
 Bitte nemm e annere Name.',
-'talkexists'       => "'''Die Said selwerschd, isch verschowe worre, awwer d Dischbediersaid hot nid kenne verschowe werre, wail s schun enni gebbt mid dem Name.
+'talkexists'              => "'''Die Said selwerschd, isch verschowe worre, awwer d Dischbediersaid hot nid kenne verschowe werre, wail s schun enni gebbt mid dem Name.
 Bitte duu se vun Hand zammefiehre.'''",
-'movedto'          => 'verschowe uff',
-'movetalk'         => 'Dischbediersaid, wu dezu ghert, verschiewe',
-'1movedto2'        => 'hot [[$1]] uff [[$2]] verschowwe',
-'1movedto2_redir'  => 'hot [[$1]] uff [[$2]] verschowe un debai e Wairerlaidung iwwerschriwwe',
-'movelogpage'      => 'Verschiewungs-Logbuch',
-'movereason'       => 'Grund:',
-'revertmove'       => 'Zerick verschiewe',
-'delete_and_move'  => 'Lesche un Verschiewe',
+'movedto'                 => 'verschowe uff',
+'movetalk'                => 'Dischbediersaid, wu dezu ghert, verschiewe',
+'1movedto2'               => 'hot [[$1]] uff [[$2]] verschowwe',
+'1movedto2_redir'         => 'hot [[$1]] uff [[$2]] verschowe un debai e Wairerlaidung iwwerschriwwe',
+'movelogpage'             => 'Verschiewungs-Logbuch',
+'movereason'              => 'Grund:',
+'revertmove'              => 'Zerick verschiewe',
+'delete_and_move'         => 'Lesche un Verschiewe',
+'delete_and_move_confirm' => 'Ja, Said lesche',
 
 # Export
 'export'        => 'Saide exportiere',
@@ -649,23 +680,23 @@ Du kannscht awwer de Quelltext aagucke',
 'tooltip-ca-unwatch'              => 'Die Said aus Dainer Beowachdunschlischde rausnemme',
 'tooltip-search'                  => 'Durchsuch {{SITENAME}}',
 'tooltip-search-go'               => 'Geh zu ere Said mit genää dem Namme, wenn s se gebbt',
-'tooltip-search-fulltext'         => 'Such in de Said noch dem Text',
+'tooltip-search-fulltext'         => 'Such in de Said nochm Tegschd',
 'tooltip-p-logo'                  => 'Haubdsaid',
 'tooltip-n-mainpage'              => 'Uff d Hääptsaid geh',
 'tooltip-n-mainpage-description'  => 'Haubdsaid aagucke',
-'tooltip-n-portal'                => 'Iwwer s Projekt, was de duu kannscht, wo de ebbes finnscht',
+'tooltip-n-portal'                => 'Iwwers Brojegd, wude duu kannschd, wu ebbes finne duschd',
 'tooltip-n-currentevents'         => 'hinnergundsinformatione finne iwwer naie Eraichnis',
-'tooltip-n-recentchanges'         => 'D Lischt vun de letschte Ännerunge in dem Wiki',
+'tooltip-n-recentchanges'         => 'D Lischd vun de ledschde Ännerunge in dem Wiki',
 'tooltip-n-randompage'            => 'E zufälliche Said lade',
 'tooltip-n-help'                  => 'De Ort zum rausfinne',
-'tooltip-t-whatlinkshere'         => 'Lischt vun alle Wikisaide, wo do her verlinkt sin',
-'tooltip-t-recentchangeslinked'   => 'Letschte Ännerunge in Saide, wu vun do verlinkt sin',
+'tooltip-t-whatlinkshere'         => 'Lischt vun alle Wikisaide, wu do her verlinkt sinn',
+'tooltip-t-recentchangeslinked'   => 'Letschde Ännerunge in Saide, wu vun do verlinkt sin',
 'tooltip-feed-rss'                => 'RSS feed fer die Said',
 'tooltip-feed-atom'               => 'Atom feed fer die Said',
 'tooltip-t-contributions'         => 'Die letschte Baidräch vun däm Benutzer aagucke',
 'tooltip-t-emailuser'             => 'Dem Benutzer e E-Mail schicke',
-'tooltip-t-upload'                => 'Dateie nuflade',
-'tooltip-t-specialpages'          => 'Lischt vun alle Spezialsaide',
+'tooltip-t-upload'                => 'Dateije nufflade',
+'tooltip-t-specialpages'          => 'Lischd vun alle Schbezialsaide',
 'tooltip-t-print'                 => 'Druckversion vun derre Said',
 'tooltip-t-permalink'             => 'E dauerhafte Link zu derre Version vun de Said',
 'tooltip-ca-nstab-main'           => 'D Inhaldssaid aagucke',
@@ -681,7 +712,7 @@ Du kannscht awwer de Quelltext aagucke',
 'tooltip-diff'                    => 'Guck, welle Ännerunge Du im Text gmacht hoscht',
 'tooltip-compareselectedversions' => 'D Unnerschied zwische denne zwai ausgwehlte Versione aagucke',
 'tooltip-watch'                   => 'Die Said zu Dainer Beowachdunglischd zufieche',
-'tooltip-rollback'                => '„Zericksetze“ maxcht alle Bearwaidunge vum letschte Bearwaider rickgängich',
+'tooltip-rollback'                => '„Zericksetze“ machd alle Bearwaidunge vum letschte Bearwaider rickgängich',
 'tooltip-undo'                    => '„Zerick“ macht numme die Ännerung rickgängich un zaicht d Vorschau aa.
 Du kannscht e Grund in dr Zammfassung aagewwe',
 
@@ -700,11 +731,11 @@ Du kannscht e Grund in dr Zammfassung aagewwe',
 'ilsubmit'     => 'Such',
 
 # Bad image list
-'bad_image_list' => 'Format:
+'bad_image_list' => 'Formad:
 
-nur Zaile, die wu mit eme * aafange werre bericksichticht.
-De erscht Link muss e Link zu ere unerwinschte Datei sai.
-Annere Links in der glaiche Zail werre als Ausnahme behannelt, d. h. Saide, wu d Datei drin vorkumme därft.',
+nur Zaile, wu mid eme * aafange werre bericksichdischd.
+De erschd Link muss e Link zu ere unerwinschd Dadei sai.
+Annere Links in der glaiche Zail werre als Ausnahme behanneld, d. h. Saide, wu d Dadei drin vorkumme därfd.',
 
 # Metadata
 'metadata'          => 'Metadata',
@@ -712,8 +743,8 @@ Annere Links in der glaiche Zail werre als Ausnahme behannelt, d. h. Saide, wu d
 Wenn die Datei verännert worre isch, dann kann s sai, dass die zusätzlich Information fer die verännert Datei nimmi richtich isch.',
 'metadata-expand'   => 'Erwaiterte Details aazaiche',
 'metadata-collapse' => 'Erwaiterte Details versteckeln',
-'metadata-fields'   => 'Die EXIF-Metadate werre in de Bild-Bschraiwung ach aagezeicht, wenn d Metadate-Tabelle versteckelt isch.
-Annere Metadate sinn standardmäßig versteckelt.
+'metadata-fields'   => 'Die EXIF-Medadaade werren inde Bild-Bschraiwung a ogzaischd, wonn die Medadaade-Tabelle verschdegld isch.
+Annere Medadaade sinn noamalawais verschdegld.
 * make
 * model
 * datetimeoriginal

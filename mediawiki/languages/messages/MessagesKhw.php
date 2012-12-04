@@ -46,6 +46,8 @@ $messages = array(
 'tog-oldsig'                  => 'موجودہ دستخطو نمائش:',
 'tog-fancysig'                => '(سادہ دسخط بلا خودکار ربط)',
 'tog-externaleditor'          => 'ہمیشہ بیرونی تدوین کار استعمال کورے (صرفی ماہرینن بچے، ھمو بچے کمپیوٹرا خاص ترتیبات درکار بونیان)',
+'tog-externaldiff'            => 'ہمیشہ بیرونی تدوین کار استعمال کورے (صرفی ماہرینن بچے، ھمو بچے کمپیوٹرا خاص ترتیبات درکار بونیان)',
+'tog-showjumplinks'           => 'ھیہ ووشکی څروٹھاوے',
 'tog-uselivepreview'          => 'براہِ راست نمائش استعمال کورے (JavaScript ضرورت بوی)',
 'tog-forceeditsummary'        => 'کیاوتکی آوا ترمیمی خلاصو خالی پیڅھیتام تھے متے لو دیت',
 'tog-watchlisthideown'        => 'زیرِنظرفہرستہ مہ ترمیماتن کھوشاوے',
@@ -64,7 +66,10 @@ $messages = array(
 
 # Font style option in Special:Preferences
 'editfont-style'     => 'خانۂ تدوینو اندازِ تحریر:',
+'editfont-default'   => 'ڈیفالٹ براوزر',
 'editfont-monospace' => 'یکفضائی نویسہ',
+'editfont-sansserif' => 'بےحلیہ فونٹ',
+'editfont-serif'     => 'حلیہ فونٹ',
 
 # Dates
 'sunday'        => 'یک شمبے',
@@ -119,19 +124,23 @@ $messages = array(
 'dec'           => 'دسمبر',
 
 # Categories related messages
-'pagecategories'                => '{{PLURAL:$1|زمرہ|زمرہ جات}}',
-'category_header'               => 'زمرہ "$1" مضمون\'',
-'subcategories'                 => 'ذیلی ذمرہ جات',
-'category-media-header'         => 'زمرا "$1" میڈیا',
-'category-empty'                => '‘‘ھیہ زمرا ھنیسے کیہ صفحہ یا میڈیا موجود نیکی.’’',
-'hidden-categories'             => '{{PLURAL:$1|کھوشت زمرہ|کھوشت زمرہ جات}}',
-'hidden-category-category'      => 'کھوشت زمرہ جات',
-'category-subcat-count'         => '{{PLURAL:$2|اِس زمرہ میں صرف درج ذیل ذیلی زمرہ ہے.|اِس زمرہ میں درج ذیل {{PLURAL:$1|ذیلی زمرہ|$1 ذیلی زمرہ جات}}, کل $2 میں سے.}}',
-'category-subcat-count-limited' => 'ھیہ زمرا درج ذیل {{PLURAL:$1|ذیلی زمرہ ہے|$1 ذیلی زمرہ جات شینی}}.',
-'category-article-count'        => '{{Plural:$2|مضمون شینی|{{Plural:$1|صفحا|صفحا}} $2 ھیہ زمرا مضمون شینی}}',
-'listingcontinuesabbrev'        => 'جاری',
-'index-category'                => 'نو انڈیکس صفحات',
-'noindex-category'              => 'نو انڈیکس صفحات',
+'pagecategories'                 => '{{PLURAL:$1|زمرہ|زمرہ جات}}',
+'category_header'                => 'زمرہ "$1" مضمون\'',
+'subcategories'                  => 'ذیلی ذمرہ جات',
+'category-media-header'          => 'زمرا "$1" میڈیا',
+'category-empty'                 => '‘‘ھیہ زمرا ھنیسے کیہ صفحہ یا میڈیا موجود نیکی.’’',
+'hidden-categories'              => '{{PLURAL:$1|کھوشت زمرہ|کھوشت زمرہ جات}}',
+'hidden-category-category'       => 'کھوشت زمرہ جات',
+'category-subcat-count'          => '{{PLURAL:$2|اِس زمرہ میں صرف درج ذیل ذیلی زمرہ ہے.|اِس زمرہ میں درج ذیل {{PLURAL:$1|ذیلی زمرہ|$1 ذیلی زمرہ جات}}, کل $2 میں سے.}}',
+'category-subcat-count-limited'  => 'ھیہ زمرا درج ذیل {{PLURAL:$1|ذیلی زمرہ ہے|$1 ذیلی زمرہ جات شینی}}.',
+'category-article-count'         => '{{Plural:$2|مضمون شینی|{{Plural:$1|صفحا|صفحا}} $2 ھیہ زمرا مضمون شینی}}',
+'category-article-count-limited' => 'The following {{PLURAL:$1|صفحا|$1 صفحات}} in the current category.',
+'category-file-count'            => '{{Plural:$2|مضمون شینی|{{Plural:$1|صفحا|صفحا}} $2 ھیہ زمرا مضمون شینی}}',
+'category-file-count-limited'    => 'The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
+'listingcontinuesabbrev'         => 'جاری',
+'index-category'                 => 'نو انڈیکس صفحات',
+'noindex-category'               => 'نو انڈیکس صفحات',
+'broken-file-category'           => 'نس پھت صفحات',
 
 'about'         => 'تعارف',
 'article'       => 'صفحۂ مشمول',
@@ -160,6 +169,7 @@ $messages = array(
 'vector-action-delete'     => 'بوغاوے',
 'vector-action-move'       => 'منتقل کورے',
 'vector-action-protect'    => 'محفوظ کورے',
+'vector-action-undelete'   => 'اچی انگیے',
 'vector-action-unprotect'  => 'غیر محفوظ',
 'vector-view-create'       => 'ساوزاوے',
 'vector-view-edit'         => 'ایڈٹ کورے',
@@ -223,6 +233,11 @@ $messages = array(
 'jumpto'            => 'ھیہ ووشکی څروٹھاوے',
 'jumptonavigation'  => 'رہنمائی',
 'jumptosearch'      => 'تلاش',
+'view-pool-error'   => 'معذرت: تمام سرورا موجودہ وختہ اِضافی بوجھ شیر.
+بو زیادہ صارفین موجودہ وختہ ھیہ صفحو لاڑینیان 
+برائے مہربانی! صفحو لوڑیکو بچے دوبارہ کوشش کوریکاری پروشٹی پھوکرو انتظار کورے.
+
+$1',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'تعارف {{SITENAME}}',
@@ -269,6 +284,7 @@ $messages = array(
 'toc'                     => 'فہرست',
 'showtoc'                 => 'پشاوے',
 'hidetoc'                 => 'کھوشتاوے',
+'collapsible-collapse'    => 'خاتمہ/Collapse',
 'thisisdeleted'           => 'لوڑے  یا بحال کورے $1',
 'viewdeleted'             => 'لوڑے $1؟',
 'restorelink'             => '{{PLURAL:$1|ای ترمیم حذف ہوی|$1 ترامیم حذف ہونی}}',
@@ -546,6 +562,12 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'moveddeleted-notice'              => 'ھیہ ای حذف شدہ صفحہ شیر.
 صفحو نوشتۂ حذف شدگی و منتقلی ذیلا بطورِ حوالہ دیونو بویان.',
 
+# Parser/template warnings
+'post-expand-template-inclusion-warning'  => "'''خبردار:''' سانچو سایز بو لوٹ شیر.
+بعضی سانچہ شامل نو بونی.",
+'post-expand-template-inclusion-category' => 'ھش صفحات کہ ھتیرا ٹمپلیٹ یعنی سانچو ناپ لوٹ بیتی شیر۔',
+'post-expand-template-argument-category'  => 'ھش صفحات کہ ھتیرا بوغینو بیرو سانچان یعنی(ٹمپلیٹان) لو شینی۔',
+
 # History pages
 'viewpagelogs'           => 'ھیہ صفحہو بچے نوشتہ جاتن لوڑے',
 'currentrev-asof'        => 'حالیہ نظرثانی بمطابق $1',
@@ -555,6 +577,7 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'nextrevision'           => '→پروشٹیو اعادہ',
 'currentrevisionlink'    => 'حالیہ نظرثانی',
 'cur'                    => 'رائج',
+'next'                   => 'پروشٹیو',
 'last'                   => 'سابقہ',
 'histlegend'             => "انتخاب: مختلف نسخان موازنہ کوریکو بچے ، پیامی خانان نشان زد کوری موڑا دیرو بٹنا کلک کورے۔
 
@@ -673,42 +696,44 @@ HTML tags لوڑے.',",
 'action-edit' => 'ھیہ صفحا ایڈیٹنگ کورے',
 
 # Recent changes
-'nchanges'                       => '$1 {{PLURAL:$1|تبدیلی|تبدیلیاں}}',
-'recentchanges'                  => 'حالیہ تبدیلی',
-'recentchanges-legend'           => 'حالیہ تبدیلیان اختیارات',
-'recentchangestext'              => 'ھیہ صفحا کھوار ویکیپیڈیا باک تازہ تریں تبدیلیان مشاہدہ کورے',
-'recentchanges-feed-description' => 'کھوارا ترجمہ',
-'recentchanges-label-newpage'    => 'ھیہ ترمیم نوغ صفحہ تخلیق آریر',
-'recentchanges-label-minor'      => 'ھیہ ای معمولی ترمیم شیر',
-'recentchanges-label-bot'        => 'ھیہ ایڈیٹو خود کار بوٹو زریعا انجام دیونو ہوی',
-'rcnote'                         => "درج ذیل گزشتہ {{PLURAL:$2|بس|'''$2''' انوسا}} باک {{PLURAL:$1|'''ای''' تبدیلی شیر|آخری '''$1''' تبدیلی شینی}}، $5، $4.",
-'rcnotefrom'                     => "ھیہ موڑا '''$2''' کورونو بیرو تبدیلیان تفصیلات شینی ('''$1''' تبدیلیان پشینو بونیان)۔",
-'rclistfrom'                     => '$1 نوغ تبدیلیاں پشیک شروع کورے',
-'rcshowhideminor'                => ' معمولی ترامیم $1',
-'rcshowhidebots'                 => 'خودکار صارف $1',
-'rcshowhideliu'                  => 'داخل بیرو صارف $1',
-'rcshowhideanons'                => 'گمنام صارف $1',
-'rcshowhidepatr'                 => '$1 لوڑونو بیرو لکھائی',
-'rcshowhidemine'                 => 'ذاتی ترامیم $1',
-'rclinks'                        => 'آخری $2 آنوسو بیرو $1 تبدیلیان مشاہدہ کورے<br />$3',
-'diff'                           => 'فرق',
-'hist'                           => 'تاریخچہ',
-'hide'                           => 'مو پشاوے',
-'show'                           => 'ویریغ کورے',
-'minoreditletter'                => 'م',
-'newpageletter'                  => 'نوغ',
-'boteditletter'                  => 'خودکار',
-'rc-enhanced-expand'             => 'تفصیلاتن پشاوے (JavaScript ضرورت بوی)',
-'rc-enhanced-hide'               => 'تفصیلاتن کھوشتاوے',
+'nchanges'                        => '$1 {{PLURAL:$1|تبدیلی|تبدیلیاں}}',
+'recentchanges'                   => 'حالیہ تبدیلی',
+'recentchanges-legend'            => 'حالیہ تبدیلیان اختیارات',
+'recentchangestext'               => 'ھیہ صفحا کھوار ویکیپیڈیا باک تازہ تریں تبدیلیان مشاہدہ کورے',
+'recentchanges-feed-description'  => 'کھوارا ترجمہ',
+'recentchanges-label-newpage'     => 'ھیہ ترمیم نوغ صفحہ تخلیق آریر',
+'recentchanges-label-minor'       => 'ھیہ ای معمولی ترمیم شیر',
+'recentchanges-label-bot'         => 'ھیہ ایڈیٹو خود کار بوٹو زریعا انجام دیونو ہوی',
+'recentchanges-label-unpatrolled' => 'ھیہ ترمیمو ھمونیہ پت مراجعت(Patrolled) کورونو نو بیتی شیر',
+'rcnote'                          => "درج ذیل گزشتہ {{PLURAL:$2|بس|'''$2''' انوسا}} باک {{PLURAL:$1|'''ای''' تبدیلی شیر|آخری '''$1''' تبدیلی شینی}}، $5، $4.",
+'rcnotefrom'                      => "ھیہ موڑا '''$2''' کورونو بیرو تبدیلیان تفصیلات شینی ('''$1''' تبدیلیان پشینو بونیان)۔",
+'rclistfrom'                      => '$1 نوغ تبدیلیاں پشیک شروع کورے',
+'rcshowhideminor'                 => ' معمولی ترامیم $1',
+'rcshowhidebots'                  => 'خودکار صارف $1',
+'rcshowhideliu'                   => 'داخل بیرو صارف $1',
+'rcshowhideanons'                 => 'گمنام صارف $1',
+'rcshowhidepatr'                  => '$1 لوڑونو بیرو لکھائی',
+'rcshowhidemine'                  => 'ذاتی ترامیم $1',
+'rclinks'                         => 'آخری $2 آنوسو بیرو $1 تبدیلیان مشاہدہ کورے<br />$3',
+'diff'                            => 'فرق',
+'hist'                            => 'تاریخچہ',
+'hide'                            => 'مو پشاوے',
+'show'                            => 'ویریغ کورے',
+'minoreditletter'                 => 'م',
+'newpageletter'                   => 'نوغ',
+'boteditletter'                   => 'خودکار',
+'rc-enhanced-expand'              => 'تفصیلاتن پشاوے (JavaScript ضرورت بوی)',
+'rc-enhanced-hide'                => 'تفصیلاتن کھوشتاوے',
 
 # Recent changes linked
-'recentchangeslinked'         => 'متعلقہ تبدیلی',
-'recentchangeslinked-toolbox' => 'موقعی تبدیلی',
-'recentchangeslinked-title'   => 'متعلقہ تبدیلی "$1"',
-'recentchangeslinked-summary' => "ھیہ ھتے تبدیلیان لسٹ شیر کہ ھیتان پھوک مدا پروشٹی ساوزینو بیتی شینی وا ھے صفحان سوم جستہ خور کیہ صفحہ چوکی شینی یا کیہ خاص زمرہ جاتو ممبرانن سوم چوکی شینی<br />
+'recentchangeslinked'          => 'متعلقہ تبدیلی',
+'recentchangeslinked-toolbox'  => 'موقعی تبدیلی',
+'recentchangeslinked-title'    => 'متعلقہ تبدیلی "$1"',
+'recentchangeslinked-noresult' => 'ھمی صفحا موجودہ وختہ کیہ تبدیلی نیکی۔',
+'recentchangeslinked-summary'  => "ھیہ ھتے تبدیلیان لسٹ شیر کہ ھیتان پھوک مدا پروشٹی ساوزینو بیتی شینی وا ھے صفحان سوم جستہ خور کیہ صفحہ چوکی شینی یا کیہ خاص زمرہ جاتو ممبرانن سوم چوکی شینی<br />
 ساوزیرو [[Special:Watchlist|موڑا صفحہ]] '''بولڈ''' شینی",
-'recentchangeslinked-page'    => 'کھوار ویکیپیڈیو منصوبو صفحو لوڑے',
-'recentchangeslinked-to'      => 'کھلولاو بیرو صفحو بجایا ھمو سوم چوکیرو صفحو نوغ تبدیلیان پشاوے',
+'recentchangeslinked-page'     => 'کھوار ویکیپیڈیو منصوبو صفحو لوڑے',
+'recentchangeslinked-to'       => 'کھولاو بیرو صفحو بجایا ھمو سوم چوکیرو صفحو نوغ تبدیلیان پشاوے',
 
 # Upload
 'upload'        => 'فائل انځاوے',
@@ -742,6 +767,8 @@ HTML tags لوڑے.',",
 
 # Statistics
 'statistics' => 'اعداد و شمار',
+
+'disambiguationspage' => 'سانچہ: ڈسایمبگ',
 
 # Miscellaneous special pages
 'nbytes'               => '$1 {{PLURAL:$1|بایٹ|بایٹس}}',
@@ -920,6 +947,7 @@ HTML tags لوڑے.',",
 
 # Block/unblock
 'blockip'                  => 'داخلہ ممنوع براۓ صارف',
+'ipboptions'               => '2 گھنٹہ:2 hours,1 آنوس:1 day,3 بس:3 days,1 ہفتہ:1 week,2 ہفتہ:2 weeks,1 مس:1 month,3 مس:3 months,6 مس:6 months,1 سال:1 year,لامحدود:infinite',
 'ipblocklist'              => 'داخلہ ممنوع براۓ صارف',
 'blocklink'                => 'پاوبندی لیگاوے',
 'unblocklink'              => 'پاوبندی ختم',
@@ -1056,6 +1084,8 @@ HTML tags لوڑے.',",
 * gpslongitude
 * gpsaltitude',
 
+'exif-dc-date' => 'تاریخ',
+
 # External editor support
 'edit-externally'      => 'ھیہ مسلو ایڈیٹ کورے',
 'edit-externally-help' => '(See the [//www.mediawiki.org/wiki/Manual:External_editors setup instructions] for more information)
@@ -1066,6 +1096,9 @@ HTML tags لوڑے.',",
 'namespacesall' => 'تھمامو',
 'monthsall'     => 'سف',
 
+# action=purge
+'confirm_purge_button' => 'OK/ٹھیک شیر',
+
 # Table pager
 'table_pager_first' => 'آویلو صفحہ',
 
@@ -1074,10 +1107,22 @@ HTML tags لوڑے.',",
 'watchlisttools-edit' => 'لوڑے یا واچ لسٹہ ترمیم کورے',
 'watchlisttools-raw'  => 'نوغ واچ لسٹان ایڈیٹ کورے',
 
+# Core parser functions
+'duplicate-defaultsort' => '\'\'\'خبردار:\'\'\' ڈیفالٹ تاڑٰ(نغڑی) "$2" پروشٹیو ڈیفالٹ تاڑا "$1" لیگی شیر۔',
+
+# Special:FilePath
+'filepath-page'   => 'فایل',
+'filepath-submit' => 'Go/بوغے',
+
 # Special:SpecialPages
 'specialpages' => 'اسپیشل صفحہ',
 
 # Special:Tags
-'tag-filter' => '[[Special:Tags|Tag]] filter:',
+'tag-filter'        => '[[Special:Tags|Tag]] filter:',
+'tag-filter-submit' => 'فلٹر',
+'tags-title'        => 'Tags/ٹیگز',
+
+# Special:ComparePages
+'compare-page1' => 'صفحہ 1',
 
 );
