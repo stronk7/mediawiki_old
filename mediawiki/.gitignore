@@ -1,0 +1,43 @@
+# Repository management
+.svn
+
+# Editors
+*.kate-swp
+*~
+.*.swp
+.project
+cscope.files
+cscope.out
+## NetBeans
+nbproject*
+project.index
+
+# MediaWiki install & usage
+cache
+images/[0-9a-f]
+images/archive
+images/deleted
+images/temp
+images/thumb
+## Extension:EasyTimeline
+images/timeline
+images/tmp
+maintenance/.mweval_history
+maintenance/.mwsql_history
+maintenance/dev/data
+AdminSettings.php
+LocalSettings.php
+StartProfiler.php
+
+# Operating systems
+## Mac OS X
+.DS_Store
+
+# Misc
+.classpath
+.idea
+.metadata*
+.settings
+favicon.ico
+static*
+tags
