@@ -122,9 +122,9 @@ class moodle_output {
         if (!preg_match('/^2\d$/', $mdocsver)) {
             echo '<ul>';
             echo '<li class="first"><a href="http://moodle.org">Home</a></li>';
-            echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="/overview/">Moodle Docs</a></li>';
-            echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="'.htmlspecialchars($scriptpath).'/">'.$wgLanguageName.'</a></li>';
-            echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> '.$title.'</li>';
+            echo '<li class="first">&nbsp;<span class="arrow sep">&#x25BA;</span> <a href="/overview/">Moodle Docs</a></li>';
+            echo '<li class="first">&nbsp;<span class="arrow sep">&#x25BA;</span> <a href="'.htmlspecialchars($scriptpath).'/">'.$wgLanguageName.'</a></li>';
+            echo '<li class="first">&nbsp;<span class="arrow sep">&#x25BA;</span> '.$title.'</li>';
             echo '</ul>';
         }
         echo '</div>'; // breadcrumb

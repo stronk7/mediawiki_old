@@ -23,7 +23,7 @@ div#page {width: 96%;margin: 16px auto;padding: 0;color: #444;background: #FFF u
 div#moodlelogo {background: url(images/header_stripe_grad_2.jpg) no-repeat right top;padding:0 2em;height: 2.5em;border:0;}
 div#moodlelogo img.logo {border: 0;padding-top: 0.5em;}
 div#moodlenavbar {width: 100%;padding: 0;margin: 0;min-height: 2.1em;border-style: none;border-bottom: 0.1em solid #FFE39D;z-index: 0;background: #FFFCF6 url(images/navbar_bg.jpg) repeat-x left top;}
-div#moodlenavbar .breadcrumb {float:left;margin: 0.4em 0 0.1em 18px;}
+div#moodlenavbar .breadcrumb {float:left;margin: 0.4em 0 0.1em 18px; clear: both; }
 div#moodlenavbar .breadcrumb a {text-decoration: none;}
 div#moodlenavbar .breadcrumb ul {padding:0;margin:0;text-indent:0;list-style:none;}
 div#moodlenavbar .breadcrumb li {display:inline;font-size: 84%;}
