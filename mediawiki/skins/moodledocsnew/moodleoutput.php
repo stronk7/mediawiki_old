@@ -115,17 +115,18 @@ class moodle_output {
 
     public static function navbar($scriptpath, $title) {
         global $wgLanguageName;
+        global $mdocsver;
         self::area_start('navbar');
         echo '<div id="moodlenavbar" class="navbar clearfix" dir="LTR">';
         echo '<div class="breadcrumb"><h2 class="accesshide">You are here</h2>';
-        /*
-        echo '<ul>';
-        echo '<li class="first"><a href="http://moodle.org">Home</a></li>';
-        echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="/overview/">Moodle Docs</a></li>';
-        echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="'.htmlspecialchars($scriptpath).'/">'.$wgLanguageName.'</a></li>';
-        echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> '.$title.'</li>';
-        echo '</ul>';
-        */
+        if (!preg_match('/^2\d$/', $mdocsver)) {
+            echo '<ul>';
+            echo '<li class="first"><a href="http://moodle.org">Home</a></li>';
+            echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="/overview/">Moodle Docs</a></li>';
+            echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> <a href="'.htmlspecialchars($scriptpath).'/">'.$wgLanguageName.'</a></li>';
+            echo '<li class="first"><span class="accesshide " >/&nbsp;</span><span class="arrow sep">&#x25BA;</span> '.$title.'</li>';
+            echo '</ul>';
+        }
         echo '</div>'; // breadcrumb
         echo '</div>'; // navbar
         self::area_end();
