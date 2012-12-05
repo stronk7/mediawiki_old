@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(dirname(__FILE__)).'/prodwiki/skins/moodledocsnew/moodleoutput.php');
+require_once(dirname(dirname(__FILE__)).'/mediawiki/skins/moodledocsnew/moodleoutput.php');
 
 if (isset($wgStylePath)) $wgStylePathOriginal = $wgStylePath;
 $wgStylePath = '/20/en/skins';

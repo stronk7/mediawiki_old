@@ -498,10 +498,10 @@ $wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) )
 /// Some MoodleDocs settings
 
 #$wgLogo = "/pix/moodle-docs.gif";
-$wgLogo = '/prodwiki/skins/moodledocsnew/wiki.png';
+$wgLogo = '/mediawiki/skins/moodledocsnew/wiki.png';
 // Select a logo that represents this skin
 if (!empty($mdocsver)) {
-    $wgLogo = "/prodwiki/skins/moodledocsnew/images/version.{$mdocsver}.png";
+    $wgLogo = "/mediawiki/skins/moodledocsnew/images/version.{$mdocsver}.png";
 }
 
 $wgGroupPermissions['user']['move'] = false;  ///Added by Eloy (Helen request): 25/01/2006
