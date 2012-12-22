@@ -4696,7 +4696,13 @@ class Parser {
 	function getUserSig( &$user, $nickname = false, $fancySig = null ) {
 		global $wgMaxSigChars;
 
-		$username = $user->getName();
+		// Moodle realusername hack begin
+		// Note we do this one-line hack instead of
+		// adding an ArticlePrepareTextForEdit hook
+		// because it's way safer and quicker this way.
+		// Commented:$username = $user->getName();
+		$username = $user->getRealName();
+		// Moodle realusername hack end
 
 		# If not given, retrieve from the user object.
 		if ( $nickname === false ) {
