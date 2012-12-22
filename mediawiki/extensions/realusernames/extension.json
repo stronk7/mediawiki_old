@@ -1,0 +1,43 @@
+{
+	"name": "Real Usernames",
+	"version": "0.99.31",
+	"author": [
+		"Eloy Lafuente (stronk7)"
+	],
+    "url": "http://stronk7.com/code/realusernames",
+	"descriptionmsg": "Replace usernames by real usernames (almost) everywhere.",
+	"license-name": "3-Clause BSD",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.31.0"
+	},
+    "AutoloadClasses": {
+		"realusernames": "realusernames.body.php"
+	},
+	"config": {
+		"wgrealusernames_linktext": {
+			"value": true,
+			"description": "Control if we want link text to be replaced by real usernames"
+		},
+		"wgrealusernames_linkref": {
+			"value": true,
+			"description": "Control if we want link refs to be replaced by real usernames"
+		},
+		"wgrealusernames_append_username": {
+			"value": true,
+			"description": "Control if some roles (those having perms to 'block' users) should be able to see the username together with the realname."
+		}
+	},
+	"Hooks": {
+		"LinkBegin": [
+			"realusernames::hookLinkBegin"
+		],
+		"PersonalUrls": [
+			"realusernames::hookPersonalUrls"
+		],
+		"ParserBeforeStrip": [
+			"realusernames::hookParser"
+		]
+	},
+	"manifest_version": 2
+}
