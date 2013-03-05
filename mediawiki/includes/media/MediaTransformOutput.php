@@ -198,10 +198,10 @@ abstract class MediaTransformOutput {
 	public function getDescLinkAttribs( $title = null, $params = '' ) {
 		$query = '';
 		if ( $this->page && $this->page !== 1 ) {
-			  $query = 'page=' . urlencode( $this->page );
+			$query = 'page=' . urlencode( $this->page );
 		}
 		if( $params ) {
-			$query .= $query ? '&'.$params : $params;
+			$query .= $query ? '&' . $params : $params;
 		}
 		$attribs = array(
 			'href' => $this->file->getTitle()->getLocalURL( $query ),
@@ -237,7 +237,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		# Previous parameters:
 		#   $file, $url, $width, $height, $path = false, $page = false
 
-		if( is_array( $parameters ) ){
+		if( is_array( $parameters ) ) {
 			$defaults = array(
 				'page' => false
 			);
@@ -301,7 +301,7 @@ class ThumbnailImage extends MediaTransformOutput {
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
-		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
+		$query = empty( $options['desc-query'] ) ? '' : $options['desc-query'];
 
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$linkAttribs = array( 'href' => $options['custom-url-link'] );
@@ -347,6 +347,9 @@ class ThumbnailImage extends MediaTransformOutput {
 		if ( !empty( $this->responsiveUrls ) ) {
 			$attribs['srcset'] = Html::srcSet( $this->responsiveUrls );
 		}
+
+		wfRunHooks( 'ThumbnailBeforeProduceHTML', array( $this, &$attribs, &$linkAttribs ) );
+
 		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}
 
@@ -401,7 +404,7 @@ class MediaTransformError extends MediaTransformOutput {
 class TransformParameterError extends MediaTransformError {
 	function __construct( $params ) {
 		parent::__construct( 'thumbnail_error',
-			max( isset( $params['width']  ) ? $params['width']  : 0, 120 ),
+			max( isset( $params['width'] ) ? $params['width'] : 0, 120 ),
 			max( isset( $params['height'] ) ? $params['height'] : 0, 120 ),
 			wfMessage( 'thumbnail_invalid_params' )->text() );
 	}

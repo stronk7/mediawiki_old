@@ -45,7 +45,7 @@ class SearchEngine {
 	 */
 	protected $db;
 
-	function __construct($db = null) {
+	function __construct( $db = null ) {
 		if ( $db ) {
 			$this->db = $db;
 		} else {
@@ -183,7 +183,7 @@ class SearchEngine {
 
 			# Exact match? No need to look further.
 			$title = Title::newFromText( $term );
-			if ( is_null( $title ) ){
+			if ( is_null( $title ) ) {
 				return null;
 			}
 
@@ -1142,8 +1142,8 @@ class SearchHighlighter {
 				// add more lines
 				$add = $index + 1;
 				while ( $len < $targetchars - 20
-					   && array_key_exists( $add, $all )
-					   && !array_key_exists( $add, $snippets ) ) {
+						&& array_key_exists( $add, $all )
+						&& !array_key_exists( $add, $snippets ) ) {
 					$offsets[$add] = 0;
 					$tt = "\n" . $this->extract( $all[$add], 0, $targetchars - $len, $offsets[$add] );
 					$extended[$add] = $tt;
@@ -1153,7 +1153,7 @@ class SearchHighlighter {
 			}
 		}
 
-		// $snippets = array_map('htmlspecialchars', $extended);
+		// $snippets = array_map( 'htmlspecialchars', $extended );
 		$snippets = $extended;
 		$last = - 1;
 		$extract = '';
@@ -1243,7 +1243,7 @@ class SearchHighlighter {
 			$posEnd = $end;
 		}
 
-		if ( $end > $start )  {
+		if ( $end > $start ) {
 			return substr( $text, $start, $end - $start );
 		} else {
 			return '';
@@ -1332,12 +1332,12 @@ class SearchHighlighter {
 		$fname = __METHOD__;
 		wfProfileIn( $fname );
 
-		// $text = preg_replace("/'{2,5}/", "", $text);
-		// $text = preg_replace("/\[[a-z]+:\/\/[^ ]+ ([^]]+)\]/", "\\2", $text);
-		// $text = preg_replace("/\[\[([^]|]+)\]\]/", "\\1", $text);
-		// $text = preg_replace("/\[\[([^]]+\|)?([^|]]+)\]\]/", "\\2", $text);
-		// $text = preg_replace("/\\{\\|(.*?)\\|\\}/", "", $text);
-		// $text = preg_replace("/\\[\\[[A-Za-z_-]+:([^|]+?)\\]\\]/", "", $text);
+		// $text = preg_replace( "/'{2,5}/", "", $text );
+		// $text = preg_replace( "/\[[a-z]+:\/\/[^ ]+ ([^]]+)\]/", "\\2", $text );
+		// $text = preg_replace( "/\[\[([^]|]+)\]\]/", "\\1", $text );
+		// $text = preg_replace( "/\[\[([^]]+\|)?([^|]]+)\]\]/", "\\2", $text );
+		// $text = preg_replace( "/\\{\\|(.*?)\\|\\}/", "", $text );
+		// $text = preg_replace( "/\\[\\[[A-Za-z_-]+:([^|]+?)\\]\\]/", "", $text );
 		$text = preg_replace( "/\\{\\{([^|]+?)\\}\\}/", "", $text );
 		$text = preg_replace( "/\\{\\{([^|]+\\|)(.*?)\\}\\}/", "\\2", $text );
 		$text = preg_replace( "/\\[\\[([^|]+?)\\]\\]/", "\\1", $text );
@@ -1419,8 +1419,7 @@ class SearchHighlighter {
 
 			$line = htmlspecialchars( $pre . $found . $post );
 			$pat2 = '/(' . $terms . ")/i";
-			$line = preg_replace( $pat2,
-			  "<span class='searchmatch'>\\1</span>", $line );
+			$line = preg_replace( $pat2, "<span class='searchmatch'>\\1</span>", $line );
 
 			$extract .= "${line}\n";
 		}

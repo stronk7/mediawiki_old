@@ -652,7 +652,6 @@ Inviendi lu testhu ài la ripunsabiriddai chi lu testhu sia toiu oppuru sia i lu
 'template-semiprotected' => '(mezu-prutiggiddu)',
 'hiddencategories' => 'Chistha pagina appartheni a {{PLURAL:$1|una categuria cuadda|$1 categurì cuaddi}}:',
 'edittools' => '<!-- Testhu chi appari in giossu lu mòdulu di mudìfiga e di carriggamentu. -->',
-'nocreatetitle' => 'Criazioni di li pàgini limitadda',
 'nocreatetext' => '{{SITENAME}} à limitaddu la pussibiliddai di crià nobi pagini a li sori utenti registhraddi. È pussìbiri turrà indareddu e mudìfiggà una pàgina esisthenti, oppuru [[Special:UserLogin|intrà o crià una noba registhrazioni]].',
 'nocreate-loggedin' => 'No si diponi di li pimmissi nezzessàri pa crià nobi pàgini in {{SITENAME}}.',
 'permissionserrors' => 'Errori i li pimmissi',
@@ -907,11 +906,12 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 'grouppage-sysop' => '{{ns:project}}:Amministhradori',
 'grouppage-bureaucrat' => '{{ns:project}}:Buròcrati',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Nobi utenti',
+
 # User rights log
 'rightslog' => 'Diritti di li utenti',
 'rightslogtext' => "Chisthu è lu rigisthru di lu mudìfigghi a li diritti assignaddi a l'utenti.",
-'rightslogentry' => "à mudìfiggaddu l'apparthinènzia di $1 da lu gruppu $2 a lu gruppu $3",
-'rightsnone' => '(nisciunu)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'mudìfiggà chistha pàgina',
@@ -1242,9 +1242,6 @@ Also see [[Special:WantedCategories|wanted categories]].",
 'listusers-submit' => 'Musthra',
 'listusers-noresult' => 'Nisciun utenti curripundi a li critéri impusthaddi.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Nobi utenti',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(erencu di li membri)',
 
@@ -1331,6 +1328,8 @@ Pa mudìfiggà l\'impusthazioni di la listha di l\'abbaidaddi ippiziari, visita
 
 Pa dì cosa ni pensi e dumandà assisthènzia:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'criadda',
+'changed' => 'ciambadda',
 
 # Delete
 'deletepage' => 'Canzella pàgina',
@@ -2039,5 +2038,8 @@ Pa piazeri, cunfèimma chi vòi ricrià avveru chistha pàgina.",
 'htmlform-submit' => 'Invia',
 'htmlform-reset' => 'Annulla mudifigghi',
 'htmlform-selectorother-other' => 'Althru',
+
+# New logging system
+'rightsnone' => '(nisciunu)',
 
 );

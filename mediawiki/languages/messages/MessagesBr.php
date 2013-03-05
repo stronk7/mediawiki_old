@@ -291,7 +291,7 @@ $messages = array(
 # Categories related messages
 'pagecategories' => '{{PLURAL:$1|Rummad |Rummad }}',
 'category_header' => 'Niver a bennadoù er rummad "$1"',
-'subcategories' => 'Isrummad',
+'subcategories' => 'Isrummadoù',
 'category-media-header' => 'Restroù liesvedia er rummad "$1"',
 'category-empty' => "''N'eus na pajenn na media ebet er rummad-mañ evit ar mare.''",
 'hidden-categories' => '{{PLURAL:$1|Rummad kuzhet|Rummad kuzhet}}',
@@ -312,6 +312,7 @@ $messages = array(
 'newwindow' => '(digeriñ en ur prenestr nevez)',
 'cancel' => 'Nullañ',
 'moredotdotdot' => "Ha muioc'h c'hoazh...",
+'morenotlisted' => "Ha muioc'h c'hoazh n'int ket rollet...",
 'mypage' => 'Ma zammig pajenn',
 'mytalk' => "Ma c'haozeadennoù",
 'anontalk' => "Kaozeal gant ar chomlec'h IP-mañ",
@@ -345,6 +346,7 @@ $messages = array(
 'namespaces' => 'Esaouennoù anv',
 'variants' => 'Adstummoù',
 
+'navigation-heading' => 'Lañser merdeiñ',
 'errorpagetitle' => 'Fazi',
 'returnto' => "Distreiñ d'ar bajenn $1.",
 'tagline' => 'Eus {{SITENAME}}',
@@ -448,7 +450,7 @@ $1',
 'youhavenewmessagesmulti' => "Kemennoù nevez zo ganeoc'h war $1",
 'editsection' => 'kemmañ',
 'editold' => 'kemmañ',
-'viewsourceold' => 'gwelet ar vammenn',
+'viewsourceold' => 'sellet ouzh tarzh an destenn',
 'editlink' => 'kemmañ',
 'viewsourcelink' => 'gwelet an tarzh',
 'editsectionhint' => 'Kemmañ ar rann : $1',
@@ -552,7 +554,7 @@ Goulenn : $2",
 'viewsource-title' => 'Gwelet an tarzh evit $1',
 'actionthrottled' => 'Ober daleet',
 'actionthrottledtext' => "A-benn dizarbenn ar strob, n'haller ket implijout an ober-mañ re alies en ur frapad amzer lakaet, hag aet oc'h dreist ar muzul. Klaskit en-dro a-benn un nebeut munutennoù.",
-'protectedpagetext' => "Prennet eo bet ar bajenn-mañ. N'haller ket kemmañ anezhi ken.",
+'protectedpagetext' => 'Prennet eo bet ar bajenn-mañ kuit na vefe skrivet pe cheñchet un dra bennak enni',
 'viewsourcetext' => 'Gallout a rit gwelet hag eilañ danvez ar bajenn-mañ',
 'viewyourtext' => "Gallout a rit gwelet hag eilañ mammenn ho '''kemmoù''' d'ar bajenn-mañ :",
 'protectedinterface' => 'Testenn ar bajenn-mañ a dalvez evit etrefas ar meziant er wiki-mañ. Setu perak eo bet gwarezet ar bajenn.',
@@ -584,6 +586,9 @@ Setu amañ perak ''$2''.",
 
 Gallout a rit kenderc'hel da implijout {{SITENAME}} en un doare dizanv, pe <span class='plainlinks'>[$1 kevreañ en-dro]</span> gant an hevelep anv pe un anv all mar fell deoc'h.
 Notit mat e c'hallo pajennoù zo kenderc'hel da vezañ diskwelet evel pa vefec'h kevreet c'hoazh, betek ma vo riñset krubuilh ho merdeer ganeoc'h.",
+'welcomeuser' => 'Degemer mat $1 !',
+'welcomecreation-msg' => 'Krouet eo bet ho kont implijer.
+Na zisoñjit ket resisaat ho [[Special:Preferences|penndibaboù evit {{SITENAME}}]].',
 'yourname' => 'Anv implijer :',
 'yourpassword' => 'Ger-tremen :',
 'yourpasswordagain' => 'Skrivit ho ker-tremen en-dro',
@@ -606,7 +611,7 @@ Notit mat e c'hallo pajennoù zo kenderc'hel da vezañ diskwelet evel pa vefec'h
 'gotaccount' => "Ur gont zo ganeoc'h dija ? '''$1'''.",
 'gotaccountlink' => 'Kevreañ',
 'userlogin-resetlink' => "Ha disoñjet eo bet ho titouroù kevreañ ganeoc'h ?",
-'createaccountmail' => 'dre bostel',
+'createaccountmail' => 'Dre bostel',
 'createaccountreason' => 'Abeg :',
 'badretype' => 'Ne glot ket ar gerioù-tremen an eil gant egile.',
 'userexists' => "Implijet eo an anv implijer lakaet ganeoc'h dija.
@@ -673,7 +678,7 @@ Gortozit a-raok klask en-dro.",
 'loginlanguagelabel' => 'Yezh : $1',
 'suspicious-userlogout' => 'Distaolet eo bet ho koulenn digevreañ rak kaset e oa bet gant ur merdeer direizhet pe krubuilhadenn ur proksi, evit doare.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => "Fazi dianav en arc'hwel postel () PHP",
 'user-mail-no-addy' => "Klasket kas ur postel hep lakaat ur chomlec'h postel.",
 
@@ -732,6 +737,7 @@ Ger-tremen da c'hortoz : $2",
 'changeemail-oldemail' => "Chomlec'h postel a-vremañ :",
 'changeemail-newemail' => "Chomlec'h postel nevez :",
 'changeemail-none' => '(hini ebet)',
+'changeemail-password' => 'Ho ker-tremen war {{SITENAME}}:',
 'changeemail-submit' => "Cheñch chomlec'h postel",
 'changeemail-cancel' => 'Nullañ',
 
@@ -894,10 +900,11 @@ Heñveldra, prometiñ a rit kemer perzh dre zegas skridoù savet ganeoc'h hepken
 '''NA IMPLIJIT KET LABOURIOÙ GANT GWIRIOÙ AOZER (COPYRIGHT) HEP AOTRE D'OBER KEMENT-SE!'''",
 'copyrightwarning2' => "Notit mat e c'hall kement degasadenn graet ganeoc'h war {{SITENAME}} bezañ kemmet, adaozet pe lamet kuit gant an implijerien all. Mar ne fell ket deoc'h e vije kemmet-digemmet ar pezh hoc'h eus skrivet na gemerit ket perzh er raktres-mañ.<br /> Gouestlañ a rit ivez eo bet savet ar boued spered ganeoc'h pe eilet diwar ur vammenn frank a wirioù pe en domani foran (gwelet $1 evit gouzout hiroc'h). '''NA IMPLIJIT KET LABOURIOÙ GANT GWIRIOÙ AOZER HEP AOTRE D'OBER KEMENT-SE!'''",
 'longpageerror' => "'''FAZI : {{PLURAL:$1|Ur c'hilookted|$1 kilookted}} hir eo an destenn lakaet ganeoc'h, ar pezh zo hiroc'h eget {{PLURAL:$2|ur c'hilookted|$2 kilookted}}, ar vent vrasañ aotreet. N'haller ket enrollañ.'''",
-'readonlywarning' => "'''KEMENN DIWALL : stanket eo an diaz titouroù a-benn bezañ trezalc'het; setu ne viot ket evit enrollañ ho kemmoù diouzhtu-diouzhtu eta.
-Gallout a rit eilañ-pegañ an destenn en ur restr skrid all hag enrollañ anezhi a-benn diwezhatoc'hik.'''
+'readonlywarning' => "'''KEMENN DIWALL : prennet eo bet an diaz titouroù evit bezañ trezalc'het; setu ne viot ket evit enrollañ ho kemmoù diouzhtu-diouzhtu eta.'''
 
-Setu an displegadenn lakaet gant ar merour en deus stanket an traoù : $1",
+Gallout a rit eilañ ha pegañ ho testenn en ur restr skrid all hag enrollañ anezhi a-benn diwezhatoc'hik.'''
+
+Setu an displegadenn lakaet gant ar merour eo bet prennet an traoù gantañ : $1",
 'protectedpagewarning' => "'''KEMENN DIWALL: Gwarezet eo bet ar bajenn-mañ. N'eus nemet an implijerien ganto ar statud merour a c'hall kemmañ anezhi.'''
 Enmont diwezhañ ar marilh a ziskouezer amañ a-is evel dave :",
 'semiprotectedpagewarning' => "''Notenn :''' Gwarezet eo ar bajenn-mañ; n'eus nemet an implijerien bet krouet ur gont ganto a kemmañ anezhi. Kasadenn ziwezhañ ar marilh zo diskouezet amañ a-is evel dave :",
@@ -910,7 +917,6 @@ Enmont diwezhañ ar marilh a ziskouezer amañ a-is evel dave :",
 'template-semiprotected' => '(damwarezet)',
 'hiddencategories' => "{{PLURAL:$1|1 rummad kuzhet|$1 rummad kuzhet}} m'emañ rollet ar bajenn-mañ :",
 'edittools' => '<!-- Diskouezet e vo an destenn kinniget amañ dindan ar sternioù kemmañ ha kargañ. -->',
-'nocreatetitle' => "Strishaet eo bet ar c'hrouiñ pajennoù",
 'nocreatetext' => 'Strishaet eo bet an tu da grouiñ pajennoù nevez war {{SITENAME}}.
 Gallout a rit mont war-gil ha lakaat kemmañ ur bajenn zo anezhi dija, pe [[Special:UserLogin|en em enrollañ ha krouiñ ur gont]].',
 'nocreate-loggedin' => "N'oc'h ket aotreet da grouiñ pajennoù nevez.",
@@ -968,10 +974,10 @@ A-gostez eo bet lezet an arventenn-se.',
 'converter-manual-rule-error' => 'Fazi dinodet  er reolenn cheñch yezh dre zorn',
 
 # "Undo" feature
-'undo-success' => "Gallout a reer disteurel ar c'hemmoù-mañ. Gwiriit, mar plij, gant ar geñveriadenn a-is evit bezañ sur eo an dra-se a fell deoc'h ober; goude-se enrollit ar c'hemmoù a-is a-benn echuiñ disteurel ar c'hemmoù.",
+'undo-success' => "Gallout a reer dizober ar c'hemmoù-mañ. Gwiriit, mar plij, gant ar geñveriadenn a-is evit bezañ sur eo an dra-se a fell deoc'h ober; goude-se enrollit ar c'hemmoù a-is a-benn echuiñ disteurel ar c'hemmoù.",
 'undo-failure' => "N'eus ket bet tu da zisteuler ar c'hemm-mañ abalamour d'un tabut gant kemmoù degaset e-keit-se.",
 'undo-norev' => "N'eus ket bet gallet degas ar c'hemmoù-mañ rak pe n'eus ket anezho pe int bet diverket.",
-'undo-summary' => 'Disteurel kemmoù $1 a-berzh [[Special:Contributions/$2|$2]] ([[User talk:$2|kaozeal]])',
+'undo-summary' => 'Dizober kemmoù $1 a-berzh [[Special:Contributions/$2|$2]] ([[User talk:$2|kaozeal]])',
 
 # Account creation failure
 'cantcreateaccounttitle' => 'Dibosupl krouiñ ar gont',
@@ -1198,7 +1204,7 @@ Gallout a reot kavout munudoù e [{{fullurl:{{#Special:Log}}/delete|page={{FULLP
 'search-interwiki-default' => "$1 disoc'h :",
 'search-interwiki-more' => "(muioc'h)",
 'search-relatedarticle' => "Disoc'hoù kar",
-'mwsuggest-disable' => 'Diweredekaat kinnigoù AJAX',
+'mwsuggest-disable' => "Diweredekaat ar c'hinnigoù klask",
 'searcheverything-enable' => 'Klask en holl esaouennoù anv',
 'searchrelated' => "disoc'hoù kar",
 'searchall' => 'An holl',
@@ -1304,8 +1310,8 @@ Setu aze un dalvoudenn ganet dre zegouezh hag a c'hallfec'h implijout : $1",
 'prefs-emailconfirm-label' => 'Kadarnaat ar postel :',
 'prefs-textboxsize' => 'Ment ar prenestr skridaozañ',
 'youremail' => 'Postel :',
-'username' => 'Anv implijer :',
-'uid' => 'Niv. identelezh an implijer :',
+'username' => '{{GENDER:$1|Anv implijer|Anv implijerez}}:',
+'uid' => '{{GENDER:$1|Niv. identelezh an implijer|Niv. identelezh an implijerez}}:',
 'prefs-memberingroups' => 'Ezel eus {{PLURAL:$1|ar strollad|ar strolladoù}}:',
 'prefs-registration' => 'Deiziad enskrivañ :',
 'yourrealname' => 'Anv gwir*',
@@ -1344,7 +1350,7 @@ Ma skrivit anezhañ e vo implijet evit lakaat war wel ar pezh a vo bet degaset g
 'prefs-displaywatchlist' => 'Dibarzhioù diskwel',
 'prefs-diffs' => "Diforc'hioù",
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => "Reizh eo ar chomlec'h postel war a seblant",
 'email-address-validity-invalid' => "Ebarzhit ur chomlec'h postel reizh",
 
@@ -1456,12 +1462,13 @@ Ma skrivit anezhañ e vo implijet evit lakaat war wel ar pezh a vo bet degaset g
 'right-sendemail' => "Kas ur postel d'an implijerien all",
 'right-passwordreset' => 'Gwelet ar posteloù assevel gerioù-tremen',
 
+# Special:Log/newusers
+'newuserlogpage' => "Marilh ar c'hontoù krouet",
+'newuserlogpagetext' => "Marilh krouiñ ar c'hontoù implijer.",
+
 # User rights log
 'rightslog' => 'Marilh statud an implijerien',
 'rightslogtext' => "Setu marilh ar c'hemmoù statud bet c'hoarvezet d'an implijerien.",
-'rightslogentry' => '{{Gender:.|en|he}} deus cheñchet gwirioù an {{Gender:.|implijer|implijerez}}  $1 a oa $2 hag a zo bet lakaet da $3',
-'rightslogentry-autopromote' => 'zo bet anvet ent emgefre a $2 da $3',
-'rightsnone' => '(netra)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'lenn ar bajenn-mañ',
@@ -1522,7 +1529,7 @@ Ma skrivit anezhañ e vo implijet evit lakaat war wel ar pezh a vo bet degaset g
 'rclinks' => "Diskouez an $1 kemm diwezhañ c'hoarvezet e-pad an $2 devezh diwezhañ<br />$3",
 'diff' => "diforc'h",
 'hist' => 'ist',
-'hide' => 'kuzhat',
+'hide' => 'Kuzhat',
 'show' => 'Diskouez',
 'minoreditletter' => 'D',
 'newpageletter' => 'N',
@@ -1537,9 +1544,9 @@ Ma skrivit anezhañ e vo implijet evit lakaat war wel ar pezh a vo bet degaset g
 'rc-old-title' => 'bet krouet da gentañ gant an anv "$1"',
 
 # Recent changes linked
-'recentchangeslinked' => 'Heuliañ al liammoù',
-'recentchangeslinked-feed' => 'Heuliañ al liammoù',
-'recentchangeslinked-toolbox' => 'Heuliañ al liammoù',
+'recentchangeslinked' => 'Heuliañ ar pajennoù liammet',
+'recentchangeslinked-feed' => 'Heuliañ ar pajennoù liammet',
+'recentchangeslinked-toolbox' => 'Heuliañ ar pajennoù liammet',
 'recentchangeslinked-title' => 'Kemmoù a denn da "$1"',
 'recentchangeslinked-noresult' => 'Kemm ebet war ar pajennoù liammet e-pad an amzer spisaet.',
 'recentchangeslinked-summary' => "Rollet eo war ar bajenn dibar-mañ ar c'hemmoù diwezhañ bet degaset war ar pajennoù liammet ouzh ur bajenn lakaet (pe ouzh izili ur rummad lakaet).
@@ -1701,6 +1708,7 @@ Ma talc'h ar gudenn, kit e darempred gant [[Special:ListUsers/sysop|merourien ar
 'backend-fail-notsame' => "Ur restr disheñvel zo e $1 c'hoazh.",
 'backend-fail-invalidpath' => "$1 n'eo ket un hent stokañ reizh.",
 'backend-fail-delete' => 'Dibosupl eo diverkañ ar restr $1.',
+'backend-fail-describe' => 'N\'eus ket bet gallet cheñch ar metaroadennoù evit ar restr "$1".',
 'backend-fail-alreadyexists' => 'Ar restr "$1" zo anezhi c\'hoazh.',
 'backend-fail-store' => 'Dibosupl stokañ ar restr $1 e $2.',
 'backend-fail-copy' => 'Dibosupl eilañ ar restr "$1" war-du "$2".',
@@ -1933,6 +1941,8 @@ Marteze a-walc'h e fell deoc'h kemmañ an deskrivadur anezhi war ar [$2 bajenn d
 Padal e tlefent kas war-eeun d'an danvez anezho.<br />
 Sellet e vez ouzh ur bajenn evel ouzh ur bajenn disheñvelout ma ra gant ur patrom liammet ouzh [[MediaWiki:Disambiguationspage]]",
 
+'pageswithprop-prop' => 'Anv ar perzh :',
+
 'doubleredirects' => 'Adkasoù doubl',
 'doubleredirectstext' => 'Rollañ a ra ar bajenn-mañ ar pajennoù a adkas da bajennoù adkas all.
 War bep linenn ez eus liammoù war-du pajennoù an adkas kentañ hag en eil adkas, hag ivez war-du pajenn-dal an eil adkas zo sañset bezañ ar pal "gwirion" a zlefe an adkas kentañ kas di.
@@ -2087,7 +2097,7 @@ Gwelet ivez ar [[Special:WantedCategories|rummadoù goulennet a vank]].',
 'linksearch-ok' => 'Klask',
 'linksearch-text' => 'Gallout a reer implijout arouezennoù "joker" evel, da skouer, "*.wikipedia.org".
 Rekis eo dezho un domani a-us da nebeutañ evel, da skouer, "*.org".<br />
-Protokoloù skoret : <code>$1</code> (defaults to http:// na lakait hini ebet eus ar re-se en ho klask)',
+{{PLURAL:$2|Protokol|Protokoloù}} skoret : <code>$1</code> (defaults to http:// na lakait hini ebet eus ar re-se en ho klask).',
 'linksearch-line' => '$1 gant ul liamm adal $2',
 'linksearch-error' => "N'hall an arouezennoù joker bezañ implijet nemet e deroù anv domani an ostiz.",
 
@@ -2100,15 +2110,11 @@ Protokoloù skoret : <code>$1</code> (defaults to http:// na lakait hini ebet eu
 # Special:ActiveUsers
 'activeusers' => 'Roll an implijerien oberiant',
 'activeusers-intro' => 'Setu aze ur roll eus an implijerien zo bet oberiant mui pe vui e-pad an $1 {{PLURAL:$1|deiz|deiz}} diwezhañ.',
-'activeusers-count' => '$1 {{PLURAL:$1|degasadenn}} abaoe an {{PLURAL:$3|deiz|$3 deiz}} diwezhañ',
+'activeusers-count' => '$1 {{PLURAL:$1|oberiadenn}} abaoe an {{PLURAL:$3|deiz|$3 deiz}} diwezhañ',
 'activeusers-from' => 'Diskouez an implijerien adal :',
 'activeusers-hidebots' => 'Kuzhat ar robotoù',
 'activeusers-hidesysops' => 'Kuzhat ar verourien',
 'activeusers-noresult' => "N'eus bet kavet implijer ebet.",
-
-# Special:Log/newusers
-'newuserlogpage' => "Marilh ar c'hontoù krouet",
-'newuserlogpagetext' => "Marilh krouiñ ar c'hontoù implijer.",
 
 # Special:ListGroupRights
 'listgrouprights' => 'Gwirioù ar strolladoù implijer',
@@ -2129,7 +2135,7 @@ Gallout a ra bezañ [[{{MediaWiki:Listgrouprights-helppage}}|titouroù ouzhpenn]
 'listgrouprights-addgroup-self-all' => 'Gallout a ra ouzhpennañ an holl strolladoù da gont an-unan',
 'listgrouprights-removegroup-self-all' => 'Gallout a ra tennañ kuit an holl strolladoù eus kont an-unan.',
 
-# E-mail user
+# Email user
 'mailnologin' => "Chomlec'h ebet",
 'mailnologintext' => "Ret eo deoc'h bezañ [[Special:UserLogin|kevreet]]
 ha bezañ merket ur chomlec'h postel reizh en ho [[Special:Preferences|penndibaboù]]
@@ -2179,9 +2185,7 @@ E maezienn \"Kaser\" ho postel e vo merket ar chomlec'h postel resisaet ganeoc'h
 a-benn gellout kemmañ ho roll evezhiañ.",
 'addwatch' => "Ouzhpennañ d'ar roll evezhiañ",
 'addedwatchtext' => 'Ouzh ho [[Special:Watchlist|rollad evezhiañ]] eo bet ouzhpennet ar bajenn "[[:$1]]".
-Kemmoù da zont ar bajenn-mañ ha re ar bajenn gaozeal stag outi a vo rollet amañ hag e teuio ar bajenn <b>e tev</b> er [[Special:RecentChanges|roll kemmoù diwezhañ]] evit bezañ gwelet aesoc\'h ganeoc\'h.
-
-Evit tennañ ar bajenn-mañ a-ziwar ho rollad evezhiañ, klikit war "Paouez da evezhiañ" er framm merdeiñ.',
+Amañ e vo rollet ar c\'hemmoù da zont evit ar bajenn-mañ hag ar bajenn gaozeal stag outi.',
 'removewatch' => 'Lemel a-ziwar ar roll evezhiañ',
 'removedwatchtext' => 'Lamet eo bet ar bajenn "[[:$1]]" a-ziwar ho [[Special:Watchlist|roll evezhiañ]].',
 'watch' => 'Evezhiañ',
@@ -2242,6 +2246,8 @@ $UNWATCHURL
 
 Evezhiadennoù ha skoazell pelloc\'h :
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'Krouet',
+'changed' => 'kemmet',
 
 # Delete
 'deletepage' => 'Diverkañ ur bajenn',
@@ -2280,8 +2286,8 @@ taolit evezh bras.",
 'rollback' => "disteuler ar c'hemmoù",
 'rollback_short' => 'Disteuler',
 'rollbacklink' => 'disteuler',
-'rollbacklinkcount' => 'terriñ $1 {{PLURAL:$1|kemm|kemmañ}}',
-'rollbacklinkcount-morethan' => 'terriñ ouzhpenn $1 {{PLURAL:$1|kemm|kemmoù}}',
+'rollbacklinkcount' => 'disteurel $1 {{PLURAL:$1|kemm}}',
+'rollbacklinkcount-morethan' => 'disteurel ouzhpenn $1 {{PLURAL:$1|kemm}}',
 'rollbackfailed' => "C'hwitet eo bet an distaoladenn",
 'cantrollback' => 'Dibosupl da zisteuler: an aozer diwezhañ eo an hini nemetañ da vezañ kemmet ar pennad-mañ',
 'alreadyrolled' => "Dibosupl eo disteuler ar c'hemm diwezhañ graet d'ar bajenn [[:$1]] gant [[User:$2|$2]] ([[User talk:$2|Kaozeal]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
@@ -2326,9 +2332,9 @@ Setu doare a-vremañ ar bajenn '''$1''' :",
 Setu an doare a-vremañ evit ar bajenn-mañ '''$1''':",
 'protect-cascadeon' => "Gwarezet eo ar bajenn-mañ peogwir he c'haver er {{PLURAL:$1|bajenn|pajennoù}} da-heul zo gweredekaet enno ar gwareziñ dre skalierad. Gallout a rit kemmañ al live gwareziñ met ne cheñcho ket ar gwareziñ dre skalierad.",
 'protect-default' => 'Aotren an holl implijerien',
-'protect-fallback' => 'Ezhomm zo aotre "$1"',
-'protect-level-autoconfirmed' => "Stankañ an implijerien nevez hag ar re n'int ket enrollet",
-'protect-level-sysop' => 'Merourien hepken',
+'protect-fallback' => 'Degemer hepken an implijerien gant an aotre "$1"',
+'protect-level-autoconfirmed' => 'Degemer hepken an implijerien emgadarnaet',
+'protect-level-sysop' => 'Aotren ar verourien hepken',
 'protect-summary-cascade' => 'Gwareziñ dre skalierad',
 'protect-expiring' => "a zeu d'e dermen d'an $1",
 'protect-expiring-local' => "a ya d'e dermen d'an $1",
@@ -2424,7 +2430,7 @@ $1',
 'blanknamespace' => '(Pennañ)',
 
 # Contributions
-'contributions' => 'Degasadennoù an implijer',
+'contributions' => 'Degasadennoù an {{GENDER:$1|implijer|implijerez}}',
 'contributions-title' => 'Degasadennoù an implijer evit $1',
 'mycontris' => 'Ma degasadennoù',
 'contribsub2' => 'Evit $1 ($2)',
@@ -2617,9 +2623,16 @@ Kadarnait, mar plij, eo se hoc'h eus c'hoant da ober.",
 # Move page
 'move-page' => "Dilec'hiañ $1",
 'move-page-legend' => 'Adenvel ur pennad',
-'movepagetext' => "Grit gant ar furmskrid a-is evit adenvel ur pennad hag adkas an holl stummoù kent anezhañ war-du an anv nevez.
-Dont a raio an titl kentañ da vezañ ur bajenn adkas war-du an titl nevez.
+'movepagetext' => "Grit gant ar furmskrid a-is evit adenvel ur pennad hag adkas an holl stummoù kent anezhañ war-zu an anv nevez.
+Dont a raio an titl kozh da vezañ ur bajenn adkas war-zu an titl nevez.
+Gallout a rit nevesaat ent emgefre an adkasoù a-vremañ a gas d'an titl orin.
 Ne vo ket kemmet liammoù an titl kozh ha ne vo ket dilec'hiet ar bajenn gaozeal, ma'z eus anezhi.
+
+Ma rit ho soñj chom hep en ober, gwiriit mat an holl [[Special:DoubleRedirects|adkasoù doubl]] pe [[Special:BrokenRedirects|adkasoù torret]].
+C'hwi eo zo karget da wiriañ e kas mat al liammoù d'al lec'h int sañset kas.
+
+Notit mat '''ne vo ket''' dilec'hiet ma'z eus dija ur bajenn ganti an anv nevez, nemet e vefe un adkas ha ne vefe tamm istor ebet stag outi.
+Dre se e c'haller adkas ur bajenn war-zu he lec'h orin ma oa kamm an adkas.
 
 '''DIWALLIT!'''
 Gallout a ra kement-se bezañ ur c'hemm bras ha dic'hortoz evit ur pennad a vez sellet outi alies;
@@ -2980,6 +2993,10 @@ Sur a-walc'h abalamour d'ul liamm enni a gas d'ul lec'hienn ziavaez berzet.",
 'pageinfo-redirectsto-info' => 'Titouroù',
 'pageinfo-contentpage-yes' => 'Ya',
 'pageinfo-protect-cascading-yes' => 'Ya',
+'pageinfo-category-info' => 'Titouroù ar rummad',
+'pageinfo-category-pages' => 'Niver a bajennoù',
+'pageinfo-category-subcats' => 'Niver a isrummadoù',
+'pageinfo-category-files' => 'Niver a restroù',
 
 # Skin names
 'skinname-standard' => 'Standard',
@@ -3035,6 +3052,7 @@ Ma vez erounezet ganeoc'h e c'hallje tagañ ho reizhiad.",
 'file-nohires' => "N'haller ket gwellaat ar pizhder.",
 'svg-long-desc' => 'restr SVG file, pizhder $1 × $2 piksel, ment ar restr : $3',
 'svg-long-desc-animated' => 'Restr SVG bev, ment $1 × $2 piksel, ment ar restr: $3',
+'svg-long-error' => 'Restr SVG direizh : $1',
 'show-big-image' => 'Pizhder leun',
 'show-big-image-preview' => 'Ment ar rakweled-mañ : $1.',
 'show-big-image-other' => '{{PLURAL:$2|pizhder all|pizhderioù all}} : $1.',
@@ -3064,7 +3082,10 @@ Ma vez erounezet ganeoc'h e c'hallje tagañ ho reizhiad.",
 'minutes' => '{{PLURAL:$1|$1 vunutenn|$1 munutenn}}',
 'hours' => '{{PLURAL:$1|$1 eurvezh|$1 eurvezh}}',
 'days' => '{{PLURAL:$1|$1 deiz|$1 deiz}}',
+'months' => '{{PLURAL: $1|$1 miz|$1 miz}}',
+'years' => '{{PLURAL: $1|$1 bloaz|$1 bloaz}}',
 'ago' => '$1 zo',
+'just-now' => 'bremañ diouzhtu',
 
 # Bad image list
 'bad_image_list' => "Setu doare ar furmad :
@@ -3492,7 +3513,7 @@ Kuzhet e vo ar re all dre ziouer.
 'monthsall' => 'an holl',
 'limitall' => 'An holl',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => "Kadarnaat ar chomlec'h postel",
 'confirmemail_noemail' => "N'hoc'h eus ket spisaet chomlec'h postel mat ebet en ho [[Special:Preferences|penndibaboù implijer]].",
 'confirmemail_text' => "Rankout a ra ar wiki-mañ bezañ gwiriet ho chomlec'h postel a-raok gallout implijout nep arc'hwel postel. Implijit ar bouton a-is evit kas ur postel kadarnaat d'ho chomlec'h. Ul liamm ennañ ur c'hod a vo er postel. Kargit al liamm-se en o merdeer evit kadarnaat ho chomlec'h.",
@@ -3560,6 +3581,7 @@ Mont a raio ar c'hod-mañ d'e dermen d'ar \$4.",
 # Scary transclusion
 'scarytranscludedisabled' => '[Diweredekaet eo an treuzkludañ etrewiki]',
 'scarytranscludefailed' => "[N'eus ket bet gallet tapout ar patrom evit $1]",
+'scarytranscludefailed-httpstatus' => "[c'hwitet adtapout ar patrom evit $1: HTTP $2]",
 'scarytranscludetoolong' => '[URL re hir]',
 
 # Delete conflict
@@ -3828,11 +3850,12 @@ Diskouezet eo ar skeudennoù gant ur pizhder uhel, erounit a ra ar restroù all 
 'logentry-move-move_redir-noredirect' => 'kaset ar bajenn $3 da $4 gant $1 dreist un adkas hep lezel un adkas',
 'logentry-patrol-patrol' => 'Merket eo bet an adweladenn $4 eus ar bajenn $3 evel gwiriet gant $1',
 'logentry-patrol-patrol-auto' => 'Merket eo bet ent emgefre an adweladenn $4 eus ar bajenn $3 evel gwiriet gant $1',
-'logentry-newusers-newusers' => '$1 en deus krouet ur gont implijer',
-'logentry-newusers-create' => '$1 en deus krouet ur gont implijer',
-'logentry-newusers-create2' => '$1 en deus krouet ur gont implijer $3',
+'logentry-newusers-newusers' => 'Krouet eo bet ar gont implijer $1',
+'logentry-newusers-create' => 'Krouet eo bet ar gont implijer $1',
+'logentry-newusers-create2' => 'Gant $1 eo bet krouet ar gont implijer $3',
 'logentry-newusers-autocreate' => 'Krouet eo bet kont $1 ent emgefre',
-'newuserlog-byemail' => 'ger-tremen kaset dre bostel',
+'logentry-rights-autopromote' => '$1 zo bet anvet ent emgefre a $4 da $5',
+'rightsnone' => '(netra)',
 
 # Feedback
 'feedback-bugornote' => "Ma'z oc'h prest da zeskrivañ ur gudenn deknikel dre ar munud e c'hallit [\$1 kemenn un draen].
@@ -3886,6 +3909,7 @@ A-hend-all e c'hallit ober gant ar furmskrid eeunaet dindan. Ouzhpennet e vo hoc
 'api-error-ok-but-empty' => 'Fazi diabarzh : respont ebet a-berzh ar servijer.',
 'api-error-overwrite' => "N'eo ket aotreet frikañ ur restr zo anezhi c'hoazh.",
 'api-error-stashfailed' => "Fazi diabarzh : dibosupl d'ar servijer enrollañ ar restr padennek.",
+'api-error-publishfailed' => "Fazi diabarzh : dibosupl d'ar servijer embann ar restr padennek.",
 'api-error-timeout' => "N'eo ket bet ar servijer evit respont en termen lakaet.",
 'api-error-unclassified' => "C'hoarvezet ez eus ur gudenn dianav.",
 'api-error-unknown-code' => 'Fazi dianav : "$1"',
@@ -3906,4 +3930,6 @@ A-hend-all e c'hallit ober gant ar furmskrid eeunaet dindan. Ouzhpennet e vo hoc
 'duration-centuries' => "$1 {{PLURAL:$1|c'hantved|kantved}}",
 'duration-millennia' => '$1 {{PLURAL:$1|milvloaz|milvoaz}}',
 
+# Unknown messages
+'pageswithprop-submit' => 'Mont',
 );

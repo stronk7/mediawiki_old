@@ -11,7 +11,7 @@ abstract class SeleniumTestSuite extends PHPUnit_Framework_TestSuite {
 	const RESULT_OK = 2;
 	const RESULT_ERROR = 3;
 
-	public abstract function addTests();
+	abstract public function addTests();
 
 	public function setUp() {
 		// Hack because because PHPUnit version 3.0.6 which is on prototype does not
@@ -25,7 +25,7 @@ abstract class SeleniumTestSuite extends PHPUnit_Framework_TestSuite {
 		if ( $this->triggerClientTestResources ) {
 			$this->selenium->open( $this->selenium->getUrl() . '/index.php?setupTestSuite=' . $this->getName() );
 			//wait a little longer for the db operation
-			$this->selenium->waitForPageToLoad( 6000  );
+			$this->selenium->waitForPageToLoad( 6000 );
 		}
 		if ( $this->loginBeforeTests ) {
 			$this->login();
@@ -50,7 +50,7 @@ abstract class SeleniumTestSuite extends PHPUnit_Framework_TestSuite {
 	protected function setLoginBeforeTests( $loginBeforeTests = true ) {
 		$this->loginBeforeTests = $loginBeforeTests;
 	}
-	
+
 	protected function setTriggerClientTestResources( $triggerClientTestResources = true ) {
 		$this->triggerClientTestResources = $triggerClientTestResources;
 	}

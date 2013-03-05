@@ -25,6 +25,12 @@
  *
  * @author Daniel Kinzler
  */
+
+/**
+ * Base interface for content objects.
+ *
+ * @ingroup Content
+ */
 interface Content {
 
 	/**
@@ -385,7 +391,7 @@ interface Content {
 	 * @param $sectionTitle String: new section's subject, only if $section is 'new'
 	 * @return string Complete article text, or null if error
 	 */
-	public function replaceSection( $section, Content $with, $sectionTitle = ''  );
+	public function replaceSection( $section, Content $with, $sectionTitle = '' );
 
 	/**
 	 * Returns a Content object with pre-save transformations applied (or this

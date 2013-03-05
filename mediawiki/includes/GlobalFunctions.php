@@ -50,7 +50,7 @@ if ( !function_exists( 'mb_substr' ) ) {
 	 * @codeCoverageIgnore
 	 * @return string
 	 */
-	function mb_substr( $str, $start, $count='end' ) {
+	function mb_substr( $str, $start, $count = 'end' ) {
 		return Fallback::mb_substr( $str, $start, $count );
 	}
 
@@ -330,6 +330,40 @@ function wfRandomString( $length = 32 ) {
 }
 
 /**
+ * Given an array of non-normalised probabilities, this function will select
+ * an element and return the appropriate key
+ *
+ * @param $weights array
+ *
+ * @return bool|int|string
+ */
+function wfPickRandom( $weights ){
+	if ( !is_array( $weights ) || count( $weights ) == 0 ) {
+		return false;
+	}
+
+	$sum = array_sum( $weights );
+	if ( $sum == 0 ) {
+		# No loads on any of them
+		# In previous versions, this triggered an unweighted random selection,
+		# but this feature has been removed as of April 2006 to allow for strict
+		# separation of query groups.
+		return false;
+	}
+	$max = mt_getrandmax();
+	$rand = mt_rand( 0, $max ) / $max * $sum;
+
+	$sum = 0;
+	foreach ( $weights as $i => $w ) {
+		$sum += $w;
+		if ( $sum >= $rand ) {
+			break;
+		}
+	}
+	return $i;
+}
+
+/**
  * We want some things to be included as literal characters in our title URLs
  * for prettiness, which urlencode encodes by default.  According to RFC 1738,
  * all of the following should be safe:
@@ -392,7 +426,7 @@ function wfArrayToCgi( $array1, $array2 = null, $prefix = '' ) {
 
 	$cgi = '';
 	foreach ( $array1 as $key => $value ) {
-		if ( !is_null($value) && $value !== false ) {
+		if ( !is_null( $value ) && $value !== false ) {
 			if ( $cgi != '' ) {
 				$cgi .= '&';
 			}
@@ -809,9 +843,14 @@ function wfParseUrl( $url ) {
 	if ( !isset( $bits['host'] ) ) {
 		$bits['host'] = '';
 
-		/* parse_url loses the third / for file:///c:/ urls (but not on variants) */
-		if ( substr( $bits['path'], 0, 1 ) !== '/' ) {
-			$bits['path'] = '/' . $bits['path'];
+		// bug 45069
+		if ( isset( $bits['path'] ) ) {
+			/* parse_url loses the third / for file:///c:/ urls (but not on variants) */
+			if ( substr( $bits['path'], 0, 1 ) !== '/' ) {
+				$bits['path'] = '/' . $bits['path'];
+			}
+		} else {
+			$bits['path'] = '';
 		}
 	}
 
@@ -1037,7 +1076,7 @@ function wfDebugLog( $logGroup, $text, $public = true ) {
 			wfErrorLog( "$time $host $wiki: $text", $wgDebugLogGroups[$logGroup] );
 		}
 	} elseif ( $public === true ) {
-		wfDebug( $text, true );
+		wfDebug( "[$logGroup] $text", true );
 	}
 }
 
@@ -1235,17 +1274,21 @@ function wfLogProfilingData() {
  *
  * @param $key String
  * @param $count Int
+ * @return void
  */
 function wfIncrStats( $key, $count = 1 ) {
 	global $wgStatsMethod;
 
 	$count = intval( $count );
+	if ( $count == 0 ) {
+		return;
+	}
 
 	if( $wgStatsMethod == 'udp' ) {
-		global $wgUDPProfilerHost, $wgUDPProfilerPort, $wgDBname, $wgAggregateStatsID;
+		global $wgUDPProfilerHost, $wgUDPProfilerPort, $wgAggregateStatsID;
 		static $socket;
 
-		$id = $wgAggregateStatsID !== false ? $wgAggregateStatsID : $wgDBname;
+		$id = $wgAggregateStatsID !== false ? $wgAggregateStatsID : wfWikiID();
 
 		if ( !$socket ) {
 			$socket = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
@@ -1377,9 +1420,13 @@ function wfUILang() {
 }
 
 /**
- * This is the new function for getting translated interface messages.
- * See the Message class for documentation how to use them.
- * The intention is that this function replaces all old wfMsg* functions.
+ * This is the function for getting translated interface messages.
+ *
+ * @see Message class for documentation how to use them.
+ * @see https://www.mediawiki.org/wiki/Manual:Messages_API
+ *
+ * This function replaces all old wfMsg* functions.
+ *
  * @param $key \string Message key.
  * Varargs: normal message parameters.
  * @return Message
@@ -1427,6 +1474,8 @@ function wfMessageFallback( /*...*/ ) {
  * @return String
  */
 function wfMsg( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReal( $key, $args );
@@ -1441,6 +1490,8 @@ function wfMsg( $key ) {
  * @return String
  */
 function wfMsgNoTrans( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReal( $key, $args, true, false, false );
@@ -1472,6 +1523,8 @@ function wfMsgNoTrans( $key ) {
  * @return String
  */
 function wfMsgForContent( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	global $wgForceUIMsgAsContentMsg;
 	$args = func_get_args();
 	array_shift( $args );
@@ -1493,6 +1546,8 @@ function wfMsgForContent( $key ) {
  * @return String
  */
 function wfMsgForContentNoTrans( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	global $wgForceUIMsgAsContentMsg;
 	$args = func_get_args();
 	array_shift( $args );
@@ -1518,6 +1573,8 @@ function wfMsgForContentNoTrans( $key ) {
  * @return String: the requested message.
  */
 function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform = true ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	wfProfileIn( __METHOD__ );
 	$message = wfMsgGetKey( $key, $useDB, $forContent, $transform );
 	$message = wfMsgReplaceArgs( $message, $args );
@@ -1538,6 +1595,8 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
  * @return string
  */
 function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	wfRunHooks( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
 
 	$cache = MessageCache::singleton();
@@ -1592,6 +1651,8 @@ function wfMsgReplaceArgs( $message, $args ) {
  * @return string
  */
 function wfMsgHtml( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReplaceArgs( htmlspecialchars( wfMsgGetKey( $key ) ), $args );
@@ -1611,6 +1672,8 @@ function wfMsgHtml( $key ) {
  * @return string
  */
 function wfMsgWikiHtml( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReplaceArgs(
@@ -1642,6 +1705,8 @@ function wfMsgWikiHtml( $key ) {
  * @return String
  */
 function wfMsgExt( $key, $options ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	$args = func_get_args();
 	array_shift( $args );
 	array_shift( $args );
@@ -1722,6 +1787,8 @@ function wfMsgExt( $key, $options ) {
  * @return Boolean True if the message *doesn't* exist.
  */
 function wfEmptyMsg( $key ) {
+	wfDeprecated( __METHOD__, '1.21' );
+
 	return MessageCache::singleton()->get( $key, /*useDB*/true, /*content*/false ) === false;
 }
 
@@ -2340,7 +2407,7 @@ function wfSuppressWarnings( $end = false ) {
 		}
 	} else {
 		if ( !$suppressCount ) {
-			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED ) );
+			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED | E_STRICT ) );
 		}
 		++$suppressCount;
 	}
@@ -2402,11 +2469,6 @@ define( 'TS_ORACLE', 6 );
 define( 'TS_POSTGRES', 7 );
 
 /**
- * DB2 format time
- */
-define( 'TS_DB2', 8 );
-
-/**
  * ISO 8601 basic format with no timezone: 19860209T200000Z.  This is used by ResourceLoader
  */
 define( 'TS_ISO_8601_BASIC', 9 );
@@ -2417,7 +2479,7 @@ define( 'TS_ISO_8601_BASIC', 9 );
  * @param $outputtype Mixed: A timestamp in one of the supported formats, the
  *                    function will autodetect which format is supplied and act
  *                    accordingly.
- * @param $ts Mixed: the timestamp to convert or 0 for the current timestamp
+ * @param $ts Mixed: optional timestamp to convert, default 0 for the current time
  * @return Mixed: String / false The same date in the format specified in $outputtype or false
  */
 function wfTimestamp( $outputtype = TS_UNIX, $ts = 0 ) {
@@ -2425,7 +2487,7 @@ function wfTimestamp( $outputtype = TS_UNIX, $ts = 0 ) {
 		$timestamp = new MWTimestamp( $ts );
 		return $timestamp->getTimestamp( $outputtype );
 	} catch( TimestampException $e ) {
-		wfDebug("wfTimestamp() fed bogus time value: TYPE=$outputtype; VALUE=$ts\n");
+		wfDebug( "wfTimestamp() fed bogus time value: TYPE=$outputtype; VALUE=$ts\n" );
 		return false;
 	}
 }
@@ -2598,12 +2660,14 @@ function wfPercent( $nr, $acc = 2, $round = true ) {
 /**
  * Find out whether or not a mixed variable exists in a string
  *
+ * @deprecated Just use str(i)pos
  * @param $needle String
  * @param $str String
  * @param $insensitive Boolean
  * @return Boolean
  */
 function in_string( $needle, $str, $insensitive = false ) {
+	wfDeprecated( __METHOD__, '1.21' );
 	$func = 'strpos';
 	if( $insensitive ) $func = 'stripos';
 
@@ -2657,8 +2721,7 @@ function wfDl( $extension, $fileName = null ) {
 	}
 
 	$canDl = false;
-	$sapi = php_sapi_name();
-	if( $sapi == 'cli' || $sapi == 'cgi' || $sapi == 'embed' ) {
+	if( PHP_SAPI == 'cli' || PHP_SAPI == 'cgi' || PHP_SAPI == 'embed' ) {
 		$canDl = ( function_exists( 'dl' ) && is_callable( 'dl' )
 		&& wfIniGetBool( 'enable_dl' ) && !wfIniGetBool( 'safe_mode' ) );
 	}
@@ -2747,12 +2810,13 @@ function wfEscapeShellArg( ) {
  *                 (non-zero is usually failure)
  * @param $environ Array optional environment variables which should be
  *                 added to the executed command environment.
- * @param $limits Array optional array with limits(filesize, memory, time)
+ * @param $limits Array optional array with limits(filesize, memory, time, walltime)
  *                 this overwrites the global wgShellMax* limits.
  * @return string collected stdout as a string (trailing newlines stripped)
  */
 function wfShellExec( $cmd, &$retval = null, $environ = array(), $limits = array() ) {
-	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
+	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime,
+		$wgMaxShellWallClockTime, $wgShellCgroup;
 
 	static $disabled;
 	if ( is_null( $disabled ) ) {
@@ -2799,15 +2863,27 @@ function wfShellExec( $cmd, &$retval = null, $environ = array(), $limits = array
 	$cmd = $envcmd . $cmd;
 
 	if ( php_uname( 's' ) == 'Linux' ) {
-		$time = intval ( isset($limits['time']) ? $limits['time'] : $wgMaxShellTime );
-		$mem = intval ( isset($limits['memory']) ? $limits['memory'] : $wgMaxShellMemory );
-		$filesize = intval ( isset($limits['filesize']) ? $limits['filesize'] : $wgMaxShellFileSize );
+		$time = intval ( isset( $limits['time'] ) ? $limits['time'] : $wgMaxShellTime );
+		if ( isset( $limits['walltime'] ) ) {
+			$wallTime = intval( $limits['walltime'] );
+		} elseif ( isset( $limits['time'] ) ) {
+			$wallTime = $time;
+		} else {
+			$wallTime = intval( $wgMaxShellWallClockTime );
+		}
+		$mem = intval ( isset( $limits['memory'] ) ? $limits['memory'] : $wgMaxShellMemory );
+		$filesize = intval ( isset( $limits['filesize'] ) ? $limits['filesize'] : $wgMaxShellFileSize );
 
-		if ( $time > 0 && $mem > 0 ) {
-			$script = "$IP/bin/ulimit4.sh";
-			if ( is_executable( $script ) ) {
-				$cmd = '/bin/bash ' . escapeshellarg( $script ) . " $time $mem $filesize " . escapeshellarg( $cmd );
-			}
+		if ( $time > 0 || $mem > 0 || $filesize > 0 || $wallTime > 0 ) {
+			$cmd = '/bin/bash ' . escapeshellarg( "$IP/includes/limit.sh" ) . ' ' .
+				escapeshellarg( $cmd ) . ' ' .
+				escapeshellarg(
+					"MW_CPU_LIMIT=$time; " .
+					'MW_CGROUP=' . escapeshellarg( $wgShellCgroup ) . '; ' .
+					"MW_MEM_LIMIT=$mem; " .
+					"MW_FILE_SIZE_LIMIT=$filesize; " .
+					"MW_WALL_CLOCK_LIMIT=$wallTime"
+				);
 		}
 	}
 	wfDebug( "wfShellExec: $cmd\n" );
@@ -2916,7 +2992,7 @@ function wfMerge( $old, $mine, $yours, &$result ) {
 	fclose( $yourtextFile );
 
 	# Check for a conflict
-	$cmd = $wgDiff3 . ' -a --overlap-only ' .
+	$cmd = wfEscapeShellArg( $wgDiff3 ) . ' -a --overlap-only ' .
 		wfEscapeShellArg( $mytextName ) . ' ' .
 		wfEscapeShellArg( $oldtextName ) . ' ' .
 		wfEscapeShellArg( $yourtextName );
@@ -2930,7 +3006,7 @@ function wfMerge( $old, $mine, $yours, &$result ) {
 	pclose( $handle );
 
 	# Merge differences
-	$cmd = $wgDiff3 . ' -a -e --merge ' .
+	$cmd = wfEscapeShellArg( $wgDiff3 ) . ' -a -e --merge ' .
 		wfEscapeShellArg( $mytextName, $oldtextName, $yourtextName );
 	$handle = popen( $cmd, 'r' );
 	$result = '';
@@ -3159,84 +3235,98 @@ function wfDoUpdates( $commit = '' ) {
  * Supports base 2 through 36; digit values 10-36 are represented
  * as lowercase letters a-z. Input is case-insensitive.
  *
- * @param $input String: of digits
- * @param $sourceBase Integer: 2-36
- * @param $destBase Integer: 2-36
- * @param $pad Integer: 1 or greater
- * @param $lowercase Boolean
- * @return String or false on invalid input
+ * @param string $input Input number
+ * @param int $sourceBase Base of the input number
+ * @param int $destBase Desired base of the output
+ * @param int $pad Minimum number of digits in the output (pad with zeroes)
+ * @param bool $lowercase Whether to output in lowercase or uppercase
+ * @param string $engine Either "gmp", "bcmath", or "php"
+ * @return string|bool The output number as a string, or false on error
  */
-function wfBaseConvert( $input, $sourceBase, $destBase, $pad = 1, $lowercase = true ) {
-	$input = strval( $input );
-	if( $sourceBase < 2 ||
+function wfBaseConvert( $input, $sourceBase, $destBase, $pad = 1, $lowercase = true, $engine = 'auto' ) {
+	$input = (string)$input;
+	if(
+		$sourceBase < 2 ||
 		$sourceBase > 36 ||
 		$destBase < 2 ||
 		$destBase > 36 ||
-		$pad < 1 ||
-		$sourceBase != intval( $sourceBase ) ||
-		$destBase != intval( $destBase ) ||
-		$pad != intval( $pad ) ||
-		!is_string( $input ) ||
-		$input == '' ) {
+		$sourceBase != (int) $sourceBase ||
+		$destBase != (int) $destBase ||
+		$pad != (int) $pad ||
+		!preg_match( "/^[" . substr( '0123456789abcdefghijklmnopqrstuvwxyz', 0, $sourceBase ) . "]+$/i", $input )
+	) {
 		return false;
 	}
-	$digitChars = ( $lowercase ) ? '0123456789abcdefghijklmnopqrstuvwxyz' : '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	$inDigits = array();
-	$outChars = '';
 
-	// Decode and validate input string
-	$input = strtolower( $input );
-	for( $i = 0; $i < strlen( $input ); $i++ ) {
-		$n = strpos( $digitChars, $input[$i] );
-		if( $n === false || $n > $sourceBase ) {
-			return false;
+	static $baseChars = array (
+		10 => 'a', 11 => 'b', 12 => 'c', 13 => 'd', 14 => 'e', 15 => 'f',
+		16 => 'g', 17 => 'h', 18 => 'i', 19 => 'j', 20 => 'k', 21 => 'l',
+		22 => 'm', 23 => 'n', 24 => 'o', 25 => 'p', 26 => 'q', 27 => 'r',
+		28 => 's', 29 => 't', 30 => 'u', 31 => 'v', 32 => 'w', 33 => 'x',
+		34 => 'y', 35 => 'z',
+
+		'0' => 0,  '1' => 1,  '2' => 2,  '3' => 3,  '4' => 4,  '5' => 5,
+		'6' => 6,  '7' => 7,  '8' => 8,  '9' => 9,  'a' => 10, 'b' => 11,
+		'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15, 'g' => 16, 'h' => 17,
+		'i' => 18, 'j' => 19, 'k' => 20, 'l' => 21, 'm' => 22, 'n' => 23,
+		'o' => 24, 'p' => 25, 'q' => 26, 'r' => 27, 's' => 28, 't' => 29,
+		'u' => 30, 'v' => 31, 'w' => 32, 'x' => 33, 'y' => 34, 'z' => 35
+	);
+
+	if( extension_loaded( 'gmp' ) && ( $engine == 'auto' || $engine == 'gmp' ) ) {
+		$result = gmp_strval( gmp_init( $input, $sourceBase ), $destBase );
+	} elseif( extension_loaded( 'bcmath' ) && ( $engine == 'auto' || $engine == 'bcmath' ) ) {
+		$decimal = '0';
+		foreach( str_split( strtolower( $input ) ) as $char ) {
+			$decimal = bcmul( $decimal, $sourceBase );
+			$decimal = bcadd( $decimal, $baseChars[$char] );
 		}
-		$inDigits[] = $n;
-	}
 
-	// Iterate over the input, modulo-ing out an output digit
-	// at a time until input is gone.
-	while( count( $inDigits ) ) {
-		$work = 0;
-		$workDigits = array();
+		for( $result = ''; bccomp( $decimal, 0 ); $decimal = bcdiv( $decimal, $destBase, 0 ) ) {
+			$result .= $baseChars[bcmod( $decimal, $destBase )];
+		}
 
-		// Long division...
-		foreach( $inDigits as $digit ) {
-			$work *= $sourceBase;
-			$work += $digit;
+		$result = strrev( $result );
+	} else {
+		$inDigits = array();
+		foreach( str_split( strtolower( $input ) ) as $char ) {
+			$inDigits[] = $baseChars[$char];
+		}
 
-			if( $work < $destBase ) {
-				// Gonna need to pull another digit.
-				if( count( $workDigits ) ) {
-					// Avoid zero-padding; this lets us find
-					// the end of the input very easily when
-					// length drops to zero.
-					$workDigits[] = 0;
+		// Iterate over the input, modulo-ing out an output digit
+		// at a time until input is gone.
+		$result = '';
+		while( $inDigits ) {
+			$work = 0;
+			$workDigits = array();
+
+			// Long division...
+			foreach( $inDigits as $digit ) {
+				$work *= $sourceBase;
+				$work += $digit;
+
+				if( $workDigits || $work >= $destBase ) {
+					$workDigits[] = (int) ( $work / $destBase );
 				}
-			} else {
-				// Finally! Actual division!
-				$workDigits[] = intval( $work / $destBase );
-
-				// Isn't it annoying that most programming languages
-				// don't have a single divide-and-remainder operator,
-				// even though the CPU implements it that way?
-				$work = $work % $destBase;
+				$work %= $destBase;
 			}
+
+			// All that division leaves us with a remainder,
+			// which is conveniently our next output digit.
+			$result .= $baseChars[$work];
+
+			// And we continue!
+			$inDigits = $workDigits;
 		}
 
-		// All that division leaves us with a remainder,
-		// which is conveniently our next output digit.
-		$outChars .= $digitChars[$work];
-
-		// And we continue!
-		$inDigits = $workDigits;
+		$result = strrev( $result );
 	}
 
-	while( strlen( $outChars ) < $pad ) {
-		$outChars .= '0';
+	if( !$lowercase ) {
+		$result = strtoupper( $result );
 	}
 
-	return strrev( $outChars );
+	return str_pad( $result, $pad, '0', STR_PAD_LEFT );
 }
 
 /**

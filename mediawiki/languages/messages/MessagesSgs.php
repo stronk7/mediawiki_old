@@ -613,7 +613,6 @@ tudie negaliesėt ėšsauguotė sava pakeitėmu daba. Tamsta galėt nosėkopėjo
 'template-protected' => '(apsauguots)',
 'template-semiprotected' => '(posiau apsauguots)',
 'hiddencategories' => 'Tas poslapis prėklausa $1 {{PLURAL:$1|pakavuotā kateguorėjē|pakavuotoms kateguorėjėms|pakavuotu kateguorėju}}:',
-'nocreatetitle' => 'Poslapiu kūrims aprėbuots',
 'nocreatetext' => '{{SITENAME}} aprėbuojė galėmībe kortė naujus poslapius.
 Tamsta galėt grīžtė ė redagoutė nūnā esonti poslapi, a [[Special:UserLogin|prėsėjongtė a sokortė paskīra]].',
 'permissionserrors' => 'Teisiu klaida',
@@ -877,11 +876,12 @@ Ana gal sodarītė ne daugiau kāp $1 {{PLURAL:$1|sėmbuolis|sėmbuolē|sėmbuol
 'right-read' => 'Skaitītė poslapius',
 'right-edit' => 'Keistė poslapius',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Nauduotuojė kūrėma regėstros',
+
 # User rights log
 'rightslog' => 'Nauduotuoju teisiu istuorėjė',
 'rightslogtext' => 'Pateikiams nauduotuoju teisiu pakeitėmu sārašos.',
-'rightslogentry' => 'pakeista $1 gropės narīstė ėš $2 i $3. Sveikėnam!',
-'rightsnone' => '(juokiū)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'redagoutė ta poslapi',
@@ -1226,9 +1226,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'listusers-submit' => 'Ruodītė',
 'listusers-noresult' => 'Nerast anėjuokiū nauduotuoju.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Nauduotuojė kūrėma regėstros',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Nauduotuoju gropiu teisės',
 'listgrouprights-group' => 'Gropė',
@@ -1288,6 +1285,8 @@ Jēgo bikumet ožsėnuorietomiet liautėis keravuotė straipsnė, spauskat \"neb
 
 'enotif_reset' => 'Pažīmietė vėsus poslapius kāp aplonkītus',
 'enotif_anon_editor' => 'anuonėminis nauduotuos $1',
+'created' => 'sokūrė',
+'changed' => 'pakeitė',
 
 # Delete
 'deletepage' => 'Trintė poslapi',
@@ -1963,6 +1962,6 @@ Tamsta tēpuogi galėt [[Special:EditWatchlist/raw|redagoutė grīnaji keravuoja
 'logentry-newusers-newusers' => '$1 padėrba nauduotuojė paskīra',
 'logentry-newusers-create2' => '$1 padėrba nauduotuojė paskīra $3',
 'logentry-newusers-autocreate' => 'Paskīra $1 bova padėrbta autuomatėškā',
-'newuserlog-byemail' => 'slaptažuodis ėšsiōsts par el. pašta',
+'rightsnone' => '(juokiū)',
 
 );

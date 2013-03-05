@@ -1,5 +1,5 @@
 <?php
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -449,6 +449,7 @@ $messages = array(
 'newwindow' => '(åpnes i et nytt vindu)',
 'cancel' => 'Avbryt',
 'moredotdotdot' => 'Mer …',
+'morenotlisted' => 'Mer som ikke er oppført&nbsp;…',
 'mypage' => 'Min brukerside',
 'mytalk' => 'Min diskusjonsside',
 'anontalk' => 'Brukerdiskusjon for denne IP-adressen',
@@ -513,7 +514,7 @@ $messages = array(
 'unprotectthispage' => 'Endre beskyttelsen av denne siden',
 'newpage' => 'Ny side',
 'talkpage' => 'Diskuter denne siden',
-'talkpagelinktext' => 'Diskusjon',
+'talkpagelinktext' => 'diskusjon',
 'specialpage' => 'Spesialside',
 'personaltools' => 'Personlige verktøy',
 'postcomment' => 'Ny seksjon',
@@ -750,7 +751,7 @@ Ikke glem å endre [[Special:Preferences|innstillingene dine]] på {{SITENAME}}.
 'gotaccount' => 'Har du allerede en konto? $1.',
 'gotaccountlink' => 'Logg inn',
 'userlogin-resetlink' => 'Har du glemt påloggingsdetaljene dine?',
-'createaccountmail' => 'per e-post',
+'createaccountmail' => 'Bruk et midlertidig tilfeldig passord, og send det til e-postadressen nedenfor',
 'createaccountreason' => 'Årsak:',
 'badretype' => 'Passordene samsvarte ikke.',
 'userexists' => 'Brukernavnet er allerede i bruk.
@@ -816,9 +817,10 @@ Du kan ignorere denne beskjeden dersom kontoen ble opprettet ved en feil.',
 'loginlanguagelabel' => 'Språk: $1',
 'suspicious-userlogout' => 'Din forespørsel om å logge ut ble nektet fordi den så ut til å ha bli sendt av en ødelagt nettleser eller en mellomtjener.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Ukjent feil i PHPs mail()-funksjon',
 'user-mail-no-addy' => 'Forsøkte å sende e-post uten e-postadresse',
+'user-mail-no-body' => 'Prøvde å sende e-post med tom eller for kort brødtekst.',
 
 # Change password dialog
 'resetpass' => 'Endre passord',
@@ -885,6 +887,7 @@ Midlertidig passord: $2',
 'changeemail-oldemail' => 'Nåværende e-postadresse:',
 'changeemail-newemail' => 'Ny e-postadresse:',
 'changeemail-none' => '(ingen)',
+'changeemail-password' => 'Ditt passord på {{SITENAME}}:',
 'changeemail-submit' => 'Endre e-post',
 'changeemail-cancel' => 'Avbryt',
 
@@ -1069,7 +1072,6 @@ Det siste loggelementet er oppgitt under som referanse:",
 'template-semiprotected' => '(halvbeskyttet)',
 'hiddencategories' => 'Denne siden er medlem av {{PLURAL:$1|1 skjult kategori|$1 skjulte kategorier}}:',
 'edittools' => '<!-- Teksten her vil vises under redigerings- og opplastingsboksene. -->',
-'nocreatetitle' => 'Sideoppretting er begrenset',
 'nocreatetext' => '{{SITENAME}} har begrensede muligheter for oppretting av nye sider. Du kan gå tilbake og redigere en eksisterende side, eller [[Special:UserLogin|logge inn eller opprette en ny konto]].',
 'nocreate-loggedin' => 'Du har ikke tillatelse til å opprette sider.',
 'sectioneditnotsupported-title' => 'Seksjonsredigering støttes ikke',
@@ -1462,9 +1464,9 @@ Dette kan ikke tilbakestilles.',
 'prefs-emailconfirm-label' => 'E-postbekreftelse:',
 'prefs-textboxsize' => 'Størrelse på redigeringsvindu',
 'youremail' => 'E-post:',
-'username' => 'Brukernavn:',
-'uid' => 'Bruker-ID:',
-'prefs-memberingroups' => 'Medlem i følgende {{PLURAL:$1|gruppe|grupper}}:',
+'username' => '{{GENDER:$1|Brukernavn}}:',
+'uid' => '{{GENDER:$1|Bruker-ID}}:',
+'prefs-memberingroups' => '{{GENDER:$2|Medlem}} i følgende {{PLURAL:$1|gruppe|grupper}}:',
 'prefs-registration' => 'Registreringstid:',
 'yourrealname' => 'Virkelig navn:',
 'yourlanguage' => 'Språk:',
@@ -1500,7 +1502,7 @@ Den kan maks inneholde $1 {{PLURAL:$1|tegn|tegn}}.',
 'prefs-displaywatchlist' => 'Visningsalternativer',
 'prefs-diffs' => 'Forskjeller',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'E-postadressen ser gyldig ut',
 'email-address-validity-invalid' => 'Skriv inn en gyldig e-postadresse',
 
@@ -1613,15 +1615,13 @@ Den kan maks inneholde $1 {{PLURAL:$1|tegn|tegn}}.',
 'right-sendemail' => 'Send e-post til andre brukere',
 'right-passwordreset' => 'Vis e-poster over tilbakestilte passord',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Brukeropprettelseslogg',
+'newuserlogpagetext' => 'Dette er en logg over brukeropprettelser.',
+
 # User rights log
 'rightslog' => 'Brukerrettighetslogg',
 'rightslogtext' => 'Dette er en logg over endringer av brukerrettigheter.',
-'rightslogentry' => 'endret gruppe for $1 fra $2 til $3',
-'rightslogentry-autopromote' => 'ble automatisk forfremmet fra $2 til $3',
-'logentry-rights-rights' => '$1 endret gruppemedlemskap for $3 fra $4 til $5',
-'logentry-rights-rights-legacy' => '$1 endret gruppemedlemskap for $3',
-'logentry-rights-autopromote' => '$1 ble automatisk forfremmet fra $4 til $5',
-'rightsnone' => '(ingen)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'se denne siden',
@@ -2092,6 +2092,8 @@ Kanskje du vil redigere beskrivelsen på dens [$2 filbeskrivelsesside].',
 De burde i stedet lenke til en passende innholdsside.<br />
 En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[MediaWiki:Disambiguationspage]].",
 
+'pageswithprop' => 'Sider med sideverdi',
+
 'doubleredirects' => 'Doble omdirigeringer',
 'doubleredirectstext' => 'Denne siden lister opp de sidene som er omdirigeringer til andre omdirigeringssider.
 Hver rad inneholder lenker til første og andre omdirigering, samt målet for den andre omdirigeringen, som vanligvis er den «virkelige» målsiden som den første omdirigeringen burde peke til.
@@ -2244,7 +2246,7 @@ Se også [[Special:WantedCategories|ønskede kategorier]].',
 'linksearch-ok' => 'Søk',
 'linksearch-text' => 'Jokertegn slik som i «*.wikipedia.org» kan brukes.
 Det kreves at det oppgis minst et toppnivådomene, for eksempel «*.org».<br />
-Støttede protokoller: <code>$1</code> (ikke legg til noen av disse i søket ditt).',
+{{PLURAL:$2|Støttede protokoller}}: <code>$1</code> (ikke legg til noen av disse i søket ditt).',
 'linksearch-line' => '$1 lenkes fra $2',
 'linksearch-error' => 'Jokertegn kan kun brukes foran tjenernavnet.',
 
@@ -2262,10 +2264,6 @@ Støttede protokoller: <code>$1</code> (ikke legg til noen av disse i søket dit
 'activeusers-hidebots' => 'Skjul roboter',
 'activeusers-hidesysops' => 'Skjul administratorer',
 'activeusers-noresult' => 'Ingen brukere funnet.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Brukeropprettelseslogg',
-'newuserlogpagetext' => 'Dette er en logg over brukeropprettelser.',
 
 # Special:ListGroupRights
 'listgrouprights' => 'Rettigheter for brukergrupper',
@@ -2286,7 +2284,7 @@ Mer informasjon om de enkelte rettighetstypene kan finnes [[{{MediaWiki:Listgrou
 'listgrouprights-addgroup-self-all' => 'Kan legge til alle grupper til egen konto',
 'listgrouprights-removegroup-self-all' => 'Kan ta bort alle grupper fra egen konto',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Ingen avsenderadresse',
 'mailnologintext' => 'Du må være [[Special:UserLogin|logget inn]] og ha en gyldig e-postadresse satt i [[Special:Preferences|brukerinnstillingene]] for å sende e-post til andre brukere.',
 'emailuser' => 'E-post til denne brukeren',
@@ -2332,8 +2330,8 @@ E-postadressen du har satt i [[Special:Preferences|innstillingene dine]] vil vis
 'watchnologin' => 'Ikke logget inn',
 'watchnologintext' => 'Du må være [[Special:UserLogin|logget inn]] for å kunne endre overvåkningslisten.',
 'addwatch' => 'Legg til i overvåkningslisten',
-'addedwatchtext' => "Siden «[[:$1]]» er lagt til [[Special:Watchlist|overvåkningslisten]].
-Fremtidige endringer til denne siden og den tilhørende diskusjonssiden blir listet opp her, og siden vil fremstå '''uthevet''' i [[Special:RecentChanges|listen over siste endringer]] for å gjøre det lettere å finne den.",
+'addedwatchtext' => 'Siden «[[:$1]]» er lagt til [[Special:Watchlist|overvåkningslisten]] din.
+Fremtidige endringer til denne siden og den tilhørende diskusjonssiden blir listet opp der.',
 'removewatch' => 'Fjern fra overvåkningslisten',
 'removedwatchtext' => 'Siden «[[:$1]]» er fjernet fra [[Special:Watchlist|overvåkningslisten din]].',
 'watch' => 'Overvåk',
@@ -2367,7 +2365,7 @@ Fremtidige endringer til denne siden og den tilhørende diskusjonssiden blir lis
 'enotif_subject_moved' => '{{SITENAME}}-siden $1 har blitt flyttet av {{gender:$2|$2}}',
 'enotif_subject_restored' => '{{SITENAME}}-siden $1 har blitt gjenopprettet av {{gender:$2|$2}}',
 'enotif_subject_changed' => '{{SITENAME}}-siden $1 har blitt endret av {{gender:$2|$2}}',
-'enotif_body_intro_deleted' => '{{SITENAME}}-siden $1 ble slettet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
+'enotif_body_intro_deleted' => '{{SITENAME}}-siden $1 ble slettet $PAGEEDITDATE av {{gender:$2|$2}}; se $3.',
 'enotif_body_intro_created' => '{{SITENAME}}-siden $1 ble opprettet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
 'enotif_body_intro_moved' => '{{SITENAME}}-siden $1 ble flyttet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
 'enotif_body_intro_restored' => '{{SITENAME}}-siden $1 ble gjenopprettet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
@@ -2402,6 +2400,8 @@ $UNWATCHURL
 
 Tilbakemelding og videre assistanse:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'opprettet',
+'changed' => 'endret',
 
 # Delete
 'deletepage' => 'Slett side',
@@ -2467,6 +2467,8 @@ Se [[Special:ProtectedPages|listen over beskyttede sider]] for listen over gjeld
 'prot_1movedto2' => '[[$1]] flyttet til [[$2]]',
 'protect-badnamespace-title' => 'Navnerom som ikke kan beskyttes',
 'protect-badnamespace-text' => 'Sider i dette navnerommet kan ikke beskyttes.',
+'protect-norestrictiontypes-text' => 'Denne siden kan ikke beskyttes fordi det ikke er noen tilgjengelige begrensningstyper.',
+'protect-norestrictiontypes-title' => 'Ubeskyttbar side',
 'protect-legend' => 'Bekreft låsing',
 'protectcomment' => 'Årsak:',
 'protectexpiry' => 'Utløper:',
@@ -2481,9 +2483,9 @@ Dette er de nåværende innstillingene for siden '''$1''':",
 'protect-cascadeon' => 'Denne siden er for tiden beskyttet fordi den er inkludert på følgende {{PLURAL:$1|side|sider}} som har dypbeskyttelse slått på.
 Du kan endre sidens beskyttelsesnivå, men det vil ikke påvirke dypbeskyttelsen.',
 'protect-default' => 'Tillat alle brukere',
-'protect-fallback' => 'Må ha «$1»-tillatelse',
-'protect-level-autoconfirmed' => 'Blokker uregistrerte og nye brukere',
-'protect-level-sysop' => 'Kun administratorer',
+'protect-fallback' => 'Tillat kun brukere med tillatelsen «$1»',
+'protect-level-autoconfirmed' => 'Tillat kun autobekreftede brukere',
+'protect-level-sysop' => 'Tillat kun administratorer',
 'protect-summary-cascade' => 'dypbeskyttelse',
 'protect-expiring' => 'utløper $1 (UTC)',
 'protect-expiring-local' => 'løper ut $1',
@@ -2577,7 +2579,7 @@ $1',
 'blanknamespace' => '(Hoved)',
 
 # Contributions
-'contributions' => 'Brukerbidrag',
+'contributions' => '{{GENDER:$1|Brukerbidrag}}',
 'contributions-title' => 'Brukerbidrag av $1',
 'mycontris' => 'Bidrag',
 'contribsub2' => 'For $1 ($2)',
@@ -2779,7 +2781,7 @@ Du kan oppdatere omdirigeringer som peker til den opprinnelige tittelen automati
 Om du velger å ikke gjøre det, sjekk at flyttingen ikke fører til [[Special:DoubleRedirects|doble]] eller [[Special:BrokenRedirects|ødelagte omdirigeringer]].
 Du er ansvarlig for at lenker fortsetter å peke til de sidene de er ment å peke til.
 
-Legg merke til at siden '''ikke''' kan flyttes hvis det allerede finnes en side med den nye tittelen, med mindre den er tom eller er en omdirigeringsside uten historikk.
+Legg merke til at siden '''ikke''' kan flyttes hvis det allerede finnes en side med den nye tittelen, med mindre sistnevnte er tom eller er en omdirigeringsside uten historikk.
 Det betyr at du kan flytte en side tilbake dit den kom fra hvis du gjør en feil, og du kan ikke overskrive eksisterende sider ved et uhell.
 
 '''Advarsel!'''
@@ -2794,7 +2796,7 @@ Merk at sider '''ikke''' blir flyttet om det allerede finnes en side med den tit
 Dette betyr at du kan endre tittelen til en tittel siden hadde tidligere, og at du ikke kan skrive over en eksisterende side.
 
 '''Advarsel!'''
-Dette kan være en drastisk og uventen endring for en populær side;
+Dette kan være en drastisk og uventet endring for en populær side;
 vær sikker på at du forstår konsekvensene av dette før du fortsetter.",
 'movepagetalktext' => "Den tilhørende diskusjonssiden vil automatisk bli flyttet sammen med siden '''med mindre:'''
 *Det allerede finnes en diskusjonsside som ikke er tom under det nye navnet, eller
@@ -2958,6 +2960,7 @@ Lagre den på din egen datamaskin og last den opp her.',
 'import-error-interwiki' => 'Siden «$1» ble ikke importert fordi navnet er reservert for ekstern lenking (interwiki).',
 'import-error-special' => 'Siden «$1» ble ikke importert fordi den tilhører et spesialnavnerom som ikke tillater sider.',
 'import-error-invalid' => 'Siden «$1» ble ikke importert fordi navnet er ugyldig.',
+'import-error-unserialize' => 'Revisjon $2 av siden «$1» kunne ikke serialiseres. Det ble rapportert at revisjonen bruker innholdsmodellen $3 serialisert som $4.',
 'import-options-wrong' => 'Feil {{PLURAL:$2|opsjon|opsjoner}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'Den angitte grunnsiden har en ugyldig tittel.',
 'import-rootpage-nosubpage' => 'Navnerommet "$1" til grunnsiden tillater ikke undersider.',
@@ -3127,7 +3130,8 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-recent-authors' => 'Antall nylige forfattere',
 'pageinfo-magic-words' => '{{PLURAL:$1|Magisk|Magiske}} ord ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|Skjult kategori|Skjulte kategorier}} ($1)',
-'pageinfo-templates' => 'Transkludert {{PLURAL:$1|mal|maler}} ($1)',
+'pageinfo-templates' => 'Transkluderte {{PLURAL:$1|mal|maler}} ($1)',
+'pageinfo-transclusions' => '{{PLURAL:$1|Sider}} transkludert på ($1)',
 'pageinfo-toolboxlink' => 'Sideinformasjon',
 'pageinfo-redirectsto' => 'Omdirigerer til',
 'pageinfo-redirectsto-info' => 'info',
@@ -3136,6 +3140,10 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-protect-cascading' => 'Dypbeskyttelse starter herfra',
 'pageinfo-protect-cascading-yes' => 'Ja',
 'pageinfo-protect-cascading-from' => 'Dypbeskyttelse fra',
+'pageinfo-category-info' => 'Kategoriinformasjon',
+'pageinfo-category-pages' => 'Antall sider',
+'pageinfo-category-subcats' => 'Antall underkategorier',
+'pageinfo-category-files' => 'Antall filer',
 
 # Skin names
 'skinname-standard' => 'Standard',
@@ -3191,6 +3199,7 @@ Ved å åpne den kan systemet ditt kompromitteres.",
 'file-nohires' => 'Ingen høyere oppløsning tilgjengelig.',
 'svg-long-desc' => 'SVG-fil, standardstørrelse $1 × $2 piksler, filstørrelse: $3',
 'svg-long-desc-animated' => 'Animert SVG-fil, standardstørrelse $1 × $2 piksler, filstørrelse: $3',
+'svg-long-error' => 'Ugyldig SVG-fil: $1',
 'show-big-image' => 'Full oppløsning',
 'show-big-image-preview' => 'Størrelse på denne forhåndsvisningen: $1.',
 'show-big-image-other' => '{{PLURAL:$2|Annen oppløsning|Andre oppløsninger}}: $1.',
@@ -3221,6 +3230,8 @@ Ved å åpne den kan systemet ditt kompromitteres.",
 'minutes' => '{{PLURAL:$1|$1 minutt|$1 minutter}}',
 'hours' => '{{PLURAL:$1|$1 time|$1 timer}}',
 'days' => '{{PLURAL:$1|$1 dag|$1 dager}}',
+'months' => '{{PLURAL:$1|$1 måned|$1 måneder}}',
+'years' => '{{PLURAL:$1|$1 år}}',
 'ago' => '$1 siden',
 'just-now' => 'nettopp',
 
@@ -3654,7 +3665,7 @@ Rotert 90° mot klokka og vridd vertikalt',
 'monthsall' => 'alle',
 'limitall' => 'alle',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Bekreft e-postadresse',
 'confirmemail_noemail' => 'Du har ikke oppgitt en gyldig e-postadresse i [[Special:Preferences|innstillingene dine]].',
 'confirmemail_text' => 'Du må bekrefte e-postadressen din før du kan benytte deg av e-posttjenester på {{SITENAME}}. Trykk på knappen under for å sende en bekreftelsesmelding til e-postadressen din. Meldingen vil inneholde en lenke med en kode; følg lenken for å bekrefte at e-postadressen er gyldig.',
@@ -3898,7 +3909,7 @@ Bilder vises med full oppløsning, mens andre filtyper startes direkte gjennom s
 'specialpages-group-highuse' => 'Ofte brukte sider',
 'specialpages-group-pages' => 'Sidelister',
 'specialpages-group-pagetools' => 'Sideverktøy',
-'specialpages-group-wiki' => 'Informasjon og verktøy for wikien',
+'specialpages-group-wiki' => 'Data og verktøy',
 'specialpages-group-redirects' => 'Omdirigerende spesialsider',
 'specialpages-group-spam' => 'Spamverktøy',
 
@@ -3995,8 +4006,12 @@ Bilder vises med full oppløsning, mens andre filtyper startes direkte gjennom s
 'logentry-newusers-newusers' => 'Kontoen $1 ble opprettet',
 'logentry-newusers-create' => 'Kontoen $1 ble opprettet',
 'logentry-newusers-create2' => 'Kontoen $3 ble opprettet av $1',
+'logentry-newusers-byemail' => 'Kontoen $3 ble opprettet av $1 og passordet sendt med e-post',
 'logentry-newusers-autocreate' => 'Konto $1 ble opprettet automatisk',
-'newuserlog-byemail' => 'passord sendt på e-post',
+'logentry-rights-rights' => '$1 endret gruppemedlemskap for $3 fra $4 til $5',
+'logentry-rights-rights-legacy' => '$1 endret gruppemedlemskap for $3',
+'logentry-rights-autopromote' => '$1 ble automatisk forfremmet fra $4 til $5',
+'rightsnone' => '(ingen)',
 
 # Feedback
 'feedback-bugornote' => 'Hvis du er klar til å sende inn en detaljert feilrapport, vennligst [$1 rapporter en feil].
@@ -4050,6 +4065,7 @@ Om det ikke er tilfellet, kan du bruke det enkle skjemaet som du finner under. K
 'api-error-ok-but-empty' => 'Intern feil: ingen svar fra server.',
 'api-error-overwrite' => 'Det er ikke tillatt å overskrive eksisterende filer.',
 'api-error-stashfailed' => 'Internal error: tjeneren greide ikke å lagre midlertidig fil.',
+'api-error-publishfailed' => 'Intern feil: Tjeneren greide ikke å publisere midlertidig fil.',
 'api-error-timeout' => 'Serveren svarte ikke innenfor forventet tid.',
 'api-error-unclassified' => 'En ukjent feil har oppstått',
 'api-error-unknown-code' => 'Ukjent feil: "$1"',
@@ -4071,5 +4087,5 @@ Om det ikke er tilfellet, kan du bruke det enkle skjemaet som du finner under. K
 'duration-millennia' => '$1 {{PLURAL:$1|millennium|millennier}}',
 
 # Unknown messages
-'svg-long-error' => 'Ugyldig SVG-fil: $1',
+'pageswithprop-legend' => 'Sider med en sideverdi',
 );

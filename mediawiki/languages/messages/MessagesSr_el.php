@@ -1068,7 +1068,6 @@ Poslednji zapis u dnevniku je prikazan ispod:",
 'hiddencategories' => 'Ova stranica je član {{PLURAL:$1|jedne skrivene kategorije|$1 skrivene kategorije|$1 skrivenih kategorija}}:',
 'edittools' => '<!-- Ovaj tekst će biti prikazan ispod obrasca za uređivanje i otpremanje. -->',
 'edittools-upload' => '-',
-'nocreatetitle' => 'Pravljenje stranice je ograničeno',
 'nocreatetext' => 'Na ovom vikiju je ograničeno pravljenje novih stranica.
 Možete se vratiti i urediti postojeću stranicu, ili se [[Special:UserLogin|prijavite ili otvorite nalog]].',
 'nocreate-loggedin' => 'Nemate dozvolu da pravite nove stranice.',
@@ -1627,15 +1626,13 @@ Ako izaberete da ga unesete, ono će biti korišćeno za pripisivanje vašeg rad
 'right-sendemail' => 'slanje e-poruka drugim korisnicima',
 'right-passwordreset' => 'pregledanje poruka za obnavljanje lozinke',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Dnevnik novih korisnika',
+'newuserlogpagetext' => 'Ovo je istorija novih korisnika.',
+
 # User rights log
 'rightslog' => 'Dnevnik korisničkih prava',
 'rightslogtext' => 'Ovo je dnevnik izmena korisničkih prava.',
-'rightslogentry' => '{{GENDER:|je promenio|je promenila|je promenio}} prava za člana $1 iz $2 u $3',
-'rightslogentry-autopromote' => 'je unapređen iz $2 u $3',
-'logentry-rights-rights' => '$1 {{GENDER:$1|je promenio|je promenila|je promenio}} članstvo grupe za $3 iz $4 u $5',
-'logentry-rights-rights-legacy' => '$1 {{GENDER:$1|je promenio|je promenila|je promenio}} članstvo grupe za $3',
-'logentry-rights-autopromote' => '$1 je automatski {{GENDER:$1|unapređen|unapređena|unapređen}} iz $4 u $5',
-'rightsnone' => '(ništa)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'čitanje ove stranice',
@@ -2301,10 +2298,6 @@ Podržani protokoli: <code>$1</code> (zadaje http:// ako ne navedete protokol).'
 'activeusers-hidesysops' => 'Sakrij administratore',
 'activeusers-noresult' => 'Korisnik nije pronađen.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Dnevnik novih korisnika',
-'newuserlogpagetext' => 'Ovo je istorija novih korisnika.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Prava korisničkih grupa',
 'listgrouprights-summary' => 'Sledi spisak korisničkih grupa na ovom vikiju, zajedno s pravima pristupa.
@@ -2438,6 +2431,8 @@ $UNWATCHURL
 
 Podrška i dalja pomoć:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'napravljena',
+'changed' => 'izmenjena',
 
 # Delete
 'deletepage' => 'Obriši stranicu',
@@ -3235,6 +3230,8 @@ Ovo je verovatno izazvano vezom do spoljašnjeg sajta koji se nalazi na crnoj li
 'markedaspatrollederror' => 'Ne mogu da označim kao patrolirano',
 'markedaspatrollederrortext' => 'Morate izabrati izmenu da biste je označili kao pregledanu.',
 'markedaspatrollederror-noautopatrol' => 'Ne možete da označite svoje izmene kao patrolirane.',
+'markedaspatrollednotify' => 'Ova izmena na stranici „$1“ je označena kao pregledana.',
+'markedaspatrollederrornotify' => 'Nije uspešno označavanje ove stranice kao pregledanom.',
 
 # Patrol log
 'patrol-log-page' => 'Dnevnik patroliranja',
@@ -4230,7 +4227,10 @@ Slike su prikazane u punoj veličini, a druge vrste datoteka se pokreću pomoću
 'logentry-newusers-create' => '$1 {{GENDER:|je otvorio|je otvorila|je otvorio}} korisnički nalog',
 'logentry-newusers-create2' => '$1 {{GENDER:|je otvorio|je otvorila|je otvorio}} korisnički nalog $3',
 'logentry-newusers-autocreate' => 'Nalog $1 je samostalno otvoren',
-'newuserlog-byemail' => 'lozinka je poslata e-poštom',
+'logentry-rights-rights' => '$1 {{GENDER:$1|je promenio|je promenila|je promenio}} članstvo grupe za $3 iz $4 u $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$1|je promenio|je promenila|je promenio}} članstvo grupe za $3',
+'logentry-rights-autopromote' => '$1 je automatski {{GENDER:$1|unapređen|unapređena|unapređen}} iz $4 u $5',
+'rightsnone' => '(ništa)',
 
 # Feedback
 'feedback-bugornote' => 'Ako ste spremni da detaljno opišete tehnički problem, onda [$1 prijavite grešku].

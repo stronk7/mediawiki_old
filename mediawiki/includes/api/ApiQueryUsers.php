@@ -124,7 +124,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				$this->addWhereFld( 'user_name', $goodNames );
 				$this->addTables( 'user_groups' );
 				$this->addJoinConds( array( 'user_groups' => array( 'INNER JOIN', 'ug_user=user_id' ) ) );
-				$this->addFields( array('user_name', 'ug_group') );
+				$this->addFields( array( 'user_name', 'ug_group' ) );
 				$userGroupsRes = $this->select( __METHOD__ );
 
 				foreach( $userGroupsRes as $row ) {
@@ -161,7 +161,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['implicitgroups'] ) ) {
-					$data[$name]['implicitgroups'] =  $user->getAutomaticGroups();
+					$data[$name]['implicitgroups'] = $user->getAutomaticGroups();
 				}
 
 				if ( isset( $this->prop['rights'] ) ) {
@@ -250,7 +250,7 @@ class ApiQueryUsers extends ApiQueryBase {
 			}
 			$done[] = $u;
 		}
-		return $result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
 	}
 
 	/**
@@ -310,7 +310,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				'  rights         - Lists all the rights the user(s) has',
 				'  editcount      - Adds the user\'s edit count',
 				'  registration   - Adds the user\'s registration timestamp',
-				'  emailable      - Tags if the user can and wants to receive e-mail through [[Special:Emailuser]]',
+				'  emailable      - Tags if the user can and wants to receive email through [[Special:Emailuser]]',
 				'  gender         - Tags the gender of the user. Returns "male", "female", or "unknown"',
 			),
 			'users' => 'A list of users to obtain the same information for',
@@ -395,9 +395,5 @@ class ApiQueryUsers extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Users';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -152,7 +152,7 @@ class SpecialContributions extends SpecialPage {
 				$apiParams['month'] = $this->opts['month'];
 			}
 
-			$url = wfScript( 'api' ) . '?' . wfArrayToCGI( $apiParams );
+			$url = wfScript( 'api' ) . '?' . wfArrayToCgi( $apiParams );
 
 			$out->redirect( $url, '301' );
 			return;
@@ -360,7 +360,7 @@ class SpecialContributions extends SpecialPage {
 		if ( !isset( $this->opts['target'] ) ) {
 			$this->opts['target'] = '';
 		} else {
-			$this->opts['target'] = str_replace( '_' , ' ' , $this->opts['target'] );
+			$this->opts['target'] = str_replace( '_', ' ', $this->opts['target'] );
 		}
 
 		if ( !isset( $this->opts['namespace'] ) ) {
@@ -424,7 +424,7 @@ class SpecialContributions extends SpecialPage {
 			Xml::radioLabel(
 				$this->msg( 'sp-contributions-newbies' )->text(),
 				'contribs',
-				'newbie' ,
+				'newbie',
 				'newbie',
 				$this->opts['contribs'] == 'newbie',
 				array( 'class' => 'mw-input' )
@@ -445,7 +445,7 @@ class SpecialContributions extends SpecialPage {
 					( $this->opts['target'] ? array() : array( 'autofocus' )
 				)
 			) . ' '
-		) ;
+		);
 
 		$namespaceSelection =
 			Xml::tags( 'td', array( 'class' => 'mw-label' ),
@@ -483,7 +483,7 @@ class SpecialContributions extends SpecialPage {
 						array( 'title' => $this->msg( 'tooltip-namespace_association' )->text(), 'class' => 'mw-input' )
 					) . '&#160;'
 				)
-			) ;
+			);
 
 		if ( $this->getUser()->isAllowed( 'deletedhistory' ) ) {
 			$deletedOnlyCheck = Html::rawElement( 'span', array( 'style' => 'white-space: nowrap' ),
@@ -521,7 +521,7 @@ class SpecialContributions extends SpecialPage {
 				$this->msg( 'sp-contributions-submit' )->text(),
 				array( 'class' => 'mw-submit' )
 			)
-		) ;
+		);
 
 		$form .=
 			Xml::fieldset( $this->msg( 'sp-contributions-search' )->text() ) .
@@ -727,10 +727,10 @@ class ContribsPager extends ReverseChronologicalPager {
 			}
 		}
 		if ( $this->deletedOnly ) {
-			$condition[] = "rev_deleted != '0'";
+			$condition[] = 'rev_deleted != 0';
 		}
 		if ( $this->topOnly ) {
-			$condition[] = "rev_id = page_latest";
+			$condition[] = 'rev_id = page_latest';
 		}
 		return array( $tables, $index, $condition, $join_conds );
 	}
@@ -827,7 +827,7 @@ class ContribsPager extends ReverseChronologicalPager {
 		 */
 		wfSuppressWarnings();
 		$rev = new Revision( $row );
-		$validRevision = $rev->getParentId() !== null;
+		$validRevision = (bool) $rev->getId();
 		wfRestoreWarnings();
 
 		if ( $validRevision ) {
@@ -946,8 +946,12 @@ class ContribsPager extends ReverseChronologicalPager {
 		// Let extensions add data
 		wfRunHooks( 'ContributionsLineEnding', array( $this, &$ret, $row, &$classes ) );
 
-		$classes = implode( ' ', $classes );
-		$ret = "<li class=\"$classes\">$ret</li>\n";
+		if ( $classes === array() && $ret === '' ) {
+			wfDebug( 'Dropping Special:Contribution row that could not be formatted' );
+			$ret = "<!-- Could not format Special:Contribution row. -->\n";
+		} else {
+			$ret = Html::rawElement( 'li', array( 'class' => $classes ), $ret ) . "\n";
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $ret;

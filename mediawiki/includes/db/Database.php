@@ -62,9 +62,10 @@ interface DatabaseType {
 	 * Fetch the next row from the given result object, in object form.
 	 * Fields can be retrieved with $row->fieldname, with fields acting like
 	 * member variables.
+	 * If no more rows are available, false is returned.
 	 *
 	 * @param $res ResultWrapper|object as returned from DatabaseBase::query(), etc.
-	 * @return Row object
+	 * @return object|bool
 	 * @throws DBUnexpectedError Thrown if the database returns an error
 	 */
 	function fetchObject( $res );
@@ -72,9 +73,10 @@ interface DatabaseType {
 	/**
 	 * Fetch the next row from the given result object, in associative array
 	 * form.  Fields are retrieved with $row['fieldname'].
+	 * If no more rows are available, false is returned.
 	 *
 	 * @param $res ResultWrapper result object as returned from DatabaseBase::query(), etc.
-	 * @return Row object
+	 * @return array|bool
 	 * @throws DBUnexpectedError Thrown if the database returns an error
 	 */
 	function fetchRow( $res );
@@ -112,8 +114,8 @@ interface DatabaseType {
 	 * The value inserted should be fetched from nextSequenceValue()
 	 *
 	 * Example:
-	 * $id = $dbw->nextSequenceValue('page_page_id_seq');
-	 * $dbw->insert('page',array('page_id' => $id));
+	 * $id = $dbw->nextSequenceValue( 'page_page_id_seq' );
+	 * $dbw->insert( 'page', array( 'page_id' => $id ) );
 	 * $id = $dbw->insertId();
 	 *
 	 * @return int
@@ -393,7 +395,7 @@ abstract class DatabaseBase implements DatabaseType {
 		return wfSetVar( $this->mTablePrefix, $prefix );
 	}
 
- 	/**
+	/**
 	 * Set the filehandle to copy write statements to.
 	 *
 	 * @param $fh filehandle
@@ -584,7 +586,7 @@ abstract class DatabaseBase implements DatabaseType {
 		global $wgDebugDBTransactions;
 		$this->mFlags |= $flag;
 		if ( ( $flag & DBO_TRX) & $wgDebugDBTransactions ) {
-			wfDebug("Implicit transactions are now  disabled.\n");
+			wfDebug( "Implicit transactions are now  disabled.\n" );
 		}
 	}
 
@@ -597,7 +599,7 @@ abstract class DatabaseBase implements DatabaseType {
 		global $wgDebugDBTransactions;
 		$this->mFlags &= ~$flag;
 		if ( ( $flag & DBO_TRX ) && $wgDebugDBTransactions ) {
-			wfDebug("Implicit transactions are now disabled.\n");
+			wfDebug( "Implicit transactions are now disabled.\n" );
 		}
 	}
 
@@ -671,12 +673,12 @@ abstract class DatabaseBase implements DatabaseType {
 			if ( $wgCommandLineMode ) {
 				$this->mFlags &= ~DBO_TRX;
 				if ( $wgDebugDBTransactions ) {
-					wfDebug("Implicit transaction open disabled.\n");
+					wfDebug( "Implicit transaction open disabled.\n" );
 				}
 			} else {
 				$this->mFlags |= DBO_TRX;
 				if ( $wgDebugDBTransactions ) {
-					wfDebug("Implicit transaction open enabled.\n");
+					wfDebug( "Implicit transaction open enabled.\n" );
 				}
 			}
 		}
@@ -724,9 +726,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 *    Valid options are: host, user, password, dbname, flags, tablePrefix
 	 * @return DatabaseBase subclass or null
 	 */
-	public final static function factory( $dbType, $p = array() ) {
+	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql', 'postgres', 'sqlite', 'oracle', 'mssql', 'ibm_db2'
+			'mysql', 'postgres', 'sqlite', 'oracle', 'mssql'
 		);
 		$dbType = strtolower( $dbType );
 		$class = 'Database' . ucfirst( $dbType );
@@ -772,7 +774,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $errno
 	 * @param $errstr
 	 */
-	protected function connectionErrorHandler( $errno,  $errstr ) {
+	protected function connectionErrorHandler( $errno, $errstr ) {
 		$this->mPHPError = $errstr;
 	}
 
@@ -780,6 +782,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Closes a database connection.
 	 * if it is open : commits any open transactions
 	 *
+	 * @throws MWException
 	 * @return Bool operation success. true if already closed.
 	 */
 	public function close() {
@@ -810,7 +813,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @since 1.20
 	 * @return bool: Whether connection was closed successfully
 	 */
-	protected abstract function closeConnection();
+	abstract protected function closeConnection();
 
 	/**
 	 * @param $error String: fallback error message, used if none is given by DB
@@ -832,7 +835,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param  $sql String: SQL query.
 	 * @return ResultWrapper Result object to feed to fetchObject, fetchRow, ...; or false on failure
 	 */
-	protected abstract function doQuery( $sql );
+	abstract protected function doQuery( $sql );
 
 	/**
 	 * Determine whether a query writes to the DB.
@@ -920,7 +923,7 @@ abstract class DatabaseBase implements DatabaseType {
 			if ( strpos( $sqlstart, "SHOW " ) !== 0 && strpos( $sqlstart, "SET " ) !== 0 ) {
 				global $wgDebugDBTransactions;
 				if ( $wgDebugDBTransactions ) {
-					wfDebug("Implicit transaction start.\n");
+					wfDebug( "Implicit transaction start.\n" );
 				}
 				$this->begin( __METHOD__ . " ($fname)" );
 				$this->mTrxAutomatic = true;
@@ -1095,7 +1098,7 @@ abstract class DatabaseBase implements DatabaseType {
 			case '\\&': return '&';
 		}
 
-		list( /* $n */ , $arg ) = each( $this->preparedArgs );
+		list( /* $n */, $arg ) = each( $this->preparedArgs );
 
 		switch( $matches[1] ) {
 			case '?': return $this->addQuotes( $arg );
@@ -1179,26 +1182,9 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 		}
 
-		if ( isset( $options['GROUP BY'] ) ) {
-			$gb = is_array( $options['GROUP BY'] )
-				? implode( ',', $options['GROUP BY'] )
-				: $options['GROUP BY'];
-			$preLimitTail .= " GROUP BY {$gb}";
-		}
+		$preLimitTail .= $this->makeGroupByWithHaving( $options );
 
-		if ( isset( $options['HAVING'] ) ) {
-			$having = is_array( $options['HAVING'] )
-				? $this->makeList( $options['HAVING'], LIST_AND )
-				: $options['HAVING'];
-			$preLimitTail .= " HAVING {$having}";
-		}
-
-		if ( isset( $options['ORDER BY'] ) ) {
-			$ob = is_array( $options['ORDER BY'] )
-				? implode( ',', $options['ORDER BY'] )
-				: $options['ORDER BY'];
-			$preLimitTail .= " ORDER BY {$ob}";
-		}
+		$preLimitTail .= $this->makeOrderBy( $options );
 
 		// if (isset($options['LIMIT'])) {
 		//	$tailOpts .= $this->limitResult('', $options['LIMIT'],
@@ -1258,6 +1244,49 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		return array( $startOpts, $useIndex, $preLimitTail, $postLimitTail );
+	}
+
+	/**
+	 * Returns an optional GROUP BY with an optional HAVING
+	 *
+	 * @param $options Array: associative array of options
+	 * @return string
+	 * @see DatabaseBase::select()
+	 * @since 1.21
+	 */
+	public function makeGroupByWithHaving( $options ) {
+		$sql = '';
+		if ( isset( $options['GROUP BY'] ) ) {
+			$gb = is_array( $options['GROUP BY'] )
+				? implode( ',', $options['GROUP BY'] )
+				: $options['GROUP BY'];
+			$sql .= ' GROUP BY ' . $gb;
+		}
+		if ( isset( $options['HAVING'] ) ) {
+			$having = is_array( $options['HAVING'] )
+				? $this->makeList( $options['HAVING'], LIST_AND )
+				: $options['HAVING'];
+			$sql .= ' HAVING ' . $having;
+		}
+		return $sql;
+	}
+
+	/**
+	 * Returns an optional ORDER BY
+	 *
+	 * @param $options Array: associative array of options
+	 * @return string
+	 * @see DatabaseBase::select()
+	 * @since 1.21
+	 */
+	public function makeOrderBy( $options ) {
+		if ( isset( $options['ORDER BY'] ) ) {
+			$ob = is_array( $options['ORDER BY'] )
+				? implode( ',', $options['ORDER BY'] )
+				: $options['ORDER BY'];
+			return ' ORDER BY ' . $ob;
+		}
+		return '';
 	}
 
 	/**
@@ -1392,7 +1421,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * join, the second is an SQL fragment giving the join condition for that
 	 * table. For example:
 	 *
-	 *    array( 'page' => array('LEFT JOIN','page_latest=rev_id') )
+	 *    array( 'page' => array( 'LEFT JOIN', 'page_latest=rev_id' ) )
 	 *
 	 * @return ResultWrapper. If the query returned no rows, a ResultWrapper
 	 *   with no rows in it will be returned. If there was a query error, a
@@ -2029,46 +2058,38 @@ abstract class DatabaseBase implements DatabaseType {
 		# Split database and table into proper variables.
 		# We reverse the explode so that database.table and table both output
 		# the correct table.
-		$dbDetails = array_reverse( explode( '.', $name, 2 ) );
-		if ( isset( $dbDetails[1] ) ) {
-			list( $table, $database ) = $dbDetails;
+		$dbDetails = explode( '.', $name, 2 );
+		if ( count( $dbDetails ) == 2 ) {
+			list( $database, $table ) = $dbDetails;
+			# We don't want any prefix added in this case
+			$prefix = '';
 		} else {
 			list( $table ) = $dbDetails;
-		}
-		$prefix = $this->mTablePrefix; # Default prefix
-
-		# A database name has been specified in input. We don't want any
-		# prefixes added.
-		if ( isset( $database ) ) {
-			$prefix = '';
-		}
-
-		# Note that we use the long format because php will complain in in_array if
-		# the input is not an array, and will complain in is_array if it is not set.
-		if ( !isset( $database ) # Don't use shared database if pre selected.
-		 && isset( $wgSharedDB ) # We have a shared database
-		 && !$this->isQuotedIdentifier( $table ) # Paranoia check to prevent shared tables listing '`table`'
-		 && isset( $wgSharedTables )
-		 && is_array( $wgSharedTables )
-		 && in_array( $table, $wgSharedTables ) ) { # A shared table is selected
-			$database = $wgSharedDB;
-			$prefix   = isset( $wgSharedPrefix ) ? $wgSharedPrefix : $prefix;
-		}
-
-		# Quote the $database and $table and apply the prefix if not quoted.
-		if ( isset( $database ) ) {
-			if ( $format == 'quoted' && !$this->isQuotedIdentifier( $database ) ) {
-				$database = $this->addIdentifierQuotes( $database );
+			if ( $wgSharedDB !== null # We have a shared database
+				&& !$this->isQuotedIdentifier( $table ) # Paranoia check to prevent shared tables listing '`table`'
+				&& in_array( $table, $wgSharedTables ) # A shared table is selected
+			) {
+				$database = $wgSharedDB;
+				$prefix   = $wgSharedPrefix === null ? $this->mTablePrefix : $wgSharedPrefix;
+			} else {
+				$database = null;
+				$prefix = $this->mTablePrefix; # Default prefix
 			}
 		}
 
-		$table = "{$prefix}{$table}";
-		if ( $format == 'quoted' && !$this->isQuotedIdentifier( $table ) ) {
-			$table = $this->addIdentifierQuotes( "{$table}" );
+		# Quote $table and apply the prefix if not quoted.
+		$tableName = "{$prefix}{$table}";
+		if ( $format == 'quoted' && !$this->isQuotedIdentifier( $tableName ) ) {
+			$tableName = $this->addIdentifierQuotes( $tableName );
 		}
 
-		# Merge our database and table into our final table name.
-		$tableName = ( isset( $database ) ? "{$database}.{$table}" : "{$table}" );
+		# Quote $database and merge it with the table name if needed
+		if ( $database !== null ) {
+			if ( $format == 'quoted' && !$this->isQuotedIdentifier( $database ) ) {
+				$database = $this->addIdentifierQuotes( $database );
+			}
+			$tableName = $database . '.' . $tableName;
+		}
 
 		return $tableName;
 	}
@@ -2078,7 +2099,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * This is handy when you need to construct SQL for joins
 	 *
 	 * Example:
-	 * extract($dbr->tableNames('user','watchlist'));
+	 * extract( $dbr->tableNames( 'user', 'watchlist' ) );
 	 * $sql = "SELECT wl_namespace,wl_title FROM $watchlist,$user
 	 *         WHERE wl_user=user_id AND wl_user=$nameWithQuotes";
 	 *
@@ -2100,7 +2121,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * This is handy when you need to construct SQL for joins
 	 *
 	 * Example:
-	 * list( $user, $watchlist ) = $dbr->tableNamesN('user','watchlist');
+	 * list( $user, $watchlist ) = $dbr->tableNamesN( 'user', 'watchlist' );
 	 * $sql = "SELECT wl_namespace,wl_title FROM $watchlist,$user
 	 *         WHERE wl_user=user_id AND wl_user=$nameWithQuotes";
 	 *
@@ -2592,7 +2613,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $fname String name of the calling function
 	 *
 	 * @throws DBUnexpectedError
-	 * @return bool
+	 * @return bool|ResultWrapper
 	 */
 	public function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
@@ -2652,7 +2673,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -2994,18 +3015,18 @@ abstract class DatabaseBase implements DatabaseType {
 
 		if ( $this->mTrxLevel ) { // implicit commit
 			if ( !$this->mTrxAutomatic ) {
-				// We want to warn about inadvertently nested begin/commit pairs, but not about auto-committing
-				// implicit transactions that were started by query() because DBO_TRX was set.
-
-				wfWarn( "$fname: Transaction already in progress (from {$this->mTrxFname}), " .
-					" performing implicit commit!" );
+				// We want to warn about inadvertently nested begin/commit pairs, but not about
+				// auto-committing implicit transactions that were started by query() via DBO_TRX
+				$msg = "$fname: Transaction already in progress (from {$this->mTrxFname}), " .
+					" performing implicit commit!";
+				wfWarn( $msg );
+				wfLogDBError( $msg );
 			} else {
 				// if the transaction was automatic and has done write operations,
 				// log it if $wgDebugDBTransactions is enabled.
-
 				if ( $this->mTrxDoneWrites && $wgDebugDBTransactions ) {
-					wfDebug( "$fname: Automatic transaction with writes in progress (from {$this->mTrxFname}), " .
-						" performing implicit commit!\n" );
+					wfDebug( "$fname: Automatic transaction with writes in progress" .
+						" (from {$this->mTrxFname}), performing implicit commit!\n" );
 				}
 			}
 
@@ -3280,6 +3301,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *      generated dynamically using $filename
 	 * @param bool|callable $inputCallback Callback: Optional function called for each complete line sent
 	 * @throws MWException
+	 * @throws Exception|MWException
 	 * @return bool|string
 	 */
 	public function sourceFile(
@@ -3446,7 +3468,7 @@ abstract class DatabaseBase implements DatabaseType {
 			// replace `{$var}`
 			$ins = str_replace( '`{$' . $var . '}`', $this->addIdentifierQuotes( $value ), $ins );
 			// replace /*$var*/
-			$ins = str_replace( '/*$' . $var . '*/', $this->strencode( $value ) , $ins );
+			$ins = str_replace( '/*$' . $var . '*/', $this->strencode( $value ), $ins );
 		}
 		return $ins;
 	}

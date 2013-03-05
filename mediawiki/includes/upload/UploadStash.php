@@ -110,10 +110,9 @@ class UploadStash {
 			throw new UploadStashBadPathException( "key '$key' is not in a proper format" );
 		}
 
-		if ( !$noAuth ) {
-			if ( !$this->isLoggedIn ) {
-				throw new UploadStashNotLoggedInException( __METHOD__ . ' No user is logged in, files must belong to users' );
-			}
+		if ( !$noAuth && !$this->isLoggedIn ) {
+			throw new UploadStashNotLoggedInException( __METHOD__ .
+				' No user is logged in, files must belong to users' );
 		}
 
 		if ( !isset( $this->fileMetadata[$key] ) ) {
@@ -207,8 +206,8 @@ class UploadStash {
 		//
 		// some things that when combined will make a suitably unique key.
 		// see: http://www.jwz.org/doc/mid.html
-		list ($usec, $sec) = explode( ' ', microtime() );
-		$usec = substr($usec, 2);
+		list( $usec, $sec ) = explode( ' ', microtime() );
+		$usec = substr( $usec, 2 );
 		$key = wfBaseConvert( $sec . $usec, 10, 36 ) . '.' .
 			wfBaseConvert( mt_rand(), 10, 36 ) . '.'.
 			$this->userId . '.' .
@@ -358,6 +357,9 @@ class UploadStash {
 	 */
 	public function removeFileNoAuth( $key ) {
 		wfDebug( __METHOD__ . " clearing row $key\n" );
+
+		// Ensure we have the UploadStashFile loaded for this key
+		$this->getFile( $key );
 
 		$dbw = $this->repo->getMasterDb();
 

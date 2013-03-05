@@ -254,9 +254,11 @@ class Revision implements IDBAccessObject {
 			$matchId = 'page_latest';
 		}
 		return self::loadFromConds( $db,
-			array( "rev_id=$matchId",
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
+			array(
+				"rev_id=$matchId",
+				'page_namespace' => $title->getNamespace(),
+				'page_title'     => $title->getDBkey()
+			)
 		);
 	}
 
@@ -272,9 +274,11 @@ class Revision implements IDBAccessObject {
 	 */
 	public static function loadFromTimestamp( $db, $title, $timestamp ) {
 		return self::loadFromConds( $db,
-			array( 'rev_timestamp'  => $db->timestamp( $timestamp ),
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
+			array(
+				'rev_timestamp'  => $db->timestamp( $timestamp ),
+				'page_namespace' => $title->getNamespace(),
+				'page_title'     => $title->getDBkey()
+			)
 		);
 	}
 
@@ -330,9 +334,11 @@ class Revision implements IDBAccessObject {
 	public static function fetchRevision( $title ) {
 		return self::fetchFromConds(
 			wfGetDB( DB_SLAVE ),
-			array( 'rev_id=page_latest',
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
+			array(
+				'rev_id=page_latest',
+				'page_namespace' => $title->getNamespace(),
+				'page_title'     => $title->getDBkey()
+			)
 		);
 	}
 
@@ -493,13 +499,13 @@ class Revision implements IDBAccessObject {
 			$this->mTimestamp =         $row->rev_timestamp;
 			$this->mDeleted   = intval( $row->rev_deleted );
 
-			if( !isset( $row->rev_parent_id ) ) {
-				$this->mParentId = is_null( $row->rev_parent_id ) ? null : 0;
+			if ( !isset( $row->rev_parent_id ) ) {
+				$this->mParentId = null;
 			} else {
-				$this->mParentId  = intval( $row->rev_parent_id );
+				$this->mParentId = intval( $row->rev_parent_id );
 			}
 
-			if( !isset( $row->rev_len ) || is_null( $row->rev_len ) ) {
+			if ( !isset( $row->rev_len ) ) {
 				$this->mSize = null;
 			} else {
 				$this->mSize = intval( $row->rev_len );
@@ -532,7 +538,7 @@ class Revision implements IDBAccessObject {
 			}
 
 			// Lazy extraction...
-			$this->mText      = null;
+			$this->mText = null;
 			if( isset( $row->old_text ) ) {
 				$this->mTextRow = $row;
 			} else {
@@ -557,8 +563,8 @@ class Revision implements IDBAccessObject {
 			if ( !empty( $row['content'] ) ) {
 				//@todo: when is that set? test with external store setup! check out insertOn() [dk]
 				if ( !empty( $row['text_id'] ) ) {
-					throw new MWException( "Text already stored in external store (id {$row['text_id']}), "
-											. "can't serialize content object" );
+					throw new MWException( "Text already stored in external store (id {$row['text_id']}), " .
+						"can't serialize content object" );
 				}
 
 				$row['content_model'] = $row['content']->getModel();
@@ -615,12 +621,12 @@ class Revision implements IDBAccessObject {
 				} elseif ( $this->mTitle->getArticleID() !== $this->mPage ) {
 					// Got different page IDs. This may be legit (e.g. during undeletion),
 					// but it seems worth mentioning it in the log.
-					wfDebug( "Page ID " . $this->mPage . " mismatches the ID "
-							. $this->mTitle->getArticleID() . " provided by the Title object." );
+					wfDebug( "Page ID " . $this->mPage . " mismatches the ID " .
+						$this->mTitle->getArticleID() . " provided by the Title object." );
 				}
 			}
 
-			$this->mCurrent   = false;
+			$this->mCurrent = false;
 
 			// If we still have no length, see it we have the text to figure it out
 			if ( !$this->mSize ) {
@@ -718,7 +724,7 @@ class Revision implements IDBAccessObject {
 				array( 'page', 'revision' ),
 				self::selectPageFields(),
 				array( 'page_id=rev_page',
-					   'rev_id' => $this->mId ),
+					'rev_id' => $this->mId ),
 				__METHOD__ );
 			if ( $row ) {
 				$this->mTitle = Title::newFromRow( $row );
@@ -1148,9 +1154,13 @@ class Revision implements IDBAccessObject {
 	  *
 	  * @param $row Object: the text data
 	  * @param $prefix String: table prefix (default 'old_')
+	  * @param $wiki String|false: the name of the wiki to load the revision text from
+	  *         (same as the the wiki $row was loaded from) or false to indicate the local
+	  *         wiki (this is the default). Otherwise, it must be a symbolic wiki database
+	  *         identifier as understood by the LoadBalancer class.
 	  * @return String: text the text requested or false on failure
 	  */
-	public static function getRevisionText( $row, $prefix = 'old_' ) {
+	public static function getRevisionText( $row, $prefix = 'old_', $wiki = false ) {
 		wfProfileIn( __METHOD__ );
 
 		# Get data
@@ -1178,7 +1188,7 @@ class Revision implements IDBAccessObject {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
-			$text = ExternalStore::fetchFromURL( $url );
+			$text = ExternalStore::fetchFromURL( $url, array( 'wiki' => $wiki ) );
 		}
 
 		// If the text was fetched without an error, convert it
@@ -1577,7 +1587,7 @@ class Revision implements IDBAccessObject {
 	 */
 	static function getTimestampFromId( $title, $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		// Casting fix for DB2
+		// Casting fix for databases that can't take '' for rev_id
 		if ( $id == '' ) {
 			$id = 0;
 		}

@@ -39,6 +39,9 @@ abstract class Job {
 		$removeDuplicates,
 		$error;
 
+	/** @var Array Additional queue metadata */
+	public $metadata = array();
+
 	/*-------------------------------------------------------------------------
 	 * Abstract functions
 	 *------------------------------------------------------------------------*/
@@ -80,6 +83,7 @@ abstract class Job {
 	 * removed later on, when the first one is popped.
 	 *
 	 * @param $jobs array of Job objects
+	 * @return bool
 	 * @deprecated 1.21
 	 */
 	public static function batchInsert( $jobs ) {
@@ -94,6 +98,7 @@ abstract class Job {
 	 * large batches of jobs can cause slave lag.
 	 *
 	 * @param $jobs array of Job objects
+	 * @return bool
 	 * @deprecated 1.21
 	 */
 	public static function safeBatchInsert( $jobs ) {
@@ -172,10 +177,17 @@ abstract class Job {
 	}
 
 	/**
-	 * @return bool
+	 * @return bool Whether only one of each identical set of jobs should be run
 	 */
 	public function ignoreDuplicates() {
 		return $this->removeDuplicates;
+	}
+
+	/**
+	 * @return bool Whether this job can be retried on failure by job runners
+	 */
+	public function allowRetries() {
+		return true;
 	}
 
 	/**
@@ -242,6 +254,16 @@ abstract class Job {
 				if ( $paramString != '' ) {
 					$paramString .= ' ';
 				}
+				if ( is_array( $value ) ) {
+					$value = "array(" . count( $value ) . ")";
+				} elseif ( is_object( $value ) && !method_exists( $value, '__toString' ) ) {
+					$value = "object(" . get_class( $value ) . ")";
+				}
+				$value = (string)$value;
+				if ( mb_strlen( $value ) > 1024 ) {
+					$value = "string(" . mb_strlen( $value ) . ")";
+				}
+
 				$paramString .= "$key=$value";
 			}
 		}

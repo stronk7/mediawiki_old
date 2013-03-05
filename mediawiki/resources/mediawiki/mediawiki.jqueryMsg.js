@@ -12,7 +12,19 @@
 				'SITENAME' : mw.config.get( 'wgSiteName' )
 			},
 			messages : mw.messages,
-			language : mw.language
+			language : mw.language,
+
+			// Same meaning as in mediawiki.js.
+			//
+			// Only 'text', 'parse', and 'escaped' are supported, and the
+			// actual escaping for 'escaped' is done by other code (generally
+			// through jqueryMsg).
+			//
+			// However, note that this default only
+			// applies to direct calls to jqueryMsg. The default for mediawiki.js itself
+			// is 'text', including when it uses jqueryMsg.
+			format: 'parse'
+
 		};
 
 	/**
@@ -57,7 +69,15 @@
 	 * @return {Function} function suitable for assigning to window.gM
 	 */
 	mw.jqueryMsg.getMessageFunction = function ( options ) {
-		var failableParserFn = getFailableParserFn( options );
+		var failableParserFn = getFailableParserFn( options ),
+			format;
+
+		if ( options && options.format !== undefined ) {
+			format = options.format;
+		} else {
+			format = parserDefaults.format;
+		}
+
 		/**
 		 * N.B. replacements are variadic arguments or an array in second parameter. In other words:
 		 *    somefunction(a, b, c, d)
@@ -69,7 +89,12 @@
 		 * @return {string} Rendered HTML.
 		 */
 		return function () {
-			return failableParserFn( arguments ).html();
+			var failableResult = failableParserFn( arguments );
+			if ( format === 'text' || format === 'escaped' ) {
+				return failableResult.text();
+			} else {
+				return failableResult.html();
+			}
 		};
 	};
 
@@ -100,6 +125,8 @@
 		 */
 		return function () {
 			var $target = this.empty();
+			// TODO: Simply $target.append( failableParserFn( arguments ).contents() )
+			// or Simply $target.append( failableParserFn( arguments ) )
 			$.each( failableParserFn( arguments ).contents(), function ( i, node ) {
 				$target.append( node );
 			} );
@@ -114,12 +141,28 @@
 	 */
 	mw.jqueryMsg.parser = function ( options ) {
 		this.settings = $.extend( {}, parserDefaults, options );
+		this.settings.onlyCurlyBraceTransform = ( this.settings.format === 'text' || this.settings.format === 'escaped' );
+
 		this.emitter = new mw.jqueryMsg.htmlEmitter( this.settings.language, this.settings.magic );
 	};
 
 	mw.jqueryMsg.parser.prototype = {
-		// cache, map of mediaWiki message key to the AST of the message. In most cases, the message is a string so this is identical.
-		// (This is why we would like to move this functionality server-side).
+		/**
+		 * Cache mapping MediaWiki message keys and the value onlyCurlyBraceTransform, to the AST of the message.
+		 *
+		 * In most cases, the message is a string so this is identical.
+		 * (This is why we would like to move this functionality server-side).
+		 *
+		 * The two parts of the key are separated by colon.  For example:
+		 *
+		 * "message-key:true": ast
+		 *
+		 * if they key is "message-key" and onlyCurlyBraceTransform is true.
+		 *
+		 * This cache is shared by all instances of mw.jqueryMsg.parser.
+		 *
+		 * @static
+		 */
 		astCache: {},
 
 		/**
@@ -140,16 +183,19 @@
 		 * @return {String|Array} string of '[key]' if message missing, simple string if possible, array of arrays if needs parsing
 		 */
 		getAst: function ( key ) {
-			if ( this.astCache[ key ] === undefined ) {
-				var wikiText = this.settings.messages.get( key );
+			var cacheKey = [key, this.settings.onlyCurlyBraceTransform].join( ':' ), wikiText;
+
+			if ( this.astCache[ cacheKey ] === undefined ) {
+				wikiText = this.settings.messages.get( key );
 				if ( typeof wikiText !== 'string' ) {
 					wikiText = '\\[' + key + '\\]';
 				}
-				this.astCache[ key ] = this.wikiTextToAst( wikiText );
+				this.astCache[ cacheKey ] = this.wikiTextToAst( wikiText );
 			}
-			return this.astCache[ key ];
+			return this.astCache[ cacheKey ];
 		},
-		/*
+
+		/**
 		 * Parses the input wikiText into an abstract syntax tree, essentially an s-expression.
 		 *
 		 * CAVEAT: This does not parse all wikitext. It could be more efficient, but it's pretty good already.
@@ -161,12 +207,12 @@
 		 */
 		wikiTextToAst: function ( input ) {
 			var pos,
-				regularLiteral, regularLiteralWithoutBar, regularLiteralWithoutSpace, backslash, anyCharacter,
-				escapedOrLiteralWithoutSpace, escapedOrLiteralWithoutBar, escapedOrRegularLiteral,
+				regularLiteral, regularLiteralWithoutBar, regularLiteralWithoutSpace, regularLiteralWithSquareBrackets,
+				backslash, anyCharacter, escapedOrLiteralWithoutSpace, escapedOrLiteralWithoutBar, escapedOrRegularLiteral,
 				whitespace, dollar, digits,
-				openExtlink, closeExtlink, openLink, closeLink, templateName, pipe, colon,
+				openExtlink, closeExtlink, wikilinkPage, wikilinkContents, openLink, closeLink, templateName, pipe, colon,
 				templateContents, openTemplate, closeTemplate,
-				nonWhitespaceExpression, paramExpression, expression, result;
+				nonWhitespaceExpression, paramExpression, expression, curlyBraceTransformExpression, result;
 
 			// Indicates current position in input as we parse through it.
 			// Shared among all parsing functions below.
@@ -272,6 +318,7 @@
 			regularLiteral = makeRegexParser( /^[^{}\[\]$\\]/ );
 			regularLiteralWithoutBar = makeRegexParser(/^[^{}\[\]$\\|]/);
 			regularLiteralWithoutSpace = makeRegexParser(/^[^{}\[\]$\s]/);
+			regularLiteralWithSquareBrackets = makeRegexParser( /^[^{}$\\]/ );
 			backslash = makeStringParser( '\\' );
 			anyCharacter = makeRegexParser( /^./ );
 			function escapedLiteral() {
@@ -295,19 +342,33 @@
 			] );
 			// Used to define "literals" without spaces, in space-delimited situations
 			function literalWithoutSpace() {
-				 var result = nOrMore( 1, escapedOrLiteralWithoutSpace )();
-				 return result === null ? null : result.join('');
+				var result = nOrMore( 1, escapedOrLiteralWithoutSpace )();
+				return result === null ? null : result.join('');
 			}
 			// Used to define "literals" within template parameters. The pipe character is the parameter delimeter, so by default
 			// it is not a literal in the parameter
 			function literalWithoutBar() {
-				 var result = nOrMore( 1, escapedOrLiteralWithoutBar )();
-				 return result === null ? null : result.join('');
+				var result = nOrMore( 1, escapedOrLiteralWithoutBar )();
+				return result === null ? null : result.join('');
 			}
+
+			// Used for wikilink page names.  Like literalWithoutBar, but
+			// without allowing escapes.
+			function unescapedLiteralWithoutBar() {
+				var result = nOrMore( 1, regularLiteralWithoutBar )();
+				return result === null ? null : result.join('');
+			}
+
 			function literal() {
-				 var result = nOrMore( 1, escapedOrRegularLiteral )();
-				 return result === null ? null : result.join('');
+				var result = nOrMore( 1, escapedOrRegularLiteral )();
+				return result === null ? null : result.join('');
 			}
+
+			function curlyBraceTransformExpressionLiteral() {
+				var result = nOrMore( 1, regularLiteralWithSquareBrackets )();
+				return result === null ? null : result.join('');
+			}
+
 			whitespace = makeRegexParser( /^\s+/ );
 			dollar = makeStringParser( '$' );
 			digits = makeRegexParser( /^\d+/ );
@@ -357,16 +418,48 @@
 			}
 			openLink = makeStringParser( '[[' );
 			closeLink = makeStringParser( ']]' );
+			pipe = makeStringParser( '|' );
+
+			function template() {
+				var result = sequence( [
+					openTemplate,
+					templateContents,
+					closeTemplate
+				] );
+				return result === null ? null : result[1];
+			}
+
+			wikilinkPage = choice( [
+				unescapedLiteralWithoutBar,
+				template
+			] );
+
+			function pipedWikilink() {
+				var result = sequence( [
+					wikilinkPage,
+					pipe,
+					expression
+				] );
+				return result === null ? null : [ result[0], result[2] ];
+			}
+
+			wikilinkContents = choice( [
+				pipedWikilink,
+				wikilinkPage // unpiped link
+			] );
+
 			function link() {
-				var result, parsedResult;
+				var result, parsedResult, parsedLinkContents;
 				result = null;
+
 				parsedResult = sequence( [
 					openLink,
-					expression,
+					wikilinkContents,
 					closeLink
 				] );
 				if ( parsedResult !== null ) {
-					 result = [ 'WLINK', parsedResult[1] ];
+					parsedLinkContents = parsedResult[1];
+					result = [ 'WLINK' ].concat( parsedLinkContents );
 				}
 				return result;
 			}
@@ -389,7 +482,7 @@
 				// use a CONCAT operator if there are multiple nodes, otherwise return the first node, raw.
 				return expr.length > 1 ? [ 'CONCAT' ].concat( expr ) : expr[0];
 			}
-			pipe = makeStringParser( '|' );
+
 			function templateWithReplacement() {
 				var result = sequence( [
 					templateName,
@@ -430,14 +523,6 @@
 			] );
 			openTemplate = makeStringParser('{{');
 			closeTemplate = makeStringParser('}}');
-			function template() {
-				var result = sequence( [
-					openTemplate,
-					templateContents,
-					closeTemplate
-				] );
-				return result === null ? null : result[1];
-			}
 			nonWhitespaceExpression = choice( [
 				template,
 				link,
@@ -454,6 +539,7 @@
 				replacement,
 				literalWithoutBar
 			] );
+
 			expression = choice( [
 				template,
 				link,
@@ -462,8 +548,23 @@
 				replacement,
 				literal
 			] );
-			function start() {
-				var result = nOrMore( 0, expression )();
+
+			// Used when only {{-transformation is wanted, for 'text'
+			// or 'escaped' formats
+			curlyBraceTransformExpression = choice( [
+				template,
+				replacement,
+				curlyBraceTransformExpressionLiteral
+			] );
+
+
+			/**
+			 * Starts the parse
+			 *
+			 * @param {Function} rootExpression root parse function
+			 */
+			function start( rootExpression ) {
+				var result = nOrMore( 0, rootExpression )();
 				if ( result === null ) {
 					return null;
 				}
@@ -472,7 +573,9 @@
 			// everything above this point is supposed to be stateless/static, but
 			// I am deferring the work of turning it into prototypes & objects. It's quite fast enough
 			// finally let's do some actual work...
-			result = start();
+
+			// If you add another possible rootExpression, you must update the astCache key scheme.
+			result = start( this.settings.onlyCurlyBraceTransform ? curlyBraceTransformExpression : expression );
 
 			/*
 			 * For success, the p must have gotten to the end of the input
@@ -560,6 +663,7 @@
 					} );
 				} else {
 					// strings, integers, anything else
+					// (will soon switch to createTextNode() for non-objects)
 					$span.append( node );
 				}
 			} );
@@ -571,7 +675,7 @@
 		 * Note that we expect the parsed parameter to be zero-based. i.e. $1 should have become [ 0 ].
 		 * if the specified parameter is not found return the same string
 		 * (e.g. "$99" -> parameter 98 -> not found -> return "$99" )
-		 * TODO throw error if nodes.length > 1 ?
+		 * TODO: Throw error if nodes.length > 1 ?
 		 * @param {Array} of one element, integer, n >= 0
 		 * @return {String} replacement
 		 */
@@ -579,13 +683,7 @@
 			var index = parseInt( nodes[0], 10 );
 
 			if ( index < replacements.length ) {
-				if ( typeof arg === 'string' ) {
-					// replacement is a string, escape it
-					return mw.html.escape( replacements[index] );
-				} else {
-					// replacement is no string, don't touch!
-					return replacements[index];
-				}
+				return replacements[index];
 			} else {
 				// index not found, fallback to displaying variable
 				return '$' + ( index + 1 );
@@ -594,11 +692,41 @@
 
 		/**
 		 * Transform wiki-link
-		 * TODO unimplemented
+		 *
+		 * TODO:
+		 * It only handles basic cases, either no pipe, or a pipe with an explicit
+		 * anchor.
+		 *
+		 * It does not attempt to handle features like the pipe trick.
+		 * However, the pipe trick should usually not be present in wikitext retrieved
+		 * from the server, since the replacement is done at save time.
+		 * It may, though, if the wikitext appears in extension-controlled content.
+		 *
 		 * @param nodes
 		 */
-		wlink: function () {
-			return 'unimplemented';
+		wlink: function ( nodes ) {
+			var page, anchor, url;
+
+			page = nodes[0];
+			url = mw.util.wikiGetlink( page );
+
+			// [[Some Page]] or [[Namespace:Some Page]]
+			if ( nodes.length === 1 ) {
+				anchor = page;
+			}
+
+			/*
+			 * [[Some Page|anchor text]] or
+			 * [[Namespace:Some Page|anchor]
+			 */
+			else {
+				anchor = nodes[1];
+			}
+
+			return $( '<a />' ).attr( {
+				title: page,
+				href: url
+			} ).text( anchor );
 		},
 
 		/**
@@ -695,6 +823,30 @@
 			var form = nodes[0],
 				word = nodes[1];
 			return word && form && this.language.convertGrammar( word, form );
+		},
+
+		/**
+		 * Tranform parsed structure into a int: (interface language) message include
+		 * Invoked by putting {{int:othermessage}} into a message
+		 * @param {Array} of nodes
+		 * @return {string} Other message
+		 */
+		int: function ( nodes ) {
+			return mw.jqueryMsg.getMessageFunction()( nodes[0].toLowerCase() );
+		},
+
+		/**
+		 * Takes an unformatted number (arab, no group separators and . as decimal separator)
+		 * and outputs it in the localized digit script and formatted with decimal
+		 * separator, according to the current language
+		 * @param {Array} of nodes
+		 * @return {Number|String} formatted number
+		 */
+		formatnum: function ( nodes ) {
+			var isInteger = ( nodes[1] && nodes[1] === 'R' ) ? true : false,
+				number = nodes[0];
+
+			return this.language.convertNumber( number, isInteger );
 		}
 	};
 	// Deprecated! don't rely on gM existing.
@@ -707,15 +859,22 @@
 	// Replace the default message parser with jqueryMsg
 	oldParser = mw.Message.prototype.parser;
 	mw.Message.prototype.parser = function () {
+		var messageFunction;
+
 		// TODO: should we cache the message function so we don't create a new one every time? Benchmark this maybe?
 		// Caching is somewhat problematic, because we do need different message functions for different maps, so
 		// we'd have to cache the parser as a member of this.map, which sounds a bit ugly.
 		// Do not use mw.jqueryMsg unless required
-		if ( this.map.get( this.key ).indexOf( '{{' ) < 0 ) {
+		if ( this.format === 'plain' || !/\{\{|\[/.test(this.map.get( this.key ) ) ) {
 			// Fall back to mw.msg's simple parser
 			return oldParser.apply( this );
 		}
-		var messageFunction = mw.jqueryMsg.getMessageFunction( { 'messages': this.map } );
+
+		messageFunction = mw.jqueryMsg.getMessageFunction( {
+			'messages': this.map,
+			// For format 'escaped', escaping part is handled by mediawiki.js
+			'format': this.format
+		} );
 		return messageFunction( this.key, this.parameters );
 	};
 

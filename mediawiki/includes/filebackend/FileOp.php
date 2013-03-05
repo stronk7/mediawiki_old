@@ -42,7 +42,6 @@ abstract class FileOp {
 	protected $state = self::STATE_NEW; // integer
 	protected $failed = false; // boolean
 	protected $async = false; // boolean
-	protected $useLatest = true; // boolean
 	protected $batchId; // string
 
 	protected $doOperation = true; // boolean; operation is not a no-op
@@ -125,16 +124,6 @@ abstract class FileOp {
 	}
 
 	/**
-	 * Whether to allow stale data for file reads and stat checks
-	 *
-	 * @param $allowStale bool
-	 * @return void
-	 */
-	final public function allowStaleReads( $allowStale ) {
-		$this->useLatest = !$allowStale;
-	}
-
-	/**
 	 * Get the value of the parameter with the given name
 	 *
 	 * @param $name string
@@ -178,7 +167,7 @@ abstract class FileOp {
 	 * @return Array
 	 */
 	final public function applyDependencies( array $deps ) {
-		$deps['read']  += array_fill_keys( $this->storagePathsRead(), 1 );
+		$deps['read'] += array_fill_keys( $this->storagePathsRead(), 1 );
 		$deps['write'] += array_fill_keys( $this->storagePathsChanged(), 1 );
 		return $deps;
 	}
@@ -411,7 +400,7 @@ abstract class FileOp {
 		if ( isset( $predicates['exists'][$source] ) ) {
 			return $predicates['exists'][$source]; // previous op assures this
 		} else {
-			$params = array( 'src' => $source, 'latest' => $this->useLatest );
+			$params = array( 'src' => $source, 'latest' => true );
 			return $this->backend->fileExists( $params );
 		}
 	}
@@ -429,7 +418,7 @@ abstract class FileOp {
 		} elseif ( isset( $predicates['exists'][$source] ) && !$predicates['exists'][$source] ) {
 			return false; // previous op assures this
 		} else {
-			$params = array( 'src' => $source, 'latest' => $this->useLatest );
+			$params = array( 'src' => $source, 'latest' => true );
 			return $this->backend->getFileSha1Base36( $params );
 		}
 	}

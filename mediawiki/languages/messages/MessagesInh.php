@@ -8,6 +8,7 @@
  * @file
  *
  * @author Amire80
+ * @author Andrijko Z.
  * @author Reedy
  * @author Sapral Mikail
  * @author Tagir
@@ -631,9 +632,11 @@ $messages = array(
 'right-move' => 'ОагIувний цIи хувца',
 'right-movefile' => 'Паьлий цIи хувца',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Дакъалаьцархоший дIаязбeнна таптар',
+
 # User rights log
 'rightslog' => 'Дакъалаьцархочунна бокъона тептар',
-'rightsnone' => '(а)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'Укх оагIуви дешам',
@@ -790,9 +793,6 @@ $messages = array(
 'linksearch-ok' => 'Лаха',
 'linksearch-line' => '$1 тIа Iинк $2 юкъера',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Дакъалаьцархоший дIаязбeнна таптар',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(тоабий дагарче)',
 
@@ -871,7 +871,7 @@ $messages = array(
 'blanknamespace' => '(Корта)',
 
 # Contributions
-'contributions' => 'Дакъалаьцархочунна къахьегам',
+'contributions' => '{{GENDER:$1|Дакъалаьцархочунна}} къахьегам',
 'contributions-title' => '$1 дакъалаьцархочунна къахьегам',
 'mycontris' => 'Са къахьегам',
 'contribsub2' => '$1 ($2) баь болх',
@@ -1179,5 +1179,8 @@ $messages = array(
 'htmlform-submit' => 'ДIадахьийта',
 'htmlform-reset' => 'Хувцамаш юхадаккха',
 'htmlform-selectorother-other' => 'Кхыдола',
+
+# New logging system
+'rightsnone' => '(а)',
 
 );

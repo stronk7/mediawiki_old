@@ -176,8 +176,8 @@ class PostgresTransactionState {
 				$old = reset( $this->mCurrentState );
 				$new = reset( $this->mNewState );
 				foreach ( self::$WATCHED as $watched ) {
-					if ($old !== $new) {
-						$this->log_changed($old, $new, $watched);
+					if ( $old !== $new ) {
+						$this->log_changed( $old, $new, $watched );
 					}
 					$old = next( $this->mCurrentState );
 					$new = next( $this->mNewState );
@@ -197,11 +197,11 @@ class PostgresTransactionState {
 	}
 
 	protected function log_changed( $old, $new, $watched ) {
-		wfDebug(sprintf($watched["desc"],
+		wfDebug( sprintf( $watched["desc"],
 			$this->mConn,
 			$this->describe_changed( $old, $watched["states"] ),
-			$this->describe_changed( $new, $watched["states"] ))
-		);
+			$this->describe_changed( $new, $watched["states"] )
+		) );
 	}
 }
 
@@ -218,7 +218,7 @@ class SavepointPostgres {
 	protected $id;
 	protected $didbegin;
 
-	public function __construct ($dbw, $id) {
+	public function __construct ( $dbw, $id ) {
 		$this->dbw = $dbw;
 		$this->id = $id;
 		$this->didbegin = false;
@@ -232,12 +232,14 @@ class SavepointPostgres {
 	public function __destruct() {
 		if ( $this->didbegin ) {
 			$this->dbw->rollback();
+			$this->didbegin = false;
 		}
 	}
 
 	public function commit() {
 		if ( $this->didbegin ) {
 			$this->dbw->commit();
+			$this->didbegin = false;
 		}
 	}
 
@@ -245,29 +247,29 @@ class SavepointPostgres {
 		global $wgDebugDBTransactions;
 		if ( $this->dbw->doQuery( $keyword . " " . $this->id ) !== false ) {
 			if ( $wgDebugDBTransactions ) {
-				wfDebug( sprintf ($msg_ok, $this->id ) );
+				wfDebug( sprintf ( $msg_ok, $this->id ) );
 			}
 		} else {
-			wfDebug( sprintf ($msg_failed, $this->id ) );
+			wfDebug( sprintf ( $msg_failed, $this->id ) );
 		}
 	}
 
 	public function savepoint() {
-		$this->query("SAVEPOINT",
+		$this->query( "SAVEPOINT",
 			"Transaction state: savepoint \"%s\" established.\n",
 			"Transaction state: establishment of savepoint \"%s\" FAILED.\n"
 		);
 	}
 
 	public function release() {
-		$this->query("RELEASE",
+		$this->query( "RELEASE",
 			"Transaction state: savepoint \"%s\" released.\n",
 			"Transaction state: release of savepoint \"%s\" FAILED.\n"
 		);
 	}
 
 	public function rollback() {
-		$this->query("ROLLBACK TO",
+		$this->query( "ROLLBACK TO",
 			"Transaction state: savepoint \"%s\" rolled back.\n",
 			"Transaction state: rollback of savepoint \"%s\" FAILED.\n"
 		);
@@ -391,6 +393,9 @@ class DatabasePostgres extends DatabaseBase {
 		$this->query( "SET datestyle = 'ISO, YMD'", __METHOD__ );
 		$this->query( "SET timezone = 'GMT'", __METHOD__ );
 		$this->query( "SET standard_conforming_strings = on", __METHOD__ );
+		if ( $this->getServerVersion() >= 9.0 ) {
+			$this->query( "SET bytea_output = 'escape'", __METHOD__ ); // PHP bug 53127
+		}
 
 		global $wgDBmwschema;
 		$this->determineCoreSchema( $wgDBmwschema );
@@ -604,7 +609,7 @@ class DatabasePostgres extends DatabaseBase {
 	 * Takes same arguments as Database::select()
 	 * @return int
 	 */
-	function estimateRowCount( $table, $vars = '*', $conds='', $fname = 'DatabasePostgres::estimateRowCount', $options = array() ) {
+	function estimateRowCount( $table, $vars = '*', $conds = '', $fname = 'DatabasePostgres::estimateRowCount', $options = array() ) {
 		$options['EXPLAIN'] = true;
 		$res = $this->select( $table, $vars, $conds, $fname, $options );
 		$rows = -1;
@@ -682,7 +687,7 @@ class DatabasePostgres extends DatabaseBase {
 					AND	i.indclass[s.g] = opcls.oid
 					AND	pg_am.oid = opcls.opcmethod
 __INDEXATTR__;
-		$res = $this->query($sql, __METHOD__);
+		$res = $this->query( $sql, __METHOD__ );
 		$a = array();
 		if ( $res ) {
 			foreach ( $res as $row ) {
@@ -690,7 +695,7 @@ __INDEXATTR__;
 					$row->attname,
 					$row->opcname,
 					$row->amname,
-					$row->option);
+					$row->option );
 			}
 		} else {
 			return null;
@@ -733,7 +738,7 @@ __INDEXATTR__;
 		}
 
 		$table = $this->tableName( $table );
-		if (! isset( $this->numeric_version ) ) {
+		if ( !isset( $this->numeric_version ) ) {
 			$this->getServerVersion();
 		}
 
@@ -985,7 +990,7 @@ __INDEXATTR__;
 		$endArray = array();
 
 		foreach( $result as $table ) {
-			$vars = get_object_vars($table);
+			$vars = get_object_vars( $table );
 			$table = array_pop( $vars );
 			if( !$prefix || strpos( $table, $prefix ) === 0 ) {
 				$endArray[] = $table;
@@ -1066,7 +1071,7 @@ __INDEXATTR__;
 	 * @return string return default schema for the current session
 	 */
 	function getCurrentSchema() {
-		$res = $this->query( "SELECT current_schema()", __METHOD__);
+		$res = $this->query( "SELECT current_schema()", __METHOD__ );
 		$row = $this->fetchRow( $res );
 		return $row[0];
 	}
@@ -1082,11 +1087,11 @@ __INDEXATTR__;
 	 * @return array list of actual schemas for the current sesson
 	 */
 	function getSchemas() {
-		$res = $this->query( "SELECT current_schemas(false)", __METHOD__);
+		$res = $this->query( "SELECT current_schemas(false)", __METHOD__ );
 		$row = $this->fetchRow( $res );
 		$schemas = array();
 		/* PHP pgsql support does not support array type, "{a,b}" string is returned */
-		return $this->pg_array_parse($row[0], $schemas);
+		return $this->pg_array_parse( $row[0], $schemas );
 	}
 
 	/**
@@ -1099,10 +1104,10 @@ __INDEXATTR__;
 	 * @return array how to search for table names schemas for the current user
 	 */
 	function getSearchPath() {
-		$res = $this->query( "SHOW search_path", __METHOD__);
+		$res = $this->query( "SHOW search_path", __METHOD__ );
 		$row = $this->fetchRow( $res );
 		/* PostgreSQL returns SHOW values as strings */
-		return explode(",", $row[0]);
+		return explode( ",", $row[0] );
 	}
 
 	/**
@@ -1113,7 +1118,7 @@ __INDEXATTR__;
 	 * @param $search_path array list of schemas to be searched by default
 	 */
 	function setSearchPath( $search_path ) {
-		$this->query( "SET search_path = " . implode(", ", $search_path) );
+		$this->query( "SET search_path = " . implode( ", ", $search_path ) );
 	}
 
 	/**
@@ -1134,7 +1139,7 @@ __INDEXATTR__;
 		if ( $this->schemaExists( $desired_schema ) ) {
 			if ( in_array( $desired_schema, $this->getSchemas() ) ) {
 				$this->mCoreSchema = $desired_schema;
-				wfDebug("Schema \"" . $desired_schema . "\" already in the search path\n");
+				wfDebug( "Schema \"" . $desired_schema . "\" already in the search path\n" );
 			} else {
 				/**
 				 * Prepend our schema (e.g. 'mediawiki') in front
@@ -1146,11 +1151,11 @@ __INDEXATTR__;
 					$this->addIdentifierQuotes( $desired_schema ));
 				$this->setSearchPath( $search_path );
 				$this->mCoreSchema = $desired_schema;
-				wfDebug("Schema \"" . $desired_schema . "\" added to the search path\n");
+				wfDebug( "Schema \"" . $desired_schema . "\" added to the search path\n" );
 			}
 		} else {
 			$this->mCoreSchema = $this->getCurrentSchema();
-			wfDebug("Schema \"" . $desired_schema . "\" not found, using current \"". $this->mCoreSchema ."\"\n");
+			wfDebug( "Schema \"" . $desired_schema . "\" not found, using current \"" . $this->mCoreSchema . "\"\n" );
 		}
 		/* Commit SET otherwise it will be rollbacked on error or IGNORE SELECT */
 		$this->commit( __METHOD__ );
@@ -1256,8 +1261,8 @@ SQL;
 	}
 
 	function constraintExists( $table, $constraint ) {
-		$SQL = sprintf( "SELECT 1 FROM information_schema.table_constraints ".
-			   "WHERE constraint_schema = %s AND table_name = %s AND constraint_name = %s",
+		$SQL = sprintf( "SELECT 1 FROM information_schema.table_constraints " .
+				"WHERE constraint_schema = %s AND table_name = %s AND constraint_name = %s",
 			$this->addQuotes( $this->getCoreSchema() ),
 			$this->addQuotes( $table ),
 			$this->addQuotes( $constraint )
@@ -1384,23 +1389,9 @@ SQL;
 			}
 		}
 
-		if ( isset( $options['GROUP BY'] ) ) {
-			$gb = is_array( $options['GROUP BY'] )
-				? implode( ',', $options['GROUP BY'] )
-				: $options['GROUP BY'];
-			$preLimitTail .= " GROUP BY {$gb}";
-		}
+		$preLimitTail .= $this->makeGroupByWithHaving( $options );
 
-		if ( isset( $options['HAVING'] ) ) {
-			$preLimitTail .= " HAVING {$options['HAVING']}";
-		}
-
-		if ( isset( $options['ORDER BY'] ) ) {
-			$ob = is_array( $options['ORDER BY'] )
-				? implode( ',', $options['ORDER BY'] )
-				: $options['ORDER BY'];
-			$preLimitTail .= " ORDER BY {$ob}";
-		}
+		$preLimitTail .= $this->makeOrderBy( $options );
 
 		//if ( isset( $options['LIMIT'] ) ) {
 		//	$tailOpts .= $this->limitResult( '', $options['LIMIT'],
@@ -1447,5 +1438,66 @@ SQL;
 			}
 		}
 		return parent::streamStatementEnd( $sql, $newLine );
+	}
+
+	/**
+	 * Check to see if a named lock is available. This is non-blocking.
+	 * See http://www.postgresql.org/docs/8.2/static/functions-admin.html#FUNCTIONS-ADVISORY-LOCKS
+	 *
+	 * @param $lockName String: name of lock to poll
+	 * @param $method String: name of method calling us
+	 * @return Boolean
+	 * @since 1.20
+	 */
+	public function lockIsFree( $lockName, $method ) {
+		$key = $this->addQuotes( $this->bigintFromLockName( $lockName ) );
+		$result = $this->query( "SELECT (CASE(pg_try_advisory_lock($key))
+			WHEN 'f' THEN 'f' ELSE pg_advisory_unlock($key) END) AS lockstatus", $method );
+		$row = $this->fetchObject( $result );
+		return ( $row->lockstatus === 't' );
+	}
+
+	/**
+	 * See http://www.postgresql.org/docs/8.2/static/functions-admin.html#FUNCTIONS-ADVISORY-LOCKS
+	 * @param $lockName string
+	 * @param $method string
+	 * @param $timeout int
+	 * @return bool
+	 */
+	public function lock( $lockName, $method, $timeout = 5 ) {
+		$key = $this->addQuotes( $this->bigintFromLockName( $lockName ) );
+		for ( $attempts=1; $attempts <= $timeout; ++$attempts ) {
+			$result = $this->query(
+				"SELECT pg_try_advisory_lock($key) AS lockstatus", $method );
+			$row = $this->fetchObject( $result );
+			if ( $row->lockstatus === 't' ) {
+				return true;
+			} else {
+				sleep( 1 );
+			}
+		}
+		wfDebug( __METHOD__." failed to acquire lock\n" );
+		return false;
+	}
+
+	/**
+	 * See http://www.postgresql.org/docs/8.2/static/functions-admin.html#FUNCTIONS-ADVISORY-LOCKSFROM PG DOCS: http://www.postgresql.org/docs/8.2/static/functions-admin.html#FUNCTIONS-ADVISORY-LOCKS
+	 * @param $lockName string
+	 * @param $method string
+	 * @return bool
+	 */
+	public function unlock( $lockName, $method ) {
+		$key = $this->addQuotes( $this->bigintFromLockName( $lockName ) );
+		$result = $this->query( "SELECT pg_advisory_unlock($key) as lockstatus", $method );
+		$row = $this->fetchObject( $result );
+		return ( $row->lockstatus === 't' );
+	}
+
+	/**
+	 * @param string $lockName
+	 * @return string Integer
+	 */
+	private function bigintFromLockName( $lockName ) {
+		return wfBaseConvert( substr( sha1( $lockName ), 0, 15 ), 16, 10 );
 	}
 } // end DatabasePostgres class

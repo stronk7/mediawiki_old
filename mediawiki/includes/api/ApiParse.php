@@ -36,10 +36,6 @@ class ApiParse extends ApiBase {
 	/** @var Content $pstContent */
 	private $pstContent = null;
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		// The data is hot but user-dependent, like page views, so we set vary cookies
 		$this->getMain()->setCacheMode( 'anon-public-user-private' );
@@ -102,10 +98,10 @@ class ApiParse extends ApiBase {
 				$popts->enableLimitReport( !$params['disablepp'] );
 
 				// If for some reason the "oldid" is actually the current revision, it may be cached
-				if ( $rev->isCurrent() )  {
+				if ( $rev->isCurrent() ) {
 					// May get from/save to parser cache
 					$p_result = $this->getParsedContent( $pageObj, $popts,
-						$pageid, isset( $prop['wikitext'] ) ) ;
+						$pageid, isset( $prop['wikitext'] ) );
 				} else { // This is an old revision, so get the text differently
 					$this->content = $rev->getContent( Revision::FOR_THIS_USER, $this->getUser() );
 
@@ -161,11 +157,11 @@ class ApiParse extends ApiBase {
 
 				// Potentially cached
 				$p_result = $this->getParsedContent( $pageObj, $popts, $pageid,
-					isset( $prop['wikitext'] ) ) ;
+					isset( $prop['wikitext'] ) );
 			}
 		} else { // Not $oldid, $pageid, $page. Hence based on $text
 			$titleObj = Title::newFromText( $title );
-			if ( !$titleObj ) {
+			if ( !$titleObj || $titleObj->isExternal() ) {
 				$this->dieUsageMsg( array( 'invalidtitle', $title ) );
 			}
 			if ( !$titleObj->canExist() ) {
@@ -450,14 +446,14 @@ class ApiParse extends ApiBase {
 			$text = Language::fetchLanguageName( $nt->getInterwiki() );
 
 			$langs[] = Html::element( 'a',
-				array( 'href' => $nt->getFullURL(), 'title' => $nt->getText(), 'class' => "external" ),
+				array( 'href' => $nt->getFullURL(), 'title' => $nt->getText(), 'class' => 'external' ),
 				$text == '' ? $l : $text );
 		}
 
 		$s .= implode( wfMessage( 'pipe-separator' )->escaped(), $langs );
 
 		if ( $wgContLang->isRTL() ) {
-			$s = Html::rawElement( 'span', array( 'dir' => "LTR" ), $s );
+			$s = Html::rawElement( 'span', array( 'dir' => 'LTR' ), $s );
 		}
 
 		return $s;
@@ -670,9 +666,5 @@ class ApiParse extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Parsing_wikitext#parse';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -31,10 +31,6 @@
  */
 class ApiWatch extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		$user = $this->getUser();
 		if ( !$user->isLoggedIn() ) {
@@ -44,7 +40,7 @@ class ApiWatch extends ApiBase {
 		$params = $this->extractRequestParams();
 		$title = Title::newFromText( $params['title'] );
 
-		if ( !$title || $title->getNamespace() < 0 ) {
+		if ( !$title || $title->isExternal() || !$title->canExist() ) {
 			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
 		}
 
@@ -150,9 +146,5 @@ class ApiWatch extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Watch';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

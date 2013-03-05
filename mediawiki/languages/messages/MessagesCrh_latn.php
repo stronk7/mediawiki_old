@@ -726,7 +726,6 @@ Jurnalnıñ soñki yazısı aşağıda berilgen:",
 'template-protected' => '(qorçalav altında)',
 'template-semiprotected' => '(qısmen qorçalav altında)',
 'hiddencategories' => 'Bu saife {{PLURAL:$1|1|$1}} gizli kategoriyağa mensüptir:',
-'nocreatetitle' => 'Saife yaratuv sıñırlıdır',
 'nocreatetext' => '{{SITENAME}} saytında yañı saife yaratuv sıñırlıdır.
 Keri qaytıp mevcut olğan saifeni deñiştire, [[Special:UserLogin|oturım aça ya da yañı bir esap yaratıp olasıñız]].',
 'nocreate-loggedin' => 'Yañı saifeler yaratmağa iziniñiz yoqtır.',
@@ -1018,6 +1017,10 @@ Eger bildirseñiz, saifelerdeki deñişmelerni kimniñ yapqanını köstermek i�
 'grouppage-sysop' => '{{ns:project}}:İdareciler',
 'grouppage-bureaucrat' => '{{ns:project}}:Bürokratlar',
 'grouppage-suppress' => '{{ns:project}}:Teftişçiler',
+
+# Special:Log/newusers
+'newuserlogpage' => 'Yañı qullanıcı jurnalı',
+'newuserlogpagetext' => 'Eñ sоñki qayd оlğan qullanıcı jurnalı.',
 
 # User rights log
 'rightslog' => 'Qullanıcınıñ aqları jurnalı',
@@ -1370,10 +1373,6 @@ Ayrıca [[Special:WantedCategories|talap etilgen kategoriyalarnıñ cedveline]] 
 'listusers-submit' => 'Köster',
 'listusers-noresult' => 'İç bir qullanıcı tapılmadı.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Yañı qullanıcı jurnalı',
-'newuserlogpagetext' => 'Eñ sоñki qayd оlğan qullanıcı jurnalı.',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(azalar cedveli)',
 
@@ -1463,6 +1462,8 @@ $UNWATCHURL
 
 Yardım ve teklifler içün:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'yaratıldı',
+'changed' => 'deñiştirildi',
 
 # Delete
 'deletepage' => 'Saifeni yoq et',
@@ -2091,9 +2092,6 @@ Bitirgen soñ "{{int:Watchlistedit-raw-submit}}" yazısına basıñız.
 
 # HTML forms
 'htmlform-reset' => 'Deñişikliklerni keri al',
-
-# New logging system
-'newuserlog-byemail' => 'parol e-mail vastasınen yiberilgen',
 
 # Search suggestions
 'searchsuggest-containing' => 'içinde bu olğan...',

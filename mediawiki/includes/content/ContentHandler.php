@@ -1,28 +1,6 @@
 <?php
-
 /**
- * Exception representing a failure to serialize or unserialize a content object.
- */
-class MWContentSerializationException extends MWException {
-
-}
-
-/**
- * A content handler knows how do deal with a specific type of content on a wiki
- * page. Content is stored in the database in a serialized form (using a
- * serialization format a.k.a. MIME type) and is unserialized into its native
- * PHP representation (the content model), which is wrapped in an instance of
- * the appropriate subclass of Content.
- *
- * ContentHandler instances are stateless singletons that serve, among other
- * things, as a factory for Content objects. Generally, there is one subclass
- * of ContentHandler and one subclass of Content for every type of content model.
- *
- * Some content types have a flat model, that is, their native representation
- * is the same as their serialized form. Examples would be JavaScript and CSS
- * code. As of now, this also applies to wikitext (MediaWiki's default content
- * type), but wikitext content may be represented by a DOM or AST structure in
- * the future.
+ * Base class for content handling.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +23,35 @@ class MWContentSerializationException extends MWException {
  * @ingroup Content
  *
  * @author Daniel Kinzler
+ */
+
+/**
+ * Exception representing a failure to serialize or unserialize a content object.
+ *
+ * @ingroup Content
+ */
+class MWContentSerializationException extends MWException {
+
+}
+
+/**
+ * A content handler knows how do deal with a specific type of content on a wiki
+ * page. Content is stored in the database in a serialized form (using a
+ * serialization format a.k.a. MIME type) and is unserialized into its native
+ * PHP representation (the content model), which is wrapped in an instance of
+ * the appropriate subclass of Content.
+ *
+ * ContentHandler instances are stateless singletons that serve, among other
+ * things, as a factory for Content objects. Generally, there is one subclass
+ * of ContentHandler and one subclass of Content for every type of content model.
+ *
+ * Some content types have a flat model, that is, their native representation
+ * is the same as their serialized form. Examples would be JavaScript and CSS
+ * code. As of now, this also applies to wikitext (MediaWiki's default content
+ * type), but wikitext content may be represented by a DOM or AST structure in
+ * the future.
+ *
+ * @ingroup Content
  */
 abstract class ContentHandler {
 
@@ -131,6 +138,7 @@ abstract class ContentHandler {
 	 * @param $format null|string the format to use for deserialization. If not
 	 *    given, the model's default format is used.
 	 *
+	 * @throws MWException
 	 * @return Content a Content object representing $text
 	 *
 	 * @throw MWException if $model or $format is not supported or if $text can
@@ -185,8 +193,6 @@ abstract class ContentHandler {
 	 * @return null|string default model name for the page given by $title
 	 */
 	public static function getDefaultModelFor( Title $title ) {
-		global $wgNamespaceContentModels;
-
 		// NOTE: this method must not rely on $title->getContentModel() directly or indirectly,
 		//       because it is used to initialize the mContentModel member.
 
@@ -194,11 +200,7 @@ abstract class ContentHandler {
 
 		$ext = false;
 		$m = null;
-		$model = null;
-
-		if ( !empty( $wgNamespaceContentModels[ $ns ] ) ) {
-			$model = $wgNamespaceContentModels[ $ns ];
-		}
+		$model = MWNamespace::getNamespaceContentModel( $ns );
 
 		// Hook can determine default model
 		if ( !wfRunHooks( 'ContentHandlerDefaultModelFor', array( $title, &$model ) ) ) {
@@ -411,7 +413,7 @@ abstract class ContentHandler {
 	 * @param $format null|String The desired serialization format
 	 * @return string Serialized form of the content
 	 */
-	public abstract function serializeContent( Content $content, $format = null );
+	abstract public function serializeContent( Content $content, $format = null );
 
 	/**
 	 * Unserializes a Content object of the type supported by this ContentHandler.
@@ -422,7 +424,7 @@ abstract class ContentHandler {
 	 * @param $format null|String the format used for serialization
 	 * @return Content the Content object created by deserializing $blob
 	 */
-	public abstract function unserializeContent( $blob, $format = null );
+	abstract public function unserializeContent( $blob, $format = null );
 
 	/**
 	 * Creates an empty Content object of the type supported by this
@@ -432,7 +434,7 @@ abstract class ContentHandler {
 	 *
 	 * @return Content
 	 */
-	public abstract function makeEmptyContent();
+	abstract public function makeEmptyContent();
 
 	/**
 	 * Creates a new Content object that acts as a redirect to the given page,
@@ -440,6 +442,9 @@ abstract class ContentHandler {
 	 *
 	 * This default implementation always returns null. Subclasses supporting redirects
 	 * must override this method.
+	 *
+	 * Note that subclasses that override this method to return a Content object
+	 * should also override supportsRedirects() to return true.
 	 *
 	 * @since 1.21
 	 *
@@ -783,7 +788,7 @@ abstract class ContentHandler {
 	 *    boolean false if no revision occurred
 	 *
 	 * @XXX &$hasHistory is extremely ugly, it's here because
-	 * WikiPage::getAutoDeleteReason() and Article::getReason()
+	 * WikiPage::getAutoDeleteReason() and Article::generateReason()
 	 * have it / want it.
 	 */
 	public function getAutoDeleteReason( Title $title, &$hasHistory ) {
@@ -964,12 +969,27 @@ abstract class ContentHandler {
 
 	/**
 	 * Returns true if this content model supports sections.
-	 *
 	 * This default implementation returns false.
+	 *
+	 * Content models that return true here should also implement
+	 * Content::getSection, Content::replaceSection, etc. to handle sections..
 	 *
 	 * @return boolean whether sections are supported.
 	 */
 	public function supportsSections() {
+		return false;
+	}
+
+	/**
+	 * Returns true if this content model supports redirects.
+	 * This default implementation returns false.
+	 *
+	 * Content models that return true here should also implement
+	 * ContentHandler::makeRedirectContent to return a Content object.
+	 *
+	 * @return boolean whether redirects are supported.
+	 */
+	public function supportsRedirects() {
 		return false;
 	}
 
@@ -1054,7 +1074,7 @@ abstract class ContentHandler {
 
 			wfRestoreWarnings();
 
-			wfWarn( "Using obsolete hook $event via ContentHandler::runLegacyHooks()! Handlers: " . implode(', ', $handlerInfo), 2 );
+			wfWarn( "Using obsolete hook $event via ContentHandler::runLegacyHooks()! Handlers: " . implode( ', ', $handlerInfo ), 2 );
 		}
 
 		// convert Content objects to text
@@ -1094,4 +1114,3 @@ abstract class ContentHandler {
 		return $ok;
 	}
 }
-

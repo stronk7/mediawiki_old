@@ -737,7 +737,6 @@ Uostatńy wpis z rejera je ńyżej.",
 'template-protected' => '(zawrzity uod sprowjańo)',
 'template-semiprotected' => '(tajlowo zawarte)',
 'hiddencategories' => 'Ta zajta je {{PLURAL:$1|w jednyj schrůńunyj katygoryji|we $1 schrůńunych katygoryjach}}:',
-'nocreatetitle' => 'Uograńičůno wćepywańy zajtůw',
 'nocreatetext' => 'Na {{GRAMMAR:MS.lp|{{SITENAME}}}} twořyńy nowych zajtůw uograńičůno.
 Možeš sprowjać te co juž sům, abo [[Special:UserLogin|zalogować śe, abo zauožyć konto]].',
 'nocreate-loggedin' => 'Ńy moš uprowńyń do twořyńo nowych zajtůw.',
@@ -1181,11 +1180,13 @@ $1',
 'right-userrights-interwiki' => 'Sprowjej uprawńyńo užytkowńikůw na zajtach inkšych Wiki',
 'right-siteadmin' => 'Zawjerańy i uodmykańy bazy danych',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Nowe użytkowniki',
+'newuserlogpagetext' => 'To je rejer uostatńo utworzůnych kůnt użytkowńikůw',
+
 # User rights log
 'rightslog' => 'Uprawńyńa',
 'rightslogtext' => 'Rejer půmjyńań uprawńyń užytkowńikůw.',
-'rightslogentry' => 'půmjyńiu/a uprawńyńo užytkowńika $1 ($2 → $3)',
-'rightsnone' => 'podstawowo',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'přeglůndańo tyj zajty',
@@ -1628,10 +1629,6 @@ Uobsůgiwane protokoły: <code>$1</code>',
 'activeusers-hidesysops' => 'Schrůń adminy',
 'activeusers-noresult' => 'Ńy sům używacze.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Nowe użytkowniki',
-'newuserlogpagetext' => 'To je rejer uostatńo utworzůnych kůnt użytkowńikůw',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Uprawńyńo grup użytkowńikůw',
 'listgrouprights-summary' => 'Půńiży znojdowo śe spis grup użytkowńikůw zdefińjowanych na tyj wiki, s wyszczygůlńyńym przidźelůnych im prow dostympu.
@@ -1739,6 +1736,8 @@ Kejbyś chćou půmjyńić štalowańo swojej listy zajtůw, na kere dowoš poz�
 
 Pomoc:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'utwořono',
+'changed' => 'pomjyńono',
 
 # Delete
 'deletepage' => 'Wyćep artikel',
@@ -2843,6 +2842,6 @@ Naškryflej sam mjano plika bez prefiksu „{{ns:file}}:”.',
 # New logging system
 'revdelete-restricted' => 'naštaluj uograničyńo do administratorůw',
 'revdelete-unrestricted' => 'wycofej uograničyńo do administratorůw',
-'newuserlog-byemail' => 'hasło uostało wysłane e-brifym',
+'rightsnone' => 'podstawowo',
 
 );

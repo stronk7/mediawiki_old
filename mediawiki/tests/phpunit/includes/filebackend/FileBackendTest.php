@@ -143,14 +143,14 @@ class FileBackendTest extends MediaWikiTestCase {
 			array( 'mwstore://backend/container/path', 'mwstore://backend/container/path' ),
 			array( 'mwstore://backend/container//path', 'mwstore://backend/container/path' ),
 			array( 'mwstore://backend/container///path', 'mwstore://backend/container/path' ),
-			array( 'mwstore://backend/container///path//to///obj', 'mwstore://backend/container/path/to/obj',
+			array( 'mwstore://backend/container///path//to///obj', 'mwstore://backend/container/path/to/obj' ),
 			array( 'mwstore://', null ),
 			array( 'mwstore://backend', null ),
 			array( 'mwstore://backend//container/path', null ),
 			array( 'mwstore://backend//container//path', null ),
 			array( 'mwstore:///', null ),
 			array( 'mwstore:/', null ),
-			array( 'mwstore:', null ), )
+			array( 'mwstore:', null ),
 		);
 	}
 
@@ -799,7 +799,7 @@ class FileBackendTest extends MediaWikiTestCase {
 			$status = $this->prepare( array( 'dir' => dirname( $path ) ) );
 			$this->assertGoodStatus( $status,
 				"Preparing $path succeeded without warnings ($backendName)." );
-			$ops[] = array( 'op' => 'create', 'dst' => $path, 'content' => mt_rand(0,50000) );
+			$ops[] = array( 'op' => 'create', 'dst' => $path, 'content' => mt_rand(0, 50000) );
 			$purgeOps[] = array( 'op' => 'delete', 'src' => $path );
 		}
 		$purgeOps[] = array( 'op' => 'null' );
@@ -1080,7 +1080,7 @@ class FileBackendTest extends MediaWikiTestCase {
 		$cases[] = array( "$base/unittest-cont1/e/b/some-other_file.txt", "more file contents" );
 		$cases[] = array(
 			array( "$base/unittest-cont1/e/a/x.txt", "$base/unittest-cont1/e/a/y.txt",
-				 "$base/unittest-cont1/e/a/z.txt" ),
+				"$base/unittest-cont1/e/a/z.txt" ),
 			array( "contents xx", "contents xy", "contents xz" )
 		);
 
@@ -1149,7 +1149,7 @@ class FileBackendTest extends MediaWikiTestCase {
 		$cases[] = array( "$base/unittest-cont1/e/a/\$odd&.txt", "test file contents" );
 		$cases[] = array(
 			array( "$base/unittest-cont1/e/a/x.txt", "$base/unittest-cont1/e/a/y.txt",
-				 "$base/unittest-cont1/e/a/z.txt" ),
+				"$base/unittest-cont1/e/a/z.txt" ),
 			array( "contents xx", "contents xy", "contents xz" )
 		);
 
@@ -1215,7 +1215,7 @@ class FileBackendTest extends MediaWikiTestCase {
 		$cases[] = array( "$base/unittest-cont1/e/a/\$odd&.txt", "test file contents" );
 		$cases[] = array(
 			array( "$base/unittest-cont1/e/a/x.txt", "$base/unittest-cont1/e/a/y.txt",
-				 "$base/unittest-cont1/e/a/z.txt" ),
+				"$base/unittest-cont1/e/a/z.txt" ),
 			array( "contents xx", "contents xy", "contents xz" )
 		);
 
@@ -1998,12 +1998,22 @@ class FileBackendTest extends MediaWikiTestCase {
 
 		$this->assertEquals( $expected, $list, "Correct dir listing ($backendName)." );
 
+		$iter = $this->backend->getDirectoryList( array( 'dir' => "$base/unittest-cont1/e/subdir1" ) );
+		$items = is_array( $iter ) ? $iter : iterator_to_array( $iter );
+		$this->assertEquals( array(), $items, "Directory listing is empty." );
+
 		foreach ( $files as $file ) { // clean up
 			$this->backend->doOperation( array( 'op' => 'delete', 'src' => $file ) );
 		}
 
 		$iter = $this->backend->getDirectoryList( array( 'dir' => "$base/unittest-cont1/not/exists" ) );
-		foreach ( $iter as $iter ) {} // no errors
+		foreach ( $iter as $file ) {} // no errors
+		$items = is_array( $iter ) ? $iter : iterator_to_array( $iter );
+		$this->assertEquals( array(), $items, "Directory listing is empty." );
+
+		$iter = $this->backend->getDirectoryList( array( 'dir' => "$base/unittest-cont1/e/not/exists" ) );
+		$items = is_array( $iter ) ? $iter : iterator_to_array( $iter );
+		$this->assertEquals( array(), $items, "Directory listing is empty." );
 	}
 
 	public function testLockCalls() {

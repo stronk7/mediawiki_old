@@ -134,7 +134,7 @@ $messages = array(
 'tog-externaleditor' => 'Edîtorekî derve bike "standard" (ji yên bi ezmûn re, tercîhên taybet di komputerê de hewce ne)',
 'tog-externaldiff' => 'Birnemijekî derve biguherîne "standard" (ji yên bi ezmûn re, tercîhên taybet di komputerê de hewce ne)',
 'tog-showjumplinks' => 'Girêdanên "Here-berve" qebûlbike',
-'tog-uselivepreview' => 'Pêşdîtinê "zindî" bikarbîne (JavaScript pêwîst e) (ceribandinî)',
+'tog-uselivepreview' => 'Pêşdîtina "zindî" bi kar bîne (JavaScript pêwîst e) (ceribandinî)',
 'tog-forceeditsummary' => 'Hinga kurteyeke vala hate tomarkirin min agahdar bike',
 'tog-watchlisthideown' => 'Guherandinên min ji lîsteya şopandinê veşêre',
 'tog-watchlisthidebots' => "Guherandinên bot'an ji lîsteya şopandinê veşêre",
@@ -349,8 +349,8 @@ $messages = array(
 'youhavenewmessages' => '$1 yên te hene ($2).',
 'newmessageslink' => 'Peyamên nû',
 'newmessagesdifflink' => 'cudayî ji guhertoya berê',
-'youhavenewmessagesfromusers' => 'Ji {{PLURAL:$3|bikarhênerekê/î|$3 bikarhêneran}}, ji bo te {{PLURAL:$1|peyameke nû heye|peyamên nû hene}} ($2).',
-'newmessageslinkplural' => '{{PLURAL:$1|peyameke nû|peyamên nû}}',
+'youhavenewmessagesfromusers' => 'Ji {{PLURAL:$3|bikarhênerekê/î|$3 bikarhêneran}}, ji bo te $1 ($2).',
+'newmessageslinkplural' => '{{PLURAL:$1|peyameke nû heye|peyamên nû hene}}',
 'newmessagesdifflinkplural' => '{{PLURAL:$1|guherandin|guherandinên dawî}}',
 'youhavenewmessagesmulti' => 'Peyamên nû li $1 ji te re hene.',
 'editsection' => 'biguherîne',
@@ -506,7 +506,7 @@ Eger kesekî din vê xastinê ji te ra xast ya şîfreya kevin dîsa hate bîrê
 'passwordsent' => 'Ji navnîşana e-mail ku ji bo "$1" hat tomarkirin şîfreyekê nû hat şandin. Vê bistîne û dîsa têkeve.',
 'blocked-mailpassword' => "IP'ya ku tu niha bi kar tînî ji guherandinê re hatiye astengkirin. Ji bo tiştên şaş çênebin, xwestina te ya ji bo şîfreyeke nû jî hatiye qedexekirin.",
 'eauthentsent' => 'E-nameyeka naskirinê ji adresa nivîsî ra hate şandin. Berî e-name ji bikarhênerên din bi vê rêkê dikaribim bi te gên, ew adresa û rastbûna xwe gireke werin naskirin. Xêra xwe e-nameyê naskirinê bixûne!',
-'throttled-mailpassword' => 'Berî {{PLURAL:$1|saetekê|$1 saetan}} şîfreyeke nû hate xwestin. Ji bo şaşbûn bi vê fonksiyonê çênebin, bes her {{PLURAL:$1|saetekê|$1 saetan}} şîfreyeke nû dikare were xwestin.',
+'throttled-mailpassword' => 'Berî {{PLURAL:$1|saetekê|$1 saetan}} şîfreyeke nû hate xwestin. Ji bo şaşbûn bi vê fonksiyonê çênebin, serê her {{PLURAL:$1|saetekê|$1 saetan}} tenê şîfreyeke nû dikare were xwestin.',
 'mailerror' => 'Şaşbûnek li cem şandina e-nameyekê: $1',
 'acct_creation_throttle_hit' => 'Bibexşe! Te hesabê bikarhêneriyê $1 vekiriye. Tu êdî nikarî hesabên din vekî.',
 'emailauthenticated' => 'Adresa e-nameya te hate naskirin: $1.',
@@ -657,12 +657,13 @@ Astengkirina dawî bi referansa li jêr hatiye piştrastkirin:',
 * '''Opera:''' Girekin belkî cache'a xwe tevda di bin ''Tools → Preferences'' da valabikin",
 'usercssyoucanpreview' => "'''Tîp:''' 'Pêşdîtin' bikarwîne ji bo tu bibînê çawa CSS'ê te yê nuh e berî tomarkirinê.",
 'userjsyoucanpreview' => "'''Tîp:''' 'Pêşdîtin' bikarwîne ji bo tu bibînê çawa JS'ê te yê nuh e berî tomarkirinê.",
-'usercsspreview' => "'''Zanibe ku tu bes pêşdîtina CSS dibînî.'''
+'usercsspreview' => "'''Zanibe ku tu tenê pêşdîtina CSS dibînî.'''
 '''Ew hê nehatiye tomarkirin!'''",
-'userjspreview' => "'''Zanibe ku tu bes JavaScript'a xwe dicerbînê, ew hên nehatîye tomarkirin!'''",
+'userjspreview' => "'''Zanibe ku tu tenê JavaScript'a xwe diceribînî, ew hê nehatiye tomarkirin!'''",
 'updated' => '(Hate rojanekirin)',
 'note' => "'''Nîşe:'''",
-'previewnote' => "'''Ji bîr neke ku ev bi tenê çavdêriyek e, ev rûpel hîn nehatiye tomarkirin!'''",
+'previewnote' => "'''Ji bîr neke ku ev bi tenê çavdêriyek e.'''
+Ev rûpel hîn nehatiye tomarkirin!",
 'continue-editing' => 'Guhertinê bidomîne',
 'editing' => 'Biguherîne: "$1"',
 'creating' => '$1 tê çêkirin',
@@ -685,14 +686,14 @@ Eger tu nexwazî ku nivîsên te bê dilrehmî bên guherandin û li gora keyfa 
 Tu soz didî ku te ev bi xwe nivîsand an jî ji çavkaniyekê azad an geliyane (''public domain'') girt.
 '''Berhemên mafên wan parastî bê destûr neweşîne!'''",
 'protectedpagewarning' => "'''Hişyarî:  Ev rûpel tê parastin. Bi tenê bikarhênerên ku xwediyên mafên \"koordînatoriyê\" ne, dikarin vê rûpelê biguherînin.'''",
-'semiprotectedpagewarning' => "'''Hişyarî:''' Ev rûpel tê parastin, lewma bes bikarhênerên tomarkirî dikarin vê biguherînin.
+'semiprotectedpagewarning' => "'''Hişyarî:''' Ev rûpel tê parastin, lewma tenê bikarhênerên tomarkirî dikarin vê biguherînin.
 Guhertina herî dawî bi referansa li jêr hatiye piştrastkirin:",
 'templatesused' => '{{PLURAL:$1|Şablona|Şablonên}} ku li ser vê rûpelê {{PLURAL:$1|tê|tên}} bikaranîn:',
 'templatesusedpreview' => '{{PLURAL:$1|Şablona|Şablonên}} di vê pêşdîtinê de {{PLURAL:$1|tê|tên}} bikaranîn:',
 'templatesusedsection' => 'Şablonên ku di vê parçeyê de tên bikaranîn:',
 'template-protected' => '(tê parastin)',
 'template-semiprotected' => '(nîv-parastî)',
-'hiddencategories' => 'Ev rûpel endamê{{PLURAL:$1|1 hidden category|$1 hidden categories}} ye:',
+'hiddencategories' => 'Ev rûpel endamê {{PLURAL:$1|1 kategoriya veşartî|$1 kategoriyên veşartî}} ye:',
 'sectioneditnotsupported-title' => 'Guhertina beşê nayê piştgirîkirin',
 'sectioneditnotsupported-text' => 'Guhertina beşê di vê rûpelê de nayê piştgirîkirin.',
 'permissionserrors' => 'Çewtiyên destûrê',
@@ -872,6 +873,7 @@ Sedema qedexekirina $3 ev e: ''$2''",
 'datedefault' => 'Tercih tune ne',
 'prefs-beta' => "Taybetmendiyên Beta'yê",
 'prefs-datetime' => 'Dîrok û dem',
+'prefs-user-pages' => 'Rûpelên bikarhêner',
 'prefs-personal' => 'Profîla bikarhêner',
 'prefs-rc' => 'Guherandinên dawî',
 'prefs-watchlist' => 'Lîsteya şopandinê',
@@ -1001,11 +1003,12 @@ Sedema qedexekirina $3 ev e: ''$2''",
 'right-userrights' => 'Hemû mafên bikarhêner biguherîne',
 'right-sendemail' => 'Ji bikarhênerên di re e-name bişîne',
 
+# Special:Log/newusers
+'newuserlogpage' => 'çêkirina hesabê nû',
+
 # User rights log
 'rightslog' => 'guhertina mafê bikarhêneriyê',
 'rightslogtext' => 'Ev guhertineke ji bo mafên bikarhêneriyê ye.',
-'rightslogentry' => 'grûpa bikarhêneran ji bo $1 ji $2 guherande $3',
-'rightsnone' => '(tune)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'vê rûpelê bixwîne',
@@ -1024,6 +1027,7 @@ Sedema qedexekirina $3 ev e: ''$2''",
 'action-browsearchive' => 'li rûpelên jêbirî bigere',
 'action-undelete' => 'vê rûpelê dîsa çêke',
 'action-userrights' => 'hemû mafên bikarhêneran biguherîne',
+'action-sendemail' => 'e-nameyan bişîne',
 
 # Recent changes
 'nchanges' => '$1 {{PLURAL:$1|guherandinek|guherandin}}',
@@ -1335,7 +1339,7 @@ Li [[Special:WantedCategories|kategoriyên xwestî]] binêre.',
 # Special:DeletedContributions
 'deletedcontributions' => 'Beşdariyên bikarhênerekî yê jêbirî',
 'deletedcontributions-title' => 'Guherandinên bikarhêner yê jêbirî',
-'sp-deletedcontributions-contribs' => 'beşdari',
+'sp-deletedcontributions-contribs' => 'beşdarî',
 
 # Special:LinkSearch
 'linksearch' => 'Lêgerîna girêdanên derve',
@@ -1352,9 +1356,6 @@ Li [[Special:WantedCategories|kategoriyên xwestî]] binêre.',
 'activeusers-hidebots' => "Bot'an veşêre",
 'activeusers-hidesysops' => 'Rêveberan veşêre',
 'activeusers-noresult' => 'Tu bikarhêner nehate dîtin.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'çêkirina hesabê nû',
 
 # Special:ListGroupRights
 'listgrouprights' => 'Mafên koma bikarhêner',
@@ -1444,6 +1445,8 @@ Heke tu dixwazî lîsteya xwe ya şopandinê biguherînî, li
 
 Paşagahîdan û alîkaraya din:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'hate afirandin',
+'changed' => 'hate guhertin',
 
 # Delete
 'deletepage' => 'Rûpelê jê bibe',
@@ -1607,10 +1610,10 @@ Ji bo jêbirinan û çêkirinên nû, ji kerema xwe li [[{{ns:special}}:Log/dele
 'blockip' => 'Bikarhêner asteng bike',
 'blockip-title' => 'Bikarhêner asteng bike',
 'blockip-legend' => 'Bikarhêner asteng bike',
-'blockiptext' => 'Ji bo astengkirina nivîsandinê ji navnîşaneke IP an bi navekî bikarhêner, vê formê bikarbîne.
-Ev bes gireke were bikaranîn ji bo vandalîzmê biskinîne (bi vê [[{{MediaWiki:Policy-url}}|qebûlkirinê]]).
+'blockiptext' => "Ji bo astengkirina nivîsandinê ya ji navnîşaneke IP'yê an jî ji bikarhênerekî/ê, vê formê bikarbîne.
+Divê ev tenê ji bo sekinandina vandalîzmê were bikaranîn, ku divê li gorî [[{{MediaWiki:Policy-url}}|rêgezê]] be.
 
-Sedemekê binivîse!',
+Sedemekê binivîse!",
 'ipadressorusername' => "adresê IP'yekê ya navekî bikarhênerekî",
 'ipbexpiry' => 'Dem:',
 'ipbreason' => 'Sedem',
@@ -1648,6 +1651,7 @@ Sedemekê binivîse!',
 'unblockiptext' => "Nivîsara jêr bikarwîne ji bo qebûlkirina nivîsandinê bikarhênerekî ya IP'yeka berê astengkirî.",
 'ipusubmit' => 'Vê astengkirinê rake',
 'unblocked' => '[[User:$1|$1]] niha vê astengkirinê ye',
+'unblocked-range' => '$1 hat astengkirin.',
 'unblocked-id' => '$1 dîsa vê astengkirinê ye',
 'blocklist' => 'Bikarhênerên astengkirî',
 'ipblocklist' => "Listek ji adresên IP'yan û bikarhêneran yê hatine astengkirin",
@@ -1663,7 +1667,7 @@ Sedemekê binivîse!',
 'ipblocklist-otherblocks' => '{{PLURAL:$1|Astengkirin|Astengkirinên}} din',
 'infiniteblock' => 'ji her demê ra',
 'expiringblock' => 'heta $1 $2',
-'anononlyblock' => 'bes kesên netên zanîn',
+'anononlyblock' => 'tenê kesên bênav',
 'noautoblockblock' => 'astengkirina otomatîk hatîye temirandin',
 'createaccountblock' => 'çêkirina hesaban hate qedexekirin',
 'emailblock' => 'E-Mail hate girtin',
@@ -1680,7 +1684,7 @@ Sedemekê binivîse!',
 'blocklogentry' => '"[[$1]]" ji bo dema $2, $3 asteng kir',
 'blocklogtext' => "Ev reşahîyek ji astengkirinên û rakirina astengkirinên bikarhêneran ra ye. Adrêsên IP'yan, yê otomatîk hatine astengkirin, nehatine nivîsandin. [[Special:BlockList|Lîsteya IP'yên astengkirî]] bibîne ji bo dîtina astengkirinên IP'yan.",
 'unblocklogentry' => 'astenga "$1" betalkir',
-'block-log-flags-anononly' => 'bes bikarhênerên neqeydkirî',
+'block-log-flags-anononly' => 'tenê bikarhênerên neqeydkirî',
 'block-log-flags-nocreate' => 'çêkirina hesaban hate qedexekirin',
 'block-log-flags-noautoblock' => 'astengkirina otomatik tune',
 'block-log-flags-noemail' => 'Şandina e-nameyan hatîye qedexekirin',
@@ -1797,7 +1801,7 @@ Rûpela "[[:$1]]" berê heye. Tu rast dixazê wê jêbibê ji bo navguherandinê
 'tooltip-pt-mycontris' => 'Lîsteya beşdariyên min',
 'tooltip-pt-logout' => 'Derkeve',
 'tooltip-ca-talk' => 'Gotûbêj li ser rûpela naverokê',
-'tooltip-ca-edit' => 'Vê rûpelê biguherîne! Berê qeydkirinê bişkoka "Pêşdîtin',
+'tooltip-ca-edit' => 'Vê rûpelê biguherîne! Berê qeydkirinê bişkoka "Pêşdîtin"',
 'tooltip-ca-addsection' => 'Beşekê zêde bike.',
 'tooltip-ca-viewsource' => 'Ev rûpel tê parastin.
 Tu dikarî tenê li çavkaniyê binêrî.',
@@ -1909,6 +1913,9 @@ Ji ber ku girêdaneke derve di wê rûpelê de heye ev pirsgirêk pêk hat.',
 'ilsubmit' => 'Lêgerîn',
 'bydate' => 'li gor dîrokê',
 'sp-newimages-showfrom' => 'Daneyên nû ji dema $1, saet $2 ve bibîne',
+
+# Video information, used by Language::formatTimePeriod() to format lengths in the above messages
+'ago' => 'berî $1',
 
 # Variants for Kurdish language
 'variantname-ku-arab' => 'Tîpên erebî',
@@ -2032,6 +2039,9 @@ Ji kerema xwe zanibe ku tu bi rastî dixwazî vê rûpelê dîsa çêkî.",
 'confirm_purge_button' => 'Baş e',
 'confirm-purge-top' => 'Bîra vê rûpelê jêbîbe ?',
 
+# action=watch/unwatch
+'confirm-watch-button' => 'Temam',
+
 # Multipage image navigation
 'imgmultipageprev' => '← rûpela berî vê',
 'imgmultipagenext' => 'rûpela din →',
@@ -2141,7 +2151,7 @@ Ji kerema xwe zanibe ku tu bi rastî dixwazî vê rûpelê dîsa çêkî.",
 'logentry-move-move_redir' => '$1 navê $3 guherand û kir $4',
 'logentry-newusers-newusers' => '$1 hesabekî bikarhêneriyê çêkir',
 'logentry-newusers-create' => '$1 hesabekî bikarhêneriyê çêkir',
-'newuserlog-byemail' => 'şîfre bi e-nameyê hate şandin',
+'rightsnone' => '(tune)',
 
 # Feedback
 'feedback-subject' => 'Mijar:',

@@ -664,7 +664,6 @@ Yu de pramis wi alzwel se a yu rait dis yuself, ar kapi'i frahn a poblik domien 
 'template-protected' => '(protek)',
 'template-semiprotected' => '(semi-protek)',
 'hiddencategories' => 'Dis piej a memb a {{PLURAL:$1|1 idn kiatigari|$1 idn kiatigari}}:',
-'nocreatetitle' => 'Piej krieshan limit',
 'permissionserrors' => 'Permishan herro',
 'permissionserrorstext-withaction' => 'Yu no ab no poermishan fi $2, fi di falarin {{PLURAL:$1|riizn|riizndem}}:',
 'edit-conflict' => 'Hedit kanflik: $1',
@@ -735,6 +734,9 @@ Chrai priifix yu kwieri wid ''all:'' fi saach aal kantent (inkluudn taak piej, t
 'group-sysop' => 'Adminischrieta',
 
 'grouppage-sysop' => '{{ns:project}}:Adminischrieta',
+
+# Special:Log/newusers
+'newuserlogpage' => 'Yuuza krieshan lag',
 
 # User rights log
 'rightslog' => 'Yuuza raits lag',
@@ -825,9 +827,6 @@ Piej pahn [[Special:Watchlist|yu wachlis]] dem '''buol'''.",
 
 # Special:LinkSearch
 'linksearch' => 'Extoernal lingk',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Yuuza krieshan lag',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(lis a memba)',

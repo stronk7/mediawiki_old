@@ -33,10 +33,6 @@
  */
 class ApiEditPage extends ApiBase {
 
-	public function __construct( $query, $moduleName ) {
-		parent::__construct( $query, $moduleName );
-	}
-
 	public function execute() {
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
@@ -50,10 +46,6 @@ class ApiEditPage extends ApiBase {
 
 		$pageObj = $this->getTitleOrPageId( $params );
 		$titleObj = $pageObj->getTitle();
-		if ( $titleObj->isExternal() ) {
-			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
-		}
-
 		$apiResult = $this->getResult();
 
 		if ( $params['redirect'] ) {
@@ -68,12 +60,12 @@ class ApiEditPage extends ApiBase {
 				$redirValues = array();
 				foreach ( $titles as $id => $newTitle ) {
 
-					if ( !isset( $titles[ $id - 1 ] ) ) {
-						$titles[ $id - 1 ] = $oldTitle;
+					if ( !isset( $titles[$id - 1] ) ) {
+						$titles[$id - 1] = $oldTitle;
 					}
 
 					$redirValues[] = array(
-						'from' => $titles[ $id - 1 ]->getPrefixedText(),
+						'from' => $titles[$id - 1]->getPrefixedText(),
 						'to' => $newTitle->getPrefixedText()
 					);
 
@@ -307,7 +299,13 @@ class ApiEditPage extends ApiBase {
 		// TODO: Make them not or check if they still do
 		$wgTitle = $titleObj;
 
-		$articleObject = new Article( $titleObj );
+		$articleContext = new RequestContext;
+		$articleContext->setRequest( $req );
+		$articleContext->setWikiPage( $pageObj );
+		$articleContext->setUser( $this->getUser() );
+
+		$articleObject = Article::newFromWikiPage( $pageObj, $articleContext );
+
 		$ep = new EditPage( $articleObject );
 
 		// allow editing of non-textual content.
@@ -407,7 +405,6 @@ class ApiEditPage extends ApiBase {
 				} else {
 					$r['oldrevid'] = intval( $oldRevId );
 					$r['newrevid'] = intval( $newRevId );
-					$pageObj->clear();
 					$r['newtimestamp'] = wfTimestamp( TS_ISO_8601,
 						$pageObj->getTimestamp() );
 				}
@@ -648,9 +645,5 @@ class ApiEditPage extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Edit';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

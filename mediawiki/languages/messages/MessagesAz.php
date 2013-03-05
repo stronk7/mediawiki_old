@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author AZISS
  * @author Cekli829
  * @author Don Alessandro
  * @author E THP
@@ -15,6 +16,7 @@
  * @author Erdemaslancan
  * @author Gulmammad
  * @author Kaganer
+ * @author Khan27
  * @author PPerviz
  * @author PrinceValiant
  * @author Sortilegus
@@ -112,7 +114,7 @@ $messages = array(
 'tog-externaleditor' => 'Susmaya görə xarici müqayisə proqramlarından istifadə et',
 'tog-externaldiff' => 'Susmaya görə xarici müqayisə proqramlarından istifadə et',
 'tog-showjumplinks' => '"Keçid et:" linklərini aktivləşdir',
-'tog-uselivepreview' => 'Canlı sınaq baxışı xüsusiyyətini istifadə et (JavaScript, sınaq mərhələsində)',
+'tog-uselivepreview' => 'Canlı sınaq baxışı xüsusiyyətindən istifadə et (JavaScript tələb edir, sınaq mərhələsindədir)',
 'tog-forceeditsummary' => 'Qısa məzmunu boş saxladıqda mənə bildir',
 'tog-watchlisthideown' => 'Mənim redaktələrimi izləmə siyahısında gizlət',
 'tog-watchlisthidebots' => 'Bot redaktələrini izləmə siyahısında gizlət',
@@ -240,13 +242,14 @@ $messages = array(
 'vector-simplesearch-preference' => 'İnkişaf etmiş axtarma təkliflərini gətir (yalnız Vector görünüşü üçün)',
 'vector-view-create' => 'Yarat',
 'vector-view-edit' => 'Redaktə',
-'vector-view-history' => 'Tarixçə',
+'vector-view-history' => 'Tarixçəyə bax',
 'vector-view-view' => 'Oxu',
 'vector-view-viewsource' => 'Mənbəyə bax',
 'actions' => 'Hərəkətlər',
 'namespaces' => 'Adlar fəzası',
 'variants' => 'Variantlar',
 
+'navigation-heading' => 'Naviqasiya menyusu',
 'errorpagetitle' => 'Xəta',
 'returnto' => '$1 səhifəsinə qayıt.',
 'tagline' => '{{SITENAME}} saytından',
@@ -328,7 +331,7 @@ $1',
 'policy-url' => 'Project:Qaydalar',
 'portal' => 'Kənd meydanı',
 'portal-url' => 'Project:Kənd meydanı',
-'privacy' => 'Gizlilik prinsipi',
+'privacy' => 'Məxfilik siyasəti',
 'privacypage' => 'Project:Gizlilik prinsipi',
 
 'badaccess' => 'İcazə xətası',
@@ -476,12 +479,16 @@ Göstərilən səbəb: "\'\'$2\'\'".',
 'logouttext' => "'''Sistemdən çıxdınız.'''
 
 Siz {{SITENAME}} saytını anonim olaraq istifadə etməyə davam edə bilər və ya eyni, yaxud başqa istifadəçi adı ilə <span class='plainlinks'>[$1 yenidən daxil ola]</span> bilərsiniz. Veb-brauzerin keş yaddaşını təmizləyənədək bəzi səhifələr hələ də sistemdə imişsiniz kimi görünə bilər.",
+'welcomeuser' => 'Xoş gəldin $1!',
+'welcomecreation-msg' => 'Hesabınız yaradıldı.
+[[Special:Preferences|{{SITENAME}} nizamlamalarınızı]] dəyişdirməyi unutmayın.',
 'yourname' => 'İstifadəçi adı',
 'yourpassword' => 'Parol:',
 'yourpasswordagain' => 'Parolu təkrar yazın:',
 'remembermypassword' => 'Məni bu kompyuterdə xatırla (maksimum $1 {{PLURAL:$1|gün|gün}})',
 'securelogin-stick-https' => 'Daxil olduqdan sonra HTTPS-lə əlaqədə qal',
 'yourdomainname' => 'Sizin domain',
+'password-change-forbidden' => 'Bu vikidə parolunuzu dəyişdirə bilməzsiniz.',
 'externaldberror' => 'Verilənlər bazasının doğruluğunu yoxlamada xəta baş verib və yaxud sizin xarici istifadəçi qeydiyyatını yeniləmək hüququnuz yoxdur.',
 'login' => 'Daxil ol',
 'nav-login-createaccount' => 'Daxil ol / hesab yarat',
@@ -543,6 +550,7 @@ Aşağıdakı xidmətlərin heç biri üçün Sizə e-məktub göndərilməyəc�
 'emailconfirmlink' => 'E-poçt ünvanını təsdiq et',
 'invalidemailaddress' => 'E-poçt ünvanınızı qeyri-düzgün formatda olduğu üçün qəbul edə bilmirik.
 Xahiş edirik düzgün formatlı ünvan daxil edin və ya bu sahəni boş qoyun.',
+'emaildisabled' => 'Bu saytdan e-poçt göndərə bilməzsiniz.',
 'accountcreated' => 'Hesab yaradıldı',
 'accountcreatedtext' => '$1 üçün istifadəçi hesabı yaradıldı.',
 'createaccount-title' => '{{SITENAME}} hesabın yaradılması',
@@ -593,7 +601,7 @@ Müvəqqəti parol: $2',
 'changeemail' => 'E-məktub ünvanını dəyiş',
 'changeemail-oldemail' => 'Hazırki e-poçt ünvanı:',
 'changeemail-newemail' => 'Yeni e-poçt ünvanı:',
-'changeemail-none' => '(heç biri)',
+'changeemail-none' => '(yoxdur)',
 'changeemail-submit' => 'E-poçtu dəyiş',
 'changeemail-cancel' => 'İmtina',
 
@@ -623,7 +631,7 @@ Müvəqqəti parol: $2',
 'minoredit' => 'Kiçik redaktə',
 'watchthis' => 'Bu səhifəni izlə',
 'savearticle' => 'Səhifəni qeyd et',
-'preview' => 'Sınaq göstərişi',
+'preview' => 'Sınaq görüntüsü',
 'showpreview' => 'Sınaq göstərişi',
 'showlivepreview' => 'Canlı sınaq göstərişi',
 'showdiff' => 'Dəyişiklikləri göstər',
@@ -704,7 +712,6 @@ Siz eyni zamanda söz verirsiniz ki, bu yazıları siz özünüz yazmısınız v
 'template-semiprotected' => '(yarım-mühafizə)',
 'hiddencategories' => 'Bu səhifə {{PLURAL:$1|1 gizli kateqoriyaya|$1 gizli kateqoriyaya}} aiddir:',
 'edittools-upload' => '-',
-'nocreatetitle' => 'Səhifə yaratma məhdudlaşdırılıb.',
 'nocreatetext' => '{{SITENAME}} saytında yeni səhifələrin yaradılması imkanları məhdudlaşdırılıb.
 Siz geri qayıdıb mövcud səhifəni və ya  [[Special:UserLogin|sistemə təqdim olunma və ya yeni hesab açmaq]] səhifəsini redaktə edə bilərsiniz.',
 'nocreate-loggedin' => 'Sizin yeni səhifələr yaratmaq üçün icazəniz yoxdur.',
@@ -961,7 +968,7 @@ $1",
 'prefsnologintext' => 'Nizamlamaları dəyişmək üçün <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} daxil olmaq]</span> zəruridir.',
 'changepassword' => 'Parolu dəyiş',
 'prefs-skin' => 'Cild',
-'skin-preview' => 'Sınaq göstərişi',
+'skin-preview' => 'Sınaq görüntüsü',
 'datedefault' => 'Seçim yoxdur',
 'prefs-beta' => 'Beta xüsusiyyətlər',
 'prefs-datetime' => 'Tarix və vaxt',
@@ -1169,11 +1176,13 @@ Həmçinin kimliyinizi gostərmədən belə, başqalarının sizinlə istifadə�
 'right-siteadmin' => 'Məlumatlar bazasının bloklanması və blokun götürülməsi',
 'right-sendemail' => 'Digər istifadəçilərə elektron poçt göndər',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Yeni istifadəçilərin qeydiyyatı',
+'newuserlogpagetext' => 'Yeni qeydiyyatdan keçmiş istifadəçilərin siyahısı.',
+
 # User rights log
 'rightslog' => 'İstifadəçi hüquqları qeydləri',
 'rightslogtext' => 'İstifadəçi hüquqları dəyişikliyi qeydləri.',
-'rightslogentry' => '$1 adlı istifadəçinin istifadəçi qruplarındakı üzvlüyü dəyişdirildi: $2 ► $3',
-'rightsnone' => '(heç biri)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'bu səhifənin oxunması',
@@ -1649,10 +1658,6 @@ Həmçinin, [[Special:WantedCategories|tələb olunan kateqoriyalara]] baxın.',
 'activeusers-hidesysops' => 'İdarəçiləri gizlə',
 'activeusers-noresult' => 'İstifadəçi tapılmadı.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Yeni istifadəçilərin qeydiyyatı',
-'newuserlogpagetext' => 'Yeni qeydiyyatdan keçmiş istifadəçilərin siyahısı.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'İstifadəçi qruplarının hüquqları',
 'listgrouprights-summary' => 'Bu vikidə olan istifadəçi siyahıları və onların hüquqları aşağıda göstərilmişdir.
@@ -1765,6 +1770,8 @@ Siz haqqında söhbət gedən səhifəyə baxanadək səhifədəki digər dəyi�
 
 Yardım və təklifləriniz üçün:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'yaradıldı',
+'changed' => 'dəyişdi',
 
 # Delete
 'deletepage' => 'Səhifəni sil',
@@ -2985,7 +2992,7 @@ Bu saytda texniki problemlər var.',
 'logentry-newusers-create' => '$1 istifadəçi hesabı yaratdı',
 'logentry-newusers-create2' => '$1 $3 üçün istifadəçi hesabı yaratdı',
 'logentry-newusers-autocreate' => '$1 hesabı avtomatik yaradıldı',
-'newuserlog-byemail' => 'parol e-maillə göndərildi',
+'rightsnone' => '(yoxdur)',
 
 # Feedback
 'feedback-subject' => 'Mövzu:',

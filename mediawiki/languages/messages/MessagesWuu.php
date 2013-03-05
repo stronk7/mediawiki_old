@@ -624,7 +624,6 @@ $2',
 'template-protected' => '（保护）',
 'template-semiprotected' => '（半保护垃许）',
 'hiddencategories' => '箇只页面是属于$1个隐藏分类个成员：',
-'nocreatetitle' => '创建页面受限',
 'nocreatetext' => '{{SITENAME}}限制了创建新页面功能。侬可以返回并编辑已有个页面，或者[[Special:UserLogin|登录或创建新账户]]。',
 'nocreate-loggedin' => '侬呒没权限创建新页面。',
 'sectioneditnotsupported-title' => '段落编辑弗支持',
@@ -996,9 +995,11 @@ $1",
 'grouppage-sysop' => '{{ns:project}}:管理员',
 'grouppage-bureaucrat' => '{{ns:project}}:行政员',
 
+# Special:Log/newusers
+'newuserlogpage' => '用户创建日志',
+
 # User rights log
 'rightslog' => '用户权限日志',
-'rightsnone' => '（呒）',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => '编辑箇只页面',
@@ -1188,9 +1189,6 @@ $1",
 # Special:ListUsers
 'listusers-submit' => '显示',
 
-# Special:Log/newusers
-'newuserlogpage' => '用户创建日志',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '（成员列表）',
 
@@ -1224,6 +1222,9 @@ $1",
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => '监控……',
 'unwatching' => '解除监控……',
+
+'created' => '建立哉',
+'changed' => '改变哉',
 
 # Delete
 'deletepage' => '删脱页面',
@@ -1594,5 +1595,6 @@ Variants for Chinese language
 # New logging system
 'revdelete-restricted' => '已将限制应用到管理员',
 'revdelete-unrestricted' => '已移除对管理员个限制',
+'rightsnone' => '（呒）',
 
 );

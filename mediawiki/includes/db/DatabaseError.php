@@ -176,7 +176,7 @@ class DBConnectionError extends DBError {
 		return "$text<hr />$extra";
 	}
 
-	public function reportHTML(){
+	public function reportHTML() {
 		global $wgUseFileCache;
 
 		# Check whether we can serve a file-cached copy of the page with the error underneath
@@ -289,10 +289,10 @@ class DBQueryError extends DBError {
 	 * @param $fname string
 	 */
 	function __construct( DatabaseBase &$db, $error, $errno, $sql, $fname ) {
-		$message = "A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script\n" .
-		  "Query: $sql\n" .
-		  "Function: $fname\n" .
-		  "Error: $errno $error\n";
+		$message = "A database error has occurred. Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script\n" .
+			"Query: $sql\n" .
+			"Function: $fname\n" .
+			"Error: $errno $error\n";
 		parent::__construct( $db, $message );
 
 		$this->error = $error;

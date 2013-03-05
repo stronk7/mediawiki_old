@@ -234,7 +234,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			$this->addFieldsIf( 'rc_comment', $this->fld_comment || $this->fld_parsedcomment );
 			$this->addFieldsIf( 'rc_user', $this->fld_user );
 			$this->addFieldsIf( 'rc_user_text', $this->fld_user || $this->fld_userid );
-			$this->addFieldsIf( array( 'rc_minor', 'rc_type', 'rc_bot' ) , $this->fld_flags );
+			$this->addFieldsIf( array( 'rc_minor', 'rc_type', 'rc_bot' ), $this->fld_flags );
 			$this->addFieldsIf( array( 'rc_old_len', 'rc_new_len' ), $this->fld_sizes );
 			$this->addFieldsIf( 'rc_patrolled', $this->fld_patrolled );
 			$this->addFieldsIf( array( 'rc_logid', 'rc_log_type', 'rc_log_action', 'rc_params' ), $this->fld_loginfo );
@@ -260,7 +260,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( !is_null( $params['tag'] ) ) {
 			$this->addTables( 'change_tag' );
 			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag' , $params['tag'] );
+			$this->addWhereFld( 'ct_tag', $params['tag'] );
 			global $wgOldChangeTagsIndex;
 			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
@@ -340,6 +340,9 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				break;
 			case RC_LOG:
 				$vals['type'] = 'log';
+				break;
+			case RC_EXTERNAL:
+				$vals['type'] = 'external';
 				break;
 			case RC_MOVE_OVER_REDIRECT:
 				$vals['type'] = 'move over redirect';
@@ -477,6 +480,8 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				return RC_NEW;
 			case 'log':
 				return RC_LOG;
+			case 'external':
+				return RC_EXTERNAL;
 		}
 	}
 
@@ -573,6 +578,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_ISMULTI => true,
 				ApiBase::PARAM_TYPE => array(
 					'edit',
+					'external',
 					'new',
 					'log'
 				)
@@ -729,9 +735,5 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Recentchanges';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

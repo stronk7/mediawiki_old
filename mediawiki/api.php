@@ -60,7 +60,7 @@ if ( !$wgEnableAPI ) {
 	header( $_SERVER['SERVER_PROTOCOL'] . ' 500 MediaWiki configuration Error', true, 500 );
 	echo( 'MediaWiki API is not enabled for this site. Add the following line to your LocalSettings.php'
 		. '<pre><b>$wgEnableAPI=true;</b></pre>' );
-	die(1);
+	die( 1 );
 }
 
 // Set a dummy $wgTitle, because $wgTitle == null breaks various things
@@ -87,17 +87,17 @@ wfLogProfilingData();
 // Log the request
 if ( $wgAPIRequestLog ) {
 	$items = array(
-			wfTimestamp( TS_MW ),
-			$endtime - $starttime,
-			$wgRequest->getIP(),
-			$_SERVER['HTTP_USER_AGENT']
+		wfTimestamp( TS_MW ),
+		$endtime - $starttime,
+		$wgRequest->getIP(),
+		$_SERVER['HTTP_USER_AGENT']
 	);
 	$items[] = $wgRequest->wasPosted() ? 'POST' : 'GET';
 	$module = $processor->getModule();
 	if ( $module->mustBePosted() ) {
 		$items[] = "action=" . $wgRequest->getVal( 'action' );
 	} else {
-		$items[] = wfArrayToCGI( $wgRequest->getValues() );
+		$items[] = wfArrayToCgi( $wgRequest->getValues() );
 	}
 	wfErrorLog( implode( ',', $items ) . "\n", $wgAPIRequestLog );
 	wfDebug( "Logged API request to $wgAPIRequestLog\n" );
@@ -107,4 +107,3 @@ if ( $wgAPIRequestLog ) {
 // get here to worry about whether this should be = or =&, but the file has to parse properly.
 $lb = wfGetLBFactory();
 $lb->shutdown();
-

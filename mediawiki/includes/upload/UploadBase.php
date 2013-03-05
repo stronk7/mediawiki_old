@@ -63,6 +63,8 @@ abstract class UploadBase {
 	const WINDOWS_NONASCII_FILENAME = 13;
 	const FILENAME_TOO_LONG = 14;
 
+	const SESSION_STATUS_KEY = 'wsUploadStatusData';
+
 	/**
 	 * @param $error int
 	 * @return string
@@ -76,7 +78,7 @@ abstract class UploadBase {
 								self::ILLEGAL_FILENAME => 'illegal-filename',
 								self::OVERWRITE_EXISTING_FILE => 'overwrite',
 								self::VERIFICATION_ERROR => 'verification-error',
-								self::HOOK_ABORTED =>  'hookaborted',
+								self::HOOK_ABORTED => 'hookaborted',
 								self::WINDOWS_NONASCII_FILENAME => 'windows-nonascii-filename',
 								self::FILENAME_TOO_LONG => 'filename-toolong',
 		);
@@ -207,7 +209,7 @@ abstract class UploadBase {
 	/**
 	 * Initialize from a WebRequest. Override this in a subclass.
 	 */
-	public abstract function initializeFromRequest( &$request );
+	abstract public function initializeFromRequest( &$request );
 
 	/**
 	 * Fetch the file. Usually a no-op
@@ -231,6 +233,14 @@ abstract class UploadBase {
 	 */
 	public function getFileSize() {
 		return $this->mFileSize;
+	}
+
+	/**
+	 * Get the base 36 SHA1 of the file
+	 * @return string
+	 */
+	public function getTempFileSha1Base36() {
+		return FSFile::getSha1Base36FromPath( $this->mTempPath );
 	}
 
 	/**
@@ -350,7 +360,7 @@ abstract class UploadBase {
 		global $wgVerifyMimeType;
 		wfProfileIn( __METHOD__ );
 		if ( $wgVerifyMimeType ) {
-			wfDebug ( "\n\nmime: <$mime> extension: <{$this->mFinalExtension}>\n\n");
+			wfDebug ( "\n\nmime: <$mime> extension: <{$this->mFinalExtension}>\n\n" );
 			global $wgMimeTypeBlacklist;
 			if ( $this->checkFileExtension( $mime, $wgMimeTypeBlacklist ) ) {
 				wfProfileOut( __METHOD__ );
@@ -399,7 +409,7 @@ abstract class UploadBase {
 		$this->mFileProps = FSFile::getPropsFromPath( $this->mTempPath, $this->mFinalExtension );
 
 		# check mime type, if desired
-		$mime = $this->mFileProps[ 'file-mime' ];
+		$mime = $this->mFileProps['file-mime'];
 		$status = $this->verifyMimeType( $mime );
 		if ( $status !== true ) {
 			wfProfileOut( __METHOD__ );
@@ -544,7 +554,9 @@ abstract class UploadBase {
 	}
 
 	/**
-	 * Check for non fatal problems with the file
+	 * Check for non fatal problems with the file.
+	 *
+	 * This should not assume that mTempPath is set.
 	 *
 	 * @return Array of warnings
 	 */
@@ -579,7 +591,7 @@ abstract class UploadBase {
 
 		global $wgUploadSizeWarning;
 		if ( $wgUploadSizeWarning && ( $this->mFileSize > $wgUploadSizeWarning ) ) {
-			$warnings['large-file'] = $wgUploadSizeWarning;
+			$warnings['large-file'] = array( $wgUploadSizeWarning, $this->mFileSize );
 		}
 
 		if ( $this->mFileSize == 0 ) {
@@ -592,7 +604,7 @@ abstract class UploadBase {
 		}
 
 		// Check dupes against existing files
-		$hash = FSFile::getSha1Base36FromPath( $this->mTempPath );
+		$hash = $this->getTempFileSha1Base36();
 		$dupes = RepoGroup::singleton()->findBySha1( $hash );
 		$title = $this->getTitle();
 		// Remove all matches against self
@@ -756,7 +768,7 @@ abstract class UploadBase {
 		}
 
 		if( strlen( $partname ) < 1 ) {
-			$this->mTitleError =  self::MIN_LENGTH_PARTNAME;
+			$this->mTitleError = self::MIN_LENGTH_PARTNAME;
 			return $this->mTitle = null;
 		}
 
@@ -785,13 +797,14 @@ abstract class UploadBase {
 	 * This method returns the file object, which also has a 'fileKey' property which can be passed through a form or
 	 * API request to find this stashed file again.
 	 *
+	 * @param $user User
 	 * @return UploadStashFile stashed file
 	 */
-	public function stashFile() {
+	public function stashFile( User $user = null ) {
 		// was stashSessionFile
 		wfProfileIn( __METHOD__ );
 
-		$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
+		$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash( $user );
 		$file = $stash->stashFile( $this->mTempPath, $this->getSourceType() );
 		$this->mLocalFile = $file;
 
@@ -927,7 +940,7 @@ abstract class UploadBase {
 		# ugly hack: for text files, always look at the entire file.
 		# For binary field, just check the first K.
 
-		if( strpos( $mime,'text/' ) === 0 ) {
+		if( strpos( $mime, 'text/' ) === 0 ) {
 			$chunk = file_get_contents( $file );
 		} else {
 			$fp = fopen( $file, 'rb' );
@@ -1077,7 +1090,7 @@ abstract class UploadBase {
 
 		foreach( $attribs as $attrib => $value ) {
 			$stripped = $this->stripXmlNamespace( $attrib );
-			$value = strtolower($value);
+			$value = strtolower( $value );
 
 			if( substr( $stripped, 0, 2 ) == 'on' ) {
 				wfDebug( __METHOD__ . ": Found event-handler attribute '$attrib'='$value' in uploaded file.\n" );
@@ -1130,8 +1143,8 @@ abstract class UploadBase {
 			# use CSS styles to bring in remote code
 			# catch url("http:..., url('http:..., url(http:..., but not url("#..., url('#..., url(#....
 			if( $stripped == 'style' && preg_match_all( '!((?:font|clip-path|fill|filter|marker|marker-end|marker-mid|marker-start|mask|stroke)\s*:\s*url\s*\(\s*["\']?\s*[^#]+.*?\))!sim', $value, $matches ) ) {
-				foreach ($matches[1] as $match) {
-					if (!preg_match( '!(?:font|clip-path|fill|filter|marker|marker-end|marker-mid|marker-start|mask|stroke)\s*:\s*url\s*\(\s*(#|\'#|"#)!sim', $match ) ) {
+				foreach ( $matches[1] as $match ) {
+					if ( !preg_match( '!(?:font|clip-path|fill|filter|marker|marker-end|marker-mid|marker-start|mask|stroke)\s*:\s*url\s*\(\s*(#|\'#|"#)!sim', $match ) ) {
 						wfDebug( __METHOD__ . ": Found svg setting a style with remote url '$attrib'='$value' in uploaded file.\n" );
 						return true;
 					}
@@ -1221,27 +1234,22 @@ abstract class UploadBase {
 			}
 		}
 
+		/* NB: AV_NO_VIRUS is 0 but AV_SCAN_FAILED is false,
+		 * so we need the strict equalities === and thus can't use a switch here
+		 */
 		if ( $mappedCode === AV_SCAN_FAILED ) {
 			# scan failed (code was mapped to false by $exitCodeMap)
 			wfDebug( __METHOD__ . ": failed to scan $file (code $exitCode).\n" );
 
-			if ( $wgAntivirusRequired ) {
-				wfProfileOut( __METHOD__ );
-				return wfMessage( 'virus-scanfailed', array( $exitCode ) )->text();
-			} else {
-				wfProfileOut( __METHOD__ );
-				return null;
-			}
+			$output = $wgAntivirusRequired ? wfMessage( 'virus-scanfailed', array( $exitCode ) )->text() : null;
 		} elseif ( $mappedCode === AV_SCAN_ABORTED ) {
 			# scan failed because filetype is unknown (probably imune)
 			wfDebug( __METHOD__ . ": unsupported file type $file (code $exitCode).\n" );
-			wfProfileOut( __METHOD__ );
-			return null;
+			$output = null;
 		} elseif ( $mappedCode === AV_NO_VIRUS ) {
 			# no virus found
 			wfDebug( __METHOD__ . ": file passed virus scan.\n" );
-			wfProfileOut( __METHOD__ );
-			return false;
+			$output = false;
 		} else {
 			$output = trim( $output );
 
@@ -1257,9 +1265,10 @@ abstract class UploadBase {
 			}
 
 			wfDebug( __METHOD__ . ": FOUND VIRUS! scanner feedback: $output \n" );
-			wfProfileOut( __METHOD__ );
-			return $output;
 		}
+
+		wfProfileOut( __METHOD__ );
+		return $output;
 	}
 
 	/**
@@ -1370,7 +1379,7 @@ abstract class UploadBase {
 
 		if ( self::isThumbName( $file->getName() ) ) {
 			# Check for filenames like 50px- or 180px-, these are mostly thumbnails
-			$nt_thb = Title::newFromText( substr( $partname , strpos( $partname , '-' ) +1 ) . '.' . $extension, NS_FILE );
+			$nt_thb = Title::newFromText( substr( $partname, strpos( $partname, '-' ) + 1 ) . '.' . $extension, NS_FILE );
 			$file_thb = wfLocalFile( $nt_thb );
 			if( $file_thb->exists() ) {
 				return array(
@@ -1411,10 +1420,10 @@ abstract class UploadBase {
 		$n = strrpos( $filename, '.' );
 		$partname = $n ? substr( $filename, 0, $n ) : $filename;
 		return (
-					substr( $partname , 3, 3 ) == 'px-' ||
-					substr( $partname , 2, 3 ) == 'px-'
+					substr( $partname, 3, 3 ) == 'px-' ||
+					substr( $partname, 2, 3 ) == 'px-'
 				) &&
-				preg_match( "/[0-9]{2}/" , substr( $partname , 0, 2 ) );
+				preg_match( "/[0-9]{2}/", substr( $partname, 0, 2 ) );
 	}
 
 	/**
@@ -1494,6 +1503,32 @@ abstract class UploadBase {
 		} else {
 			return intval( $wgMaxUploadSize );
 		}
+	}
 
+	/**
+	 * Get the current status of a chunked upload (used for polling).
+	 * The status will be read from the *current* user session.
+	 * @param $statusKey string
+	 * @return Array|bool
+	 */
+	public static function getSessionStatus( $statusKey ) {
+		return isset( $_SESSION[self::SESSION_STATUS_KEY][$statusKey] )
+			? $_SESSION[self::SESSION_STATUS_KEY][$statusKey]
+			: false;
+	}
+
+	/**
+	 * Set the current status of a chunked upload (used for polling).
+	 * The status will be stored in the *current* user session.
+	 * @param $statusKey string
+	 * @param $value array|false
+	 * @return void
+	 */
+	public static function setSessionStatus( $statusKey, $value ) {
+		if ( $value === false ) {
+			unset( $_SESSION[self::SESSION_STATUS_KEY][$statusKey] );
+		} else {
+			$_SESSION[self::SESSION_STATUS_KEY][$statusKey] = $value;
+		}
 	}
 }

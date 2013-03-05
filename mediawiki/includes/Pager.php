@@ -143,7 +143,7 @@ abstract class IndexPager extends ContextSource implements Pager {
 		$this->mOffset = $this->mRequest->getText( 'offset' );
 
 		# Use consistent behavior for the limit options
-		$this->mDefaultLimit = intval( $this->getUser()->getOption( 'rclimit' ) );
+		$this->mDefaultLimit = $this->getUser()->getIntOption( 'rclimit' );
 		if ( !$this->mLimit ) {
 			// Don't override if a subclass calls $this->setLimit() in its constructor.
 			list( $this->mLimit, /* $offset */ ) = $this->mRequest->getLimitOffset();
@@ -866,7 +866,7 @@ abstract class ReverseChronologicalPager extends IndexPager {
 		if ( $this->mMonth ) {
 			$month = $this->mMonth + 1;
 			// For December, we want January 1 of the next year
-			if ($month > 12) {
+			if ( $month > 12 ) {
 				$month = 1;
 				$year++;
 			}
@@ -1160,7 +1160,7 @@ abstract class TablePager extends IndexPager {
 			# The pair is either $index => $limit, in which case the $value
 			# will be numeric, or $limit => $text, in which case the $value
 			# will be a string.
-			if( is_int( $value ) ){
+			if( is_int( $value ) ) {
 				$limit = $value;
 				$text = $this->getLanguage()->formatNum( $limit );
 			} else {

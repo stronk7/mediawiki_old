@@ -141,6 +141,7 @@ $messages = array(
 'index-category' => 'نو انڈیکس صفحات',
 'noindex-category' => 'نو انڈیکس صفحات',
 'broken-file-category' => 'نس پھت صفحات',
+'categoryviewer-pagedlinks' => '($1) ($2)',
 
 'about' => 'تعارف',
 'article' => 'صفحۂ مشمول',
@@ -237,6 +238,7 @@ $messages = array(
 برائے مہربانی! صفحو لوڑیکو بچے دوبارہ کوشش کوریکاری پروشٹی پھوکرو انتظار کورے.
 
 $1',
+'pool-errorunknown' => 'نامعلوم خطا',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'تعارف {{SITENAME}}',
@@ -268,6 +270,7 @@ $1',
 [[Special:Version|version page]]',
 
 'ok' => 'ٹھیک شیر',
+'pagetitle' => '$1 - {{SITENAME}}',
 'pagetitle-view-mainpage' => '{{SITENAME}}',
 'retrievedfrom' => '‘‘$1’’ نقل کاردو',
 'youhavenewmessages' => 'تہ بچے ای $1 شیر۔ ($2)',
@@ -275,6 +278,7 @@ $1',
 'newmessagesdifflink' => 'تـجـدیـد مـاقـبل آخـراری فـرق',
 'youhavenewmessagesmulti' => 'ء$1 تہ بچے نوغ نوغ پیغامات شینی',
 'editsection' => 'ترمیم',
+'editsection-brackets' => '[$1]',
 'editold' => 'ترمیم',
 'viewsourceold' => 'مآخذو لوڑے',
 'editlink' => 'تدوین کورے',
@@ -284,6 +288,7 @@ $1',
 'showtoc' => 'پشاوے',
 'hidetoc' => 'کھوشتاوے',
 'collapsible-collapse' => 'خاتمہ/Collapse',
+'collapsible-expand' => 'فراخ کورے',
 'thisisdeleted' => 'لوڑے  یا بحال کورے $1',
 'viewdeleted' => 'لوڑے $1؟',
 'restorelink' => '{{PLURAL:$1|ای ترمیم حذف ہوی|$1 ترامیم حذف ہونی}}',
@@ -291,6 +296,8 @@ $1',
 'site-atom-feed' => '$1 اٹوم فیڈ',
 'page-rss-feed' => '$1 آر ایس ایس فیڈ',
 'page-atom-feed' => '$1 آٹوم فیڈ',
+'feed-atom' => 'اٹوم',
+'feed-rss' => 'آر ایس ایس',
 'red-link-title' => '
 $1 (صفحہ موجود نیکی)',
 
@@ -390,7 +397,7 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'yourname' => 'اسمِ رکنیت',
 'yourpassword' => 'کلمۂ شناخت(پاسورڈ)',
 'yourpasswordagain' => 'کلمۂ شناخت(پاسورڈو)دوبارہ نیویشے',
-'remembermypassword' => '!!Rachitrali!!مہ یاد لاکھے (کم از کم $1 {{PLURAL:$1|بس|بس}})',
+'remembermypassword' => 'ھیہ براوزیرا مہ داخلِ نوشتگی معلوماتن یاد لاکھے (زیاتاری زیات $1 {{PLURAL:$1|بس|بسان}} بچے)',
 'yourdomainname' => 'تہ ڈومین',
 'externaldberror' => 'یا تھے توثیقی ڈیٹابیسا خطا واقع بیتی شیر یا تتے بیریو کھاتو بتاریخ کوریکو اِجازت نیکی',
 'login' => 'داخل بوس',
@@ -478,6 +485,11 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 
 # Special:PasswordReset
 'passwordreset' => 'پاسورڈو ری سیٹ کورے',
+'passwordreset-username' => 'ممبارو نم',
+
+# Special:ChangeEmail
+'changeemail-none' => '(نو)',
+'changeemail-cancel' => 'کھینسل',
 
 # Edit page toolbar
 'bold_sample' => 'بوسک متن',
@@ -554,6 +566,9 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'moveddeleted-notice' => 'ھیہ ای حذف شدہ صفحہ شیر.
 صفحو نوشتۂ حذف شدگی و منتقلی ذیلا بطورِ حوالہ دیونو بویان.',
 
+# Content models
+'content-model-javascript' => 'جاوا اسکرپٹ',
+
 # Parser/template warnings
 'post-expand-template-inclusion-warning' => "'''خبردار:''' سانچو سایز بو لوٹ شیر.
 بعضی سانچہ شامل نو بونی.",
@@ -582,15 +597,22 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'history-show-deleted' => 'صرفی حذف شدہ',
 'histfirst' => 'قدیم ترین',
 'histlast' => 'تازہ ترین',
+'historyempty' => '(خالی)',
 
 # Revision feed
 'history-feed-item-nocomment' => '$1 تا $2',
 
 # Revision deletion
 'rev-delundel' => 'پشاوے/کھوشتاوے',
+'rev-showdeleted' => 'پشاوے',
+'revdelete-radio-set' => 'Yes/دی',
+'revdelete-radio-unset' => 'نو',
 'revdel-restore' => 'ظاہریتو تبدیل کورے',
 'revdel-restore-deleted' => 'حذف شدہ رویژنز',
 'revdel-restore-visible' => 'ویزیبل رویژنز',
+
+# History merging
+'mergehistory-revisionrow' => '$1 ($2) $3 . . $4 $5 $6',
 
 # Merge log
 'revertmerge' => 'غیر ضم',
@@ -648,14 +670,17 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 'powersearch-ns' => 'جائے ناما تلاش:',
 'powersearch-redir' => 'فہرستِ رجوع مکرر',
 'powersearch-field' => 'تلاش برائے',
+'powersearch-toggleall' => 'سف',
 
 # Preferences page
 'preferences' => 'ترجیحات',
 'mypreferences' => 'مہ ترجیہات',
+'skin-preview' => 'نمائش',
 'youremail' => 'بشلی کغاز',
 'username' => 'ممبارو نم',
 'uid' => 'ممبارو لمبار:',
 'prefs-memberingroups' => '{{PLURAL:$1|گروہ|گروہاں}} رُکن:',
+'prefs-registration-date-time' => '$1',
 'yourrealname' => '* اصلی نم',
 'yournick' => 'دسخط',
 'badsig' => "ناقص خام دسخط.
@@ -676,9 +701,11 @@ HTML tags لوڑے.',",
 'right-upload' => 'فائل انځاوے',
 'right-delete' => 'صفحان ضائع کورے',
 
+# Special:Log/newusers
+'newuserlogpage' => 'نوشتۂ آمد صارف',
+
 # User rights log
 'rightslog' => 'یوزروت مختص شدہ حقوق',
-'rightsnone' => '(نو)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'ھیہ صفحا ایڈیٹنگ کورے',
@@ -826,9 +853,6 @@ HTML tags لوڑے.',",
 'linksearch-ok' => 'Search/تلاش',
 'linksearch-line' => '$1 مربوط شیر $2 ری',
 
-# Special:Log/newusers
-'newuserlogpage' => 'نوشتۂ آمد صارف',
-
 # Special:ListGroupRights
 'listgrouprights-members' => 'ممبارانن فھرست',
 
@@ -896,7 +920,7 @@ HTML tags لوڑے.',",
 'blanknamespace' => '(مرکز)',
 
 # Contributions
-'contributions' => 'صارفو حصہ',
+'contributions' => ' $1 صارفو حصہ',
 'contributions-title' => '$1 صارفو حصہ',
 'mycontris' => 'مہ حصہ',
 'contribsub2' => 'براۓ $1 ($2)',
@@ -1117,6 +1141,9 @@ HTML tags لوڑے.',",
 
 # Special:ComparePages
 'compare-page1' => 'صفحہ 1',
+
+# New logging system
+'rightsnone' => '(نو)',
 
 # Feedback
 'feedback-message' => 'پیغام',

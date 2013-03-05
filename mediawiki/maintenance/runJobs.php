@@ -53,6 +53,10 @@ class RunJobs extends Maintenance {
 	public function execute() {
 		global $wgTitle;
 
+		if ( wfReadOnly() ) {
+			$this->error( "Unable to run jobs; the wiki is in read-only mode.", 1 ); // die
+		}
+
 		if ( $this->hasOption( 'procs' ) ) {
 			$procs = intval( $this->getOption( 'procs' ) );
 			if ( $procs < 1 || $procs > 1000 ) {
@@ -72,32 +76,50 @@ class RunJobs extends Maintenance {
 		$n = 0;
 
 		$group = JobQueueGroup::singleton();
+		// Handle any required periodic queue maintenance
+		$count = $group->executeReadyPeriodicTasks();
+		if ( $count > 0 ) {
+			$this->runJobsLog( "Executed $count periodic queue task(s)." );
+		}
+
 		do {
 			$job = ( $type === false )
-				? $group->pop() // job from any queue
-				: $group->get( $type )->pop(); // job from a single queue
+				? $group->pop( JobQueueGroup::TYPE_DEFAULT, JobQueueGroup::USE_CACHE )
+				: $group->pop( $type ); // job from a single queue
 			if ( $job ) { // found a job
-				// Perform the job (logging success/failure and runtime)...
-				$t = microtime( true );
 				$this->runJobsLog( $job->toString() . " STARTING" );
-				$status = $job->run();
-				$group->ack( $job ); // done
-				$t = microtime( true ) - $t;
-				$timeMs = intval( $t * 1000 );
+
+				// Run the job...
+				$t = microtime( true );
+				try {
+					$status = $job->run();
+					$error = $job->getLastError();
+				} catch ( MWException $e ) {
+					$status = false;
+					$error = get_class( $e ) . ': ' . $e->getMessage();
+				}
+				$timeMs = intval( ( microtime( true ) - $t ) * 1000 );
+
+				// Mark the job as done on success or when the job cannot be retried
+				if ( $status !== false || !$job->allowRetries() ) {
+					$group->ack( $job ); // done
+				}
+
 				if ( !$status ) {
-					$this->runJobsLog( $job->toString() . " t=$timeMs error={$job->error}" );
+					$this->runJobsLog( $job->toString() . " t=$timeMs error={$error}" );
 				} else {
 					$this->runJobsLog( $job->toString() . " t=$timeMs good" );
 				}
+
 				// Break out if we hit the job count or wall time limits...
 				if ( $maxJobs && ++$n >= $maxJobs ) {
 					break;
-				}
-				if ( $maxTime && ( time() - $startTime ) > $maxTime ) {
+				} elseif ( $maxTime && ( time() - $startTime ) > $maxTime ) {
 					break;
 				}
+
 				// Don't let any slaves/backups fall behind...
-				$group->get( $type )->waitForBackups();
+				$group->get( $job->getType() )->waitForBackups();
 			}
 		} while ( $job ); // stop when there are no jobs
 	}

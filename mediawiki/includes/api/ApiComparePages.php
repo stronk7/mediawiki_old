@@ -25,10 +25,6 @@
 
 class ApiComparePages extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		$params = $this->extractRequestParams();
 
@@ -85,11 +81,11 @@ class ApiComparePages extends ApiBase {
 	 * @return int
 	 */
 	private function revisionOrTitleOrId( $revision, $titleText, $titleId ) {
-		if( $revision ){
+		if( $revision ) {
 			return $revision;
 		} elseif( $titleText ) {
 			$title = Title::newFromText( $titleText );
-			if( !$title ){
+			if( !$title || $title->isExternal() ) {
 				$this->dieUsageMsg( array( 'invalidtitle', $titleText ) );
 			}
 			return $title->getLatestRevID();
@@ -171,9 +167,5 @@ class ApiComparePages extends ApiBase {
 		return array(
 			'api.php?action=compare&fromrev=1&torev=2' => 'Create a diff between revision 1 and 2',
 		);
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -5,10 +5,10 @@ class ParserMethodsTest extends MediaWikiLangTestCase {
 	public static function providePreSaveTransform() {
 		return array(
 			array( 'hello this is ~~~',
-			       "hello this is [[Special:Contributions/127.0.0.1|127.0.0.1]]",
+				"hello this is [[Special:Contributions/127.0.0.1|127.0.0.1]]",
 			),
 			array( 'hello \'\'this\'\' is <nowiki>~~~</nowiki>',
-			       'hello \'\'this\'\' is <nowiki>~~~</nowiki>',
+				'hello \'\'this\'\' is <nowiki>~~~</nowiki>',
 			),
 		);
 	}
@@ -30,4 +30,3 @@ class ParserMethodsTest extends MediaWikiLangTestCase {
 
 	// TODO: Add tests for cleanSig() / cleanSigInSig(), getSection(), replaceSection(), getPreloadText()
 }
-

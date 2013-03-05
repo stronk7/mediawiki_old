@@ -31,8 +31,8 @@
  * @ingroup SpecialPage Dump
  */
 class WikiExporter {
-	var $list_authors = false ; # Return distinct author list (when not returning full history)
-	var $author_list = "" ;
+	var $list_authors = false; # Return distinct author list (when not returning full history)
+	var $author_list = "";
 
 	var $dumpUploads = false;
 	var $dumpUploadFileContents = false;
@@ -87,10 +87,10 @@ class WikiExporter {
 			$buffer = WikiExporter::BUFFER, $text = WikiExporter::TEXT ) {
 		$this->db = $db;
 		$this->history = $history;
-		$this->buffer  = $buffer;
-		$this->writer  = new XmlDumpWriter();
-		$this->sink    = new DumpOutput();
-		$this->text    = $text;
+		$this->buffer = $buffer;
+		$this->writer = new XmlDumpWriter();
+		$this->sink = new DumpOutput();
+		$this->text = $text;
 	}
 
 	/**
@@ -226,7 +226,7 @@ class WikiExporter {
 		foreach ( $res as $row ) {
 			$this->author_list .= "<contributor>" .
 				"<username>" .
-				htmlentities( $row->rev_user_text )  .
+				htmlentities( $row->rev_user_text ) .
 				"</username>" .
 				"<id>" .
 				$row->rev_user .
@@ -330,7 +330,7 @@ class WikiExporter {
 				$join['revision'] = array( 'INNER JOIN', 'page_id=rev_page' );
 			} elseif ( $this->history & WikiExporter::CURRENT ) {
 				# Latest revision dumps...
-				if ( $this->list_authors && $cond != '' )  { // List authors, if so desired
+				if ( $this->list_authors && $cond != '' ) { // List authors, if so desired
 					$this->do_list_authors( $cond );
 				}
 				$join['revision'] = array( 'INNER JOIN', 'page_id=rev_page AND page_latest=rev_id' );
@@ -427,10 +427,10 @@ class WikiExporter {
 	protected function outputPageStream( $resultset ) {
 		$last = null;
 		foreach ( $resultset as $row ) {
-			if ( is_null( $last ) ||
+			if ( $last === null ||
 				$last->page_namespace != $row->page_namespace ||
 				$last->page_title     != $row->page_title ) {
-				if ( isset( $last ) ) {
+				if ( $last !== null ) {
 					$output = '';
 					if ( $this->dumpUploads ) {
 						$output .= $this->writer->writeUploads( $last, $this->dumpUploadFileContents );
@@ -445,7 +445,7 @@ class WikiExporter {
 			$output = $this->writer->writeRevision( $row );
 			$this->sink->writeRevision( $row, $output );
 		}
-		if ( isset( $last ) ) {
+		if ( $last !== null ) {
 			$output = '';
 			if ( $this->dumpUploads ) {
 				$output .= $this->writer->writeUploads( $last, $this->dumpUploadFileContents );
@@ -634,7 +634,7 @@ class XmlDumpWriter {
 	function writeRevision( $row ) {
 		wfProfileIn( __METHOD__ );
 
-		$out  = "    <revision>\n";
+		$out = "    <revision>\n";
 		$out .= "      " . Xml::element( 'id', null, strval( $row->rev_id ) ) . "\n";
 		if( isset( $row->rev_parent_id ) && $row->rev_parent_id ) {
 			$out .= "      " . Xml::element( 'parentid', null, strval( $row->rev_parent_id ) ) . "\n";
@@ -674,12 +674,12 @@ class XmlDumpWriter {
 		}
 
 		if ( isset( $row->rev_sha1 ) && $row->rev_sha1 && !( $row->rev_deleted & Revision::DELETED_TEXT ) ) {
-			$out .= "      " . Xml::element('sha1', null, strval( $row->rev_sha1 ) ) . "\n";
+			$out .= "      " . Xml::element( 'sha1', null, strval( $row->rev_sha1 ) ) . "\n";
 		} else {
 			$out .= "      <sha1/>\n";
 		}
 
-		if ( isset( $row->rev_content_model ) && !is_null( $row->rev_content_model )  ) {
+		if ( isset( $row->rev_content_model ) && !is_null( $row->rev_content_model ) ) {
 			$content_model = strval( $row->rev_content_model );
 		} else {
 			// probably using $wgContentHandlerUseDB = false;
@@ -688,7 +688,7 @@ class XmlDumpWriter {
 			$content_model = ContentHandler::getDefaultModelFor( $title );
 		}
 
-		$out .= "      " . Xml::element('model', null, strval( $content_model ) ) . "\n";
+		$out .= "      " . Xml::element( 'model', null, strval( $content_model ) ) . "\n";
 
 		if ( isset( $row->rev_content_format ) && !is_null( $row->rev_content_format ) ) {
 			$content_format = strval( $row->rev_content_format );
@@ -699,7 +699,7 @@ class XmlDumpWriter {
 			$content_format = $content_handler->getDefaultFormat();
 		}
 
-		$out .= "      " . Xml::element('format', null, strval( $content_format ) ) . "\n";
+		$out .= "      " . Xml::element( 'format', null, strval( $content_format ) ) . "\n";
 
 		wfRunHooks( 'XmlDumpWriterWriteRevision', array( &$this, &$out, $row, $text ) );
 
@@ -720,7 +720,7 @@ class XmlDumpWriter {
 	function writeLogItem( $row ) {
 		wfProfileIn( __METHOD__ );
 
-		$out  = "  <logitem>\n";
+		$out = "  <logitem>\n";
 		$out .= "    " . Xml::element( 'id', null, strval( $row->log_id ) ) . "\n";
 
 		$out .= $this->writeTimestamp( $row->log_timestamp, "    " );
@@ -940,7 +940,6 @@ class DumpOutput {
 	 * @param $newname mixed File name. May be a string or an array with one element
 	 */
 	function closeRenameAndReopen( $newname ) {
-		return;
 	}
 
 	/**
@@ -951,7 +950,6 @@ class DumpOutput {
 	 * @param $open bool If true, a new file with the old filename will be opened again for writing (default: false)
 	 */
 	function closeAndRename( $newname, $open = false ) {
-		return;
 	}
 
 	/**
@@ -960,7 +958,7 @@ class DumpOutput {
 	 * @return null
 	 */
 	function getFilenames() {
-		return NULL;
+		return null;
 	}
 }
 
@@ -1009,7 +1007,7 @@ class DumpFileOutput extends DumpOutput {
 	 * @throws MWException
 	 */
 	function renameOrException( $newname ) {
-			if (! rename( $this->filename, $newname ) ) {
+			if ( !rename( $this->filename, $newname ) ) {
 				throw new MWException( __METHOD__ . ": rename of file {$this->filename} to $newname failed\n" );
 			}
 	}
@@ -1072,7 +1070,7 @@ class DumpPipeOutput extends DumpFileOutput {
 	 */
 	function __construct( $command, $file = null ) {
 		if ( !is_null( $file ) ) {
-			$command .=  " > " . wfEscapeShellArg( $file );
+			$command .= " > " . wfEscapeShellArg( $file );
 		}
 
 		$this->startCommand( $command );
@@ -1128,7 +1126,7 @@ class DumpPipeOutput extends DumpFileOutput {
 			$this->renameOrException( $newname );
 			if ( $open ) {
 				$command = $this->command;
-				$command .=  " > " . wfEscapeShellArg( $this->filename );
+				$command .= " > " . wfEscapeShellArg( $this->filename );
 				$this->startCommand( $command );
 			}
 		}
@@ -1361,7 +1359,7 @@ class DumpNamespaceFilter extends DumpFilter {
 			"NS_PROJECT_TALK"   => NS_PROJECT_TALK,
 			"NS_FILE"           => NS_FILE,
 			"NS_FILE_TALK"      => NS_FILE_TALK,
-			"NS_IMAGE"          => NS_IMAGE,  // NS_IMAGE is an alias for NS_FILE
+			"NS_IMAGE"          => NS_IMAGE, // NS_IMAGE is an alias for NS_FILE
 			"NS_IMAGE_TALK"     => NS_IMAGE_TALK,
 			"NS_MEDIAWIKI"      => NS_MEDIAWIKI,
 			"NS_MEDIAWIKI_TALK" => NS_MEDIAWIKI_TALK,
@@ -1529,7 +1527,7 @@ class DumpMultiWriter {
 	function getFilenames() {
 		$filenames = array();
 		for ( $i = 0; $i < $this->count; $i++ ) {
-			$filenames[] =  $this->sinks[$i]->getFilenames();
+			$filenames[] = $this->sinks[$i]->getFilenames();
 		}
 		return $filenames;
 	}

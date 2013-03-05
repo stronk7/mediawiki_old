@@ -28,10 +28,27 @@
  * @since 1.21
  */
 class JobQueueDB extends JobQueue {
-	const CACHE_TTL      = 300; // integer; seconds to cache queue information
-	const MAX_AGE_PRUNE  = 604800; // integer; seconds a job can live once claimed
-	const MAX_ATTEMPTS   = 3; // integer; number of times to try a job
-	const MAX_JOB_RANDOM = 2147483647; // integer; 2^31 - 1, used for job_random
+	const ROOTJOB_TTL     = 1209600; // integer; seconds to remember root jobs (14 days)
+	const CACHE_TTL_SHORT = 30; // integer; seconds to cache info without re-validating
+	const CACHE_TTL_LONG  = 300; // integer; seconds to cache info that is kept up to date
+	const MAX_AGE_PRUNE   = 604800; // integer; seconds a job can live once claimed
+	const MAX_JOB_RANDOM  = 2147483647; // integer; 2^31 - 1, used for job_random
+	const MAX_OFFSET      = 255; // integer; maximum number of rows to skip
+
+	protected $cluster = false; // string; name of an external DB cluster
+
+	/**
+	 * Additional parameters include:
+	 *   - cluster : The name of an external cluster registered via LBFactory.
+	 *               If not specified, the primary DB cluster for the wiki will be used.
+	 *               This can be overridden with a custom cluster so that DB handles will
+	 *               be retrieved via LBFactory::getExternalLB() and getConnection().
+	 * @param $params array
+	 */
+	protected function __construct( array $params ) {
+		parent::__construct( $params );
+		$this->cluster = isset( $params['cluster'] ) ? $params['cluster'] : false;
+	}
 
 	/**
 	 * @see JobQueue::doIsEmpty()
@@ -40,7 +57,7 @@ class JobQueueDB extends JobQueue {
 	protected function doIsEmpty() {
 		global $wgMemc;
 
-		$key = $this->getEmptinessCacheKey();
+		$key = $this->getCacheKey( 'empty' );
 
 		$isEmpty = $wgMemc->get( $key );
 		if ( $isEmpty === 'true' ) {
@@ -49,20 +66,77 @@ class JobQueueDB extends JobQueue {
 			return false;
 		}
 
-		$found = $this->getSlaveDB()->selectField(
-			'job', '1', array( 'job_cmd' => $this->type ), __METHOD__
+		list( $dbr, $scope ) = $this->getSlaveDB();
+		$found = $dbr->selectField( // unclaimed job
+			'job', '1', array( 'job_cmd' => $this->type, 'job_token' => '' ), __METHOD__
 		);
+		$wgMemc->add( $key, $found ? 'false' : 'true', self::CACHE_TTL_LONG );
 
-		$wgMemc->add( $key, $found ? 'false' : 'true', self::CACHE_TTL );
+		return !$found;
+	}
+
+	/**
+	 * @see JobQueue::doGetSize()
+	 * @return integer
+	 */
+	protected function doGetSize() {
+		global $wgMemc;
+
+		$key = $this->getCacheKey( 'size' );
+
+		$size = $wgMemc->get( $key );
+		if ( is_int( $size ) ) {
+			return $size;
+		}
+
+		list( $dbr, $scope ) = $this->getSlaveDB();
+		$size = (int)$dbr->selectField( 'job', 'COUNT(*)',
+			array( 'job_cmd' => $this->type, 'job_token' => '' ),
+			__METHOD__
+		);
+		$wgMemc->set( $key, $size, self::CACHE_TTL_SHORT );
+
+		return $size;
+	}
+
+	/**
+	 * @see JobQueue::doGetAcquiredCount()
+	 * @return integer
+	 */
+	protected function doGetAcquiredCount() {
+		global $wgMemc;
+
+		if ( $this->claimTTL <= 0 ) {
+			return 0; // no acknowledgements
+		}
+
+		$key = $this->getCacheKey( 'acquiredcount' );
+
+		$count = $wgMemc->get( $key );
+		if ( is_int( $count ) ) {
+			return $count;
+		}
+
+		list( $dbr, $scope ) = $this->getSlaveDB();
+		$count = (int)$dbr->selectField( 'job', 'COUNT(*)',
+			array( 'job_cmd' => $this->type, "job_token != {$dbr->addQuotes( '' )}" ),
+			__METHOD__
+		);
+		$wgMemc->set( $key, $count, self::CACHE_TTL_SHORT );
+
+		return $count;
 	}
 
 	/**
 	 * @see JobQueue::doBatchPush()
+	 * @param array $jobs
+	 * @param $flags
+	 * @throws DBError|Exception
 	 * @return bool
 	 */
 	protected function doBatchPush( array $jobs, $flags ) {
 		if ( count( $jobs ) ) {
-			$dbw = $this->getMasterDB();
+			list( $dbw, $scope ) = $this->getMasterDB();
 
 			$rowSet = array(); // (sha1 => job) map for jobs that are de-duplicated
 			$rowList = array(); // list of jobs for jobs that are are not de-duplicated
@@ -76,20 +150,16 @@ class JobQueueDB extends JobQueue {
 				}
 			}
 
+			$key = $this->getCacheKey( 'empty' );
 			$atomic = ( $flags & self::QoS_Atomic );
-			$key    = $this->getEmptinessCacheKey();
-			$ttl    = self::CACHE_TTL;
 
 			$dbw->onTransactionIdle(
-				function() use ( $dbw, $rowSet, $rowList, $atomic, $key, $ttl
+				function() use ( $dbw, $rowSet, $rowList, $atomic, $key, $scope
 			) {
 				global $wgMemc;
 
-				$autoTrx = $dbw->getFlag( DBO_TRX ); // automatic begin() enabled?
 				if ( $atomic ) {
 					$dbw->begin( __METHOD__ ); // wrap all the job additions in one transaction
-				} else {
-					$dbw->clearFlag( DBO_TRX ); // make each query its own transaction
 				}
 				try {
 					// Strip out any duplicate jobs that are already in the queue...
@@ -113,21 +183,20 @@ class JobQueueDB extends JobQueue {
 					foreach ( array_chunk( $rows, 50 ) as $rowBatch ) {
 						$dbw->insert( 'job', $rowBatch, __METHOD__ );
 					}
+					wfIncrStats( 'job-insert', count( $rows ) );
+					wfIncrStats( 'job-insert-duplicate',
+						count( $rowSet ) + count( $rowList ) - count( $rows ) );
 				} catch ( DBError $e ) {
 					if ( $atomic ) {
 						$dbw->rollback( __METHOD__ );
-					} else {
-						$dbw->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
 					}
 					throw $e;
 				}
 				if ( $atomic ) {
 					$dbw->commit( __METHOD__ );
-				} else {
-					$dbw->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
 				}
 
-				$wgMemc->set( $key, 'false', $ttl ); // queue is not empty
+				$wgMemc->set( $key, 'false', JobQueueDB::CACHE_TTL_LONG );
 			} );
 		}
 
@@ -141,60 +210,47 @@ class JobQueueDB extends JobQueue {
 	protected function doPop() {
 		global $wgMemc;
 
-		if ( $wgMemc->get( $this->getEmptinessCacheKey() ) === 'true' ) {
+		if ( $wgMemc->get( $this->getCacheKey( 'empty' ) ) === 'true' ) {
 			return false; // queue is empty
 		}
 
-		$dbw = $this->getMasterDB();
+		list( $dbw, $scope ) = $this->getMasterDB();
 		$dbw->commit( __METHOD__, 'flush' ); // flush existing transaction
 
 		$uuid = wfRandomString( 32 ); // pop attempt
 		$job = false; // job popped off
-		$autoTrx = $dbw->getFlag( DBO_TRX ); // automatic begin() enabled?
-		$dbw->clearFlag( DBO_TRX ); // make each query its own transaction
-		try {
-			// Occasionally recycle jobs back into the queue that have been claimed too long
-			if ( mt_rand( 0, 99 ) == 0 ) {
-				$this->recycleStaleJobs();
+		do { // retry when our row is invalid or deleted as a duplicate
+			// Try to reserve a row in the DB...
+			if ( in_array( $this->order, array( 'fifo', 'timestamp' ) ) ) {
+				$row = $this->claimOldest( $uuid );
+			} else { // random first
+				$rand = mt_rand( 0, self::MAX_JOB_RANDOM ); // encourage concurrent UPDATEs
+				$gte  = (bool)mt_rand( 0, 1 ); // find rows with rand before/after $rand
+				$row  = $this->claimRandom( $uuid, $rand, $gte );
 			}
-			do { // retry when our row is invalid or deleted as a duplicate
-				// Try to reserve a row in the DB...
-				if ( in_array( $this->order, array( 'fifo', 'timestamp' ) ) ) {
-					$row = $this->claimOldest( $uuid );
-				} else { // random first
-					$rand = mt_rand( 0, self::MAX_JOB_RANDOM ); // encourage concurrent UPDATEs
-					$gte  = (bool)mt_rand( 0, 1 ); // find rows with rand before/after $rand
-					$row  = $this->claimRandom( $uuid, $rand, $gte );
-					if ( !$row ) { // need to try the other direction
-						$row = $this->claimRandom( $uuid, $rand, !$gte );
-					}
-				}
-				// Check if we found a row to reserve...
-				if ( !$row ) {
-					$wgMemc->set( $this->getEmptinessCacheKey(), 'true', self::CACHE_TTL );
-					break; // nothing to do
-				}
-				// Get the job object from the row...
-				$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title );
-				if ( !$title ) {
-					$dbw->delete( 'job', array( 'job_id' => $row->job_id ), __METHOD__ );
-					wfIncrStats( 'job-pop' );
-					wfDebugLog( 'JobQueueDB', "Row has invalid title '{$row->job_title}'." );
-					continue; // try again
-				}
-				$job = Job::factory( $row->job_cmd, $title,
-					self::extractBlob( $row->job_params ), $row->job_id );
-				// Flag this job as an old duplicate based on its "root" job...
-				if ( $this->isRootJobOldDuplicate( $job ) ) {
-					$job = DuplicateJob::newFromJob( $job ); // convert to a no-op
-				}
-				break; // done
-			} while( true );
-		} catch ( DBError $e ) {
-			$dbw->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
-			throw $e;
-		}
-		$dbw->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
+			// Check if we found a row to reserve...
+			if ( !$row ) {
+				$wgMemc->set( $this->getCacheKey( 'empty' ), 'true', self::CACHE_TTL_LONG );
+				break; // nothing to do
+			}
+			wfIncrStats( 'job-pop' );
+			// Get the job object from the row...
+			$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title );
+			if ( !$title ) {
+				$dbw->delete( 'job', array( 'job_id' => $row->job_id ), __METHOD__ );
+				wfDebugLog( 'JobQueueDB', "Row has invalid title '{$row->job_title}'." );
+				continue; // try again
+			}
+			$job = Job::factory( $row->job_cmd, $title,
+				self::extractBlob( $row->job_params ), $row->job_id );
+			$job->id = $row->job_id; // XXX: work around broken subclasses
+			// Flag this job as an old duplicate based on its "root" job...
+			if ( $this->isRootJobOldDuplicate( $job ) ) {
+				wfIncrStats( 'job-pop-duplicate' );
+				$job = DuplicateJob::newFromJob( $job ); // convert to a no-op
+			}
+			break; // done
+		} while( true );
 
 		return $job;
 	}
@@ -208,24 +264,55 @@ class JobQueueDB extends JobQueue {
 	 * @return Row|false
 	 */
 	protected function claimRandom( $uuid, $rand, $gte ) {
-		$dbw  = $this->getMasterDB();
-		$dir  = $gte ? 'ASC' : 'DESC';
-		$ineq = $gte ? '>=' : '<=';
+		global $wgMemc;
+
+		list( $dbw, $scope ) = $this->getMasterDB();
+		// Check cache to see if the queue has <= OFFSET items
+		$tinyQueue = $wgMemc->get( $this->getCacheKey( 'small' ) );
 
 		$row = false; // the row acquired
+		$invertedDirection = false; // whether one job_random direction was already scanned
 		// This uses a replication safe method for acquiring jobs. One could use UPDATE+LIMIT
 		// instead, but that either uses ORDER BY (in which case it deadlocks in MySQL) or is
 		// not replication safe. Due to http://bugs.mysql.com/bug.php?id=6980, subqueries cannot
 		// be used here with MySQL.
 		do {
-			$row = $dbw->selectRow( 'job', '*', // find a random job
-				array(
-					'job_cmd'   => $this->type,
-					'job_token' => '',
-					"job_random {$ineq} {$dbw->addQuotes( $rand )}" ),
-				__METHOD__,
-				array( 'ORDER BY' => "job_random {$dir}" )
-			);
+			if ( $tinyQueue ) { // queue has <= MAX_OFFSET rows
+				// For small queues, using OFFSET will overshoot and return no rows more often.
+				// Instead, this uses job_random to pick a row (possibly checking both directions).
+				$ineq = $gte ? '>=' : '<=';
+				$dir  = $gte ? 'ASC' : 'DESC';
+				$row  = $dbw->selectRow( 'job', '*', // find a random job
+					array(
+						'job_cmd'   => $this->type,
+						'job_token' => '', // unclaimed
+						"job_random {$ineq} {$dbw->addQuotes( $rand )}" ),
+					__METHOD__,
+					array( 'ORDER BY' => "job_random {$dir}" )
+				);
+				if ( !$row && !$invertedDirection ) {
+					$gte = !$gte;
+					$invertedDirection = true;
+					continue; // try the other direction
+				}
+			} else { // table *may* have >= MAX_OFFSET rows
+				// Bug 42614: "ORDER BY job_random" with a job_random inequality causes high CPU
+				// in MySQL if there are many rows for some reason. This uses a small OFFSET
+				// instead of job_random for reducing excess claim retries.
+				$row = $dbw->selectRow( 'job', '*', // find a random job
+					array(
+						'job_cmd'   => $this->type,
+						'job_token' => '', // unclaimed
+					),
+					__METHOD__,
+					array( 'OFFSET' => mt_rand( 0, self::MAX_OFFSET ) )
+				);
+				if ( !$row ) {
+					$tinyQueue = true; // we know the queue must have <= MAX_OFFSET rows
+					$wgMemc->set( $this->getCacheKey( 'small' ), 1, 30 );
+					continue; // use job_random
+				}
+			}
 			if ( $row ) { // claim the job
 				$dbw->update( 'job', // update by PK
 					array(
@@ -255,7 +342,7 @@ class JobQueueDB extends JobQueue {
 	 * @return Row|false
 	 */
 	protected function claimOldest( $uuid ) {
-		$dbw  = $this->getMasterDB();
+		list( $dbw, $scope ) = $this->getMasterDB();
 
 		$row = false; // the row acquired
 		do {
@@ -314,31 +401,51 @@ class JobQueueDB extends JobQueue {
 	 *
 	 * @return integer Number of jobs recycled/deleted
 	 */
-	protected function recycleStaleJobs() {
-		$now   = time();
-		$dbw   = $this->getMasterDB();
+	public function recycleAndDeleteStaleJobs() {
+		global $wgMemc;
+
+		$now = time();
+		list( $dbw, $scope ) = $this->getMasterDB();
 		$count = 0; // affected rows
 
-		if ( $this->claimTTL > 0 ) { // re-try stale jobs...
+		if ( !$dbw->lock( "jobqueue-recycle-{$this->type}", __METHOD__, 1 ) ) {
+			return $count; // already in progress
+		}
+
+		// Remove claims on jobs acquired for too long if enabled...
+		if ( $this->claimTTL > 0 ) {
 			$claimCutoff = $dbw->timestamp( $now - $this->claimTTL );
-			// Reset job_token for these jobs so that other runners will pick them up.
-			// Set the timestamp to the current time, as it is useful to now that the job
-			// was already tried before.
-			$dbw->update( 'job',
-				array(
-					'job_token' => '',
-					'job_token_timestamp' => $dbw->timestamp( $now ) ), // time of release
+			// Get the IDs of jobs that have be claimed but not finished after too long.
+			// These jobs can be recycled into the queue by expiring the claim. Selecting
+			// the IDs first means that the UPDATE can be done by primary key (less deadlocks).
+			$res = $dbw->select( 'job', 'job_id',
 				array(
 					'job_cmd' => $this->type,
 					"job_token != {$dbw->addQuotes( '' )}", // was acquired
 					"job_token_timestamp < {$dbw->addQuotes( $claimCutoff )}", // stale
-					"job_attempts < {$dbw->addQuotes( self::MAX_ATTEMPTS )}" ),
+					"job_attempts < {$dbw->addQuotes( $this->maxTries )}" ), // retries left
 				__METHOD__
 			);
-			$count += $dbw->affectedRows();
+			$ids = array_map( function( $o ) { return $o->job_id; }, iterator_to_array( $res ) );
+			if ( count( $ids ) ) {
+				// Reset job_token for these jobs so that other runners will pick them up.
+				// Set the timestamp to the current time, as it is useful to now that the job
+				// was already tried before (the timestamp becomes the "released" time).
+				$dbw->update( 'job',
+					array(
+						'job_token' => '',
+						'job_token_timestamp' => $dbw->timestamp( $now ) ), // time of release
+					array(
+						'job_id' => $ids ),
+					__METHOD__
+				);
+				$count += $dbw->affectedRows();
+				wfIncrStats( 'job-recycle', $dbw->affectedRows() );
+				$wgMemc->set( $this->getCacheKey( 'empty' ), 'false', self::CACHE_TTL_LONG );
+			}
 		}
 
-		// Just destroy stale jobs...
+		// Just destroy any stale jobs...
 		$pruneCutoff = $dbw->timestamp( $now - self::MAX_AGE_PRUNE );
 		$conds = array(
 			'job_cmd' => $this->type,
@@ -346,38 +453,47 @@ class JobQueueDB extends JobQueue {
 			"job_token_timestamp < {$dbw->addQuotes( $pruneCutoff )}" // stale
 		);
 		if ( $this->claimTTL > 0 ) { // only prune jobs attempted too many times...
-			$conds[] = "job_attempts >= {$dbw->addQuotes( self::MAX_ATTEMPTS )}";
+			$conds[] = "job_attempts >= {$dbw->addQuotes( $this->maxTries )}";
 		}
-		$dbw->delete( 'job', $conds, __METHOD__ );
-		$count += $dbw->affectedRows();
+		// Get the IDs of jobs that are considered stale and should be removed. Selecting
+		// the IDs first means that the UPDATE can be done by primary key (less deadlocks).
+		$res = $dbw->select( 'job', 'job_id', $conds, __METHOD__ );
+		$ids = array_map( function( $o ) { return $o->job_id; }, iterator_to_array( $res ) );
+		if ( count( $ids ) ) {
+			$dbw->delete( 'job', array( 'job_id' => $ids ), __METHOD__ );
+			$count += $dbw->affectedRows();
+		}
+
+		$dbw->unlock( "jobqueue-recycle-{$this->type}", __METHOD__ );
 
 		return $count;
 	}
 
 	/**
 	 * @see JobQueue::doAck()
+	 * @param Job $job
+	 * @throws MWException
 	 * @return Job|bool
 	 */
 	protected function doAck( Job $job ) {
-		$dbw = $this->getMasterDB();
+		if ( !$job->getId() ) {
+			throw new MWException( "Job of type '{$job->getType()}' has no ID." );
+		}
+
+		list( $dbw, $scope ) = $this->getMasterDB();
 		$dbw->commit( __METHOD__, 'flush' ); // flush existing transaction
 
-		$autoTrx = $dbw->getFlag( DBO_TRX ); // automatic begin() enabled?
-		$dbw->clearFlag( DBO_TRX ); // make each query its own transaction
-		try {
-			// Delete a row with a single DELETE without holding row locks over RTTs...
-			$dbw->delete( 'job', array( 'job_cmd' => $this->type, 'job_id' => $job->getId() ) );
-		} catch ( Exception $e ) {
-			$dbw->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
-			throw $e;
-		}
-		$dbw->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
+		// Delete a row with a single DELETE without holding row locks over RTTs...
+		$dbw->delete( 'job',
+			array( 'job_cmd' => $this->type, 'job_id' => $job->getId() ), __METHOD__ );
 
 		return true;
 	}
 
 	/**
 	 * @see JobQueue::doDeduplicateRootJob()
+	 * @param Job $job
+	 * @throws MWException
 	 * @return bool
 	 */
 	protected function doDeduplicateRootJob( Job $job ) {
@@ -390,10 +506,11 @@ class JobQueueDB extends JobQueue {
 		$key = $this->getRootJobCacheKey( $params['rootJobSignature'] );
 		// Callers should call batchInsert() and then this function so that if the insert
 		// fails, the de-duplication registration will be aborted. Since the insert is
-		// deferred till "transaction idle", do that same here, so that the ordering is
+		// deferred till "transaction idle", do the same here, so that the ordering is
 		// maintained. Having only the de-duplication registration succeed would cause
 		// jobs to become no-ops without any actual jobs that made them redundant.
-		$this->getMasterDB()->onTransactionIdle( function() use ( $params, $key ) {
+		list( $dbw, $scope ) = $this->getMasterDB();
+		$dbw->onTransactionIdle( function() use ( $params, $key, $scope ) {
 			global $wgMemc;
 
 			$timestamp = $wgMemc->get( $key ); // current last timestamp of this job
@@ -402,7 +519,7 @@ class JobQueueDB extends JobQueue {
 			}
 
 			// Update the timestamp of the last root job started at the location...
-			return $wgMemc->set( $key, $params['rootJobTimestamp'], 14*86400 ); // 2 weeks
+			return $wgMemc->set( $key, $params['rootJobTimestamp'], JobQueueDB::ROOTJOB_TTL );
 		} );
 
 		return true;
@@ -441,17 +558,57 @@ class JobQueueDB extends JobQueue {
 	}
 
 	/**
-	 * @return DatabaseBase
+	 * @return Array
 	 */
-	protected function getSlaveDB() {
-		return wfGetDB( DB_SLAVE, array(), $this->wiki );
+	protected function doGetPeriodicTasks() {
+		return array(
+			'recycleAndDeleteStaleJobs' => array(
+				'callback' => array( $this, 'recycleAndDeleteStaleJobs' ),
+				'period'   => ceil( $this->claimTTL / 2 )
+			)
+		);
 	}
 
 	/**
-	 * @return DatabaseBase
+	 * @return void
+	 */
+	protected function doFlushCaches() {
+		global $wgMemc;
+
+		foreach ( array( 'empty', 'size', 'acquiredcount' ) as $type ) {
+			$wgMemc->delete( $this->getCacheKey( $type ) );
+		}
+	}
+
+	/**
+	 * @return Array (DatabaseBase, ScopedCallback)
+	 */
+	protected function getSlaveDB() {
+		return $this->getDB( DB_SLAVE );
+	}
+
+	/**
+	 * @return Array (DatabaseBase, ScopedCallback)
 	 */
 	protected function getMasterDB() {
-		return wfGetDB( DB_MASTER, array(), $this->wiki );
+		return $this->getDB( DB_MASTER );
+	}
+
+	/**
+	 * @param $index integer (DB_SLAVE/DB_MASTER)
+	 * @return Array (DatabaseBase, ScopedCallback)
+	 */
+	protected function getDB( $index ) {
+		$lb = ( $this->cluster !== false )
+			? wfGetLBFactory()->getExternalLB( $this->cluster, $this->wiki )
+			: wfGetLB( $this->wiki );
+		$conn = $lb->getConnection( $index, array(), $this->wiki );
+		return array(
+			$conn,
+			new ScopedCallback( function() use ( $lb, $conn ) {
+				$lb->reuseConnection( $conn );
+			} )
+		);
 	}
 
 	/**
@@ -459,7 +616,7 @@ class JobQueueDB extends JobQueue {
 	 * @return array
 	 */
 	protected function insertFields( Job $job ) {
-		$dbw = $this->getMasterDB();
+		list( $dbw, $scope ) = $this->getMasterDB();
 		return array(
 			// Fields that describe the nature of the job
 			'job_cmd'       => $job->getType(),
@@ -480,9 +637,9 @@ class JobQueueDB extends JobQueue {
 	/**
 	 * @return string
 	 */
-	private function getEmptinessCacheKey() {
+	private function getCacheKey( $property ) {
 		list( $db, $prefix ) = wfSplitWikiID( $this->wiki );
-		return wfForeignMemcKey( $db, $prefix, 'jobqueue', $this->type, 'isempty' );
+		return wfForeignMemcKey( $db, $prefix, 'jobqueue', $this->type, $property );
 	}
 
 	/**

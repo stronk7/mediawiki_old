@@ -77,10 +77,7 @@ class ApiQueryFilearchive extends ApiQueryBase {
 
 		if ( !is_null( $params['continue'] ) ) {
 			$cont = explode( '|', $params['continue'] );
-			if ( count( $cont ) != 1 ) {
-				$this->dieUsage( "Invalid continue param. You should pass the " .
-					"original value returned by the previous query", "_badcontinue" );
-			}
+			$this->dieContinueUsageIf( count( $cont ) != 1 );
 			$op = $params['dir'] == 'descending' ? '<' : '>';
 			$cont_from = $db->addQuotes( $cont[0] );
 			$this->addWhere( "fa_name $op= $cont_from" );
@@ -103,15 +100,16 @@ class ApiQueryFilearchive extends ApiQueryBase {
 		if ( $sha1Set || $sha1base36Set ) {
 			$sha1 = false;
 			if ( $sha1Set ) {
-				if ( !$this->validateSha1Hash( $params['sha1'] ) ) {
+				$sha1 = strtolower( $params['sha1'] );
+				if ( !$this->validateSha1Hash( $sha1 ) ) {
 					$this->dieUsage( 'The SHA1 hash provided is not valid', 'invalidsha1hash' );
 				}
-				$sha1 = wfBaseConvert( $params['sha1'], 16, 36, 31 );
+				$sha1 = wfBaseConvert( $sha1, 16, 36, 31 );
 			} elseif ( $sha1base36Set ) {
-				if ( !$this->validateSha1Base36Hash( $params['sha1base36'] ) ) {
+				$sha1 = strtolower( $params['sha1base36'] );
+				if ( !$this->validateSha1Base36Hash( $sha1 ) ) {
 					$this->dieUsage( 'The SHA1Base36 hash provided is not valid', 'invalidsha1base36hash' );
 				}
-				$sha1 = $params['sha1base36'];
 			}
 			if ( $sha1 ) {
 				$this->addWhereFld( 'fa_sha1', $sha1 );
@@ -365,7 +363,6 @@ class ApiQueryFilearchive extends ApiQueryBase {
 			array( 'code' => 'hashsearchdisabled', 'info' => 'Search by hash disabled in Miser Mode' ),
 			array( 'code' => 'invalidsha1hash', 'info' => 'The SHA1 hash provided is not valid' ),
 			array( 'code' => 'invalidsha1base36hash', 'info' => 'The SHA1Base36 hash provided is not valid' ),
-			array( 'code' => '_badcontinue', 'info' => 'Invalid continue param. You should pass the original value returned by the previous query' ),
 		) );
 	}
 
@@ -376,9 +373,5 @@ class ApiQueryFilearchive extends ApiQueryBase {
 				'Show a list of all deleted files',
 			),
 		);
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

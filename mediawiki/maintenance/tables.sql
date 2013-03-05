@@ -152,7 +152,7 @@ CREATE TABLE /*_*/user_groups (
   -- with particular permissions. A user will have the combined
   -- permissions of any group they're explicitly in, plus
   -- the implicit '*' and 'user' groups.
-  ug_group varbinary(32) NOT NULL default ''
+  ug_group varbinary(255) NOT NULL default ''
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/ug_user_group ON /*_*/user_groups (ug_user,ug_group);
@@ -164,7 +164,7 @@ CREATE INDEX /*i*/ug_group ON /*_*/user_groups (ug_group);
 CREATE TABLE /*_*/user_former_groups (
   -- Key to user_id
   ufg_user int unsigned NOT NULL default 0,
-  ufg_group varbinary(32) NOT NULL default ''
+  ufg_group varbinary(255) NOT NULL default ''
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/ufg_user_group ON /*_*/user_former_groups (ufg_user,ufg_group);
@@ -1244,7 +1244,8 @@ CREATE TABLE /*_*/logging (
   -- Freeform text. Interpreted as edit history comments.
   log_comment varchar(255) NOT NULL default '',
 
-  -- LF separated list of miscellaneous parameters
+  -- miscellaneous parameters:
+  -- LF separated list (old system) or serialized PHP array (new system)
   log_params blob NOT NULL,
 
   -- rev_deleted for logs
@@ -1416,6 +1417,7 @@ CREATE TABLE /*_*/page_props (
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/pp_page_propname ON /*_*/page_props (pp_page,pp_propname);
+CREATE UNIQUE INDEX /*i*/pp_propname_page ON /*_*/page_props (pp_propname,pp_page);
 
 
 -- A table to log updates, one text key row per update.

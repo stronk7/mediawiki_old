@@ -34,9 +34,19 @@
  * @ingroup Media
  */
 class DjVuImage {
+	/**
+	 * Constructor
+	 *
+	 * @param string $filename The DjVu file name.
+	 */
 	function __construct( $filename ) {
 		$this->mFilename = $filename;
 	}
+
+	/**
+	 * @const DJVUTXT_MEMORY_LIMIT Memory limit for the DjVu description software
+	 */
+	const DJVUTXT_MEMORY_LIMIT = 300000;
 
 	/**
 	 * Check if the given file is indeed a valid DjVu image file
@@ -249,10 +259,10 @@ class DjVuImage {
 		# Text layer
 		if ( isset( $wgDjvuTxt ) ) {
 			wfProfileIn( 'djvutxt' );
-			$cmd = wfEscapeShellArg( $wgDjvuTxt ) . ' --detail=page ' . wfEscapeShellArg( $this->mFilename ) ;
-			wfDebug( __METHOD__.": $cmd\n" );
+			$cmd = wfEscapeShellArg( $wgDjvuTxt ) . ' --detail=page ' . wfEscapeShellArg( $this->mFilename );
+			wfDebug( __METHOD__ . ": $cmd\n" );
 			$retval = '';
-			$txt = wfShellExec( $cmd, $retval );
+			$txt = wfShellExec( $cmd, $retval, array(), array( 'memory' => self::DJVUTXT_MEMORY_LIMIT ) );
 			wfProfileOut( 'djvutxt' );
 			if( $retval == 0) {
 				# Strip some control characters
@@ -271,7 +281,7 @@ EOR;
 				$txt = preg_replace_callback( $reg, array( $this, 'pageTextCallback' ), $txt );
 				$txt = "<DjVuTxt>\n<HEAD></HEAD>\n<BODY>\n" . $txt . "</BODY>\n</DjVuTxt>\n";
 				$xml = preg_replace( "/<DjVuXML>/", "<mw-djvu><DjVuXML>", $xml, 1 );
-				$xml = $xml . $txt. '</mw-djvu>' ;
+				$xml = $xml . $txt. '</mw-djvu>';
 			}
 		}
 		wfProfileOut( __METHOD__ );

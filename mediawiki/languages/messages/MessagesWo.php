@@ -681,7 +681,6 @@ Jëfandikukat yi nekk yorkat rekk a ko man a soppi.'''",
 'template-protected' => '(aar)',
 'template-semiprotected' => '(aar-diggu)',
 'hiddencategories' => '{{PLURAL:$1|wàll bu nëbbu bu|wàll yu nëbbu yu }} xët wii bokk :',
-'nocreatetitle' => 'Digalu sosteefu xët',
 'nocreatetext' => 'Jëfandikukat yi bindu rekk a man a sosi xët ci {{SITENAME}}. Man nga dellu ginnaaw walla soppi aw xët wu am ba noppi, [[Special:UserLogin|duggu walla sos am sàq]].',
 'nocreate-loggedin' => 'Amuloo sañ-sañ yu doy ngir man a sosi xët yu bees.',
 'permissionserrors' => 'Njuumte ci sañ-sañ yi',
@@ -1125,11 +1124,13 @@ Jéemala bindaale ''all'' ngir seet ci biir ëmbit gépp (boolewaale ci xëti wa
 'right-siteadmin' => 'Caabi walla caabeedi dàttub njoxe bi',
 'right-override-export-depth' => 'génne ay xët yu ëmbi xët yu lëkkaloo ba-ci xóotaay bu tolluwaayam àgg 5',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Jëfandikukat yu yees yi',
+'newuserlogpagetext' => 'Xët wii daf lay won limu sáq yi fi mujjee sosu.',
+
 # User rights log
 'rightslog' => 'Sañ-sañi jëfandikukat',
 'rightslogtext' => 'Lii di toftal limu jaar-jaaru coppitey sañ-sañi jëfandikukat yi.',
-'rightslogentry' => 'moo jële jëfandikukat bii di « $1 » ci mbooloo  $2  yóbb ko ci $3',
-'rightsnone' => '(menn)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'jàng wii xët',
@@ -1545,10 +1546,6 @@ Xoolal itam [[Special:WantedCategories|wàll yi ñuy laaj]].',
 'activeusers-from' => 'Wone jëfandikukat yi dalee ko ci:',
 'activeusers-noresult' => 'Benn jëfandikukat giseesu ko',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Jëfandikukat yu yees yi',
-'newuserlogpagetext' => 'Xët wii daf lay won limu sáq yi fi mujjee sosu.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Sañ-sañi mbooloom jëfandikukat mi',
 'listgrouprights-summary' => 'Lii di toftal mooy limu mboolooy jëfandikukat yi ne ci bii wiki, ak sañ-sañ yi ñu leen féetaleel.
@@ -1625,6 +1622,8 @@ Coppite yiy ñëw yu xët wi ak xëtu waxtaanuwaay wi mu àndal di nañu leen fa
 'enotif_lastvisited' => 'Nemmeekul $1 ngir gis bépp coppite dale ba sa nemmeku gu mujj.',
 'enotif_lastdiff' => 'Xoolal $1 ngir gis gii coppite.',
 'enotif_anon_editor' => 'Jëfandikukat bu binduwul $1',
+'created' => 'sosu na',
+'changed' => 'soppi',
 
 # Delete
 'deletepage' => 'Far xët wi',
@@ -2199,6 +2198,6 @@ Man nga tamit  [[Special:EditWatchlist/raw|soppi ko]].',
 # New logging system
 'revdelete-restricted' => 'doxalub digal ngir yorkat yi',
 'revdelete-unrestricted' => 'digal ngir yorkat yi deñ na',
-'newuserlog-byemail' => 'baatujáll bi yónne nañu ko cib bataaxal',
+'rightsnone' => '(menn)',
 
 );

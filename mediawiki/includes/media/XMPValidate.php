@@ -95,8 +95,8 @@ class XMPValidate {
 			return;
 		}
 		if ( !preg_match( '/^[-+]?\d*(?:\.?\d*)$/D', $val )
-			|| !is_numeric($val)
-		 ) {
+			|| !is_numeric( $val )
+		) {
 			wfDebugLog( 'XMP', __METHOD__ . " Expected rating but got $val" );
 			$val = null;
 			return;
@@ -106,12 +106,12 @@ class XMPValidate {
 				// We do < 0 here instead of < -1 here, since
 				// the values between 0 and -1 are also illegal
 				// as -1 is meant as a special reject rating.
-				wfDebugLog( 'XMP', __METHOD__ . " Rating too low, setting to -1 (Rejected)");
+				wfDebugLog( 'XMP', __METHOD__ . " Rating too low, setting to -1 (Rejected)" );
 				$val = '-1';
 				return;
 			}
 			if ( $nVal > 5 ) {
-				wfDebugLog( 'XMP', __METHOD__ . " Rating too high, setting to 5");
+				wfDebugLog( 'XMP', __METHOD__ . " Rating too high, setting to 5" );
 				$val = '5';
 				return;
 			}
@@ -247,8 +247,8 @@ class XMPValidate {
 		$res = array();
 		if ( !preg_match(
 			/* ahh! scary regex... */
-			'/^([0-3]\d{3})(?:-([01]\d)(?:-([0-3]\d)(?:T([0-2]\d):([0-6]\d)(?::([0-6]\d)(?:\.\d+)?)?([-+]\d{2}:\d{2}|Z)?)?)?)?$/D'
-			, $val, $res)
+			'/^([0-3]\d{3})(?:-([01]\d)(?:-([0-3]\d)(?:T([0-2]\d):([0-6]\d)(?::([0-6]\d)(?:\.\d+)?)?([-+]\d{2}:\d{2}|Z)?)?)?)?$/D',
+			$val, $res )
 		) {
 			wfDebugLog( 'XMP', __METHOD__ . " Expected date but got $val" );
 			$val = null;

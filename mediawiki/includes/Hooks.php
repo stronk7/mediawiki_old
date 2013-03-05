@@ -138,6 +138,8 @@ class Hooks {
 	 * @param $event String: event name
 	 * @param $args  Array: parameters passed to hook functions
 	 *
+	 * @throws MWException
+	 * @throws FatalError
 	 * @return Boolean True if no handler aborted the hook
 	 */
 	public static function run( $event, $args = array() ) {
@@ -148,6 +150,7 @@ class Hooks {
 			return true;
 		}
 
+		wfProfileIn( 'hook: ' . $event );
 		$hooks = self::getHandlers( $event );
 
 		foreach ( $hooks as $hook ) {
@@ -286,10 +289,12 @@ class Hooks {
 					);
 				}
 			} elseif ( !$retval ) {
+				wfProfileOut( 'hook: ' . $event );
 				return false;
 			}
 		}
 
+		wfProfileOut( 'hook: ' . $event );
 		return true;
 	}
 

@@ -574,7 +574,6 @@ L'aministradôr che al à blocât la base di dâts al à ufiert chest spiegazion
 'template-protected' => '(protezût)',
 'template-semiprotected' => '(semi-protezût)',
 'hiddencategories' => 'Cheste pagjine e je {{PLURAL:$1|intune categorie platade|in $1 categoriis platadis}}:',
-'nocreatetitle' => 'Creazion des pagjinis limitade',
 'nocreatetext' => '{{SITENAME}} al à limitât la pussibilitât di creâ gnovis pagjinis ai utents regjistrâts. Tu puedis tornâ indaûr e cambiâ une pagjine che e esist o se no [[Special:UserLogin|jentrâ o creâ une gnove identitât]].',
 'nocreate-loggedin' => 'No tu âs i permès che a coventin par creâ gnovis pagjinis.',
 'permissionserrors' => 'Erôr tai permès',
@@ -814,6 +813,10 @@ La tô direzion di pueste no ven mostrade cuant che i utents ti contatin.',
 'group-user-member' => '{{GENDER:$1|Utent}}',
 
 'grouppage-sysop' => '{{ns:project}}:Aministradôrs',
+
+# Special:Log/newusers
+'newuserlogpage' => 'Regjistri dai gnûfs utents',
+'newuserlogpagetext' => 'Ca sot tu cjatis un regjistri dai gnûfs utents creâts.',
 
 # User rights log
 'rightslog' => 'Regjistri dai dirits dai utents',
@@ -1113,10 +1116,6 @@ Cjale ancje lis [[Special:WantedCategories|categoriis desideradis]].',
 'activeusers-hidesysops' => 'Plate i aministradôrs',
 'activeusers-noresult' => 'Nissun utent cjatât.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Regjistri dai gnûfs utents',
-'newuserlogpagetext' => 'Ca sot tu cjatis un regjistri dai gnûfs utents creâts.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Dirits dai grups di utents',
 'listgrouprights-group' => 'Grup',
@@ -1174,6 +1173,8 @@ e la pagjine e sarà '''gruessute''' te [[Special:RecentChanges|liste dai ultins
 'enotif_reset' => 'Segne dutis lis pagjinis come visitadis',
 'enotif_impersonal_salutation' => 'Utent di {{SITENAME}}',
 'enotif_anon_editor' => 'utent anonim $1',
+'created' => 'creade',
+'changed' => 'cambiade',
 
 # Delete
 'deletepage' => 'Elimine pagjine',
@@ -1689,9 +1690,6 @@ Se il file al è stât cambiât rispiet al so stât origjinâl, cualchi informaz
 # HTML forms
 'htmlform-submit' => 'Invie',
 'htmlform-selectorother-other' => 'Altris',
-
-# New logging system
-'newuserlog-byemail' => 'peraule clâf mandade par pueste eletroniche',
 
 # Search suggestions
 'searchsuggest-search' => 'Ricercje',

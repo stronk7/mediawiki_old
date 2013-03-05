@@ -22,6 +22,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 				CONTENT_MODEL_CSS,
 				CONTENT_MODEL_JAVASCRIPT,
 			),
+			'wgUseTidy' => false,
 			'wgAlwaysUseTidy' => false,
 		) );
 
@@ -142,7 +143,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 	 */
 	public function testGetRedirectTarget( $text, $expected ) {
 		$content = $this->newContent( $text );
-		$t = $content->getRedirectTarget( );
+		$t = $content->getRedirectTarget();
 
 		if ( is_null( $expected ) ) {
 			$this->assertNull( $t, "text should not have generated a redirect target: $text" );
@@ -157,7 +158,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 	public function testIsRedirect( $text, $expected ) {
 		$content = $this->newContent( $text );
 
-		$this->assertEquals( !is_null($expected), $content->isRedirect() );
+		$this->assertEquals( !is_null( $expected ), $content->isRedirect() );
 	}
 
 	/**
@@ -183,28 +184,27 @@ class TextContentTest extends MediaWikiLangTestCase {
 	public static function dataIsCountable() {
 		return array(
 			array( '',
-			       null,
-			       'any',
-			       true
+				null,
+				'any',
+				true
 			),
 			array( 'Foo',
-			       null,
-			       'any',
-			       true
+				null,
+				'any',
+				true
 			),
 			array( 'Foo',
-			       null,
-			       'comma',
-			       false
+				null,
+				'comma',
+				false
 			),
 			array( 'Foo, bar',
-			       null,
-			       'comma',
-			       false
+				null,
+				'comma',
+				false
 			),
 		);
 	}
-
 
 	/**
 	 * @dataProvider dataIsCountable
@@ -222,22 +222,22 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$wgArticleCountMethod = $old;
 
 		$this->assertEquals( $expected, $v, 'isCountable() returned unexpected value ' . var_export( $v, true )
-		                                    . ' instead of ' . var_export( $expected, true ) . " in mode `$mode` for text \"$text\"" );
+			. ' instead of ' . var_export( $expected, true ) . " in mode `$mode` for text \"$text\"" );
 	}
 
 	public static function dataGetTextForSummary() {
 		return array(
 			array( "hello\nworld.",
-			       16,
-			       'hello world.',
+				16,
+				'hello world.',
 			),
 			array( 'hello world.',
-			       8,
-			       'hello...',
+				8,
+				'hello...',
 			),
 			array( '[[hello world]].',
-			       8,
-			       '[[hel...',
+				8,
+				'[[hel...',
 			),
 		);
 	}
@@ -251,8 +251,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$this->assertEquals( $expected, $content->getTextForSummary( $maxlength ) );
 	}
 
-
-	public function testGetTextForSearchIndex( ) {
+	public function testGetTextForSearchIndex() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 'hello world.', $content->getTextForSearchIndex() );
@@ -266,19 +265,19 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$this->assertEquals( 'hello world.', $copy->getNativeData() );
 	}
 
-	public function testGetSize( ) {
+	public function testGetSize() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 12, $content->getSize() );
 	}
 
-	public function testGetNativeData( ) {
+	public function testGetNativeData() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 'hello world.', $content->getNativeData() );
 	}
 
-	public function testGetWikitextForTransclusion( ) {
+	public function testGetWikitextForTransclusion() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 'hello world.', $content->getWikitextForTransclusion() );
@@ -296,7 +295,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$this->assertEquals( CONTENT_MODEL_TEXT, $content->getContentHandler()->getModelID() );
 	}
 
-	public static function dataIsEmpty( ) {
+	public static function dataIsEmpty() {
 		return array(
 			array( '', true ),
 			array( '  ', false ),
@@ -314,11 +313,11 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$this->assertEquals( $empty, $content->isEmpty() );
 	}
 
-	public static function dataEquals( ) {
+	public static function dataEquals() {
 		return array(
 			array( new TextContent( "hallo" ), null, false ),
 			array( new TextContent( "hallo" ), new TextContent( "hallo" ), true ),
-			array( new TextContent( "hallo" ), new JavascriptContent( "hallo" ), false ),
+			array( new TextContent( "hallo" ), new JavaScriptContent( "hallo" ), false ),
 			array( new TextContent( "hallo" ), new WikitextContent( "hallo" ), false ),
 			array( new TextContent( "hallo" ), new TextContent( "HALLO" ), false ),
 		);
@@ -333,13 +332,13 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	public static function dataGetDeletionUpdates() {
 		return array(
-			array("TextContentTest_testGetSecondaryDataUpdates_1",
+			array( "TextContentTest_testGetSecondaryDataUpdates_1",
 				CONTENT_MODEL_TEXT, "hello ''world''\n",
-				array( )
+				array()
 			),
-			array("TextContentTest_testGetSecondaryDataUpdates_2",
+			array( "TextContentTest_testGetSecondaryDataUpdates_2",
 				CONTENT_MODEL_TEXT, "hello [[world test 21344]]\n",
-				array( )
+				array()
 			),
 			// TODO: more...?
 		);
@@ -349,17 +348,20 @@ class TextContentTest extends MediaWikiLangTestCase {
 	 * @dataProvider dataGetDeletionUpdates
 	 */
 	public function testDeletionUpdates( $title, $model, $text, $expectedStuff ) {
-		$title = Title::newFromText( $title );
-		$title->resetArticleID( 2342 ); //dummy id. fine as long as we don't try to execute the updates!
+		$ns = $this->getDefaultWikitextNS();
+		$title = Title::newFromText( $title, $ns );
 
 		$content = ContentHandler::makeContent( $text, $title, $model );
 
-		$updates = $content->getDeletionUpdates( WikiPage::factory( $title ) );
+		$page = WikiPage::factory( $title );
+		$page->doEditContent( $content, '' );
+
+		$updates = $content->getDeletionUpdates( $page );
 
 		// make updates accessible by class name
 		foreach ( $updates as $update ) {
 			$class = get_class( $update );
-			$updates[ $class ] = $update;
+			$updates[$class] = $update;
 		}
 
 		if ( !$expectedStuff ) {
@@ -370,13 +372,15 @@ class TextContentTest extends MediaWikiLangTestCase {
 		foreach ( $expectedStuff as $class => $fieldValues ) {
 			$this->assertArrayHasKey( $class, $updates, "missing an update of type $class" );
 
-			$update = $updates[ $class ];
+			$update = $updates[$class];
 
 			foreach ( $fieldValues as $field => $value ) {
 				$v = $update->$field; #if the field doesn't exist, just crash and burn
 				$this->assertEquals( $value, $v, "unexpected value for field $field in instance of $class" );
 			}
 		}
+
+		$page->doDeleteArticle( '' );
 	}
 
 	public static function provideConvert() {

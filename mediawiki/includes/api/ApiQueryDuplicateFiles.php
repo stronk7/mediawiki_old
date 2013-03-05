@@ -66,10 +66,7 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 		$skipUntilThisDup = false;
 		if ( isset( $params['continue'] ) ) {
 			$cont = explode( '|', $params['continue'] );
-			if ( count( $cont ) != 2 ) {
-				$this->dieUsage( 'Invalid continue param. You should pass the ' .
-					'original value returned by the previous query', '_badcontinue' );
-			}
+			$this->dieContinueUsageIf( count( $cont ) != 2 );
 			$fromImage = $cont[0];
 			$skipUntilThisDup = $cont[1];
 			// Filter out any images before $fromImage
@@ -133,7 +130,7 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 					break;
 				}
 				if ( !is_null( $resultPageSet ) ) {
-					$titles[] = $file->getTitle();
+					$titles[] = $dupFile->getTitle();
 				} else {
 					$r = array(
 						'name' => $dupName,
@@ -204,12 +201,6 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 		return 'List all files that are duplicates of the given file(s) based on hash values';
 	}
 
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => '_badcontinue', 'info' => 'Invalid continue param. You should pass the original value returned by the previous query' ),
-		) );
-	}
-
 	public function getExamples() {
 		return array(
 			'api.php?action=query&titles=File:Albert_Einstein_Head.jpg&prop=duplicatefiles',
@@ -219,9 +210,5 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Properties#duplicatefiles_.2F_df';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

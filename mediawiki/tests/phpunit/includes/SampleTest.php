@@ -34,13 +34,12 @@ class TestSample extends MediaWikiLangTestCase {
 	 * http://www.phpunit.de/manual/3.4/en/other-uses-for-tests.html
 	 */
 	function testTitleObjectStringConversion() {
-		$title = Title::newFromText("text");
-		$this->assertEquals("Text", $title->__toString(), "Title creation");
-		$this->assertEquals("Text", "Text", "Automatic string conversion");
+		$title = Title::newFromText( "text" );
+		$this->assertInstanceOf( 'Title', $title, "Title creation" );
+		$this->assertEquals( "Text", $title, "Automatic string conversion" );
 
-		$title = Title::newFromText("text", NS_MEDIA);
-		$this->assertEquals("Media:Text", $title->__toString(), "Title creation with namespace");
-
+		$title = Title::newFromText( "text", NS_MEDIA );
+		$this->assertEquals( "Media:Text", $title, "Title creation with namespace" );
 	}
 
 	/**
@@ -63,14 +62,14 @@ class TestSample extends MediaWikiLangTestCase {
 	 * @dataProvider provideTitles
 	 * See http://www.phpunit.de/manual/3.4/en/appendixes.annotations.html#appendixes.annotations.dataProvider
 	 */
-	public function testCreateBasicListOfTitles($titleName, $ns, $text) {
-		$title = Title::newFromText($titleName, $ns);
-		$this->assertEquals($text, "$title", "see if '$titleName' matches '$text'");
+	public function testCreateBasicListOfTitles( $titleName, $ns, $text ) {
+		$title = Title::newFromText( $titleName, $ns );
+		$this->assertEquals( $text, "$title", "see if '$titleName' matches '$text'" );
 	}
 
 	public function testSetUpMainPageTitleForNextTest() {
 		$title = Title::newMainPage();
-		$this->assertEquals("Main Page", "$title", "Test initial creation of a title");
+		$this->assertEquals( "Main Page", "$title", "Test initial creation of a title" );
 
 		return $title;
 	}
@@ -104,4 +103,3 @@ class TestSample extends MediaWikiLangTestCase {
 		$this->assertEquals( "Test", $title->isLocal() );
 	}
 }
-

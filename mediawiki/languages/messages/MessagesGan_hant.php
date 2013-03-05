@@ -626,7 +626,6 @@ $2',
 'template-semiprotected' => '（半保護）',
 'hiddencategories' => '箇隻版面係屬於$1隻隱藏類嗰成員：',
 'edittools' => '<!--箇首嗰文本會到下底嗰編輯同上傳列表裡坨顯示。 -->',
-'nocreatetitle' => '新建頁面拕限制',
 'nocreatetext' => '箇隻網站限制新建頁面嗰功能。倷可以回頭去編輯有嘞嗰頁面，或者[[Special:UserLogin|登入或新開帳戶]]。',
 'nocreate-loggedin' => '倷到 {{SITENAME}} 冇權新開頁面。',
 'permissionserrors' => '許可權錯誤',
@@ -890,11 +889,12 @@ $2',
 'grouppage-sysop' => '{{ns:project}}:操作員',
 'grouppage-bureaucrat' => '{{ns:project}}:行政員',
 
+# Special:Log/newusers
+'newuserlogpage' => '新開戶嗰人名單',
+
 # User rights log
 'rightslog' => '用戶許可權日誌',
 'rightslogtext' => '底下記到用戶許可權嗰更改記錄。',
-'rightslogentry' => '拿 $1 嗰許可權從 $2 改到 $3',
-'rightsnone' => '（冇）',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => '編輯箇頁',
@@ -1252,9 +1252,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'listusers-submit' => '顯示',
 'listusers-noresult' => '尋伓到用戶。',
 
-# Special:Log/newusers
-'newuserlogpage' => '新開戶嗰人名單',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '（成員名單）',
 
@@ -1329,6 +1326,8 @@ $NEWPAGE
 {{SITENAME}}通知系統 – 會改卟倷嗰監視列表設置，請去 {{canonicalurl:{{#special:EditWatchlist}}}}
 
 回饋同到別嗰説明: {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => '建正嘞',
+'changed' => '改卟嘞',
 
 # Delete
 'deletepage' => '刪卟頁面',
@@ -2282,6 +2281,9 @@ $3
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|標籤]]過濾器：',
+
+# New logging system
+'rightsnone' => '（冇）',
 
 # Search suggestions
 'searchsuggest-search' => '尋吖',

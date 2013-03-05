@@ -123,6 +123,24 @@
 					rtl: true
 				}
 			},
+			// Iceweasel 10.0.6
+			'Mozilla/5.0 (X11; Linux i686; rv:10.0.6) Gecko/20100101 Iceweasel/10.0.6': {
+				title: 'Iceweasel 10.0.6',
+				platform: 'Linux',
+				profile: {
+					name: 'iceweasel',
+					layout: 'gecko',
+					layoutVersion: 20100101,
+					platform: 'linux',
+					version: '10.0.6',
+					versionBase: '10',
+					versionNumber: 10
+				},
+				wikiEditor: {
+					ltr: true,
+					rtl: true
+				}
+			},
 			// Firefox 5
 			// Safari 3
 			// Safari 4
@@ -161,7 +179,42 @@
 				}
 			},
 			// Safari 5
-			// Opera 10
+			// Opera 10+
+			'Opera/9.80 (Windows NT 5.1)': {
+				title: 'Opera 10+ (exact version unspecified)',
+				platform: 'Win32',
+				profile: {
+					name: 'opera',
+					layout: 'presto',
+					layoutVersion: 'unknown',
+					platform: 'win',
+					version: '10',
+					versionBase: '10',
+					versionNumber: 10
+				},
+				wikiEditor: {
+					ltr: true,
+					rtl: true
+				}
+			},
+			// Opera 12
+			'Opera/9.80 (Windows NT 5.1) Presto/2.12.388 Version/12.11': {
+				title: 'Opera 12',
+				platform: 'Win32',
+				profile: {
+					name: 'opera',
+					layout: 'presto',
+					layoutVersion: 'unknown',
+					platform: 'win',
+					version: '12.11',
+					versionBase: '12',
+					versionNumber: 12.11
+				},
+				wikiEditor: {
+					ltr: true,
+					rtl: true
+				}
+			},
 			// Chrome 5
 			// Chrome 6
 			// Chrome 7
@@ -225,13 +278,13 @@
 		};
 		$.each( uas, function () {
 			uacount++;
-		});
+		} );
 		return uas;
 	}() );
 
 	QUnit.test( 'profile userAgent support', uacount, function ( assert ) {
 		// Generate a client profile object and compare recursively
-		var uaTest = function( rawUserAgent, data ) {
+		var uaTest = function ( rawUserAgent, data ) {
 			var ret = $.client.profile( {
 				userAgent: rawUserAgent,
 				platform: data.platform
@@ -245,6 +298,7 @@
 
 	QUnit.test( 'profile return validation for current user agent', 7, function ( assert ) {
 		var p = $.client.profile();
+
 		function unknownOrType( val, type, summary ) {
 			assert.ok( typeof val === type || val === 'unknown', summary );
 		}
@@ -256,7 +310,7 @@
 		unknownOrType( p.version, 'string', 'p.version is a string (or "unknown")' );
 		unknownOrType( p.versionBase, 'string', 'p.versionBase is a string (or "unknown")' );
 		assert.equal( typeof p.versionNumber, 'number', 'p.versionNumber is a number' );
-	});
+	} );
 
 	// Example from WikiEditor
 	// Make sure to use raw numbers, a string like "7.0" would fail on a
@@ -293,10 +347,10 @@
 
 		assert.equal( typeof testMatch, 'boolean', 'test returns a boolean value' );
 
-	});
+	} );
 
 	QUnit.test( 'User-agent matches against WikiEditor\'s compatibility map', uacount * 2, function ( assert ) {
-		var	$body = $( 'body' ),
+		var $body = $( 'body' ),
 			bodyClasses = $body.attr( 'class' );
 
 		// Loop through and run tests
@@ -312,10 +366,10 @@
 				$body.removeClass( dir );
 
 				assert.equal( testMatch, data.wikiEditor[dir], 'testing comparison based on ' + dir + ', ' + agent );
-			});
-		});
+			} );
+		} );
 
 		// Restore body classes
 		$body.attr( 'class', bodyClasses );
-	});
+	} );
 }( jQuery ) );

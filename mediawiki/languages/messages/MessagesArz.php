@@ -960,7 +960,6 @@ $2',
 'template-semiprotected' => '(حمايه جزئيه )',
 'hiddencategories' => 'الصفحه دى موجوده فى {{PLURAL:$1|تصنيف مخفى واحد|$1 تصنيف مخفى}}:',
 'edittools' => '<!-- النص هنا هايظهر تحت صندوق التحرير و استمارة  تحميل الصور. -->',
-'nocreatetitle' => 'إنشاء الصفحات اتحدد',
 'nocreatetext' => '{{SITENAME}} حدد القدره على انشاء صفحات جديده.
 ممكن ترجع وتحرر صفحه موجوده بالفعل، او [[Special:UserLogin|الدخول / فتح حساب]].',
 'nocreate-loggedin' => 'انت ما عندك ش صلاحية تعمل صفحات جديدة.',
@@ -1478,11 +1477,13 @@ $1",
 'right-sendemail' => 'يبعت إيميل لليوزرز التانيين',
 'right-passwordreset' => 'إعادة ضبط كلمة سر مستخدم([[Special:PasswordReset|صفحة خاصة]])',
 
+# Special:Log/newusers
+'newuserlogpage' => 'سجل اليوزرز الجداد',
+'newuserlogpagetext' => 'دا سجل لليوزرز الجداد',
+
 # User rights log
 'rightslog' => 'سجل صلاحيات اليوزرز',
 'rightslogtext' => 'ده سجل بالتغييرات ف صلاحيات اليوزرز .',
-'rightslogentry' => 'غير صلاحيات $1 من $2 ل $3',
-'rightsnone' => '(فاضى)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'قراية الصفحه دى',
@@ -2024,10 +2025,6 @@ PICT # misc.
 'activeusers-hidesysops' => 'خبى السيسوبات',
 'activeusers-noresult' => 'مالقيناش اى يوزر',
 
-# Special:Log/newusers
-'newuserlogpage' => 'سجل اليوزرز الجداد',
-'newuserlogpagetext' => 'دا سجل لليوزرز الجداد',
-
 # Special:ListGroupRights
 'listgrouprights' => 'حقوق مجموعات اليوزرز',
 'listgrouprights-summary' => 'دى لستة بمجموعات اليوزرز المتعرفة فى الويكى دا، بالحقوق اللى معاهم.
@@ -2139,6 +2136,8 @@ $UNWATCHURL
 
 الfeedback و مساعده اكتر:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'إتنشأت',
+'changed' => 'اتغيرت',
 
 # Delete
 'deletepage' => 'امسح الصفحه',
@@ -3476,7 +3475,7 @@ $5
 # New logging system
 'revdelete-restricted' => 'طبق التعليمات على السيسوبات',
 'revdelete-unrestricted' => 'شيل الضوابط من على السيسوبات',
-'newuserlog-byemail' => 'الباسورد اتبعتت بالايميل',
+'rightsnone' => '(فاضى)',
 
 # Search suggestions
 'searchsuggest-search' => 'تدوير',

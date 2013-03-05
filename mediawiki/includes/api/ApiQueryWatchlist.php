@@ -116,7 +116,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 		) );
 
 		$userId = $user->getId();
-		$this->addJoinConds( array( 'watchlist' => array('INNER JOIN',
+		$this->addJoinConds( array( 'watchlist' => array( 'INNER JOIN',
 			array(
 				'wl_user' => $userId,
 				'wl_namespace=rc_namespace',
@@ -517,9 +517,5 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Watchlist';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -33,10 +33,6 @@
  */
 class ApiFeedWatchlist extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	/**
 	 * This module uses a custom feed wrapper printer.
 	 *
@@ -62,7 +58,7 @@ class ApiFeedWatchlist extends ApiBase {
 				$this->dieUsage( 'Syndication feeds are not available', 'feed-unavailable' );
 			}
 
-			if( !isset( $wgFeedClasses[ $params['feedformat'] ] ) ) {
+			if( !isset( $wgFeedClasses[$params['feedformat']] ) ) {
 				$this->dieUsage( 'Invalid subscription feed type', 'feed-invalid' );
 			}
 			if ( !is_null( $params['wlexcludeuser'] ) ) {
@@ -232,9 +228,5 @@ class ApiFeedWatchlist extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Watchlist_feed';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

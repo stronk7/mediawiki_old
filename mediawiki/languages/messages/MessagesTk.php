@@ -716,7 +716,6 @@ Gündeligiň iň soňky ýazgysy salgylanmak üçin aşakda berilýär:",
 'template-protected' => '(goragly)',
 'template-semiprotected' => '(ýarym goragly)',
 'hiddencategories' => 'Bu sahypa {{PLURAL:$1|1 gizlin kategoriýa|$1 gizlin kategoriýa}} degişlidir:',
-'nocreatetitle' => 'Sahypa döretmeklik çäklendirildi',
 'nocreatetext' => '{{SITENAME}} täze sahypa döretmek mümkinçiligini çäklendirdi.
 Yza gaýdyp, bar bolan sahypalary redaktirläp bilersiňiz ýa-da bolmasa [[Special:UserLogin|sessiýa açyp]] ýa-da [[Special:UserLogin|hasap döredip]] bilersiňiz.',
 'nocreate-loggedin' => 'Täze sahypa döretmäge rugsadyňyz ýok.',
@@ -1238,11 +1237,13 @@ $1 {{PLURAL:$1|simwoldan|simwoldan}} köp bolmaly däl.',
 'right-override-export-depth' => 'Sahypalary, şol sanda çykgytly sahypalary 5-e çenli çuňlukda eksportirle',
 'right-sendemail' => 'Başga ulanyjylara e-poçta iber',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Täze ulanyjy gündeligi',
+'newuserlogpagetext' => 'Ulanyjy döretme gündeligi.',
+
 # User rights log
 'rightslog' => 'Ulanyjy hukuklarynyň gündeligi',
 'rightslogtext' => 'Ulanyjy hukuklaryndaky üýtgeşmeler gündeligi.',
-'rightslogentry' => '$1 üçin topar agzalygyny $2 toparyndan $3 toparyna üýtgetdi',
-'rightsnone' => '(hiç biri)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'bu sahypany okamaga',
@@ -1788,10 +1789,6 @@ Goldanylýan protokollar: <code>$1</code>',
 'activeusers-hidesysops' => 'Administratorlary gizle',
 'activeusers-noresult' => 'Ulanyjy tapylmady.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Täze ulanyjy gündeligi',
-'newuserlogpagetext' => 'Ulanyjy döretme gündeligi.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Ulanyjy topary hukuklary',
 'listgrouprights-summary' => 'Aşakda şu wikide kesgitlenen ulanyjy toparlarynyň hem-de olaryň degişli ulanmak hukuklarynyň sanawy berilýär.
@@ -1843,7 +1840,7 @@ Goldanylýan protokollar: <code>$1</code>',
 'usermessage-editor' => 'Ulgam habarçysy',
 
 # Watchlist
-'watchlist' => 'Gözegçilik sanawym',
+'watchlist' => 'Gözegçilik sanawy',
 'mywatchlist' => 'Gözegçilik sanawy',
 'watchlistfor2' => '$1 üçin  $2',
 'nowatchlist' => 'Gözegçilik sanawyňyzda hiçhili sahypa ýok.',
@@ -1910,6 +1907,8 @@ $UNWATCHURL
 
 Seslenme we goşmaça kömek:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'döredildi',
+'changed' => 'üýtgedildi',
 
 # Delete
 'deletepage' => 'Sahypany öçür',
@@ -2091,7 +2090,7 @@ $1',
 'blanknamespace' => '(Baş)',
 
 # Contributions
-'contributions' => 'Ulanyjynyň goşantlary',
+'contributions' => '{{GENDER:$1|Ulanyjy}} goşantlary',
 'contributions-title' => '$1 üçin ulanyjy goşantlary',
 'mycontris' => 'Goşantlar',
 'contribsub2' => '$1 ($2)',
@@ -3153,7 +3152,7 @@ Faýlyň adyny "{{ns:file}}:" pristawkasyz giriziň.',
 # New logging system
 'revdelete-restricted' => 'administratorlara goýlan çäklendirmeler',
 'revdelete-unrestricted' => 'administratorlardan aýyrylan çäklendirmeler',
-'newuserlog-byemail' => 'parol e-poçta bilen iberildi',
+'rightsnone' => '(hiç biri)',
 
 # Search suggestions
 'searchsuggest-search' => 'Gözleg',

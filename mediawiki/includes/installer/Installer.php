@@ -88,7 +88,6 @@ abstract class Installer {
 		'postgres',
 		'oracle',
 		'sqlite',
-		'ibm_db2',
 	);
 
 	/**
@@ -313,19 +312,19 @@ abstract class Installer {
 	 * output format such as HTML or text before being sent to the user.
 	 * @param $msg
 	 */
-	public abstract function showMessage( $msg /*, ... */ );
+	abstract public function showMessage( $msg /*, ... */ );
 
 	/**
 	 * Same as showMessage(), but for displaying errors
 	 * @param $msg
 	 */
-	public abstract function showError( $msg /*, ... */ );
+	abstract public function showError( $msg /*, ... */ );
 
 	/**
 	 * Show a message to the installing user by using a Status object
 	 * @param $status Status
 	 */
-	public abstract function showStatusMessage( Status $status );
+	abstract public function showStatusMessage( Status $status );
 
 	/**
 	 * Constructor, always call this from child classes.
@@ -488,7 +487,7 @@ abstract class Installer {
 		if( !$_lsExists ) {
 			return false;
 		}
-		unset($_lsExists);
+		unset( $_lsExists );
 
 		require( "$IP/includes/DefaultSettings.php" );
 		require( "$IP/LocalSettings.php" );
@@ -927,7 +926,7 @@ abstract class Installer {
 	 * Helper function to be called from envCheckServer()
 	 * @return String
 	 */
-	protected abstract function envGetDefaultServer();
+	abstract protected function envGetDefaultServer();
 
 	/**
 	 * Environment check for setting $IP and $wgScriptPath.
@@ -1073,18 +1072,18 @@ abstract class Installer {
 	 * @return string
 	 */
 	protected function unicodeChar( $c ) {
-		$c = hexdec($c);
-		if ($c <= 0x7F) {
-			return chr($c);
-		} elseif ($c <= 0x7FF) {
-			return chr(0xC0 | $c >> 6) . chr(0x80 | $c & 0x3F);
-		} elseif ($c <= 0xFFFF) {
-			return chr(0xE0 | $c >> 12) . chr(0x80 | $c >> 6 & 0x3F)
-				. chr(0x80 | $c & 0x3F);
-		} elseif ($c <= 0x10FFFF) {
-			return chr(0xF0 | $c >> 18) . chr(0x80 | $c >> 12 & 0x3F)
-				. chr(0x80 | $c >> 6 & 0x3F)
-				. chr(0x80 | $c & 0x3F);
+		$c = hexdec( $c );
+		if ( $c <= 0x7F ) {
+			return chr( $c );
+		} elseif ( $c <= 0x7FF ) {
+			return chr( 0xC0 | $c >> 6 ) . chr( 0x80 | $c & 0x3F );
+		} elseif ( $c <= 0xFFFF ) {
+			return chr( 0xE0 | $c >> 12 ) . chr( 0x80 | $c >> 6 & 0x3F )
+				. chr( 0x80 | $c & 0x3F );
+		} elseif ( $c <= 0x10FFFF ) {
+			return chr( 0xF0 | $c >> 18 ) . chr( 0x80 | $c >> 12 & 0x3F )
+				. chr( 0x80 | $c >> 6 & 0x3F )
+				. chr( 0x80 | $c & 0x3F );
 		} else {
 			return false;
 		}
@@ -1105,8 +1104,8 @@ abstract class Installer {
 		 * Note that we use the hex representation to create the code
 		 * points in order to avoid any Unicode-destroying during transit.
 		 */
-		$not_normal_c = $this->unicodeChar("FA6C");
-		$normal_c = $this->unicodeChar("242EE");
+		$not_normal_c = $this->unicodeChar( "FA6C" );
+		$normal_c = $this->unicodeChar( "242EE" );
 
 		$useNormalizer = 'php';
 		$needsUpdate = false;

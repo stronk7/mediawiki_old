@@ -8,7 +8,7 @@
  * @group Stub
  */
 class NewParserTest extends MediaWikiTestCase {
-	static protected $articles = array();	// Array of test articles defined by the tests
+	static protected $articles = array(); // Array of test articles defined by the tests
 	/* The data provider is run on a different instance than the test, so it must be static
 	 * When running tests from several files, all tests will see all articles.
 	 */
@@ -16,6 +16,7 @@ class NewParserTest extends MediaWikiTestCase {
 
 	public $keepUploads = false;
 	public $runDisabled = false;
+	public $runParsoid = false;
 	public $regex = '';
 	public $showProgress = true;
 	public $savedInitialGlobals = array();
@@ -32,12 +33,10 @@ class NewParserTest extends MediaWikiTestCase {
 	protected $file = false;
 
 	protected function setUp() {
-		global $wgContLang, $wgLanguageCode;
 		global $wgNamespaceProtection, $wgNamespaceAliases;
 		global $wgHooks, $IP;
 
-		$wgLanguageCode = 'en';
-		$wgContLang = Language::factory( 'en' );
+		parent::setUp();
 
 		//Setup CLI arguments
 		if ( $this->getCliArg( 'regex=' ) ) {
@@ -51,6 +50,8 @@ class NewParserTest extends MediaWikiTestCase {
 
 		$tmpGlobals = array();
 
+		$tmpGlobals['wgLanguageCode'] = 'en';
+		$tmpGlobals['wgContLang'] = Language::factory( 'en' );
 		$tmpGlobals['wgScript'] = '/index.php';
 		$tmpGlobals['wgScriptPath'] = '/';
 		$tmpGlobals['wgArticlePath'] = '/wiki/$1';
@@ -58,12 +59,12 @@ class NewParserTest extends MediaWikiTestCase {
 		$tmpGlobals['wgStylePath'] = '/skins';
 		$tmpGlobals['wgThumbnailScriptPath'] = false;
 		$tmpGlobals['wgLocalFileRepo'] = array(
-			'class'           => 'LocalRepo',
-			'name'            => 'local',
-			'url'             => 'http://example.com/images',
-			'hashLevels'      => 2,
+			'class' => 'LocalRepo',
+			'name' => 'local',
+			'url' => 'http://example.com/images',
+			'hashLevels' => 2,
 			'transformVia404' => false,
-			'backend'         => 'local-backend'
+			'backend' => 'local-backend'
 		);
 		$tmpGlobals['wgForeignFileRepos'] = array();
 		$tmpGlobals['wgEnableParserCache'] = false;
@@ -117,6 +118,8 @@ class NewParserTest extends MediaWikiTestCase {
 		// Restore backends
 		RepoGroup::destroySingleton();
 		FileBackendGroup::destroySingleton();
+
+		parent::tearDown();
 	}
 
 	function addDBData() {
@@ -128,43 +131,42 @@ class NewParserTest extends MediaWikiTestCase {
 		# Hack: insert a few Wikipedia in-project interwiki prefixes,
 		# for testing inter-language links
 		$this->db->insert( 'interwiki', array(
-			array( 'iw_prefix' => 'wikipedia',
-				   'iw_url'    => 'http://en.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 0 ),
-			array( 'iw_prefix' => 'meatball',
-				   'iw_url'    => 'http://www.usemod.com/cgi-bin/mb.pl?$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 0 ),
-			array( 'iw_prefix' => 'zh',
-				   'iw_url'    => 'http://zh.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
-			array( 'iw_prefix' => 'es',
-				   'iw_url'    => 'http://es.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
-			array( 'iw_prefix' => 'fr',
-				   'iw_url'    => 'http://fr.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
-			array( 'iw_prefix' => 'ru',
-				   'iw_url'    => 'http://ru.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
-			/**
-			 * @todo Fixme! Why are we inserting duplicate data here? Shouldn't
-			 * need this IGNORE or shouldn't need the insert at all.
-			 */
+				array( 'iw_prefix' => 'wikipedia',
+					'iw_url' => 'http://en.wikipedia.org/wiki/$1',
+					'iw_api' => '',
+					'iw_wikiid' => '',
+					'iw_local' => 0 ),
+				array( 'iw_prefix' => 'meatball',
+					'iw_url' => 'http://www.usemod.com/cgi-bin/mb.pl?$1',
+					'iw_api' => '',
+					'iw_wikiid' => '',
+					'iw_local' => 0 ),
+				array( 'iw_prefix' => 'zh',
+					'iw_url' => 'http://zh.wikipedia.org/wiki/$1',
+					'iw_api' => '',
+					'iw_wikiid' => '',
+					'iw_local' => 1 ),
+				array( 'iw_prefix' => 'es',
+					'iw_url' => 'http://es.wikipedia.org/wiki/$1',
+					'iw_api' => '',
+					'iw_wikiid' => '',
+					'iw_local' => 1 ),
+				array( 'iw_prefix' => 'fr',
+					'iw_url' => 'http://fr.wikipedia.org/wiki/$1',
+					'iw_api' => '',
+					'iw_wikiid' => '',
+					'iw_local' => 1 ),
+				array( 'iw_prefix' => 'ru',
+					'iw_url' => 'http://ru.wikipedia.org/wiki/$1',
+					'iw_api' => '',
+					'iw_wikiid' => '',
+					'iw_local' => 1 ),
+				/**
+				 * @todo Fixme! Why are we inserting duplicate data here? Shouldn't
+				 * need this IGNORE or shouldn't need the insert at all.
+				 */
 			), __METHOD__, array( 'IGNORE' )
 		);
-
 
 		# Update certain things in site_stats
 		$this->db->insert( 'site_stats',
@@ -192,15 +194,15 @@ class NewParserTest extends MediaWikiTestCase {
 				'Upload of some lame file',
 				'Some lame file',
 				array(
-					'size'        => 12345,
-					'width'       => 1941,
-					'height'      => 220,
-					'bits'        => 24,
-					'media_type'  => MEDIATYPE_BITMAP,
-					'mime'        => 'image/jpeg',
-					'metadata'    => serialize( array() ),
-					'sha1'        => wfBaseConvert( '', 16, 36, 31 ),
-					'fileExists'  => true ),
+					'size' => 12345,
+					'width' => 1941,
+					'height' => 220,
+					'bits' => 24,
+					'media_type' => MEDIATYPE_BITMAP,
+					'mime' => 'image/jpeg',
+					'metadata' => serialize( array() ),
+					'sha1' => wfBaseConvert( '', 16, 36, 31 ),
+					'fileExists' => true ),
 				$this->db->timestamp( '20010115123500' ), $user
 			);
 		}
@@ -213,22 +215,19 @@ class NewParserTest extends MediaWikiTestCase {
 				'zomgnotcensored',
 				'Borderline image',
 				array(
-					'size'        => 12345,
-					'width'       => 320,
-					'height'      => 240,
-					'bits'        => 24,
-					'media_type'  => MEDIATYPE_BITMAP,
-					'mime'        => 'image/jpeg',
-					'metadata'    => serialize( array() ),
-					'sha1'        => wfBaseConvert( '', 16, 36, 31 ),
-					'fileExists'  => true ),
+					'size' => 12345,
+					'width' => 320,
+					'height' => 240,
+					'bits' => 24,
+					'media_type' => MEDIATYPE_BITMAP,
+					'mime' => 'image/jpeg',
+					'metadata' => serialize( array() ),
+					'sha1' => wfBaseConvert( '', 16, 36, 31 ),
+					'fileExists' => true ),
 				$this->db->timestamp( '20010115123500' ), $user
 			);
 		}
 	}
-
-
-
 
 	//ParserTest setup/teardown functions
 
@@ -236,7 +235,7 @@ class NewParserTest extends MediaWikiTestCase {
 	 * Set up the global variables for a consistent environment for each test.
 	 * Ideally this should replace the global configuration entirely.
 	 */
-	protected function setupGlobals( $opts = '', $config = '' ) {
+	protected function setupGlobals( $opts = array(), $config = '' ) {
 		global $wgFileBackends;
 		# Find out values for some special options.
 		$lang =
@@ -267,29 +266,29 @@ class NewParserTest extends MediaWikiTestCase {
 			}
 		} else {
 			$backend = new FSFileBackend( array(
-				'name'        => 'local-backend',
+				'name' => 'local-backend',
 				'lockManager' => 'nullLockManager',
 				'containerPaths' => array(
 					'local-public' => "$uploadDir",
-					'local-thumb'  => "$uploadDir/thumb",
+					'local-thumb' => "$uploadDir/thumb",
 				)
 			) );
 		}
 
 		$settings = array(
-			'wgServer' => 'http://Britney-Spears',
+			'wgServer' => 'http://example.org',
 			'wgScript' => '/index.php',
 			'wgScriptPath' => '/',
 			'wgArticlePath' => '/wiki/$1',
 			'wgExtensionAssetsPath' => '/extensions',
 			'wgActionPaths' => array(),
 			'wgLocalFileRepo' => array(
-				'class'           => 'LocalRepo',
-				'name'            => 'local',
-				'url'             => 'http://example.com/images',
-				'hashLevels'      => 2,
+				'class' => 'LocalRepo',
+				'name' => 'local',
+				'url' => 'http://example.com/images',
+				'hashLevels' => 2,
 				'transformVia404' => false,
-				'backend'         => $backend
+				'backend' => $backend
 			),
 			'wgEnableUploads' => self::getOptionValue( 'wgEnableUploads', $opts, true ),
 			'wgStylePath' => '/skins',
@@ -300,7 +299,7 @@ class NewParserTest extends MediaWikiTestCase {
 			'wgRawHtml' => isset( $opts['rawhtml'] ),
 			'wgLang' => null,
 			'wgContLang' => null,
-			'wgNamespacesWithSubpages' => array( 0 => isset( $opts['subpage'] ) ),
+			'wgNamespacesWithSubpages' => array( NS_MAIN => isset( $opts['subpage'] ) ),
 			'wgMaxTocLevel' => $maxtoclevel,
 			'wgCapitalLinks' => true,
 			'wgNoFollowLinks' => true,
@@ -316,10 +315,10 @@ class NewParserTest extends MediaWikiTestCase {
 			'wgVariantArticlePath' => false,
 			'wgGroupPermissions' => array( '*' => array(
 				'createaccount' => true,
-				'read'          => true,
-				'edit'          => true,
-				'createpage'    => true,
-				'createtalk'    => true,
+				'read' => true,
+				'edit' => true,
+				'createpage' => true,
+				'createtalk' => true,
 			) ),
 			'wgNamespaceProtection' => array( NS_MEDIAWIKI => 'editinterface' ),
 			'wgDefaultExternalStore' => array(),
@@ -462,7 +461,7 @@ class NewParserTest extends MediaWikiTestCase {
 		$base = $this->getBaseDir();
 		// delete the files first, then the dirs.
 		self::deleteFiles(
-			array (
+			array(
 				"$base/local-public/3/3a/Foobar.jpg",
 				"$base/local-thumb/3/3a/Foobar.jpg/180px-Foobar.jpg",
 				"$base/local-thumb/3/3a/Foobar.jpg/200px-Foobar.jpg",
@@ -541,7 +540,7 @@ class NewParserTest extends MediaWikiTestCase {
 			// @todo: When setting up pages, force the content model. Only skip if
 			//        $wgtContentModelUseDB is false.
 			$this->markTestSkipped( "Main namespace does not support wikitext,"
-					. "skipping parser test: $desc" );
+				. "skipping parser test: $desc" );
 		}
 
 		wfDebug( "Running parser test: $desc\n" );
@@ -554,8 +553,7 @@ class NewParserTest extends MediaWikiTestCase {
 
 		if ( isset( $opts['title'] ) ) {
 			$titleText = $opts['title'];
-		}
-		else {
+		} else {
 			$titleText = 'Parser test';
 		}
 
@@ -628,7 +626,7 @@ class NewParserTest extends MediaWikiTestCase {
 
 		$files = $wgParserTestFiles;
 
-		if( $this->getCliArg( 'file=' ) ) {
+		if ( $this->getCliArg( 'file=' ) ) {
 			$files = array( $this->getCliArg( 'file=' ) );
 		}
 
@@ -790,15 +788,16 @@ class NewParserTest extends MediaWikiTestCase {
 	 */
 	public function requireHook( $name ) {
 		global $wgParser;
-		$wgParser->firstCallInit( ); // make sure hooks are loaded.
+		$wgParser->firstCallInit(); // make sure hooks are loaded.
 		return isset( $wgParser->mTagHooks[$name] );
 	}
 
 	public function requireFunctionHook( $name ) {
 		global $wgParser;
-		$wgParser->firstCallInit( ); // make sure hooks are loaded.
+		$wgParser->firstCallInit(); // make sure hooks are loaded.
 		return isset( $wgParser->mFunctionHooks[$name] );
 	}
+
 	//Various "cleanup" functions
 
 	/**
@@ -824,8 +823,7 @@ class NewParserTest extends MediaWikiTestCase {
 	public function removeEndingNewline( $s ) {
 		if ( substr( $s, -1 ) === "\n" ) {
 			return substr( $s, 0, -1 );
-		}
-		else {
+		} else {
 			return $s;
 		}
 	}

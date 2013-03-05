@@ -2,7 +2,7 @@
 /**
  * Helper class to keep track of options when mixing links and form elements.
  *
- * Copyright © 2008, Niklas Laxstiröm
+ * Copyright © 2008, Niklas Laxström
  * Copyright © 2011, Antoine Musso
  *
  * This program is free software; you can redistribute it and/or modify
@@ -178,8 +178,9 @@ class FormOptions implements ArrayAccess {
 
 	/**
 	 * @todo Document
-	 * @param $name String: option name
-	 * @return null
+	 * @param string $name Option name
+	 * @throws MWException If option does not exist.
+	 * @return mixed Value or the default value if it is null.
 	 */
 	public function consumeValue( $name ) {
 		$this->validateName( $name, true );

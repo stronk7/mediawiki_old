@@ -39,7 +39,7 @@ class FeedUtils {
 	public static function checkPurge( $timekey, $key ) {
 		global $wgRequest, $wgUser, $messageMemc;
 		$purge = $wgRequest->getVal( 'action' ) === 'purge';
-		if ( $purge && $wgUser->isAllowed('purge') ) {
+		if ( $purge && $wgUser->isAllowed( 'purge' ) ) {
 			$messageMemc->delete( $timekey );
 			$messageMemc->delete( $key );
 		}
@@ -85,7 +85,7 @@ class FeedUtils {
 			$row->rc_last_oldid, $row->rc_this_oldid,
 			$timestamp,
 			($row->rc_deleted & Revision::DELETED_COMMENT)
-				? wfMessage('rev-deleted-comment')->escaped()
+				? wfMessage( 'rev-deleted-comment' )->escaped()
 				: $row->rc_comment,
 			$actiontext
 		);
@@ -102,7 +102,7 @@ class FeedUtils {
 	 * @param $actiontext String: text of the action; in case of log event
 	 * @return String
 	 */
-	public static function formatDiffRow( $title, $oldid, $newid, $timestamp, $comment, $actiontext='' ) {
+	public static function formatDiffRow( $title, $oldid, $newid, $timestamp, $comment, $actiontext = '' ) {
 		global $wgFeedDiffCutoff, $wgLang;
 		wfProfileIn( __METHOD__ );
 
@@ -222,7 +222,7 @@ class FeedUtils {
 	protected static function getDiffLink( Title $title, $newid, $oldid = null ) {
 		$queryParameters = ($oldid == null)
 			? "diff={$newid}"
-			: "diff={$newid}&oldid={$oldid}" ;
+			: "diff={$newid}&oldid={$oldid}";
 		$diffUrl = $title->getFullUrl( $queryParameters );
 
 		$diffLink = Html::element( 'a', array( 'href' => $diffUrl ),

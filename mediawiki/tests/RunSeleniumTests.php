@@ -1,9 +1,9 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 /**
  * @file
  * @ingroup Maintenance
- * @copyright Copyright Â© Wikimedia Deuschland, 2009
+ * @copyright Copyright © Wikimedia Deuschland, 2009
  * @author Hallo Welt! Medienwerkstatt GmbH
  * @author Markus Glaser, Dan Nessett, Priyanka Dhanda
  * initial idea by Daniel Kinzler
@@ -24,15 +24,16 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-$IP = dirname( __DIR__ );
+if ( PHP_SAPI != 'cli' ) {
+	die( "Run me from the command line please.\n" );
+}
 
 define( 'SELENIUMTEST', true );
 
-//require_once( __DIR__ . '/../maintenance/commandLine.inc' );
 require( __DIR__ . '/../maintenance/Maintenance.php' );
 
 require_once( 'PHPUnit/Runner/Version.php' );
-if( version_compare( PHPUnit_Runner_Version::id(), '3.5.0', '>=' ) ) {
+if ( version_compare( PHPUnit_Runner_Version::id(), '3.5.0', '>=' ) ) {
 	# PHPUnit 3.5.0 introduced a nice autoloader based on class name
 	require_once( 'PHPUnit/Autoload.php' );
 } else {
@@ -75,7 +76,7 @@ class SeleniumTester extends Maintenance {
 	public function listBrowsers() {
 		$desc = "Available browsers:\n";
 
-		foreach ($this->selenium->getAvailableBrowsers() as $k => $v) {
+		foreach ( $this->selenium->getAvailableBrowsers() as $k => $v ) {
 			$desc .= "  $k => $v\n";
 		}
 
@@ -85,8 +86,8 @@ class SeleniumTester extends Maintenance {
 	protected function startServer() {
 		if ( $this->seleniumServerExecPath == '' ) {
 			die ( "The selenium server exec path is not set in " .
-				  "selenium_settings.ini. Cannot start server \n" .
-				  "as requested - terminating RunSeleniumTests\n" );
+				"selenium_settings.ini. Cannot start server \n" .
+				"as requested - terminating RunSeleniumTests\n" );
 		}
 		$this->serverManager = new SeleniumServerManager( 'true',
 			$this->selenium->getPort(),
@@ -159,20 +160,20 @@ class SeleniumTester extends Maintenance {
 
 		$configFile = $this->getOption( 'seleniumConfig', '' );
 		if ( strlen( $configFile ) > 0 ) {
-			$this->output("Using Selenium Configuration file: " . $configFile . "\n");
+			$this->output( "Using Selenium Configuration file: " . $configFile . "\n" );
 			SeleniumConfig::getSeleniumSettings( $seleniumSettings,
 				$seleniumBrowsers,
 				$seleniumTestSuites,
 				$configFile );
 		} elseif ( !isset( $wgHooks['SeleniumSettings'] ) ) {
-			$this->output("No command line, configuration file or configuration hook found.\n");
+			$this->output( "No command line, configuration file or configuration hook found.\n" );
 			SeleniumConfig::getSeleniumSettings( $seleniumSettings,
 				$seleniumBrowsers,
 				$seleniumTestSuites
-													);
+			);
 		} else {
-			$this->output("Using 'SeleniumSettings' hook for configuration.\n");
-			wfRunHooks('SeleniumSettings', array( $seleniumSettings,
+			$this->output( "Using 'SeleniumSettings' hook for configuration.\n" );
+			wfRunHooks( 'SeleniumSettings', array( $seleniumSettings,
 				$seleniumBrowsers,
 				$seleniumTestSuites ) );
 		}
@@ -180,24 +181,48 @@ class SeleniumTester extends Maintenance {
 		// State for starting/stopping the Selenium server has nothing to do with the Selenium
 		// class. Keep this state local to SeleniumTester class. Using getOption() is clumsy, but
 		// the Maintenance class does not have a setOption()
-		if ( ! isset( $seleniumSettings['startserver'] ) ) $this->getOption( 'startserver', true );
-		if ( ! isset( $seleniumSettings['stopserver'] ) ) $this->getOption( 'stopserver', true );
-		if ( !isset( $seleniumSettings['seleniumserverexecpath'] ) ) $seleniumSettings['seleniumserverexecpath'] = '';
+		if ( !isset( $seleniumSettings['startserver'] ) ) {
+			$this->getOption( 'startserver', true );
+		}
+		if ( !isset( $seleniumSettings['stopserver'] ) ) {
+			$this->getOption( 'stopserver', true );
+		}
+		if ( !isset( $seleniumSettings['seleniumserverexecpath'] ) ) {
+			$seleniumSettings['seleniumserverexecpath'] = '';
+		}
 		$this->seleniumServerExecPath = $seleniumSettings['seleniumserverexecpath'];
 
 		//set reasonable defaults if we did not find the settings
-		if ( !isset( $seleniumBrowsers ) ) $seleniumBrowsers = array ('firefox' => '*firefox');
-		if ( !isset( $seleniumSettings['host'] ) ) $seleniumSettings['host'] = $wgServer . $wgScriptPath;
-		if ( !isset( $seleniumSettings['port'] ) ) $seleniumSettings['port'] = '4444';
-		if ( !isset( $seleniumSettings['wikiUrl'] ) ) $seleniumSettings['wikiUrl'] = 'http://localhost';
-		if ( !isset( $seleniumSettings['username'] ) ) $seleniumSettings['username'] = '';
-		if ( !isset( $seleniumSettings['userPassword'] ) ) $seleniumSettings['userPassword'] = '';
-		if ( !isset( $seleniumSettings['testBrowser'] ) ) $seleniumSettings['testBrowser'] = 'firefox';
-		if ( !isset( $seleniumSettings['jUnitLogFile'] ) ) $seleniumSettings['jUnitLogFile'] = false;
-		if ( !isset( $seleniumSettings['runAgainstGrid'] ) ) $seleniumSettings['runAgainstGrid'] = false;
+		if ( !isset( $seleniumBrowsers ) ) {
+			$seleniumBrowsers = array( 'firefox' => '*firefox' );
+		}
+		if ( !isset( $seleniumSettings['host'] ) ) {
+			$seleniumSettings['host'] = $wgServer . $wgScriptPath;
+		}
+		if ( !isset( $seleniumSettings['port'] ) ) {
+			$seleniumSettings['port'] = '4444';
+		}
+		if ( !isset( $seleniumSettings['wikiUrl'] ) ) {
+			$seleniumSettings['wikiUrl'] = 'http://localhost';
+		}
+		if ( !isset( $seleniumSettings['username'] ) ) {
+			$seleniumSettings['username'] = '';
+		}
+		if ( !isset( $seleniumSettings['userPassword'] ) ) {
+			$seleniumSettings['userPassword'] = '';
+		}
+		if ( !isset( $seleniumSettings['testBrowser'] ) ) {
+			$seleniumSettings['testBrowser'] = 'firefox';
+		}
+		if ( !isset( $seleniumSettings['jUnitLogFile'] ) ) {
+			$seleniumSettings['jUnitLogFile'] = false;
+		}
+		if ( !isset( $seleniumSettings['runAgainstGrid'] ) ) {
+			$seleniumSettings['runAgainstGrid'] = false;
+		}
 
 		// Setup Selenium class
-		$this->selenium = new Selenium( );
+		$this->selenium = new Selenium();
 		$this->selenium->setAvailableBrowsers( $seleniumBrowsers );
 		$this->selenium->setRunAgainstGrid( $this->getOption( 'runAgainstGrid', $seleniumSettings['runAgainstGrid'] ) );
 		$this->selenium->setUrl( $this->getOption( 'wikiUrl', $seleniumSettings['wikiUrl'] ) );
@@ -209,9 +234,9 @@ class SeleniumTester extends Maintenance {
 		$this->selenium->setVerbose( $this->hasOption( 'verbose' ) );
 		$this->selenium->setJUnitLogFile( $this->getOption( 'jUnitLogFile', $seleniumSettings['jUnitLogFile'] ) );
 
-		if( $this->hasOption( 'list-browsers' ) ) {
+		if ( $this->hasOption( 'list-browsers' ) ) {
 			$this->listBrowsers();
-			exit(0);
+			exit( 0 );
 		}
 		if ( $this->hasOption( 'startserver' ) ) {
 			$this->startServer();
@@ -222,7 +247,7 @@ class SeleniumTester extends Maintenance {
 
 		$this->runTests( $seleniumTestSuites );
 
-		if ( $this->hasOption( 'stopserver' )  ) {
+		if ( $this->hasOption( 'stopserver' ) ) {
 			$this->stopServer();
 		}
 	}

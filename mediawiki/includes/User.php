@@ -253,7 +253,7 @@ class User {
 	/**
 	 * @return String
 	 */
-	function __toString(){
+	function __toString() {
 		return $this->getName();
 	}
 
@@ -293,6 +293,7 @@ class User {
 				wfRunHooks( 'UserLoadAfterLoadFromSession', array( $this ) );
 				break;
 			default:
+				wfProfileOut( __METHOD__ );
 				throw new MWException( "Unrecognised value for User->mFrom: \"{$this->mFrom}\"" );
 		}
 		wfProfileOut( __METHOD__ );
@@ -332,6 +333,9 @@ class User {
 				$this->$name = $data[$name];
 			}
 		}
+
+		$this->mLoadedItems = true;
+
 		return true;
 	}
 
@@ -543,7 +547,7 @@ class User {
 	 * @return Bool
 	 */
 	public static function isIP( $name ) {
-		return preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.(?:xxx|\d{1,3})$/',$name) || IP::isIPv6($name);
+		return preg_match( '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.(?:xxx|\d{1,3})$/', $name ) || IP::isIPv6( $name );
 	}
 
 	/**
@@ -976,10 +980,13 @@ class User {
 		}
 
 		if ( $request->getSessionData( 'wsToken' ) ) {
-			$passwordCorrect = $proposedUser->getToken( false ) === $request->getSessionData( 'wsToken' );
+			$passwordCorrect = ( $proposedUser->getToken( false ) === $request->getSessionData( 'wsToken' ) );
 			$from = 'session';
 		} elseif ( $request->getCookie( 'Token' ) ) {
-			$passwordCorrect = $proposedUser->getToken( false ) === $request->getCookie( 'Token' );
+			# Get the token from DB/cache and clean it up to remove garbage padding.
+			# This deals with historical problems with bugs and the default column value.
+			$token = rtrim( $proposedUser->getToken( false ) ); // correct token
+			$passwordCorrect = ( strlen( $token ) && $token === $request->getCookie( 'Token' ) );
 			$from = 'cookie';
 		} else {
 			# No session or persistent login cookie
@@ -1201,6 +1208,7 @@ class User {
 		$this->mRights = null;
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
+		$this->mGroups = null;
 		$this->mOptions = null;
 		$this->mOptionsLoaded = false;
 		$this->mEditCount = null;
@@ -1446,7 +1454,7 @@ class User {
 			// But this is a crappy hack and should die.
 			return false;
 		}
-		return !$this->isAllowed('noratelimit');
+		return !$this->isAllowed( 'noratelimit' );
 	}
 
 	/**
@@ -1462,7 +1470,7 @@ class User {
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
 		$result = false;
-		if( !wfRunHooks( 'PingLimiter', array( &$this, $action, $result ) ) ) {
+		if( !wfRunHooks( 'PingLimiter', array( &$this, $action, &$result ) ) ) {
 			return $result;
 		}
 
@@ -1564,7 +1572,7 @@ class User {
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true ){
+	public function getBlock( $bFromSlave = true ) {
 		$this->getBlockedStatus( $bFromSlave );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
@@ -2041,7 +2049,9 @@ class User {
 	/**
 	 * Set the password and reset the random token unconditionally.
 	 *
-	 * @param $str String New password to set
+	 * @param $str string|null New password to set or null to set an invalid
+	 *        password hash meaning that the user will not be able to log in
+	 *        through the web interface.
 	 */
 	public function setInternalPassword( $str ) {
 		$this->load();
@@ -2224,7 +2234,7 @@ class User {
 		# set it, and then it was disabled removing their ability to change it).  But
 		# we don't want to erase the preferences in the database in case the preference
 		# is re-enabled again.  So don't touch $mOptions, just override the returned value
-		if( in_array( $oname, $wgHiddenPrefs ) && !$ignoreHidden ){
+		if( in_array( $oname, $wgHiddenPrefs ) && !$ignoreHidden ) {
 			return self::getDefaultOption( $oname );
 		}
 
@@ -2250,9 +2260,9 @@ class User {
 		# set it, and then it was disabled removing their ability to change it).  But
 		# we don't want to erase the preferences in the database in case the preference
 		# is re-enabled again.  So don't touch $mOptions, just override the returned value
-		foreach( $wgHiddenPrefs as $pref ){
+		foreach( $wgHiddenPrefs as $pref ) {
 			$default = self::getDefaultOption( $pref );
-			if( $default !== null ){
+			if( $default !== null ) {
 				$options[$pref] = $default;
 			}
 		}
@@ -2279,7 +2289,7 @@ class User {
 	 * @return Int User's current value for the option
 	 * @see getOption()
 	 */
-	public function getIntOption( $oname, $defaultOverride=0 ) {
+	public function getIntOption( $oname, $defaultOverride = 0 ) {
 		$val = $this->getOption( $oname );
 		if( $val == '' ) {
 			$val = $defaultOverride;
@@ -2305,12 +2315,137 @@ class User {
 	}
 
 	/**
-	 * Reset all options to the site defaults
+	 * Return a list of the types of user options currently returned by
+	 * User::getOptionKinds().
+	 *
+	 * Currently, the option kinds are:
+	 * - 'registered' - preferences which are registered in core MediaWiki or
+	 *                  by extensions using the UserGetDefaultOptions hook.
+	 * - 'registered-multiselect' - as above, using the 'multiselect' type.
+	 * - 'userjs' - preferences with names starting with 'userjs-', intended to
+	 *              be used by user scripts.
+	 * - 'unused' - preferences about which MediaWiki doesn't know anything.
+	 *              These are usually legacy options, removed in newer versions.
+	 *
+	 * The API (and possibly others) use this function to determine the possible
+	 * option types for validation purposes, so make sure to update this when a
+	 * new option kind is added.
+	 *
+	 * @see User::getOptionKinds
+	 * @return array Option kinds
 	 */
-	public function resetOptions() {
-		$this->load();
+	public static function listOptionKinds() {
+		return array(
+			'registered',
+			'registered-multiselect',
+			'userjs',
+			'unused'
+		);
+	}
 
-		$this->mOptions = self::getDefaultOptions();
+	/**
+	 * Return an associative array mapping preferences keys to the kind of a preference they're
+	 * used for. Different kinds are handled differently when setting or reading preferences.
+	 *
+	 * See User::listOptionKinds for the list of valid option types that can be provided.
+	 *
+	 * @see User::listOptionKinds
+	 * @param $context IContextSource
+	 * @param $options array assoc. array with options keys to check as keys. Defaults to $this->mOptions.
+	 * @return array the key => kind mapping data
+	 */
+	public function getOptionKinds( IContextSource $context, $options = null ) {
+		$this->loadOptions();
+		if ( $options === null ) {
+			$options = $this->mOptions;
+		}
+
+		$prefs = Preferences::getPreferences( $this, $context );
+		$mapping = array();
+
+		// Multiselect options are stored in the database with one key per
+		// option, each having a boolean value. Extract those keys.
+		$multiselectOptions = array();
+		foreach ( $prefs as $name => $info ) {
+			if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
+					( isset( $info['class'] ) && $info['class'] == 'HTMLMultiSelectField' ) ) {
+				$opts = HTMLFormField::flattenOptions( $info['options'] );
+				$prefix = isset( $info['prefix'] ) ? $info['prefix'] : $name;
+
+				foreach ( $opts as $value ) {
+					$multiselectOptions["$prefix$value"] = true;
+				}
+
+				unset( $prefs[$name] );
+			}
+		}
+
+		// $value is ignored
+		foreach ( $options as $key => $value ) {
+			if ( isset( $prefs[$key] ) ) {
+				$mapping[$key] = 'registered';
+			} elseif( isset( $multiselectOptions[$key] ) ) {
+				$mapping[$key] = 'registered-multiselect';
+			} elseif ( substr( $key, 0, 7 ) === 'userjs-' ) {
+				$mapping[$key] = 'userjs';
+			} else {
+				$mapping[$key] = 'unused';
+			}
+		}
+
+		return $mapping;
+	}
+
+	/**
+	 * Reset certain (or all) options to the site defaults
+	 *
+	 * The optional parameter determines which kinds of preferences will be reset.
+	 * Supported values are everything that can be reported by getOptionKinds()
+	 * and 'all', which forces a reset of *all* preferences and overrides everything else.
+	 *
+	 * @param $resetKinds array|string which kinds of preferences to reset. Defaults to
+	 *                                 array( 'registered', 'registered-multiselect', 'unused' )
+	 *                                 for backwards-compatibility.
+	 * @param $context IContextSource|null context source used when $resetKinds
+	 *                                     does not contain 'all', passed to getOptionKinds().
+	 *                                     Defaults to RequestContext::getMain() when null.
+	 */
+	public function resetOptions(
+		$resetKinds = array( 'registered', 'registered-multiselect', 'unused' ),
+		IContextSource $context = null
+	) {
+		$this->load();
+		$defaultOptions = self::getDefaultOptions();
+
+		if ( !is_array( $resetKinds ) ) {
+			$resetKinds = array( $resetKinds );
+		}
+
+		if ( in_array( 'all', $resetKinds ) ) {
+			$newOptions = $defaultOptions;
+		} else {
+			if ( $context === null ) {
+				$context = RequestContext::getMain();
+			}
+
+			$optionKinds = $this->getOptionKinds( $context );
+			$resetKinds = array_intersect( $resetKinds, self::listOptionKinds() );
+			$newOptions = array();
+
+			// Use default values for the options that should be deleted, and
+			// copy old values for the ones that shouldn't.
+			foreach ( $this->mOptions as $key => $value ) {
+				if ( in_array( $optionKinds[$key], $resetKinds ) ) {
+					if ( array_key_exists( $key, $defaultOptions ) ) {
+						$newOptions[$key] = $defaultOptions[$key];
+					}
+				} else {
+					$newOptions[$key] = $value;
+				}
+			}
+		}
+
+		$this->mOptions = $newOptions;
 		$this->mOptionsLoaded = true;
 	}
 
@@ -2339,7 +2474,7 @@ class User {
 	 */
 	public function getStubThreshold() {
 		global $wgMaxArticleSize; # Maximum article size, in Kb
-		$threshold = intval( $this->getOption( 'stubthreshold' ) );
+		$threshold = $this->getIntOption( 'stubthreshold' );
 		if ( $threshold > $wgMaxArticleSize * 1024 ) {
 			# If they have set an impossible value, disable the preference
 			# so we can use the parser cache again.
@@ -2490,7 +2625,7 @@ class User {
 			if( $this->getId() ) {
 				$dbw->insert( 'user_groups',
 					array(
-						'ug_user'  => $this->getID(),
+						'ug_user' => $this->getID(),
 						'ug_group' => $group,
 					),
 					__METHOD__,
@@ -2515,13 +2650,13 @@ class User {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->delete( 'user_groups',
 				array(
-					'ug_user'  => $this->getID(),
+					'ug_user' => $this->getID(),
 					'ug_group' => $group,
 				), __METHOD__ );
 			// Remember that the user was in this group
 			$dbw->insert( 'user_former_groups',
 				array(
-					'ufg_user'  => $this->getID(),
+					'ufg_user' => $this->getID(),
 					'ufg_group' => $group,
 				),
 				__METHOD__,
@@ -2558,10 +2693,10 @@ class User {
 	 *
 	 * @return bool
 	 */
-	public function isAllowedAny( /*...*/ ){
+	public function isAllowedAny( /*...*/ ) {
 		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( $this->isAllowed( $permission ) ){
+		foreach( $permissions as $permission ) {
+			if( $this->isAllowed( $permission ) ) {
 				return true;
 			}
 		}
@@ -2573,10 +2708,10 @@ class User {
 	 * @internal param $varargs string
 	 * @return bool True if the user is allowed to perform *all* of the given actions
 	 */
-	public function isAllowedAll( /*...*/ ){
+	public function isAllowedAll( /*...*/ ) {
 		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( !$this->isAllowed( $permission ) ){
+		foreach( $permissions as $permission ) {
+			if( !$this->isAllowed( $permission ) ) {
 				return false;
 			}
 		}
@@ -2744,13 +2879,17 @@ class User {
 	 * the next change of any watched page.
 	 */
 	public function clearAllNotifications() {
+		if ( wfReadOnly() ) {
+			return;
+		}
+
 		global $wgUseEnotif, $wgShowUpdatedMarker;
 		if ( !$wgUseEnotif && !$wgShowUpdatedMarker ) {
 			$this->setNewtalk( false );
 			return;
 		}
 		$id = $this->getId();
-		if( $id != 0 )  {
+		if( $id != 0 ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'watchlist',
 				array( /* SET */
@@ -2978,6 +3117,7 @@ class User {
 	public static function createNew( $name, $params = array() ) {
 		$user = new User;
 		$user->load();
+		$user->setToken(); // init token
 		if ( isset( $params['options'] ) ) {
 			$user->mOptions = $params['options'] + (array)$user->mOptions;
 			unset( $params['options'] );
@@ -3034,10 +3174,14 @@ class User {
 	 * so it is still advisable to make the call conditional on isLoggedIn(),
 	 * and to commit the transaction after calling.
 	 *
+	 * @throws MWException
 	 * @return Status
 	 */
 	public function addToDatabase() {
 		$this->load();
+		if ( !$this->mToken ) {
+			$this->setToken(); // init token
+		}
 
 		$this->mTouched = self::newTouchedTimestamp();
 
@@ -3133,8 +3277,8 @@ class User {
 	public function getPageRenderingHash() {
 		wfDeprecated( __METHOD__, '1.17' );
 
-		global $wgUseDynamicDates, $wgRenderHashAppend, $wgLang, $wgContLang;
-		if( $this->mHash ){
+		global $wgRenderHashAppend, $wgLang, $wgContLang;
+		if( $this->mHash ) {
 			return $this->mHash;
 		}
 
@@ -3144,9 +3288,6 @@ class User {
 
 		$confstr =        $this->getOption( 'math' );
 		$confstr .= '!' . $this->getStubThreshold();
-		if ( $wgUseDynamicDates ) { # This is wrong (bug 24714)
-			$confstr .= '!' . $this->getDatePreference();
-		}
 		$confstr .= '!' . ( $this->getOption( 'numberheadings' ) ? '1' : '' );
 		$confstr .= '!' . $wgLang->getCode();
 		$confstr .= '!' . $this->getOption( 'thumbsize' );
@@ -3175,14 +3316,14 @@ class User {
 	 */
 	public function isBlockedFromCreateAccount() {
 		$this->getBlockedStatus();
-		if( $this->mBlock && $this->mBlock->prevents( 'createaccount' ) ){
+		if( $this->mBlock && $this->mBlock->prevents( 'createaccount' ) ) {
 			return $this->mBlock;
 		}
 
 		# bug 13611: if the IP address the user is trying to create an account from is
 		# blocked with createaccount disabled, prevent new account creation there even
 		# when the user is logged in
-		if( $this->mBlockedFromCreateAccount === false ){
+		if ( $this->mBlockedFromCreateAccount === false && !$this->isAllowed( 'ipblock-exempt' ) ) {
 			$this->mBlockedFromCreateAccount = Block::newFromTarget( null, $this->getRequest()->getIP() );
 		}
 		return $this->mBlockedFromCreateAccount instanceof Block && $this->mBlockedFromCreateAccount->prevents( 'createaccount' )
@@ -3614,8 +3755,9 @@ class User {
 	/**
 	 * Get the timestamp of account creation.
 	 *
-	 * @return String|Bool Timestamp of account creation, or false for
-	 *     non-existent/anonymous user accounts.
+	 * @return String|Bool|Null Timestamp of account creation, false for
+	 *     non-existent/anonymous user accounts, or null if existing account
+	 *     but information is not in database.
 	 */
 	public function getRegistration() {
 		if ( $this->isAnon() ) {
@@ -3927,7 +4069,7 @@ class User {
 			$groups = array_merge_recursive(
 				$groups, $this->changeableByGroup( $addergroup )
 			);
-			$groups['add']    = array_unique( $groups['add'] );
+			$groups['add'] = array_unique( $groups['add'] );
 			$groups['remove'] = array_unique( $groups['remove'] );
 			$groups['add-self'] = array_unique( $groups['add-self'] );
 			$groups['remove-self'] = array_unique( $groups['remove-self'] );
@@ -4086,54 +4228,73 @@ class User {
 	}
 
 	/**
-	 * Add a newuser log entry for this user. Before 1.19 the return value was always true.
+	 * Add a newuser log entry for this user.
+	 * Before 1.19 the return value was always true.
 	 *
-	 * @param $byEmail Boolean: account made by email?
+	 * @param $action string|bool: account creation type.
+	 *   - String, one of the following values:
+	 *     - 'create' for an anonymous user creating an account for himself.
+	 *       This will force the action's performer to be the created user itself,
+	 *       no matter the value of $wgUser
+	 *     - 'create2' for a logged in user creating an account for someone else
+	 *     - 'byemail' when the created user will receive its password by e-mail
+	 *   - Boolean means whether the account was created by e-mail (deprecated):
+	 *     - true will be converted to 'byemail'
+	 *     - false will be converted to 'create' if this object is the same as
+	 *       $wgUser and to 'create2' otherwise
+	 *
 	 * @param $reason String: user supplied reason
 	 *
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
-	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+	public function addNewUserLogEntry( $action = false, $reason = '' ) {
+		global $wgUser, $wgNewUserLog;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
-			$action = 'create';
-		} else {
-			$action = 'create2';
-			if ( $byEmail ) {
-				if ( $reason === '' ) {
-					$reason = wfMessage( 'newuserlog-byemail' )->inContentLanguage()->text();
-				} else {
-					$reason = $wgContLang->commaList( array(
-						$reason, wfMessage( 'newuserlog-byemail' )->inContentLanguage()->text() ) );
-				}
+		if ( $action === true ) {
+			$action = 'byemail';
+		} elseif ( $action === false ) {
+			if ( $this->getName() == $wgUser->getName() ) {
+				$action = 'create';
+			} else {
+				$action = 'create2';
 			}
 		}
-		$log = new LogPage( 'newusers' );
-		return (int)$log->addEntry(
-			$action,
-			$this->getUserPage(),
-			$reason,
-			array( $this->getId() )
-		);
+
+		if ( $action === 'create' || $action === 'autocreate' ) {
+			$performer = $this;
+		} else {
+			$performer = $wgUser;
+		}
+
+		$logEntry = new ManualLogEntry( 'newusers', $action );
+		$logEntry->setPerformer( $performer );
+		$logEntry->setTarget( $this->getUserPage() );
+		$logEntry->setComment( $reason );
+		$logEntry->setParameters( array(
+			'4::userid' => $this->getId(),
+		) );
+		$logid = $logEntry->insert();
+
+		if ( $action !== 'autocreate' ) {
+			$logEntry->publish( $logid );
+		}
+
+		return (int)$logid;
 	}
 
 	/**
 	 * Add an autocreate newuser log entry for this user
 	 * Used by things like CentralAuth and perhaps other authplugins.
+	 * Consider calling addNewUserLogEntry() directly instead.
 	 *
 	 * @return bool
 	 */
 	public function addNewUserLogEntryAutoCreate() {
-		global $wgNewUserLog;
-		if( !$wgNewUserLog ) {
-			return true; // disabled
-		}
-		$log = new LogPage( 'newusers', false );
-		$log->addEntry( 'autocreate', $this->getUserPage(), '', array( $this->getId() ), $this );
+		$this->addNewUserLogEntry( 'autocreate' );
+
 		return true;
 	}
 

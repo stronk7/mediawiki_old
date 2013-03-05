@@ -607,7 +607,6 @@ I ràwn tùrin siam danglamna chanchin ziaka kan dahţhat thạr ber a hnuaiah k
 'template-protected' => '(vènhim)',
 'template-semiprotected' => '(hual)',
 'hiddencategories' => 'He phêk hi {{PLURAL:$1| pawl thuhrûk 1|pawl thuhrûk $1}}-a tel a ni.',
-'nocreatetitle' => 'Phêk siam theih chin bithliah',
 'nocreate-loggedin' => 'Phêk thar siam phalna i nei lo.',
 'sectioneditnotsupported-title' => 'Hlawm siamţhat bing theih loh',
 'sectioneditnotsupported-text' => 'He phêkah hian hlawm siamţhat bing theih a ni lo.',
@@ -945,6 +944,10 @@ Hmangtuten e-lehkha an thawn chein i e-chenhmun hrilh an ni chuang lo vang.',
 'right-blockemail' => 'Hmangtu e-lehkha thawn tùr dang rawh',
 'right-hideuser' => 'Hmangtu hming dangbet rawh, vantlang laka thupin',
 'right-unblockself' => 'Mahnia dalna inphelh',
+
+# Special:Log/newusers
+'newuserlogpage' => 'Hmangtu siamna chanchin-ziak',
+'newuserlogpagetext' => 'Hei hi hmangtu siangchan siam chhinchhiahna a ni.',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'he phêk hi chhiar rawh',
@@ -1354,10 +1357,6 @@ Hetah hian [[Special:UnusedCategories|pawl hman lohho]] pholan tel a ni lo.
 'activeusers-hidesysops' => 'Roreltu thupna',
 'activeusers-noresult' => 'Hmangtu awm lo.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Hmangtu siamna chanchin-ziak',
-'newuserlogpagetext' => 'Hei hi hmangtu siangchan siam chhinchhiahna a ni.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Hmangtu pawl dikna-chanvote',
 'listgrouprights-key' => '* <span class="listgrouprights-granted">Dikna-chanvo phalsak</span>
@@ -1420,6 +1419,8 @@ Hetah hian [[Special:UnusedCategories|pawl hman lohho]] pholan tel a ni lo.
 'enotif_lastvisited' => 'I tlawh hnuhnùn ber hnu lama tihdanglam zawng zawng en i duh chuan $1 en rawh.',
 'enotif_lastdiff' => 'Hë tihdanglamna hi en tùrin $1 thlír rawh.',
 'enotif_anon_editor' => 'hmangtu hriat loh $1',
+'created' => 'siam a ni ta',
+'changed' => 'tihdanglam a ni ta',
 
 # Delete
 'deletepage' => 'Hë phêk hi paih rawh',
@@ -1917,7 +1918,6 @@ A bak zawng chu thuhrûk sa vek a ni ang.
 'logentry-newusers-create' => '$1 hian hmangtu siangchan a siam.',
 'logentry-newusers-create2' => '$1 hian hmangtu siangchan $3 a siam.',
 'logentry-newusers-autocreate' => 'Siangchan $1 hi amahin a insiam.',
-'newuserlog-byemail' => 'thurûk e-lehkha hmanga thawn a ni.',
 
 # Feedback
 'feedback-subject' => 'Thupui:',

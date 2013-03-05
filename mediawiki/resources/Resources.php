@@ -20,6 +20,10 @@
  * @file
  */
 
+if( !defined( 'MEDIAWIKI' ) ) {
+	die( 'Not an entry point.' );
+}
+
 return array(
 
 	/* Special modules who have their own classes */
@@ -143,10 +147,7 @@ return array(
 	),
 	'jquery.client' => array(
 		'scripts' => 'resources/jquery/jquery.client.js',
-	),
-	'jquery.collapsibleTabs' => array(
-		'scripts' => 'resources/jquery/jquery.collapsibleTabs.js',
-		'dependencies' => 'jquery.delayedBind',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'jquery.color' => array(
 		'scripts' => 'resources/jquery/jquery.color.js',
@@ -157,6 +158,7 @@ return array(
 	),
 	'jquery.cookie' => array(
 		'scripts' => 'resources/jquery/jquery.cookie.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'jquery.delayedBind' => array(
 		'scripts' => 'resources/jquery/jquery.delayedBind.js',
@@ -193,6 +195,7 @@ return array(
 	),
 	'jquery.json' => array(
 		'scripts' => 'resources/jquery/jquery.json.js',
+		'targets' => array( 'mobile', 'desktop' ),
 	),
 	'jquery.localize' => array(
 		'scripts' => 'resources/jquery/jquery.localize.js',
@@ -210,6 +213,7 @@ return array(
 	),
 	'jquery.mwExtension' => array(
 		'scripts' => 'resources/jquery/jquery.mwExtension.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'jquery.placeholder' => array(
 		'scripts' => 'resources/jquery/jquery.placeholder.js',
@@ -647,9 +651,11 @@ return array(
 	),
 	'mediawiki.notify' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.notify.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'mediawiki.searchSuggest' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.searchSuggest.js',
+		'styles' => 'resources/mediawiki/mediawiki.searchSuggest.css',
 		'messages' => array(
 			'searchsuggest-search',
 			'searchsuggest-containing',
@@ -687,6 +693,7 @@ return array(
 		),
 		'messages' => array( 'showtoc', 'hidetoc' ),
 		'position' => 'top', // For $wgPreloadJavaScriptMwUtil
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	/* MediaWiki Action */
@@ -728,6 +735,10 @@ return array(
 			'metadata-collapse',
 		),
 	),
+	'mediawiki.action.view.postEdit' => array(
+		'scripts' => 'resources/mediawiki.action/mediawiki.action.view.postEdit.js',
+		'dependencies' => 'jquery.cookie'
+	),
 	'mediawiki.action.view.rightClickEdit' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.view.rightClickEdit.js',
 	),
@@ -739,7 +750,10 @@ return array(
 	/* MediaWiki Language */
 
 	'mediawiki.language' => array(
-		'scripts' => 'resources/mediawiki.language/mediawiki.language.js',
+		'scripts' => array(
+			'resources/mediawiki.language/mediawiki.language.js',
+			'resources/mediawiki.language/mediawiki.language.numbers.js'
+		),
 		'languageScripts' => array(
 			'bs' => 'resources/mediawiki.language/languages/bs.js',
 			'dsb' => 'resources/mediawiki.language/languages/dsb.js',
@@ -757,8 +771,9 @@ return array(
 		),
 		'dependencies' => array(
 				'mediawiki.language.data',
-				'mediawiki.cldr'
+				'mediawiki.cldr',
 			),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.cldr' => array(
@@ -766,14 +781,17 @@ return array(
 		'dependencies' => array(
 			'mediawiki.libs.pluralruleparser',
 		),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.libs.pluralruleparser' => array(
 		'scripts' => 'resources/mediawiki.libs/CLDRPluralRuleParser.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.language.init' => array(
 		'scripts' => 'resources/mediawiki.language/mediawiki.language.init.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.jqueryMsg' => array(
@@ -782,6 +800,7 @@ return array(
 			'mediawiki.util',
 			'mediawiki.language',
 		),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	/* MediaWiki Libs */
@@ -911,6 +930,9 @@ return array(
 			'largefileserver',
 		),
 		'dependencies' => array( 'mediawiki.libs.jpegmeta', 'mediawiki.util' ),
+	),
+	'mediawiki.special.userlogin.signup' => array(
+		'scripts' => 'resources/mediawiki.special/mediawiki.special.userLogin.signup.js',
 	),
 	'mediawiki.special.javaScriptTest' => array(
 		'scripts' => 'resources/mediawiki.special/mediawiki.special.javaScriptTest.js',

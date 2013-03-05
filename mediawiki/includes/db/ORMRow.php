@@ -31,7 +31,7 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
-abstract class ORMRow implements IORMRow {
+class ORMRow implements IORMRow {
 
 	/**
 	 * The fields of the object.
@@ -120,7 +120,8 @@ abstract class ORMRow implements IORMRow {
 			$result = $this->table->rawSelectRow(
 				$this->table->getPrefixedFields( $fields ),
 				array( $this->table->getPrefixedField( 'id' ) => $this->getId() ),
-				array( 'LIMIT' => 1 )
+				array( 'LIMIT' => 1 ),
+				__METHOD__
 			);
 
 			if ( $result !== false ) {
@@ -418,7 +419,7 @@ abstract class ORMRow implements IORMRow {
 	public function remove() {
 		$this->beforeRemove();
 
-		$success = $this->table->delete( array( 'id' => $this->getId() ) );
+		$success = $this->table->delete( array( 'id' => $this->getId() ), __METHOD__ );
 
 		// DatabaseBase::delete does not always return true for success as documented...
 		$success = $success !== false;
@@ -453,8 +454,8 @@ abstract class ORMRow implements IORMRow {
 	}
 
 	/**
-	 * Gets called after successfull removal.
-	 * Can be overriden to get rid of linked data.
+	 * Gets called after successful removal.
+	 * Can be overridden to get rid of linked data.
 	 *
 	 * @since 1.20
 	 */

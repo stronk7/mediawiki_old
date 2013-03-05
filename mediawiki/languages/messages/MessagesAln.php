@@ -733,7 +733,6 @@ Administruesi që e ka mshelë e ka dhânë këtë shpjegim: $1",
 'template-protected' => '(e mbrojtme)',
 'template-semiprotected' => '(gjysë-mbrojtun)',
 'hiddencategories' => 'Kjo faqe bân pjesë në {{PLURAL:$1|1 kategori të msheftë|$1 kategori të mshefta}}:',
-'nocreatetitle' => 'Krijimi i faqeve âsht i kufizuem.',
 'nocreatetext' => '{{SITENAME}} ka kufizue mundësinë e krijimit të faqeve të reja.
 Mundeni me u kthy mbrapa edhe me redaktue faqen ekzistuese, apo [[Special:UserLogin|me u kyçë a me krijue nji llogari]].',
 'nocreate-loggedin' => 'Nuk keni tagër me krijue faqe të reja.',
@@ -1131,11 +1130,12 @@ Mundeni me zgjedhe që të tjerët me ju kontaktue përmjet faqe së diskutimit 
 'right-userrights' => 'Redakto të gjitha të drejtat e përdoruesit',
 'right-passwordreset' => 'Fjalëkalimi Reset e një përdoruesi ([[Special:PasswordReset|faqe veçantë]])',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Regjistri i krijimit të përdoruesve',
+
 # User rights log
 'rightslog' => 'Regjsitri i tagrit të përdoruesve',
 'rightslogtext' => 'Ky është një regjistër për ndryshimet e titujve të përdoruesve.',
-'rightslogentry' => 'të drejtat e $1 u ndryshuan prej $2 në $3',
-'rightsnone' => '(asgjë)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'lexo këtë faqe',
@@ -1272,9 +1272,6 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë '''të theks
 
 # Special:LinkSearch
 'linksearch' => 'Vegzat e jashtme',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Regjistri i krijimit të përdoruesve',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(lista e antarëve)',
@@ -1613,6 +1610,7 @@ Tjerat kanë me mbetë të mshefuna.
 # New logging system
 'revdelete-restricted' => 'u vendosën kufizime për administruesit',
 'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
+'rightsnone' => '(asgjë)',
 
 # Search suggestions
 'searchsuggest-search' => 'Kërkim',

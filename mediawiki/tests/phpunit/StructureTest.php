@@ -8,6 +8,7 @@ class StructureTest extends MediaWikiTestCase {
 	/**
 	 * Verify all files that appear to be tests have file names ending in
 	 * Test.  If the file names do not end in Test, they will not be run.
+	 * @group medium
 	 */
 	public function testUnitTestFileNamesEndWithTest() {
 		if ( wfIsWindows() ) {
@@ -17,6 +18,8 @@ class StructureTest extends MediaWikiTestCase {
 		$testClassRegex = implode( '|', array(
 			'ApiFormatTestBase',
 			'ApiTestCase',
+			'ApiQueryTestBase',
+			'ApiQueryContinueTestBase',
 			'MediaWikiLangTestCase',
 			'MediaWikiTestCase',
 			'PHPUnit_Framework_TestCase',
@@ -28,7 +31,7 @@ class StructureTest extends MediaWikiTestCase {
 
 		$results = null;
 		$exitCode = null;
-		exec($finder, $results, $exitCode);
+		exec( $finder, $results, $exitCode );
 
 		$this->assertEquals(
 			0,
@@ -41,7 +44,7 @@ class StructureTest extends MediaWikiTestCase {
 			array( $this, 'filterSuites' )
 		);
 		$strip = strlen( $rootPath ) - 1;
-		foreach( $results as $k => $v) {
+		foreach ( $results as $k => $v ) {
 			$results[$k] = substr( $v, $strip );
 		}
 		$this->assertEquals(

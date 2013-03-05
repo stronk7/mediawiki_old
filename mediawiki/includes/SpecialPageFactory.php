@@ -80,6 +80,7 @@ class SpecialPageFactory {
 		'Categories'                => 'SpecialCategories',
 		'Disambiguations'           => 'DisambiguationsPage',
 		'Listredirects'             => 'ListredirectsPage',
+		'PagesWithProp'             => 'SpecialPagesWithProp',
 
 		// Login/create account
 		'Userlogin'                 => 'LoginForm',
@@ -95,7 +96,7 @@ class SpecialPageFactory {
 		'Preferences'               => 'SpecialPreferences',
 		'Contributions'             => 'SpecialContributions',
 		'Listgrouprights'           => 'SpecialListGroupRights',
-		'Listusers'                 => 'SpecialListUsers' ,
+		'Listusers'                 => 'SpecialListUsers',
 		'Listadmins'                => 'SpecialListAdmins',
 		'Listbots'                  => 'SpecialListBots',
 		'Activeusers'               => 'SpecialActiveUsers',
@@ -119,7 +120,7 @@ class SpecialPageFactory {
 		'Upload'                    => 'SpecialUpload',
 		'UploadStash'               => 'SpecialUploadStash',
 
-		// Wiki data and tools
+		// Data and tools
 		'Statistics'                => 'SpecialStatistics',
 		'Allmessages'               => 'SpecialAllmessages',
 		'Version'                   => 'SpecialVersion',
@@ -336,7 +337,7 @@ class SpecialPageFactory {
 	 * Find the object with a given name and return it (or NULL)
 	 *
 	 * @param $name String Special page name, may be localised and/or an alias
-	 * @return SpecialPage object or null if the page doesn't exist
+	 * @return SpecialPage|null SpecialPage object or null if the page doesn't exist
 	 */
 	public static function getPage( $name ) {
 		list( $realName, /*...*/ ) = self::resolveAlias( $name );
@@ -371,12 +372,10 @@ class SpecialPageFactory {
 			global $wgUser;
 			$user = $wgUser;
 		}
-		$context = RequestContext::newExtraneousContext( Title::newMainPage() );
-		$context->setUser( $user );
 		foreach ( self::getList() as $name => $rec ) {
 			$page = self::getPage( $name );
 			if ( $page ) { // not null
-				$page->setContext( $context );
+				$page->setContext( RequestContext::getMain() );
 				if ( $page->isListed()
 					&& ( !$page->isRestricted() || $page->userCanExecute( $user ) )
 				) {
@@ -478,7 +477,7 @@ class SpecialPageFactory {
 			if ( $name != $page->getLocalName() && !$context->getRequest()->wasPosted() ) {
 				$query = $context->getRequest()->getQueryValues();
 				unset( $query['title'] );
-				$query = wfArrayToCGI( $query );
+				$query = wfArrayToCgi( $query );
 				$title = $page->getTitle( $par );
 				$url = $title->getFullUrl( $query );
 				$context->getOutput()->redirect( $url );

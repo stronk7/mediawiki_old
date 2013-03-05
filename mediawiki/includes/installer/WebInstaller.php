@@ -426,7 +426,7 @@ class WebInstaller extends Installer {
 		$url = preg_replace( '/\?.*$/', '', $url );
 
 		if ( $query ) {
-			$url .= '?' . wfArrayToCGI( $query );
+			$url .= '?' . wfArrayToCgi( $query );
 		}
 
 		return $url;
@@ -933,7 +933,7 @@ class WebInstaller extends Installer {
 	 * @return string
 	 */
 	public function getRadioSet( $params ) {
-		if ( !isset( $params['controlName']  ) ) {
+		if ( !isset( $params['controlName'] ) ) {
 			$params['controlName'] = 'config_' . $params['var'];
 		}
 
@@ -1079,7 +1079,7 @@ class WebInstaller extends Installer {
 		) );
 		$anchor = Html::rawElement( 'a',
 			array( 'href' => $this->getURL( array( 'localsettings' => 1 ) ) ),
-			$img . ' ' . wfMessage( 'config-download-localsettings' )->escaped() );
+			$img . ' ' . wfMessage( 'config-download-localsettings' )->parse() );
 		return Html::rawElement( 'div', array( 'class' => 'config-download-link' ), $anchor );
 	}
 
@@ -1096,7 +1096,7 @@ class WebInstaller extends Installer {
 		} elseif ( !empty( $_SERVER['SCRIPT_NAME'] ) ) {
 			$path = $_SERVER['SCRIPT_NAME'];
 		}
-		if ($path !== false) {
+		if ( $path !== false ) {
 			$uri = preg_replace( '{^(.*)/(mw-)?config.*$}', '$1', $path );
 			$this->setVar( 'wgScriptPath', $uri );
 		} else {

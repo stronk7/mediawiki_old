@@ -68,7 +68,7 @@ class ArchivedFile {
 	 * @param int $id
 	 * @param string $key
 	 */
-	function __construct( $title, $id=0, $key='' ) {
+	function __construct( $title, $id = 0, $key = '' ) {
 		$this->id = -1;
 		$this->title = false;
 		$this->name = false;
@@ -95,11 +95,11 @@ class ArchivedFile {
 			$this->name = $title->getDBkey();
 		}
 
-		if ($id) {
+		if ( $id ) {
 			$this->id = $id;
 		}
 
-		if ($key) {
+		if ( $key ) {
 			$this->key = $key;
 		}
 
@@ -130,37 +130,19 @@ class ArchivedFile {
 			$conds['fa_name'] = $this->title->getDBkey();
 		}
 
-		if( !count($conds)) {
+		if( !count( $conds ) ) {
 			throw new MWException( "No specific information for retrieving archived file" );
 		}
 
 		if( !$this->title || $this->title->getNamespace() == NS_FILE ) {
 			$this->dataLoaded = true; // set it here, to have also true on miss
 			$dbr = wfGetDB( DB_SLAVE );
-			$row = $dbr->selectRow( 'filearchive',
-				array(
-					'fa_id',
-					'fa_name',
-					'fa_archive_name',
-					'fa_storage_key',
-					'fa_storage_group',
-					'fa_size',
-					'fa_bits',
-					'fa_width',
-					'fa_height',
-					'fa_metadata',
-					'fa_media_type',
-					'fa_major_mime',
-					'fa_minor_mime',
-					'fa_description',
-					'fa_user',
-					'fa_user_text',
-					'fa_timestamp',
-					'fa_deleted',
-					'fa_sha1' ),
+			$row = $dbr->selectRow(
+				'filearchive',
+				self::selectFields(),
 				$conds,
 				__METHOD__,
-				array( 'ORDER BY' => 'fa_timestamp DESC')
+				array( 'ORDER BY' => 'fa_timestamp DESC' )
 			);
 			if ( !$row ) {
 				// this revision does not exist?
@@ -191,13 +173,41 @@ class ArchivedFile {
 	}
 
 	/**
+	 * Fields in the filearchive table
+	 * @return array
+	 */
+	static function selectFields() {
+		return array(
+			'fa_id',
+			'fa_name',
+			'fa_archive_name',
+			'fa_storage_key',
+			'fa_storage_group',
+			'fa_size',
+			'fa_bits',
+			'fa_width',
+			'fa_height',
+			'fa_metadata',
+			'fa_media_type',
+			'fa_major_mime',
+			'fa_minor_mime',
+			'fa_description',
+			'fa_user',
+			'fa_user_text',
+			'fa_timestamp',
+			'fa_deleted',
+			'fa_sha1',
+		);
+	}
+
+	/**
 	 * Load ArchivedFile object fields from a DB row.
 	 *
 	 * @param $row Object database row
 	 * @since 1.21
 	 */
 	public function loadFromRow( $row ) {
-		$this->id = intval($row->fa_id);
+		$this->id = intval( $row->fa_id );
 		$this->name = $row->fa_name;
 		$this->archive_name = $row->fa_archive_name;
 		$this->group = $row->fa_storage_group;

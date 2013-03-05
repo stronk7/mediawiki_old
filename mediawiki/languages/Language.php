@@ -160,10 +160,10 @@ class Language {
 	 * @var array
 	 */
 	static public $durationIntervals = array(
-		'millennia' => 31557600000,
-		'centuries' => 3155760000,
-		'decades' => 315576000,
-		'years' => 31557600, // 86400 * 365.25
+		'millennia' => 31556952000,
+		'centuries' => 3155695200,
+		'decades' => 315569520,
+		'years' => 31556952, // 86400 * ( 365 + ( 24 * 3 + 25 ) / 400 )
 		'weeks' => 604800,
 		'days' => 86400,
 		'hours' => 3600,
@@ -172,19 +172,28 @@ class Language {
 	);
 
 	/**
-	 * Get a cached language object for a given language code
+	 * Get a cached or new language object for a given language code
 	 * @param $code String
 	 * @return Language
 	 */
 	static function factory( $code ) {
-		if ( !isset( self::$mLangObjCache[$code] ) ) {
-			if ( count( self::$mLangObjCache ) > 10 ) {
-				// Don't keep a billion objects around, that's stupid.
-				self::$mLangObjCache = array();
-			}
-			self::$mLangObjCache[$code] = self::newFromCode( $code );
+		global $wgDummyLanguageCodes, $wgLangObjCacheSize;
+
+		if ( isset( $wgDummyLanguageCodes[$code] ) ) {
+			$code = $wgDummyLanguageCodes[$code];
 		}
-		return self::$mLangObjCache[$code];
+
+		// get the language object to process
+		$langObj = isset( self::$mLangObjCache[$code] )
+			? self::$mLangObjCache[$code]
+			: self::newFromCode( $code );
+
+		// merge the language object in to get it up front in the cache
+		self::$mLangObjCache = array_merge( array( $code => $langObj ), self::$mLangObjCache );
+		// get rid of the oldest ones in case we have an overflow
+		self::$mLangObjCache = array_slice( self::$mLangObjCache, 0, $wgLangObjCacheSize, true );
+
+		return $langObj;
 	}
 
 	/**
@@ -237,6 +246,78 @@ class Language {
 	}
 
 	/**
+	 * Checks whether any localisation is available for that language tag
+	 * in MediaWiki (MessagesXx.php exists).
+	 *
+	 * @param string $code Language tag (in lower case)
+	 * @return bool Whether language is supported
+	 * @since 1.21
+	 */
+	public static function isSupportedLanguage( $code ) {
+		return $code === strtolower( $code ) && is_readable( self::getMessagesFileName( $code ) );
+	}
+
+	/**
+	 * Returns true if a language code string is a well-formed language tag
+	 * according to RFC 5646.
+	 * This function only checks well-formedness; it doesn't check that
+	 * language, script or variant codes actually exist in the repositories.
+	 *
+	 * Based on regexes by Mark Davis of the Unicode Consortium:
+	 * http://unicode.org/repos/cldr/trunk/tools/java/org/unicode/cldr/util/data/langtagRegex.txt
+	 *
+	 * @param $code string
+	 * @param $lenient boolean Whether to allow '_' as separator. The default is only '-'.
+	 *
+	 * @return bool
+	 * @since 1.21
+	 */
+	public static function isWellFormedLanguageTag( $code, $lenient = false ) {
+		$alpha = '[a-z]';
+		$digit = '[0-9]';
+		$alphanum = '[a-z0-9]';
+		$x = 'x' ; # private use singleton
+		$singleton = '[a-wy-z]'; # other singleton
+		$s = $lenient ? '[-_]' : '-';
+
+		$language = "$alpha{2,8}|$alpha{2,3}$s$alpha{3}";
+		$script = "$alpha{4}"; # ISO 15924
+		$region = "(?:$alpha{2}|$digit{3})"; # ISO 3166-1 alpha-2 or UN M.49
+		$variant = "(?:$alphanum{5,8}|$digit$alphanum{3})";
+		$extension = "$singleton(?:$s$alphanum{2,8})+";
+		$privateUse = "$x(?:$s$alphanum{1,8})+";
+
+		# Define certain grandfathered codes, since otherwise the regex is pretty useless.
+		# Since these are limited, this is safe even later changes to the registry --
+		# the only oddity is that it might change the type of the tag, and thus
+		# the results from the capturing groups.
+		# http://www.iana.org/assignments/language-subtag-registry
+
+		$grandfathered = "en{$s}GB{$s}oed"
+			. "|i{$s}(?:ami|bnn|default|enochian|hak|klingon|lux|mingo|navajo|pwn|tao|tay|tsu)"
+			. "|no{$s}(?:bok|nyn)"
+			. "|sgn{$s}(?:BE{$s}(?:fr|nl)|CH{$s}de)"
+			. "|zh{$s}min{$s}nan";
+
+		$variantList = "$variant(?:$s$variant)*";
+		$extensionList = "$extension(?:$s$extension)*";
+
+		$langtag = "(?:($language)"
+			. "(?:$s$script)?"
+			. "(?:$s$region)?"
+			. "(?:$s$variantList)?"
+			. "(?:$s$extensionList)?"
+			. "(?:$s$privateUse)?)";
+
+		# The final breakdown, with capturing groups for each of these components
+		# The variants, extensions, grandfathered, and private-use may have interior '-'
+
+		$root = "^(?:$langtag|$privateUse|$grandfathered)$";
+
+		return (bool)preg_match( "/$root/", strtolower( $code ) );
+	}
+
+	/**
 	 * Returns true if a language code string is of a valid form, whether or
 	 * not it exists. This includes codes which are used solely for
 	 * customisation via the MediaWiki namespace.
@@ -278,6 +359,30 @@ class Language {
 		}
 
 		return (bool)preg_match( '/^[a-z0-9-]+$/i', $code );
+	}
+
+	/**
+	 * Returns true if a language code is an IETF tag known to MediaWiki.
+	 *
+	 * @param $code string
+	 *
+	 * @since 1.21
+	 * @return bool
+	 */
+	public static function isKnownLanguageTag( $tag ) {
+		static $coreLanguageNames;
+
+		if ( $coreLanguageNames === null ) {
+			include( MWInit::compiledPath( 'languages/Names.php' ) );
+		}
+
+		if ( isset( $coreLanguageNames[$tag] )
+			|| self::fetchLanguageName( $tag, $tag ) !== ''
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -468,9 +573,13 @@ class Language {
 	 * getNsText() except with '_' changed to ' ', useful for
 	 * producing output.
 	 *
-	 * @param $index string
+	 * <code>
+	 * $mw_ns = $wgContLang->getFormattedNsText( NS_MEDIAWIKI_TALK );
+	 * echo $mw_ns; // prints 'MediaWiki talk'
+	 * </code>
 	 *
-	 * @return array
+	 * @param int $index The array key of the namespace to return
+	 * @return string Namespace name without underscores (empty string if namespace does not exist)
 	 */
 	function getFormattedNsText( $index ) {
 		$ns = $this->getNsText( $index );
@@ -1976,7 +2085,7 @@ class Language {
 		$segments = array();
 
 		foreach ( $intervals as $intervalName => $intervalValue ) {
-			$message = new Message( 'duration-' . $intervalName, array( $intervalValue ) );
+			$message = wfMessage( 'duration-' . $intervalName )->numParams( $intervalValue );
 			$segments[] = $message->inLanguage( $this )->escaped();
 		}
 
@@ -2416,19 +2525,7 @@ class Language {
 		if ( is_array( $s ) ) {
 			wfDebugDieBacktrace( 'Given array to checkTitleEncoding.' );
 		}
-		# Check for non-UTF-8 URLs
-		$ishigh = preg_match( '/[\x80-\xff]/', $s );
-		if ( !$ishigh ) {
-			return $s;
-		}
-
-		if ( function_exists( 'mb_check_encoding' ) ) {
-			$isutf8 = mb_check_encoding( $s, 'UTF-8' );
-		} else {
-			$isutf8 = preg_match( '/^(?>[\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
-					'[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+$/', $s );
-		}
-		if ( $isutf8 ) {
+		if ( StringUtils::isUtf8( $s ) ) {
 			return $s;
 		}
 
@@ -2866,30 +2963,30 @@ class Language {
 		return "<em>$text</em>";
 	}
 
-	 /**
-	  * Normally we output all numbers in plain en_US style, that is
-	  * 293,291.235 for twohundredninetythreethousand-twohundredninetyone
-	  * point twohundredthirtyfive. However this is not suitable for all
-	  * languages, some such as Pakaran want ੨੯੩,੨੯੫.੨੩੫ and others such as
-	  * Icelandic just want to use commas instead of dots, and dots instead
-	  * of commas like "293.291,235".
-	  *
-	  * An example of this function being called:
-	  * <code>
-	  * wfMessage( 'message' )->numParams( $num )->text()
-	  * </code>
-	  *
-	  * See LanguageGu.php for the Gujarati implementation and
-	  * $separatorTransformTable on MessageIs.php for
-	  * the , => . and . => , implementation.
-	  *
-	  * @todo check if it's viable to use localeconv() for the decimal
-	  *       separator thing.
-	  * @param $number Mixed: the string to be formatted, should be an integer
-	  *        or a floating point number.
-	  * @param $nocommafy Bool: set to true for special numbers like dates
-	  * @return string
-	  */
+	/**
+	 * Normally we output all numbers in plain en_US style, that is
+	 * 293,291.235 for twohundredninetythreethousand-twohundredninetyone
+	 * point twohundredthirtyfive. However this is not suitable for all
+	 * languages, some such as Pakaran want ੨੯੩,੨੯੫.੨੩੫ and others such as
+	 * Icelandic just want to use commas instead of dots, and dots instead
+	 * of commas like "293.291,235".
+	 *
+	 * An example of this function being called:
+	 * <code>
+	 * wfMessage( 'message' )->numParams( $num )->text()
+	 * </code>
+	 *
+	 * See LanguageGu.php for the Gujarati implementation and
+	 * $separatorTransformTable on MessageIs.php for
+	 * the , => . and . => , implementation.
+	 *
+	 * @todo check if it's viable to use localeconv() for the decimal
+	 *       separator thing.
+	 * @param $number Mixed: the string to be formatted, should be an integer
+	 *        or a floating point number.
+	 * @param $nocommafy Bool: set to true for special numbers like dates
+	 * @return string
+	 */
 	public function formatNum( $number, $nocommafy = false ) {
 		global $wgTranslateNumerals;
 		if ( !$nocommafy ) {
@@ -2908,6 +3005,18 @@ class Language {
 		}
 
 		return $number;
+	}
+
+	/**
+	 * Front-end for non-commafied formatNum
+	 *
+	 * @param mixed $number the string to be formatted, should be an integer
+	 *        or a floating point number.
+	 * @since 1.21
+	 * @return string
+	 */
+	public function formatNumNoSeparators( $number ) {
+		return $this->formatNum( $number, true );
 	}
 
 	/**
@@ -2932,37 +3041,37 @@ class Language {
 	/**
 	 * Adds commas to a given number
 	 * @since 1.19
-	 * @param $_ mixed
+	 * @param $number mixed
 	 * @return string
 	 */
-	function commafy( $_ ) {
+	function commafy( $number ) {
 		$digitGroupingPattern = $this->digitGroupingPattern();
-		if ( $_ === null ) {
+		if ( $number === null ) {
 			return '';
 		}
 
 		if ( !$digitGroupingPattern || $digitGroupingPattern === "###,###,###" ) {
 			// default grouping is at thousands,  use the same for ###,###,### pattern too.
-			return strrev( (string)preg_replace( '/(\d{3})(?=\d)(?!\d*\.)/', '$1,', strrev( $_ ) ) );
+			return strrev( (string)preg_replace( '/(\d{3})(?=\d)(?!\d*\.)/', '$1,', strrev( $number ) ) );
 		} else {
 			// Ref: http://cldr.unicode.org/translation/number-patterns
 			$sign = "";
-			if ( intval( $_ ) < 0 ) {
+			if ( intval( $number ) < 0 ) {
 				// For negative numbers apply the algorithm like positive number and add sign.
 				$sign =  "-";
-				$_ = substr( $_, 1 );
+				$number = substr( $number, 1 );
 			}
-			$numberpart = array();
-			$decimalpart = array();
+			$integerPart = array();
+			$decimalPart = array();
 			$numMatches = preg_match_all( "/(#+)/", $digitGroupingPattern, $matches );
-			preg_match( "/\d+/", $_, $numberpart );
-			preg_match( "/\.\d*/", $_, $decimalpart );
-			$groupedNumber = ( count( $decimalpart ) > 0 ) ? $decimalpart[0]:"";
-			if ( $groupedNumber  === $_ ) {
+			preg_match( "/\d+/", $number, $integerPart );
+			preg_match( "/\.\d*/", $number, $decimalPart );
+			$groupedNumber = ( count( $decimalPart ) > 0 ) ? $decimalPart[0]:"";
+			if ( $groupedNumber  === $number ) {
 				// the string does not have any number part. Eg: .12345
 				return $sign . $groupedNumber;
 			}
-			$start = $end = strlen( $numberpart[0] );
+			$start = $end = strlen( $integerPart[0] );
 			while ( $start > 0 ) {
 				$match = $matches[0][$numMatches -1] ;
 				$matchLen = strlen( $match );
@@ -2970,7 +3079,7 @@ class Language {
 				if ( $start < 0 ) {
 					$start = 0;
 				}
-				$groupedNumber = substr( $_ , $start, $end -$start ) . $groupedNumber ;
+				$groupedNumber = substr( $number, $start, $end -$start ) . $groupedNumber ;
 				$end = $start;
 				if ( $numMatches > 1 ) {
 					// use the last pattern for the rest of the number
@@ -2983,6 +3092,7 @@ class Language {
 			return $sign . $groupedNumber;
 		}
 	}
+
 	/**
 	 * @return String
 	 */
@@ -3014,25 +3124,26 @@ class Language {
 	 * @return string
 	 */
 	function listToText( array $l ) {
-		$s = '';
 		$m = count( $l ) - 1;
-
-		if ( $m === 0 ) {
-			return $l[0];
-		} elseif ( $m === 1 ) {
-			return $l[0] . $this->getMessageFromDB( 'and' ) . $this->getMessageFromDB( 'word-separator' ) . $l[1];
-		} else {
-			for ( $i = $m; $i >= 0; $i-- ) {
-				if ( $i == $m ) {
-					$s = $l[$i];
-				} elseif ( $i == $m - 1 ) {
-					$s = $l[$i] . $this->getMessageFromDB( 'and' ) . $this->getMessageFromDB( 'word-separator' ) . $s;
-				} else {
-					$s = $l[$i] . $this->getMessageFromDB( 'comma-separator' ) . $s;
-				}
-			}
-			return $s;
+		if ( $m < 0 ) {
+			return '';
 		}
+		if ( $m > 0 ) {
+			$and = $this->getMessageFromDB( 'and' );
+			$space = $this->getMessageFromDB( 'word-separator' );
+			if ( $m > 1 ) {
+				$comma = $this->getMessageFromDB( 'comma-separator' );
+			}
+		}
+		$s = $l[$m];
+		for ( $i = $m - 1; $i >= 0; $i-- ) {
+			if ( $i == $m - 1 ) {
+				$s = $l[$i] . $and . $space . $s;
+			} else {
+				$s = $l[$i] . $comma . $s;
+			}
+		}
+		return $s;
 	}
 
 	/**
@@ -3421,11 +3532,12 @@ class Language {
 			return '';
 		}
 
-		// Handle explicit 0= and 1= forms
+		// Handle explicit n=pluralform cases
 		foreach ( $forms as $index => $form ) {
-			if ( isset( $form[1] ) && $form[1] === '=' ) {
-				if ( $form[0] === (string) $count ) {
-					return substr( $form, 2 );
+			if ( preg_match( '/\d+=/i', $form ) ) {
+				$pos = strpos( $form, '=' );
+				if ( substr( $form, 0, $pos ) === (string) $count ) {
+					return substr( $form, $pos + 1 );
 				}
 				unset( $forms[$index] );
 			}
@@ -3577,7 +3689,7 @@ class Language {
 	 * @return bool
 	 */
 	public function hasVariants() {
-		return sizeof( $this->getVariants() ) > 1;
+		return count( $this->getVariants() ) > 1;
 	}
 
 	/**
@@ -4285,5 +4397,4 @@ class Language {
 		$form = CLDRPluralRuleEvaluator::evaluateCompiled( $number, $pluralRules );
 		return $form;
 	}
-
 }

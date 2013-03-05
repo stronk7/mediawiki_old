@@ -49,8 +49,8 @@
 
 $.suggestions = {
 	/**
-	 * Cancel any delayed updateSuggestions() call and inform the user so
-	 * they can cancel their result fetching if they use AJAX or something
+	 * Cancel any delayed maybeFetch() call and callback the context so
+	 * they can cancel any async fetching if they use AJAX or something.
 	 */
 	cancel: function ( context ) {
 		if ( context.data.timerID !== null ) {
@@ -79,13 +79,16 @@ $.suggestions = {
 	 * @param {Boolean} delayed Whether or not to delay this by the currently configured amount of time
 	 */
 	update: function ( context, delayed ) {
-		// Only fetch if the value in the textbox changed and is not empty
+		// Only fetch if the value in the textbox changed and is not empty, or if the results were hidden
 		// if the textbox is empty then clear the result div, but leave other settings intouched
 		function maybeFetch() {
 			if ( context.data.$textbox.val().length === 0 ) {
 				context.data.$container.hide();
 				context.data.prevText = '';
-			} else if ( context.data.$textbox.val() !== context.data.prevText ) {
+			} else if (
+				context.data.$textbox.val() !== context.data.prevText ||
+				!context.data.$container.is( ':visible' )
+			) {
 				if ( typeof context.config.fetch === 'function' ) {
 					context.data.prevText = context.data.$textbox.val();
 					context.config.fetch.call( context.data.$textbox, context.data.$textbox.val() );
@@ -93,12 +96,12 @@ $.suggestions = {
 			}
 		}
 
-		// Cancel previous call
-		if ( context.data.timerID !== null ) {
-			clearTimeout( context.data.timerID );
-		}
+		// Cancels any delayed maybeFetch call, and invokes context.config.cancel.
+		$.suggestions.cancel( context );
+
 		if ( delayed ) {
-			// Start a new asynchronous call
+			// To avoid many started/aborted requests while typing, we're gonna take a short
+			// break before trying to fetch data.
 			context.data.timerID = setTimeout( maybeFetch, context.config.delay );
 		} else {
 			maybeFetch();
@@ -113,7 +116,7 @@ $.suggestions = {
 			setTimeout( function () {
 				// Render special
 				var $special = context.data.$container.find( '.suggestions-special' );
-				context.config.special.render.call( $special, context.data.$textbox.val() );
+				context.config.special.render.call( $special, context.data.$textbox.val(), context );
 			}, 1 );
 		}
 	},
@@ -125,7 +128,7 @@ $.suggestions = {
 	 */
 	configure: function ( context, property, value ) {
 		var newCSS,
-			$autoEllipseMe, $result, $results, $span,
+			$autoEllipseMe, $result, $results, childrenWidth,
 			i, expWidth, matchedText, maxWidth, text;
 
 		// Validate creation using fallback values
@@ -237,33 +240,34 @@ $.suggestions = {
 									context.data.selectedWithMouse = true;
 									$.suggestions.highlight(
 										context,
-										$(this).closest( '.suggestions-results div' ),
+										$(this).closest( '.suggestions-results .suggestions-result' ),
 										false
 									);
 								} )
 								.appendTo( $results );
 							// Allow custom rendering
 							if ( typeof context.config.result.render === 'function' ) {
-								context.config.result.render.call( $result, context.config.suggestions[i] );
+								context.config.result.render.call( $result, context.config.suggestions[i], context );
 							} else {
 								// Add <span> with text
-								if( context.config.highlightInput ) {
-									matchedText = context.data.prevText;
-								}
 								$result.append( $( '<span>' )
 										.css( 'whiteSpace', 'nowrap' )
 										.text( text )
 									);
-
-								// Widen results box if needed
-								// New width is only calculated here, applied later
-								$span = $result.children( 'span' );
-								if ( $span.outerWidth() > $result.width() && $span.outerWidth() > expWidth ) {
-									// factor in any padding, margin, or border space on the parent
-									expWidth = $span.outerWidth() + ( context.data.$container.width() - $span.parent().width());
-								}
-								$autoEllipseMe = $autoEllipseMe.add( $result );
 							}
+
+							if ( context.config.highlightInput ) {
+								matchedText = context.data.prevText;
+							}
+
+							// Widen results box if needed
+							// New width is only calculated here, applied later
+							childrenWidth = $result.children().outerWidth();
+							if ( childrenWidth > $result.width() && childrenWidth > expWidth ) {
+								// factor in any padding, margin, or border space on the parent
+								expWidth = childrenWidth + ( context.data.$container.width() - $result.width() );
+							}
+							$autoEllipseMe = $autoEllipseMe.add( $result );
 						}
 						// Apply new width for results box, if any
 						if ( expWidth > context.data.$container.width() ) {
@@ -305,30 +309,40 @@ $.suggestions = {
 		var selected = context.data.$container.find( '.suggestions-result-current' );
 		if ( !result.get || selected.get( 0 ) !== result.get( 0 ) ) {
 			if ( result === 'prev' ) {
-				if( selected.is( '.suggestions-special' ) ) {
+				if( selected.hasClass( 'suggestions-special' ) ) {
 					result = context.data.$container.find( '.suggestions-result:last' );
 				} else {
 					result = selected.prev();
+					if ( !( result.length && result.hasClass( 'suggestions-result' ) ) ) {
+						// there is something in the DOM between selected element and the wrapper, bypass it
+						result = selected.parents( '.suggestions-results > *' ).prev().find( '.suggestions-result' ).eq(0);
+					}
+
 					if ( selected.length === 0 ) {
 						// we are at the beginning, so lets jump to the last item
 						if ( context.data.$container.find( '.suggestions-special' ).html() !== '' ) {
 							result = context.data.$container.find( '.suggestions-special' );
 						} else {
-							result = context.data.$container.find( '.suggestions-results div:last' );
+							result = context.data.$container.find( '.suggestions-results .suggestions-result:last' );
 						}
 					}
 				}
 			} else if ( result === 'next' ) {
 				if ( selected.length === 0 ) {
 					// No item selected, go to the first one
-					result = context.data.$container.find( '.suggestions-results div:first' );
+					result = context.data.$container.find( '.suggestions-results .suggestions-result:first' );
 					if ( result.length === 0 && context.data.$container.find( '.suggestions-special' ).html() !== '' ) {
 						// No suggestion exists, go to the special one directly
 						result = context.data.$container.find( '.suggestions-special' );
 					}
 				} else {
 					result = selected.next();
-					if ( selected.is( '.suggestions-special' ) ) {
+					if ( !( result.length && result.hasClass( 'suggestions-result' ) ) ) {
+						// there is something in the DOM between selected element and the wrapper, bypass it
+						result = selected.parents( '.suggestions-results > *' ).next().find( '.suggestions-result' ).eq(0);
+					}
+
+					if ( selected.hasClass( 'suggestions-special' ) ) {
 						result = $( [] );
 					} else if (
 						result.length === 0 &&
@@ -503,21 +517,25 @@ $.fn.suggestions = function () {
 						// textbox loses focus. Instead, listen for a mousedown followed
 						// by a mouseup on the same div.
 						.mousedown( function ( e ) {
-							context.data.mouseDownOn = $( e.target ).closest( '.suggestions-results div' );
+							context.data.mouseDownOn = $( e.target ).closest( '.suggestions-results .suggestions-result' );
 						} )
 						.mouseup( function ( e ) {
-							var $result = $( e.target ).closest( '.suggestions-results div' ),
+							var $result = $( e.target ).closest( '.suggestions-results .suggestions-result' ),
 								$other = context.data.mouseDownOn;
 
 							context.data.mouseDownOn = $( [] );
 							if ( $result.get( 0 ) !== $other.get( 0 ) ) {
 								return;
 							}
-							$.suggestions.highlight( context, $result, true );
-							context.data.$container.hide();
-							if ( typeof context.config.result.select === 'function' ) {
-								context.config.result.select.call( $result, context.data.$textbox );
+							// do not interfere with non-left clicks or if modifier keys are pressed (e.g. ctrl-click)
+							if ( !( e.which !== 1 || e.altKey || e.ctrlKey || e.shiftKey || e.metaKey ) ) {
+								$.suggestions.highlight( context, $result, true );
+								context.data.$container.hide();
+								if ( typeof context.config.result.select === 'function' ) {
+									context.config.result.select.call( $result, context.data.$textbox );
+								}
 							}
+							// but still restore focus to the textbox, so that the suggestions will be hidden properly
 							context.data.$textbox.focus();
 						} )
 				)
@@ -537,10 +555,14 @@ $.fn.suggestions = function () {
 							if ( $special.get( 0 ) !== $other.get( 0 ) ) {
 								return;
 							}
-							context.data.$container.hide();
-							if ( typeof context.config.special.select === 'function' ) {
-								context.config.special.select.call( $special, context.data.$textbox );
+							// do not interfere with non-left clicks or if modifier keys are pressed (e.g. ctrl-click)
+							if ( !( e.which !== 1 || e.altKey || e.ctrlKey || e.shiftKey || e.metaKey ) ) {
+								context.data.$container.hide();
+								if ( typeof context.config.special.select === 'function' ) {
+									context.config.special.select.call( $special, context.data.$textbox );
+								}
 							}
+							// but still restore focus to the textbox, so that the suggestions will be hidden properly
 							context.data.$textbox.focus();
 						} )
 						.mousemove( function ( e ) {

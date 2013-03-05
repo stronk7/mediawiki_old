@@ -189,7 +189,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 		if ( !is_null( $params['tag'] ) ) {
 			$this->addTables( 'change_tag' );
 			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rev_id=ct_rev_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag' , $params['tag'] );
+			$this->addWhereFld( 'ct_tag', $params['tag'] );
 			global $wgOldChangeTagsIndex;
 			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
@@ -338,10 +338,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 			if ( !is_null( $params['continue'] ) ) {
 				$cont = explode( '|', $params['continue'] );
-				if ( count( $cont ) != 2 ) {
-					$this->dieUsage( 'Invalid continue param. You should pass the original ' .
-							'value returned by the previous query', '_badcontinue' );
-				}
+				$this->dieContinueUsageIf( count( $cont ) != 2 );
 				$pageid = intval( $cont[0] );
 				$revid = intval( $cont[1] );
 				$this->addWhere(
@@ -439,12 +436,14 @@ class ApiQueryRevisions extends ApiQueryBase {
 			}
 		}
 
-		if ( $this->fld_sha1 ) {
+		if ( $this->fld_sha1 && !$revision->isDeleted( Revision::DELETED_TEXT ) ) {
 			if ( $revision->getSha1() != '' ) {
 				$vals['sha1'] = wfBaseConvert( $revision->getSha1(), 36, 16, 40 );
 			} else {
 				$vals['sha1'] = '';
 			}
+		} elseif ( $this->fld_sha1 ) {
+			$vals['sha1hidden'] = '';
 		}
 
 		if ( $this->fld_contentmodel ) {
@@ -491,19 +490,19 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 		$content = null;
 		global $wgParser;
-		if ( $this->fld_content || !is_null( $this->difftotext ) ) {
+		if ( $this->fld_content || !is_null( $this->diffto ) || !is_null( $this->difftotext ) ) {
 			$content = $revision->getContent();
 			// Expand templates after getting section content because
 			// template-added sections don't count and Parser::preprocess()
 			// will have less input
-			if ( $this->section !== false ) {
+			if ( $content && $this->section !== false ) {
 				$content = $content->getSection( $this->section, false );
 				if ( !$content ) {
 					$this->dieUsage( "There is no section {$this->section} in r" . $revision->getId(), 'nosuchsection' );
 				}
 			}
 		}
-		if ( $this->fld_content && !$revision->isDeleted( Revision::DELETED_TEXT ) ) {
+		if ( $this->fld_content && $content && !$revision->isDeleted( Revision::DELETED_TEXT ) ) {
 			$text = null;
 
 			if ( $this->generateXML ) {
@@ -567,13 +566,20 @@ class ApiQueryRevisions extends ApiQueryBase {
 				ApiResult::setContent( $vals, $text );
 			}
 		} elseif ( $this->fld_content ) {
-			$vals['texthidden'] = '';
+			if ( $revision->isDeleted( Revision::DELETED_TEXT ) ) {
+				$vals['texthidden'] = '';
+			} else {
+				$vals['textmissing'] = '';
+			}
 		}
 
 		if ( !is_null( $this->diffto ) || !is_null( $this->difftotext ) ) {
 			global $wgAPIMaxUncachedDiffs;
 			static $n = 0; // Number of uncached diffs we've had
-			if ( $n < $wgAPIMaxUncachedDiffs ) {
+
+			if ( is_null( $content ) ) {
+				$vals['textmissing'] = '';
+			} elseif ( $n < $wgAPIMaxUncachedDiffs ) {
 				$vals['diff'] = array();
 				$context = new DerivativeContext( $this->getContext() );
 				$context->setTitle( $title );
@@ -786,7 +792,8 @@ class ApiQueryRevisions extends ApiQueryBase {
 					ApiBase::PROP_TYPE => 'string',
 					ApiBase::PROP_NULLABLE => true
 				),
-				'texthidden' => 'boolean'
+				'texthidden' => 'boolean',
+				'textmissing' => 'boolean',
 			),
 			'contentmodel' => array(
 				'contentmodel' => 'string'
@@ -846,9 +853,5 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

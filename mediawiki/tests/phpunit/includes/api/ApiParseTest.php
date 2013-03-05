@@ -3,6 +3,7 @@
 /**
  * @group API
  * @group Database
+ * @group medium
  */
 class ApiParseTest extends ApiTestCase {
 
@@ -20,7 +21,7 @@ class ApiParseTest extends ApiTestCase {
 				'page' => $somePage ) );
 
 			$this->fail( "API did not return an error when parsing a nonexistent page" );
-		} catch(UsageException $ex){
+		} catch ( UsageException $ex ) {
 			$this->assertEquals( 'missingtitle', $ex->getCodeString(),
 				"Parse request for nonexistent page must give 'missingtitle' error: " . var_export( $ex->getMessageArray(), true ) );
 		}

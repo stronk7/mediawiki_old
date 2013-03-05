@@ -37,14 +37,18 @@
  * Outside callers can assume that all backends will have these functions.
  *
  * All "storage paths" are of the format "mwstore://<backend>/<container>/<path>".
- * The "<path>" portion is a relative path that uses UNIX file system (FS)
- * notation, though any particular backend may not actually be using a local
- * filesystem. Therefore, the relative paths are only virtual.
+ * The "backend" portion is unique name for MediaWiki to refer to a backend, while
+ * the "container" portion is a top-level directory of the backend. The "path" portion
+ * is a relative path that uses UNIX file system (FS) notation, though any particular
+ * backend may not actually be using a local filesystem. Therefore, the relative paths
+ * are only virtual.
  *
  * Backend contents are stored under wiki-specific container names by default.
- * For legacy reasons, this has no effect for the FS backend class, and per-wiki
- * segregation must be done by setting the container paths appropriately.
+ * Global (qualified) backends are achieved by configuring the "wiki ID" to a constant.
+ * For legacy reasons, the FSFileBackend class allows manually setting the paths of
+ * containers to ones that do not respect the "wiki ID".
  *
+ * In key/value stores, the container is the only hierarchy (the rest is emulated).
  * FS-based backends are somewhat more restrictive due to the existence of real
  * directory files; a regular file cannot have the same name as a directory. Other
  * backends with virtual directories may not have this limitation. Callers should
@@ -75,9 +79,13 @@ abstract class FileBackend {
 	 * $config includes:
 	 *   - name        : The unique name of this backend.
 	 *                   This should consist of alphanumberic, '-', and '_' characters.
-	 *                   This name should not be changed after use.
-	 *   - wikiId      : Prefix to container names that is unique to this wiki.
+	 *                   This name should not be changed after use (e.g. with journaling).
+	 *                   Note that the name is *not* used in actual container names.
+	 *   - wikiId      : Prefix to container names that is unique to this backend.
+	 *                   If not provided, this defaults to the current wiki ID.
 	 *                   It should only consist of alphanumberic, '-', and '_' characters.
+	 *                   This ID is what avoids collisions if multiple logical backends
+	 *                   use the same storage system, so this should be set carefully.
 	 *   - lockManager : Registered name of a file lock manager to use.
 	 *   - fileJournal : File journal configuration; see FileJournal::factory().
 	 *                   Journals simply log changes to files stored in the backend.
@@ -100,7 +108,7 @@ abstract class FileBackend {
 			: wfWikiID(); // e.g. "my_wiki-en_"
 		$this->lockManager = ( $config['lockManager'] instanceof LockManager )
 			? $config['lockManager']
-			: LockManagerGroup::singleton()->get( $config['lockManager'] );
+			: LockManagerGroup::singleton( $this->wikiId )->get( $config['lockManager'] );
 		$this->fileJournal = isset( $config['fileJournal'] )
 			? ( ( $config['fileJournal'] instanceof FileJournal )
 				? $config['fileJournal']
@@ -275,11 +283,8 @@ abstract class FileBackend {
 	 * $opts is an associative of boolean flags, including:
 	 *   - force               : Operation precondition errors no longer trigger an abort.
 	 *                           Any remaining operations are still attempted. Unexpected
-	 *                           failures may still cause remaning operations to be aborted.
+	 *                           failures may still cause remaining operations to be aborted.
 	 *   - nonLocking          : No locks are acquired for the operations.
-	 *                           This can increase performance for non-critical writes.
-	 *                           This has no effect unless the 'force' flag is set.
-	 *   - allowStale          : Don't require the latest available data.
 	 *                           This can increase performance for non-critical writes.
 	 *                           This has no effect unless the 'force' flag is set.
 	 *   - nonJournaled        : Don't log this operation batch in the file journal.
@@ -315,8 +320,8 @@ abstract class FileBackend {
 		}
 		if ( empty( $opts['force'] ) ) { // sanity
 			unset( $opts['nonLocking'] );
-			unset( $opts['allowStale'] );
 		}
+		$scope = $this->getScopedPHPBehaviorForOps(); // try to ignore client aborts
 		return $this->doOperationsInternal( $ops, $opts );
 	}
 
@@ -518,9 +523,9 @@ abstract class FileBackend {
 	 *                           header when GETs/HEADs of the destination file are made.
 	 *                           Backends that don't support file metadata will ignore this.
 	 *                           See http://tools.ietf.org/html/rfc6266 (since 1.20).
-	 *   - headers             : If supplied, the backend will return these headers when
-	 *                           GETs/HEADs of the destination file are made. Header values
-	 *                           should be smaller than 256 bytes, often options or numbers.
+	 *   - headers             : If supplied with a header name/value map, the backend will
+	 *                           reply with these headers when GETs/HEADs of the destination
+	 *                           file are made. Header values should be smaller than 256 bytes.
 	 *                           Existing headers will remain, but these will replace any
 	 *                           conflicting previous headers, and headers will be removed
 	 *                           if they are set to an empty string.
@@ -547,6 +552,7 @@ abstract class FileBackend {
 		foreach ( $ops as &$op ) {
 			$op['overwrite'] = true; // avoids RTTs in key/value stores
 		}
+		$scope = $this->getScopedPHPBehaviorForOps(); // try to ignore client aborts
 		return $this->doQuickOperationsInternal( $ops );
 	}
 
@@ -690,6 +696,7 @@ abstract class FileBackend {
 		if ( empty( $params['bypassReadOnly'] ) && $this->isReadOnly() ) {
 			return Status::newFatal( 'backend-fail-readonly', $this->name, $this->readOnly );
 		}
+		$scope = $this->getScopedPHPBehaviorForOps(); // try to ignore client aborts
 		return $this->doPrepare( $params );
 	}
 
@@ -717,6 +724,7 @@ abstract class FileBackend {
 		if ( empty( $params['bypassReadOnly'] ) && $this->isReadOnly() ) {
 			return Status::newFatal( 'backend-fail-readonly', $this->name, $this->readOnly );
 		}
+		$scope = $this->getScopedPHPBehaviorForOps(); // try to ignore client aborts
 		return $this->doSecure( $params );
 	}
 
@@ -745,6 +753,7 @@ abstract class FileBackend {
 		if ( empty( $params['bypassReadOnly'] ) && $this->isReadOnly() ) {
 			return Status::newFatal( 'backend-fail-readonly', $this->name, $this->readOnly );
 		}
+		$scope = $this->getScopedPHPBehaviorForOps(); // try to ignore client aborts
 		return $this->doPublish( $params );
 	}
 
@@ -769,6 +778,7 @@ abstract class FileBackend {
 		if ( empty( $params['bypassReadOnly'] ) && $this->isReadOnly() ) {
 			return Status::newFatal( 'backend-fail-readonly', $this->name, $this->readOnly );
 		}
+		$scope = $this->getScopedPHPBehaviorForOps(); // try to ignore client aborts
 		return $this->doClean( $params );
 	}
 
@@ -776,6 +786,21 @@ abstract class FileBackend {
 	 * @see FileBackend::clean()
 	 */
 	abstract protected function doClean( array $params );
+
+	/**
+	 * Enter file operation scope.
+	 * This just makes PHP ignore user aborts/disconnects until the return
+	 * value leaves scope. This returns null and does nothing in CLI mode.
+	 *
+	 * @return ScopedCallback|null
+	 */
+	final protected function getScopedPHPBehaviorForOps() {
+		if ( php_sapi_name() != 'cli' ) { // http://bugs.php.net/bug.php?id=47540
+			$old = ignore_user_abort( true ); // avoid half-finished operations
+			return new ScopedCallback( function() use ( $old ) { ignore_user_abort( $old ); } );
+		}
+		return null;
+	}
 
 	/**
 	 * Check if a file exists at a storage path in the backend.

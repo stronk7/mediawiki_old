@@ -11,6 +11,7 @@
  * @author Chavash
  * @author FLAGELLVM DEI
  * @author PCode
+ * @author Salam
  * @author Александр Сигачёв
  */
 
@@ -68,6 +69,7 @@ $messages = array(
 'tog-enotifminoredits' => 'Пĕчĕк улшăнусене те эл. почта урлă пĕлтермелле',
 'tog-enotifrevealaddr' => 'Асăрхаттару пĕлтерĕвĕсенче ман эл. адреса кăтартмалла',
 'tog-shownumberswatching' => 'Страницăна миçе хутшăнакан сăнав списокне кĕртнине кăтартмалла',
+'tog-oldsig' => 'Хальхи алӑ пусни:',
 'tog-fancysig' => 'Хăвăр тунă алă пуснин вики-паллисем',
 'tog-externaleditor' => 'Палăртман чухне тулашри редактора усă курмалла',
 'tog-externaldiff' => 'Палăртман чухне версисене танлаштарма тулашри программăна усă курмалла',
@@ -516,7 +518,6 @@ $1 хутшăнакан патне, е ытти [[{{MediaWiki:Grouppage-sysop}}|
 'templatesusedsection' => 'Ку пайра усă курнă шаблонсем:',
 'template-protected' => '(сыхланă)',
 'template-semiprotected' => '(пĕр пайне сыхланă)',
-'nocreatetitle' => 'Страницăсене хатĕрлессине чакарнă',
 
 # Parser/template warnings
 'expensive-parserfunction-category' => 'Кунта эсир чылай ресурс ыйтакан функцисемпе нумай ĕçлекен страницăсене куратăр',
@@ -659,7 +660,6 @@ $1 хутшăнакан патне, е ытти [[{{MediaWiki:Grouppage-sysop}}|
 
 # User rights log
 'rightslogtext' => 'Ку пользовательсен прависене улăштарниссен журналě',
-'rightsnone' => '(çук)',
 
 # Recent changes
 'recentchanges' => 'Улшăнусем',
@@ -922,6 +922,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_reset' => 'Пур страницăсене те пăхнă пек палăрт',
 'enotif_anon_editor' => '$1 анонимлă хутшăнакан',
+'created' => 'хатĕрленĕ',
+'changed' => 'улăштарнă',
 
 # Delete
 'deletepage' => 'Кăларса парахнă статьясем',
@@ -1210,5 +1212,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'specialpages-group-media' => 'Медиа-материалсемпе тултарăшсем',
 'specialpages-group-users' => 'Хутшăнакансем тата правасем',
 'specialpages-group-highuse' => 'Нумай усă куракан страницăсем',
+
+# New logging system
+'rightsnone' => '(çук)',
 
 );

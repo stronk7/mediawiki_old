@@ -756,7 +756,6 @@ l-idari lli qffelha ĝta had ṫfsir: $1",
 'template-semiprotected' => '(ḫimaya ma kamlaċ)',
 'hiddencategories' => '{{PLURAL:$1|L-Katégori l-mĥebbya li kaṫmlek|L-Katégoriyaṫ l-mĥebbyin li kaymelko}} had ṣ-ṣefḫa :',
 'edittools' => '<!-- nass ghayban hna t7t t3dil ot7t istimarat raf3 sowar. -->',
-'nocreatetitle' => "inċa' ṣfaḫi mḫdod",
 'nocreate-loggedin' => 'ma ĝndek-ċ l-heqq ṫsayb ṣ-ṣfaḫi jdad.',
 'sectioneditnotsupported-title' => 'ṫĝdil l-aqsam ma kayn-ċ hna',
 'sectioneditnotsupported-text' => 'ṫṫĝdil l-aqsam ma kayn-ċ f-had ṣfḫa.',
@@ -1187,11 +1186,13 @@ Laḫed ana imken ikono l-indexaṫ dial {{SITENAME}} qdam o ma bqaoċ ṣalḫi
 'right-override-export-depth' => 'tsdir sfahi obinha sfahi lmawsola hta lomq 5',
 'right-sendemail' => 'sift email lmostkhdimin lkhrin',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Ṫariĥ dyal l-ḫsabaṫ j-jdad',
+'newuserlogpagetext' => "hada sijill d-inċa'aṫ l-moṣṫĥdimin.",
+
 # User rights log
 'rightslog' => 'Ĝamaliyaṫ ḫoqoq l-mosṫeĥdim',
 'rightslogtext' => 'hada sijil btaghyirat f salahiyat lmostkhdimin',
-'rightslogentry' => 'ghyr salahiyat $1 mn $2 l $3',
-'rightsnone' => '(walo)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => "Ĥṫareĝ had 'ṣ-ṣefḫa",
@@ -1609,10 +1610,6 @@ daba ka ṫḫwwal l-[[$2]].',
 'activeusers-hidesysops' => 'Khbbi lidariyin',
 'activeusers-noresult' => 'ta mostakhdim matlgach.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Ṫariĥ dyal l-ḫsabaṫ j-jdad',
-'newuserlogpagetext' => "hada sijill d-inċa'aṫ l-moṣṫĥdimin.",
-
 # Special:ListGroupRights
 'listgrouprights' => 'salahiyat mjmoat lmostkhdimin',
 'listgrouprights-key' => '* <span class="listgrouprights-granted">ḫoqoq mĝtiyya</span>
@@ -1695,6 +1692,8 @@ L-Kṫaba dyal had ṣ-ṣefḫa ġaṫban '''ġliḍa''' fe [[Special:RecentCha
 'enotif_lastvisited' => 'Sir ċof $1 baċ ṫċof ṫ-ṫeġyiraṫ kamlin men ziyarṫek l-leĥĥraniya.',
 'enotif_lastdiff' => 'Ċof $1 baċ ṫċof had ṫ-ṫeġyiraṫ.',
 'enotif_anon_editor' => 'mosṫeĥdim ma mċejjelċ $1',
+'created' => "tnch'at",
+'changed' => 'Beddel',
 
 # Delete
 'deletepage' => "Mḫi had 'ṣ-ṣefḫa",
@@ -2712,6 +2711,6 @@ jrreb l-ĝṛḍ l-ĝadi.',
 # New logging system
 'revdelete-restricted' => 'tḅḅq ḍ-ḍawaḅit ll-idariyyin',
 'revdelete-unrestricted' => 'ḫyyd ḍ-ḍawaḅit ll-idariyyin',
-'newuserlog-byemail' => "lmot de passe raha tsiftat f l'email",
+'rightsnone' => '(walo)',
 
 );

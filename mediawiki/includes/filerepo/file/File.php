@@ -40,7 +40,7 @@
  * never name a file class explictly outside of the repo class. Instead use the
  * repo's factory functions to generate file objects, for example:
  *
- * RepoGroup::singleton()->getLocalRepo()->newFile($title);
+ * RepoGroup::singleton()->getLocalRepo()->newFile( $title );
  *
  * The convenience functions wfLocalFile() and wfFindFile() should be sufficient
  * in most cases.
@@ -54,7 +54,7 @@ abstract class File {
 	const DELETED_RESTRICTED = 8;
 
 	/** Force rendering in the current process */
-	const RENDER_NOW   = 1;
+	const RENDER_NOW = 1;
 	/**
 	 * Force rendering even if thumbnail already exist and using RENDER_NOW
 	 * I.e. you have to pass both flags: File::RENDER_NOW | File::RENDER_FORCE
@@ -348,7 +348,7 @@ abstract class File {
 			if ( $this->canRender() ) {
 				return $this->createThumb( $this->getWidth() );
 			} else {
-				wfDebug( __METHOD__.': supposed to render ' . $this->getName() .
+				wfDebug( __METHOD__ . ': supposed to render ' . $this->getName() .
 					' (' . $this->getMimeType() . "), but can't!\n" );
 				return $this->getURL(); #hm... return NULL?
 			}
@@ -663,13 +663,13 @@ abstract class File {
 		if ( $this->allowInlineDisplay() ) {
 			return true;
 		}
-		if ($this->isTrustedFile()) {
+		if ( $this->isTrustedFile() ) {
 			return true;
 		}
 
 		$type = $this->getMediaType();
 		$mime = $this->getMimeType();
-		#wfDebug("LocalFile::isSafeFile: type= $type, mime= $mime\n");
+		#wfDebug( "LocalFile::isSafeFile: type= $type, mime= $mime\n" );
 
 		if ( !$type || $type === MEDIATYPE_UNKNOWN ) {
 			return false; #unknown type, not trusted
@@ -842,7 +842,7 @@ abstract class File {
 		global $wgIgnoreImageErrors;
 
 		if ( $wgIgnoreImageErrors && !( $flags & self::RENDER_NOW ) ) {
-			return $this->handler->getTransform( $this, $thumbPath, $thumbUrl, $params );
+			return $this->getHandler()->getTransform( $this, $thumbPath, $thumbUrl, $params );
 		} else {
 			return new MediaTransformError( 'thumbnail_error',
 				$params['width'], 0, wfMessage( 'thumbnail-dest-create' )->text() );
@@ -873,17 +873,18 @@ abstract class File {
 				$params['descriptionUrl'] = wfExpandUrl( $descriptionUrl, PROTO_CANONICAL );
 			}
 
+			$handler = $this->getHandler();
 			$script = $this->getTransformScript();
 			if ( $script && !( $flags & self::RENDER_NOW ) ) {
 				// Use a script to transform on client request, if possible
-				$thumb = $this->handler->getScriptedTransform( $this, $script, $params );
+				$thumb = $handler->getScriptedTransform( $this, $script, $params );
 				if ( $thumb ) {
 					break;
 				}
 			}
 
 			$normalisedParams = $params;
-			$this->handler->normaliseParams( $this, $normalisedParams );
+			$handler->normaliseParams( $this, $normalisedParams );
 
 			$thumbName = $this->thumbName( $normalisedParams );
 			$thumbUrl = $this->getThumbUrl( $thumbName );
@@ -896,20 +897,21 @@ abstract class File {
 					// XXX: Pass in the storage path even though we are not rendering anything
 					// and the path is supposed to be an FS path. This is due to getScalerType()
 					// getting called on the path and clobbering $thumb->getUrl() if it's false.
-					$thumb = $this->handler->getTransform( $this, $thumbPath, $thumbUrl, $params );
+					$thumb = $handler->getTransform( $this, $thumbPath, $thumbUrl, $params );
 					break;
 				}
 				// Clean up broken thumbnails as needed
 				$this->migrateThumbFile( $thumbName );
 				// Check if an up-to-date thumbnail already exists...
-				wfDebug( __METHOD__.": Doing stat for $thumbPath\n" );
-				if ( $this->repo->fileExists( $thumbPath ) && !( $flags & self::RENDER_FORCE ) ) {
+				wfDebug( __METHOD__ . ": Doing stat for $thumbPath\n" );
+				if ( !( $flags & self::RENDER_FORCE ) && $this->repo->fileExists( $thumbPath ) ) {
 					$timestamp = $this->repo->getFileTimestamp( $thumbPath );
 					if ( $timestamp !== false && $timestamp >= $wgThumbnailEpoch ) {
 						// XXX: Pass in the storage path even though we are not rendering anything
 						// and the path is supposed to be an FS path. This is due to getScalerType()
 						// getting called on the path and clobbering $thumb->getUrl() if it's false.
-						$thumb = $this->handler->getTransform( $this, $thumbPath, $thumbUrl, $params );
+						$thumb = $handler->getTransform(
+							$this, $thumbPath, $thumbUrl, $params );
 						$thumb->setStoragePath( $thumbPath );
 						break;
 					}
@@ -936,7 +938,7 @@ abstract class File {
 
 			// Actually render the thumbnail...
 			wfProfileIn( __METHOD__ . '-doTransform' );
-			$thumb = $this->handler->doTransform( $this, $tmpThumbPath, $thumbUrl, $params );
+			$thumb = $handler->doTransform( $this, $tmpThumbPath, $thumbUrl, $params );
 			wfProfileOut( __METHOD__ . '-doTransform' );
 			$tmpFile->bind( $thumb ); // keep alive with $thumb
 
@@ -946,7 +948,7 @@ abstract class File {
 				$this->lastError = $thumb->toText();
 				// Ignore errors if requested
 				if ( $wgIgnoreImageErrors && !( $flags & self::RENDER_NOW ) ) {
-					$thumb = $this->handler->getTransform( $this, $tmpThumbPath, $thumbUrl, $params );
+					$thumb = $handler->getTransform( $this, $tmpThumbPath, $thumbUrl, $params );
 				}
 			} elseif ( $this->repo && $thumb->hasFile() && !$thumb->fileIsSource() ) {
 				// Copy the thumbnail from the file system into storage...
@@ -1246,6 +1248,18 @@ abstract class File {
 	}
 
 	/**
+	 * Get the path of the transcoded directory, or a particular file if $suffix is specified
+	 *
+	 * @param $suffix bool|string if not false, the name of a media file
+	 *
+	 * @return string
+	 */
+	function getTranscodedPath( $suffix = false ) {
+		$this->assertRepoDefined();
+		return $this->repo->getZonePath( 'transcoded' ) . '/' . $this->getThumbRel( $suffix );
+	}
+
+	/**
 	 * Get the URL of the archive directory, or a particular file if $suffix is specified
 	 *
 	 * @param $suffix bool|string if not false, the name of an archived file
@@ -1286,6 +1300,24 @@ abstract class File {
 	}
 
 	/**
+	 * Get the URL of the zone directory, or a particular file if $suffix is specified
+	 *
+	 * @param $zone string name of requested zone
+	 * @param $suffix bool|string if not false, the name of a file in zone
+	 *
+	 * @return string path
+	 */
+	function getZoneUrl( $zone, $suffix = false ) {
+		$this->assertRepoDefined();
+		$ext = $this->getExtension();
+		$path = $this->repo->getZoneUrl( $zone, $ext ) . '/' . $this->getUrlRel();
+		if ( $suffix !== false ) {
+			$path .= '/' . rawurlencode( $suffix );
+		}
+		return $path;
+	}
+
+	/**
 	 * Get the URL of the thumbnail directory, or a particular file if $suffix is specified
 	 *
 	 * @param $suffix bool|string if not false, the name of a thumbnail file
@@ -1293,13 +1325,18 @@ abstract class File {
 	 * @return string path
 	 */
 	function getThumbUrl( $suffix = false ) {
-		$this->assertRepoDefined();
-		$ext = $this->getExtension();
-		$path = $this->repo->getZoneUrl( 'thumb', $ext ) . '/' . $this->getUrlRel();
-		if ( $suffix !== false ) {
-			$path .= '/' . rawurlencode( $suffix );
-		}
-		return $path;
+		return $this->getZoneUrl( 'thumb', $suffix );
+	}
+
+	/**
+	 * Get the URL of the transcoded directory, or a particular file if $suffix is specified
+	 *
+	 * @param $suffix bool|string if not false, the name of a media file
+	 *
+	 * @return string path
+	 */
+	function getTranscodedUrl( $suffix = false ) {
+		return $this->getZoneUrl( 'transcoded', $suffix );
 	}
 
 	/**
@@ -1364,7 +1401,7 @@ abstract class File {
 	 * @throws MWException
 	 */
 	function readOnlyError() {
-		throw new MWException( get_class($this) . ': write operations are not supported' );
+		throw new MWException( get_class( $this ) . ': write operations are not supported' );
 	}
 
 	/**
@@ -1377,8 +1414,12 @@ abstract class File {
 	 * @param $copyStatus string
 	 * @param $source string
 	 * @param $watch bool
+	 * @param $timestamp string|bool
+	 * @param $user User object or null to use $wgUser
+	 * @return bool
+	 * @throws MWException
 	 */
-	function recordUpload( $oldver, $desc, $license = '', $copyStatus = '', $source = '', $watch = false ) {
+	function recordUpload( $oldver, $desc, $license = '', $copyStatus = '', $source = '', $watch = false, $timestamp = false, User $user = null ) {
 		$this->readOnlyError();
 	}
 
@@ -1498,9 +1539,9 @@ abstract class File {
 	 * @param $target Title New file name
 	 * @return FileRepoStatus object.
 	 */
-	 function move( $target ) {
+	function move( $target ) {
 		$this->readOnlyError();
-	 }
+	}
 
 	/**
 	 * Delete all versions of the file.
@@ -1625,15 +1666,15 @@ abstract class File {
 		$renderUrl = $this->repo->getDescriptionRenderUrl( $this->getName(), $wgLang->getCode() );
 		if ( $renderUrl ) {
 			if ( $this->repo->descriptionCacheExpiry > 0 ) {
-				wfDebug("Attempting to get the description from cache...");
+				wfDebug( "Attempting to get the description from cache..." );
 				$key = $this->repo->getLocalCacheKey( 'RemoteFileDescription', 'url', $wgLang->getCode(),
 									$this->getName() );
-				$obj = $wgMemc->get($key);
-				if ($obj) {
-					wfDebug("success!\n");
+				$obj = $wgMemc->get( $key );
+				if ( $obj ) {
+					wfDebug( "success!\n" );
 					return $obj;
 				}
-				wfDebug("miss\n");
+				wfDebug( "miss\n" );
 			}
 			wfDebug( "Fetching shared description from $renderUrl\n" );
 			$res = Http::get( $renderUrl );
@@ -1717,9 +1758,10 @@ abstract class File {
 	 *             Set it to false to ignore the extension.
 	 *
 	 * @return array
+	 * @deprecated since 1.19
 	 */
 	static function getPropsFromPath( $path, $ext = true ) {
-		wfDebug( __METHOD__.": Getting file info for $path\n" );
+		wfDebug( __METHOD__ . ": Getting file info for $path\n" );
 		wfDeprecated( __METHOD__, '1.19' );
 
 		$fsFile = new FSFile( $path );
@@ -1736,6 +1778,7 @@ abstract class File {
 	 * @param $path string
 	 *
 	 * @return bool|string False on failure
+	 * @deprecated since 1.19
 	 */
 	static function sha1Base36( $path ) {
 		wfDeprecated( __METHOD__, '1.19' );
@@ -1800,7 +1843,7 @@ abstract class File {
 	}
 
 	/**
-	 * @return Title
+	 * @return Title|null
 	 */
 	function getRedirectedTitle() {
 		if ( $this->redirected ) {
@@ -1809,6 +1852,7 @@ abstract class File {
 			}
 			return $this->redirectTitle;
 		}
+		return null;
 	}
 
 	/**

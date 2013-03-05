@@ -31,9 +31,7 @@
  */
 class ApiSetNotificationTimestamp extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
+	private $mPageSet;
 
 	public function execute() {
 		$user = $this->getUser();
@@ -45,11 +43,11 @@ class ApiSetNotificationTimestamp extends ApiBase {
 		$params = $this->extractRequestParams();
 		$this->requireMaxOneParameter( $params, 'timestamp', 'torevid', 'newerthanrevid' );
 
-		$pageSet = new ApiPageSet( $this );
+		$pageSet = $this->getPageSet();
 		$args = array_merge( array( $params, 'entirewatchlist' ), array_keys( $pageSet->getAllowedParams() ) );
 		call_user_func_array( array( $this, 'requireOnlyOneParameter' ), $args );
 
-		$dbw = $this->getDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, 'api' );
 
 		$timestamp = null;
 		if ( isset( $params['timestamp'] ) ) {
@@ -96,20 +94,20 @@ class ApiSetNotificationTimestamp extends ApiBase {
 			$result['notificationtimestamp'] = ( is_null( $timestamp ) ? '' : wfTimestamp( TS_ISO_8601, $timestamp ) );
 		} else {
 			// First, log the invalid titles
-			foreach( $pageSet->getInvalidTitles() as $title ) {
+			foreach ( $pageSet->getInvalidTitles() as $title ) {
 				$r = array();
 				$r['title'] = $title;
 				$r['invalid'] = '';
 				$result[] = $r;
 			}
-			foreach( $pageSet->getMissingPageIDs() as $p ) {
+			foreach ( $pageSet->getMissingPageIDs() as $p ) {
 				$page = array();
 				$page['pageid'] = $p;
 				$page['missing'] = '';
 				$page['notwatched'] = '';
 				$result[] = $page;
 			}
-			foreach( $pageSet->getMissingRevisionIDs() as $r ) {
+			foreach ( $pageSet->getMissingRevisionIDs() as $r ) {
 				$rev = array();
 				$rev['revid'] = $r;
 				$rev['missing'] = '';
@@ -161,6 +159,17 @@ class ApiSetNotificationTimestamp extends ApiBase {
 		$apiResult->addValue( null, $this->getModuleName(), $result );
 	}
 
+	/**
+	 * Get a cached instance of an ApiPageSet object
+	 * @return ApiPageSet
+	 */
+	private function getPageSet() {
+		if ( !isset( $this->mPageSet ) ) {
+			$this->mPageSet = new ApiPageSet( $this );
+		}
+		return $this->mPageSet;
+	}
+
 	public function mustBePosted() {
 		return true;
 	}
@@ -177,9 +186,8 @@ class ApiSetNotificationTimestamp extends ApiBase {
 		return '';
 	}
 
-	public function getAllowedParams() {
-		$psModule = new ApiPageSet( $this );
-		return $psModule->getAllowedParams() + array(
+	public function getAllowedParams( $flags = 0 ) {
+		$result = array(
 			'entirewatchlist' => array(
 				ApiBase::PARAM_TYPE => 'boolean'
 			),
@@ -194,11 +202,15 @@ class ApiSetNotificationTimestamp extends ApiBase {
 				ApiBase::PARAM_TYPE => 'integer'
 			),
 		);
+		if ( $flags ) {
+			$result += $this->getPageSet()->getFinalParams( $flags );
+		}
+		return $result;
+
 	}
 
 	public function getParamDescription() {
-		$psModule = new ApiPageSet( $this );
-		return $psModule->getParamDescription() + array(
+		return $this->getPageSet()->getParamDescription() + array(
 			'entirewatchlist' => 'Work on all watched pages',
 			'timestamp' => 'Timestamp to which to set the notification timestamp',
 			'torevid' => 'Revision to set the notification timestamp to (one page only)',
@@ -247,18 +259,20 @@ class ApiSetNotificationTimestamp extends ApiBase {
 	public function getDescription() {
 		return array( 'Update the notification timestamp for watched pages.',
 			'This affects the highlighting of changed pages in the watchlist and history,',
-			'and the sending of email when the "E-mail me when a page on my watchlist is',
+			'and the sending of email when the "Email me when a page on my watchlist is',
 			'changed" preference is enabled.'
 		);
 	}
 
 	public function getPossibleErrors() {
-		$psModule = new ApiPageSet( $this );
+		$ps = $this->getPageSet();
 		return array_merge(
 			parent::getPossibleErrors(),
-			$psModule->getPossibleErrors(),
-			$this->getRequireMaxOneParameterErrorMessages( array( 'timestamp', 'torevid', 'newerthanrevid' ) ),
-			$this->getRequireOnlyOneParameterErrorMessages( array_merge( array( 'entirewatchlist' ), array_keys( $psModule->getAllowedParams() ) ) ),
+			$ps->getPossibleErrors(),
+			$this->getRequireMaxOneParameterErrorMessages(
+				array( 'timestamp', 'torevid', 'newerthanrevid' ) ),
+			$this->getRequireOnlyOneParameterErrorMessages(
+				array_merge( array( 'entirewatchlist' ), array_keys( $ps->getFinalParams() ) ) ),
 			array(
 				array( 'code' => 'notloggedin', 'info' => 'Anonymous users cannot use watchlist change notifications' ),
 				array( 'code' => 'multpages', 'info' => 'torevid may only be used with a single page' ),
@@ -277,9 +291,5 @@ class ApiSetNotificationTimestamp extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:SetNotificationTimestamp';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

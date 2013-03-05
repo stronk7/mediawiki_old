@@ -1,6 +1,7 @@
 ( function ( mw, $ ) {
+	'use strict';
 
-	QUnit.module( 'mediawiki.language', QUnit.newMwEnvironment({
+	QUnit.module( 'mediawiki.language', QUnit.newMwEnvironment( {
 		setup: function () {
 			this.liveLangData = mw.language.data.values;
 			mw.language.data.values = $.extend( true, {}, this.liveLangData );
@@ -8,12 +9,12 @@
 		teardown: function () {
 			mw.language.data.values = this.liveLangData;
 		}
-	}) );
+	} ) );
 
 	QUnit.test( 'mw.language getData and setData', 2, function ( assert ) {
 		mw.language.setData( 'en', 'testkey', 'testvalue' );
-		assert.equal(  mw.language.getData( 'en', 'testkey' ), 'testvalue', 'Getter setter test for mw.language' );
-		assert.equal(  mw.language.getData( 'en', 'invalidkey' ), undefined, 'Getter setter test for mw.language with invalid key' );
+		assert.equal( mw.language.getData( 'en', 'testkey' ), 'testvalue', 'Getter setter test for mw.language' );
+		assert.equal( mw.language.getData( 'en', 'invalidkey' ), undefined, 'Getter setter test for mw.language with invalid key' );
 	} );
 
 	function grammarTest( langCode, test ) {
@@ -22,16 +23,17 @@
 		QUnit.test( 'Grammar test for lang=' + langCode, function ( assert ) {
 			QUnit.expect( test.length );
 
-			for ( var i = 0 ; i < test.length; i++ ) {
+			for ( var i = 0; i < test.length; i++ ) {
 				assert.equal(
 					mw.language.convertGrammar( test[i].word, test[i].grammarForm ),
 					test[i].expected,
 					test[i].description
 				);
 			}
-		});
+		} );
 	}
 
+	// These tests run only for the current UI language.
 	var grammarTests = {
 		bs: [
 			{
@@ -188,40 +190,87 @@
 				word: 'тесть',
 				grammarForm: 'genitive',
 				expected: 'тестя',
-				description: 'Grammar test for genitive case'
+				description: 'Grammar test for genitive case, тесть -> тестя'
 			},
 			{
 				word: 'привилегия',
 				grammarForm: 'genitive',
 				expected: 'привилегии',
-				description: 'Grammar test for genitive case'
+				description: 'Grammar test for genitive case, привилегия -> привилегии'
 			},
 			{
 				word: 'установка',
 				grammarForm: 'genitive',
 				expected: 'установки',
-				description: 'Grammar test for genitive case'
+				description: 'Grammar test for genitive case, установка -> установки'
 			},
 			{
 				word: 'похоти',
 				grammarForm: 'genitive',
 				expected: 'похотей',
-				description: 'Grammar test for genitive case'
+				description: 'Grammar test for genitive case, похоти -> похотей'
 			},
 			{
 				word: 'доводы',
 				grammarForm: 'genitive',
 				expected: 'доводов',
-				description: 'Grammar test for genitive case'
+				description: 'Grammar test for genitive case, доводы -> доводов'
 			},
 			{
 				word: 'песчаник',
 				grammarForm: 'genitive',
 				expected: 'песчаника',
-				description: 'Grammar test for genitive case'
+				description: 'Grammar test for genitive case, песчаник -> песчаника'
+			},
+			{
+				word: 'данные',
+				grammarForm: 'genitive',
+				expected: 'данных',
+				description: 'Grammar test for genitive case, данные -> данных'
+			},
+			{
+				word: 'тесть',
+				grammarForm: 'prepositional',
+				expected: 'тесте',
+				description: 'Grammar test for prepositional case, тесть -> тесте'
+			},
+			{
+				word: 'привилегия',
+				grammarForm: 'prepositional',
+				expected: 'привилегии',
+				description: 'Grammar test for prepositional case, привилегия -> привилегии'
+			},
+			{
+				word: 'установка',
+				grammarForm: 'prepositional',
+				expected: 'установке',
+				description: 'Grammar test for prepositional case, установка -> установке'
+			},
+			{
+				word: 'похоти',
+				grammarForm: 'prepositional',
+				expected: 'похотях',
+				description: 'Grammar test for prepositional case, похоти -> похотях'
+			},
+			{
+				word: 'доводы',
+				grammarForm: 'prepositional',
+				expected: 'доводах',
+				description: 'Grammar test for prepositional case, доводы -> доводах'
+			},
+			{
+				word: 'песчаник',
+				grammarForm: 'prepositional',
+				expected: 'песчанике',
+				description: 'Grammar test for prepositional case, песчаник -> песчанике'
+			},
+			{
+				word: 'данные',
+				grammarForm: 'prepositional',
+				expected: 'данных',
+				description: 'Grammar test for prepositional case, данные -> данных'
 			}
 		],
-
 
 		hu: [
 			{
@@ -390,5 +439,5 @@
 		if ( langCode === mw.config.get( 'wgUserLanguage' ) ) {
 			grammarTest( langCode, test );
 		}
-	});
+	} );
 }( mediaWiki, jQuery ) );

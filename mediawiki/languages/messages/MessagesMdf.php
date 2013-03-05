@@ -818,7 +818,6 @@ $2',
 'template-protected' => '(аралаф)',
 'template-semiprotected' => '(пялес-аралаф)',
 'hiddencategories' => 'Тя лопась {{PLURAL:$1|1 кяшф катериень|$1 кяшф категориень}} полаец:',
-'nocreatetitle' => 'Лопань тиемац оторонзаф',
 'nocreatetext' => '{{SITENAME}}-са од лопатнень тиемац оторонзаф.
 Тондейть ули кода мърдамс меки ди петнемс тиф ни лопать, эли [[Special:UserLogin|сувамс эли сёрматфтомс одукс]].',
 'nocreate-loggedin' => 'Тон аф мярьговат тиемс од лопат.',
@@ -1226,11 +1225,13 @@ $3 макссь туфталсь - ''$2''",
 'right-userrights-interwiki' => 'Петнемс тиихнень видекснон иля викить лопасонза',
 'right-siteadmin' => 'Пякстамс эди панжемс датабазать',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Тиинь ушедоманзон лувомасна',
+'newuserlogpagetext' => 'Тя тиинь ушедоманзон лувомасна.',
+
 # User rights log
 'rightslog' => 'Тиить видексонза лувомась',
 'rightslogtext' => 'Тиить видексонзон полафнемасна лувомась.',
-'rightslogentry' => '$1-нь полгац полафтсь $2-ста $3-с',
-'rightsnone' => '(аш)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'тя лопать морафтома',
@@ -1671,10 +1672,6 @@ $3 макссь туфталсь - ''$2''",
 'listusers-submit' => 'Няфтемс',
 'listusers-noresult' => 'Тиихть исть мув.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Тиинь ушедоманзон лувомасна',
-'newuserlogpagetext' => 'Тя тиинь ушедоманзон лувомасна.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Тиихнень полгаснон видексонза',
 'listgrouprights-summary' => 'Тяса тиихнень полгасна конатне сувсихть тя Викис синь сувама видексснон мархта.
@@ -1781,6 +1778,8 @@ $UNWATCHURL
 
 Азома мекпяли ди иля лезкс:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'тиф',
+'changed' => 'полафтсь',
 
 # Delete
 'deletepage' => 'Нардамс лопать',
@@ -2888,6 +2887,6 @@ $5
 # New logging system
 'revdelete-restricted' => 'нолдаф тевс кардафксне системонь вятиксненди',
 'revdelete-unrestricted' => 'системонь вятиксненди кардафксне валхтфт',
-'newuserlog-byemail' => 'сувама валце кучф электрононь сёрмаса',
+'rightsnone' => '(аш)',
 
 );

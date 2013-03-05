@@ -158,18 +158,21 @@ class Preferences {
 			$wgEnableEmail, $wgEmailConfirmToEdit, $wgEnableUserEmail, $wgEmailAuthentication,
 			$wgEnotifWatchlist, $wgEnotifUserTalk, $wgEnotifRevealEditorAddress;
 
+		// retrieving user name for GENDER and misc.
+		$userName = $user->getName();
+
 		## User info #####################################
 		// Information panel
 		$defaultPreferences['username'] = array(
 			'type' => 'info',
-			'label-message' => 'username',
-			'default' => $user->getName(),
+			'label-message' => array( 'username', $userName ),
+			'default' => $userName,
 			'section' => 'personal/info',
 		);
 
 		$defaultPreferences['userid'] = array(
 			'type' => 'info',
-			'label-message' => 'uid',
+			'label-message' => array( 'uid', $userName ),
 			'default' => $user->getId(),
 			'section' => 'personal/info',
 		);
@@ -185,7 +188,7 @@ class Preferences {
 			$groupName  = User::getGroupName( $ueg );
 			$userGroups[] = User::makeGroupLinkHTML( $ueg, $groupName );
 
-			$memberName = User::getGroupMember( $ueg, $user->getName() );
+			$memberName = User::getGroupMember( $ueg, $userName );
 			$userMembers[] = User::makeGroupLinkHTML( $ueg, $memberName );
 		}
 		asort( $userGroups );
@@ -196,7 +199,7 @@ class Preferences {
 		$defaultPreferences['usergroups'] = array(
 			'type' => 'info',
 			'label' => $context->msg( 'prefs-memberingroups' )->numParams(
-				count( $userGroups ) )->parse(),
+				count( $userGroups ) )->params( $userName )->parse(),
 			'default' => $context->msg( 'prefs-memberingroups-type',
 				$lang->commaList( $userGroups ),
 				$lang->commaList( $userMembers )
@@ -252,7 +255,7 @@ class Preferences {
 		if ( $wgAuth->allowPasswordChange() ) {
 			$link = Linker::link( SpecialPage::getTitleFor( 'ChangePassword' ),
 				$context->msg( 'prefs-resetpass' )->escaped(), array(),
-				array( 'returnto' => SpecialPage::getTitleFor( 'Preferences' ) ) );
+				array( 'returnto' => SpecialPage::getTitleFor( 'Preferences' )->getPrefixedText() ) );
 
 			$defaultPreferences['password'] = array(
 				'type' => 'info',
@@ -356,7 +359,7 @@ class Preferences {
 		if ( $wgEnableEmail ) {
 			$helpMessages[] = $wgEmailConfirmToEdit
 					? 'prefs-help-email-required'
-					: 'prefs-help-email' ;
+					: 'prefs-help-email';
 
 			if( $wgEnableUserEmail ) {
 				// additional messages when users can send email to each other
@@ -367,7 +370,7 @@ class Preferences {
 				SpecialPage::getTitleFor( 'ChangeEmail' ),
 				$context->msg( $user->getEmail() ? 'prefs-changeemail' : 'prefs-setemail' )->escaped(),
 				array(),
-				array( 'returnto' => SpecialPage::getTitleFor( 'Preferences' ) ) );
+				array( 'returnto' => SpecialPage::getTitleFor( 'Preferences' )->getPrefixedText() ) );
 
 			$emailAddress = $user->getEmail() ? htmlspecialchars( $user->getEmail() ) : '';
 			if ( $wgAuth->allowPropChange( 'emailaddress' ) ) {
@@ -507,14 +510,15 @@ class Preferences {
 		# be nice to somehow merge this back in there to avoid redundancy.
 		if ( $wgAllowUserCss || $wgAllowUserJs ) {
 			$linkTools = array();
+			$userName = $user->getName();
 
 			if ( $wgAllowUserCss ) {
-				$cssPage = Title::makeTitleSafe( NS_USER, $user->getName() . '/common.css' );
+				$cssPage = Title::makeTitleSafe( NS_USER, $userName . '/common.css' );
 				$linkTools[] = Linker::link( $cssPage, $context->msg( 'prefs-custom-css' )->escaped() );
 			}
 
 			if ( $wgAllowUserJs ) {
-				$jsPage = Title::makeTitleSafe( NS_USER, $user->getName() . '/common.js' );
+				$jsPage = Title::makeTitleSafe( NS_USER, $userName . '/common.js' );
 				$linkTools[] = Linker::link( $jsPage, $context->msg( 'prefs-custom-js' )->escaped() );
 			}
 
@@ -887,7 +891,7 @@ class Preferences {
 			'max' => $watchlistdaysMax,
 			'section' => 'watchlist/displaywatchlist',
 			'help' => $context->msg( 'prefs-watchlist-days-max' )->numParams(
-				                 $watchlistdaysMax )->text(),
+				$watchlistdaysMax )->text(),
 			'label-message' => 'prefs-watchlist-days',
 		);
 		$defaultPreferences['wllimit'] = array(
@@ -1009,27 +1013,17 @@ class Preferences {
 			'section' => 'searchoptions/advancedsearchoptions',
 		);
 
-		$nsOptions = array();
-
-		foreach ( $wgContLang->getNamespaces() as $ns => $name ) {
-			if ( $ns < 0 ) {
-				continue;
-			}
-
-			$displayNs = str_replace( '_', ' ', $name );
-
-			if ( !$displayNs ) {
-				$displayNs = $context->msg( 'blanknamespace' )->text();
-			}
-
-			$displayNs = htmlspecialchars( $displayNs );
-			$nsOptions[$displayNs] = $ns;
+		$nsOptions = $wgContLang->getFormattedNamespaces();
+		$nsOptions[0] = $context->msg( 'blanknamespace' )->text();
+		foreach ( $nsOptions as $ns => $name ) {
+			if ( $ns < 0 )
+				unset( $nsOptions[$ns] );
 		}
 
 		$defaultPreferences['searchnamespaces'] = array(
 			'type' => 'multiselect',
 			'label-message' => 'defaultns',
-			'options' => $nsOptions,
+			'options' => array_flip( $nsOptions ),
 			'section' => 'searchoptions/advancedsearchoptions',
 			'prefix' => 'searchNs',
 		);
@@ -1246,6 +1240,13 @@ class Preferences {
 			$formDescriptor = array_diff_key( $formDescriptor, $removeKeys );
 		}
 
+		// Remove type=api preferences. They are not intended for rendering in the form.
+		foreach ( $formDescriptor as $name => $info ) {
+			if ( isset( $info['type'] ) && $info['type'] === 'api' ) {
+				unset( $formDescriptor[$name] );
+			}
+		}
+
 		/**
 		 * @var $htmlForm PreferencesForm
 		 */
@@ -1332,7 +1333,7 @@ class Preferences {
 	 * @param $alldata
 	 * @return int
 	 */
-	static function filterIntval( $value, $alldata ){
+	static function filterIntval( $value, $alldata ) {
 		return intval( $value );
 	}
 
@@ -1406,15 +1407,14 @@ class Preferences {
 		# via $wgHiddenPrefs, we don't want to destroy that setting in case the preference
 		# is subsequently re-enabled
 		# TODO: maintenance script to actually delete these
-		foreach( $wgHiddenPrefs as $pref ){
+		foreach( $wgHiddenPrefs as $pref ) {
 			# If the user has not set a non-default value here, the default will be returned
 			# and subsequently discarded
 			$formData[$pref] = $user->getOption( $pref, null, true );
 		}
 
-		//  Keeps old preferences from interfering due to back-compat
-		//  code, etc.
-		$user->resetOptions();
+		// Keep old preferences from interfering due to back-compat code, etc.
+		$user->resetOptions( 'unused', $form->getContext() );
 
 		foreach ( $formData as $key => $value ) {
 			$user->setOption( $key, $value );

@@ -45,9 +45,7 @@ class Http {
 	 *                          Otherwise it will use $wgHTTPProxy (if set)
 	 *                          Otherwise it will use the environment variable "http_proxy" (if set)
 	 *    - noProxy             Don't use any proxy at all. Takes precedence over proxy value(s).
-	 *    - sslVerifyHost       (curl only) Set to 2 to verify hostname against certificate
-	 *		                    Setting to 1 (or true) will NOT verify the host name. It will
-	 *		                    only check its existence. Setting to 0 (or false) disables entirely.
+	 *    - sslVerifyHost       (curl only) Verify hostname against certificate
 	 *    - sslVerifyCert       (curl only) Verify SSL certificate
 	 *    - caInfo              (curl only) Provide CA information
 	 *    - maxRedirects        Maximum number of redirects to follow (defaults to 5)
@@ -187,15 +185,7 @@ class MWHttpRequest {
 	protected $postData = null;
 	protected $proxy = null;
 	protected $noProxy = false;
-	/**
-	 * Parameter passed to Curl that specifies whether
-	 * to validate SSL certificates.
-	 *
-	 * Setting to 0 disables entirely. Setting to 1 checks
-	 * the existence of a CN, but doesn't verify it. Setting
-	 * to 2 (the default) actually verifies the host.
-	 */
-	protected $sslVerifyHost = 2;
+	protected $sslVerifyHost = true;
 	protected $sslVerifyCert = true;
 	protected $caInfo = null;
 	protected $method = "GET";
@@ -244,7 +234,7 @@ class MWHttpRequest {
 		}
 
 		$members = array( "postData", "proxy", "noProxy", "sslVerifyHost", "caInfo",
-				  "method", "followRedirects", "maxRedirects", "sslVerifyCert", "callback" );
+				"method", "followRedirects", "maxRedirects", "sslVerifyCert", "callback" );
 
 		foreach ( $members as $o ) {
 			if ( isset( $options[$o] ) ) {
@@ -284,7 +274,7 @@ class MWHttpRequest {
 			Http::$httpEngine = function_exists( 'curl_init' ) ? 'curl' : 'php';
 		} elseif ( Http::$httpEngine == 'curl' && !function_exists( 'curl_init' ) ) {
 			throw new MWException( __METHOD__ . ': curl (http://php.net/curl) is not installed, but' .
-								   ' Http::$httpEngine is set to "curl"' );
+				' Http::$httpEngine is set to "curl"' );
 		}
 
 		switch( Http::$httpEngine ) {
@@ -328,14 +318,17 @@ class MWHttpRequest {
 	public function proxySetup() {
 		global $wgHTTPProxy;
 
-		if ( $this->proxy || !$this->noProxy ) {
+		// If there is an explicit proxy set and proxies are not disabled, then use it
+		if ( $this->proxy && !$this->noProxy ) {
 			return;
 		}
 
+		// Otherwise, fallback to $wgHTTPProxy/http_proxy (when set) if this is not a machine
+		// local URL and proxies are not disabled
 		if ( Http::isLocalURL( $this->url ) || $this->noProxy ) {
 			$this->proxy = '';
 		} elseif ( $wgHTTPProxy ) {
-			$this->proxy = $wgHTTPProxy ;
+			$this->proxy = $wgHTTPProxy;
 		} elseif ( getenv( "http_proxy" ) ) {
 			$this->proxy = getenv( "http_proxy" );
 		}
@@ -643,12 +636,12 @@ class MWHttpRequest {
 			$locations = $headers[ 'location' ];
 			$domain = '';
 			$foundRelativeURI = false;
-			$countLocations = count($locations);
+			$countLocations = count( $locations );
 
 			for ( $i = $countLocations - 1; $i >= 0; $i-- ) {
 				$url = parse_url( $locations[ $i ] );
 
-				if ( isset($url[ 'host' ]) ) {
+				if ( isset( $url['host'] ) ) {
 					$domain = $url[ 'scheme' ] . '://' . $url[ 'host' ];
 					break;	//found correct URI (with host)
 				} else {
@@ -728,13 +721,8 @@ class CurlHttpRequest extends MWHttpRequest {
 		}
 		$this->curlOptions[CURLOPT_USERAGENT] = $this->reqHeaders['User-Agent'];
 
-		if ( isset( $this->sslVerifyHost ) ) {
-			$this->curlOptions[CURLOPT_SSL_VERIFYHOST] = $this->sslVerifyHost;
-		}
-
-		if ( isset( $this->sslVerifyCert ) ) {
-			$this->curlOptions[CURLOPT_SSL_VERIFYPEER] = $this->sslVerifyCert;
-		}
+		$this->curlOptions[CURLOPT_SSL_VERIFYHOST] = $this->sslVerifyHost ? 2 : 0;
+		$this->curlOptions[CURLOPT_SSL_VERIFYPEER] = $this->sslVerifyCert;
 
 		if ( $this->caInfo ) {
 			$this->curlOptions[CURLOPT_CAINFO] = $this->caInfo;
@@ -827,7 +815,7 @@ class PhpHttpRequest extends MWHttpRequest {
 		parent::execute();
 
 		if ( is_array( $this->postData ) ) {
-			$this->postData = wfArrayToCGI( $this->postData );
+			$this->postData = wfArrayToCgi( $this->postData );
 		}
 
 		if ( $this->parsedUrl['scheme'] != 'http' &&

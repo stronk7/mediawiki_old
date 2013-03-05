@@ -128,7 +128,7 @@ abstract class ExternalUser {
 	 * @param $name string
 	 * @return bool Success?
 	 */
-	protected abstract function initFromName( $name );
+	abstract protected function initFromName( $name );
 
 	/**
 	 * Given an id, which was at some previous point in history returned by
@@ -138,7 +138,7 @@ abstract class ExternalUser {
 	 * @param $id string
 	 * @return bool Success?
 	 */
-	protected abstract function initFromId( $id );
+	abstract protected function initFromId( $id );
 
 	/**
 	 * Try to magically initialize the user from cookies or similar information
@@ -280,12 +280,12 @@ abstract class ExternalUser {
 	 *
 	 * @param $id int user_id
 	 */
-	public final function linkToLocal( $id ) {
+	final public function linkToLocal( $id ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->replace( 'external_user',
 			array( 'eu_local_id', 'eu_external_id' ),
 			array( 'eu_local_id' => $id,
-				   'eu_external_id' => $this->getId() ),
+				'eu_external_id' => $this->getId() ),
 			__METHOD__ );
 	}
 
@@ -294,7 +294,7 @@ abstract class ExternalUser {
 	 * a local user.
 	 * @return Mixed User if the account is linked, Null otherwise.
 	 */
-	public final function getLocalUser(){
+	final public function getLocalUser() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow(
 			'external_user',

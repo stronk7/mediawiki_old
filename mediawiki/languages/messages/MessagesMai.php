@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Amire80
  * @author Ashishanchinhar
  * @author Dhirendra.maithili
  * @author Ggajendra
@@ -160,7 +161,7 @@ $messages = array(
 'cancel' => 'समाप्त',
 'moredotdotdot' => 'आर...',
 'mypage' => 'हमर पन्ना',
-'mytalk' => 'हमर वार्त्ता',
+'mytalk' => 'वार्त्ता',
 'anontalk' => 'ऐ अनिकेत पता लेल विमर्श',
 'navigation' => 'संचार',
 'and' => '&#32;आर',
@@ -749,7 +750,6 @@ $2
 'template-semiprotected' => '(अर्ध-रक्षित)',
 'hiddencategories' => 'ई पन्ना सदस्य अछि {{PLURAL:$1|1 नुकाएल संवर्ग|$1 नुकाएल संवर्ग सभ}}:',
 'edittools-upload' => '-',
-'nocreatetitle' => 'पन्ना निर्माण सीमित',
 'nocreatetext' => '{{अन्तर्जाल}} नव पन्ना निर्माणक क्षमताकेँ सीमित कऽ देने अछि।
 अहाँ आपस जा सकै छी आ कोनो पन्नाकेँ सम्पादित कऽ सकै छी, वा [[Special:UserLogin|log in or create an account]]',
 'nocreate-loggedin' => 'अहाँकेँ नव पन्ना बनेबाक अधिकार नै अछि।',
@@ -1049,7 +1049,7 @@ $3 द्वारा देल कारण अछि ''$2''",
 
 # Preferences page
 'preferences' => 'विकल्प',
-'mypreferences' => 'हमर खासमखास',
+'mypreferences' => 'खासमखास',
 'prefs-edits' => 'सम्पादनक संख्या',
 'prefsnologin' => 'सम्प्रवेशित नै',
 'prefsnologintext' => 'अहाँ <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} logged in]</span> प्रयोक्ता विकल्प निर्धारण लेल प्रयोग करू।',
@@ -1280,12 +1280,13 @@ $3 द्वारा देल कारण अछि ''$2''",
 'right-sendemail' => 'ई-पत्र दोसर प्रयोक्ता लोकनिकेँ पठाउ',
 'right-passwordreset' => 'कूटशब्द पुनर्निर्धारण ई-पत्र देखू',
 
+# Special:Log/newusers
+'newuserlogpage' => 'प्रयोक्ता रचना वृत्तलेख',
+'newuserlogpagetext' => 'ई प्रयोक्ता निर्माणक वृत्तलेख अछि।',
+
 # User rights log
 'rightslog' => 'प्रयोक्ता अधिकार वृत्तलेख',
 'rightslogtext' => 'ई प्रयोक्ता अधिकार परिवर्तन सभक वृतलेख छी।',
-'rightslogentry' => 'वर्गक सदस्यता बदलल गेल $1 लेल $2 सँ $3',
-'rightslogentry-autopromote' => 'स्वयंचालित रूपमे $2 सँ $3 मे पदोन्नत भेल',
-'rightsnone' => '(कोनो नै)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'ई पन्ना पढ़ू',
@@ -1868,10 +1869,6 @@ $1',
 'activeusers-hidesysops' => 'संचालक नुकाउ',
 'activeusers-noresult' => 'कोनो प्रयोक्ता नै भेटल',
 
-# Special:Log/newusers
-'newuserlogpage' => 'प्रयोक्ता रचना वृत्तलेख',
-'newuserlogpagetext' => 'ई प्रयोक्ता निर्माणक वृत्तलेख अछि।',
-
 # Special:ListGroupRights
 'listgrouprights' => 'प्रयोक्ता संवर्ग अधिकार',
 'listgrouprights-summary' => 'ई सभ प्रयोक्ता संवर्गक एकटा सूची अछि जे ऐ विकीपरपरिभाषित अछि ओकर संसर्गित प्रवेश अधिकारक संग।
@@ -1928,8 +1925,8 @@ $1',
 'usermessage-template' => 'मीडियाविकी:प्रयोक्ता संदेश',
 
 # Watchlist
-'watchlist' => 'हमर साकांक्षसूची',
-'mywatchlist' => 'हमर साकांक्ष-सूची',
+'watchlist' => 'साकांक्षसूची',
+'mywatchlist' => 'साकांक्ष-सूची',
 'watchlistfor2' => '$1 $2 लेल',
 'nowatchlist' => 'अहाँक साकांक्ष-सूचीमे कोनो बौस्तु नै अछि।',
 'watchlistanontext' => 'कृपा कऽ $1 अहाँक साकांक्ष-सूचीकेँ देखबा वा सम्पादित करबा लेल।',
@@ -1998,6 +1995,8 @@ $UNWATCHURL
 
 अपन अनुभव बतेबा वा कोनो सहायता लेल:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'बनाएल गेल',
+'changed' => 'बदलल गेल',
 
 # Delete
 'deletepage' => 'पन्ना मेटाउ',
@@ -2184,7 +2183,7 @@ $1',
 # Contributions
 'contributions' => 'प्रयोक्ताक योगदान सभ',
 'contributions-title' => '$1 लेल प्रयोक्ताक अवदान',
-'mycontris' => 'हमर योगदान',
+'mycontris' => 'योगदान',
 'contribsub2' => '$1 ($2) लेल',
 'nocontribs' => 'कोनो परिवर्तन ऐ सँ मेल नै खाइए।',
 'uctop' => '(शिखर)',
@@ -2225,7 +2224,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 घुरबैए',
 'whatlinkshere-hidetrans' => '$1 परागत',
 'whatlinkshere-hidelinks' => '$1 सम्बन्ध सभ',
-'whatlinkshere-hideimages' => '$1 चित्रक लागि सभ',
+'whatlinkshere-hideimages' => '$1 फाइल लागि सभ',
 'whatlinkshere-filters' => 'चलनी सभ',
 
 # Block/unblock
@@ -3529,7 +3528,7 @@ $5
 'logentry-newusers-create' => '$1 {{लिंग:$2|बनाएल}} एकटा प्रयोक्ता खाता',
 'logentry-newusers-create2' => '$1 {{लिंग:$2|बनाएल}} {{लिंग:$4|एकटा प्रयोक्ता खाता}} $3',
 'logentry-newusers-autocreate' => 'खाता $1 छल {{लिंग:$2|बनाएल}} स्वतः',
-'newuserlog-byemail' => 'कूटशब्द ई-पत्र द्वारा पठाएल गेल',
+'rightsnone' => '(कोनो नै)',
 
 # API errors
 'api-error-badaccess-groups' => 'अहि विकी सें अहां कोनो प्रारूप लोड नहि क सकब.',

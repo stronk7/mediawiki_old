@@ -6,6 +6,20 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	public $runDisabled = false;
 
 	/**
+	 * $called tracks whether the setUp and tearDown method has been called.
+	 * class extending MediaWikiTestCase usually override setUp and tearDown
+	 * but forget to call the parent.
+	 *
+	 * The array format takes a method name as key and anything as a value.
+	 * By asserting the key exist, we know the child class has called the
+	 * parent.
+	 *
+	 * This property must be private, we do not want child to override it,
+	 * they should call the appropriate parent method instead.
+	 */
+	private $called = array();
+
+	/**
 	 * @var Array of TestUser
 	 */
 	public static $users;
@@ -57,7 +71,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		$this->backupStaticAttributes = false;
 	}
 
-	function run( PHPUnit_Framework_TestResult $result = NULL ) {
+	function run( PHPUnit_Framework_TestResult $result = null ) {
 		/* Some functions require some kind of caching, and will end up using the db,
 		 * which we can't allow, as that would open a new connection for mysql.
 		 * Replace with a HashBag. They would not be going to persist anyway.
@@ -67,17 +81,17 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		$needsResetDB = false;
 		$logName = get_class( $this ) . '::' . $this->getName( false );
 
-		if( $this->needsDB() ) {
+		if ( $this->needsDB() ) {
 			// set up a DB connection for this test to use
 
 			self::$useTemporaryTables = !$this->getCliArg( 'use-normal-tables' );
-			self::$reuseDB = $this->getCliArg('reuse-db');
+			self::$reuseDB = $this->getCliArg( 'reuse-db' );
 
 			$this->db = wfGetDB( DB_MASTER );
 
 			$this->checkDbIsSupported();
 
-			if( !self::$dbSetup ) {
+			if ( !self::$dbSetup ) {
 				wfProfileIn( $logName . ' (clone-db)' );
 
 				// switch to a temporary clone of the database
@@ -102,7 +116,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		parent::run( $result );
 		wfProfileOut( $logName );
 
-		if( $needsResetDB ) {
+		if ( $needsResetDB ) {
 			wfProfileIn( $logName . ' (reset-db)' );
 			$this->resetDB();
 			wfProfileOut( $logName . ' (reset-db)' );
@@ -150,6 +164,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		wfProfileIn( __METHOD__ );
 		parent::setUp();
+		$this->called['setUp'] = 1;
 
 		/*
 		//@todo: global variables to restore for *every* test
@@ -171,11 +186,14 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		// Clean up open transactions
 		if ( $this->needsDB() && $this->db ) {
-			while( $this->db->trxLevel() > 0 ) {
+			// Clean up open transactions
+			while ( $this->db->trxLevel() > 0 ) {
 				$this->db->rollback();
 			}
+
+			// don't ignore DB errors
+			$this->db->ignoreErrors( false );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -193,11 +211,14 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		// Clean up open transactions
 		if ( $this->needsDB() && $this->db ) {
-			while( $this->db->trxLevel() > 0 ) {
+			// Clean up open transactions
+			while ( $this->db->trxLevel() > 0 ) {
 				$this->db->rollback();
 			}
+
+			// don't ignore DB errors
+			$this->db->ignoreErrors( false );
 		}
 
 		// Restore mw globals
@@ -208,6 +229,16 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 		parent::tearDown();
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Make sure MediaWikiTestCase extending classes have called their
+	 * parent setUp method
+	 */
+	final public function testMediaWikiTestCaseParentSetupCalled() {
+		$this->assertArrayHasKey( 'setUp', $this->called,
+			get_called_class() . "::setUp() must call parent::setUp()"
+		);
 	}
 
 	/**
@@ -245,7 +276,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function setMwGlobals( $pairs, $value = null ) {
 
 		// Normalize (string, value) to an array
-		if( is_string( $pairs ) ) {
+		if ( is_string( $pairs ) ) {
 			$pairs = array( $pairs => $value );
 		}
 
@@ -325,8 +356,8 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			# Insert 0 user to prevent FK violations
 			# Anonymous user
 			$this->db->insert( 'user', array(
-				'user_id' 		=> 0,
-				'user_name'   	=> 'Anonymous' ), __METHOD__, array( 'IGNORE' ) );
+				'user_id' => 0,
+				'user_name' => 'Anonymous' ), __METHOD__, array( 'IGNORE' ) );
 
 			# Insert 0 page to prevent FK violations
 			# Blank page
@@ -334,7 +365,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 				'page_id' => 0,
 				'page_namespace' => 0,
 				'page_title' => ' ',
-				'page_restrictions' => NULL,
+				'page_restrictions' => null,
 				'page_counter' => 0,
 				'page_is_redirect' => 0,
 				'page_is_new' => 0,
@@ -440,20 +471,24 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 * Empty all tables so they can be repopulated for tests
 	 */
 	private function resetDB() {
-		if( $this->db ) {
-			if ( $this->db->getType() == 'oracle' )  {
+		if ( $this->db ) {
+			if ( $this->db->getType() == 'oracle' ) {
 				if ( self::$useTemporaryTables ) {
 					wfGetLB()->closeAll();
 					$this->db = wfGetDB( DB_MASTER );
 				} else {
-					foreach( $this->tablesUsed as $tbl ) {
-						if( $tbl == 'interwiki') continue;
-						$this->db->query( 'TRUNCATE TABLE '.$this->db->tableName($tbl), __METHOD__ );
+					foreach ( $this->tablesUsed as $tbl ) {
+						if ( $tbl == 'interwiki' ) {
+							continue;
+						}
+						$this->db->query( 'TRUNCATE TABLE ' . $this->db->tableName( $tbl ), __METHOD__ );
 					}
 				}
 			} else {
-				foreach( $this->tablesUsed as $tbl ) {
-					if( $tbl == 'interwiki' || $tbl == 'user' ) continue;
+				foreach ( $this->tablesUsed as $tbl ) {
+					if ( $tbl == 'interwiki' || $tbl == 'user' ) {
+						continue;
+					}
 					$this->db->delete( $tbl, '*', __METHOD__ );
 				}
 			}
@@ -469,9 +504,9 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		);
 
 		if ( method_exists( $this->suite, $func ) ) {
-			return call_user_func_array( array( $this->suite, $func ), $args);
+			return call_user_func_array( array( $this->suite, $func ), $args );
 		} elseif ( isset( $compatibility[$func] ) ) {
-			return call_user_func_array( array( $this, $compatibility[$func] ), $args);
+			return call_user_func_array( array( $this, $compatibility[$func] ), $args );
 		} else {
 			throw new MWException( "Called non-existant $func method on "
 				. get_class( $this ) );
@@ -482,12 +517,12 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		return $this->assertTrue( $value == '', $msg );
 	}
 
-	static private function unprefixTable( $tableName ) {
+	private static function unprefixTable( $tableName ) {
 		global $wgDBprefix;
 		return substr( $tableName, strlen( $wgDBprefix ) );
 	}
 
-	static private function isNotUnittest( $table ) {
+	private static function isNotUnittest( $table ) {
 		return strpos( $table, 'unittest_' ) !== 0;
 	}
 
@@ -512,14 +547,14 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function checkDbIsSupported() {
-		if( !in_array( $this->db->getType(), $this->supportedDBs ) ) {
+		if ( !in_array( $this->db->getType(), $this->supportedDBs ) ) {
 			throw new MWException( $this->db->getType() . " is not currently supported for unit testing." );
 		}
 	}
 
 	public function getCliArg( $offset ) {
 
-		if( isset( MediaWikiPHPUnitCommand::$additionalOptions[$offset] ) ) {
+		if ( isset( MediaWikiPHPUnitCommand::$additionalOptions[$offset] ) ) {
 			return MediaWikiPHPUnitCommand::$additionalOptions[$offset];
 		}
 
@@ -564,7 +599,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function assertSelect( $table, $fields, $condition, array $expectedRows ) {
 		if ( !$this->needsDB() ) {
 			throw new MWException( 'When testing database state, the test cases\'s needDB()' .
-				' method should return true. Use @group Database or $this->tablesUsed.');
+				' method should return true. Use @group Database or $this->tablesUsed.' );
 		}
 
 		$db = wfGetDB( DB_SLAVE );
@@ -603,7 +638,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 */
 	protected function arrayWrap( array $elements ) {
 		return array_map(
-			function( $element ) {
+			function ( $element ) {
 				return array( $element );
 			},
 			$elements
@@ -651,9 +686,9 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 * @param String $actual HTML on oneline
 	 * @param String $msg Optional message
 	 */
-	protected function assertHTMLEquals( $expected, $actual, $msg='' ) {
+	protected function assertHTMLEquals( $expected, $actual, $msg = '' ) {
 		$expected = str_replace( '>', ">\n", $expected );
-		$actual   = str_replace( '>', ">\n", $actual   );
+		$actual = str_replace( '>', ">\n", $actual );
 
 		$this->assertEquals( $expected, $actual, $msg );
 	}
@@ -668,7 +703,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function objectAssociativeSort( array &$array ) {
 		uasort(
 			$array,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				return serialize( $a ) > serialize( $b ) ? 1 : -1;
 			}
 		);
@@ -711,8 +746,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function assertTypeOrValue( $type, $actual, $value = false, $message = '' ) {
 		if ( $actual === $value ) {
 			$this->assertTrue( true, $message );
-		}
-		else {
+		} else {
 			$this->assertType( $type, $actual, $message );
 		}
 	}
@@ -731,8 +765,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function assertType( $type, $actual, $message = '' ) {
 		if ( class_exists( $type ) || interface_exists( $type ) ) {
 			$this->assertInstanceOf( $type, $actual, $message );
-		}
-		else {
+		} else {
 			$this->assertInternalType( $type, $actual, $message );
 		}
 	}
@@ -785,7 +818,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 		$namespaces = array_diff( $namespaces, array(
 			NS_FILE, NS_CATEGORY, NS_MEDIAWIKI, NS_USER // don't mess with magic namespaces
-		));
+		) );
 
 		$talk = array_filter( $namespaces, function ( $ns ) {
 			return MWNamespace::isTalk( $ns );
@@ -798,7 +831,8 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		// check default content model of each namespace
 		foreach ( $namespaces as $ns ) {
 			if ( !isset( $wgNamespaceContentModels[$ns] ) ||
-				$wgNamespaceContentModels[$ns] === CONTENT_MODEL_WIKITEXT ) {
+				$wgNamespaceContentModels[$ns] === CONTENT_MODEL_WIKITEXT
+			) {
 
 				$wikitextNS = $ns;
 				return $wikitextNS;
@@ -826,9 +860,49 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		$haveDiff3 = $wgDiff3 && file_exists( $wgDiff3 );
 		wfRestoreWarnings();
 
-		if( !$haveDiff3 ) {
+		if ( !$haveDiff3 ) {
 			$this->markTestSkipped( "Skip test, since diff3 is not configured" );
 		}
+	}
+
+	/**
+	 * Check whether we have the 'gzip' commandline utility, will skip
+	 * the test whenever "gzip -V" fails.
+	 *
+	 * Result is cached at the process level.
+	 *
+	 * @return bool
+	 *
+	 * @since 1.21
+	 */
+	protected function checkHasGzip() {
+		static $haveGzip;
+
+		if ( $haveGzip === null ) {
+			$retval = null;
+			wfShellExec( 'gzip -V', $retval );
+			$haveGzip = ( $retval === 0 );
+		}
+
+		if ( !$haveGzip ) {
+			$this->markTestSkipped( "Skip test, requires the gzip utility in PATH" );
+		}
+
+		return $haveGzip;
+	}
+
+	/**
+	 * Check if $extName is a loaded PHP extension, will skip the
+	 * test whenever it is not loaded.
+	 *
+	 * @since 1.21
+	 */
+	protected function checkPHPExtension( $extName ) {
+		$loaded = extension_loaded( $extName );
+		if ( !$loaded ) {
+			$this->markTestSkipped( "PHP extension '$extName' is not loaded, skipping." );
+		}
+		return $loaded;
 	}
 
 	/**
@@ -846,8 +920,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 		try {
 			call_user_func( $code );
-		}
-		catch ( Exception $pokemons ) {
+		} catch ( Exception $pokemons ) {
 			// Gotta Catch 'Em All!
 		}
 

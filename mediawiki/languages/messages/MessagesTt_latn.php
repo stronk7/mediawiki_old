@@ -731,7 +731,6 @@ Asta küzätü köndälegendäge soñğı yazma birelgän:",
 'template-protected' => '(yaqlanğan)',
 'template-semiprotected' => '(öleşçä yaqlanğan)',
 'hiddencategories' => 'Bu bit $1 {{PLURAL:$1|yäşeren törkemgä}} kerä:',
-'nocreatetitle' => 'Bitlär tözü çiklängän',
 'nocreatetext' => '{{SITENAME}}: saytta yaña bitlär tözü çiklängän.
 Sez artqa qaytıp, tözelgän bitne üzgärtä alasız. [[Special:UserLogin|Kerergä yäisä terkälergä]] täğdim itelä.',
 'nocreate-loggedin' => 'Sezgä yaña bitlär tözü xoquqı birelmägän.',
@@ -1114,10 +1113,12 @@ Ul $1 {{PLURAL:$1|xäreftän}} kübräk bulırğa tieş tügel.',
 'right-delete' => 'bitlärne beterü',
 'right-editinterface' => 'Qullanuçı interfeysın üzgärtü',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Qullanuçılarnı terkäw köndälege',
+'newuserlogpagetext' => 'Yaña terkälgän qullanuçılar isemlege',
+
 # User rights log
 'rightslog' => 'Qullanuçınıñ xoquqları köndälege',
-'rightslogentry' => '$1 qullanuçısın $2 gruppasınnan $3 gruppasına küçerde',
-'rightsnone' => '(yuq)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'bu bitne üzgärtergä',
@@ -1464,10 +1465,6 @@ Asta [[Special:UnusedCategories|qullanılmağan törkemnär]] kärsätelgän.
 'activeusers-hidesysops' => 'İdaräçelärne yäşer',
 'activeusers-noresult' => 'Qullanuçılar tabılmadı.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Qullanuçılarnı terkäw köndälege',
-'newuserlogpagetext' => 'Yaña terkälgän qullanuçılar isemlege',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Qullanuçı törkemnäreneñ xoquqları',
 'listgrouprights-group' => 'Törkem',
@@ -1538,6 +1535,8 @@ $UNWATCHURL
 
 Elemtä häm yärdäm:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'tözergän',
+'changed' => 'üzgärtelde',
 
 # Delete
 'deletepage' => 'Bitne beterü',
@@ -2187,6 +2186,6 @@ Yulnıñ berençe sıltaması quyma öçen tıyılğan räsemgä sıltama bulır
 
 # New logging system
 'revdelete-restricted' => 'çikläwlär idaräçelärgä dä qullanıla',
-'newuserlog-byemail' => 'sersüz elektron poçta aşa cibärelde',
+'rightsnone' => '(yuq)',
 
 );

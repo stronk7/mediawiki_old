@@ -169,7 +169,7 @@ class SkinTemplate extends Skin {
 			unset( $query['returnto'] );
 			unset( $query['returntoquery'] );
 		}
-		$this->thisquery = wfArrayToCGI( $query );
+		$this->thisquery = wfArrayToCgi( $query );
 		$this->loggedin = $user->isLoggedIn();
 		$this->username = $user->getName();
 
@@ -219,7 +219,7 @@ class SkinTemplate extends Skin {
 		if ( $subpagestr !== '' ) {
 			$subpagestr = '<span class="subpages">' . $subpagestr . '</span>';
 		}
-		$tpl->set( 'subtitle',  $subpagestr . $out->getSubtitle() );
+		$tpl->set( 'subtitle', $subpagestr . $out->getSubtitle() );
 
 		$undelete = $this->getUndeleteLink();
 		if ( $undelete === '' ) {
@@ -403,7 +403,7 @@ class SkinTemplate extends Skin {
 			$pageLang = $title->getPageViewLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
 			$realBodyAttribs['dir'] = $pageLang->getDir();
-			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir();
+			$realBodyAttribs['class'] = 'mw-content-' . $pageLang->getDir();
 		}
 
 		$out->mBodytext = Html::rawElement( 'div', $realBodyAttribs, $out->mBodytext );
@@ -413,25 +413,28 @@ class SkinTemplate extends Skin {
 		$language_urls = array();
 
 		if ( !$wgHideInterlanguageLinks ) {
-			foreach( $out->getLanguageLinks() as $l ) {
-				$tmp = explode( ':', $l, 2 );
-				$class = 'interwiki-' . $tmp[0];
-				unset( $tmp );
-				$nt = Title::newFromText( $l );
-				if ( $nt ) {
-					$ilLangName = Language::fetchLanguageName( $nt->getInterwiki() );
+			foreach( $out->getLanguageLinks() as $languageLinkText ) {
+				$languageLinkParts = explode( ':', $languageLinkText, 2 );
+				$class = 'interwiki-' . $languageLinkParts[0];
+				unset( $languageLinkParts );
+				$languageLinkTitle = Title::newFromText( $languageLinkText );
+				if ( $languageLinkTitle ) {
+					$ilInterwikiCode = $languageLinkTitle->getInterwiki();
+					$ilLangName = Language::fetchLanguageName( $ilInterwikiCode );
+
 					if ( strval( $ilLangName ) === '' ) {
-						$ilLangName = $l;
+						$ilLangName = $languageLinkText;
 					} else {
 						$ilLangName = $this->formatLanguageName( $ilLangName );
 					}
+
 					$language_urls[] = array(
-						'href' => $nt->getFullURL(),
+						'href' => $languageLinkTitle->getFullURL(),
 						'text' => $ilLangName,
-						'title' => $nt->getText(),
+						'title' => $languageLinkTitle->getText(),
 						'class' => $class,
-						'lang' => $nt->getInterwiki(),
-						'hreflang' => $nt->getInterwiki(),
+						'lang' => $ilInterwikiCode,
+						'hreflang' => $ilInterwikiCode
 					);
 				}
 			}
@@ -574,7 +577,7 @@ class SkinTemplate extends Skin {
 			$a['wpStickHTTPS'] = true;
 		}
 
-		$returnto = wfArrayToCGI( $a );
+		$returnto = wfArrayToCgi( $a );
 		if( $this->loggedin ) {
 			$personal_urls['userpage'] = array(
 				'text' => $this->username,
@@ -690,12 +693,14 @@ class SkinTemplate extends Skin {
 	}
 
 	/**
-	 * TODO document
-	 * @param  $title Title
-	 * @param  $message String message key
-	 * @param  $selected Bool
-	 * @param  $query String
-	 * @param  $checkEdit Bool
+	 * Builds an array with tab definition
+	 *
+	 * @param Title $title page where the tab links to
+	 * @param string|array $message message key or an array of message keys (will fall back)
+	 * @param boolean $selected display the tab as selected
+	 * @param string $query query string attached to tab URL
+	 * @param boolean $checkEdit check if $title exists and mark with .new if one doesn't
+	 *
 	 * @return array
 	 */
 	function tabAction( $title, $message, $selected, $query = '', $checkEdit = false ) {
@@ -705,7 +710,11 @@ class SkinTemplate extends Skin {
 		}
 		if( $checkEdit && !$title->isKnown() ) {
 			$classes[] = 'new';
-			$query = 'action=edit&redlink=1';
+			if ( $query !== '' ) {
+				$query = 'action=edit&redlink=1&' . $query;
+			} else {
+				$query = 'action=edit&redlink=1';
+			}
 		}
 
 		// wfMessageFallback will nicely accept $message as an array of fallbacks
@@ -957,7 +966,7 @@ class SkinTemplate extends Skin {
 					}
 				}
 
-				if ( $title->getNamespace() !== NS_MEDIAWIKI && $title->quickUserCan( 'protect', $user ) ) {
+				if ( $title->getNamespace() !== NS_MEDIAWIKI && $title->quickUserCan( 'protect', $user ) && $title->getRestrictionTypes() ) {
 					$mode = $title->isProtected() ? 'unprotect' : 'protect';
 					$content_navigation['actions'][$mode] = array(
 						'class' => ( $onPage && $action == $mode ) ? 'selected' : false,
@@ -1002,6 +1011,12 @@ class SkinTemplate extends Skin {
 					// Gets preferred variant (note that user preference is
 					// only possible for wiki content language variant)
 					$preferred = $pageLang->getPreferredVariant();
+					if ( Action::getActionName( $this ) === 'view' ) {
+						$params = $request->getQueryValues();
+						unset( $params['title'] );
+					} else {
+						$params = array();
+					}
 					// Loops over each variant
 					foreach( $variants as $code ) {
 						// Gets variant name from language code
@@ -1015,7 +1030,7 @@ class SkinTemplate extends Skin {
 						$content_navigation['variants'][] = array(
 							'class' => ( $code == $preferred ) ? 'selected' : false,
 							'text' => $varname,
-							'href' => $title->getLocalURL( array( 'variant' => $code ) ),
+							'href' => $title->getLocalURL( array( 'variant' => $code ) + $params ),
 							'lang' => $code,
 							'hreflang' => $code
 						);
@@ -1036,7 +1051,7 @@ class SkinTemplate extends Skin {
 		}
 
 		// Equiv to SkinTemplateContentActions
-		wfRunHooks( 'SkinTemplateNavigation::Universal', array( &$this,  &$content_navigation ) );
+		wfRunHooks( 'SkinTemplateNavigation::Universal', array( &$this, &$content_navigation ) );
 
 		// Setup xml ids and tooltip info
 		foreach ( $content_navigation as $section => &$links ) {

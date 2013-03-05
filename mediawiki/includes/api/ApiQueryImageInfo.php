@@ -30,6 +30,8 @@
  * @ingroup API
  */
 class ApiQueryImageInfo extends ApiQueryBase {
+	const TRANSFORM_LIMIT = 50;
+	private static $transformCount = 0;
 
 	public function __construct( $query, $moduleName, $prefix = 'ii' ) {
 		// We allow a subclass to override the prefix, to create a related API module.
@@ -52,14 +54,10 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			$titles = array_keys( $pageIds[NS_FILE] );
 			asort( $titles ); // Ensure the order is always the same
 
-			$skip = false;
+			$fromTitle = null;
 			if ( !is_null( $params['continue'] ) ) {
-				$skip = true;
 				$cont = explode( '|', $params['continue'] );
-				if ( count( $cont ) != 2 ) {
-					$this->dieUsage( 'Invalid continue param. You should pass the original ' .
-							'value returned by the previous query', '_badcontinue' );
-				}
+				$this->dieContinueUsageIf( count( $cont ) != 2 );
 				$fromTitle = strval( $cont[0] );
 				$fromTimestamp = $cont[1];
 				// Filter out any titles before $fromTitle
@@ -79,14 +77,33 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			} else {
 				$images = RepoGroup::singleton()->findFiles( $titles );
 			}
-			foreach ( $images as $img ) {
-				// Skip redirects
-				if ( $img->getOriginalTitle()->isRedirect() ) {
+			foreach ( $titles as $title ) {
+				$pageId = $pageIds[NS_FILE][$title];
+				$start = $title === $fromTitle ? $fromTimestamp : $params['start'];
+
+				if ( !isset( $images[$title] ) ) {
+					$result->addValue(
+						array( 'query', 'pages', intval( $pageId ) ),
+						'imagerepository', ''
+					);
+					// The above can't fail because it doesn't increase the result size
 					continue;
 				}
 
-				$start = $skip ? $fromTimestamp : $params['start'];
-				$pageId = $pageIds[NS_FILE][ $img->getOriginalTitle()->getDBkey() ];
+				$img = $images[$title];
+
+				if ( self::getTransformCount() >= self::TRANSFORM_LIMIT ) {
+					if ( count( $pageIds[NS_FILE] ) == 1 ) {
+						// See the 'the user is screwed' comment below
+						$this->setContinueEnumParameter( 'start',
+							$start !== null ? $start : wfTimestamp( TS_ISO_8601, $img->getTimestamp() )
+						);
+					} else {
+						$this->setContinueEnumParameter( 'continue',
+							$this->getContinueStr( $img, $start ) );
+					}
+					break;
+				}
 
 				$fit = $result->addValue(
 					array( 'query', 'pages', intval( $pageId ) ),
@@ -100,10 +117,11 @@ class ApiQueryImageInfo extends ApiQueryBase {
 						// thing again. When the violating queries have been
 						// out-continued, the result will get through
 						$this->setContinueEnumParameter( 'start',
-							wfTimestamp( TS_ISO_8601, $img->getTimestamp() ) );
+							$start !== null ? $start : wfTimestamp( TS_ISO_8601, $img->getTimestamp() )
+						);
 					} else {
 						$this->setContinueEnumParameter( 'continue',
-							$this->getContinueStr( $img ) );
+							$this->getContinueStr( $img, $start ) );
 					}
 					break;
 				}
@@ -167,18 +185,6 @@ class ApiQueryImageInfo extends ApiQueryBase {
 				if ( !$fit ) {
 					break;
 				}
-				$skip = false;
-			}
-
-			$data = $this->getResultData();
-			foreach ( $data['query']['pages'] as $pageid => $arr ) {
-				if ( is_array( $arr ) && !isset( $arr['imagerepository'] ) ) {
-					$result->addValue(
-						array( 'query', 'pages', $pageid ),
-						'imagerepository', ''
-					);
-				}
-				// The above can't fail because it doesn't increase the result size
 			}
 		}
 	}
@@ -346,6 +352,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 		if ( $url ) {
 			if ( !is_null( $thumbParams ) ) {
 				$mto = $file->transform( $thumbParams );
+				self::$transformCount++;
 				if ( $mto && !$mto->isError() ) {
 					$vals['thumburl'] = wfExpandUrl( $mto->getUrl(), PROTO_CURRENT );
 
@@ -406,6 +413,17 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	}
 
 	/**
+	 * Get the count of image transformations performed
+	 *
+	 * If this is >= TRANSFORM_LIMIT, you should probably stop processing images.
+	 *
+	 * @return integer count
+	 */
+	static function getTransformCount() {
+		return self::$transformCount;
+	}
+
+	/**
 	 *
 	 * @param $metadata Array
 	 * @param $result ApiResult
@@ -436,9 +454,11 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	 * @param $img File
 	 * @return string
 	 */
-	protected function getContinueStr( $img ) {
-		return $img->getOriginalTitle()->getText() .
-			'|' .  $img->getTimestamp();
+	protected function getContinueStr( $img, $start = null ) {
+		if ( $start === null ) {
+			$start = $img->getTimestamp();
+		}
+		return $img->getOriginalTitle()->getText() . '|' . $start;
 	}
 
 	public function getAllowedParams() {
@@ -542,7 +562,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 		return array(
 			'prop' => self::getPropertyDescriptions( array(), $p ),
 			'urlwidth' => array( "If {$p}prop=url is set, a URL to an image scaled to this width will be returned.",
-					    'Only the current version of the image can be scaled' ),
+						'Only the current version of the image can be scaled' ),
 			'urlheight' => "Similar to {$p}urlwidth. Cannot be used without {$p}urlwidth",
 			'urlparam' => array( "A handler specific parameter string. For example, pdf's ",
 				"might use 'page15-100px'. {$p}urlwidth must be used and be consistent with {$p}urlparam" ),
@@ -704,9 +724,5 @@ class ApiQueryImageInfo extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Properties#imageinfo_.2F_ii';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

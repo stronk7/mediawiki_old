@@ -1,5 +1,7 @@
 <?php
 /**
+ * Content object for wiki text pages.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -21,6 +23,12 @@
  * @ingroup Content
  *
  * @author Daniel Kinzler
+ */
+
+/**
+ * Content object for wiki text pages.
+ *
+ * @ingroup Content
  */
 class WikitextContent extends TextContent {
 
@@ -63,6 +71,7 @@ class WikitextContent extends TextContent {
 		$text = $with->getNativeData();
 
 		if ( $section === '' ) {
+			wfProfileOut( __METHOD__ );
 			return $with; # XXX: copy first?
 		} if ( $section == 'new' ) {
 			# Inserting a new section
@@ -232,7 +241,7 @@ class WikitextContent extends TextContent {
 			case 'any':
 				return true;
 			case 'comma':
-				return strpos( $text,  ',' ) !== false;
+				return strpos( $text, ',' ) !== false;
 			case 'link':
 				if ( $hasLinks === null ) { # not known, find out
 					if ( !$title ) {

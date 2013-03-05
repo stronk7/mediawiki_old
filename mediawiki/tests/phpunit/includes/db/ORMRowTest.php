@@ -43,19 +43,19 @@ abstract class ORMRowTest extends \MediaWikiTestCase {
 	 * @since 1.20
 	 * @return string
 	 */
-	protected abstract function getRowClass();
+	abstract protected function getRowClass();
 
 	/**
 	 * @since 1.20
 	 * @return IORMTable
 	 */
-	protected abstract function getTableInstance();
+	abstract protected function getTableInstance();
 
 	/**
 	 * @since 1.20
 	 * @return array
 	 */
-	public abstract function constructorTestProvider();
+	abstract public function constructorTestProvider();
 
 	/**
 	 * @since 1.20
@@ -136,7 +136,7 @@ abstract class ORMRowTest extends \MediaWikiTestCase {
 	/**
 	 * @dataProvider constructorTestProvider
 	 */
-	public function testSave( array $data, $loadDefaults ) {
+	public function testSaveAndRemove( array $data, $loadDefaults ) {
 		$item = $this->getRowInstance( $data, $loadDefaults );
 
 		$this->assertTrue( $item->save() );
@@ -151,14 +151,6 @@ abstract class ORMRowTest extends \MediaWikiTestCase {
 		$this->assertEquals( $id, $item->getId() );
 
 		$this->verifyFields( $item, $data );
-	}
-
-	/**
-	 * @dataProvider constructorTestProvider
-	 * @depends testSave
-	 */
-	public function testRemove( array $data, $loadDefaults ) {
-		$item = $this->getRowInstance( $data, $loadDefaults );
 
 		$this->assertTrue( $item->remove() );
 

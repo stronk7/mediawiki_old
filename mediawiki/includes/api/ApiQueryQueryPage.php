@@ -211,7 +211,7 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
-			 array( 'specialpage-cantexecute' )
+			array( 'specialpage-cantexecute' )
 		) );
 	}
 
@@ -219,9 +219,5 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 		return array(
 			'api.php?action=query&list=querypage&qppage=Ancientpages'
 		);
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

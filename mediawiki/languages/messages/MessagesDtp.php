@@ -730,7 +730,6 @@ Mangakaun ko nogi do sinuratannu iti mopori, toi dinalin iri mantad domin ginumu
 'template-protected' => '(tingoligai)',
 'template-semiprotected' => '(noumoligan)',
 'hiddencategories' => 'Bolikon diti songkoruhang do {{PLURAL:$1|1 katogori poinlisok|$1 kakatogori poinlisok}}:',
-'nocreatetitle' => 'Momonsoi bolikon wagu pinatagal',
 'nocreatetext' => '{{SITENAME}} tinagal kasagaan momonsoi bobolikon kawawagu.
 Milo ko do gumuli om mongidit di bolikon poinsuang, toi ko [[Special:UserLogin|sumuang log toi momonsoi do takaun.]].',
 'nocreate-loggedin' => 'Ingaa kasagaannu do momonsoi bobolikon wagu.',
@@ -1043,6 +1042,9 @@ Imurai no do indik suang diti {{SITENAME}} nopo nga nokolipas.',
 
 'grouppage-sysop' => '{{ns:project}}:Mandur',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Log pinamansaian momomoguno',
+
 # User rights log
 'rightslog' => 'Log kasagaan momomoguno',
 
@@ -1201,9 +1203,6 @@ Kointalangan dilo [$2 kointalangan pail] okito id siriba.',
 'linksearch-ns' => 'Ponuratan ngaran:',
 'linksearch-ok' => 'Ihumo',
 'linksearch-line' => '$1 toput mantad $2',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Log pinamansaian momomoguno',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(lis do kinoruhangan)',

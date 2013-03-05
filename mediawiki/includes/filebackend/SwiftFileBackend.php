@@ -46,6 +46,10 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $swiftCDNExpiry; // integer; how long to cache things in the CDN
 	protected $swiftCDNPurgable; // boolean; whether object CDN purging is enabled
 
+	// Rados Gateway specific options
+	protected $rgwS3AccessKey; // string; S3 access key
+	protected $rgwS3SecretKey; // string; S3 authentication key
+
 	/** @var CF_Connection */
 	protected $conn; // Swift connection handle
 	protected $sessionStarted = 0; // integer UNIX timestamp
@@ -87,6 +91,16 @@ class SwiftFileBackend extends FileBackendStore {
 	 *   - cacheAuthInfo      : Whether to cache authentication tokens in APC, XCache, ect.
 	 *                          If those are not available, then the main cache will be used.
 	 *                          This is probably insecure in shared hosting environments.
+	 *   - rgwS3AccessKey     : Ragos Gateway S3 "access key" value on the account.
+	 *                          Do not set this until it has been set in the backend.
+	 *                          This is used for generating expiring pre-authenticated URLs.
+	 *                          Only use this when using rgw and to work around
+	 *                          http://tracker.newdream.net/issues/3454.
+	 *   - rgwS3SecretKey     : Ragos Gateway S3 "secret key" value on the account.
+	 *                          Do not set this until it has been set in the backend.
+	 *                          This is used for generating expiring pre-authenticated URLs.
+	 *                          Only use this when using rgw and to work around
+	 *                          http://tracker.newdream.net/issues/3454.
 	 */
 	public function __construct( array $config ) {
 		parent::__construct( $config );
@@ -122,13 +136,19 @@ class SwiftFileBackend extends FileBackendStore {
 		$this->swiftCDNPurgable = isset( $config['swiftCDNPurgable'] )
 			? $config['swiftCDNPurgable']
 			: true;
+		$this->rgwS3AccessKey = isset( $config['rgwS3AccessKey'] )
+			? $config['rgwS3AccessKey']
+			: '';
+		$this->rgwS3SecretKey = isset( $config['rgwS3SecretKey'] )
+			? $config['rgwS3SecretKey']
+			: '';
 		// Cache container information to mask latency
 		$this->memCache = wfGetMainCache();
 		// Process cache for container info
 		$this->connContainerCache = new ProcessCacheLRU( 300 );
 		// Cache auth token information to avoid RTTs
 		if ( !empty( $config['cacheAuthInfo'] ) ) {
-			if ( php_sapi_name() === 'cli' ) {
+			if ( PHP_SAPI === 'cli' ) {
 				$this->srvCache = wfGetMainCache(); // preferrably memcached
 			} else {
 				try { // look for APC, XCache, WinCache, ect...
@@ -295,7 +315,9 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		// (b) Get a SHA-1 hash of the object
+		wfSuppressWarnings();
 		$sha1Hash = sha1_file( $params['src'] );
+		wfRestoreWarnings();
 		if ( $sha1Hash === false ) { // source doesn't exist?
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
 			return $status;
@@ -968,7 +990,7 @@ class SwiftFileBackend extends FileBackendStore {
 				$objects = $container->list_objects( $limit, $after, $prefix );
 				foreach ( $objects as $object ) { // files
 					$objectDir = $this->getParentDir( $object ); // directory of object
-					if ( $objectDir !== false ) { // file has a parent dir
+					if ( $objectDir !== false && $objectDir !== $dir ) {
 						// Swift stores paths in UTF-8, using binary sorting.
 						// See function "create_container_table" in common/db.py.
 						// If a directory is not "greater" than the last one,
@@ -1180,7 +1202,9 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @return string|null
 	 */
 	public function getFileHttpUrl( array $params ) {
-		if ( $this->swiftTempUrlKey != '' ) { // temp urls enabled
+		if ( $this->swiftTempUrlKey != '' ||
+			( $this->rgwS3AccessKey != '' && $this->rgwS3SecretKey != '' ) )
+		{
 			list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
 			if ( $srcRel === null ) {
 				return null; // invalid path
@@ -1188,7 +1212,31 @@ class SwiftFileBackend extends FileBackendStore {
 			try {
 				$sContObj = $this->getContainer( $srcCont );
 				$obj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
-				return $obj->get_temp_url( $this->swiftTempUrlKey, 86400, "GET" );
+				if ( $this->swiftTempUrlKey != '' ) {
+					return $obj->get_temp_url( $this->swiftTempUrlKey, 86400, "GET" );
+				} else { // give S3 API URL for rgw
+					$expires = time() + 86400;
+					// Path for signature starts with the bucket
+					$spath = '/' . rawurlencode( $srcCont ) . '/' .
+						str_replace( '%2F', '/', rawurlencode( $srcRel ) );
+					// Calculate the hash
+					$signature = base64_encode( hash_hmac(
+						'sha1',
+						"GET\n\n\n{$expires}\n{$spath}",
+						$this->rgwS3SecretKey,
+						true // raw
+					) );
+					// See http://s3.amazonaws.com/doc/s3-developer-guide/RESTAuthentication.html.
+					// Note: adding a newline for empty CanonicalizedAmzHeaders does not work.
+					return wfAppendQuery(
+						str_replace( '/swift/v1', '', // S3 API is the rgw default
+							$sContObj->cfs_http->getStorageUrl() . $spath ),
+						array(
+							'Signature'      => $signature,
+							'Expires'        => $expires,
+							'AWSAccessKeyId' => $this->rgwS3AccessKey )
+					);
+				}
 			} catch ( NoSuchContainerException $e ) {
 			} catch ( CloudFilesException $e ) { // some other exception?
 				$this->handleException( $e, null, __METHOD__, $params );
@@ -1237,8 +1285,8 @@ class SwiftFileBackend extends FileBackendStore {
 		$cfOps = $batch->execute();
 		foreach ( $cfOps as $index => $cfOp ) {
 			$status = Status::newGood();
+			$function = '_getResponse' . $fileOpHandles[$index]->call;
 			try { // catch exceptions; update status
-				$function = '_getResponse' . $fileOpHandles[$index]->call;
 				$this->$function( $cfOp, $status, $fileOpHandles[$index]->params );
 				$this->purgeCDNCache( $fileOpHandles[$index]->affectedObjects );
 			} catch ( CloudFilesException $e ) { // some other exception?
@@ -1256,12 +1304,12 @@ class SwiftFileBackend extends FileBackendStore {
 	 *
 	 * $readGrps is a list of the possible criteria for a request to have
 	 * access to read a container. Each item is one of the following formats:
-	 *   - account:user       : Grants access if the request is by the given user
-	 *   - ".r:<regex>"       : Grants access if the request is from a referrer host that
-	 *                          matches the expression and the request is not for a listing.
-	 *                          Setting this to '*' effectively makes a container public.
-	 *   -".rlistings:<regex>": Grants access if the request is from a referrer host that
-	 *                          matches the expression and the request for a listing.
+	 *   - account:user        : Grants access if the request is by the given user
+	 *   - ".r:<regex>"        : Grants access if the request is from a referrer host that
+	 *                           matches the expression and the request is not for a listing.
+	 *                           Setting this to '*' effectively makes a container public.
+	 *   -".rlistings:<regex>" : Grants access if the request is from a referrer host that
+	 *                           matches the expression and the request for a listing.
 	 *
 	 * $writeGrps is a list of the possible criteria for a request to have
 	 * access to write to a container. Each item is of the following format:
@@ -1318,8 +1366,9 @@ class SwiftFileBackend extends FileBackendStore {
 	/**
 	 * Get an authenticated connection handle to the Swift proxy
 	 *
-	 * @return CF_Connection|bool False on failure
 	 * @throws CloudFilesException
+	 * @throws CloudFilesException|Exception
+	 * @return CF_Connection|bool False on failure
 	 */
 	protected function getConnection() {
 		if ( $this->connException instanceof CloudFilesException ) {

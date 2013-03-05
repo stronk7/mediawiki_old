@@ -54,12 +54,12 @@ define( 'DBO_COMPRESS', 512 );
  */
 define( 'DB_SLAVE', -1 );     # Read from the slave (or only server)
 define( 'DB_MASTER', -2 );    # Write to master (or only server)
-define( 'DB_LAST', -3 );     # Whatever database was used last
 /**@}*/
 
 # Obsolete aliases
 define( 'DB_READ', -1 );
 define( 'DB_WRITE', -2 );
+define( 'DB_LAST', -3 ); # deprecated since 2008, usage throws exception
 
 
 /**@{
@@ -200,7 +200,6 @@ define( 'LIST_AND', 1 );
 define( 'LIST_SET', 2 );
 define( 'LIST_NAMES', 3);
 define( 'LIST_OR', 4);
-define( 'LIST_SET_PREPARED', 8);  // List of (?, ?, ?) for DatabaseIbm_db2
 /**@}*/
 
 /**
@@ -227,7 +226,7 @@ define( 'MW_SUPPORTS_RESOURCE_MODULES', 1 );
 define( 'OT_HTML', 1 );
 define( 'OT_WIKI', 2 );
 define( 'OT_PREPROCESS', 3 );
-define( 'OT_MSG' , 3 );  // b/c alias for OT_PREPROCESS
+define( 'OT_MSG', 3 );  // b/c alias for OT_PREPROCESS
 define( 'OT_PLAIN', 4 );
 /**@}*/
 

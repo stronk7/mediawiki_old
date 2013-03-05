@@ -1,9 +1,8 @@
 <?php
 /**
- * Unit tests for wfExpandUrl()
+ * Tests for wfExpandUrl()
  */
-
-class wfExpandUrl extends MediaWikiTestCase {
+class WfExpandUrlTest extends MediaWikiTestCase {
 	/** @dataProvider provideExpandableUrls */
 	public function testWfExpandUrl( $fullUrl, $shortUrl, $defaultProto, $server, $canServer, $httpsMode, $message ) {
 		// Fake $wgServer and $wgCanonicalServer
@@ -51,7 +50,7 @@ class wfExpandUrl extends MediaWikiTestCase {
 		foreach ( $modes as $mode ) {
 			$httpsMode = $mode == 'https';
 			foreach ( $servers as $serverDesc => $server ) {
-				foreach ( $modes as $canServerMode  ) {
+				foreach ( $modes as $canServerMode ) {
 					$canServer = "$canServerMode://example2.com";
 					foreach ( $defaultProtos as $protoDesc => $defaultProto ) {
 						$retval[] = array(

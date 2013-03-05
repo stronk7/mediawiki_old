@@ -154,6 +154,7 @@ CREATE TABLE page_props (
 );
 ALTER TABLE page_props ADD CONSTRAINT page_props_pk PRIMARY KEY (pp_page,pp_propname);
 CREATE INDEX page_props_propname ON page_props (pp_propname);
+CREATE UNIQUE INDEX pp_propname_page ON page_props (pp_propname,pp_page);
 
 CREATE TABLE archive (
   ar_namespace      SMALLINT     NOT NULL,
@@ -530,12 +531,14 @@ CREATE TABLE job (
   job_timestamp       TIMESTAMPTZ,
   job_params          TEXT      NOT NULL,
   job_random          INTEGER   NOT NULL DEFAULT 0,
+  job_attempts        INTEGER   NOT NULL DEFAULT 0,
   job_token           TEXT      NOT NULL DEFAULT '',
   job_token_timestamp TIMESTAMPTZ,
   job_sha1            TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX job_sha1 ON job (job_sha1);
 CREATE INDEX job_cmd_token ON job (job_cmd, job_token, job_random);
+CREATE INDEX job_cmd_token_id ON job (job_cmd, job_token, job_id);
 CREATE INDEX job_cmd_namespace_title ON job (job_cmd, job_namespace, job_title);
 CREATE INDEX job_timestamp_idx ON job (job_timestamp);
 
@@ -697,3 +700,35 @@ CREATE TABLE module_deps (
   md_deps    TEXT  NOT NULL
 );
 CREATE UNIQUE INDEX md_module_skin ON module_deps (md_module, md_skin);
+
+CREATE SEQUENCE sites_site_id_seq;
+CREATE TABLE sites (
+  site_id           INTEGER     NOT NULL    PRIMARY KEY DEFAULT nextval('sites_site_id_seq'),
+  site_global_key   TEXT        NOT NULL,
+  site_type         TEXT        NOT NULL,
+  site_group        TEXT        NOT NULL,
+  site_source       TEXT        NOT NULL,
+  site_language     TEXT        NOT NULL,
+  site_protocol     TEXT        NOT NULL,
+  site_domain       TEXT        NOT NULL,
+  site_data         TEXT        NOT NULL,
+  site_forward      SMALLINT    NOT NULL,
+  site_config       TEXT        NOT NULL
+);
+CREATE UNIQUE INDEX site_global_key ON sites (site_global_key);
+CREATE INDEX site_type ON sites (site_type);
+CREATE INDEX site_group ON sites (site_group);
+CREATE INDEX site_source ON sites (site_source);
+CREATE INDEX site_language ON sites (site_language);
+CREATE INDEX site_protocol ON sites (site_protocol);
+CREATE INDEX site_domain ON sites (site_domain);
+CREATE INDEX site_forward ON sites (site_forward);
+
+CREATE TABLE site_identifiers (
+  si_site   INTEGER NOT NULL,
+  si_type   TEXT    NOT NULL,
+  si_key    TEXT    NOT NULL
+);
+CREATE UNIQUE INDEX si_type_key ON site_identifiers (si_type, si_key);
+CREATE INDEX si_site ON site_identifiers (si_site);
+CREATE INDEX si_key ON site_identifiers (si_key);

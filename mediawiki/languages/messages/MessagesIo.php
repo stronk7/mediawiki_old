@@ -573,7 +573,6 @@ Publikigante vua skribajo hike, vu asertas ke olu skribesis da vu ipsa o kopiesi
 'template-protected' => '(protektita)',
 'template-semiprotected' => '(mi-protektita)',
 'hiddencategories' => 'Ca pagino esas membro di {{PLURAL:$1|1 celita kategorio|$1 celita kategorii}}:',
-'nocreatetitle' => 'Kreado di pagini limitita',
 'permissionserrorstext-withaction' => 'Vu ne darfas $2, pro la {{PLURAL:$1|kauzo|kauzi}} sequanta:',
 'moveddeleted-notice' => 'Ca pagino efacesabas.
 La efaco-registraro e movo-registraro dil pagino provizesar sequante por refero.',
@@ -788,9 +787,11 @@ Ol mustas ne havar plu kam $1 {{PLURAL:$1|litero|literi}}.',
 'right-browsearchive' => 'Serchar pagini efacita',
 'right-rollback' => 'Rapide retrorular la redakti da la lasta uzanto qua redaktis specigita pagino',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Uzanto-kreo-registro',
+
 # User rights log
 'rightslog' => 'Uzanto-yuri-registraro',
-'rightsnone' => '(nula)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'lektar ca pagino',
@@ -1029,9 +1030,6 @@ Volutez kontrolar <strong>[[:$1]]</strong> se vu ne esas certa pri chanjar olu.
 
 # Special:ActiveUsers
 'activeusers-noresult' => 'Nula uzanto trovesis.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Uzanto-kreo-registro',
 
 # Special:ListGroupRights
 'listgrouprights-group' => 'Grupo',
@@ -1548,6 +1546,9 @@ Vu darfos adjuntar kauso en la rezumo.',
 # HTML forms
 'htmlform-reset' => 'Desfacar chanji',
 'htmlform-selectorother-other' => 'Altra',
+
+# New logging system
+'rightsnone' => '(nula)',
 
 # Search suggestions
 'searchsuggest-search' => 'Serchez',

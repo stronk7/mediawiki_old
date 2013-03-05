@@ -51,6 +51,7 @@ class DoubleRedirectsPage extends QueryPage {
 
 	function reallyGetQueryInfo( $namespace = null, $title = null ) {
 		$limitToTitle = !( $namespace === null && $title === null );
+		$dbr = wfGetDB( DB_SLAVE );
 		$retval = array (
 			'tables' => array (
 				'ra' => 'redirect',
@@ -82,7 +83,7 @@ class DoubleRedirectsPage extends QueryPage {
 
 				// Need to check both NULL and "" for some reason,
 				// apparently either can be stored for non-iw entries.
-				'(ra.rd_interwiki IS NULL OR ra.rd_interwiki = "")',
+				'ra.rd_interwiki IS NULL OR ra.rd_interwiki = ' . $dbr->addQuotes( '' ),
 
 				'pb.page_namespace = ra.rd_namespace',
 				'pb.page_title = ra.rd_title',
@@ -117,7 +118,7 @@ class DoubleRedirectsPage extends QueryPage {
 			$dbr = wfGetDB( DB_SLAVE );
 			$qi = $this->reallyGetQueryInfo( $result->namespace,
 					$result->title );
-			$res = $dbr->select($qi['tables'], $qi['fields'],
+			$res = $dbr->select( $qi['tables'], $qi['fields'],
 					$qi['conds'], __METHOD__ );
 			if ( $res ) {
 				$result = $dbr->fetchObject( $res );
@@ -128,7 +129,7 @@ class DoubleRedirectsPage extends QueryPage {
 		}
 
 		$titleB = Title::makeTitle( $result->nsb, $result->tb );
-		$titleC = Title::makeTitle( $result->nsc, $result->tc, '',  $result->iwc );
+		$titleC = Title::makeTitle( $result->nsc, $result->tc, '', $result->iwc );
 
 		$linkA = Linker::linkKnown(
 			$titleA,

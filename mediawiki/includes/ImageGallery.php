@@ -161,7 +161,7 @@ class ImageGallery {
 	 * @param $alt   String: Alt text for the image
 	 * @param $link  String: Override image link (optional)
 	 */
-	function add( $title, $html = '', $alt = '', $link = '') {
+	function add( $title, $html = '', $alt = '', $link = '' ) {
 		if ( $title instanceof File ) {
 			// Old calling convention
 			$title = $title->getTitle();
@@ -354,7 +354,7 @@ class ImageGallery {
 					array(),
 					array( 'known', 'noclasses' )
 				) . "<br />\n" :
-				'' ;
+				'';
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which
 			# in version 4.8.6 generated crackpot html in its absence, see:

@@ -597,7 +597,6 @@ Amaḱ bodolaḱ kodo nit habićte bań rukhíạakana!",
 'template-protected' => 'Rukhiạ',
 'template-semiprotected' => '(Kạṭic-rukhiyạ)',
 'hiddencategories' => 'Noa sakam do {{PLURAL:$1 1 ukuakan bhag $1 uku akan bhagkorenaḱ}} gaõtarenge:',
-'nocreatetitle' => 'Sakam tear do akoṭgea',
 'nocreate-loggedin' => 'Nãwã sakam tear lạgit́te am do ạidạri em baṅ hoeakana.',
 'sectioneditnotsupported-title' => 'Pahaṭa sompadona do bae hataoeda',
 'sectioneditnotsupported-text' => 'Noa sompadona sakamre pahaṭa sompadona do bae hataoeda',
@@ -796,6 +795,9 @@ Amaḱ e-mail ṭhikạna do bań cabaḱa tinre onko do ko beohara',
 'right-upload' => 'Rẽtko rakabmẽ',
 'right-delete' => 'Sakamko get giḍiymẽ',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Laṛcaṛićaḱ tear cạbi',
+
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'noa sakam joṛao',
 
@@ -935,9 +937,6 @@ Noa reaḱ pasnao katha [$2 rẽt pasnao sakam] latare emena',
 'listusers-submit' => 'Udugmẽ',
 'listusers-blocked' => '(Esetgea)',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Laṛcaṛićaḱ tear cạbi',
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'Gaõta',
 'listgrouprights-rights' => 'Ạidạriko',
@@ -969,6 +968,8 @@ Noa reaḱ pasnao katha [$2 rẽt pasnao sakam] latare emena',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Ńeloḱ kana...',
+
+'changed' => 'Bodolena',
 
 # Delete
 'deletepage' => 'Sakam get giḍikam',

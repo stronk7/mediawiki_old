@@ -24,7 +24,7 @@
 /**
  * Bump this number when serialized cache records may be incompatible.
  */
-define( 'MW_FILE_VERSION', 8 );
+define( 'MW_FILE_VERSION', 9 );
 
 /**
  * Class to represent a local file in the wiki's own database
@@ -36,7 +36,7 @@ define( 'MW_FILE_VERSION', 8 );
  * never name a file class explictly outside of the repo class. Instead use the
  * repo's factory functions to generate file objects, for example:
  *
- * RepoGroup::singleton()->getLocalRepo()->newFile($title);
+ * RepoGroup::singleton()->getLocalRepo()->newFile( $title );
  *
  * The convenience functions wfLocalFile() and wfFindFile() should be sufficient
  * in most cases.
@@ -67,9 +67,11 @@ class LocalFile extends File {
 		$sha1,             # SHA-1 base 36 content hash
 		$user, $user_text, # User, who uploaded the file
 		$description,      # Description of current revision of the file
-		$dataLoaded,       # Whether or not all this has been loaded from the database (loadFromXxx)
+		$dataLoaded,       # Whether or not core data has been loaded from the database (loadFromXxx)
+		$extraDataLoaded,  # Whether or not lazy-loaded data has been loaded from the database
 		$upgraded,         # Whether the row was upgraded on load
 		$locked,           # True if the image row is locked
+		$lockedOwnTrx,     # True if the image row is locked with a lock initiated transaction
 		$missing,          # True if file is not present in file system. Not to be cached in memcached
 		$deleted;          # Bitfield akin to rev_deleted
 
@@ -81,6 +83,8 @@ class LocalFile extends File {
 	var $repo;
 
 	protected $repoClass = 'LocalRepo';
+
+	const LOAD_ALL = 1; // integer; load all the lazy fields too (like metadata)
 
 	/**
 	 * Create a LocalFile from a title
@@ -175,6 +179,7 @@ class LocalFile extends File {
 		$this->historyLine = 0;
 		$this->historyRes = null;
 		$this->dataLoaded = false;
+		$this->extraDataLoaded = false;
 
 		$this->assertRepoDefined();
 		$this->assertTitleDefined();
@@ -200,6 +205,7 @@ class LocalFile extends File {
 
 		wfProfileIn( __METHOD__ );
 		$this->dataLoaded = false;
+		$this->extraDataLoaded = false;
 		$key = $this->getCacheKey();
 
 		if ( !$key ) {
@@ -210,13 +216,17 @@ class LocalFile extends File {
 		$cachedValues = $wgMemc->get( $key );
 
 		// Check if the key existed and belongs to this version of MediaWiki
-		if ( isset( $cachedValues['version'] ) && ( $cachedValues['version'] == MW_FILE_VERSION ) ) {
+		if ( isset( $cachedValues['version'] ) && $cachedValues['version'] == MW_FILE_VERSION ) {
 			wfDebug( "Pulling file metadata from cache key $key\n" );
 			$this->fileExists = $cachedValues['fileExists'];
 			if ( $this->fileExists ) {
 				$this->setProps( $cachedValues );
 			}
 			$this->dataLoaded = true;
+			$this->extraDataLoaded = true;
+			foreach ( $this->getLazyCacheFields( '' ) as $field ) {
+				$this->extraDataLoaded = $this->extraDataLoaded && isset( $cachedValues[$field] );
+			}
 		}
 
 		if ( $this->dataLoaded ) {
@@ -252,7 +262,17 @@ class LocalFile extends File {
 			}
 		}
 
-		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
+		// Strip off excessive entries from the subset of fields that can become large.
+		// If the cache value gets to large it will not fit in memcached and nothing will
+		// get cached at all, causing master queries for any file access.
+		foreach ( $this->getLazyCacheFields( '' ) as $field ) {
+			if ( isset( $cache[$field] ) && strlen( $cache[$field] ) > 100*1024 ) {
+				unset( $cache[$field] ); // don't let the value get too big
+			}
+		}
+
+		// Cache presence for 1 week and negatives for 1 day
+		$wgMemc->set( $key, $cache, $this->fileExists ? 86400 * 7 : 86400 );
 	}
 
 	/**
@@ -288,6 +308,28 @@ class LocalFile extends File {
 	}
 
 	/**
+	 * @return array
+	 */
+	function getLazyCacheFields( $prefix = 'img_' ) {
+		static $fields = array( 'metadata' );
+		static $results = array();
+
+		if ( $prefix == '' ) {
+			return $fields;
+		}
+
+		if ( !isset( $results[$prefix] ) ) {
+			$prefixedFields = array();
+			foreach ( $fields as $field ) {
+				$prefixedFields[] = $prefix . $field;
+			}
+			$results[$prefix] = $prefixedFields;
+		}
+
+		return $results[$prefix];
+	}
+
+	/**
 	 * Load file metadata from the DB
 	 */
 	function loadFromDB() {
@@ -297,9 +339,9 @@ class LocalFile extends File {
 
 		# Unconditionally set loaded=true, we don't want the accessors constantly rechecking
 		$this->dataLoaded = true;
+		$this->extraDataLoaded = true;
 
 		$dbr = $this->repo->getMasterDB();
-
 		$row = $dbr->selectRow( 'image', $this->getCacheFields( 'img_' ),
 			array( 'img_name' => $this->getName() ), $fname );
 
@@ -313,6 +355,61 @@ class LocalFile extends File {
 	}
 
 	/**
+	 * Load lazy file metadata from the DB.
+	 * This covers fields that are sometimes not cached.
+	 */
+	protected function loadExtraFromDB() {
+		# Polymorphic function name to distinguish foreign and local fetches
+		$fname = get_class( $this ) . '::' . __FUNCTION__;
+		wfProfileIn( $fname );
+
+		# Unconditionally set loaded=true, we don't want the accessors constantly rechecking
+		$this->extraDataLoaded = true;
+
+		$dbr = $this->repo->getSlaveDB();
+		// In theory the file could have just been renamed/deleted...oh well
+		$row = $dbr->selectRow( 'image', $this->getLazyCacheFields( 'img_' ),
+			array( 'img_name' => $this->getName() ), $fname );
+
+		if ( !$row ) { // fallback to master
+			$dbr = $this->repo->getMasterDB();
+			$row = $dbr->selectRow( 'image', $this->getLazyCacheFields( 'img_' ),
+				array( 'img_name' => $this->getName() ), $fname );
+		}
+
+		if ( $row ) {
+			foreach ( $this->unprefixRow( $row, 'img_' ) as $name => $value ) {
+				$this->$name = $value;
+			}
+		} else {
+			throw new MWException( "Could not find data for image '{$this->getName()}'." );
+		}
+
+		wfProfileOut( $fname );
+	}
+
+	/**
+	 * @param Row $row
+	 * @param $prefix string
+	 * @return Array
+	 */
+	protected function unprefixRow( $row, $prefix = 'img_' ) {
+		$array = (array)$row;
+		$prefixLength = strlen( $prefix );
+
+		// Sanity check prefix once
+		if ( substr( key( $array ), 0, $prefixLength ) !== $prefix ) {
+			throw new MWException( __METHOD__ . ': incorrect $prefix parameter' );
+		}
+
+		$decoded = array();
+		foreach ( $array as $name => $value ) {
+			$decoded[substr( $name, $prefixLength )] = $value;
+		}
+		return $decoded;
+	}
+
+	/**
 	 * Decode a row from the database (either object or array) to an array
 	 * with timestamps and MIME types decoded, and the field prefix removed.
 	 * @param $row
@@ -321,19 +418,7 @@ class LocalFile extends File {
 	 * @return array
 	 */
 	function decodeRow( $row, $prefix = 'img_' ) {
-		$array = (array)$row;
-		$prefixLength = strlen( $prefix );
-
-		// Sanity check prefix once
-		if ( substr( key( $array ), 0, $prefixLength ) !== $prefix ) {
-			throw new MWException( __METHOD__ .  ': incorrect $prefix parameter' );
-		}
-
-		$decoded = array();
-
-		foreach ( $array as $name => $value ) {
-			$decoded[substr( $name, $prefixLength )] = $value;
-		}
+		$decoded = $this->unprefixRow( $row, $prefix );
 
 		$decoded['timestamp'] = wfTimestamp( TS_MW, $decoded['timestamp'] );
 
@@ -357,6 +442,8 @@ class LocalFile extends File {
 	 */
 	function loadFromRow( $row, $prefix = 'img_' ) {
 		$this->dataLoaded = true;
+		$this->extraDataLoaded = true;
+
 		$array = $this->decodeRow( $row, $prefix );
 
 		foreach ( $array as $name => $value ) {
@@ -369,14 +456,18 @@ class LocalFile extends File {
 
 	/**
 	 * Load file metadata from cache or DB, unless already loaded
+	 * @param integer $flags
 	 */
-	function load() {
+	function load( $flags = 0 ) {
 		if ( !$this->dataLoaded ) {
 			if ( !$this->loadFromCache() ) {
 				$this->loadFromDB();
 				$this->saveToCache();
 			}
 			$this->dataLoaded = true;
+		}
+		if ( ( $flags & self::LOAD_ALL ) && !$this->extraDataLoaded ) {
+			$this->loadExtraFromDB();
 		}
 	}
 
@@ -397,7 +488,7 @@ class LocalFile extends File {
 		} else {
 			$handler = $this->getHandler();
 			if ( $handler ) {
-				$validity = $handler->isMetadataValid( $this, $this->metadata );
+				$validity = $handler->isMetadataValid( $this, $this->getMetadata() );
 				if ( $validity === MediaHandler::METADATA_BAD
 					|| ( $validity === MediaHandler::METADATA_COMPATIBLE && $wgUpdateCompatibleMetadata )
 				) {
@@ -464,6 +555,7 @@ class LocalFile extends File {
 	/**
 	 * Set properties in this object to be equal to those given in the
 	 * associative array $info. Only cacheable fields can be set.
+	 * All fields *must* be set in $info except for getLazyCacheFields().
 	 *
 	 * If 'mime' is given, it will be split into major_mime/minor_mime.
 	 * If major_mime/minor_mime are given, $this->mime will also be set.
@@ -570,7 +662,7 @@ class LocalFile extends File {
 	 * @return string
 	 */
 	function getMetadata() {
-		$this->load();
+		$this->load( self::LOAD_ALL ); // large metadata is loaded in another step
 		return $this->metadata;
 	}
 
@@ -646,7 +738,7 @@ class LocalFile extends File {
 			// Directory where file should be
 			// This happened occasionally due to broken migration code in 1.5
 			// Rename to broken-*
-			for ( $i = 0; $i < 100 ; $i++ ) {
+			for ( $i = 0; $i < 100; $i++ ) {
 				$broken = $this->repo->getZonePath( 'public' ) . "/broken-$i-$thumbName";
 				if ( !file_exists( $broken ) ) {
 					rename( $thumbPath, $broken );
@@ -771,8 +863,16 @@ class LocalFile extends File {
 
 		// Delete thumbnails
 		$files = $this->getThumbnails();
+		// Always purge all files from squid regardless of handler filters
+		if ( $wgUseSquid ) {
+			$urls = array();
+			foreach( $files as $file ) {
+				$urls[] = $this->getThumbUrl( $file );
+			}
+			array_shift( $urls ); // don't purge directory
+		}
 
-		// Give media handler a chance to filter the purge list
+		// Give media handler a chance to filter the file purge list
 		if ( !empty( $options['forThumbRefresh'] ) ) {
 			$handler = $this->getHandler();
 			if ( $handler ) {
@@ -788,10 +888,6 @@ class LocalFile extends File {
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
-			$urls = array();
-			foreach( $files as $file ) {
-				$urls[] = $this->getThumbUrl( $file );
-			}
 			SquidUpdate::purge( $urls );
 		}
 
@@ -806,7 +902,7 @@ class LocalFile extends File {
 	protected function purgeThumbList( $dir, $files ) {
 		$fileListDebug = strtr(
 			var_export( $files, true ),
-			array("\n"=>'')
+			array( "\n" => '' )
 		);
 		wfDebug( __METHOD__ . ": $fileListDebug\n" );
 
@@ -992,6 +1088,9 @@ class LocalFile extends File {
 			$options['headers'] = array();
 		}
 
+		// Trim spaces on user supplied text
+		$comment = trim( $comment );
+
 		// truncate nicely or the DB will do it for us
 		// non-nicely (dangling multi-byte chars, non-truncated version in cache).
 		$comment = $wgContLang->truncate( $comment, 255 );
@@ -1021,20 +1120,25 @@ class LocalFile extends File {
 	 * @param $source string
 	 * @param $watch bool
 	 * @param $timestamp string|bool
+	 * @param $user User object or null to use $wgUser
 	 * @return bool
 	 */
 	function recordUpload( $oldver, $desc, $license = '', $copyStatus = '', $source = '',
-		$watch = false, $timestamp = false )
+		$watch = false, $timestamp = false, User $user = null )
 	{
+		if ( !$user ) {
+			global $wgUser;
+			$user = $wgUser;
+		}
+
 		$pageText = SpecialUpload::getInitialPageText( $desc, $license, $copyStatus, $source );
 
-		if ( !$this->recordUpload2( $oldver, $desc, $pageText, false, $timestamp ) ) {
+		if ( !$this->recordUpload2( $oldver, $desc, $pageText, false, $timestamp, $user ) ) {
 			return false;
 		}
 
 		if ( $watch ) {
-			global $wgUser;
-			$wgUser->addWatch( $this->getTitle() );
+			$user->addWatch( $this->getTitle() );
 		}
 		return true;
 	}
@@ -1187,7 +1291,7 @@ class LocalFile extends File {
 				$log->getRcComment(),
 				false
 			);
-			if (!is_null($nullRevision)) {
+			if ( !is_null( $nullRevision ) ) {
 				$nullRevision->insertOn( $dbw );
 
 				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
@@ -1571,7 +1675,10 @@ class LocalFile extends File {
 		$dbw = $this->repo->getMasterDB();
 
 		if ( !$this->locked ) {
-			$dbw->begin( __METHOD__ );
+			if ( !$dbw->trxLevel() ) {
+				$dbw->begin( __METHOD__ );
+				$this->lockedOwnTrx = true;
+			}
 			$this->locked++;
 		}
 
@@ -1586,9 +1693,10 @@ class LocalFile extends File {
 	function unlock() {
 		if ( $this->locked ) {
 			--$this->locked;
-			if ( !$this->locked ) {
+			if ( !$this->locked && $this->lockedOwnTrx ) {
 				$dbw = $this->repo->getMasterDB();
 				$dbw->commit( __METHOD__ );
+				$this->lockedOwnTrx = false;
 			}
 		}
 	}
@@ -1600,6 +1708,7 @@ class LocalFile extends File {
 		$this->locked = false;
 		$dbw = $this->repo->getMasterDB();
 		$dbw->rollback( __METHOD__ );
+		$this->lockedOwnTrx = false;
 	}
 
 	/**
@@ -2030,7 +2139,9 @@ class LocalFileRestoreBatch {
 			$conditions[] = 'fa_id IN (' . $dbw->makeList( $this->ids ) . ')';
 		}
 
-		$result = $dbw->select( 'filearchive', '*',
+		$result = $dbw->select(
+			'filearchive',
+			ArchivedFile::selectFields(),
 			$conditions,
 			__METHOD__,
 			array( 'ORDER BY' => 'fa_timestamp DESC' )
@@ -2282,7 +2393,7 @@ class LocalFileRestoreBatch {
 	/**
 	 * Delete unused files in the deleted zone.
 	 * This should be called from outside the transaction in which execute() was called.
-	 * @return FileRepoStatus|void
+	 * @return FileRepoStatus
 	 */
 	function cleanup() {
 		if ( !$this->cleanupBatch ) {

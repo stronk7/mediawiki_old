@@ -63,8 +63,8 @@ $magicWords = array(
 	'noeditsection'             => array( '0', '__KEENÄNNERNLINK__', '__ABSCHNITTE_NICHT_BEARBEITEN__', '__NOEDITSECTION__' ),
 	'currentmonth'              => array( '1', 'AKTMAAND', 'JETZIGER_MONAT', 'JETZIGER_MONAT_2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonthname'          => array( '1', 'AKTMAANDNAAM', 'JETZIGER_MONATSNAME', 'CURRENTMONTHNAME' ),
-	'currentmonthnamegen'       => array( '1', 'AKTMAANDNAAMGEN', 'JETZIGER_MONATSNAME_GENITIV', 'CURRENTMONTHNAMEGEN' ),
-	'currentday'                => array( '1', 'AKTDAG', 'JETZIGER_KALENDERTAG', 'CURRENTDAY' ),
+	'currentmonthnamegen'       => array( '1', 'AKTMAANDNAAMGEN', 'JETZIGER_MONATSNAME_GENITIV', 'JETZIGER_MONATSNAME_GEN', 'CURRENTMONTHNAMEGEN' ),
+	'currentday'                => array( '1', 'AKTDAG', 'JETZIGER_KALENDERTAG', 'JETZIGER_TAG', 'CURRENTDAY' ),
 	'currentdayname'            => array( '1', 'AKTDAGNAAM', 'JETZIGER_WOCHENTAG', 'CURRENTDAYNAME' ),
 	'currentyear'               => array( '1', 'AKTJOHR', 'JETZIGES_JAHR', 'CURRENTYEAR' ),
 	'currenttime'               => array( '1', 'AKTTIED', 'JETZIGE_UHRZEIT', 'CURRENTTIME' ),
@@ -874,7 +874,6 @@ Bruker mit Sysop-Rechten doran arbeiden könnt.'''",
 'template-semiprotected' => '(half-schuult)',
 'hiddencategories' => 'Disse Siet steiht in {{PLURAL:$1|ene verstekene Kategorie|$1 verstekene Kategorien}}:',
 'edittools' => '<!-- Disse Text warrt ünner de Finstern för dat Ännern un Hoochladen wiest. -->',
-'nocreatetitle' => 'Opstellen vun ne’e Sieden is inschränkt.',
 'nocreatetext' => '{{SITENAME}} verlööft di dat Opstellen vun ne’e Sieden nich. Du kannst blot Sieden ännern, de al dor sünd, oder du musst di [[Special:UserLogin|anmellen]].',
 'nocreate-loggedin' => 'Du hest keen Verlööf, ne’e Sieden antoleggen.',
 'permissionserrors' => 'Fehlers mit de Rechten',
@@ -1342,11 +1341,13 @@ Dat kann nich wedder ungeschehn maakt warrn.',
 'right-siteadmin' => 'Datenbank sperren un wedder apen maken',
 'right-override-export-depth' => 'Exporteer Sieden, lenkt Sieden inslaten bet to en Deepd vun 5',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Ne’e-Bruker-Logbook',
+'newuserlogpagetext' => 'Dit is dat Logbook för nee opstellte Brukerkonten.',
+
 # User rights log
 'rightslog' => 'Brukerrechten-Logbook',
 'rightslogtext' => 'In dit Logbook staht Ännern an de Brukerrechten.',
-'rightslogentry' => 'Grupp bi $1 vun $2 op $3 ännert.',
-'rightsnone' => '(kene)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'de Sied to lesen',
@@ -1807,10 +1808,6 @@ Kiek ok bi de [[Special:WantedCategories|wünschten Kategorien]].',
 'activeusers-hidesysops' => 'Administraters nich wiesen',
 'activeusers-noresult' => 'Keen Brukers funnen.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Ne’e-Bruker-Logbook',
-'newuserlogpagetext' => 'Dit is dat Logbook för nee opstellte Brukerkonten.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Brukergruppen-Rechten',
 'listgrouprights-summary' => 'Dit is en List vun de Brukergruppen, de in dit Wiki defineert sünd, un de Rechten, de dor mit verbunnen sünd.
@@ -1918,6 +1915,8 @@ Du kriggst solang keen Bescheedgeev-E-Mails mehr, bet dat du de Siet wedder bes�
 
 --
 De Instellungen vun dien Oppasslist to ännern, gah na: {{canonicalurl:Special:Watchlist/edit}}',
+'created' => 'opstellt',
+'changed' => 'ännert',
 
 # Delete
 'deletepage' => 'Siet wegsmieten',
@@ -3089,6 +3088,6 @@ Geev den Dateinaam ahn den Tosatz „{{ns:file}}:“ an.',
 # New logging system
 'revdelete-restricted' => 'Inschränkungen för Administraters instellt',
 'revdelete-unrestricted' => 'Inschränkungen för Administraters rutnahmen',
-'newuserlog-byemail' => 'Passwoord per E-Mail toschickt',
+'rightsnone' => '(kene)',
 
 );

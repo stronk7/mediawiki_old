@@ -29,10 +29,6 @@
  */
 class ApiFeedContributions extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	/**
 	 * This module uses a custom feed wrapper printer.
 	 *
@@ -51,7 +47,7 @@ class ApiFeedContributions extends ApiBase {
 			$this->dieUsage( 'Syndication feeds are not available', 'feed-unavailable' );
 		}
 
-		if( !isset( $wgFeedClasses[ $params['feedformat'] ] ) ) {
+		if( !isset( $wgFeedClasses[$params['feedformat']] ) ) {
 			$this->dieUsage( 'Invalid subscription feed type', 'feed-invalid' );
 		}
 
@@ -212,9 +208,5 @@ class ApiFeedContributions extends ApiBase {
 		return array(
 			'api.php?action=feedcontributions&user=Reedy',
 		);
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

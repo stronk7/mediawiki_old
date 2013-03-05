@@ -170,7 +170,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 *         // Scripts to include in the startup module
 	 *         'loaderScripts' => [file path string or array of file path strings],
 	 *         // Modules which must be loaded before this module
-	 *         'dependencies' => [modile name string or array of module name strings],
+	 *         'dependencies' => [module name string or array of module name strings],
 	 *         // Styles to always load
 	 *         'styles' => [file path string or array of file path strings],
 	 *         // Styles to include in specific skin contexts
@@ -312,15 +312,19 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		// Collect referenced files
 		$this->localFileRefs = array_unique( $this->localFileRefs );
 		// If the list has been modified since last time we cached it, update the cache
-		if ( $this->localFileRefs !== $this->getFileDependencies( $context->getSkin() ) && !wfReadOnly() ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->replace( 'module_deps',
-				array( array( 'md_module', 'md_skin' ) ), array(
-					'md_module' => $this->getName(),
-					'md_skin' => $context->getSkin(),
-					'md_deps' => FormatJson::encode( $this->localFileRefs ),
-				)
-			);
+		try {
+			if ( $this->localFileRefs !== $this->getFileDependencies( $context->getSkin() ) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->replace( 'module_deps',
+					array( array( 'md_module', 'md_skin' ) ), array(
+						'md_module' => $this->getName(),
+						'md_skin' => $context->getSkin(),
+						'md_deps' => FormatJson::encode( $this->localFileRefs ),
+					)
+				);
+			}
+		} catch ( Exception $e ) {
+			wfDebug( __METHOD__ . " failed to update DB: $e\n" );
 		}
 		return $styles;
 	}
@@ -437,9 +441,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			return $this->modifiedTime[$context->getHash()] = 1;
 		}
 
-		wfProfileIn( __METHOD__.'-filemtime' );
+		wfProfileIn( __METHOD__ . '-filemtime' );
 		$filesMtime = max( array_map( array( __CLASS__, 'safeFilemtime' ), $files ) );
-		wfProfileOut( __METHOD__.'-filemtime' );
+		wfProfileOut( __METHOD__ . '-filemtime' );
 		$this->modifiedTime[$context->getHash()] = max(
 			$filesMtime,
 			$this->getMsgBlobMtime( $context->getLanguage() ) );
@@ -567,7 +571,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		foreach ( array_unique( $scripts ) as $fileName ) {
 			$localPath = $this->getLocalPath( $fileName );
 			if ( !file_exists( $localPath ) ) {
-				throw new MWException( __METHOD__.": script file not found: \"$localPath\"" );
+				throw new MWException( __METHOD__ . ": script file not found: \"$localPath\"" );
 			}
 			$contents = file_get_contents( $localPath );
 			if ( $wgResourceLoaderValidateStaticJS ) {
@@ -624,7 +628,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	protected function readStyleFile( $path, $flip ) {
 		$localPath = $this->getLocalPath( $path );
 		if ( !file_exists( $localPath ) ) {
-			$msg = __METHOD__.": style file not found: \"$localPath\"";
+			$msg = __METHOD__ . ": style file not found: \"$localPath\"";
 			wfDebugLog( 'resourceloader', $msg );
 			throw new MWException( $msg );
 		}
@@ -647,23 +651,6 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		return CSSMin::remap(
 			$style, $dir, $remoteDir, true
 		);
-	}
-
-	/**
-	 * Safe version of filemtime(), which doesn't throw a PHP warning if the file doesn't exist
-	 * but returns 1 instead.
-	 * @param $filename string File name
-	 * @return int UNIX timestamp, or 1 if the file doesn't exist
-	 */
-	protected static function safeFilemtime( $filename ) {
-		if ( file_exists( $filename ) ) {
-			return filemtime( $filename );
-		} else {
-			// We only ever map this function on an array if we're gonna call max() after,
-			// so return our standard minimum timestamps here. This is 1, not 0, because
-			// wfTimestamp(0) == NOW
-			return 1;
-		}
 	}
 
 	/**

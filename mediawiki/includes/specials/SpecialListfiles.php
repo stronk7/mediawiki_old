@@ -23,11 +23,11 @@
 
 class SpecialListFiles extends IncludableSpecialPage {
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct( 'Listfiles' );
 	}
 
-	public function execute( $par ){
+	public function execute( $par ) {
 		$this->setHeaders();
 		$this->outputHeader();
 
@@ -137,7 +137,7 @@ class ImageListPager extends TablePager {
 		$tables = array( 'image' );
 		$fields = array_keys( $this->getFieldNames() );
 		$fields[] = 'img_user';
-		$fields[array_search('thumb', $fields)] = 'img_name AS thumb';
+		$fields[array_search( 'thumb', $fields )] = 'img_name AS thumb';
 		$options = $join_conds = array();
 
 		# Depends on $wgMiserMode

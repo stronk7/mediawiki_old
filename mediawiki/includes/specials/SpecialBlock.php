@@ -62,7 +62,7 @@ class SpecialBlock extends FormSpecialPage {
 	 * @throws ErrorPageError
 	 */
 	protected function checkExecutePermissions( User $user ) {
-		 parent::checkExecutePermissions( $user );
+		parent::checkExecutePermissions( $user );
 
 		# bug 15810: blocked admins should have limited access here
 		$status = self::checkUnblockSelf( $this->target, $user );
@@ -134,6 +134,7 @@ class SpecialBlock extends FormSpecialPage {
 				'tabindex' => '1',
 				'id' => 'mw-bi-target',
 				'size' => '45',
+				'autofocus' => true,
 				'required' => true,
 				'validation-callback' => array( __CLASS__, 'validateTargetField' ),
 			),
@@ -239,7 +240,7 @@ class SpecialBlock extends FormSpecialPage {
 
 		if ( $block instanceof Block && !$block->mAuto # The block exists and isn't an autoblock
 			&& ( $this->type != Block::TYPE_RANGE # The block isn't a rangeblock
-			  || $block->getTarget() == $this->target ) # or if it is, the range is what we're about to block
+				|| $block->getTarget() == $this->target ) # or if it is, the range is what we're about to block
 			)
 		{
 			$fields['HardBlock']['default'] = $block->isHardblock();
@@ -386,7 +387,7 @@ class SpecialBlock extends FormSpecialPage {
 			);
 		}
 
-		$text =  Html::rawElement(
+		$text = Html::rawElement(
 			'p',
 			array( 'class' => 'mw-ipb-conveniencelinks' ),
 			$this->getLanguage()->pipeList( $links )
@@ -650,7 +651,7 @@ class SpecialBlock extends FormSpecialPage {
 		}
 
 		if ( $data['HideUser'] ) {
-			if ( !$performer->isAllowed('hideuser') ) {
+			if ( !$performer->isAllowed( 'hideuser' ) ) {
 				# this codepath is unreachable except by a malicious user spoofing forms,
 				# or by race conditions (user has oversight and sysop, loads block form,
 				# and is de-oversighted before submission); so need to fail completely
@@ -693,10 +694,16 @@ class SpecialBlock extends FormSpecialPage {
 		# Try to insert block. Is there a conflicting block?
 		$status = $block->insert();
 		if ( !$status ) {
+			# Indicates whether the user is confirming the block and is aware of
+			# the conflict (did not change the block target in the meantime)
+			$blockNotConfirmed = !$data['Confirm'] || ( array_key_exists( 'PreviousTarget', $data )
+				&& $data['PreviousTarget'] !== $target );
+
+			# Special case for API - bug 32434
+			$reblockNotAllowed = ( array_key_exists( 'Reblock', $data ) && !$data['Reblock'] );
+
 			# Show form unless the user is already aware of this...
-			if ( !$data['Confirm'] || ( array_key_exists( 'PreviousTarget', $data )
-				&& $data['PreviousTarget'] !== $target ) )
-			{
+			if( $blockNotConfirmed || $reblockNotAllowed ) {
 				return array( array( 'ipb_already_blocked', $block->getTarget() ) );
 			# Otherwise, try to update the block...
 			} else {
@@ -763,7 +770,7 @@ class SpecialBlock extends FormSpecialPage {
 			$logParams
 		);
 		# Relate log ID to block IDs (bug 25763)
-		$blockIds = array_merge( array( $status['id'] ), $status['autoIds']  );
+		$blockIds = array_merge( array( $status['id'] ), $status['autoIds'] );
 		$log->addRelations( 'ipb_id', $blockIds, $log_id );
 
 		# Report to the user

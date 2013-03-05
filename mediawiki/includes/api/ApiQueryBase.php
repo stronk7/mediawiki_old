@@ -351,7 +351,7 @@ abstract class ApiQueryBase extends ApiBase {
 		}
 		$result = $this->getResult();
 		$fit = $result->addValue( array( 'query', 'pages', $pageId,
-					 $this->getModuleName() ), null, $item );
+			$this->getModuleName() ), null, $item );
 		if ( !$fit ) {
 			return false;
 		}
@@ -370,7 +370,7 @@ abstract class ApiQueryBase extends ApiBase {
 		$msg = array( $paramName => $paramValue );
 		$result = $this->getResult();
 		$result->disableSizeCheck();
-		$result->addValue( 'query-continue', $this->getModuleName(), $msg );
+		$result->addValue( 'query-continue', $this->getModuleName(), $msg, ApiResult::ADD_ON_TOP );
 		$result->enableSizeCheck();
 	}
 
@@ -380,8 +380,7 @@ abstract class ApiQueryBase extends ApiBase {
 	 */
 	protected function getDB() {
 		if ( is_null( $this->mDb ) ) {
-			$apiQuery = $this->getQuery();
-			$this->mDb = $apiQuery->getDB();
+			$this->mDb = $this->getQuery()->getDB();
 		}
 		return $this->mDb;
 	}
@@ -549,18 +548,12 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @return array
 	 */
 	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
+		$errors = parent::getPossibleErrors();
+		$errors = array_merge( $errors, array(
 			array( 'invalidtitle', 'title' ),
 			array( 'invalidtitle', 'key' ),
 		) );
-	}
-
-	/**
-	 * Get version string for use in the API help output
-	 * @return string
-	 */
-	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id$';
+		return $errors;
 	}
 }
 
@@ -569,24 +562,32 @@ abstract class ApiQueryBase extends ApiBase {
  */
 abstract class ApiQueryGeneratorBase extends ApiQueryBase {
 
-	private $mIsGenerator;
-
-	/**
-	 * @param $query ApiBase
-	 * @param $moduleName string
-	 * @param $paramPrefix string
-	 */
-	public function __construct( $query, $moduleName, $paramPrefix = '' ) {
-		parent::__construct( $query, $moduleName, $paramPrefix );
-		$this->mIsGenerator = false;
-	}
+	private $mGeneratorPageSet = null;
 
 	/**
 	 * Switch this module to generator mode. By default, generator mode is
 	 * switched off and the module acts like a normal query module.
+	 * @since 1.21 requires pageset parameter
+	 * @param $generatorPageSet ApiPageSet object that the module will get
+	 *        by calling getPageSet() when in generator mode.
 	 */
-	public function setGeneratorMode() {
-		$this->mIsGenerator = true;
+	public function setGeneratorMode( ApiPageSet $generatorPageSet ) {
+		if ( $generatorPageSet === null ) {
+			ApiBase::dieDebug( __METHOD__, 'Required parameter missing - $generatorPageSet' );
+		}
+		$this->mGeneratorPageSet = $generatorPageSet;
+	}
+
+	/**
+	 * Get the PageSet object to work on.
+	 * If this module is generator, the pageSet object is different from other module's
+	 * @return ApiPageSet
+	 */
+	protected function getPageSet() {
+		if ( $this->mGeneratorPageSet !== null ) {
+			return $this->mGeneratorPageSet;
+		}
+		return parent::getPageSet();
 	}
 
 	/**
@@ -595,10 +596,25 @@ abstract class ApiQueryGeneratorBase extends ApiQueryBase {
 	 * @return string Prefixed parameter name
 	 */
 	public function encodeParamName( $paramName ) {
-		if ( $this->mIsGenerator ) {
+		if ( $this->mGeneratorPageSet !== null ) {
 			return 'g' . parent::encodeParamName( $paramName );
 		} else {
 			return parent::encodeParamName( $paramName );
+		}
+	}
+
+	/**
+	 * Overrides base in case of generator & smart continue to
+	 * notify ApiQueryMain instead of adding them to the result right away.
+	 * @param $paramName string Parameter name
+	 * @param $paramValue string Parameter value
+	 */
+	protected function setContinueEnumParameter( $paramName, $paramValue ) {
+		// If this is a generator and query->setGeneratorContinue() returns false, treat as before
+		if ( $this->mGeneratorPageSet === null
+			|| !$this->getQuery()->setGeneratorContinue( $this, $paramName, $paramValue )
+		) {
+			parent::setContinueEnumParameter( $paramName, $paramValue );
 		}
 	}
 
@@ -607,5 +623,5 @@ abstract class ApiQueryGeneratorBase extends ApiQueryBase {
 	 * @param $resultPageSet ApiPageSet: All output should be appended to
 	 *  this object
 	 */
-	public abstract function executeGenerator( $resultPageSet );
+	abstract public function executeGenerator( $resultPageSet );
 }

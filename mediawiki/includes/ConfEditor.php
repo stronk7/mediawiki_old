@@ -1060,6 +1060,7 @@ class ConfEditorParseError extends MWException {
 				return "$line\n" .str_repeat( ' ', $this->colNum - 1 ) . "^\n";
 			}
 		}
+		return '';
 	}
 
 }
@@ -1094,4 +1095,3 @@ class ConfEditorToken {
 		return $this->type == 'END';
 	}
 }
-

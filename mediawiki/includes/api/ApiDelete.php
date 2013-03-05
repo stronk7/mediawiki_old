@@ -32,10 +32,6 @@
  */
 class ApiDelete extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	/**
 	 * Extracts the title, token, and reason from the request parameters and invokes
 	 * the local delete() function with these as arguments. It does not make use of
@@ -266,9 +262,5 @@ class ApiDelete extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Delete';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

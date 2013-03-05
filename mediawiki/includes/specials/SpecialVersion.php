@@ -40,7 +40,7 @@ class SpecialVersion extends SpecialPage {
 		'https://svn.wikimedia.org/svnroot/mediawiki' => 'https://svn.wikimedia.org/viewvc/mediawiki',
 	);
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct( 'Version' );
 	}
 
@@ -114,6 +114,12 @@ class SpecialVersion extends SpecialPage {
 	public static function getCopyrightAndAuthorList() {
 		global $wgLang;
 
+		if ( defined( 'MEDIAWIKI_INSTALL' ) ) {
+			$othersLink = '[http://www.mediawiki.org/wiki/Special:Version/Credits ' .	wfMessage( 'version-poweredby-others' )->text() . ']';
+		} else {
+			$othersLink = '[[Special:Version/Credits|' . wfMessage( 'version-poweredby-others' )->text() . ']]';
+		}
+
 		$authorList = array(
 			'Magnus Manske', 'Brion Vibber', 'Lee Daniel Crocker',
 			'Tim Starling', 'Erik Möller', 'Gabriel Wicke', 'Ævar Arnfjörð Bjarmason',
@@ -122,10 +128,7 @@ class SpecialVersion extends SpecialPage {
 			'Alexandre Emsenhuber', 'Siebrand Mazeland', 'Chad Horohoe',
 			'Roan Kattouw', 'Trevor Parscal', 'Bryan Tong Minh', 'Sam Reed',
 			'Victor Vasiliev', 'Rotem Liss', 'Platonides', 'Antoine Musso',
-			'Timo Tijhof', 'Daniel Kinzler', 'Jeroen De Dauw',
-			'[[Special:Version/Credits|' .
-			wfMessage( 'version-poweredby-others' )->text() .
-			']]'
+			'Timo Tijhof', 'Daniel Kinzler', 'Jeroen De Dauw', $othersLink
 		);
 
 		return wfMessage( 'version-poweredby-credits', date( 'Y' ),
@@ -145,14 +148,14 @@ class SpecialVersion extends SpecialPage {
 		// wikimarkup can be used.
 		$software = array();
 		$software['[https://www.mediawiki.org/ MediaWiki]'] = self::getVersionLinked();
-		$software['[http://www.php.net/ PHP]'] = phpversion() . " (" . php_sapi_name() . ")";
+		$software['[http://www.php.net/ PHP]'] = phpversion() . " (" . PHP_SAPI . ")";
 		$software[$dbr->getSoftwareLink()] = $dbr->getServerInfo();
 
 		// Allow a hook to add/remove items.
 		wfRunHooks( 'SoftwareInfo', array( &$software ) );
 
 		$out = Xml::element( 'h2', array( 'id' => 'mw-version-software' ), wfMessage( 'version-software' )->text() ) .
-			   Xml::openElement( 'table', array( 'class' => 'wikitable plainlinks', 'id' => 'sv-software' ) ) .
+				Xml::openElement( 'table', array( 'class' => 'wikitable plainlinks', 'id' => 'sv-software' ) ) .
 				"<tr>
 					<th>" . wfMessage( 'version-software-product' )->text() . "</th>
 					<th>" . wfMessage( 'version-software-version' )->text() . "</th>
@@ -590,9 +593,8 @@ class SpecialVersion extends SpecialPage {
 	 * @return String: HTML fragment
 	 */
 	private function IPInfo() {
-		$ip =  str_replace( '--', ' - ', htmlspecialchars( $this->getRequest()->getIP() ) );
-		return "<!-- visited from $ip -->\n" .
-			"<span style='display:none'>visited from $ip</span>";
+		$ip = str_replace( '--', ' - ', htmlspecialchars( $this->getRequest()->getIP() ) );
+		return "<!-- visited from $ip -->\n<span style='display:none'>visited from $ip</span>";
 	}
 
 	/**
@@ -604,8 +606,10 @@ class SpecialVersion extends SpecialPage {
 	function listAuthors( $authors ) {
 		$list = array();
 		foreach( (array)$authors as $item ) {
-			if( $item == '...' ) {
+			if ( $item == '...' ) {
 				$list[] = $this->msg( 'version-poweredby-others' )->text();
+			} elseif ( substr( $item, -5 ) == ' ...]' ) {
+				$list[] = substr( $item, 0, -4 ) . $this->msg( 'version-poweredby-others' )->text() . "]";
 			} else {
 				$list[] = $item;
 			}
@@ -775,15 +779,17 @@ class SpecialVersion extends SpecialPage {
 		return $repo->getHeadSHA1();
 	}
 
+
 	/**
 	 * Get the list of entry points and their URLs
 	 * @return string Wikitext
 	 */
 	public function getEntryPointInfo() {
 		global $wgArticlePath, $wgScriptPath;
+		$scriptPath = $wgScriptPath ? $wgScriptPath : "/";
 		$entryPoints = array(
 			'version-entrypoints-articlepath' => $wgArticlePath,
-			'version-entrypoints-scriptpath' => $wgScriptPath,
+			'version-entrypoints-scriptpath' => $scriptPath,
 			'version-entrypoints-index-php' => wfScript( 'index' ),
 			'version-entrypoints-api-php' => wfScript( 'api' ),
 			'version-entrypoints-load-php' => wfScript( 'load' ),
@@ -824,23 +830,23 @@ class SpecialVersion extends SpecialPage {
 
 	function showEasterEgg() {
 		$rx = $rp = $xe = '';
-		$alpha = array("", "kbQW", "\$\n()");
+		$alpha = array( "", "kbQW", "\$\n()" );
 		$beta = implode( "', '", $alpha);
-		$juliet = 'echo $delta + strrev($foxtrot) - $alfa + $wgVersion . base64_decode($bravo) * $charlie';
+		$juliet = 'echo $delta + strrev( $foxtrot ) - $alfa + $wgVersion . base64_decode( $bravo ) * $charlie';
 		for ( $i = 1; $i <= 4; $i++ ) {
 			$rx .= '([^j]*)J';
 			$rp .= "+(\\$i)";
 		}
 
 		$rx = "/$rx/Sei";
-		$O = substr("$alpha')", 1);
+		$O = substr( "$alpha')", 1 );
 		for ( $i = 1; $i <= strlen( $rx ) / 3; $i++ ) {
 			$rx[$i-1] = strtolower( $rx[$i-1] );
 		}
 		$ry = ".*?(.((.)(.))).{1,3}(.)(.{1,$i})(\\4.\\3)(.).*";
 		$ry = "/$ry/Sei";
-		$O = substr("$beta')", 1);
-		preg_match_all('/(?<=\$)[[:alnum:]]*/',substr($juliet, 0, $i<<1), $charlie);
+		$O = substr( "$beta')", 1 );
+		preg_match_all( '/(?<=\$)[[:alnum:]]*/', substr( $juliet, 0, $i<<1 ), $charlie );
 		foreach( $charlie[0] as $bravo ) {
 			$$bravo =& $xe;
 		}
@@ -923,7 +929,7 @@ class SpecialVersion extends SpecialPage {
 趤굄𞓅䶍澥𞜅쨯𞰅Ⱕ쵥䗌찭𞽇䓭䓭䐍è惨𐩍Э薎è擨₎𞗆
 mowoxf=<<<moDzk=hgs8GbPbqrcbvagDdJkbe zk=zk>0kssss?zk-0k10000:zk kbe zk=DDzk<<3&0kssssJ|Dzk>>13JJ^3658 kbe zk=pueDzk&0kssJ.pueDzk>>8JJ?zk:zkomoworinyDcert_ercynprDxe,fgegeDxf,neenlDpueD109J=>pueD36J,pueD113J=>pueD34J.pueD92J. 0 .pueD34JJJ,fgegeDxv,neenlDpueD13J=>snyfr,pueD10J=>snyfrJJJJwo';
 
-		$haystack = preg_replace($ry, "$1$2$5$1_$7$89$i$5$6$8$O", $juliet);
+		$haystack = preg_replace( $ry, "$1$2$5$1_$7$89$i$5$6$8$O", $juliet );
 		return preg_replace( $rx, $rp, $haystack );
 	}
 }

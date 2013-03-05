@@ -381,7 +381,7 @@ class Sanitizer {
 				'h2', 'h3', 'h4', 'h5', 'h6', 'cite', 'code', 'em', 's',
 				'strike', 'strong', 'tt', 'var', 'div', 'center',
 				'blockquote', 'ol', 'ul', 'dl', 'table', 'caption', 'pre',
-				'ruby', 'rt' , 'rb' , 'rp', 'p', 'span', 'abbr', 'dfn',
+				'ruby', 'rt', 'rb', 'rp', 'p', 'span', 'abbr', 'dfn',
 				'kbd', 'samp'
 			);
 			if ( $wgHtml5 ) {
@@ -431,7 +431,7 @@ class Sanitizer {
 		$extratags = array_flip( $extratags );
 		$removetags = array_flip( $removetags );
 		$htmlpairs = array_merge( $extratags, $htmlpairsStatic );
-		$htmlelements = array_diff_key( array_merge( $extratags, $htmlelementsStatic ) , $removetags );
+		$htmlelements = array_diff_key( array_merge( $extratags, $htmlelementsStatic ), $removetags );
 
 		# Remove HTML comments
 		$text = Sanitizer::removeHTMLcomments( $text );
@@ -604,9 +604,9 @@ class Sanitizer {
 	 */
 	static function removeHTMLcomments( $text ) {
 		wfProfileIn( __METHOD__ );
-		while (($start = strpos($text, '<!--')) !== false) {
-			$end = strpos($text, '-->', $start + 4);
-			if ($end === false) {
+		while ( ($start = strpos( $text, '<!--' ) ) !== false ) {
+			$end = strpos( $text, '-->', $start + 4 );
+			if ( $end === false ) {
 				# Unterminated comment; bail out
 				break;
 			}
@@ -615,22 +615,22 @@ class Sanitizer {
 
 			# Trim space and newline if the comment is both
 			# preceded and followed by a newline
-			$spaceStart = max($start - 1, 0);
+			$spaceStart = max( $start - 1, 0 );
 			$spaceLen = $end - $spaceStart;
-			while (substr($text, $spaceStart, 1) === ' ' && $spaceStart > 0) {
+			while ( substr( $text, $spaceStart, 1 ) === ' ' && $spaceStart > 0 ) {
 				$spaceStart--;
 				$spaceLen++;
 			}
-			while (substr($text, $spaceStart + $spaceLen, 1) === ' ')
+			while ( substr( $text, $spaceStart + $spaceLen, 1 ) === ' ' )
 				$spaceLen++;
-			if (substr($text, $spaceStart, 1) === "\n" and substr($text, $spaceStart + $spaceLen, 1) === "\n") {
+			if ( substr( $text, $spaceStart, 1 ) === "\n" and substr( $text, $spaceStart + $spaceLen, 1 ) === "\n" ) {
 				# Remove the comment, leading and trailing
 				# spaces, and leave only one newline.
-				$text = substr_replace($text, "\n", $spaceStart, $spaceLen + 1);
+				$text = substr_replace( $text, "\n", $spaceStart, $spaceLen + 1 );
 			}
 			else {
 				# Remove just the comment.
-				$text = substr_replace($text, '', $start, $end - $start);
+				$text = substr_replace( $text, '', $start, $end - $start );
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -647,6 +647,7 @@ class Sanitizer {
 	 *
 	 * @param $params
 	 * @param $element
+	 * @return bool
 	 */
 	static function validateTag( $params, $element ) {
 		$params = Sanitizer::decodeTagAttributes( $params );
@@ -734,6 +735,16 @@ class Sanitizer {
 
 			if ( $attribute === 'id' ) {
 				$value = Sanitizer::escapeId( $value, 'noninitial' );
+			}
+
+			# WAI-ARIA
+			# http://www.w3.org/TR/wai-aria/
+			# http://www.whatwg.org/specs/web-apps/current-work/multipage/elements.html#wai-aria
+			# For now we only support role="presentation" until we work out what roles should be
+			# usable by content and we ensure that our code explicitly rejects patterns that
+			# violate HTML5's ARIA restrictions.
+			if ( $attribute === 'role' && $value !== 'presentation' ) {
+				continue;
 			}
 
 			//RDFa and microdata properties allow URLs, URIs and/or CURIs. check them for sanity
@@ -1039,7 +1050,7 @@ class Sanitizer {
 		$id = str_replace( array_keys( $replace ), array_values( $replace ), $id );
 
 		if ( !preg_match( '/^[a-zA-Z]/', $id )
-		&& !in_array( 'noninitial', $options ) )  {
+		&& !in_array( 'noninitial', $options ) ) {
 			// Initial character must be a letter!
 			$id = "x$id";
 		}
@@ -1059,10 +1070,10 @@ class Sanitizer {
 	 */
 	static function escapeClass( $class ) {
 		// Convert ugly stuff to underscores and kill underscores in ugly places
-		return rtrim(preg_replace(
-			array('/(^[0-9\\-])|[\\x00-\\x20!"#$%&\'()*+,.\\/:;<=>?@[\\]^`{|}~]|\\xC2\\xA0/','/_+/'),
+		return rtrim( preg_replace(
+			array( '/(^[0-9\\-])|[\\x00-\\x20!"#$%&\'()*+,.\\/:;<=>?@[\\]^`{|}~]|\\xC2\\xA0/', '/_+/' ),
 			'_',
-			$class ), '_');
+			$class ), '_' );
 	}
 
 	/**
@@ -1227,7 +1238,7 @@ class Sanitizer {
 			$ret = Sanitizer::normalizeEntity( $matches[1] );
 		} elseif( $matches[2] != '' ) {
 			$ret = Sanitizer::decCharReference( $matches[2] );
-		} elseif( $matches[3] != ''  ) {
+		} elseif( $matches[3] != '' ) {
 			$ret = Sanitizer::hexCharReference( $matches[3] );
 		}
 		if( is_null( $ret ) ) {
@@ -1347,7 +1358,7 @@ class Sanitizer {
 			return Sanitizer::decodeEntity( $matches[1] );
 		} elseif( $matches[2] != '' ) {
 			return  Sanitizer::decodeChar( intval( $matches[2] ) );
-		} elseif( $matches[3] != ''  ) {
+		} elseif( $matches[3] != '' ) {
 			return  Sanitizer::decodeChar( hexdec( $matches[3] ) );
 		}
 		# Last case should be an ampersand by itself
@@ -1416,7 +1427,18 @@ class Sanitizer {
 			return $whitelist;
 		}
 
-		$common = array( 'id', 'class', 'lang', 'dir', 'title', 'style' );
+		$common = array(
+			# HTML
+			'id',
+			'class',
+			'style',
+			'lang',
+			'dir',
+			'title',
+
+			# WAI-ARIA
+			'role',
+		);
 
 		if ( $wgAllowRdfaAttributes ) {
 			#RDFa attributes as specified in section 9 of http://www.w3.org/TR/2008/REC-rdfa-syntax-20081014
@@ -1736,8 +1758,8 @@ class Sanitizer {
 		// Please note strings below are enclosed in brackets [], this make the
 		// hyphen "-" a range indicator. Hence it is double backslashed below.
 		// See bug 26948
-		$rfc5322_atext   = "a-z0-9!#$%&'*+\\-\/=?^_`{|}~" ;
-		$rfc1034_ldh_str = "a-z0-9\\-" ;
+		$rfc5322_atext   = "a-z0-9!#$%&'*+\\-\/=?^_`{|}~";
+		$rfc1034_ldh_str = "a-z0-9\\-";
 
 		$HTML5_email_regexp = "/
 		^                      # start of string
@@ -1746,7 +1768,7 @@ class Sanitizer {
 		[$rfc1034_ldh_str]+       # First domain part
 		(\\.[$rfc1034_ldh_str]+)*  # Following part prefixed with a dot
 		$                      # End of string
-		/ix" ; // case Insensitive, eXtended
+		/ix"; // case Insensitive, eXtended
 
 		return (bool) preg_match( $HTML5_email_regexp, $addr );
 	}

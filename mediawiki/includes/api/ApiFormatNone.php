@@ -30,10 +30,6 @@
  */
 class ApiFormatNone extends ApiFormatBase {
 
-	public function __construct( $main, $format ) {
-		parent::__construct( $main, $format );
-	}
-
 	public function getMimeType() {
 		return 'text/plain';
 	}
@@ -43,9 +39,5 @@ class ApiFormatNone extends ApiFormatBase {
 
 	public function getDescription() {
 		return 'Output nothing' . parent::getDescription();
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

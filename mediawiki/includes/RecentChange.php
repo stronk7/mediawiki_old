@@ -80,7 +80,7 @@ class RecentChange {
 	 * @var Title
 	 */
 	var $mMovedToTitle = false;
-	var $numberofWatchingusers = 0 ; # Dummy to prevent error message in SpecialRecentchangeslinked
+	var $numberofWatchingusers = 0; # Dummy to prevent error message in SpecialRecentchangeslinked
 	var $notificationtimestamp;
 
 	# Factory methods
@@ -191,8 +191,6 @@ class RecentChange {
 	public function &getTitle() {
 		if ( $this->mTitle === false ) {
 			$this->mTitle = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
-			# Make sure the correct page ID is process cached
-			$this->mTitle->resetArticleID( $this->mAttribs['rc_cur_id'] );
 		}
 		return $this->mTitle;
 	}
@@ -234,6 +232,9 @@ class RecentChange {
 		if ( $dbw->strictIPs() and $this->mAttribs['rc_ip'] == '' ) {
 			unset( $this->mAttribs['rc_ip'] );
 		}
+
+		# Trim spaces on user supplied text
+		$this->mAttribs['rc_comment'] = trim( $this->mAttribs['rc_comment'] );
 
 		# Make sure summary is truncated (whole multibyte characters)
 		$this->mAttribs['rc_comment'] = $wgContLang->truncate( $this->mAttribs['rc_comment'], 255 );
@@ -709,7 +710,7 @@ class RecentChange {
 			$trail = "curid=" . (int)( $this->mAttribs['rc_cur_id'] ) .
 				"&oldid=" . (int)( $this->mAttribs['rc_last_oldid'] );
 			if ( $forceCur ) {
-				$trail .= '&diff=0' ;
+				$trail .= '&diff=0';
 			} else {
 				$trail .= '&diff=' . (int)( $this->mAttribs['rc_this_oldid'] );
 			}
@@ -758,10 +759,10 @@ class RecentChange {
 			if ( $szdiff < -500 ) {
 				$szdiff = "\002$szdiff\002";
 			} elseif ( $szdiff >= 0 ) {
-				$szdiff = '+' . $szdiff ;
+				$szdiff = '+' . $szdiff;
 			}
 			// @todo i18n with parentheses in content language?
-			$szdiff = '(' . $szdiff . ')' ;
+			$szdiff = '(' . $szdiff . ')';
 		} else {
 			$szdiff = '';
 		}
@@ -797,7 +798,7 @@ class RecentChange {
 		# see http://www.irssi.org/documentation/formats for some colour codes. prefix is \003,
 		# no colour (\003) switches back to the term default
 		$fullString = "$titleString\0034 $flag\00310 " .
-					  "\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
+			"\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
 
 		return $fullString;
 	}

@@ -126,7 +126,7 @@ class MediaWiki {
 	 * @return Title
 	 */
 	public function getTitle() {
-		if( $this->context->getTitle() === null ){
+		if( $this->context->getTitle() === null ) {
 			$this->context->setTitle( $this->parseTitle() );
 		}
 		return $this->context->getTitle();
@@ -331,8 +331,18 @@ class MediaWiki {
 		wfProfileIn( __METHOD__ );
 
 		$title = $this->context->getTitle();
-		$article = Article::newFromTitle( $title, $this->context );
-		$this->context->setWikiPage( $article->getPage() );
+		if ( $this->context->canUseWikiPage() ) {
+			// Try to use request context wiki page, as there
+			// is already data from db saved in per process
+			// cache there from this->getAction() call.
+			$page = $this->context->getWikiPage();
+			$article = Article::newFromWikiPage( $page, $this->context );
+		} else {
+			// This case should not happen, but just in case.
+			$article = Article::newFromTitle( $title, $this->context );
+			$this->context->setWikiPage( $article->getPage() );
+		}
+
 		// NS_MEDIAWIKI has no redirects.
 		// It is also used for CSS/JS, so performance matters here...
 		if ( $title->getNamespace() == NS_MEDIAWIKI ) {
@@ -497,7 +507,7 @@ class MediaWiki {
 			&& $request->getMethod() == 'GET'
 		) {
 			$redirUrl = $request->getFullRequestURL();
-			$redirUrl = str_replace( 'http://' , 'https://' , $redirUrl );
+			$redirUrl = str_replace( 'http://', 'https://', $redirUrl );
 
 			// Setup dummy Title, otherwise OutputPage::redirect will fail
 			$title = Title::newFromText( NS_MAIN, 'REDIR' );
@@ -606,39 +616,22 @@ class MediaWiki {
 		}
 
 		$group = JobQueueGroup::singleton();
-		$types = $group->getDefaultQueueTypes();
-		shuffle( $types ); // avoid starvation
-
-		// Scan the queues for a job N times...
 		do {
-			$jobFound = false; // found a job in any queue?
-			// Find a queue with a job on it and run it...
-			foreach ( $types as $i => $type ) {
-				$queue = $group->get( $type );
-				if ( $queue->isEmpty() ) {
-					unset( $types[$i] ); // don't keep checking this queue
-					continue;
-				}
-				$job = $queue->pop();
-				if ( $job ) {
-					$jobFound = true;
-					$output = $job->toString() . "\n";
-					$t = - microtime( true );
-					$success = $job->run();
-					$queue->ack( $job ); // done
-					$t += microtime( true );
-					$t = round( $t * 1000 );
-					if ( !$success ) {
-						$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
-					} else {
-						$output .= "Success, Time: $t ms\n";
-					}
-					wfDebugLog( 'jobqueue', $output );
-					break;
+			$job = $group->pop( JobQueueGroup::USE_CACHE ); // job from any queue
+			if ( $job ) {
+				$output = $job->toString() . "\n";
+				$t = - microtime( true );
+				$success = $job->run();
+				$group->ack( $job ); // done
+				$t += microtime( true );
+				$t = round( $t * 1000 );
+				if ( !$success ) {
+					$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
 				} else {
-					unset( $types[$i] ); // don't keep checking this queue
+					$output .= "Success, Time: $t ms\n";
 				}
+				wfDebugLog( 'jobqueue', $output );
 			}
-		} while ( --$n && $jobFound );
+		} while ( --$n && $job );
 	}
 }

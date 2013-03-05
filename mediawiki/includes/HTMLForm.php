@@ -96,6 +96,7 @@ class HTMLForm extends ContextSource {
 
 	// A mapping of 'type' inputs onto standard HTMLFormField subclasses
 	static $typeMappings = array(
+		'api' => 'HTMLApiField',
 		'text' => 'HTMLTextField',
 		'textarea' => 'HTMLTextAreaField',
 		'select' => 'HTMLSelectField',
@@ -638,9 +639,9 @@ class HTMLForm extends ContextSource {
 			: 'application/x-www-form-urlencoded';
 		# Attributes
 		$attribs = array(
-			'action'  => $this->mAction === false ? $this->getTitle()->getFullURL() : $this->mAction,
-			'method'  => $this->mMethod,
-			'class'   => 'visualClear',
+			'action' => $this->mAction === false ? $this->getTitle()->getFullURL() : $this->mAction,
+			'method' => $this->mMethod,
+			'class' => 'visualClear',
 			'enctype' => $encType,
 		);
 		if ( !empty( $this->mId ) ) {
@@ -711,8 +712,8 @@ class HTMLForm extends ContextSource {
 
 		foreach ( $this->mButtons as $button ) {
 			$attrs = array(
-				'type'  => 'submit',
-				'name'  => $button['name'],
+				'type' => 'submit',
+				'name' => $button['name'],
 				'value' => $button['value']
 			);
 
@@ -2427,5 +2428,23 @@ class HTMLEditTools extends HTMLFormField {
 		}
 		$msg->inContentLanguage();
 		return $msg;
+	}
+}
+
+class HTMLApiField extends HTMLFormField {
+	public function getTableRow( $value ) {
+		return '';
+	}
+
+	public function getDiv( $value ) {
+		return $this->getTableRow( $value );
+	}
+
+	public function getRaw( $value ) {
+		return $this->getTableRow( $value );
+	}
+
+	public function getInputHTML( $value ) {
+		return '';
 	}
 }

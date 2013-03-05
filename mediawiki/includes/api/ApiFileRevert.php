@@ -37,10 +37,6 @@ class ApiFileRevert extends ApiBase {
 
 	protected $params;
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		$this->params = $this->extractRequestParams();
 		// Extract the file and archiveName from the request parameters
@@ -73,8 +69,8 @@ class ApiFileRevert extends ApiBase {
 	protected function checkPermissions( $user ) {
 		$title = $this->file->getTitle();
 		$permissionErrors = array_merge(
-			$title->getUserPermissionsErrors( 'edit' , $user ),
-			$title->getUserPermissionsErrors( 'upload' , $user )
+			$title->getUserPermissionsErrors( 'edit', $user ),
+			$title->getUserPermissionsErrors( 'upload', $user )
 		);
 
 		if ( $permissionErrors ) {
@@ -194,9 +190,5 @@ class ApiFileRevert extends ApiBase {
 			'api.php?action=filerevert&filename=Wiki.png&comment=Revert&archivename=20110305152740!Wiki.png&token=+\\'
 				=> 'Revert Wiki.png to the version of 20110305152740',
 		);
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

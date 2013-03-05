@@ -28,7 +28,6 @@
  * Group all the pieces relevant to the context of a request into one instance
  */
 class RequestContext implements IContextSource {
-
 	/**
 	 * @var WebRequest
 	 */
@@ -67,7 +66,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Set the WebRequest object
 	 *
-	 * @param $r WebRequest object
+	 * @param WebRequest $r
 	 */
 	public function setRequest( WebRequest $r ) {
 		$this->request = $r;
@@ -89,7 +88,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Set the Title object
 	 *
-	 * @param $t Title object
+	 * @param Title $t
 	 */
 	public function setTitle( Title $t ) {
 		$this->title = $t;
@@ -137,7 +136,7 @@ class RequestContext implements IContextSource {
 	 * Set the WikiPage object
 	 *
 	 * @since 1.19
-	 * @param $p WikiPage object
+	 * @param WikiPage $p
 	 */
 	public function setWikiPage( WikiPage $p ) {
 		$contextTitle = $this->getTitle();
@@ -180,7 +179,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Get the OutputPage object
 	 *
-	 * @return OutputPage object
+	 * @return OutputPage
 	 */
 	public function getOutput() {
 		if ( $this->output === null ) {
@@ -192,7 +191,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Set the User object
 	 *
-	 * @param $u User
+	 * @param User $u
 	 */
 	public function setUser( User $u ) {
 		$this->user = $u;
@@ -213,7 +212,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Accepts a language code and ensures it's sane. Outputs a cleaned up language
 	 * code and replaces with $wgLanguageCode if not sane.
-	 * @param $code string
+	 * @param string $code Language code
 	 * @return string
 	 */
 	public static function sanitizeLangCode( $code ) {
@@ -223,7 +222,7 @@ class RequestContext implements IContextSource {
 		$code = strtolower( $code );
 
 		# Validate $code
-		if( empty( $code ) || !Language::isValidCode( $code ) || ( $code === 'qqq' ) ) {
+		if ( empty( $code ) || !Language::isValidCode( $code ) || ( $code === 'qqq' ) ) {
 			wfDebug( "Invalid user language code\n" );
 			$code = $wgLanguageCode;
 		}
@@ -235,7 +234,7 @@ class RequestContext implements IContextSource {
 	 * Set the Language object
 	 *
 	 * @deprecated 1.19 Use setLanguage instead
-	 * @param $l Mixed Language instance or language code
+	 * @param Language|string $l Language instance or language code
 	 */
 	public function setLang( $l ) {
 		wfDeprecated( __METHOD__, '1.19' );
@@ -245,7 +244,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Set the Language object
 	 *
-	 * @param $l Mixed Language instance or language code
+	 * @param Language|string $l Language instance or language code
 	 * @throws MWException
 	 * @since 1.19
 	 */
@@ -271,36 +270,51 @@ class RequestContext implements IContextSource {
 	}
 
 	/**
-	 * Get the Language object
+	 * Get the Language object.
+	 * Initialization of user or request objects can depend on this.
 	 *
 	 * @return Language
 	 * @since 1.19
 	 */
 	public function getLanguage() {
-		if ( $this->lang === null ) {
+		if ( isset( $this->recursion ) ) {
+			trigger_error( "Recursion detected in " . __METHOD__, E_USER_WARNING );
+			$e = new Exception;
+			wfDebugLog( 'recursion-guard', "Recursion detected:\n" . $e->getTraceAsString() );
+
+			global $wgLanguageCode;
+			$code = ( $wgLanguageCode ) ? $wgLanguageCode : 'en';
+			$this->lang = Language::factory( $code );
+		} elseif ( $this->lang === null ) {
+			$this->recursion = true;
+
 			global $wgLanguageCode, $wgContLang;
-			$code = $this->getRequest()->getVal(
-				'uselang',
-				$this->getUser()->getOption( 'language' )
-			);
+
+			$request = $this->getRequest();
+			$user = $this->getUser();
+
+			$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
 			$code = self::sanitizeLangCode( $code );
 
-			wfRunHooks( 'UserGetLanguageObject', array( $this->getUser(), &$code ) );
+			wfRunHooks( 'UserGetLanguageObject', array( $user, &$code, $this ) );
 
-			if( $code === $wgLanguageCode ) {
+			if ( $code === $wgLanguageCode ) {
 				$this->lang = $wgContLang;
 			} else {
 				$obj = Language::factory( $code );
 				$this->lang = $obj;
 			}
+
+			unset( $this->recursion );
 		}
+
 		return $this->lang;
 	}
 
 	/**
 	 * Set the Skin object
 	 *
-	 * @param $s Skin
+	 * @param Skin $s
 	 */
 	public function setSkin( Skin $s ) {
 		$this->skin = clone $s;
@@ -322,7 +336,7 @@ class RequestContext implements IContextSource {
 			// If the hook worked try to set a skin from it
 			if ( $skin instanceof Skin ) {
 				$this->skin = $skin;
-			} elseif ( is_string($skin) ) {
+			} elseif ( is_string( $skin ) ) {
 				$this->skin = Skin::newFromKey( $skin );
 			}
 
@@ -330,7 +344,7 @@ class RequestContext implements IContextSource {
 			// then go through the normal processing to load a skin
 			if ( $this->skin === null ) {
 				global $wgHiddenPrefs;
-				if( !in_array( 'skin', $wgHiddenPrefs ) ) {
+				if ( !in_array( 'skin', $wgHiddenPrefs ) ) {
 					# get the user skin
 					$userSkin = $this->getUser()->getOption( 'skin' );
 					$userSkin = $this->getRequest()->getVal( 'useskin', $userSkin );
@@ -356,7 +370,7 @@ class RequestContext implements IContextSource {
 	 * Get a Message object with context set
 	 * Parameters are the same as wfMessage()
 	 *
-	 * @return Message object
+	 * @return Message
 	 */
 	public function msg() {
 		$args = func_get_args();
@@ -368,7 +382,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Get the RequestContext object associated with the main request
 	 *
-	 * @return RequestContext object
+	 * @return RequestContext
 	 */
 	public static function getMain() {
 		static $instance = null;
@@ -376,6 +390,63 @@ class RequestContext implements IContextSource {
 			$instance = new self;
 		}
 		return $instance;
+	}
+
+	/**
+	 * Import the resolved user IP, HTTP headers, and session ID.
+	 * This sets the current session and sets $wgUser and $wgRequest.
+	 * Once the return value falls out of scope, the old context is restored.
+	 * This function can only be called within CLI mode scripts.
+	 *
+	 * This will setup the session from the given ID. This is useful when
+	 * background scripts inherit some context when acting on behalf of a user.
+	 *
+	 * $param array $params Result of WebRequest::exportUserSession()
+	 * @return ScopedCallback
+	 * @throws MWException
+	 * @since 1.21
+	 */
+	public static function importScopedSession( array $params ) {
+		if ( PHP_SAPI !== 'cli' ) {
+			// Don't send random private cookie headers to other random users
+			throw new MWException( "Sessions can only be imported in cli mode." );
+		}
+
+		$importSessionFunction = function( array $params ) {
+			global $wgRequest, $wgUser;
+
+			// Write and close any current session
+			session_write_close(); // persist
+			session_id( '' ); // detach
+			$_SESSION = array(); // clear in-memory array
+			// Load the new session from the session ID
+			if ( strlen( $params['sessionId'] ) ) {
+				wfSetupSession( $params['sessionId'] ); // sets $_SESSION
+			}
+			// Build the new WebRequest object
+			$request = new FauxRequest( array(), false, $_SESSION );
+			$request->setIP( $params['ip'] );
+			foreach ( $params['headers'] as $name => $value ) {
+				$request->setHeader( $name, $value );
+			}
+
+			$context = RequestContext::getMain();
+			// Set the current context to use the new WebRequest
+			$context->setRequest( $request );
+			$wgRequest = $context->getRequest(); // b/c
+			// Set the current user based on the new session and WebRequest
+			$context->setUser( User::newFromSession( $request ) ); // uses $_SESSION
+			$wgUser = $context->getUser(); // b/c
+		};
+
+		// Stash the old session and load in the new one
+		$oldParams = self::getMain()->getRequest()->exportUserSession();
+		$importSessionFunction( $params );
+
+		// Set callback to save and close the new session and reload the old one
+		return new ScopedCallback( function() use ( $importSessionFunction, $oldParams ) {
+			$importSessionFunction( $oldParams );
+		} );
 	}
 
 	/**
@@ -388,11 +459,11 @@ class RequestContext implements IContextSource {
 	 *   language or a uselang param in the fauxrequest data may change the lang
 	 * - Skin will be based on the anonymous user, should be the wiki's default skin
 	 *
-	 * @param $title Title Title to use for the extraneous request
-	 * @param $request Mixed A WebRequest or data to use for a FauxRequest
+	 * @param Title $title Title to use for the extraneous request
+	 * @param WebRequest|array $request A WebRequest or data to use for a FauxRequest
 	 * @return RequestContext
 	 */
-	public static function newExtraneousContext( Title $title, $request=array() ) {
+	public static function newExtraneousContext( Title $title, $request = array() ) {
 		$context = new self;
 		$context->setTitle( $title );
 		if ( $request instanceof WebRequest ) {
@@ -403,5 +474,4 @@ class RequestContext implements IContextSource {
 		$context->user = User::newFromName( '127.0.0.1', false );
 		return $context;
 	}
-
 }

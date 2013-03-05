@@ -61,9 +61,7 @@
  * </code>
  */
 
-$maintenanceDir = dirname( dirname( dirname( __DIR__ ) ) ) . '/maintenance';
-
-require( "$maintenanceDir/Maintenance.php" );
+require( __DIR__ . '/../../../maintenance/Maintenance.php' );
 
 class GenerateJqueryMsgData extends Maintenance {
 
@@ -85,9 +83,9 @@ class GenerateJqueryMsgData extends Maintenance {
 	);
 
 	public function __construct() {
-			parent::__construct();
-			$this->mDescription = 'Create a specification for message parsing ini JSON format';
-			// add any other options here
+		parent::__construct();
+		$this->mDescription = 'Create a specification for message parsing ini JSON format';
+		// add any other options here
 	}
 
 	public function execute() {
@@ -100,7 +98,7 @@ class GenerateJqueryMsgData extends Maintenance {
 		$tests = array();
 		foreach ( array( 'en', 'fr', 'ar', 'jp', 'zh' ) as $languageCode ) {
 			foreach ( self::$keyToTestArgs as $key => $testArgs ) {
-				foreach ($testArgs as $args) {
+				foreach ( $testArgs as $args ) {
 					// Get the raw message, without any transformations.
 					$template = wfMessage( $key )->inLanguage( $languageCode )->plain();
 
@@ -132,14 +130,14 @@ class GenerateJqueryMsgData extends Maintenance {
 
 		$output =
 			"// This file stores the output from the PHP parser for various messages, arguments,\n"
-			. "// languages, and parser modes. Intended for use by a unit test framework by looping\n"
-			. "// through the object and comparing its parser return value with the 'result' property.\n"
-			. '// Last generated with ' . basename( __FILE__ ) . ' at ' . gmdate( 'r' ) . "\n"
-			// This file will contain unquoted JSON strings as javascript native object literals,
-			// flip the quotemark convention for this file.
-			. "/*jshint quotmark: double */\n"
-			. "\n"
-			. 'mediaWiki.libs.phpParserData = ' . FormatJson::encode( $phpParserData, true ) . ";\n";
+				. "// languages, and parser modes. Intended for use by a unit test framework by looping\n"
+				. "// through the object and comparing its parser return value with the 'result' property.\n"
+				. '// Last generated with ' . basename( __FILE__ ) . ' at ' . gmdate( 'r' ) . "\n"
+				// This file will contain unquoted JSON strings as javascript native object literals,
+				// flip the quotemark convention for this file.
+				. "/*jshint quotmark: double */\n"
+				. "\n"
+				. 'mediaWiki.libs.phpParserData = ' . FormatJson::encode( $phpParserData, true ) . ";\n";
 
 		$fp = file_put_contents( $dataSpecFile, $output );
 		if ( $fp === false ) {
@@ -149,4 +147,4 @@ class GenerateJqueryMsgData extends Maintenance {
 }
 
 $maintClass = "GenerateJqueryMsgData";
-require_once( "$maintenanceDir/doMaintenance.php" );
+require_once( RUN_MAINTENANCE_IF_MAIN );

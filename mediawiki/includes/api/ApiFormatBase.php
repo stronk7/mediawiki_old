@@ -58,7 +58,7 @@ abstract class ApiFormatBase extends ApiBase {
 	 * This method is not called if getIsHtml() returns true.
 	 * @return string
 	 */
-	public abstract function getMimeType();
+	abstract public function getMimeType();
 
 	/**
 	 * Whether this formatter needs raw data such as _element tags
@@ -123,11 +123,13 @@ abstract class ApiFormatBase extends ApiBase {
 
 	/**
 	 * Initialize the printer function and prepare the output headers, etc.
-	 * This method must be the first outputing method during execution.
-	 * A help screen's header is printed for the HTML-based output
-	 * @param $isError bool Whether an error message is printed
+	 * This method must be the first outputting method during execution.
+	 * A human-targeted notice about available formats is printed for the HTML-based output,
+	 * except for help screens (caused by either an error in the API parameters,
+	 * the calling of action=help, or requesting the root script api.php).
+	 * @param $isHelpScreen bool Whether a help screen is going to be shown
 	 */
-	function initPrinter( $isError ) {
+	function initPrinter( $isHelpScreen ) {
 		if ( $this->mDisabled ) {
 			return;
 		}
@@ -164,7 +166,7 @@ abstract class ApiFormatBase extends ApiBase {
 <?php
 
 
-			if ( !$isError ) {
+			if ( !$isHelpScreen ) {
 ?>
 <br />
 <small>
@@ -175,15 +177,18 @@ To see the non HTML representation of the <?php echo( $this->mFormat ); ?> forma
 See the <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>, or
 <a href='<?php echo( $script ); ?>'>API help</a> for more information.
 </small>
+<pre style='white-space: pre-wrap;'>
 <?php
 
 
-			}
+			} else { // don't wrap the contents of the <pre> for help screens
+			          // because these are actually formatted to rely on
+			          // the monospaced font for layout purposes
 ?>
 <pre>
 <?php
 
-
+			}
 		}
 	}
 
@@ -248,7 +253,7 @@ See the <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>,
 	}
 
 	/**
-	 * Sets whether the pretty-printer should format *bold* and $italics$
+	 * Sets whether the pretty-printer should format *bold*
 	 * @param $help bool
 	 */
 	public function setHelp( $help = true ) {
@@ -264,22 +269,19 @@ See the <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>,
 	protected function formatHTML( $text ) {
 		// Escape everything first for full coverage
 		$text = htmlspecialchars( $text );
-
 		// encode all comments or tags as safe blue strings
 		$text = str_replace( '&lt;', '<span style="color:blue;">&lt;', $text );
 		$text = str_replace( '&gt;', '&gt;</span>', $text );
-		// identify URLs
-		$protos = wfUrlProtocolsWithoutProtRel();
-		// This regex hacks around bug 13218 (&quot; included in the URL)
-		$text = preg_replace( "#(((?i)$protos).*?)(&quot;)?([ \\'\"<>\n]|&lt;|&gt;|&quot;)#", '<a href="\\1">\\1</a>\\3\\4', $text );
 		// identify requests to api.php
 		$text = preg_replace( "#api\\.php\\?[^ <\n\t]+#", '<a href="\\0">\\0</a>', $text );
 		if ( $this->mHelp ) {
 			// make strings inside * bold
 			$text = preg_replace( "#\\*[^<>\n]+\\*#", '<b>\\0</b>', $text );
-			// make strings inside $ italic
-			$text = preg_replace( "#\\$[^<>\n]+\\$#", '<b><i>\\0</i></b>', $text );
 		}
+		// identify URLs
+		$protos = wfUrlProtocolsWithoutProtRel();
+		// This regex hacks around bug 13218 (&quot; included in the URL)
+		$text = preg_replace( "#(((?i)$protos).*?)(&quot;)?([ \\'\"<>\n]|&lt;|&gt;|&quot;)#", '<a href="\\1">\\1</a>\\3\\4', $text );
 
 		/**
 		 * Temporary fix for bad links in help messages. As a special case,
@@ -307,10 +309,6 @@ See the <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>,
 
 	public function getDescription() {
 		return $this->getIsHtml() ? ' (pretty-print in HTML)' : '';
-	}
-
-	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }
 
@@ -380,9 +378,5 @@ class ApiFormatFeedWrapper extends ApiFormatBase {
 			// Error has occurred, print something useful
 			ApiBase::dieDebug( __METHOD__, 'Invalid feed class/item' );
 		}
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

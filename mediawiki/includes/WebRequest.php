@@ -76,7 +76,7 @@ class WebRequest {
 	 *
 	 * @return Array: Any query arguments found in path matches.
 	 */
-	static public function getPathInfo( $want = 'all' ) {
+	public static function getPathInfo( $want = 'all' ) {
 		global $wgUsePathInfo;
 		// PATH_INFO is mangled due to http://bugs.php.net/bug.php?id=31892
 		// And also by Apache 2.x, double slashes are converted to single slashes.
@@ -128,7 +128,7 @@ class WebRequest {
 				global $wgVariantArticlePath, $wgContLang;
 				if( $wgVariantArticlePath ) {
 					$router->add( $wgVariantArticlePath,
-						array( 'variant' => '$2'),
+						array( 'variant' => '$2' ),
 						array( '$2' => $wgContLang->getVariants() )
 					);
 				}
@@ -144,7 +144,7 @@ class WebRequest {
 				// Also reported when ini_get('cgi.fix_pathinfo')==false
 				$matches['title'] = substr( $_SERVER['ORIG_PATH_INFO'], 1 );
 
-			} elseif ( isset( $_SERVER['PATH_INFO'] ) && ($_SERVER['PATH_INFO'] != '') ) {
+			} elseif ( isset( $_SERVER['PATH_INFO'] ) && $_SERVER['PATH_INFO'] != '' ) {
 				// Regular old PATH_INFO yay
 				$matches['title'] = substr( $_SERVER['PATH_INFO'], 1 );
 			}
@@ -192,7 +192,14 @@ class WebRequest {
 	 * @return array
 	 */
 	public static function detectProtocolAndStdPort() {
-		return ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ? array( 'https', 443 ) : array( 'http', 80 );
+		if ( ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ||
+			( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) &&
+			$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ) ) {
+			$arr = array( 'https', 443 );
+		} else {
+			$arr = array( 'http', 80 );
+		}
+		return $arr;
 	}
 
 	/**
@@ -558,9 +565,9 @@ class WebRequest {
 	 *
 	 * @return Array
 	 */
-	 public function getQueryValues() {
+	public function getQueryValues() {
 		return $_GET;
-	 }
+	}
 
 	/**
 	 * Get the HTTP method used for this request.
@@ -612,7 +619,7 @@ class WebRequest {
 			global $wgCookiePrefix;
 			$prefix = $wgCookiePrefix;
 		}
-		return $this->getGPCVal( $_COOKIE, $prefix . $key , $default );
+		return $this->getGPCVal( $_COOKIE, $prefix . $key, $default );
 	}
 
 	/**
@@ -713,7 +720,7 @@ class WebRequest {
 		$newquery = $this->getQueryValues();
 		unset( $newquery['title'] );
 		$newquery = array_merge( $newquery, $array );
-		$query = wfArrayToCGI( $newquery );
+		$query = wfArrayToCgi( $newquery );
 		return $onlyquery ? $query : $wgTitle->getLocalURL( $query );
 	}
 
@@ -734,7 +741,7 @@ class WebRequest {
 			$limit = 0;
 		}
 		if( ( $limit == 0 ) && ( $optionname != '' ) ) {
-			$limit = (int)$wgUser->getOption( $optionname );
+			$limit = $wgUser->getIntOption( $optionname );
 		}
 		if( $limit <= 0 ) {
 			$limit = $deflimit;
@@ -842,7 +849,7 @@ class WebRequest {
 		} else {
 			foreach ( $_SERVER as $name => $value ) {
 				if ( substr( $name, 0, 5 ) === 'HTTP_' ) {
-					$name = str_replace( '_', '-',  substr( $name, 5 ) );
+					$name = str_replace( '_', '-', substr( $name, 5 ) );
 					$this->headers[$name] = $value;
 				} elseif ( $name === 'CONTENT_LENGTH' ) {
 					$this->headers['CONTENT-LENGTH'] = $value;
@@ -1044,6 +1051,7 @@ HTML;
 	 *
 	 * @since 1.19
 	 *
+	 * @throws MWException
 	 * @return String
 	 */
 	protected function getRawIP() {
@@ -1115,6 +1123,30 @@ HTML;
 		wfDebug( "IP: $ip\n" );
 		$this->ip = $ip;
 		return $ip;
+	}
+
+	/**
+	 * @param string $ip
+	 * @return void
+	 * @since 1.21
+	 */
+	public function setIP( $ip ) {
+		$this->ip = $ip;
+	}
+
+	/**
+	 * Export the resolved user IP, HTTP headers, and session ID.
+	 * The result will be reasonably sized to allow for serialization.
+	 *
+	 * @return Array
+	 * @since 1.21
+	 */
+	public function exportUserSession() {
+		return array(
+			'ip'        => $this->getIP(),
+			'headers'   => $this->getAllHeaders(),
+			'sessionId' => session_id()
+		);
 	}
 }
 
@@ -1255,8 +1287,9 @@ class FauxRequest extends WebRequest {
 			throw new MWException( "FauxRequest() got bogus data" );
 		}
 		$this->wasPosted = $wasPosted;
-		if( $session )
+		if( $session ) {
 			$this->session = $session;
+		}
 	}
 
 	/**
@@ -1306,6 +1339,10 @@ class FauxRequest extends WebRequest {
 		return $this->wasPosted;
 	}
 
+	public function getCookie( $key, $prefix = null, $default = null ) {
+		return $default;
+	}
+
 	public function checkSessionCookie() {
 		return false;
 	}
@@ -1335,8 +1372,10 @@ class FauxRequest extends WebRequest {
 	 * @return mixed
 	 */
 	public function getSessionData( $key ) {
-		if( isset( $this->session[$key] ) )
+		if( isset( $this->session[$key] ) ) {
 			return $this->session[$key];
+		}
+		return null;
 	}
 
 	/**

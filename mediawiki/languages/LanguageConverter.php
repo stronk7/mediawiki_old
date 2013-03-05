@@ -410,7 +410,7 @@ class LanguageConverter {
 					$attr = $attrs[$attrName];
 					// Don't convert URLs
 					if ( !strpos( $attr, '://' ) ) {
-						$attr = $this->convertTo( $attr, $toVariant );
+						$attr = $this->recursiveConvertTopLevel( $attr, $toVariant );
 					}
 
 					// Remove HTML tags to avoid disrupting the layout
@@ -618,6 +618,8 @@ class LanguageConverter {
 		if ( $wgDisableLangConversion ) {
 			return $text;
 		}
+		// Reset converter state for a new converter run.
+		$this->mConvRuleTitle = false;
 		return $this->recursiveConvertTopLevel( $text, $variant );
 	}
 

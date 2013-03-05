@@ -30,6 +30,11 @@
   * They are required for ensuring the correct display of brackets in
   * mixed rtl/ltr environment.
   *
+  * Some writing systems require some line-height fixes. This includes
+  * most Indic scripts, like Devanagari.
+  * If you are adding support for such a language, add it also to
+  * the relevant section in skins/common/shared.css.
+  *
   * @ingroup Language
   */
 /* private */ $coreLanguageNames = array(
@@ -265,7 +270,7 @@
 	'nah' => 'Nāhuatl',		# Nahuatl, en:Wikipedia writes Nahuatlahtolli, while another form is Náhuatl
 	'nan' => 'Bân-lâm-gú', # Min-nan -- (bug 8217) nan instead of zh-min-nan, http://www.sil.org/iso639-3/codes.asp?order=639_3&letter=n
 	'nap' => 'Nnapulitano',	# Neapolitan
-	'nb' => "norsk (bokmål)\xE2\x80\x8E",		# Norwegian (Bokmal)
+	'nb' => "norsk bokmål",		# Norwegian (Bokmal)
 	'nds' => 'Plattdüütsch',	# Low German ''or'' Low Saxon
 	'nds-nl' => 'Nedersaksies',	# aka Nedersaksisch: Dutch Low Saxon
 	'ne' => 'नेपाली',	# Nepali
@@ -274,8 +279,8 @@
 	'niu' => 'Niuē',	# Niuean
 	'nl' => 'Nederlands',	# Dutch
 	'nl-informal' => "Nederlands (informeel)\xE2\x80\x8E",	# Dutch (informal address ("je"))
-	'nn' => "norsk (nynorsk)\xE2\x80\x8E",	# Norwegian (Nynorsk)
-	'no' => "norsk (bokmål)\xE2\x80\x8E",		# Norwegian (falls back to nb).
+	'nn' => "norsk nynorsk",	# Norwegian (Nynorsk)
+	'no' => "norsk bokmål",		# Norwegian (falls back to nb).
 	'nov' => 'Novial',		# Novial
 	'nrm' => 'Nouormand',	# Norman
 	'nso' => 'Sesotho sa Leboa',	# Northern Sotho

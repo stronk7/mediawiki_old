@@ -154,7 +154,7 @@ class SpecialChangeEmail extends UnlistedSpecialPage {
 			array( 'wpNewEmail', 'changeemail-newemail', 'email', $this->mNewEmail ),
 		);
 		if ( $wgRequirePasswordforEmailChange ) {
-			$items[] = array( 'wpPassword', 'yourpassword', 'password', $this->mPassword );
+			$items[] = array( 'wpPassword', 'changeemail-password', 'password', $this->mPassword );
 		}
 
 		$this->getOutput()->addHTML(
@@ -195,7 +195,7 @@ class SpecialChangeEmail extends UnlistedSpecialPage {
 			if ( $type != 'text' ) {
 				$out .= Xml::label( $this->msg( $label )->text(), $name );
 			} else {
-				$out .=  $this->msg( $label )->escaped();
+				$out .= $this->msg( $label )->escaped();
 			}
 			$out .= "</td>\n";
 			$out .= "\t<td class='mw-input'>";

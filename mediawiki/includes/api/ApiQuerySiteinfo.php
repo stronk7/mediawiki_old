@@ -96,6 +96,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				case 'variables':
 					$fit = $this->appendVariables( $p );
 					break;
+				case 'protocols':
+					$fit = $this->appendProtocols( $p );
+					break;
 				default:
 					ApiBase::dieDebug( __METHOD__, "Unknown prop=$p" );
 			}
@@ -111,7 +114,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	protected function appendGeneralInfo( $property ) {
-		global $wgContLang;
+		global $wgContLang,
+			$wgDisableLangConversion,
+			$wgDisableTitleConversion;
 
 		$data = array();
 		$mainPage = Title::newMainPage();
@@ -120,9 +125,26 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data['sitename'] = $GLOBALS['wgSitename'];
 		$data['generator'] = "MediaWiki {$GLOBALS['wgVersion']}";
 		$data['phpversion'] = phpversion();
-		$data['phpsapi'] = php_sapi_name();
+		$data['phpsapi'] = PHP_SAPI;
 		$data['dbtype'] = $GLOBALS['wgDBtype'];
 		$data['dbversion'] = $this->getDB()->getServerVersion();
+
+		if ( !$wgDisableLangConversion ) {
+			$data['langconversion'] = '';
+		}
+
+		if ( !$wgDisableTitleConversion ) {
+			$data['titleconversion'] = '';
+		}
+
+		if ( $wgContLang->linkPrefixExtension() ) {
+			$data['linkprefix'] = wfMessage( 'linkprefix' )->inContentLanguage()->text();
+		}
+
+		$linktrail = $wgContLang->linkTrail();
+		if ( $linktrail ) {
+			$data['linktrail'] = $linktrail;
+		}
 
 		$git = SpecialVersion::getGitHeadSha1( $GLOBALS['IP'] );
 		if ( $git ) {
@@ -226,6 +248,11 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 			if ( MWNamespace::isNonincludable( $ns ) ) {
 				$data[$ns]['nonincludable'] = '';
+			}
+
+			$contentmodel = MWNamespace::getNamespaceContentModel( $ns );
+			if ( $contentmodel ) {
+				$data[$ns]['defaultcontentmodel'] = $contentmodel;
 			}
 		}
 
@@ -457,7 +484,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				}
 				if ( isset( $ext['author'] ) ) {
 					$ret['author'] = is_array( $ext['author'] ) ?
-						implode( ', ', $ext['author' ] ) : $ext['author'];
+						implode( ', ', $ext['author'] ) : $ext['author'];
 				}
 				if ( isset( $ext['url'] ) ) {
 					$ret['url'] = $ext['url'];
@@ -525,7 +552,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	public function appendExtensionTags( $property ) {
 		global $wgParser;
 		$wgParser->firstCallInit();
-		$tags = array_map( array( $this, 'formatParserTags'), $wgParser->getTags() );
+		$tags = array_map( array( $this, 'formatParserTags' ), $wgParser->getTags() );
 		$this->getResult()->setIndexedTagName( $tags, 't' );
 		return $this->getResult()->addValue( 'query', $property, $tags );
 	}
@@ -544,6 +571,14 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		return $this->getResult()->addValue( 'query', $property, $variables );
 	}
 
+	public function appendProtocols( $property ) {
+		global $wgUrlProtocols;
+		// Make a copy of the global so we don't try to set the _element key of it - bug 45130
+		$protocols = array_values( $wgUrlProtocols );
+		$this->getResult()->setIndexedTagName( $protocols, 'p' );
+		return $this->getResult()->addValue( 'query', $property, $protocols );
+	}
+
 	private function formatParserTags( $item ) {
 		return "<{$item}>";
 	}
@@ -554,7 +589,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		ksort( $myWgHooks );
 
 		$data = array();
-		foreach ( $myWgHooks as $hook => $hooks )  {
+		foreach ( $myWgHooks as $hook => $hooks ) {
 			$arr = array(
 				'name' => $hook,
 				'subscribers' => array_map( array( 'SpecialVersion', 'arrayToString' ), $hooks ),
@@ -596,6 +631,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					'functionhooks',
 					'showhooks',
 					'variables',
+					'protocols',
 				)
 			),
 			'filteriw' => array(
@@ -633,6 +669,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				' functionhooks         - Returns a list of parser function hooks',
 				' showhooks             - Returns a list of all subscribed hooks (contents of $wgHooks)',
 				' variables             - Returns a list of variable IDs',
+				' protocols             - Returns a list of protocols that are allowed in external links.',
 			),
 			'filteriw' =>  'Return only local or only nonlocal entries of the interwiki map',
 			'showalldb' => 'List all database servers, not just the one lagging the most',
@@ -661,9 +698,5 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Meta#siteinfo_.2F_si';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

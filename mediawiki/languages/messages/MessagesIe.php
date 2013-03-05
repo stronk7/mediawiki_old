@@ -715,9 +715,11 @@ Tui adresse de e-mail ne es revelat quande altri usatores contacter vu.',
 'grouppage-bureaucrat' => '{{ns:project}}:Burócrates',
 'grouppage-suppress' => '{{ns:project}}:Vigilatores',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Diarium de creation de usator',
+
 # User rights log
 'rightslog' => 'Diarium de jures de usator',
-'rightsnone' => '(null)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'redacter ti págine',
@@ -967,9 +969,6 @@ Li descrition es in li [$2 págine de descrition del file] ta e es monstrat in i
 'linksearch-ns' => 'Spacie de nómine:',
 'linksearch-line' => '$1 es ligat de $2',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Diarium de creation de usator',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(liste de membres)',
 
@@ -1009,6 +1008,8 @@ Li descrition es in li [$2 págine de descrition del file] ta e es monstrat in i
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Vigilant...',
 'unwatching' => 'Desvigilant...',
+
+'created' => 'creat',
 
 # Delete
 'deletepage' => 'Deleter págine',
@@ -1411,5 +1412,8 @@ Vu posse anc [[Special:EditWatchlist|usar li redactor uniform]].',
 'tags-hitcount-header' => 'Changes nómiat',
 'tags-edit' => 'redacter',
 'tags-hitcount' => '$1 {{PLURAL:$1|change|changes}}',
+
+# New logging system
+'rightsnone' => '(null)',
 
 );

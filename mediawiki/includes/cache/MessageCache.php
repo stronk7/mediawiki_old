@@ -257,11 +257,14 @@ class MessageCache {
 	 * or false if populating empty cache fails. Also returns true if MessageCache
 	 * is disabled.
 	 *
-	 * @param $code String: language to which load messages
+	 * @param bool|String $code String: language to which load messages
+	 * @throws MWException
 	 * @return bool
 	 */
 	function load( $code = false ) {
 		global $wgUseLocalMessageCache;
+
+		$exception = null; // deferred error
 
 		if( !is_string( $code ) ) {
 			# This isn't really nice, so at least make a note about it and try to
@@ -325,25 +328,30 @@ class MessageCache {
 			$where[] = 'loading from database';
 
 			$this->lock( $cacheKey );
-
 			# Limit the concurrency of loadFromDB to a single process
 			# This prevents the site from going down when the cache expires
 			$statusKey = wfMemcKey( 'messages', $code, 'status' );
 			$success = $this->mMemc->add( $statusKey, 'loading', MSG_LOAD_TIMEOUT );
-			if ( $success ) {
+			if ( $success ) { // acquired lock
 				$cache = $this->loadFromDB( $code );
 				$success = $this->setCache( $cache, $code );
-			}
-			if ( $success ) {
-				$success = $this->saveToCaches( $cache, true, $code );
-				if ( $success ) {
-					$this->mMemc->delete( $statusKey );
+				if ( $success ) { // messages loaded
+					$success = $this->saveToCaches( $cache, true, $code );
+					if ( $success ) {
+						$this->mMemc->delete( $statusKey );
+					} else {
+						$this->mMemc->set( $statusKey, 'error', 60 * 5 );
+						wfDebug( __METHOD__ . ": set() error: restart memcached server!\n" );
+						$exception = new MWException( "Could not save cache for '$code'." );
+					}
 				} else {
-					$this->mMemc->set( $statusKey, 'error', 60 * 5 );
-					wfDebug( "MemCached set error in MessageCache: restart memcached server!\n" );
+					$this->mMemc->delete( $statusKey );
+					$exception = new MWException( "Could not load cache from DB for '$code'." );
 				}
+			} else {
+				$exception = new MWException( "Could not acquire '$statusKey' lock." );
 			}
-			$this->unlock($cacheKey);
+			$this->unlock( $cacheKey );
 		}
 
 		if ( !$success ) {
@@ -352,7 +360,11 @@ class MessageCache {
 			// This used to go on, but that led to lots of nasty side
 			// effects like gadgets and sidebar getting cached with their
 			// default content
-			throw new MWException( "MessageCache failed to load messages" );
+			if ( $exception instanceof Exception ) {
+				throw $exception;
+			} else {
+				throw new MWException( "MessageCache failed to load messages" );
+			}
 		} else {
 			# All good, just record the success
 			$info = implode( ', ', $where );
@@ -487,7 +499,7 @@ class MessageCache {
 
 		// Also delete cached sidebar... just in case it is affected
 		$codes = array( $code );
-		if ( $code === 'en'  ) {
+		if ( $code === 'en' ) {
 			// Delete all sidebars, like for example on action=purge on the
 			// sidebar messages
 			$codes = array_keys( Language::fetchLanguageNames() );
@@ -533,7 +545,7 @@ class MessageCache {
 			$serialized = serialize( $cache );
 			$hash = md5( $serialized );
 			$this->mMemc->set( wfMemcKey( 'messages', $code, 'hash' ), $hash, $this->mExpiry );
-			if ($wgLocalMessageCacheSerialized) {
+			if ( $wgLocalMessageCacheSerialized ) {
 				$this->saveToLocal( $serialized, $hash, $code );
 			} else {
 				$this->saveToScript( $cache, $hash, $code );

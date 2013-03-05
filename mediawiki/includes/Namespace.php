@@ -67,7 +67,7 @@ class MWNamespace {
 	public static function isMovable( $index ) {
 		global $wgAllowImageMoving;
 
-		$result = !( $index < NS_MAIN || ( $index == NS_FILE && !$wgAllowImageMoving )  || $index == NS_CATEGORY );
+		$result = !( $index < NS_MAIN || ( $index == NS_FILE && !$wgAllowImageMoving ) || $index == NS_CATEGORY );
 
 		/**
 		 * @since 1.20
@@ -290,9 +290,9 @@ class MWNamespace {
 	 * @param $index Int: namespace index
 	 * @return bool
 	 */
-	 public static function canTalk( $index ) {
+	public static function canTalk( $index ) {
 		return $index >= NS_MAIN;
-	 }
+	}
 
 	/**
 	 * Does this namespace contain content, for the purposes of calculating
@@ -419,4 +419,18 @@ class MWNamespace {
 		return $wgNonincludableNamespaces && in_array( $index, $wgNonincludableNamespaces );
 	}
 
+	/**
+	 * Get the default content model for a namespace
+	 * This does not mean that all pages in that namespace have the model
+	 *
+	 * @since 1.21
+	 * @param $index int Index to check
+	 * @return null|string default model name for the given namespace, if set
+	 */
+	public static function getNamespaceContentModel( $index ) {
+		global $wgNamespaceContentModels;
+		return isset( $wgNamespaceContentModels[$index] )
+			? $wgNamespaceContentModels[$index]
+			: null;
+	}
 }

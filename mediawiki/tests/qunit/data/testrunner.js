@@ -52,7 +52,7 @@
 	/**
 	 * CompletenessTest
 	 */
-	// Adds toggle checkbox to header
+	 // Adds toggle checkbox to header
 	QUnit.config.urlConfig.push( {
 		id: 'completenesstest',
 		label: 'Run CompletenessTest',
@@ -92,7 +92,7 @@
 	/**
 	 * Test environment recommended for all QUnit test modules
 	 */
-	// Whether to log environment changes to the console
+	 // Whether to log environment changes to the console
 	QUnit.config.urlConfig.push( 'mwlogenv' );
 
 	/**
@@ -109,16 +109,18 @@
 		liveMessages = mw.messages.values;
 
 		function freshConfigCopy( custom ) {
-			// "deep=true" is important here.
-			// Otherwise we just create a new object with values referring to live config.
-			// e.g. mw.config.set( 'wgFileExtensions', [] ) would not effect liveConfig,
-			// but mw.config.get( 'wgFileExtensions' ).push( 'png' ) would as the array
-			// was passed by reference in $.extend's loop.
-			return $.extend( {}, liveConfig, custom, /*deep=*/true );
+			// Tests should mock all factors that directly influence the tested code.
+			// For backwards compatibility though we set mw.config to a copy of the live config
+			// and extend it with the (optionally) given custom settings for this test
+			// (instead of starting blank with only the given custmo settings).
+			// This is a shallow copy, so we don't end up with settings taking an array value
+			// extended with the custom settings - setting a config property means you override it,
+			// not extend it.
+			return $.extend( {}, liveConfig, custom );
 		}
 
 		function freshMessagesCopy( custom ) {
-			return $.extend( {}, liveMessages, custom, /*deep=*/true );
+			return $.extend( /*deep=*/true, {}, liveMessages, custom );
 		}
 
 		log = QUnit.urlParams.mwlogenv ? mw.log : function () {};
@@ -172,7 +174,7 @@
 			// Whether this one fails or not, forwards it to
 			// the 'done' (resolve) callback of the alternative promise.
 			arg.always( alt.resolve );
-		});
+		} );
 
 		return $.when.apply( $, altPromises );
 	};
@@ -221,7 +223,7 @@
 	 * initializations defined above in this file.
 	 */
 	envExecCount = 0;
-	QUnit.module( 'mediawiki.tests.qunit.testrunner', QUnit.newMwEnvironment({
+	QUnit.module( 'mediawiki.tests.qunit.testrunner', QUnit.newMwEnvironment( {
 		setup: function () {
 			envExecCount += 1;
 			this.mwHtmlLive = mw.html;
@@ -240,7 +242,7 @@
 		messages: {
 			testMsg: 'Foo.'
 		}
-	}) );
+	} ) );
 
 	QUnit.test( 'Setup', 3, function ( assert ) {
 		assert.equal( mw.html.escape( 'foo' ), 'mocked-1', 'extra setup() callback was ran.' );
@@ -249,13 +251,13 @@
 
 		mw.config.set( 'testVar', 'bar' );
 		mw.messages.set( 'testMsg', 'Bar.' );
-	});
+	} );
 
 	QUnit.test( 'Teardown', 3, function ( assert ) {
 		assert.equal( mw.html.escape( 'foo' ), 'mocked-2', 'extra setup() callback was re-ran.' );
 		assert.equal( mw.config.get( 'testVar' ), 'foo', 'config object restored and re-applied after test()' );
 		assert.equal( mw.messages.get( 'testMsg' ), 'Foo.', 'messages object restored and re-applied after test()' );
-	});
+	} );
 
 	QUnit.module( 'mediawiki.tests.qunit.testrunner-after', QUnit.newMwEnvironment() );
 
@@ -263,6 +265,6 @@
 		assert.equal( mw.html.escape( '<' ), '&lt;', 'extra teardown() callback was ran.' );
 		assert.equal( mw.config.get( 'testVar' ), null, 'config object restored to live in next module()' );
 		assert.equal( mw.messages.get( 'testMsg' ), null, 'messages object restored to live in next module()' );
-	});
+	} );
 
 }( jQuery, mediaWiki, QUnit ) );

@@ -43,6 +43,7 @@ class OutputPage extends ContextSource {
 	var $mKeywords = array();
 
 	var $mLinktags = array();
+	var $mCanonicalUrl = false;
 
 	/// Additional stylesheets. Looks like this is for extensions. Might be replaced by resource loader.
 	var $mExtStyles = array();
@@ -248,6 +249,11 @@ class OutputPage extends ContextSource {
 	private $mRedirectedFrom = null;
 
 	/**
+	 * Additional key => value data
+	 */
+	private $mProperties = array();
+
+	/**
 	 * Constructor for OutputPage. This should not be called directly.
 	 * Instead a new RequestContext should be created and it will implicitly create
 	 * a OutputPage tied to that context.
@@ -316,7 +322,9 @@ class OutputPage extends ContextSource {
 	}
 
 	/**
-	 * Add a new \<link\> tag to the page header
+	 * Add a new \<link\> tag to the page header.
+	 *
+	 * Note: use setCanonicalUrl() for rel=canonical.
 	 *
 	 * @param $linkarr Array: associative array of attributes.
 	 */
@@ -334,6 +342,14 @@ class OutputPage extends ContextSource {
 	function addMetadataLink( $linkarr ) {
 		$linkarr['rel'] = $this->getMetadataAttribute();
 		$this->addLink( $linkarr );
+	}
+
+	/**
+	 * Set the URL to be used for the <link rel=canonical>. This should be used
+	 * in preference to addLink(), to avoid duplicate link tags.
+	 */
+	function setCanonicalUrl( $url ) {
+		$this->mCanonicalUrl = $url;
 	}
 
 	/**
@@ -428,10 +444,10 @@ class OutputPage extends ContextSource {
 	 * @param $type string
 	 * @return Array
 	 */
-	protected function filterModules( $modules, $position = null, $type = ResourceLoaderModule::TYPE_COMBINED ){
+	protected function filterModules( $modules, $position = null, $type = ResourceLoaderModule::TYPE_COMBINED ) {
 		$resourceLoader = $this->getResourceLoader();
 		$filteredModules = array();
-		foreach( $modules as $val ){
+		foreach( $modules as $val ) {
 			$module = $resourceLoader->getModule( $val );
 			if( $module instanceof ResourceLoaderModule
 				&& $module->getOrigin() <= $this->getAllowedModules( $type )
@@ -501,13 +517,15 @@ class OutputPage extends ContextSource {
 	 * @return Array of module names
 	 */
 	public function getModuleStyles( $filter = false, $position = null ) {
-		return $this->getModules( $filter,  $position, 'mModuleStyles' );
+		return $this->getModules( $filter, $position, 'mModuleStyles' );
 	}
 
 	/**
-	 * Add only CSS of one or more modules recognized by the resource loader. Module
-	 * styles added through this function will be loaded by the resource loader when
-	 * the page loads.
+	 * Add only CSS of one or more modules recognized by the resource loader.
+	 *
+	 * Module styles added through this function will be added using standard link CSS
+	 * tags, rather than as a combined Javascript and CSS package. Thus, they will
+	 * load when JavaScript is disabled (unless CSS also happens to be disabled).
 	 *
 	 * @param $modules Mixed: module name (string) or array of module names
 	 */
@@ -607,6 +625,32 @@ class OutputPage extends ContextSource {
 	 */
 	public function getArticleBodyOnly() {
 		return $this->mArticleBodyOnly;
+	}
+
+	/**
+	 * Set an additional output property
+	 * @since 1.21
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function setProperty( $name, $value ) {
+		$this->mProperties[$name] = $value;
+	}
+
+	/**
+	 * Get an additional output property
+	 * @since 1.21
+	 *
+	 * @param $name
+	 * @return mixed: Property value or null if not found
+	 */
+	public function getProperty( $name ) {
+		if ( isset( $this->mProperties[$name] ) ) {
+			return $this->mProperties[$name];
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -777,6 +821,7 @@ class OutputPage extends ContextSource {
 		if ( isset( $this->mPageTitleActionText ) ) {
 			return $this->mPageTitleActionText;
 		}
+		return '';
 	}
 
 	/**
@@ -1238,8 +1283,8 @@ class OutputPage extends ContextSource {
 	 * @param $type String ResourceLoaderModule TYPE_ constant
 	 * @return Int ResourceLoaderModule ORIGIN_ class constant
 	 */
-	public function getAllowedModules( $type ){
-		if( $type == ResourceLoaderModule::TYPE_COMBINED ){
+	public function getAllowedModules( $type ) {
+		if( $type == ResourceLoaderModule::TYPE_COMBINED ) {
 			return min( array_values( $this->mAllowedModules ) );
 		} else {
 			return isset( $this->mAllowedModules[$type] )
@@ -1253,7 +1298,7 @@ class OutputPage extends ContextSource {
 	 * @param  $type String ResourceLoaderModule TYPE_ constant
 	 * @param  $level Int ResourceLoaderModule class constant
 	 */
-	public function setAllowedModules( $type, $level ){
+	public function setAllowedModules( $type, $level ) {
 		$this->mAllowedModules[$type] = $level;
 	}
 
@@ -1262,8 +1307,8 @@ class OutputPage extends ContextSource {
 	 * @param  $type String
 	 * @param  $level Int ResourceLoaderModule class constant
 	 */
-	public function reduceAllowedModules( $type, $level ){
-		$this->mAllowedModules[$type] = min( $this->getAllowedModules($type), $level );
+	public function reduceAllowedModules( $type, $level ) {
+		$this->mAllowedModules[$type] = min( $this->getAllowedModules( $type ), $level );
 	}
 
 	/**
@@ -1423,6 +1468,9 @@ class OutputPage extends ContextSource {
 	 */
 	public function addWikiText( $text, $linestart = true, $interface = true ) {
 		$title = $this->getTitle(); // Work arround E_STRICT
+		if ( !$title ) {
+			throw new MWException( 'Title is null' );
+		}
 		$this->addWikiTextTitle( $text, $title, $linestart, /*tidy*/false, $interface );
 	}
 
@@ -1858,7 +1906,7 @@ class OutputPage extends ContextSource {
 					wfDebug( __METHOD__ . ": proxy caching with ESI; {$this->mLastModified} **\n", false );
 					# start with a shorter timeout for initial testing
 					# header( 'Surrogate-Control: max-age=2678400+2678400, content="ESI/1.0"');
-					$response->header( 'Surrogate-Control: max-age='.$wgSquidMaxage.'+'.$this->mSquidMaxage.', content="ESI/1.0"');
+					$response->header( 'Surrogate-Control: max-age=' . $wgSquidMaxage . '+' . $this->mSquidMaxage . ', content="ESI/1.0"' );
 					$response->header( 'Cache-Control: s-maxage=0, must-revalidate, max-age=0' );
 				} else {
 					# We'll purge the proxy cache for anons explicitly, but require end user agents
@@ -1868,7 +1916,7 @@ class OutputPage extends ContextSource {
 					wfDebug( __METHOD__ . ": local proxy caching; {$this->mLastModified} **\n", false );
 					# start with a shorter timeout for initial testing
 					# header( "Cache-Control: s-maxage=2678400, must-revalidate, max-age=0" );
-					$response->header( 'Cache-Control: s-maxage='.$this->mSquidMaxage.', must-revalidate, max-age=0' );
+					$response->header( 'Cache-Control: s-maxage=' . $this->mSquidMaxage . ', must-revalidate, max-age=0' );
 				}
 			} else {
 				# We do want clients to cache if they can, but they *must* check for updates
@@ -1877,7 +1925,7 @@ class OutputPage extends ContextSource {
 				$response->header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', 0 ) . ' GMT' );
 				$response->header( "Cache-Control: private, must-revalidate, max-age=0" );
 			}
-			if($this->mLastModified) {
+			if( $this->mLastModified ) {
 				$response->header( "Last-Modified: {$this->mLastModified}" );
 			}
 		} else {
@@ -2056,7 +2104,7 @@ class OutputPage extends ContextSource {
 
 		$this->prepareErrorPage( $title );
 
-		if ( $msg instanceof Message ){
+		if ( $msg instanceof Message ) {
 			$this->addHTML( $msg->parseAsBlock() );
 		} else {
 			$this->addWikiMsgArray( $msg, $params );
@@ -2113,7 +2161,7 @@ class OutputPage extends ContextSource {
 					unset( $returntoquery['title'] );
 					unset( $returntoquery['returnto'] );
 					unset( $returntoquery['returntoquery'] );
-					$query['returntoquery'] = wfArrayToCGI( $returntoquery );
+					$query['returntoquery'] = wfArrayToCgi( $returntoquery );
 				}
 			}
 			$loginLink = Linker::linkKnown(
@@ -2257,7 +2305,7 @@ class OutputPage extends ContextSource {
 
 			$pageLang = $this->getTitle()->getPageLanguage();
 			$params = array(
-				'id'   => 'wpTextbox1',
+				'id' => 'wpTextbox1',
 				'name' => 'wpTextbox1',
 				'cols' => $this->getUser()->getOption( 'cols' ),
 				'rows' => $this->getUser()->getOption( 'rows' ),
@@ -2468,7 +2516,7 @@ $templates
 			'mediawiki.page.startup',
 			'mediawiki.page.ready',
 		) );
-		if ( $wgIncludeLegacyJavaScript ){
+		if ( $wgIncludeLegacyJavaScript ) {
 			$this->addModules( 'mediawiki.legacy.wikibits' );
 		}
 
@@ -2696,7 +2744,7 @@ $templates
 				}
 			}
 
-			if( $group == 'noscript' ){
+			if( $group == 'noscript' ) {
 				$links .= Html::rawElement( 'noscript', array(), $link ) . "\n";
 			} else {
 				$links .= $link . "\n";
@@ -2911,7 +2959,7 @@ $templates
 	 * DO NOT CALL THIS FROM OUTSIDE OF THIS CLASS OR Skin::makeGlobalVariablesScript().
 	 * This is only public until that function is removed. You have been warned.
 	 *
-	 * Do not add things here which can be evaluated in ResourceLoaderStartupScript
+	 * Do not add things here which can be evaluated in ResourceLoaderStartUpModule
 	 * - in other words, page-independent/site-wide variables (without state).
 	 * You will only be adding bloat to the html page and causing page caches to
 	 * have to be purged on configuration changes.
@@ -2956,6 +3004,8 @@ $templates
 			implode( "\t", $digitTransTable ),
 		);
 
+		$user = $this->getUser();
+
 		$vars = array(
 			'wgCanonicalNamespace' => $nsname,
 			'wgCanonicalSpecialPageName' => $canonicalName,
@@ -2966,8 +3016,8 @@ $templates
 			'wgArticleId' => $pageID,
 			'wgIsArticle' => $this->isArticle(),
 			'wgAction' => Action::getActionName( $this->getContext() ),
-			'wgUserName' => $this->getUser()->isAnon() ? null : $this->getUser()->getName(),
-			'wgUserGroups' => $this->getUser()->getEffectiveGroups(),
+			'wgUserName' => $user->isAnon() ? null : $user->getName(),
+			'wgUserGroups' => $user->getEffectiveGroups(),
 			'wgCategories' => $this->getCategories(),
 			'wgBreakFrames' => $this->getFrameOptions() == 'DENY',
 			'wgPageContentLanguage' => $lang->getCode(),
@@ -2978,6 +3028,12 @@ $templates
 			'wgMonthNamesShort' => $lang->getMonthAbbreviationsArray(),
 			'wgRelevantPageName' => $relevantTitle->getPrefixedDBKey(),
 		);
+		if ( $user->isLoggedIn() ) {
+			$vars['wgUserId'] = $user->getId();
+			$vars['wgUserEditCount'] = $user->getEditCount();
+			$userReg = wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
+			$vars['wgUserRegistration'] = $userReg !== null ? ( $userReg * 1000 ) : null;
+		}
 		if ( $wgContLang->hasVariants() ) {
 			$vars['wgUserVariant'] = $wgContLang->getPreferredVariant();
 		}
@@ -3039,6 +3095,8 @@ $templates
 
 		$tags = array();
 
+		$canonicalUrl = $this->mCanonicalUrl;
+
 		if ( $addContentType ) {
 			if ( $wgHtml5 ) {
 				# More succinct than <meta http-equiv=Content-Type>, has the
@@ -3049,7 +3107,7 @@ $templates
 					'http-equiv' => 'Content-Type',
 					'content' => "$wgMimeType; charset=UTF-8"
 				) );
-				$tags['meta-content-style-type'] = Html::element( 'meta', array(  // bug 15835
+				$tags['meta-content-style-type'] = Html::element( 'meta', array( // bug 15835
 					'http-equiv' => 'Content-Style-Type',
 					'content' => 'text/css'
 				) );
@@ -3078,7 +3136,7 @@ $templates
 			);
 			$tags['meta-keywords'] = Html::element( 'meta', array(
 				'name' => 'keywords',
-				'content' =>  preg_replace(
+				'content' => preg_replace(
 					array_keys( $strip ),
 					array_values( $strip ),
 					implode( ',', $this->mKeywords )
@@ -3183,10 +3241,7 @@ $templates
 						);
 					}
 				} else {
-					$tags['canonical'] = Html::element( 'link', array(
-						'rel' => 'canonical',
-						'href' => $this->getTitle()->getCanonicalUrl()
-					) );
+					$canonicalUrl = $this->getTitle()->getLocalURL();
 				}
 			}
 		}
@@ -3255,6 +3310,24 @@ $templates
 				}
 			}
 		}
+
+		# Canonical URL
+		global $wgEnableCanonicalServerLink;
+		if ( $wgEnableCanonicalServerLink ) {
+			if ( $canonicalUrl !== false ) {
+				$canonicalUrl = wfExpandUrl( $canonicalUrl, PROTO_CANONICAL );
+			} else {
+				$reqUrl = $this->getRequest()->getRequestURL();
+				$canonicalUrl = wfExpandUrl( $reqUrl, PROTO_CANONICAL );
+			}
+		}
+		if ( $canonicalUrl !== false ) {
+			$tags[] = Html::element( 'link', array(
+				'rel' => 'canonical',
+				'href' => $canonicalUrl
+			) );
+		}
+
 		return $tags;
 	}
 
@@ -3347,7 +3420,7 @@ $templates
 		if ( $wgUseSiteCss ) {
 			$moduleStyles[] = 'site';
 			$moduleStyles[] = 'noscript';
-			if( $this->getUser()->isLoggedIn() ){
+			if( $this->getUser()->isLoggedIn() ) {
 				$moduleStyles[] = 'user.groups';
 			}
 		}
@@ -3483,10 +3556,14 @@ $templates
 	 * Transform "media" attribute based on request parameters
 	 *
 	 * @param $media String: current value of the "media" attribute
-	 * @return String: modified value of the "media" attribute
+	 * @return String: modified value of the "media" attribute, or null to skip
+	 * this stylesheet
 	 */
 	public static function transformCssMedia( $media ) {
 		global $wgRequest, $wgHandheldForIPhone;
+
+		// http://www.w3.org/TR/css3-mediaqueries/#syntax
+		$screenMediaQueryRegex = '/^(?:only\s+)?screen\b/i';
 
 		// Switch in on-screen display for media testing
 		$switches = array(
@@ -3497,8 +3574,20 @@ $templates
 			if( $wgRequest->getBool( $switch ) ) {
 				if( $media == $targetMedia ) {
 					$media = '';
-				} elseif( $media == 'screen' ) {
-					return null;
+				} elseif( preg_match( $screenMediaQueryRegex, $media ) === 1 ) {
+					// This regex will not attempt to understand a comma-separated media_query_list
+					//
+					// Example supported values for $media: 'screen', 'only screen', 'screen and (min-width: 982px)' ),
+					// Example NOT supported value for $media: '3d-glasses, screen, print and resolution > 90dpi'
+					//
+					// If it's a print request, we never want any kind of screen styesheets
+					// If it's a handheld request (currently the only other choice with a switch),
+					// we don't want simple 'screen' but we might want screen queries that
+					// have a max-width or something, so we'll pass all others on and let the
+					// client do the query.
+					if( $targetMedia == 'print' || $media == 'screen' ) {
+						return null;
+					}
 				}
 			}
 		}
@@ -3581,7 +3670,7 @@ $templates
 						'1.20'
 					);
 				}
-			}  else {
+			} else {
 				$args = array();
 				$name = $spec;
 			}

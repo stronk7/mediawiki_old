@@ -12,6 +12,7 @@
  * @author Drorsnir
  * @author Hoo
  * @author Ijon
+ * @author Inkbug
  * @author Ofekalef
  * @author Ofrahod
  * @author Rotem Dan (July 2003)
@@ -373,7 +374,7 @@ $messages = array(
 'tog-previewontop' => 'הצגת תצוגה מקדימה לפני תיבת העריכה (או: אחריה)',
 'tog-previewonfirst' => 'הצגת תצוגה מקדימה בעריכה ראשונה',
 'tog-nocache' => 'מניעת אחסון הדפים בזיכרון המטמון בדפדפן',
-'tog-enotifwatchlistpages' => 'לשלוח אליי דואר אלקטרוני כאשר נעשה שינוי בדף או בקובץ ברשימת המעקב שלי',
+'tog-enotifwatchlistpages' => 'לשלוח אליי דואר אלקטרוני כאשר משתנה דף או קובץ ברשימת המעקב שלי',
 'tog-enotifusertalkpages' => 'לשלוח אליי דואר אלקטרוני כאשר נעשה שינוי בדף שיחת המשתמש שלי',
 'tog-enotifminoredits' => 'לשלוח אליי דואר אלקטרוני גם על עריכות משניות של דפים וקבצים',
 'tog-enotifrevealaddr' => 'חשיפת כתובת הדוא"ל שלך בהודעות דוא"ל',
@@ -484,6 +485,7 @@ $messages = array(
 'newwindow' => '(נפתח בחלון חדש)',
 'cancel' => 'ביטול / יציאה',
 'moredotdotdot' => 'עוד…',
+'morenotlisted' => 'עוד פריטים שאינם ברשימה…',
 'mypage' => 'דף משתמש',
 'mytalk' => 'שיחה',
 'anontalk' => 'השיחה עבור IP זה',
@@ -788,7 +790,7 @@ $2',
 'gotaccount' => 'כבר נרשמתם? $1.',
 'gotaccountlink' => 'כניסה לחשבון',
 'userlogin-resetlink' => 'שכחת את פרטי הכניסה?',
-'createaccountmail' => 'באמצעות דוא"ל',
+'createaccountmail' => 'שימוש בסיסמה זמנית אקראית ושליחתה לכתובת הדוא"ל המצוינת להלן',
 'createaccountreason' => 'סיבה:',
 'badretype' => 'הסיסמאות שהזנתם אינן מתאימות.',
 'userexists' => 'שם המשתמש שבחרתם כבר נמצא בשימוש.
@@ -863,9 +865,10 @@ $2',
 'loginlanguagelabel' => 'שפה: $1',
 'suspicious-userlogout' => 'בקשתכם לצאת מהחשבון נדחתה כיוון שנראה שהיא נשלחה על ידי דפדפן שבור או שרת פרוקסי עם זיכרון מטמון.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'שגיאה לא ידועה בפונקציה mail()‎ של PHP',
-'user-mail-no-addy' => 'ניסיון לשלוח דוא"ל ללא כתובת דוא"ל',
+'user-mail-no-addy' => 'ניסיון לשלוח דוא"ל ללא כתובת דוא"ל.',
+'user-mail-no-body' => 'ניסיון לשלוח דוא"ל עם תוכן ריק או קצר מאוד.',
 
 # Change password dialog
 'resetpass' => 'שינוי סיסמה',
@@ -932,6 +935,7 @@ $2
 'changeemail-oldemail' => 'כתובת דוא"ל נוכחית:',
 'changeemail-newemail' => 'כתובת דוא"ל חדשה:',
 'changeemail-none' => '(אין)',
+'changeemail-password' => 'סיסמה ב{{grammar:תחילית|{{SITENAME}}}}:',
 'changeemail-submit' => 'שינוי כתובת הדוא"ל',
 'changeemail-cancel' => 'ביטול',
 
@@ -1108,8 +1112,7 @@ $2
 'template-protected' => '(מוגנת)',
 'template-semiprotected' => '(מוגנת חלקית)',
 'hiddencategories' => 'דף זה כלול ב{{PLURAL:$1|קטגוריה מוסתרת אחת|־$1 קטגוריות מוסתרות}}:',
-'edittools' => '<!-- הטקסט הנכתב כאן יוצג מתחת לטפסי עריכת דפים והעלאת קבצים, ולפיכך ניתן לכתוב להציג בו תווים קשים לכתיבה, קטעים מוכנים של טקסט ועוד. -->',
-'nocreatetitle' => 'יצירת הדפים הוגבלה',
+'edittools' => '<!-- הטקסט הנכתב כאן יוצג מתחת לטופסי עריכת דפים והעלאת קבצים, ולפיכך ניתן לכתוב להציג בו תווים קשים לכתיבה, קטעים מוכנים של טקסט ועוד. -->',
 'nocreatetext' => 'אתר זה מגביל את האפשרות ליצור דפים חדשים. באפשרותכם לחזור אחורה ולערוך דף קיים, או [[Special:UserLogin|להיכנס לחשבון]].',
 'nocreate-loggedin' => 'אינכם מורשים ליצור דפים חדשים.',
 'sectioneditnotsupported-title' => 'עריכת פסקאות אינה נתמכת',
@@ -1398,7 +1401,7 @@ $1",
 'search-interwiki-default' => 'תוצאות ב{{GRAMMAR:תחילית|$1}}:',
 'search-interwiki-more' => '(עוד)',
 'search-relatedarticle' => 'קשור',
-'mwsuggest-disable' => 'ביטול הצעות AJAX',
+'mwsuggest-disable' => 'ביטול הצעות חיפוש',
 'searcheverything-enable' => 'חיפוש בכל מרחבי השם',
 'searchrelated' => 'קשור',
 'searchall' => 'הכול',
@@ -1507,9 +1510,9 @@ $1",
 'prefs-emailconfirm-label' => 'אימות כתובת דוא"ל:',
 'prefs-textboxsize' => 'גודל חלון העריכה',
 'youremail' => 'דואר אלקטרוני:',
-'username' => 'שם משתמש:',
-'uid' => 'מספר סידורי:',
-'prefs-memberingroups' => 'חבר {{PLURAL:$1|בקבוצה|בקבוצות}}:',
+'username' => 'שם {{GENDER:$1|המשתמש|המשתמשת}}:',
+'uid' => 'המספר הסידורי של {{GENDER:$1|המשתמש|המשתמשת}}:',
+'prefs-memberingroups' => '{{GENDER:$2|חבר|חברה}} {{PLURAL:$1|בקבוצה|בקבוצות}}:',
 'prefs-registration' => 'זמן ההרשמה:',
 'yourrealname' => 'שם אמיתי:',
 'yourlanguage' => 'שפת הממשק:',
@@ -1548,7 +1551,7 @@ $1",
 'prefs-displaywatchlist' => 'אפשרויות תצוגה',
 'prefs-diffs' => 'הבדלים בין גרסאות',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'כתובת הדואר האלקטרוני נראית תקינה',
 'email-address-validity-invalid' => 'יש להקליד כתובת דואר אלקטרוני תקינה',
 
@@ -1660,15 +1663,13 @@ $1",
 'right-sendemail' => 'שליחת דואר אלקטרוני למשתמשים אחרים',
 'right-passwordreset' => 'צפייה בדואר אלקטרוני של איפוס סיסמה',
 
+# Special:Log/newusers
+'newuserlogpage' => 'יומן רישום משתמשים',
+'newuserlogpagetext' => 'זהו יומן המכיל הרשמות של משתמשים.',
+
 # User rights log
 'rightslog' => 'יומן תפקידים',
 'rightslogtext' => 'זהו יומן השינויים בתפקידי המשתמשים.',
-'rightslogentry' => 'שינה את ההרשאות של $1 מ$2 ל$3',
-'rightslogentry-autopromote' => 'קודם אוטומטית מ$2 ל$3',
-'logentry-rights-rights' => '$1 שינה את ההרשאות של $3 מ$4 ל$5',
-'logentry-rights-rights-legacy' => '$1 שינה את ההרשאות של $3',
-'logentry-rights-autopromote' => '$1 קודם אוטומטית מ$4 ל$5',
-'rightsnone' => '(כלום)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'לקרוא דף זה',
@@ -2148,6 +2149,10 @@ $1',
 ייתכן שעליהם לקשר במקום זאת לדף מתאים יותר.<br />
 דף נחשב לדף פירושונים אם הוא משתמש בתבנית המקושרת מהדף [[MediaWiki:Disambiguationspage]].",
 
+'pageswithprop' => 'דפים עם מאפיין דף',
+'pageswithprop-text' => 'הדף הזה נותן רשימה של דפים שמשתמשים במאפיין דף מסוים.',
+'pageswithprop-prop' => 'שם המאפיין:',
+
 'doubleredirects' => 'הפניות כפולות',
 'doubleredirectstext' => 'בדף הזה מופיעה רשימת דפי הפניה שמפנים לדפי הפניה אחרים.
 כל שורה מכילה קישור לשתי ההפניות הראשונות, וכן את היעד של ההפניה השנייה, שהיא לרוב היעד ה"אמיתי" של ההפניה, שההפניה הראשונה אמורה להצביע אליו.
@@ -2302,7 +2307,7 @@ $1',
 'linksearch-ok' => 'חיפוש',
 'linksearch-text' => 'ניתן להשתמש בתווים כלליים, לדוגמה <span dir="ltr">"*.wikipedia.org"</span>.
 נדרשת לפחות סיומת אינטרנט (TLD), למשל <span dir="ltr">"*.org"</span>.<br />
-פרוטוקולים נתמכים: <code dir="ltr">$1</code> (ברירת המחדל היא <span dir="ltr">http://</span> אם לא צוין פרוטוקול).',
+{{PLURAL:$2|פרוטוקול נתמך|פרוטוקולים נתמכים}}: <code dir="ltr">$1</code> (ברירת המחדל היא <span dir="ltr">http://</span> אם לא צוין פרוטוקול).',
 'linksearch-line' => '$1 מקושר מהדף $2',
 'linksearch-error' => 'תווים כלליים יכולים להופיע רק בתחילת שם השרת.',
 
@@ -2315,15 +2320,11 @@ $1',
 # Special:ActiveUsers
 'activeusers' => 'רשימת משתמשים פעילים',
 'activeusers-intro' => 'זוהי רשימת המשתמשים שביצעו פעולה כלשהי {{PLURAL:$1|ביום האחרון|ביומיים האחרונים|ב־$1 הימים האחרונים}}.',
-'activeusers-count' => '{{PLURAL:$1|עריכה אחת|$1 עריכות}} ב{{PLURAL:$3|יום האחרון|יומיים האחרונים|־$3 הימים האחרונים}}',
+'activeusers-count' => '{{PLURAL:$1|פעולה אחת|$1 פעולות}} ב{{PLURAL:$3|יום האחרון|יומיים האחרונים|־$3 הימים האחרונים}}',
 'activeusers-from' => 'הצגת משתמשים החל מ:',
 'activeusers-hidebots' => 'הסתרת בוטים',
 'activeusers-hidesysops' => 'הסתרת מפעילי מערכת',
 'activeusers-noresult' => 'לא נמצאו משתמשים.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'יומן רישום משתמשים',
-'newuserlogpagetext' => 'זהו יומן המכיל הרשמות של משתמשים.',
 
 # Special:ListGroupRights
 'listgrouprights' => 'רשימת הרשאות לקבוצה',
@@ -2344,7 +2345,7 @@ $1',
 'listgrouprights-addgroup-self-all' => 'הוספת כל הקבוצות לחשבון האישי',
 'listgrouprights-removegroup-self-all' => 'הסרת כל הקבוצות מהחשבון האישי',
 
-# E-mail user
+# Email user
 'mailnologin' => 'אין כתובת לשליחה',
 'mailnologintext' => 'עליכם [[Special:UserLogin|להיכנס לחשבון]] ולהגדיר לעצמכם כתובת דואר אלקטרוני תקינה ב[[Special:Preferences|העדפות המשתמש]] שלכם כדי לשלוח דואר למשתמש אחר.',
 'emailuser' => 'שליחת דואר אלקטרוני למשתמש זה',
@@ -2382,7 +2383,7 @@ $1',
 'usermessage-editor' => 'שולח הודעות המערכת',
 
 # Watchlist
-'watchlist' => 'רשימת המעקב שלי',
+'watchlist' => 'רשימת המעקב',
 'mywatchlist' => 'רשימת מעקב',
 'watchlistfor2' => 'עבור $1 $2',
 'nowatchlist' => 'אין דפים ברשימת המעקב.',
@@ -2390,9 +2391,8 @@ $1',
 'watchnologin' => 'לא נכנסתם לחשבון',
 'watchnologintext' => 'עליכם [[Special:UserLogin|להיכנס לחשבון]] כדי לערוך את רשימת המעקב.',
 'addwatch' => 'הוספה לרשימת המעקב',
-'addedwatchtext' => 'הדף [[:$1]] נוסף ל[[Special:Watchlist|רשימת המעקב]]. שינויים שייערכו בעתיד, בדף זה ובדף השיחה שלו, יוצגו ברשימת המעקב.
-
-בנוסף, הדף יופיע בכתב מודגש ב[[Special:RecentChanges|רשימת השינויים האחרונים]], כדי להקל עליכם את המעקב אחריו.',
+'addedwatchtext' => 'הדף [[:$1]] נוסף ל[[Special:Watchlist|רשימת המעקב]].
+שינויים שייערכו בעתיד בדף זה ובדף השיחה שלו, יוצגו ברשימת המעקב.',
 'removewatch' => 'הסרה מרשימת המעקב',
 'removedwatchtext' => 'הדף [[:$1]] הוסר מ[[Special:Watchlist|רשימת המעקב]].',
 'watch' => 'מעקב',
@@ -2421,16 +2421,16 @@ $1',
 'enotif_mailer' => 'הודעות {{SITENAME}}',
 'enotif_reset' => 'סימון כל הדפים כאילו נצפו',
 'enotif_impersonal_salutation' => 'משתמש של {{SITENAME}}',
-'enotif_subject_deleted' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נמחק על ידי {{gender:$2|$2}}',
-'enotif_subject_created' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נוצר על ידי {{gender:$2|$2}}',
-'enotif_subject_moved' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} הועבר על ידי {{gender:$2|$2}}',
-'enotif_subject_restored' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שוחזר על ידי {{gender:$2|$2}}',
-'enotif_subject_changed' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שונה על ידי {{gender:$2|$2}}',
-'enotif_body_intro_deleted' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נמחק ב־$PAGEEDITDATE על ידי {{gender:$2|$2}}, ראו $3 לגרסה הנוכחית.',
-'enotif_body_intro_created' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נוצר ב־$PAGEEDITDATE על ידי {{gender:$2|$2}}, ראו $3 לגרסה הנוכחית.',
-'enotif_body_intro_moved' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} הועבר ב־$PAGEEDITDATE על ידי {{gender:$2|$2}}, ראו $3 לגרסה הנוכחית.',
-'enotif_body_intro_restored' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שוחזר ב־$PAGEEDITDATE על ידי {{gender:$2|$2}}, ראו $3 לגרסה הנוכחית.',
-'enotif_body_intro_changed' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שונה ב־$PAGEEDITDATE על ידי {{gender:$2|$2}}, ראו $3 לגרסה הנוכחית.',
+'enotif_subject_deleted' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נמחק על ידי $2',
+'enotif_subject_created' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נוצר על ידי $2',
+'enotif_subject_moved' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} הועבר על ידי $2',
+'enotif_subject_restored' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שוחזר על ידי $2',
+'enotif_subject_changed' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שונה על ידי $2',
+'enotif_body_intro_deleted' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נמחק ב־$PAGEEDITDATE על ידי $2, ראו $3.',
+'enotif_body_intro_created' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} נוצר ב־$PAGEEDITDATE על ידי $2, ראו $3 לגרסה הנוכחית.',
+'enotif_body_intro_moved' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} הועבר ב־$PAGEEDITDATE על ידי $2, ראו $3 לגרסה הנוכחית.',
+'enotif_body_intro_restored' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שוחזר ב־$PAGEEDITDATE על ידי $2, ראו $3 לגרסה הנוכחית.',
+'enotif_body_intro_changed' => 'הדף $1 ב{{grammar:תחילית|{{SITENAME}}}} שונה ב־$PAGEEDITDATE על ידי $2, ראו $3 לגרסה הנוכחית.',
 'enotif_lastvisited' => 'ראו $1 לכל השינויים מאז ביקורכם האחרון.',
 'enotif_lastdiff' => 'ראו $1 לשינוי זה.',
 'enotif_anon_editor' => 'משתמש אנונימי $1',
@@ -2444,7 +2444,7 @@ $PAGEINTRO $NEWPAGE
 בדואר האלקטרוני: $PAGEEDITOR_EMAIL
 באתר: $PAGEEDITOR_WIKI
 
-לא תהיינה הודעות על שינויים נוספים עד שתבקרו את הדף. באפשרותכם גם לאפס את דגלי ההודעות בכל הדפים שברשימת המעקב.
+לא תהיינה הודעות על פעולות נוספות עד שתבקרו בדף. באפשרותכם גם לאפס את דגלי ההודעות בכל הדפים שברשימת המעקב.
 
              מערכת ההודעות של {{SITENAME}}
 
@@ -2460,6 +2460,8 @@ $UNWATCHURL
 
 למשוב ולעזרה נוספת:
 {{canonicalurl::{{MediaWiki:Helppage}}}}',
+'created' => 'נוצר',
+'changed' => 'שונה',
 
 # Delete
 'deletepage' => 'מחיקה',
@@ -2529,6 +2531,8 @@ $UNWATCHURL
 'prot_1movedto2' => '[[$1]] הועבר לשם [[$2]]',
 'protect-badnamespace-title' => 'מרחב שם שבו לא ניתן להגן על דפים',
 'protect-badnamespace-text' => 'לא ניתן להגן על דפים במרחב שם זה.',
+'protect-norestrictiontypes-text' => 'לא ניתן להגן על דף זה כי אין סוגי הגנה זמינים.',
+'protect-norestrictiontypes-title' => 'דף שלא ניתן להגן עליו',
 'protect-legend' => 'אישור הפעלת ההגנה',
 'protectcomment' => 'סיבה:',
 'protectexpiry' => 'פקיעת ההגנה:',
@@ -2544,9 +2548,9 @@ $UNWATCHURL
 להלן ההגדרות הנוכחיות עבור הדף '''$1''':",
 'protect-cascadeon' => 'דף זה מוגן כרגע כיוון שהוא מוכלל {{PLURAL:$1|בדף הבא, שמופעלת עליו|בדפים הבאים, שמופעלת עליהם}} הגנה מדורגת. באפשרותכם לשנות את רמת ההגנה על הדף, אך זה לא ישפיע על ההגנה המדורגת.',
 'protect-default' => 'כל המשתמשים מורשים',
-'protect-fallback' => 'משתמשים בעלי הרשאת "$1" בלבד',
-'protect-level-autoconfirmed' => 'מניעת משתמשים חדשים ולא רשומים',
-'protect-level-sysop' => 'מפעילי מערכת בלבד',
+'protect-fallback' => 'רק משתמשים בעלי הרשאת "$1" מורשים',
+'protect-level-autoconfirmed' => 'רק משתמשים ותיקים מורשים',
+'protect-level-sysop' => 'רק מפעילי מערכת מורשים',
 'protect-summary-cascade' => 'מדורג',
 'protect-expiring' => 'פוקעת $1 (UTC)',
 'protect-expiring-local' => 'פוקעת $1',
@@ -2846,7 +2850,7 @@ $1',
 אם תבחרו לא לעשות זאת, אנא ודאו שאין [[Special:DoubleRedirects|הפניות כפולות]] או [[Special:BrokenRedirects|שבורות]].
 אתם אחראים לוודא שכל הקישורים ימשיכו להצביע למקום שאליו הם אמורים להצביע.
 
-שימו לב: הדף '''לא''' יועבר אם כבר יש דף תחת השם החדש, אלא אם הדף הזה ריק, או שהוא הפניה, ואין לו היסטוריית עריכות קודמות.
+שימו לב: הדף '''לא''' יועבר אם כבר יש דף תחת השם החדש, אלא אם הדף השני הוא הפניה ואין לו היסטוריית עריכות קודמות.
 פירוש הדבר שאפשר לשנות חזרה את שמו של דף לשם המקורי אם נעשתה טעות, ושלא ניתן לדרוס דף קיים.
 
 '''אזהרה!'''
@@ -2857,7 +2861,7 @@ $1',
 אנא ודאו שאין [[Special:DoubleRedirects|הפניות כפולות]] או [[Special:BrokenRedirects|שבורות]].
 אתם אחראים לוודא שכל הקישורים ימשיכו להצביע למקום שאליו הם אמורים להצביע.
 
-שימו לב: הדף '''לא''' יועבר אם כבר יש דף תחת השם החדש, אלא אם הדף הזה ריק, או שהוא הפניה, ואין לו היסטוריית עריכות קודמות.
+שימו לב: הדף '''לא''' יועבר אם כבר יש דף תחת השם החדש, אלא אם הדף הזה הוא הפניה ואין לו היסטוריית עריכות קודמות.
 פירוש הדבר שאפשר לשנות חזרה את שמו של דף לשם המקורי אם נעשתה טעות, ושלא ניתן לדרוס דף קיים.
 
 '''אזהרה!'''
@@ -3028,6 +3032,7 @@ $1',
 'import-error-interwiki' => 'לא ניתן לייבא את הדף "$1" כיוון ששמו שמור לקישור חיצוני (בין־ויקי).',
 'import-error-special' => 'לא ניתן לייבא את הדף "$1" כיוון שהוא שייך למרחב שם מיוחד שלא יכול להכיל דפים.',
 'import-error-invalid' => 'לא ניתן לייבא את הדף "$1" כיוון ששמו אינו תקין.',
+'import-error-unserialize' => 'לא ניתן היה לפענח את הגרסה $2 של הדף "$1". הגרסה מסומנת כאילו היא משתמשת במודל התוכן $3, אך קודדה כ{{GRAMMAR:תחילית|$4}}.',
 'import-options-wrong' => '{{PLURAL:$2|אפשרות שגויה|אפשרויות שגויות}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'לדף הבסיס שניתן יש כותרת לא תקינה.',
 'import-rootpage-nosubpage' => 'מרחב השם "$1" של דף הבסיס אינו מאפשר דפי־משנה.',
@@ -3197,6 +3202,7 @@ $1',
 'pageinfo-robot-noindex' => 'לא יכול להיאסף למפתחות חיפוש',
 'pageinfo-views' => 'מספר הצפיות',
 'pageinfo-watchers' => 'מספר העוקבים אחר הדף',
+'pageinfo-few-watchers' => 'פחות מ{{PLURAL:$1|עוקב אחד|־$1 עוקבים}}',
 'pageinfo-redirects-name' => 'הפניות לדף זה',
 'pageinfo-subpages-name' => 'דפי־משנה של דף זה',
 'pageinfo-subpages-value' => '$1 ({{PLURAL:$2|הפניה אחת|$2 הפניות}}; {{PLURAL:$3|דף רגיל אחד|$3 דפים רגילים}})',
@@ -3211,6 +3217,7 @@ $1',
 'pageinfo-magic-words' => '{{PLURAL:$1|מילת קסם|מילות קסם}} ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|קטגוריה מוסתרת|קטגוריות מוסתרות}} ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|תבנית מוכללת|תבניות מוכללות}} ($1)',
+'pageinfo-transclusions' => '{{PLURAL:$1|דף|דפים}} שמוכלל בהם ($1)',
 'pageinfo-toolboxlink' => 'מידע על הדף',
 'pageinfo-redirectsto' => 'מפנה אל',
 'pageinfo-redirectsto-info' => 'מידע',
@@ -3219,6 +3226,10 @@ $1',
 'pageinfo-protect-cascading' => 'מופעלת הגנה מדורגת מכאן',
 'pageinfo-protect-cascading-yes' => 'כן',
 'pageinfo-protect-cascading-from' => 'דף זה מוגן בגלל הגנה מדורגת על',
+'pageinfo-category-info' => 'מידע על הקטגוריה',
+'pageinfo-category-pages' => 'מספר הדפים',
+'pageinfo-category-subcats' => 'מספר קטגוריות המשנה',
+'pageinfo-category-files' => 'מספר הקבצים',
 
 # Skin names
 'skinname-standard' => 'קלאסי',
@@ -3272,10 +3283,11 @@ $1',
 'widthheightpage' => '<span dir="ltr">$1 × $2</span>, {{PLURAL:$3|דף אחד|$3 דפים}}',
 'file-info' => 'גודל הקובץ: $1, סוג MIME‏: $2',
 'file-info-size' => '<span dir="ltr">$1 × $2</span> פיקסלים, גודל הקובץ: $3, סוג MIME‏: $4',
-'file-info-size-pages' => '<span dir="ltr">$1 × $2</span> פיקסלים, גודל הקובץ: $3, סוג MIME‏: $4, {{PLURAL:$5|דף אחד|$5 דפים}}',
+'file-info-size-pages' => '<span dir="ltr">$1 × $2</span> פיקסלים, גודל הקובץ: $3, סוג MIME‏: $4‏, {{PLURAL:$5|דף אחד|$5 דפים}}',
 'file-nohires' => 'אין גרסה ברזולוציה גבוהה יותר.',
 'svg-long-desc' => 'קובץ SVG, הגודל המקורי: <span dir="ltr">$1 × $2</span> פיקסלים, גודל הקובץ: $3',
 'svg-long-desc-animated' => 'קובץ SVG מונפש, הגודל המקורי: <span dir="ltr">$1 × $2</span> פיקסלים, גודל הקובץ: $3',
+'svg-long-error' => 'קובץ SVG לא תקין: $1',
 'show-big-image' => 'תמונה ברזולוציה גבוהה יותר',
 'show-big-image-preview' => 'גודל תצוגה זו: $1.',
 'show-big-image-other' => '{{PLURAL:$2|רזולוציה אחרת|רזולוציות אחרות}}: $1.',
@@ -3301,10 +3313,16 @@ $1',
 'sp-newimages-showfrom' => 'הצגת קבצים חדשים החל מ־$2, $1',
 
 # Video information, used by Language::formatTimePeriod() to format lengths in the above messages
+'seconds-abbrev' => '{{PLURAL:$1|שנייה|$1 שניות}}',
+'minutes-abbrev' => "{{PLURAL:$1|דקה|$1 דק'}}",
+'hours-abbrev' => '{{PLURAL:$1|שעה|שעתיים|$1 שעות}}',
+'days-abbrev' => '{{PLURAL:$1|יום|יומיים|$1 ימים}}',
 'seconds' => '{{PLURAL:$1|שנייה|$1 שניות}}',
 'minutes' => '{{PLURAL:$1|דקה|$1 דקות}}',
 'hours' => '{{PLURAL:$1|שעה|שעתיים|$1 שעות}}',
 'days' => '{{PLURAL:$1|יום|יומיים|$1 ימים}}',
+'months' => '{{PLURAL:$1|חודש|חודשיים|$1 חודשים}}',
+'years' => '{{PLURAL:$1|שנה|שנתיים|$1 שנים}}',
 'ago' => 'לפני $1',
 'just-now' => 'לפני זמן קצר',
 
@@ -3737,7 +3755,7 @@ $1',
 'monthsall' => 'הכול',
 'limitall' => 'הכול',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'אימות כתובת דוא"ל',
 'confirmemail_noemail' => 'אין לכם כתובת דוא"ל תקפה המוגדרת ב[[Special:Preferences|העדפות המשתמש]] שלכם.',
 'confirmemail_text' => 'אתר זה דורש שתאמתו את כתובת הדוא"ל שלכם לפני שתשתמשו בשירותי הדוא"ל. לחצו על הכפתור למטה כדי לשלוח דוא"ל עם קוד אימות לכתובת הדוא"ל שהזנתם. טענו את הקישור בדפדפן שלכם כדי לאשר שכתובת הדוא"ל תקפה.',
@@ -4023,7 +4041,7 @@ $5
 'specialpages-group-highuse' => 'דפים בשימוש רב',
 'specialpages-group-pages' => 'רשימות דפים',
 'specialpages-group-pagetools' => 'כלים לדפים',
-'specialpages-group-wiki' => 'מידע וכלים על האתר',
+'specialpages-group-wiki' => 'מידע וכלים',
 'specialpages-group-redirects' => 'הפניות מדפים מיוחדים',
 'specialpages-group-spam' => 'כלי ספאם',
 
@@ -4120,8 +4138,12 @@ $5
 'logentry-newusers-newusers' => 'חשבון המשתמש $1 נוצר',
 'logentry-newusers-create' => 'חשבון המשתמש $1 נוצר',
 'logentry-newusers-create2' => 'חשבון המשתמש $3 נוצר על ידי $1',
+'logentry-newusers-byemail' => 'חשבון המשתמש $3 נוצר על ידי $1 והסיסמה נשלחה בדוא"ל',
 'logentry-newusers-autocreate' => 'חשבון המשתמש $1 נוצר אוטומטית',
-'newuserlog-byemail' => 'הסיסמה נשלחה בדוא"ל',
+'logentry-rights-rights' => '$1 שינה את ההרשאות של $3 מ$4 ל$5',
+'logentry-rights-rights-legacy' => '$1 שינה את ההרשאות של $3',
+'logentry-rights-autopromote' => '$1 קודם אוטומטית מ$4 ל$5',
+'rightsnone' => '(כלום)',
 
 # Feedback
 'feedback-bugornote' => 'אם אתם מוכנים לתאר בעיה טכנית בפרטים, אנא [$1 דווחו על באג].
@@ -4175,6 +4197,7 @@ $5
 'api-error-ok-but-empty' => 'שגיאה פנימית: אין תשובה מהשרת.',
 'api-error-overwrite' => 'לא מותרת החלפת קובץ קיים.',
 'api-error-stashfailed' => 'שגיאה פנימית: השרת נכשל באחסון הקובץ הזמני.',
+'api-error-publishfailed' => 'שגיאה פנימית: השרת נכשל בפרסום הקובץ הזמני.',
 'api-error-timeout' => 'השרת לא השיב בזמן המצופה.',
 'api-error-unclassified' => 'אירעה שגיאה בלתי ידועה.',
 'api-error-unknown-code' => 'שגיאה בלתי ידועה: "$1".',
@@ -4196,5 +4219,6 @@ $5
 'duration-millennia' => '{{PLURAL:$1|אלף שנה|אלפיים שנה|$1 אלפי שנים}}',
 
 # Unknown messages
-'svg-long-error' => 'קובץ SVG לא תקין: $1',
+'pageswithprop-legend' => 'דפים עם מאפיין דף',
+'pageswithprop-submit' => 'שליחה',
 );

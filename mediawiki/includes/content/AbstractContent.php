@@ -25,6 +25,12 @@
  *
  * @author Daniel Kinzler
  */
+
+/**
+ * Base implementation for content objects.
+ *
+ * @ingroup Content
+ */
 abstract class AbstractContent implements Content {
 
 	/**
@@ -69,7 +75,7 @@ abstract class AbstractContent implements Content {
 		if ( $modelId !== $this->model_id ) {
 			throw new MWException(
 				"Bad content model: " .
-				"expected {$this->model_id}  " .
+				"expected {$this->model_id} " .
 				"but got $modelId."
 			);
 		}
@@ -208,7 +214,7 @@ abstract class AbstractContent implements Content {
 	 * resulting ParserOutput object.
 	 *
 	 * Subclasses may override this to determine the secondary data updates more
-	 * efficiently, preferrably without the need to generate a parser output object.
+	 * efficiently, preferably without the need to generate a parser output object.
 	 *
 	 * @see Content::getSecondaryDataUpdates()
 	 *
@@ -230,7 +236,7 @@ abstract class AbstractContent implements Content {
 		Content $old = null,
 		$recursive = true, ParserOutput $parserOutput = null
 	) {
-		if ( !$parserOutput ) {
+		if ( $parserOutput === null ) {
 			$parserOutput = $this->getParserOutput( $title, null, null, false );
 		}
 
@@ -332,7 +338,7 @@ abstract class AbstractContent implements Content {
 	 *
 	 * @since 1.21
 	 */
-	public function replaceSection( $section, Content $with, $sectionTitle = ''  ) {
+	public function replaceSection( $section, Content $with, $sectionTitle = '' ) {
 		return null;
 	}
 

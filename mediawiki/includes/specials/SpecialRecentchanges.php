@@ -42,16 +42,16 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	public function getDefaultOptions() {
 		$opts = new FormOptions();
 
-		$opts->add( 'days',  (int)$this->getUser()->getOption( 'rcdays' ) );
-		$opts->add( 'limit', (int)$this->getUser()->getOption( 'rclimit' ) );
+		$opts->add( 'days', $this->getUser()->getIntOption( 'rcdays' ) );
+		$opts->add( 'limit', $this->getUser()->getIntOption( 'rclimit' ) );
 		$opts->add( 'from', '' );
 
-		$opts->add( 'hideminor',     $this->getUser()->getBoolOption( 'hideminor' ) );
-		$opts->add( 'hidebots',      true  );
-		$opts->add( 'hideanons',     false );
-		$opts->add( 'hideliu',       false );
+		$opts->add( 'hideminor', $this->getUser()->getBoolOption( 'hideminor' ) );
+		$opts->add( 'hidebots', true  );
+		$opts->add( 'hideanons', false );
+		$opts->add( 'hideliu', false );
 		$opts->add( 'hidepatrolled', $this->getUser()->getBoolOption( 'hidepatrolled' ) );
-		$opts->add( 'hidemyself',    false );
+		$opts->add( 'hidemyself', false );
 
 		$opts->add( 'namespace', '', FormOptions::INTNULL );
 		$opts->add( 'invert', false );
@@ -155,7 +155,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		// Fetch results, prepare a batch link existence check query
 		$conds = $this->buildMainQueryConds( $opts );
 		$rows = $this->doMainQuery( $conds, $opts );
-		if( $rows === false ){
+		if( $rows === false ) {
 			if( !$this->including() ) {
 				$this->doHeader( $opts );
 			}
@@ -186,7 +186,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	 *
 	 * @return Array
 	 */
-	public function getFeedObject( $feedFormat ){
+	public function getFeedObject( $feedFormat ) {
 		$changesFeed = new ChangesFeed( $feedFormat, 'rcfeed' );
 		$formatter = $changesFeed->getFeedObject(
 			$this->msg( 'recentchanges' )->inContentLanguage()->text(),
@@ -232,7 +232,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			}
 
 			if( is_numeric( $bit ) ) {
-				$opts['limit'] =  $bit;
+				$opts['limit'] = $bit;
 			}
 
 			$m = array();
@@ -281,9 +281,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		# It makes no sense to hide both anons and logged-in users
 		# Where this occurs, force anons to be shown
 		$forcebot = false;
-		if( $opts['hideanons'] && $opts['hideliu'] ){
+		if( $opts['hideanons'] && $opts['hideliu'] ) {
 			# Check if the user wants to show bots only
-			if( $opts['hidebots'] ){
+			if( $opts['hidebots'] ) {
 				$opts['hideanons'] = false;
 			} else {
 				$forcebot = true;
@@ -296,9 +296,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
 		$cutoff = $dbr->timestamp( $cutoff_unixtime );
 
-		$fromValid = preg_match('/^[0-9]{14}$/', $opts['from']);
-		if( $fromValid && $opts['from'] > wfTimestamp(TS_MW,$cutoff) ) {
-			$cutoff = $dbr->timestamp($opts['from']);
+		$fromValid = preg_match( '/^[0-9]{14}$/', $opts['from'] );
+		if( $fromValid && $opts['from'] > wfTimestamp( TS_MW, $cutoff ) ) {
+			$cutoff = $dbr->timestamp( $opts['from'] );
 		} else {
 			$opts->reset( 'from' );
 		}
@@ -351,8 +351,8 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 					MWNamespace::getAssociated( $opts['namespace'] )
 				);
 				$condition = "(rc_namespace $operator $selectedNS "
-						   . $boolean
-						   . " rc_namespace $operator $associatedNS)";
+					. $boolean
+					. " rc_namespace $operator $associatedNS)";
 			}
 
 			$conds[] = $condition;
@@ -387,13 +387,16 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			$tables[] = 'watchlist';
 			$fields[] = 'wl_user';
 			$fields[] = 'wl_notificationtimestamp';
-			$join_conds['watchlist'] = array('LEFT JOIN',
-				"wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace");
+			$join_conds['watchlist'] = array( 'LEFT JOIN', array(
+				'wl_user' => $uid,
+				'wl_title=rc_title',
+				'wl_namespace=rc_namespace'
+			));
 		}
 		if ( $this->getUser()->isAllowed( 'rollback' ) ) {
 			$tables[] = 'page';
 			$fields[] = 'page_latest';
-			$join_conds['page'] = array('LEFT JOIN', 'rc_cur_id=page_id');
+			$join_conds['page'] = array( 'LEFT JOIN', 'rc_cur_id=page_id' );
 		}
 		// Tag stuff.
 		ChangeTags::modifyDisplayQuery(
@@ -480,7 +483,12 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		}
 
 		// And now for the content
-		$this->getOutput()->setFeedAppendQuery( $this->getFeedQuery() );
+		$feedQuery = $this->getFeedQuery();
+		if ( $feedQuery !== '' ) {
+			$this->getOutput()->setFeedAppendQuery( $feedQuery );
+		} else {
+			$this->getOutput()->setFeedAppendQuery( false );
+		}
 
 		if( $wgAllowCategorizedRecentChanges ) {
 			$this->filterByCategories( $rows, $opts );
@@ -524,8 +532,12 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 				}
 				$rc->numberofWatchingusers = $watcherCache[$obj->rc_namespace][$obj->rc_title];
 			}
-			$s .= $list->recentChangesLine( $rc, !empty( $obj->wl_user ), $counter );
-			--$limit;
+
+			$changeLine = $list->recentChangesLine( $rc, !empty( $obj->wl_user ), $counter );
+			if ( $changeLine !== false ) {
+				$s .= $changeLine;
+				--$limit;
+			}
 		}
 		$s .= $list->endRecentChangesList();
 		$this->getOutput()->addHTML( $s );
@@ -533,11 +545,24 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 	/**
 	 * Get the query string to append to feed link URLs.
-	 * This is overridden by RCL to add the target parameter
-	 * @return bool
+	 *
+	 * @return string
 	 */
 	public function getFeedQuery() {
-		return false;
+		global $wgFeedLimit;
+
+		$this->getOptions()->validateIntBounds( 'limit', 0, $wgFeedLimit );
+		$options = $this->getOptions()->getChangedValues();
+
+		// wfArrayToCgi() omits options set to null or false
+		foreach ( $options as &$value ) {
+			if ( $value === false ) {
+				$value = '0';
+			}
+		}
+		unset( $value );
+
+		return wfArrayToCgi( $options );
 	}
 
 	/**
@@ -704,7 +729,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	 * @param $opts FormOptions
 	 */
 	function filterByCategories( &$rows, FormOptions $opts ) {
-		$categories = array_map( 'trim', explode( '|' , $opts['categories'] ) );
+		$categories = array_map( 'trim', explode( '|', $opts['categories'] ) );
 
 		if( !count( $categories ) ) {
 			return;

@@ -45,7 +45,7 @@ class LoadBalancer {
 	 */
 	function __construct( $params ) {
 		if ( !isset( $params['servers'] ) ) {
-			throw new MWException( __CLASS__.': missing servers parameter' );
+			throw new MWException( __CLASS__ . ': missing servers parameter' );
 		}
 		$this->mServers = $params['servers'];
 
@@ -117,34 +117,14 @@ class LoadBalancer {
 	 * Given an array of non-normalised probabilities, this function will select
 	 * an element and return the appropriate key
 	 *
+	 * @deprecated 1.21, use wfPickRandom()
+	 *
 	 * @param $weights array
 	 *
-	 * @return int
+	 * @return bool|int|string
 	 */
 	function pickRandom( $weights ) {
-		if ( !is_array( $weights ) || count( $weights ) == 0 ) {
-			return false;
-		}
-
-		$sum = array_sum( $weights );
-		if ( $sum == 0 ) {
-			# No loads on any of them
-			# In previous versions, this triggered an unweighted random selection,
-			# but this feature has been removed as of April 2006 to allow for strict
-			# separation of query groups.
-			return false;
-		}
-		$max = mt_getrandmax();
-		$rand = mt_rand( 0, $max ) / $max * $sum;
-
-		$sum = 0;
-		foreach ( $weights as $i => $w ) {
-			$sum += $w;
-			if ( $sum >= $rand ) {
-				break;
-			}
-		}
-		return $i;
+		return wfPickRandom( $weights );
 	}
 
 	/**
@@ -205,11 +185,11 @@ class LoadBalancer {
 		global $wgReadOnly, $wgDBClusterTimeout, $wgDBAvgStatusPoll, $wgDBtype;
 
 		# @todo FIXME: For now, only go through all this for mysql databases
-		if ($wgDBtype != 'mysql') {
+		if ( $wgDBtype != 'mysql' ) {
 			return $this->getWriterIndex();
 		}
 
-		if ( count( $this->mServers ) == 1 )  {
+		if ( count( $this->mServers ) == 1 ) {
 			# Skip the load balancing if there's only one server
 			return 0;
 		} elseif ( $group === false and $this->mReadIndex >= 0 ) {
@@ -230,7 +210,7 @@ class LoadBalancer {
 				$nonErrorLoads = $this->mGroupLoads[$group];
 			} else {
 				# No loads for this group, return false and the caller can use some other group
-				wfDebug( __METHOD__.": no loads for group $group\n" );
+				wfDebug( __METHOD__ . ": no loads for group $group\n" );
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -258,7 +238,7 @@ class LoadBalancer {
 					$i = $this->pickRandom( $currentLoads );
 				} else {
 					$i = $this->getRandomNonLagged( $currentLoads, $wiki );
-					if ( $i === false && count( $currentLoads ) != 0 )  {
+					if ( $i === false && count( $currentLoads ) != 0 ) {
 						# All slaves lagged. Switch to read-only mode
 						wfDebugLog( 'replication', "All slaves lagged. Switch to read-only mode\n" );
 						$wgReadOnly = 'The database has been automatically locked ' .
@@ -272,16 +252,16 @@ class LoadBalancer {
 					# pickRandom() returned false
 					# This is permanent and means the configuration or the load monitor
 					# wants us to return false.
-					wfDebugLog( 'connect', __METHOD__.": pickRandom() returned false\n" );
+					wfDebugLog( 'connect', __METHOD__ . ": pickRandom() returned false\n" );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
 
-				wfDebugLog( 'connect', __METHOD__.": Using reader #$i: {$this->mServers[$i]['host']}...\n" );
+				wfDebugLog( 'connect', __METHOD__ . ": Using reader #$i: {$this->mServers[$i]['host']}...\n" );
 				$conn = $this->openConnection( $i, $wiki );
 
 				if ( !$conn ) {
-					wfDebugLog( 'connect', __METHOD__.": Failed connecting to $i/$wiki\n" );
+					wfDebugLog( 'connect', __METHOD__ . ": Failed connecting to $i/$wiki\n" );
 					unset( $nonErrorLoads[$i] );
 					unset( $currentLoads[$i] );
 					continue;
@@ -320,7 +300,7 @@ class LoadBalancer {
 
 			# Some servers must have been overloaded
 			if ( $overloadedServers == 0 ) {
-				throw new MWException( __METHOD__.": unexpectedly found no overloaded servers" );
+				throw new MWException( __METHOD__ . ": unexpectedly found no overloaded servers" );
 			}
 			# Back off for a while
 			# Scale the sleep time by the number of connected threads, to produce a
@@ -358,7 +338,7 @@ class LoadBalancer {
 	 */
 	function sleep( $t ) {
 		wfProfileIn( __METHOD__ );
-		wfDebug( __METHOD__.": waiting $t us\n" );
+		wfDebug( __METHOD__ . ": waiting $t us\n" );
 		usleep( $t );
 		wfProfileOut( __METHOD__ );
 		return $t;
@@ -392,7 +372,7 @@ class LoadBalancer {
 		wfProfileIn( __METHOD__ );
 		$this->mWaitForPos = $pos;
 		for ( $i = 1; $i < count( $this->mServers ); $i++ ) {
-			$this->doWait( $i , true );
+			$this->doWait( $i, true );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -435,15 +415,15 @@ class LoadBalancer {
 			}
 		}
 
-		wfDebug( __METHOD__.": Waiting for slave #$index to catch up...\n" );
+		wfDebug( __METHOD__ . ": Waiting for slave #$index to catch up...\n" );
 		$result = $conn->masterPosWait( $this->mWaitForPos, $this->mWaitTimeout );
 
 		if ( $result == -1 || is_null( $result ) ) {
 			# Timed out waiting for slave, use master instead
-			wfDebug( __METHOD__.": Timed out waiting for slave #$index pos {$this->mWaitForPos}\n" );
+			wfDebug( __METHOD__ . ": Timed out waiting for slave #$index pos {$this->mWaitForPos}\n" );
 			return false;
 		} else {
-			wfDebug( __METHOD__.": Done\n" );
+			wfDebug( __METHOD__ . ": Done\n" );
 			return true;
 		}
 	}
@@ -479,7 +459,7 @@ class LoadBalancer {
 			$groupIndex = $this->getReaderIndex( $groups, $wiki );
 			if ( $groupIndex !== false ) {
 				$serverName = $this->getServerName( $groupIndex );
-				wfDebug( __METHOD__.": using server $serverName for group $groups\n" );
+				wfDebug( __METHOD__ . ": using server $serverName for group $groups\n" );
 				$i = $groupIndex;
 			}
 		} else {
@@ -487,7 +467,7 @@ class LoadBalancer {
 				$groupIndex = $this->getReaderIndex( $group, $wiki );
 				if ( $groupIndex !== false ) {
 					$serverName = $this->getServerName( $groupIndex );
-					wfDebug( __METHOD__.": using server $serverName for group $group\n" );
+					wfDebug( __METHOD__ . ": using server $serverName for group $group\n" );
 					$i = $groupIndex;
 					break;
 				}
@@ -525,8 +505,8 @@ class LoadBalancer {
 	 * @throws MWException
 	 */
 	public function reuseConnection( $conn ) {
-		$serverIndex = $conn->getLBInfo('serverIndex');
-		$refCount = $conn->getLBInfo('foreignPoolRefCount');
+		$serverIndex = $conn->getLBInfo( 'serverIndex' );
+		$refCount = $conn->getLBInfo( 'foreignPoolRefCount' );
 		$dbName = $conn->getDBname();
 		$prefix = $conn->tablePrefix();
 		if ( strval( $prefix ) !== '' ) {
@@ -535,7 +515,7 @@ class LoadBalancer {
 			$wiki = $dbName;
 		}
 		if ( $serverIndex === null || $refCount === null ) {
-			wfDebug( __METHOD__.": this connection was not opened as a foreign connection\n" );
+			wfDebug( __METHOD__ . ": this connection was not opened as a foreign connection\n" );
 			/**
 			 * This can happen in code like:
 			 *   foreach ( $dbs as $db ) {
@@ -549,15 +529,15 @@ class LoadBalancer {
 			return;
 		}
 		if ( $this->mConns['foreignUsed'][$serverIndex][$wiki] !== $conn ) {
-			throw new MWException( __METHOD__.": connection not found, has the connection been freed already?" );
+			throw new MWException( __METHOD__ . ": connection not found, has the connection been freed already?" );
 		}
 		$conn->setLBInfo( 'foreignPoolRefCount', --$refCount );
 		if ( $refCount <= 0 ) {
 			$this->mConns['foreignFree'][$serverIndex][$wiki] = $conn;
 			unset( $this->mConns['foreignUsed'][$serverIndex][$wiki] );
-			wfDebug( __METHOD__.": freed connection $serverIndex/$wiki\n" );
+			wfDebug( __METHOD__ . ": freed connection $serverIndex/$wiki\n" );
 		} else {
-			wfDebug( __METHOD__.": reference count for $serverIndex/$wiki reduced to $refCount\n" );
+			wfDebug( __METHOD__ . ": reference count for $serverIndex/$wiki reduced to $refCount\n" );
 		}
 	}
 
@@ -579,7 +559,7 @@ class LoadBalancer {
 		wfProfileIn( __METHOD__ );
 		if ( $wiki !== false ) {
 			$conn = $this->openForeignConnection( $i, $wiki );
-			wfProfileOut( __METHOD__);
+			wfProfileOut( __METHOD__ );
 			return $conn;
 		}
 		if ( isset( $this->mConns['local'][$i][0] ) ) {
@@ -620,18 +600,18 @@ class LoadBalancer {
 	 * @return DatabaseBase
 	 */
 	function openForeignConnection( $i, $wiki ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		list( $dbName, $prefix ) = wfSplitWikiID( $wiki );
 		if ( isset( $this->mConns['foreignUsed'][$i][$wiki] ) ) {
 			// Reuse an already-used connection
 			$conn = $this->mConns['foreignUsed'][$i][$wiki];
-			wfDebug( __METHOD__.": reusing connection $i/$wiki\n" );
+			wfDebug( __METHOD__ . ": reusing connection $i/$wiki\n" );
 		} elseif ( isset( $this->mConns['foreignFree'][$i][$wiki] ) ) {
 			// Reuse a free connection for the same wiki
 			$conn = $this->mConns['foreignFree'][$i][$wiki];
 			unset( $this->mConns['foreignFree'][$i][$wiki] );
 			$this->mConns['foreignUsed'][$i][$wiki] = $conn;
-			wfDebug( __METHOD__.": reusing free connection $i/$wiki\n" );
+			wfDebug( __METHOD__ . ": reusing free connection $i/$wiki\n" );
 		} elseif ( !empty( $this->mConns['foreignFree'][$i] ) ) {
 			// Reuse a connection from another wiki
 			$conn = reset( $this->mConns['foreignFree'][$i] );
@@ -646,7 +626,7 @@ class LoadBalancer {
 				$conn->tablePrefix( $prefix );
 				unset( $this->mConns['foreignFree'][$i][$oldWiki] );
 				$this->mConns['foreignUsed'][$i][$wiki] = $conn;
-				wfDebug( __METHOD__.": reusing free connection from $oldWiki for $wiki\n" );
+				wfDebug( __METHOD__ . ": reusing free connection from $oldWiki for $wiki\n" );
 			}
 		} else {
 			// Open a new connection
@@ -655,13 +635,13 @@ class LoadBalancer {
 			$server['foreignPoolRefCount'] = 0;
 			$conn = $this->reallyOpenConnection( $server, $dbName );
 			if ( !$conn->isOpen() ) {
-				wfDebug( __METHOD__.": error opening connection for $i/$wiki\n" );
+				wfDebug( __METHOD__ . ": error opening connection for $i/$wiki\n" );
 				$this->mErrorConnection = $conn;
 				$conn = false;
 			} else {
 				$conn->tablePrefix( $prefix );
 				$this->mConns['foreignUsed'][$i][$wiki] = $conn;
-				wfDebug( __METHOD__.": opened new connection for $i/$wiki\n" );
+				wfDebug( __METHOD__ . ": opened new connection for $i/$wiki\n" );
 			}
 		}
 
@@ -670,7 +650,7 @@ class LoadBalancer {
 			$refCount = $conn->getLBInfo( 'foreignPoolRefCount' );
 			$conn->setLBInfo( 'foreignPoolRefCount', $refCount + 1 );
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $conn;
 	}
 
@@ -732,6 +712,7 @@ class LoadBalancer {
 
 	/**
 	 * @param $conn
+	 * @return bool
 	 * @throws DBConnectionError
 	 */
 	function reportConnectionError( &$conn ) {
@@ -954,10 +935,11 @@ class LoadBalancer {
 	 * @return bool
 	 */
 	function allowLagged( $mode = null ) {
-		if ( $mode === null) {
+		if ( $mode === null ) {
 			return $this->mAllowLagged;
 		}
 		$this->mAllowLagged = $mode;
+		return $this->mAllowLagged;
 	}
 
 	/**

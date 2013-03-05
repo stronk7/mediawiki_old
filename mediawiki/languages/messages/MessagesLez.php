@@ -279,7 +279,7 @@ $messages = array(
 'nstab-main' => 'Ччин',
 'nstab-user' => 'Уртахдин ччин',
 'nstab-media' => 'Медия ччин',
-'nstab-special' => 'Куьмекчи ччин',
+'nstab-special' => 'Квимекдин ччин',
 'nstab-project' => 'Проектдин ччин',
 'nstab-image' => 'Файл',
 'nstab-mediawiki' => 'Малумат',
@@ -398,7 +398,7 @@ $messages = array(
 'subject' => 'Тема/кьилинцIар',
 'minoredit' => 'ГъвечIи дуьзар хъувун',
 'watchthis' => 'И ччин гуьзетун',
-'savearticle' => 'Ччин хуьн',
+'savearticle' => 'Чъин хвин',
 'preview' => 'Сифтедин килигун',
 'showpreview' => 'Сифтедин килигун къалурун',
 'showlivepreview' => 'Фад сифтедин килигун',
@@ -523,7 +523,7 @@ $messages = array(
 'revertmerge' => 'Ччара авун',
 
 # Diffs
-'history-title' => 'Masak\'avilerin q\'isa "$1"',
+'history-title' => '$1  -  масакӀавилерин тарих',
 'lineno' => 'ЦIар $1:',
 'compareselectedversions' => 'Хкягъай жуьреяр гекъигун',
 'editundo' => 'гьич авун',
@@ -597,7 +597,7 @@ $messages = array(
 'prefs-edits' => 'Дьузар хъувунрин кьадар',
 'prefsnologin' => 'Куьне гьахьнавач',
 'changepassword' => 'Парол дегишарун',
-'prefs-skin' => 'КЪайдадиз ттунин тема',
+'prefs-skin' => 'Къайдадиз ттунин тема',
 'skin-preview' => 'Сифтедин килигун',
 'datedefault' => 'Туькlуьрмир',
 'prefs-beta' => 'Бета-мумкинвилер',
@@ -613,7 +613,7 @@ $messages = array(
 'prefs-changeemail' => 'Э-почта дегишарун',
 'prefs-setemail' => 'Э-почта эцигна туькIуьрун',
 'prefs-email' => 'E-mail туькlуьрунин кьадарар',
-'prefs-rendering' => 'КЪецепатан  акунар',
+'prefs-rendering' => 'Къецепатан акунар',
 'saveprefs' => 'Хуьн',
 'resetprefs' => 'Хуьн тавунвай дегишвилер алудун',
 'restoreprefs' => 'Авайл хьиз кьунвай низамарунар туькIуьр хъувун',
@@ -689,9 +689,11 @@ $messages = array(
 'right-browsearchive' => 'Алуднавай ччинар жугъурун',
 'right-undelete' => 'Алуднавай ччинар туькIуьр хъувун',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Уртахар регистрация авунин журнал',
+
 # User rights log
 'rightslog' => 'Эхтияр Ишлемишчидин дафтlар',
-'rightsnone' => '(садни)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'И ччин кIелун',
@@ -747,7 +749,7 @@ $messages = array(
 'recentchangeslinked-toolbox' => 'Галкlанвай масакIавилер',
 'recentchangeslinked-title' => '"$1" галаз галкlанавай масакIавилер',
 'recentchangeslinked-noresult' => 'Ганвай чlава галкlанавай ччинра са масакIавални хьанвайд туш',
-'recentchangeslinked-summary' => 'Им къалурай ччиниз (ва я къалурай категориядиз гьатзавай ччинриз) элячIзавай ччинра мукьвара хьайи масакIавилерин сиягь я. Куь [[Special:Watchlist| вилив хуьнин сиягь ]]диз гьатзавай  ччинар яцlу шрифтдал къалурнава.',
+'recentchangeslinked-summary' => 'Им къалурай ччиниз (ва я къалурай категориядиз гьатзавай ччинриз) элячӀзавай ччинра мукьвара хьайи масакӀавилерин сиягь я. Куь [[Special:Watchlist|вилив хуьнин сиягь диз]] гьатзавай ччинар яцӀу шрифтдал къалурнава.',
 'recentchangeslinked-page' => 'Ччинин тlвар:',
 'recentchangeslinked-to' => 'Аксина, къалурай ччиниз элячlзавай ччинра масакIавилер къалура',
 
@@ -918,14 +920,11 @@ $messages = array(
 'listusers-noresult' => 'Иштиракчияр жагъуриз хьанвач',
 'listusers-blocked' => '(блокарнава)',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Уртахар регистрация авунин журнал',
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'КIеретI',
 'listgrouprights-members' => '(уьзвийрин сиягь)',
 
-# E-mail user
+# Email user
 'emailuser' => 'Уртахдиз чар кхьихь',
 'emailusername' => 'Уртахдин тlвар:',
 'emailusernamesubmit' => 'Ракъурун',
@@ -951,6 +950,9 @@ $messages = array(
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Килигун...',
 'unwatching' => 'Амма клигнай',
+
+'created' => 'туькIуьрнава',
+'changed' => 'дегишнава',
 
 # Delete
 'deletepage' => 'Къакъудун хъувун',
@@ -1052,7 +1054,7 @@ $messages = array(
 'whatlinkshere-hideredirs' => '$1 рахкъурунар',
 'whatlinkshere-hidetrans' => '$1 кутунар',
 'whatlinkshere-hidelinks' => '$1 элячlунар',
-'whatlinkshere-hideimages' => '$1 шикилриз элячӀунар',
+'whatlinkshere-hideimages' => '$1 фаjлрин элачlунар',
 'whatlinkshere-filters' => 'Куьзунагар',
 
 # Block/unblock
@@ -1195,7 +1197,7 @@ $messages = array(
 'file-info-size' => '$1 × $2 пикселар, файлдин кьадар: $3, MIME жуьре: $4',
 'file-nohires' => 'Идалайни хъсан ери авайд туш',
 'svg-long-desc' => 'SVG файл, номилдаказ $1 $2 × пикселяр, файлдин кьадар: $3',
-'show-big-image' => 'Цlарафа хвена тунвай жергедай',
+'show-big-image' => 'ЦӀарафа хвена тунвай жергедай',
 
 # Bad image list
 'bad_image_list' => 'Формат гьихьтинди хьана кlанда:
@@ -1320,6 +1322,9 @@ Cиягьда авай анжах (* лишандихъ галаз эгечIза
 
 # Special:ComparePages
 'compare-page1' => 'Чар 1',
+
+# New logging system
+'rightsnone' => '(садни)',
 
 # Feedback
 'feedback-subject' => 'Тема:',

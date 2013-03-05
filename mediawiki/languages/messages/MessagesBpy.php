@@ -693,7 +693,6 @@ $2',
 'template-protected' => '(লুকরিসি)',
 'template-semiprotected' => '(আধা-কাচা লুকরিসি)',
 'hiddencategories' => 'এ পাতা এহান যে {{PLURAL:$1|১ নাফঙিসে বিষয়থাকর|$1 নাফঙিসে বিষয়থাকহানির}} সদস্য:',
-'nocreatetitle' => 'পাতা হঙকরানি নিয়ন্ত্রণ করানি অসে',
 'nocreatetext' => '{{SITENAME}}-এরে নুৱা পাতা এহানর পতানিহানাত থিতপা আসে।
 তি আলথকে গিয়া আসে হের পাতা সিলকরানি পারর, নাইলে [[Special:UserLogin|অ্যাকাউন্টহানাত হমানি বারো অ্যাকাউন্ট খুলে পারর]]।',
 'nocreate-loggedin' => 'তরতা নুৱা পাতা হঙকরানির য়্যাথাং নেই।',
@@ -964,9 +963,11 @@ $2',
 
 'grouppage-sysop' => '{{ns:project}}:প্রশাসকগি',
 
+# Special:Log/newusers
+'newuserlogpage' => 'আতাকুরা হঙসে লগহানি',
+
 # User rights log
 'rightslog' => 'আতাকুরার অধিকারর লগ',
-'rightsnone' => '(নেই)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'পাতা এহান পাকর',
@@ -1232,9 +1233,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Special:ActiveUsers
 'activeusers-noresult' => 'আতাকুরা নাপেইলাং।',
 
-# Special:Log/newusers
-'newuserlogpage' => 'আতাকুরা হঙসে লগহানি',
-
 # Special:ListGroupRights
 'listgrouprights-key' => '* <span class="listgrouprights-granted">য়্যাথাং পাসে অধিকার</span>
 * <span class="listgrouprights-revoked">থেপকরানি অসে অধিকার</span>',
@@ -1276,6 +1274,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'চা...',
 'unwatching' => 'নাউচা...',
+
+'changed' => 'পতেসে',
 
 # Delete
 'deletepage' => 'পাতাহান পুস',
@@ -1728,7 +1728,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # New logging system
 'revdelete-restricted' => 'ডান্ডিকরেকুরাগরাঙ সীমাবদ্ধতাহানি ফলা',
 'revdelete-unrestricted' => 'ডান্ডিকরেকুরাগরাঙ সীমাবদ্ধতাহানি নেইকর',
-'newuserlog-byemail' => 'ই-মেইলর মা পেঠাদিয়াসি পাসৱার্ডগ',
+'rightsnone' => '(নেই)',
 
 # Search suggestions
 'searchsuggest-search' => 'বিসারা',

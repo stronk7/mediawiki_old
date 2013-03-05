@@ -90,6 +90,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addTable', 'uploadstash',       'patch-uploadstash.sql' ),
 			array( 'addTable', 'user_former_groups','patch-user_former_groups.sql' ),
 			array( 'addTable', 'external_user',     'patch-external_user.sql' ),
+			array( 'addTable', 'sites',             'patch-sites.sql' ),
 
 			# Needed before new field
 			array( 'convertArchive2' ),
@@ -155,6 +156,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'uploadstash',   'us_chunk_inx',         "INTEGER NULL" ),
 			array( 'addPgField', 'job',           'job_timestamp',        "TIMESTAMPTZ" ),
 			array( 'addPgField', 'job',           'job_random',           "INTEGER NOT NULL DEFAULT 0" ),
+			array( 'addPgField', 'job',           'job_attempts',         "INTEGER NOT NULL DEFAULT 0" ),
 			array( 'addPgField', 'job',           'job_token',            "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'job',           'job_token_timestamp',  "TIMESTAMPTZ" ),
 			array( 'addPgField', 'job',           'job_sha1',             "TEXT NOT NULL DEFAULT ''" ),
@@ -223,6 +225,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgIndex', 'oldimage',      'oi_sha1',                '(oi_sha1)' ),
 			array( 'addPgIndex', 'page',          'page_mediawiki_title',   '(page_title) WHERE page_namespace = 8' ),
 			array( 'addPgIndex', 'pagelinks',     'pagelinks_title',        '(pl_title)' ),
+			array( 'addPgIndex', 'page_props',    'pp_propname_page',       '(pp_propname, pp_page)' ),
 			array( 'addPgIndex', 'revision',      'rev_text_id_idx',        '(rev_text_id)' ),
 			array( 'addPgIndex', 'recentchanges', 'rc_timestamp_bot',       '(rc_timestamp) WHERE rc_bot = 0' ),
 			array( 'addPgIndex', 'templatelinks', 'templatelinks_from',     '(tl_from)' ),
@@ -233,65 +236,66 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgIndex', 'job',           'job_timestamp_idx',      '(job_timestamp)' ),
 			array( 'addPgIndex', 'job',           'job_sha1',               '(job_sha1)' ),
 			array( 'addPgIndex', 'job',           'job_cmd_token',          '(job_cmd, job_token, job_random)' ),
+			array( 'addPgIndex', 'job',           'job_cmd_token_id',       '(job_cmd, job_token, job_id)' ),
 			array( 'addPgIndex', 'filearchive',   'fa_sha1',                '(fa_sha1)' ),
 
 			array( 'checkIndex', 'pagelink_unique', array(
-				array('pl_from', 'int4_ops', 'btree', 0),
-				array('pl_namespace', 'int2_ops', 'btree', 0),
-				array('pl_title', 'text_ops', 'btree', 0),
+				array( 'pl_from', 'int4_ops', 'btree', 0 ),
+				array( 'pl_namespace', 'int2_ops', 'btree', 0 ),
+				array( 'pl_title', 'text_ops', 'btree', 0 ),
 			),
 			'CREATE UNIQUE INDEX pagelink_unique ON pagelinks (pl_from,pl_namespace,pl_title)' ),
 			array( 'checkIndex', 'cl_sortkey', array(
-				array('cl_to', 'text_ops', 'btree', 0),
-				array('cl_sortkey', 'text_ops', 'btree', 0),
-				array('cl_from', 'int4_ops', 'btree', 0),
+				array( 'cl_to', 'text_ops', 'btree', 0 ),
+				array( 'cl_sortkey', 'text_ops', 'btree', 0 ),
+				array( 'cl_from', 'int4_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX cl_sortkey ON "categorylinks" USING "btree" ("cl_to", "cl_sortkey", "cl_from")' ),
 			array( 'checkIndex', 'logging_times', array(
-				array('log_timestamp', 'timestamptz_ops', 'btree', 0),
+				array( 'log_timestamp', 'timestamptz_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "logging_times" ON "logging" USING "btree" ("log_timestamp")' ),
 			array( 'dropIndex', 'oldimage', 'oi_name' ),
 			array( 'checkIndex', 'oi_name_archive_name', array(
-				array('oi_name', 'text_ops', 'btree', 0),
-				array('oi_archive_name', 'text_ops', 'btree', 0),
+				array( 'oi_name', 'text_ops', 'btree', 0 ),
+				array( 'oi_archive_name', 'text_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "oi_name_archive_name" ON "oldimage" USING "btree" ("oi_name", "oi_archive_name")' ),
 			array( 'checkIndex', 'oi_name_timestamp', array(
-				array('oi_name', 'text_ops', 'btree', 0),
-				array('oi_timestamp', 'timestamptz_ops', 'btree', 0),
+				array( 'oi_name', 'text_ops', 'btree', 0 ),
+				array( 'oi_timestamp', 'timestamptz_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "oi_name_timestamp" ON "oldimage" USING "btree" ("oi_name", "oi_timestamp")' ),
 			array( 'checkIndex', 'page_main_title', array(
-				array('page_title', 'text_pattern_ops', 'btree', 0),
+				array( 'page_title', 'text_pattern_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "page_main_title" ON "page" USING "btree" ("page_title" "text_pattern_ops") WHERE ("page_namespace" = 0)' ),
 			array( 'checkIndex', 'page_mediawiki_title', array(
-				array('page_title', 'text_pattern_ops', 'btree', 0),
+				array( 'page_title', 'text_pattern_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "page_mediawiki_title" ON "page" USING "btree" ("page_title" "text_pattern_ops") WHERE ("page_namespace" = 8)' ),
 			array( 'checkIndex', 'page_project_title', array(
-				array('page_title', 'text_pattern_ops', 'btree', 0),
+				array( 'page_title', 'text_pattern_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "page_project_title" ON "page" USING "btree" ("page_title" "text_pattern_ops") WHERE ("page_namespace" = 4)' ),
 			array( 'checkIndex', 'page_talk_title', array(
-				array('page_title', 'text_pattern_ops', 'btree', 0),
+				array( 'page_title', 'text_pattern_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "page_talk_title" ON "page" USING "btree" ("page_title" "text_pattern_ops") WHERE ("page_namespace" = 1)' ),
 			array( 'checkIndex', 'page_user_title', array(
-				array('page_title', 'text_pattern_ops', 'btree', 0),
+				array( 'page_title', 'text_pattern_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "page_user_title" ON "page" USING "btree" ("page_title" "text_pattern_ops") WHERE ("page_namespace" = 2)' ),
 			array( 'checkIndex', 'page_utalk_title', array(
-				array('page_title', 'text_pattern_ops', 'btree', 0),
+				array( 'page_title', 'text_pattern_ops', 'btree', 0 ),
 			),
 			'CREATE INDEX "page_utalk_title" ON "page" USING "btree" ("page_title" "text_pattern_ops") WHERE ("page_namespace" = 3)' ),
 			array( 'checkIndex', 'ts2_page_text', array(
-				array('textvector', 'tsvector_ops', 'gist', 0),
+				array( 'textvector', 'tsvector_ops', 'gist', 0 ),
 			),
 			'CREATE INDEX "ts2_page_text" ON "pagecontent" USING "gist" ("textvector")' ),
 			array( 'checkIndex', 'ts2_page_title', array(
-				array('titlevector', 'tsvector_ops', 'gist', 0),
+				array( 'titlevector', 'tsvector_ops', 'gist', 0 ),
 			),
 			'CREATE INDEX "ts2_page_title" ON "page" USING "gist" ("titlevector")' ),
 
@@ -300,10 +304,10 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'checkRevUserFkey' ),
 			array( 'dropIndex', 'ipblocks', 'ipb_address'),
 			array( 'checkIndex', 'ipb_address_unique', array(
-				array('ipb_address', 'text_ops', 'btree', 0),
-				array('ipb_user',    'int4_ops', 'btree', 0),
-				array('ipb_auto',    'int2_ops', 'btree', 0),
-				array('ipb_anon_only', 'int2_ops', 'btree', 0),
+				array( 'ipb_address', 'text_ops', 'btree', 0 ),
+				array( 'ipb_user',    'int4_ops', 'btree', 0 ),
+				array( 'ipb_auto',    'int2_ops', 'btree', 0 ),
+				array( 'ipb_anon_only', 'int2_ops', 'btree', 0 ),
 			),
 			'CREATE UNIQUE INDEX ipb_address_unique ON ipblocks (ipb_address,ipb_user,ipb_auto,ipb_anon_only)' ),
 
@@ -506,7 +510,7 @@ END;
 			$this->output( "Creating sequence $ns\n" );
 			$this->db->query( "CREATE SEQUENCE $ns" );
 			if( $pkey !== false ) {
-				$this->setDefault( $table,  $pkey, '"nextval"(\'"' . $ns . '"\'::"regclass")' );
+				$this->setDefault( $table, $pkey, '"nextval"(\'"' . $ns . '"\'::"regclass")' );
 			}
 		}
 	}
@@ -534,11 +538,34 @@ END;
 		}
 	}
 
-	protected function renameIndex( $table, $old, $new ) {
-		if ( $this->db->indexExists( $table, $old ) ) {
-			$this->output( "Renaming index $old to $new\n" );
-			$this->db->query( "ALTER INDEX $old RENAME TO $new" );
+	protected function renameIndex(
+		$table, $old, $new, $skipBothIndexExistWarning = false, $a = false, $b = false
+	) {
+		// First requirement: the table must exist
+		if ( !$this->db->tableExists( $table, __METHOD__ ) ) {
+			$this->output( "...skipping: '$table' table doesn't exist yet.\n" );
+			return;
 		}
+
+		// Second requirement: the new index must be missing
+		if ( $this->db->indexExists( $table, $new, __METHOD__ ) ) {
+			$this->output( "...index $new already set on $table table.\n" );
+			if ( !$skipBothIndexExistWarning
+				&& $this->db->indexExists( $table, $old, __METHOD__ ) )
+			{
+				$this->output( "...WARNING: $old still exists, despite it has been renamed into $new (which also exists).\n" .
+					"            $old should be manually removed if not needed anymore.\n" );
+			}
+			return;
+		}
+
+		// Third requirement: the old index must exist
+		if ( !$this->db->indexExists( $table, $old, __METHOD__ ) ) {
+			$this->output( "...skipping: index $old doesn't exist.\n" );
+			return;
+		}
+
+		$this->db->query( "ALTER INDEX $old RENAME TO $new" );
 	}
 
 	protected function addPgField( $table, $field, $type ) {

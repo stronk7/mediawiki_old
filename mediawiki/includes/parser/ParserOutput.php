@@ -51,6 +51,7 @@ class ParserOutput extends CacheTime {
 		private $mIndexPolicy = '';       # 'index' or 'noindex'?  Any other value will result in no change.
 		private $mAccessedOptions = array(); # List of ParserOptions (stored in the keys)
 		private $mSecondaryDataUpdates = array(); # List of DataUpdate, used to save info from the page somewhere else.
+		private $mExtensionData = array(); # extra data used by extensions
 
 	const EDITSECTION_REGEX = '#<(?:mw:)?editsection page="(.*?)" section="(.*?)"(?:/>|>(.*?)(</(?:mw:)?editsection>))#';
 
@@ -82,13 +83,13 @@ class ParserOutput extends CacheTime {
 	function replaceEditSectionLinksCallback( $m ) {
 		global $wgOut, $wgLang;
 		$args = array(
-			htmlspecialchars_decode($m[1]),
-			htmlspecialchars_decode($m[2]),
-			isset($m[4]) ? $m[3] : null,
+			htmlspecialchars_decode( $m[1] ),
+			htmlspecialchars_decode( $m[2] ),
+			isset( $m[4] ) ? $m[3] : null,
 		);
 		$args[0] = Title::newFromText( $args[0] );
-		if ( !is_object($args[0]) ) {
-			throw new MWException("Bad parser output text.");
+		if ( !is_object( $args[0] ) ) {
+			throw new MWException( "Bad parser output text." );
 		}
 		$args[] = $wgLang->getCode();
 		$skin = $wgOut->getSkin();
@@ -189,7 +190,7 @@ class ParserOutput extends CacheTime {
 	 * @param $title Title object
 	 * @param $id Mixed: optional known page_id so we can skip the lookup
 	 */
-	function addLink( $title, $id = null ) {
+	function addLink( Title $title, $id = null ) {
 		if ( $title->isExternal() ) {
 			// Don't record interwikis in pagelinks
 			$this->addInterwikiLink( $title );
@@ -260,7 +261,7 @@ class ParserOutput extends CacheTime {
 		if( $prefix == '' ) {
 			throw new MWException( 'Non-interwiki link passed, internal parser error.' );
 		}
-		if (!isset($this->mInterwikiLinks[$prefix])) {
+		if ( !isset( $this->mInterwikiLinks[$prefix] ) ) {
 			$this->mInterwikiLinks[$prefix] = array();
 		}
 		$this->mInterwikiLinks[$prefix][$title->getDBkey()] = 1;
@@ -370,15 +371,31 @@ class ParserOutput extends CacheTime {
 	 *     Wikimedia Commons.
 	 *     This is not actually implemented, yet but would be pretty cool.
 	 *
-	 * Do not use setProperty() to set a property which is only used in a
-	 * context where the ParserOutput object itself is already available, for
-	 * example a normal page view. There is no need to save such a property
+	 * @note: Do not use setProperty() to set a property which is only used
+	 * in a context where the ParserOutput object itself is already available,
+	 * for example a normal page view. There is no need to save such a property
 	 * in the database since it the text is already parsed. You can just hook
 	 * OutputPageParserOutput and get your data out of the ParserOutput object.
 	 *
-	 * If you are writing an extension where you want to set
-	 * a property in the parser which is used by an OutputPageParserOutput hook,
-	 * just use a custom variable within the ParserOutput object:
+	 * If you are writing an extension where you want to set a property in the
+	 * parser which is used by an OutputPageParserOutput hook, you have to
+	 * associate the extension data directly with the ParserOutput object.
+	 * Since MediaWiki 1.21, you can use setExtensionData() to do this:
+	 *
+	 * @par Example:
+	 * @code
+	 *    $parser->getOutput()->setExtensionData( 'my_ext_foo', '...' );
+	 * @endcode
+	 *
+	 * And then later, in OutputPageParserOutput or similar:
+	 *
+	 * @par Example:
+	 * @code
+	 *    $output->getExtensionData( 'my_ext_foo' );
+	 * @endcode
+	 *
+	 * In MediaWiki 1.20 and older, you have to use a custom member variable
+	 * within the ParserOutput object:
 	 *
 	 * @par Example:
 	 * @code
@@ -390,7 +407,7 @@ class ParserOutput extends CacheTime {
 		$this->mProperties[$name] = $value;
 	}
 
-	public function getProperty( $name ){
+	public function getProperty( $name ) {
 		return isset( $this->mProperties[$name] ) ? $this->mProperties[$name] : false;
 	}
 
@@ -407,20 +424,20 @@ class ParserOutput extends CacheTime {
 	 * into account to produce this output or false if not available.
 	 * @return mixed Array
 	 */
-	 public function getUsedOptions() {
+	public function getUsedOptions() {
 		if ( !isset( $this->mAccessedOptions ) ) {
 			return array();
 		}
 		return array_keys( $this->mAccessedOptions );
-	 }
+	}
 
-	 /**
-	  * Callback passed by the Parser to the ParserOptions to keep track of which options are used.
-	  * @access private
-	  */
-	 function recordOption( $option ) {
-		 $this->mAccessedOptions[$option] = true;
-	 }
+	/**
+	 * Callback passed by the Parser to the ParserOptions to keep track of which options are used.
+	 * @access private
+	 */
+	function recordOption( $option ) {
+		$this->mAccessedOptions[$option] = true;
+	}
 
 	/**
 	 * Adds an update job to the output. Any update jobs added to the output will eventually bexecuted in order to
@@ -457,13 +474,75 @@ class ParserOutput extends CacheTime {
 
 		$linksUpdate = new LinksUpdate( $title, $this, $recursive );
 
-		if ( $this->mSecondaryDataUpdates === array() ) {
-			return array( $linksUpdate );
+		return array_merge( $this->mSecondaryDataUpdates, array( $linksUpdate ) );
+	}
+
+	/**
+	 * Attaches arbitrary data to this ParserObject. This can be used to store some information in
+	 * the ParserOutput object for later use during page output. The data will be cached along with
+	 * the ParserOutput object, but unlike data set using setProperty(), it is not recorded in the
+	 * database.
+	 *
+	 * This method is provided to overcome the unsafe practice of attaching extra information to a
+	 * ParserObject by directly assigning member variables.
+	 *
+	 * To use setExtensionData() to pass extension information from a hook inside the parser to a
+	 * hook in the page output, use this in the parser hook:
+	 *
+	 * @par Example:
+	 * @code
+	 *    $parser->getOutput()->setExtensionData( 'my_ext_foo', '...' );
+	 * @endcode
+	 *
+	 * And then later, in OutputPageParserOutput or similar:
+	 *
+	 * @par Example:
+	 * @code
+	 *    $output->getExtensionData( 'my_ext_foo' );
+	 * @endcode
+	 *
+	 * In MediaWiki 1.20 and older, you have to use a custom member variable
+	 * within the ParserOutput object:
+	 *
+	 * @par Example:
+	 * @code
+	 *    $parser->getOutput()->my_ext_foo = '...';
+	 * @endcode
+	 *
+	 * @since 1.21
+	 *
+	 * @param string $key The key for accessing the data. Extensions should take care to avoid
+	 *               conflicts in naming keys. It is suggested to use the extension's name as a
+	 *               prefix.
+	 *
+	 * @param mixed $value The value to set. Setting a value to null is equivalent to removing
+	 *              the value.
+	 */
+	public function setExtensionData( $key, $value ) {
+		if ( $value === null ) {
+			unset( $this->mExtensionData[$key] );
 		} else {
-			$updates = array_merge( $this->mSecondaryDataUpdates, array( $linksUpdate ) );
+			$this->mExtensionData[$key] = $value;
+		}
+	}
+
+	/**
+	 * Gets extensions data previously attached to this ParserOutput using setExtensionData().
+	 * Typically, such data would be set while parsing the page, e.g. by a parser function.
+	 *
+	 * @since 1.21
+	 *
+	 * @param string $key The key to look up.
+	 *
+	 * @return mixed The value previously set for the given key using setExtensionData( $key ),
+	 *         or null if no value was set for this key.
+	 */
+	public function getExtensionData( $key ) {
+		if ( isset( $this->mExtensionData[$key] ) ) {
+			return $this->mExtensionData[$key];
 		}
 
-		return $updates;
-	 }
+		return null;
+	}
 
 }

@@ -476,7 +476,6 @@ folcliċum āgnunge oþþe ȝelīċum frēom horde (sēo $1 for āscungum).
 'template-protected' => '(borgen)',
 'template-semiprotected' => '(sāmborgen)',
 'hiddencategories' => 'Þēos sīde is ȝesīþ {{PLURAL:$1|1 ȝehȳdedes flocces|$1 ȝehȳdeda flocca}}:',
-'nocreatetitle' => 'Sīdan ȝesceaft mǣte',
 'nocreate-loggedin' => 'Þū ne hæfst þafunge to scieppenne nīƿa sīdan.',
 'permissionserrors' => 'Þafunga ƿōh',
 'permissionserrorstext-withaction' => 'Þū ne hæfst þafunge for $2, forþǣm þe {{PLURAL:$1|race|racum}}:',
@@ -631,6 +630,9 @@ folcliċum āgnunge oþþe ȝelīċum frēom horde (sēo $1 for āscungum).
 'group-suppress-member' => 'oferȝesiht',
 
 'grouppage-sysop' => '{{ns:project}}:Beƿitendas',
+
+# Special:Log/newusers
+'newuserlogpage' => 'Brūcenda ȝesceaft ȝetalu',
 
 # User rights log
 'rightslog' => 'Brūcenda riht cranic',
@@ -834,9 +836,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Special:ActiveUsers
 'activeusers' => 'Hƿata brūcenda ȝetalu',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Brūcenda ȝesceaft ȝetalu',
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'Clīeƿen',
 'listgrouprights-rights' => 'Riht',
@@ -878,6 +877,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'enotif_lastvisited' => 'Sēo $1 for eall hƿearfas siþþan þīn læst cyme.',
 'enotif_lastdiff' => 'Sēo $1 to sēonne þisne hƿearf.',
 'enotif_anon_editor' => 'uncūþ brūcend $1',
+'created' => 'ȝescapen',
+'changed' => 'hƿorfen',
 
 # Delete
 'deletepage' => 'Sīdan āfeorsian',

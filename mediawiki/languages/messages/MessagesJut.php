@@ -454,6 +454,10 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 
 'grouppage-sysop' => '{{ns:project}}:Administråtorer',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Brugeråprettelseslog',
+'newuserlogpagetext' => "Dett'er en log åver de senest åprettede brugere.",
+
 # User rights log
 'rightslog' => 'Rettigheds-logbåĝ',
 
@@ -604,10 +608,6 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'linksearch-text' => 'Wildkårter søm "*.wikipedia.org" ken benyttes.<br />Understøttede pråtåkoller: <code>$1</code>',
 'linksearch-line' => '$2 linker til $1',
 'linksearch-error' => "Wildkårter må ken benyttes i'n stårt åf håstnavnet.",
-
-# Special:Log/newusers
-'newuserlogpage' => 'Brugeråprettelseslog',
-'newuserlogpagetext' => "Dett'er en log åver de senest åprettede brugere.",
 
 # E-mail user
 'emailuser' => 'E-mail til denne bruger',
@@ -852,8 +852,5 @@ Kun endholtet åf æ liste (lenjer startende ve *) bliver brugt. Den første hen
 
 # Special:SpecialPages
 'specialpages' => 'Sonst sider',
-
-# New logging system
-'newuserlog-byemail' => 'kodeort tilsend via e-mail',
 
 );

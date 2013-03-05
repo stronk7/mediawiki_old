@@ -465,8 +465,7 @@ class Html {
 			$key = strtolower( $key );
 
 			// Here we're blacklisting some HTML5-only attributes...
-			if ( !$wgHtml5 && in_array( $key, self::$HTMLFiveOnlyAttribs )
-			 ) {
+			if ( !$wgHtml5 && in_array( $key, self::$HTMLFiveOnlyAttribs ) ) {
 				continue;
 			}
 
@@ -476,7 +475,13 @@ class Html {
 			// server-side validation.  Opera is the only other implementation at
 			// this time, and has ugly UI, so just kill the feature entirely until
 			// we have at least one good implementation.
-			if ( in_array( $key, array( 'max', 'min', 'pattern', 'required', 'step' ) ) ) {
+
+			// As the default value of "1" for "step" rejects decimal
+			// numbers to be entered in 'type="number"' fields, allow
+			// the special case 'step="any"'.
+
+			if ( in_array( $key, array( 'max', 'min', 'pattern', 'required' ) ) ||
+				 $key === 'step' && $value !== 'any' ) {
 				continue;
 			}
 
@@ -732,7 +737,7 @@ class Html {
 			}
 		}
 
-		if (substr($value, 0, 1) == "\n") {
+		if ( substr( $value, 0, 1 ) == "\n" ) {
 			// Workaround for bug 12130: browsers eat the initial newline
 			// assuming that it's just for show, but they do keep the later
 			// newlines, which we may want to preserve during editing.
@@ -924,7 +929,7 @@ class Html {
 			$icon = $wgStylePath.'/common/images/'.$icon;
 		}
 
-		$s  = Html::openElement( 'div', array( 'class' => "mw-infobox $class") );
+		$s = Html::openElement( 'div', array( 'class' => "mw-infobox $class" ) );
 
 		$s .= Html::openElement( 'div', array( 'class' => 'mw-infobox-left' ) ).
 				Html::element( 'img',

@@ -53,12 +53,13 @@ class SpecialNewpages extends IncludableSpecialPage {
 		$opts->add( 'hidepatrolled', $this->getUser()->getBoolOption( 'newpageshidepatrolled' ) );
 		$opts->add( 'hidebots', false );
 		$opts->add( 'hideredirs', true );
-		$opts->add( 'limit', (int)$this->getUser()->getOption( 'rclimit' ) );
+		$opts->add( 'limit', $this->getUser()->getIntOption( 'rclimit' ) );
 		$opts->add( 'offset', '' );
 		$opts->add( 'namespace', '0' );
 		$opts->add( 'username', '' );
 		$opts->add( 'feed', '' );
 		$opts->add( 'tagfilter', '' );
+		$opts->add( 'invert', false );
 
 		$this->customFilters = array();
 		wfRunHooks( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
@@ -105,7 +106,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 			}
 			// PG offsets not just digits!
 			if ( preg_match( '/^offset=([^=]+)$/', $bit, $m ) ) {
-				$this->opts->setValue( 'offset',  intval( $m[1] ) );
+				$this->opts->setValue( 'offset', intval( $m[1] ) );
 			}
 			if ( preg_match( '/^username=(.*)$/', $bit, $m ) ) {
 				$this->opts->setValue( 'username', $m[1] );
@@ -113,7 +114,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 			if ( preg_match( '/^namespace=(.*)$/', $bit, $m ) ) {
 				$ns = $this->getLanguage()->getNsIndex( $m[1] );
 				if( $ns !== false ) {
-					$this->opts->setValue( 'namespace',  $ns );
+					$this->opts->setValue( 'namespace', $ns );
 				}
 			}
 		}
@@ -140,12 +141,13 @@ class SpecialNewpages extends IncludableSpecialPage {
 
 			$feedType = $this->opts->getValue( 'feed' );
 			if( $feedType ) {
-				return $this->feed( $feedType );
+				$this->feed( $feedType );
+				return;
 			}
 
 			$allValues = $this->opts->getAllValues();
 			unset( $allValues['feed'] );
-			$out->setFeedAppendQuery( wfArrayToCGI( $allValues ) );
+			$out->setFeedAppendQuery( wfArrayToCgi( $allValues ) );
 		}
 
 		$pager = new NewPagesPager( $this, $this->opts );
@@ -210,6 +212,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 		$namespace = $this->opts->consumeValue( 'namespace' );
 		$username = $this->opts->consumeValue( 'username' );
 		$tagFilterVal = $this->opts->consumeValue( 'tagfilter' );
+		$nsinvert = $this->opts->consumeValue( 'invert' );
 
 		// Check username input validity
 		$ut = Title::makeTitleSafe( NS_USER, $username );
@@ -245,6 +248,13 @@ class SpecialNewpages extends IncludableSpecialPage {
 							'id'    => 'namespace',
 							'class' => 'namespaceselector',
 						)
+					) . '&#160;' .
+					Xml::checkLabel(
+						$this->msg( 'invert' )->text(),
+						'invert',
+						'nsinvert',
+						$nsinvert,
+						array( 'title' => $this->msg( 'tooltip-invert' )->text() )
 					) .
 				'</td>
 			</tr>' . ( $tagFilter ? (
@@ -295,11 +305,11 @@ class SpecialNewpages extends IncludableSpecialPage {
 
 		# Revision deletion works on revisions, so we should cast one
 		$row = array(
-					  'comment' => $result->rc_comment,
-					  'deleted' => $result->rc_deleted,
-					  'user_text' => $result->rc_user_text,
-					  'user' => $result->rc_user,
-					);
+			'comment' => $result->rc_comment,
+			'deleted' => $result->rc_deleted,
+			'user_text' => $result->rc_user_text,
+			'user' => $result->rc_user,
+		);
 		$rev = new Revision( $row );
 		$rev->setTitle( $title );
 
@@ -498,7 +508,11 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$user = Title::makeTitleSafe( NS_USER, $username );
 
 		if( $namespace !== false ) {
-			$conds['rc_namespace'] = $namespace;
+			if ( $this->opts->getValue( 'invert' ) ) {
+				$conds[] = 'rc_namespace != ' . $this->mDb->addQuotes( $namespace );
+			} else {
+				$conds['rc_namespace'] = $namespace;
+			}
 			$rcIndexes = array( 'new_name_timestamp' );
 		} else {
 			$rcIndexes = array( 'rc_timestamp' );

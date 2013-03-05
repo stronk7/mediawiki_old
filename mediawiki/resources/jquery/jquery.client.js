@@ -69,14 +69,14 @@
 					// Strings which precede a version number in a user agent string - combined and used as match 1 in
 					// version detectection
 					versionPrefixes = [
-						'camino', 'chrome', 'firefox', 'netscape', 'netscape6', 'opera', 'version', 'konqueror',
+						'camino', 'chrome', 'firefox', 'iceweasel', 'netscape', 'netscape6', 'opera', 'version', 'konqueror',
 						'lynx', 'msie', 'safari', 'ps3'
 					],
 					// Used as matches 2, 3 and 4 in version extraction - 3 is used as actual version number
 					versionSuffix = '(\\/|\\;?\\s|)([a-z0-9\\.\\+]*?)(\\;|dev|rel|\\)|\\s|$)',
 					// Names of known browsers
 					names = [
-						'camino', 'chrome', 'firefox', 'netscape', 'konqueror', 'lynx', 'msie', 'opera',
+						'camino', 'chrome', 'firefox', 'iceweasel', 'netscape', 'konqueror', 'lynx', 'msie', 'opera',
 						'safari', 'ipod', 'iphone', 'blackberry', 'ps3', 'rekonq'
 					],
 					// Tanslations for conforming browser names
@@ -148,7 +148,12 @@
 				}
 				// Expose Opera 10's lies about being Opera 9.8
 				if ( name === 'opera' && version >= 9.8) {
-					version = ua.match( /version\/([0-9\.]*)/i )[1] || 10;
+					match = ua.match( /version\/([0-9\.]*)/i );
+					if ( match && match[1] ) {
+						version = match[1];
+					} else {
+						version = '10';
+					}
 				}
 				versionNumber = parseFloat( version, 10 ) || 0.0;
 
@@ -198,7 +203,6 @@
 
 			var conditions, dir, i, op, val;
 			profile = $.isPlainObject( profile ) ? profile : $.client.profile();
-
 			dir = $( 'body' ).is( '.rtl' ) ? 'rtl' : 'ltr';
 			// Check over each browser condition to determine if we are running in a compatible client
 			if ( typeof map[dir] !== 'object' || map[dir][profile.name] === undefined ) {
@@ -206,12 +210,12 @@
 				return true;
 			}
 			conditions = map[dir][profile.name];
+			if ( conditions === false ) {
+				return false;
+			}
 			for ( i = 0; i < conditions.length; i++ ) {
 				op = conditions[i][0];
 				val = conditions[i][1];
-				if ( val === false ) {
-					return false;
-				}
 				if ( typeof val === 'string' ) {
 					if ( !( eval( 'profile.version' + op + '"' + val + '"' ) ) ) {
 						return false;
@@ -222,6 +226,7 @@
 					}
 				}
 			}
+
 			return true;
 		}
 	};

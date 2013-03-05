@@ -65,7 +65,7 @@ class SkinVector extends SkinTemplate {
 	 * fixes bug 22916
 	 * @param $out OutputPage object
 	 */
-	function setupSkinUserCss( OutputPage $out ){
+	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 		$out->addModuleStyles( 'skins.vector' );
 	}
@@ -166,7 +166,7 @@ class VectorTemplate extends BaseTemplate {
 			<?php endif; ?>
 			<!-- firstHeading -->
 			<h1 id="firstHeading" class="firstHeading" lang="<?php
-				$this->data['pageLanguage'] = $this->getSkin()->getTitle()->getPageLanguage()->getCode();
+				$this->data['pageLanguage'] = $this->getSkin()->getTitle()->getPageViewLanguage()->getCode();
 				$this->html( 'pageLanguage' );
 			?>"><span dir="auto"><?php $this->html( 'title' ) ?></span></h1>
 			<!-- /firstHeading -->
@@ -230,7 +230,7 @@ class VectorTemplate extends BaseTemplate {
 		<div id="mw-navigation">
 			<h2><?php $this->msg( 'navigation-heading' ) ?></h2>
 			<!-- header -->
-			<div id="mw-head" class="noprint">
+			<div id="mw-head">
 				<?php $this->renderNavigation( 'PERSONAL' ); ?>
 				<div id="left-navigation">
 					<?php $this->renderNavigation( array( 'NAMESPACES', 'VARIANTS' ) ); ?>
@@ -241,7 +241,7 @@ class VectorTemplate extends BaseTemplate {
 			</div>
 			<!-- /header -->
 			<!-- panel -->
-			<div id="mw-panel" class="noprint">
+			<div id="mw-panel">
 				<!-- logo -->
 					<div id="p-logo" role="banner"><a style="background-image: url(<?php $this->text( 'logopath' ) ?>);" href="<?php echo htmlspecialchars( $this->data['nav_urls']['mainpage']['href'] ) ?>" <?php echo Xml::expandAttributes( Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) ) ?>></a></div>
 				<!-- /logo -->

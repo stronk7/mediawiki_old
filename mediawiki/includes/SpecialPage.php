@@ -254,13 +254,14 @@ class SpecialPage {
 	 *
 	 * @param $name String
 	 * @param $subpage String|Bool subpage string, or false to not use a subpage
+	 * @param $fragment String the link fragment (after the "#")
 	 * @throws MWException
 	 * @return Title object
 	 */
-	public static function getTitleFor( $name, $subpage = false ) {
+	public static function getTitleFor( $name, $subpage = false, $fragment = '' ) {
 		$name = SpecialPageFactory::getLocalNameFor( $name, $subpage );
 		if ( $name ) {
-			return Title::makeTitle( NS_SPECIAL, $name );
+			return Title::makeTitle( NS_SPECIAL, $name, $fragment );
 		} else {
 			throw new MWException( "Invalid special page name \"$name\"" );
 		}
@@ -597,7 +598,7 @@ class SpecialPage {
 	 *
 	 * @param $subPage string|null
 	 */
-	public final function run( $subPage ) {
+	final public function run( $subPage ) {
 		/**
 		 * Gets called before @see SpecialPage::execute.
 		 *
@@ -845,7 +846,7 @@ class SpecialPage {
 
 		foreach ( $wgFeedClasses as $format => $class ) {
 			$theseParams = $params + array( 'feedformat' => $format );
-			$url = $feedTemplate . wfArrayToCGI( $theseParams );
+			$url = $feedTemplate . wfArrayToCgi( $theseParams );
 			$this->getOutput()->addFeedLink( $format, $url );
 		}
 	}
@@ -862,7 +863,7 @@ abstract class FormSpecialPage extends SpecialPage {
 	 * Get an HTMLForm descriptor array
 	 * @return Array
 	 */
-	protected abstract function getFormFields();
+	abstract protected function getFormFields();
 
 	/**
 	 * Add pre- or post-text to the form
@@ -878,22 +879,32 @@ abstract class FormSpecialPage extends SpecialPage {
 	protected function alterForm( HTMLForm $form ) {}
 
 	/**
+	 * Get message prefix for HTMLForm
+	 *
+	 * @since 1.21
+	 * @return string
+	 */
+	protected function getMessagePrefix() {
+		return strtolower( $this->getName() );
+	}
+
+	/**
 	 * Get the HTMLForm to control behaviour
 	 * @return HTMLForm|null
 	 */
 	protected function getForm() {
 		$this->fields = $this->getFormFields();
 
-		$form = new HTMLForm( $this->fields, $this->getContext() );
+		$form = new HTMLForm( $this->fields, $this->getContext(), $this->getMessagePrefix() );
 		$form->setSubmitCallback( array( $this, 'onSubmit' ) );
-		$form->setWrapperLegend( $this->msg( strtolower( $this->getName() ) . '-legend' ) );
+		$form->setWrapperLegend( $this->msg( $this->getMessagePrefix() . '-legend' ) );
 		$form->addHeaderText(
-			$this->msg( strtolower( $this->getName() ) . '-text' )->parseAsBlock() );
+			$this->msg( $this->getMessagePrefix() . '-text' )->parseAsBlock() );
 
 		// Retain query parameters (uselang etc)
 		$params = array_diff_key(
 			$this->getRequest()->getQueryValues(), array( 'title' => null ) );
-		$form->addHiddenField( 'redirectparams', wfArrayToCGI( $params ) );
+		$form->addHiddenField( 'redirectparams', wfArrayToCgi( $params ) );
 
 		$form->addPreText( $this->preText() );
 		$form->addPostText( $this->postText() );
@@ -910,13 +921,13 @@ abstract class FormSpecialPage extends SpecialPage {
 	 * @param  $data Array
 	 * @return Bool|Array true for success, false for didn't-try, array of errors on failure
 	 */
-	public abstract function onSubmit( array $data );
+	abstract public function onSubmit( array $data );
 
 	/**
 	 * Do something exciting on successful processing of the form, most likely to show a
 	 * confirmation message
 	 */
-	public abstract function onSuccess();
+	abstract public function onSuccess();
 
 	/**
 	 * Basic SpecialPage workflow: get a form, send it to the user; get some data back,
@@ -1034,7 +1045,7 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 		// Redirect to index.php with query parameters
 		} elseif ( $redirect === true ) {
 			global $wgScript;
-			$url = $wgScript . '?' . wfArrayToCGI( $query );
+			$url = $wgScript . '?' . wfArrayToCgi( $query );
 			$this->getOutput()->redirect( $url );
 			return $redirect;
 		} else {
@@ -1267,7 +1278,7 @@ class SpecialMytalk extends RedirectSpecialArticle {
  */
 class SpecialMycontributions extends RedirectSpecialPage {
 	function __construct() {
-		parent::__construct(  'Mycontributions' );
+		parent::__construct( 'Mycontributions' );
 		$this->mAllowedRedirectParams = array( 'limit', 'namespace', 'tagfilter',
 			'offset', 'dir', 'year', 'month', 'feed' );
 	}

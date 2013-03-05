@@ -44,7 +44,7 @@ $messages = array(
 'tog-hidepatrolled' => 'mushuk killkaykunapak kamupi, ña rikushka killkaykunata pakana',
 'tog-newpageshidepatrolled' => 'Mushuk pankakunapak kamupi, ña rikushka pankakunata pakana',
 'tog-extendwatchlist' => 'Rikushka pankakunapak mushuk killkaykunapak kamupi, ama yallik mushuk killkaykunatalla rikuchina, tukuykunatami rikuchina',
-'tog-usenewrc' => 'Mushuk killkaykunata ashtawan alli rikuchina (Javascriptwanlla)',
+'tog-usenewrc' => 'Mushuk killkaykunata chapashka pankakunapak killkaykunatapash ashtawan alli rikuchina (Javascriptwanlla)',
 'tog-numberheadings' => 'Uma killkaykunata yupayta churak antawata llankachina',
 'tog-showtoolbar' => 'Llamkana antakunata rikuchina (Javascriptwanlla)',
 'tog-editondblclick' => 'Ishkayta klik rurashpa pankapi killkanata kallarina (JavaScriptwanlla)',
@@ -348,11 +348,12 @@ Shina kakpika, shuk rurakka ña pankata pichankacha.',
 'viewsource' => 'Pukyu killkata rikuna',
 'actionthrottled' => 'Rurayta harkashka',
 'actionthrottledtext' => 'Spam rurashpa nalli runakunaka ama yapata chaskikuna kachankapak, mana chayta kutin ñapash rurana ushapankichu. Ama shinachu kapay, ashata shuyashpa  (wakin minutoskuna) kutin rurapay.',
-'protectedpagetext' => 'Kay pankata ama shukchinkapak harkashkami kan.',
+'protectedpagetext' => 'Kay pankaka ama shukchinkapak harkashkami kan.',
 'viewsourcetext' => 'Kay pankapak wiki killkayta rikunata, ishkachinatapash ushapankimi.',
 'protectedinterface' => 'Kay pankaka kapak willaykunata charinmi, ama nalli runakunaka kaypi killkankapak harkashkami kapan.',
 
 # Login and logout pages
+'welcomeuser' => '¡Alli shamushka, $1!',
 'yourname' => 'Rurak shuti:',
 'yourpassword' => 'Yaykunkapak rimay:',
 'yourpasswordagain' => 'Yaykunapak rimayta kutin killkapay:',
@@ -404,8 +405,8 @@ Shina kakpika, shuk rurakka ña pankata pichankacha.',
 'newarticletext' => 'Shuk illak pankaman tinkita katirkapanki. Kay pankata kamankapak uraypi killkapay. Ashtawan yachakunkapak [[{{MediaWiki:Helppage}}|yanapana pankata]] rikupay. Mana chay pankata kamanata munakpika, ñawpa pankaman kutin ripay.',
 'noarticletext' => 'Kunan pachapi, kay pankaka mana killkaykunata charin.
 Pakpak shutita [[Special:Search/{{PAGENAME}}|shuk pankakunapi maskanata]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} registroskunapi maskanata]pash ushankimi, kutin [{{fullurl:{{FULLPAGENAME}}|action=edit}} kay pankata kamarinata] ushankimi',
-'noarticletext-nopermission' => 'Kunan pachapi kay pankaka mana killkashkakunata charinchu. Paypak shutita [[Special:Search/{{PAGENAME}}|shuk pankakunapi maskanata]] ushapankimi, shinalla <span class="plainlinks">pankakunapa wiñay kawsay kamupi [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tinkishka shukchiykunaka] maskana</span>',
-'previewnote' => 'Rikupay: kay killkaykunata mana churapankichu !',
+'noarticletext-nopermission' => 'Kunan pachapi kay pankakapi killkaykuna illan. Paypak shutita [[Special:Search/{{PAGENAME}}|shuk pankakunapi maskanata]] ushapankimi, shinalla <span class="plainlinks">pankakunapa wiñay kawsay kamupi [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tinkishka killkaykunapi] maskanata ushapanki</span>. Shinapash, chay pankaka mana kamarinata ushapankichu.',
+'previewnote' => 'Rikupay: kay killkaykunata nara allichipashkankichu !',
 'editing' => '$1 pankapi killkashpa',
 'editingsection' => '$1 rakipi killkashpa',
 'templatesused' => 'Kay pankaka {{PLURAL:$1|plantilla|plantillakuna}}ta llankachin:',
@@ -525,6 +526,9 @@ Shuk rurakkunaka kikinpa e-chaski ''dirección''ta mana yachankachu.",
 
 'grouppage-sysop' => '{{ns:project}}:Kamachik',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Rurakkununata kamaykunapa kamu',
+
 # User rights log
 'rightslog' => 'Rurakpa hayñikunapa kamu',
 
@@ -640,9 +644,6 @@ Shuk rurakkunaka kikinpa e-chaski ''dirección''ta mana yachankachu.",
 'linksearch' => 'hawaman tinkikunata maskana',
 'linksearch-line' => '$1 pankaka $2-manta tinkishkami kan',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Rurakkununata kamaykunapa kamu',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(Kay tantanakuypa rurakkunapa shutikuna)',
 
@@ -651,7 +652,7 @@ Shuk rurakkunaka kikinpa e-chaski ''dirección''ta mana yachankachu.",
 
 # Watchlist
 'watchlist' => 'Rikukushka pankakuna',
-'mywatchlist' => 'Imata rikukuni',
+'mywatchlist' => 'Imata chapakuni',
 'watchlistfor2' => '$1-pak $2',
 'watch' => 'rikupay',
 'watchthispage' => 'Kay pankata rikukuna',
@@ -686,9 +687,9 @@ $2 rikpika, ima pankakunaka pichashkami kan yachakupanki.',
 'protect_expiry_invalid' => "''Ima pachakaman'' mana alli nishkami.",
 'protect_expiry_old' => "''Ima pachakaman'' mana alli nishkami : kay pachaka ñawpak pachapi kapanmi !",
 'protect-default' => 'Rukuy runakunaman ari nipay',
-'protect-fallback' => '«$1» hayñita mutsupanki',
-'protect-level-autoconfirmed' => 'Mushuk rurakkunata mana shutiyuk rurakkunatapash wichkana',
-'protect-level-sysop' => 'Kipukamayukkunalla',
+'protect-fallback' => '«$1» hayñiyuk rurakkunallapak',
+'protect-level-autoconfirmed' => 'Kikin shutiyuk rurakkunallapak',
+'protect-level-sysop' => 'Kipukamayukkunallapak',
 'protect-expiring' => '$1 (UTC) pachakaman',
 'restriction-type' => 'Hayñi:',
 
@@ -702,7 +703,7 @@ $2 rikpika, ima pankakunaka pichashkami kan yachakupanki.',
 'blanknamespace' => 'Kapak',
 
 # Contributions
-'contributions' => 'Kay rurakpa killkaykuna',
+'contributions' => '{{GENDER:$1|Kay rurakpa}} killkaykuna',
 'contributions-title' => '$1 shutiyuq rurakpa killkaykuna',
 'mycontris' => 'Nukapak killkaykuna',
 'contribsub2' => '$1 ($2)',

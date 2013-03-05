@@ -46,7 +46,7 @@ abstract class MediaHandler {
 	static function getHandler( $type ) {
 		global $wgMediaHandlers;
 		if ( !isset( $wgMediaHandlers[$type] ) ) {
-			wfDebug( __METHOD__ . ": no handler found for $type.\n");
+			wfDebug( __METHOD__ . ": no handler found for $type.\n" );
 			return false;
 		}
 		$class = $wgMediaHandlers[$type];
@@ -135,9 +135,9 @@ abstract class MediaHandler {
 	*/
 	static function getMetadataVersion () {
 		$version = Array( '2' ); // core metadata version
-		wfRunHooks('GetMetadataVersion', Array(&$version));
+		wfRunHooks( 'GetMetadataVersion', Array( &$version ) );
 		return implode( ';', $version);
-	 }
+	}
 
 	/**
 	* Convert metadata version.
@@ -365,7 +365,7 @@ abstract class MediaHandler {
 	 * @return array for use displaying metadata.
 	 */
 	function formatMetadataHelper( $metadataArray ) {
-		 $result = array(
+		$result = array(
 			'visible' => array(),
 			'collapsed' => array()
 		);

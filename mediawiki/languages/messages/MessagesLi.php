@@ -869,7 +869,6 @@ De lèste logbookregel vólg hier:",
 'template-protected' => '(besjirmp)',
 'template-semiprotected' => '(semi-besjörmp)',
 'hiddencategories' => 'Dees pagina vélt in de volgende verborge {{PLURAL:$1|categorie|categorië}}:',
-'nocreatetitle' => "'t Aanmake van pagina's is beperk",
 'nocreatetext' => "{{SITENAME}} haet de mäögelikheid óm nuuj pagina's te make beperk.
 De kans al besjtaonde pagina's verangere, of de kans [[Special:UserLogin|dich aanmelde of 'n gebroekersaccount aanmake]].",
 'nocreate-loggedin' => "De höbs gein rechte óm nuuj pagina's te make.",
@@ -1407,12 +1406,13 @@ Deze informatie is zichbaar veur angere gebroekers.',
 'right-sendemail' => 'Versjik e-mail aan anger gebroekers',
 'right-passwordreset' => 'Bekiek e-mails van ópnuuj ingestèldje wachwäörd',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Logbook nuuj gebroekers',
+'newuserlogpagetext' => 'Hiej ónger saton de nuuj ingesjreve gebroekers.',
+
 # User rights log
 'rightslog' => 'Gebroekersrechtelogbook',
 'rightslogtext' => 'Hiej onger staon de wieziginge in gebroekersrechte.',
-'rightslogentry' => 'wiezigde de gebroekersrechte veur $1 van $2 nao $3',
-'rightslogentry-autopromote' => 'is autematis gepromoveerdj vanne groep "$2" nao de groep "$3"',
-'rightsnone' => '(gein)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'dees pagina te bekieke',
@@ -2037,10 +2037,6 @@ Haet mèndestes e toepleveldomein, wie beveurbeildj "*.org".<br />
 'activeusers-hidesysops' => 'Verberg admins',
 'activeusers-noresult' => 'Gein gebroekers gevónje.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Logbook nuuj gebroekers',
-'newuserlogpagetext' => 'Hiej ónger saton de nuuj ingesjreve gebroekers.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Rechte van gebroekersgróppe',
 'listgrouprights-summary' => 'Op dees pazjena sjtaon de gebroekersgróppe in deze wiki besjreve, mit zien biebehurende rechte.
@@ -2162,6 +2158,8 @@ $UNWATCHURL
 
 Commentaar en wiejer assistentie:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'aangemaak',
+'changed' => 'verangerd',
 
 # Delete
 'deletepage' => 'Pagina ewegsjaffe',
@@ -3649,7 +3647,7 @@ Aafbeildinge waere in häör vollejige resolutie getoeandj. Anger bestandjstypes
 'logentry-newusers-create' => "$1 haet 'ne gebroeker aangemaak",
 'logentry-newusers-create2' => "$1 haet 'ne gebroeker $3 aangemaak",
 'logentry-newusers-autocreate' => 'De gebroeker $1 is autematis aangemaak',
-'newuserlog-byemail' => 'wachwaord is versjik per e-mail',
+'rightsnone' => '(gein)',
 
 # Feedback
 'feedback-bugornote' => 'Es se zewied bös óm e technisch perbleem in détail te besjrieve, [$1 rapperteer \'ne bug]. 

@@ -29,10 +29,6 @@
  */
 class ApiProtect extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		global $wgRestrictionLevels;
 		$params = $this->extractRequestParams();
@@ -233,9 +229,5 @@ class ApiProtect extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Protect';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

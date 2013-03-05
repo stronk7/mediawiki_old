@@ -86,7 +86,7 @@ class Xml {
 	 * @param $contents String: NULL to make an open tag only; '' for a contentless closed tag (default)
 	 * @return string
 	 */
-	public static function elementClean( $element, $attribs = array(), $contents = '') {
+	public static function elementClean( $element, $attribs = array(), $contents = '' ) {
 		global $wgContLang;
 		if( $attribs ) {
 			$attribs = array_map( array( 'UtfNormal', 'cleanUp' ), $attribs );
@@ -192,7 +192,7 @@ class Xml {
 		} elseif( $encMonth ) {
 			$thisMonth = intval( gmdate( 'n' ) );
 			$thisYear = intval( gmdate( 'Y' ) );
-			if( intval($encMonth) > $thisMonth ) {
+			if( intval( $encMonth ) > $thisMonth ) {
 				$thisYear--;
 			}
 			$encYear = $thisYear;
@@ -369,10 +369,10 @@ class Xml {
 		$a = array( 'for' => $id );
 
 		# FIXME avoid copy pasting below:
-		if( isset( $attribs['class'] ) ){
+		if( isset( $attribs['class'] ) ) {
 				$a['class'] = $attribs['class'];
 		}
-		if( isset( $attribs['title'] ) ){
+		if( isset( $attribs['title'] ) ) {
 				$a['title'] = $attribs['title'];
 		}
 
@@ -500,7 +500,7 @@ class Xml {
 				} elseif ( substr( $value, 0, 1) == '*' && substr( $value, 1, 1) != '*' ) {
 					// A new group is starting ...
 					$value = trim( substr( $value, 1 ) );
-					if( $optgroup ) $options .= self::closeElement('optgroup');
+					if( $optgroup ) $options .= self::closeElement( 'optgroup' );
 					$options .= self::openElement( 'optgroup', array( 'label' => $value ) );
 					$optgroup = true;
 				} elseif ( substr( $value, 0, 2) == '**' ) {
@@ -509,13 +509,13 @@ class Xml {
 					$options .= self::option( $value, $value, $selected === $value );
 				} else {
 					// groupless reason list
-					if( $optgroup ) $options .= self::closeElement('optgroup');
+					if( $optgroup ) $options .= self::closeElement( 'optgroup' );
 					$options .= self::option( $value, $value, $selected === $value );
 					$optgroup = false;
 				}
 			}
 
-			if( $optgroup ) $options .= self::closeElement('optgroup');
+			if( $optgroup ) $options .= self::closeElement( 'optgroup' );
 
 		$attribs = array();
 
@@ -636,10 +636,10 @@ class Xml {
 		} elseif ( is_null( $value ) ) {
 			$s = 'null';
 		} elseif ( is_int( $value ) || is_float( $value ) ) {
-			$s = strval($value);
+			$s = strval( $value );
 		} elseif ( is_array( $value ) && // Make sure it's not associative.
-					array_keys($value) === range( 0, count($value) - 1 ) ||
-					count($value) == 0
+					array_keys( $value ) === range( 0, count( $value ) - 1 ) ||
+					count( $value ) == 0
 				) {
 			$s = '[';
 			foreach ( $value as $elt ) {
@@ -682,22 +682,11 @@ class Xml {
 	 * @return string
 	 */
 	public static function encodeJsCall( $name, $args ) {
-		$s = "$name(";
-		$first = true;
-
-		foreach ( $args as $arg ) {
-			if ( $first ) {
-				$first = false;
-			} else {
-				$s .= ', ';
-			}
-
-			$s .= Xml::encodeJsVar( $arg );
+		foreach ( $args as &$arg ) {
+			$arg = Xml::encodeJsVar( $arg );
 		}
 
-		$s .= ");\n";
-
-		return $s;
+		return "$name(" . implode( ', ', $args ) . ");\n";
 	}
 
 	/**
@@ -775,7 +764,7 @@ class Xml {
 		foreach( $fields as $labelmsg => $input ) {
 			$id = "mw-$labelmsg";
 			$form .= Xml::openElement( 'tr', array( 'id' => $id ) );
-			$form .= Xml::tags( 'td', array('class' => 'mw-label'), wfMessage( $labelmsg )->parse() );
+			$form .= Xml::tags( 'td', array( 'class' => 'mw-label' ), wfMessage( $labelmsg )->parse() );
 			$form .= Xml::openElement( 'td', array( 'class' => 'mw-input' ) ) . $input . Xml::closeElement( 'td' );
 			$form .= Xml::closeElement( 'tr' );
 		}

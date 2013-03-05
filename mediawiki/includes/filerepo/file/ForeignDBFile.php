@@ -58,6 +58,7 @@ class ForeignDBFile extends LocalFile {
 	 * @param $srcPath String
 	 * @param $flags int
 	 * @param $options Array
+	 * @return \FileRepoStatus
 	 * @throws MWException
 	 */
 	function publish( $srcPath, $flags = 0, array $options = array() ) {
@@ -72,16 +73,19 @@ class ForeignDBFile extends LocalFile {
 	 * @param $source string
 	 * @param $watch bool
 	 * @param $timestamp bool|string
+	 * @param $user User object or null to use $wgUser
+	 * @return bool
 	 * @throws MWException
 	 */
 	function recordUpload( $oldver, $desc, $license = '', $copyStatus = '', $source = '',
-		$watch = false, $timestamp = false ) {
+		$watch = false, $timestamp = false, User $user = null ) {
 		$this->readOnlyError();
 	}
 
 	/**
 	 * @param $versions array
 	 * @param $unsuppress bool
+	 * @return \FileRepoStatus
 	 * @throws MWException
 	 */
 	function restore( $versions = array(), $unsuppress = false ) {
@@ -91,6 +95,7 @@ class ForeignDBFile extends LocalFile {
 	/**
 	 * @param $reason string
 	 * @param $suppress bool
+	 * @return \FileRepoStatus
 	 * @throws MWException
 	 */
 	function delete( $reason, $suppress = false ) {
@@ -99,6 +104,7 @@ class ForeignDBFile extends LocalFile {
 
 	/**
 	 * @param $target Title
+	 * @return \FileRepoStatus
 	 * @throws MWException
 	 */
 	function move( $target ) {

@@ -127,6 +127,8 @@ class DatabaseSqlite extends DatabaseBase {
 		# set error codes only, don't raise exceptions
 		if ( $this->mOpened ) {
 			$this->mConn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );
+			# Enforce LIKE to be case sensitive, just like MySQL
+			$this->query( 'PRAGMA case_sensitive_like = 1' );
 			return true;
 		}
 	}
@@ -161,7 +163,7 @@ class DatabaseSqlite extends DatabaseBase {
 			$res = $this->query( "SELECT sql FROM sqlite_master WHERE tbl_name = '$table'", __METHOD__ );
 			if ( $res ) {
 				$row = $res->fetchRow();
-				self::$fulltextEnabled = stristr($row['sql'], 'fts' ) !== false;
+				self::$fulltextEnabled = stristr( $row['sql'], 'fts' ) !== false;
 			}
 		}
 		return self::$fulltextEnabled;
@@ -250,7 +252,7 @@ class DatabaseSqlite extends DatabaseBase {
 
 	/**
 	 * @param $res ResultWrapper
-	 * @return
+	 * @return object|bool
 	 */
 	function fetchObject( $res ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -276,7 +278,7 @@ class DatabaseSqlite extends DatabaseBase {
 
 	/**
 	 * @param $res ResultWrapper
-	 * @return bool|mixed
+	 * @return array|bool
 	 */
 	function fetchRow( $res ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -848,7 +850,7 @@ class DatabaseSqlite extends DatabaseBase {
 		$endArray = array();
 
 		foreach( $result as $table ) {
-			$vars = get_object_vars($table);
+			$vars = get_object_vars( $table );
 			$table = array_pop( $vars );
 
 			if( !$prefix || strpos( $table, $prefix ) === 0 ) {

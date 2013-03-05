@@ -82,11 +82,15 @@ $messages = array(
 'tog-watchdefault' => "Hateke pájina sira-ne'ebé ha'u edita",
 'tog-watchmoves' => "Hateke pájina sira-ne'ebé ha'u book",
 'tog-watchdeletion' => "Hateke pájina sira-ne'ebé ha'u halakon",
+'tog-minordefault' => 'Edita hotu-hotu "ki\'ik"',
+'tog-oldsig' => 'Asinatura atuál',
 'tog-watchlisthideown' => "La hatudu ha'u-nia edita iha lista hateke",
 'tog-watchlisthidebots' => 'Hamsumik bot iha lista hateke',
 'tog-watchlisthideminor' => "Hamsumik muda ki-ki'ik iha lista hateke",
 'tog-watchlisthideliu' => 'La hatudu edita ema rejista nian iha lista hateke',
 'tog-watchlisthideanons' => 'La hatudu edita ema anónimu nian iha lista hateke',
+'tog-watchlisthidepatrolled' => 'Hamsumik muda patrolada iha lista hateke',
+'tog-ccmeonemails' => "Haruka ba ha'u kopia korreiu eletróniku nian ne'ebé ha'u korreia",
 'tog-showhiddencats' => "Hatudu kategoria sira-ne'ebé subar",
 
 'underline-always' => 'Sempre',
@@ -367,6 +371,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 # History pages
 'currentrev' => 'Versaun atuál',
 'revisionasof' => 'Versaun $1 nian',
+'revision-info' => 'Revisaun loron $4, tempu $5, husi $2',
 'previousrevision' => '←Versaun tuan liu',
 'nextrevision' => 'Versaun foun liu→',
 'currentrevisionlink' => 'Versaun atuál',
@@ -481,11 +486,13 @@ Ita-nia mudansa la armazenadu seidauk!",
 'right-userrights' => "Edita priviléjiu uza-na'in hotu",
 'right-userrights-interwiki' => "Edita priviléjiu uza-na'in iha wiki seluk sira",
 
+# Special:Log/newusers
+'newuserlogpage' => "Lista kria uza-na'in",
+'newuserlogpagetext' => "Ne'e lista kria uza-na'in.",
+
 # User rights log
 'rightslog' => "Lista mudansa priviléjiu uza-na'in",
 'rightslogtext' => "Ne'e lista mudansa priviléjiu uza-na'in sira nian.",
-'rightslogentry' => 'muda grupu "$1" nian husi "$2" ba "$3"',
-'rightsnone' => '(mamuk)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => "lee pájina ne'e",
@@ -627,16 +634,12 @@ Ita-nia mudansa la armazenadu seidauk!",
 'activeusers-hidebots' => 'Subar bot sira',
 'activeusers-hidesysops' => 'Subar administradór sira',
 
-# Special:Log/newusers
-'newuserlogpage' => "Lista kria uza-na'in",
-'newuserlogpagetext' => "Ne'e lista kria uza-na'in.",
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'Grupu',
 'listgrouprights-rights' => 'Priviléjiu',
 'listgrouprights-members' => '(lista membru nian)',
 
-# E-mail user
+# Email user
 'emailuser' => "Haruka korreiu eletróniku ba uza-na'in ne'e",
 'defemailsubject' => '{{SITENAME}} - korreiu eletróniku husi uza-na\'in "$1"',
 'noemailtitle' => "Lá'os diresaun korreiu eletróniku",
@@ -658,6 +661,8 @@ Ita-nia mudansa la armazenadu seidauk!",
 'unwatching' => 'La hateke...',
 
 'enotif_impersonal_salutation' => "Uza-na'in {{SITENAME}} nian",
+'created' => 'kria ona',
+'changed' => 'muda ona',
 
 # Delete
 'deletepage' => 'Halakon pájina',
@@ -974,5 +979,8 @@ Ligasaun seluk iha liña - ne'e pájina sira iha ne'ebé bele inklui imajen aat.
 
 # Database error messages
 'dberr-header' => "Wiki ne'e iha problema",
+
+# New logging system
+'rightsnone' => '(mamuk)',
 
 );

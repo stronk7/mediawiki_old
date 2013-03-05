@@ -166,6 +166,26 @@ class EditPage {
 	const EDITFORM_ID                  = 'editform';
 
 	/**
+	 * Prefix of key for cookie used to pass post-edit state.
+	 * The revision id edited is added after this
+	 */
+	const POST_EDIT_COOKIE_KEY_PREFIX = 'PostEditRevision';
+
+	/**
+	 * Duration of PostEdit cookie, in seconds.
+	 * The cookie will be removed instantly if the JavaScript runs.
+	 *
+	 * Otherwise, though, we don't want the cookies to accumulate.
+	 * RFC 2109 ( https://www.ietf.org/rfc/rfc2109.txt ) specifies a possible limit of only 20 cookies per domain.
+	 * This still applies at least to some versions of IE without full updates:
+	 * https://blogs.msdn.com/b/ieinternals/archive/2009/08/20/wininet-ie-cookie-internals-faq.aspx
+	 *
+	 * A value of 20 minutes should be enough to take into account slow loads and minor
+	 * clock skew while still avoiding cookie accumulation when JavaScript is turned off.
+	 */
+	const POST_EDIT_COOKIE_DURATION = 1200;
+
+	/**
 	 * @var Article
 	 */
 	var $mArticle;
@@ -546,8 +566,8 @@ class EditPage {
 			// Standard preference behaviour
 			return true;
 		} elseif ( !$this->mTitle->exists() &&
-		  isset( $wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] ) &&
-		  $wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] )
+			isset( $wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] ) &&
+			$wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] )
 		{
 			// Categories are special
 			return true;
@@ -577,13 +597,15 @@ class EditPage {
 	}
 
 	/**
-	 * Does this EditPage class support section editing?
-	 * This is used by EditPage subclasses to indicate their ui cannot handle section edits
+	 * Returns whether section editing is supported for the current page.
+	 * Subclasses may override this to replace the default behavior, which is
+	 * to check ContentHandler::supportsSections.
 	 *
-	 * @return bool
+	 * @return bool true if this edit page supports sections, false otherwise.
 	 */
 	protected function isSectionEditSupported() {
-		return true;
+		$contentHandler = ContentHandler::getForTitle( $this->mTitle );
+		return $contentHandler->supportsSections();
 	}
 
 	/**
@@ -597,6 +619,11 @@ class EditPage {
 
 		# Section edit can come from either the form or a link
 		$this->section = $request->getVal( 'wpSection', $request->getVal( 'section' ) );
+
+		if ( $this->section !== null && $this->section !== '' && !$this->isSectionEditSupported() ) {
+			throw new ErrorPageError( 'sectioneditnotsupported-title', 'sectioneditnotsupported-text' );
+		}
+
 		$this->isNew = !$this->mTitle->exists() || $this->section == 'new';
 
 		if ( $request->wasPosted() ) {
@@ -610,7 +637,7 @@ class EditPage {
 				// modified by subclasses
 				wfProfileIn( get_class( $this ) . "::importContentFormData" );
 				$textbox1 = $this->importContentFormData( $request );
-				if ( isset( $textbox1 ) ) {
+				if ( $textbox1 !== null ) {
 					$this->textbox1 = $textbox1;
 				}
 
@@ -1121,6 +1148,33 @@ class EditPage {
 	}
 
 	/**
+	 * Sets post-edit cookie indicating the user just saved a particular revision.
+	 *
+	 * This uses a temporary cookie for each revision ID so separate saves will never
+	 * interfere with each other.
+	 *
+	 * The cookie is deleted in the mediawiki.action.view.postEdit JS module after
+	 * the redirect.  It must be clearable by JavaScript code, so it must not be
+	 * marked HttpOnly. The JavaScript code converts the cookie to a wgPostEdit config
+	 * variable.
+	 *
+	 * Since WebResponse::setcookie does not allow forcing HttpOnly for a single
+	 * cookie, we have to use PHP's setcookie() directly.
+	 *
+	 * We use a path of '/' since wgCookiePath is not exposed to JS
+	 *
+	 * If the variable were set on the server, it would be cached, which is unwanted
+	 * since the post-edit state should only apply to the load right after the save.
+	 */
+	protected function setPostEditCookie() {
+		global $wgCookiePrefix, $wgCookieDomain;
+		$revisionId = $this->mArticle->getLatest();
+		$postEditKey = self::POST_EDIT_COOKIE_KEY_PREFIX . $revisionId;
+
+		setcookie( $wgCookiePrefix . $postEditKey, '1', time() + self::POST_EDIT_COOKIE_DURATION, '/', $wgCookieDomain );
+	}
+
+	/**
 	 * Attempt submission
 	 * @throws UserBlockedError|ReadOnlyError|ThrottledError|PermissionsError
 	 * @return bool false if output is done, true if the rest of the form should be displayed
@@ -1135,6 +1189,7 @@ class EditPage {
 		// FIXME: once the interface for internalAttemptSave() is made nicer, this should use the message in $status
 		if ( $status->value == self::AS_SUCCESS_UPDATE || $status->value == self::AS_SUCCESS_NEW_ARTICLE ) {
 			$this->didSave = true;
+			$this->setPostEditCookie();
 		}
 
 		switch ( $status->value ) {
@@ -1152,7 +1207,7 @@ class EditPage {
 				return false;
 
 			case self::AS_PARSE_ERROR:
-				$wgOut->addWikiText( '<div class="error">' . $status->getWikiText() . '</div>');
+				$wgOut->addWikiText( '<div class="error">' . $status->getWikiText() . '</div>' );
 				return true;
 
 			case self::AS_SUCCESS_NEW_ARTICLE:
@@ -1219,6 +1274,54 @@ class EditPage {
 	}
 
 	/**
+	 * Run hooks that can filter edits just before they get saved.
+	 *
+	 * @param Content $content the Content to filter.
+	 * @param Status  $status for reporting the outcome to the caller
+	 * @param User    $user the user performing the edit
+	 *
+	 * @return bool
+	 */
+	protected function runPostMergeFilters( Content $content, Status $status, User $user ) {
+		// Run old style post-section-merge edit filter
+		if ( !ContentHandler::runLegacyHooks( 'EditFilterMerged',
+			array( $this, $content, &$this->hookError, $this->summary ) ) ) {
+
+			# Error messages etc. could be handled within the hook...
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR;
+			return false;
+		} elseif ( $this->hookError != '' ) {
+			# ...or the hook could be expecting us to produce an error
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			return false;
+		}
+
+		// Run new style post-section-merge edit filter
+		if ( !wfRunHooks( 'EditFilterMergedContent',
+			array( $this->mArticle->getContext(), $content, $status, $this->summary,
+				$user, $this->minoredit ) ) ) {
+
+			# Error messages etc. could be handled within the hook...
+			// XXX: $status->value may already be something informative...
+			$this->hookError = $status->getWikiText();
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR;
+			return false;
+		} elseif ( !$status->isOK() ) {
+			# ...or the hook could be expecting us to produce an error
+			// FIXME this sucks, we should just use the Status object throughout
+			$this->hookError = $status->getWikiText();
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Attempt submission (no UI)
 	 *
 	 * @param $result
@@ -1235,7 +1338,7 @@ class EditPage {
 
 		$status = Status::newGood();
 
-		wfProfileIn( __METHOD__  );
+		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__ . '-checks' );
 
 		if ( !wfRunHooks( 'EditPage::attemptSave', array( $this ) ) ) {
@@ -1243,16 +1346,17 @@ class EditPage {
 			$status->fatal( 'hookaborted' );
 			$status->value = self::AS_HOOK_ERROR;
 			wfProfileOut( __METHOD__ . '-checks' );
-			wfProfileOut( __METHOD__  );
+			wfProfileOut( __METHOD__ );
 			return $status;
 		}
 
 		try {
 			# Construct Content object
 			$textbox_content = $this->toEditContent( $this->textbox1 );
-		} catch (MWContentSerializationException $ex) {
+		} catch ( MWContentSerializationException $ex ) {
 			$status->fatal( 'content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
 			$status->value = self::AS_PARSE_ERROR;
+			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__ );
 			return $status;
 		}
@@ -1265,7 +1369,7 @@ class EditPage {
 				$status->setResult( false, $code );
 
 				wfProfileOut( __METHOD__ . '-checks' );
-				wfProfileOut( __METHOD__  );
+				wfProfileOut( __METHOD__ );
 
 				return $status;
 		}
@@ -1386,17 +1490,7 @@ class EditPage {
 				return $status;
 			}
 
-			// Run post-section-merge edit filter
-			if ( !wfRunHooks( 'EditFilterMerged', array( $this, $this->textbox1, &$this->hookError, $this->summary ) ) ) {
-				# Error messages etc. could be handled within the hook...
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR;
-				wfProfileOut( __METHOD__ );
-				return $status;
-			} elseif ( $this->hookError != '' ) {
-				# ...or the hook could be expecting us to produce an error
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			if ( !$this->runPostMergeFilters( $textbox_content, $status, $wgUser ) ) {
 				wfProfileOut( __METHOD__ );
 				return $status;
 			}
@@ -1459,7 +1553,7 @@ class EditPage {
 						$this->isConflict = false;
 						wfDebug( __METHOD__ . ": conflict suppressed; new section\n" );
 					}
-				} elseif ( $this->section == '' && Revision::userWasLastToEdit( DB_MASTER,  $this->mTitle->getArticleID(),
+				} elseif ( $this->section == '' && Revision::userWasLastToEdit( DB_MASTER, $this->mTitle->getArticleID(),
 							$wgUser->getId(), $this->edittime ) ) {
 					# Suppress edit conflict with self, except for section edits where merging is required.
 					wfDebug( __METHOD__ . ": Suppressing edit conflict, same user.\n" );
@@ -1510,61 +1604,45 @@ class EditPage {
 				return $status;
 			}
 
-			// Run post-section-merge edit filter
-			$hook_args = array( $this, $content, &$this->hookError, $this->summary );
-
-			if ( !ContentHandler::runLegacyHooks( 'EditFilterMerged', $hook_args )
-				|| !wfRunHooks( 'EditFilterMergedContent', $hook_args ) ) {
-				# Error messages etc. could be handled within the hook...
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR;
-				wfProfileOut( __METHOD__ );
-				return $status;
-			} elseif ( $this->hookError != '' ) {
-				# ...or the hook could be expecting us to produce an error
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			if ( !$this->runPostMergeFilters( $content, $status, $wgUser ) ) {
 				wfProfileOut( __METHOD__ );
 				return $status;
 			}
 
-			# Handle the user preference to force summaries here, but not for null edits
-			if ( $this->section != 'new' && !$this->allowBlankSummary
-				&& !$content->equals( $this->getOriginalContent() )
-				&& !$content->isRedirect() ) # check if it's not a redirect
-			{
-				if ( md5( $this->summary ) == $this->autoSumm ) {
-					$this->missingSummary = true;
-					$status->fatal( 'missingsummary' );
-					$status->value = self::AS_SUMMARY_NEEDED;
-					wfProfileOut( __METHOD__ );
-					return $status;
-				}
-			}
-
-			# And a similar thing for new sections
-			if ( $this->section == 'new' && !$this->allowBlankSummary ) {
-				if ( trim( $this->summary ) == '' ) {
+			if ( $this->section == 'new' ) {
+				// Handle the user preference to force summaries here
+				if ( !$this->allowBlankSummary && trim( $this->summary ) == '' ) {
 					$this->missingSummary = true;
 					$status->fatal( 'missingsummary' ); // or 'missingcommentheader' if $section == 'new'. Blegh
 					$status->value = self::AS_SUMMARY_NEEDED;
 					wfProfileOut( __METHOD__ );
 					return $status;
 				}
+
+				// Do not allow the user to post an empty comment
+				if ( $this->textbox1 == '' ) {
+					$this->missingComment = true;
+					$status->fatal( 'missingcommenttext' );
+					$status->value = self::AS_TEXTBOX_EMPTY;
+					wfProfileOut( __METHOD__ );
+					return $status;
+				}
+			} elseif ( !$this->allowBlankSummary
+				&& !$content->equals( $this->getOriginalContent() )
+				&& !$content->isRedirect()
+				&& md5( $this->summary ) == $this->autoSumm
+			) {
+				$this->missingSummary = true;
+				$status->fatal( 'missingsummary' );
+				$status->value = self::AS_SUMMARY_NEEDED;
+				wfProfileOut( __METHOD__ );
+				return $status;
 			}
 
 			# All's well
 			wfProfileIn( __METHOD__ . '-sectionanchor' );
 			$sectionanchor = '';
 			if ( $this->section == 'new' ) {
-				if ( $this->textbox1 == '' ) {
-					$this->missingComment = true;
-					$status->fatal( 'missingcommenttext' );
-					$status->value = self::AS_TEXTBOX_EMPTY;
-					wfProfileOut( __METHOD__ . '-sectionanchor' );
-					wfProfileOut( __METHOD__ );
-					return $status;
-				}
 				if ( $this->sectiontitle !== '' ) {
 					$sectionanchor = $wgParser->guessLegacySectionNameFromWikiText( $this->sectiontitle );
 					// If no edit summary was specified, create one automatically from the section
@@ -1624,12 +1702,7 @@ class EditPage {
 			$doEditStatus = $this->mArticle->doEditContent( $content, $this->summary, $flags,
 															false, null, $this->contentFormat );
 
-		if ( $doEditStatus->isOK() ) {
-				$result['redirect'] = $content->isRedirect();
-			$this->updateWatchlist();
-			wfProfileOut( __METHOD__ );
-			return $status;
-		} else {
+		if ( !$doEditStatus->isOK() ) {
 			// Failure from doEdit()
 			// Show the edit conflict page for certain recognized errors from doEdit(),
 			// but don't show it for errors from extension hooks
@@ -1644,6 +1717,11 @@ class EditPage {
 			wfProfileOut( __METHOD__ );
 			return $doEditStatus;
 		}
+
+		$result['redirect'] = $content->isRedirect();
+		$this->updateWatchlist();
+		wfProfileOut( __METHOD__ );
+		return $status;
 	}
 
 	/**
@@ -1672,15 +1750,14 @@ class EditPage {
 	}
 
 	/**
-	 * @private
-	 * @todo document
+	 * Attempts to merge text content with base and current revisions
 	 *
 	 * @param $editText string
 	 *
 	 * @return bool
 	 * @deprecated since 1.21, use mergeChangesIntoContent() instead
 	 */
-	function mergeChangesInto( &$editText ){
+	function mergeChangesInto( &$editText ) {
 		ContentHandler::deprecated( __METHOD__, "1.21" );
 
 		$editContent = $this->toEditContent( $editText );
@@ -1695,14 +1772,17 @@ class EditPage {
 	}
 
 	/**
-	 * @private
-	 * @todo document
+	 * Attempts to do 3-way merge of edit content with a base revision
+	 * and current content, in case of edit conflict, in whichever way appropriate
+	 * for the content type.
+	 *
+	 * @since 1.21
 	 *
 	 * @param $editContent
+	 *
 	 * @return bool
-	 * @since since 1.WD
 	 */
-	private function mergeChangesIntoContent( &$editContent ){
+	private function mergeChangesIntoContent( &$editContent ) {
 		wfProfileIn( __METHOD__ );
 
 		$db = wfGetDB( DB_MASTER );
@@ -1733,10 +1813,10 @@ class EditPage {
 			$editContent = $result;
 			wfProfileOut( __METHOD__ );
 			return true;
-		} else {
-			wfProfileOut( __METHOD__ );
-			return false;
 		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
 	}
 
 	/**
@@ -2159,7 +2239,7 @@ class EditPage {
 			} catch ( MWContentSerializationException $ex ) {
 				// this can't really happen, but be nice if it does.
 				$msg = wfMessage( 'content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
-				$wgOut->addWikiText( '<div class="error">' . $msg->text() . '</div>');
+				$wgOut->addWikiText( '<div class="error">' . $msg->text() . '</div>' );
 			}
 		}
 
@@ -2415,6 +2495,8 @@ class EditPage {
 	 * @return String
 	 */
 	protected function getSummaryPreview( $isSubjectPreview, $summary = "" ) {
+		// avoid spaces in preview, gets always trimmed on save
+		$summary = trim( $summary );
 		if ( !$summary || ( !$this->preview && !$this->diff ) ) {
 			return "";
 		}
@@ -2578,7 +2660,7 @@ HTML
 				$this->showDiff();
 			} catch ( MWContentSerializationException $ex ) {
 				$msg = wfMessage( 'content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
-				$wgOut->addWikiText( '<div class="error">' . $msg->text() . '</div>');
+				$wgOut->addWikiText( '<div class="error">' . $msg->text() . '</div>' );
 			}
 		}
 	}
@@ -2850,21 +2932,24 @@ HTML
 		$dbr = wfGetDB( DB_SLAVE );
 		$data = $dbr->selectRow(
 			array( 'logging', 'user' ),
-			array( 'log_type',
-				   'log_action',
-				   'log_timestamp',
-				   'log_user',
-				   'log_namespace',
-				   'log_title',
-				   'log_comment',
-				   'log_params',
-				   'log_deleted',
-				   'user_name' ),
-			array( 'log_namespace' => $this->mTitle->getNamespace(),
-				   'log_title' => $this->mTitle->getDBkey(),
-				   'log_type' => 'delete',
-				   'log_action' => 'delete',
-				   'user_id=log_user' ),
+			array(
+				'log_type',
+				'log_action',
+				'log_timestamp',
+				'log_user',
+				'log_namespace',
+				'log_title',
+				'log_comment',
+				'log_params',
+				'log_deleted',
+				'user_name'
+			), array(
+				'log_namespace' => $this->mTitle->getNamespace(),
+				'log_title' => $this->mTitle->getDBkey(),
+				'log_type' => 'delete',
+				'log_action' => 'delete',
+				'user_id=log_user'
+			),
 			__METHOD__,
 			array( 'LIMIT' => 1, 'ORDER BY' => 'log_timestamp DESC' )
 		);
@@ -2919,13 +3004,13 @@ HTML
 
 			if ( $this->mTriedSave && !$this->mTokenOk ) {
 				if ( $this->mTokenOkExceptSuffix ) {
-					$note = wfMessage( 'token_suffix_mismatch' )->plain() ;
+					$note = wfMessage( 'token_suffix_mismatch' )->plain();
 
 				} else {
-					$note = wfMessage( 'session_fail_preview' )->plain() ;
+					$note = wfMessage( 'session_fail_preview' )->plain();
 				}
 			} elseif ( $this->incompleteForm ) {
-				$note = wfMessage( 'edit_form_incomplete' )->plain() ;
+				$note = wfMessage( 'edit_form_incomplete' )->plain();
 			} else {
 				$note = wfMessage( 'previewnote' )->plain() .
 					' [[#' . self::EDITFORM_ID . '|' . $wgLang->getArrow() . ' ' . wfMessage( 'continue-editing' )->text() . ']]';
@@ -2934,7 +3019,7 @@ HTML
 			$parserOptions = $this->mArticle->makeParserOptions( $this->mArticle->getContext() );
 			$parserOptions->setEditSection( false );
 			$parserOptions->setIsPreview( true );
-			$parserOptions->setIsSectionPreview( !is_null($this->section) && $this->section !== '' );
+			$parserOptions->setIsSectionPreview( !is_null( $this->section ) && $this->section !== '' );
 
 			# don't parse non-wikitext pages, show message about preview
 			if ( $this->mTitle->isCssJsSubpage() || $this->mTitle->isCssOrJsPage() ) {
@@ -2957,7 +3042,7 @@ HTML
 				# Used messages to make sure grep find them:
 				# Messages: usercsspreview, userjspreview, sitecsspreview, sitejspreview
 				if( $level && $format ) {
-					$note = "<div id='mw-{$level}{$format}preview'>" . wfMessage( "{$level}{$format}preview" )->text()  . "</div>";
+					$note = "<div id='mw-{$level}{$format}preview'>" . wfMessage( "{$level}{$format}preview" )->text() . "</div>";
 				}
 			}
 
@@ -2993,7 +3078,7 @@ HTML
 				}
 			}
 		} catch ( MWContentSerializationException $ex ) {
-			$m = wfMessage('content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
+			$m = wfMessage( 'content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
 			$note .= "\n\n" . $m->parse();
 			$previewHTML = '';
 		}
@@ -3416,7 +3501,7 @@ HTML
 		global $wgOut, $wgLang;
 		$this->textbox2 = $this->textbox1;
 
-		if( is_array( $match ) ){
+		if( is_array( $match ) ) {
 			$match = $wgLang->listToText( $match );
 		}
 		$wgOut->prepareErrorPage( wfMessage( 'spamprotectiontitle' ) );

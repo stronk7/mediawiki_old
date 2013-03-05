@@ -771,7 +771,6 @@ Dènye ekriti nan jounal la parèt pi bas kòm referans:",
 'template-protected' => '(pwoteje)',
 'template-semiprotected' => '(semi-pwoteje)',
 'hiddencategories' => 'Paj sa ap fè pati {{PLURAL:$1|Kategori kache|Kategori yo ki kache}} :',
-'nocreatetitle' => 'Kreyasyon paj yo limite',
 'nocreatetext' => '{{SITENAME}} anpeche kreyasyon nouvo paj sou li. Ou mèt ritounen nan navigatè ou epi modifye yon paj ki deja egziste oubyen [[Special:UserLogin|konekte ou oubyen kreye yon kont]].',
 'nocreate-loggedin' => 'Ou pa gen pèmisyon pou ou kapab kreye nouvo paj nan wiki sa.',
 'sectioneditnotsupported-title' => 'Modifikasyon seksyon pa kapab fèt',
@@ -933,6 +932,10 @@ Si ou mete li, n ap itilize li pou nou ka nonmen ou pou kontribisyon ou yo.',
 
 'grouppage-sysop' => '{{ns:project}}:Administratè',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Jounal pou kreyasyon kont itilizatè yo',
+'newuserlogpagetext' => 'Men jounal, istorik kreyasyon kont itilizatè yo.',
+
 # User rights log
 'rightslog' => 'Jounal modifikasyon estati itilizatè yo',
 
@@ -1093,10 +1096,6 @@ Gade tou [[Special:WantedCategories|kategori moun mande]].',
 
 # Special:LinkSearch
 'linksearch' => 'Lyen andeyò',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Jounal pou kreyasyon kont itilizatè yo',
-'newuserlogpagetext' => 'Men jounal, istorik kreyasyon kont itilizatè yo.',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(lis manm yo)',
@@ -1385,6 +1384,5 @@ Nenpòt lòt lyen nan menm liy nan konsidere kòm yon eksèpsyon, i.e. paj kote 
 
 # New logging system
 'revdelete-restricted' => 'aplike restriksyon sa yo pou administratè yo',
-'newuserlog-byemail' => 'mopas an voye pa imèl',
 
 );

@@ -133,7 +133,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 			$this->ids = explode( ',', $ids );
 		} else {
 			# Array input
-			$this->ids = array_keys( $request->getArray('ids',array()) );
+			$this->ids = array_keys( $request->getArray( 'ids', array() ) );
 		}
 		// $this->ids = array_map( 'intval', $this->ids );
 		$this->ids = array_unique( array_filter( $this->ids ) );
@@ -147,6 +147,19 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 		} else {
 			$this->typeName = $request->getVal( 'type' );
 			$this->targetObj = Title::newFromText( $request->getText( 'target' ) );
+			if ( $this->targetObj && $this->targetObj->isSpecial( 'Log' ) ) {
+				$result = wfGetDB( DB_SLAVE )->select( 'logging',
+					'log_type',
+					array( 'log_id' => $this->ids ),
+					__METHOD__,
+					array( 'DISTINCT' )
+				);
+
+				if ( $result->numRows() == 1 ) {
+					// If there's only one type, the target can be set to include it.
+					$this->targetObj = SpecialPage::getTitleFor( 'Log', $result->current()->log_type );
+				}
+			}
 		}
 
 		# For reviewing deleted files...
@@ -178,7 +191,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 
 		$this->otherReason = $request->getVal( 'wpReason' );
 		# We need a target page!
-		if( is_null($this->targetObj) ) {
+		if( is_null( $this->targetObj ) ) {
 			$output->addWikiMsg( 'undelete-header' );
 			return;
 		}
@@ -191,7 +204,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 			array( 'revdelete-hide-comment', 'wpHideComment', Revision::DELETED_COMMENT ),
 			array( 'revdelete-hide-user', 'wpHideUser', Revision::DELETED_USER )
 		);
-		if( $user->isAllowed('suppressrevision') ) {
+		if( $user->isAllowed( 'suppressrevision' ) ) {
 			$this->checks[] = array( 'revdelete-hide-restricted',
 				'wpHideRestricted', Revision::DELETED_RESTRICTED );
 		}
@@ -212,7 +225,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 		# Show relevant lines from the suppression log
 		if( $user->isAllowed( 'suppressionlog' ) ) {
 			$suppressLogPage = new LogPage( 'suppress' );
-			$output->addHTML( "<h2>" . $suppressLogPage->getName()->escaped()  . "</h2>\n" );
+			$output->addHTML( "<h2>" . $suppressLogPage->getName()->escaped() . "</h2>\n" );
 			LogEventsList::showLogExtract( $output, 'suppress',
 				$this->targetObj, '', array( 'lim' => 25, 'conds' => $qc ) );
 		}
@@ -240,7 +253,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 					array( 'action' => 'history' )
 				);
 				# Link to deleted edits
-				if( $this->getUser()->isAllowed('undelete') ) {
+				if( $this->getUser()->isAllowed( 'undelete' ) ) {
 					$undelete = SpecialPage::getTitleFor( 'Undelete' );
 					$links[] = Linker::linkKnown(
 						$undelete,
@@ -343,7 +356,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 		$UserAllowed = true;
 
 		if ( $this->typeName == 'logging' ) {
-			$this->getOutput()->addWikiMsg( 'logdelete-selected', $this->getLanguage()->formatNum( count($this->ids) ) );
+			$this->getOutput()->addWikiMsg( 'logdelete-selected', $this->getLanguage()->formatNum( count( $this->ids ) ) );
 		} else {
 			$this->getOutput()->addWikiMsg( 'revdelete-selected',
 				$this->targetObj->getPrefixedText(), count( $this->ids ) );
@@ -509,7 +522,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 	 */
 	protected function submit() {
 		# Check edit token on submission
-		$token = $this->getRequest()->getVal('wpEditToken');
+		$token = $this->getRequest()->getVal( 'wpEditToken' );
 		if( $this->submitClicked && !$this->getUser()->matchEditToken( $token ) ) {
 			$this->getOutput()->addWikiMsg( 'sessionfailure' );
 			return false;
@@ -524,7 +537,7 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 			$comment = $this->otherReason;
 		}
 		# Can the user set this field?
-		if( $bitParams[Revision::DELETED_RESTRICTED]==1 && !$this->getUser()->isAllowed('suppressrevision') ) {
+		if( $bitParams[Revision::DELETED_RESTRICTED] == 1 && !$this->getUser()->isAllowed( 'suppressrevision' ) ) {
 			throw new PermissionsError( 'suppressrevision' );
 		}
 		# If the save went through, go to success message...
@@ -566,14 +579,14 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 	protected function extractBitParams() {
 		$bitfield = array();
 		foreach( $this->checks as $item ) {
-			list( /* message */ , $name, $field ) = $item;
+			list( /* message */, $name, $field ) = $item;
 			$val = $this->getRequest()->getInt( $name, 0 /* unchecked */ );
 			if( $val < -1 || $val > 1) {
 				$val = -1; // -1 for existing value
 			}
 			$bitfield[$field] = $val;
 		}
-		if( !isset($bitfield[Revision::DELETED_RESTRICTED]) ) {
+		if( !isset( $bitfield[Revision::DELETED_RESTRICTED] ) ) {
 			$bitfield[Revision::DELETED_RESTRICTED] = 0;
 		}
 		return $bitfield;
@@ -611,4 +624,3 @@ class SpecialRevisionDelete extends UnlistedSpecialPage {
 		);
 	}
 }
-

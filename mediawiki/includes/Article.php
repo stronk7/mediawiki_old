@@ -33,7 +33,7 @@
  *
  * @internal documentation reviewed 15 Mar 2010
  */
-class Article extends Page {
+class Article implements Page {
 	/**@{{
 	 * @private
 	 */
@@ -280,15 +280,13 @@ class Article extends Page {
 				$message = $this->getContext()->getUser()->isLoggedIn() ? 'noarticletext' : 'noarticletextanon';
 				$content = new MessageContent( $message, null, 'parsemag' );
 			}
-			wfProfileOut( __METHOD__ );
-
-			return $content;
 		} else {
 			$this->fetchContentObject();
-			wfProfileOut( __METHOD__ );
-
-			return $this->mContentObject;
+			$content = $this->mContentObject;
 		}
+
+		wfProfileOut( __METHOD__ );
+		return $content;
 	}
 
 	/**
@@ -403,7 +401,7 @@ class Article extends Page {
 	 *
 	 * @note code that wants to retrieve page content from the database should use WikiPage::getContent().
 	 *
-	 * @return Content|null
+	 * @return Content|null|boolean false
 	 *
 	 * @since 1.21
 	 */
@@ -422,7 +420,7 @@ class Article extends Page {
 		# Pre-fill content with error message so that if something
 		# fails we'll have something telling us what we intended.
 		//XXX: this isn't page content but a UI message. horrible.
-		$this->mContentObject = new MessageContent( 'missing-revision', array( $oldid ), array() ) ;
+		$this->mContentObject = new MessageContent( 'missing-revision', array( $oldid ), array() );
 
 		if ( $oldid ) {
 			# $this->mRevision might already be fetched by getOldIDFromRequest()
@@ -769,6 +767,8 @@ class Article extends Page {
 		$this->showViewFooter();
 		$this->mPage->doViewUpdates( $user );
 
+		$outputPage->addModules( 'mediawiki.action.view.postEdit' );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -864,15 +864,21 @@ class Article extends Page {
 
 		$ns = $this->getTitle()->getNamespace();
 
-		if ( $ns == NS_USER || $ns == NS_USER_TALK ) {
-			# Don't index user and user talk pages for blocked users (bug 11443)
-			if ( !$this->getTitle()->isSubpage() ) {
-				if ( Block::newFromTarget( null, $this->getTitle()->getText() ) instanceof Block ) {
-					return array(
-						'index'  => 'noindex',
-						'follow' => 'nofollow'
-					);
-				}
+		# Don't index user and user talk pages for blocked users (bug 11443)
+		if ( ( $ns == NS_USER || $ns == NS_USER_TALK ) && !$this->getTitle()->isSubpage() ) {
+			$specificTarget = null;
+			$vagueTarget = null;
+			$titleText = $this->getTitle()->getText();
+			if ( IP::isValid( $titleText ) ) {
+				$vagueTarget = $titleText;
+			} else {
+				$specificTarget = $titleText;
+			}
+			if ( Block::newFromTarget( $specificTarget, $vagueTarget ) instanceof Block ) {
+				return array(
+					'index'  => 'noindex',
+					'follow' => 'nofollow'
+				);
 			}
 		}
 
@@ -988,9 +994,7 @@ class Article extends Page {
 				}
 
 				// Add a <link rel="canonical"> tag
-				$outputPage->addLink( array( 'rel' => 'canonical',
-					'href' => $this->getTitle()->getLocalURL() )
-				);
+				$outputPage->setCanonicalUrl( $this->getTitle()->getLocalURL() );
 
 				// Tell the output object that the user arrived at this article through a redirect
 				$outputPage->setRedirectedFrom( $this->mRedirectedFrom );
@@ -1087,6 +1091,7 @@ class Article extends Page {
 	public function showMissingArticle() {
 		global $wgSend404Code;
 		$outputPage = $this->getContext()->getOutput();
+		$validUserPage = false;
 
 		# Show info in user (talk) namespace. Does the user exist? Is he blocked?
 		if ( $this->getTitle()->getNamespace() == NS_USER || $this->getTitle()->getNamespace() == NS_USER_TALK ) {
@@ -1113,6 +1118,9 @@ class Article extends Page {
 						)
 					)
 				);
+				$validUserPage = true;
+			} else {
+				$validUserPage = true;
 			}
 		}
 
@@ -1120,13 +1128,13 @@ class Article extends Page {
 
 		# Show delete and move logs
 		LogEventsList::showLogExtract( $outputPage, array( 'delete', 'move' ), $this->getTitle(), '',
-			array(  'lim' => 10,
+			array( 'lim' => 10,
 				'conds' => array( "log_action != 'revision'" ),
 				'showIfEmpty' => false,
 				'msgKey' => array( 'moveddeleted-notice' ) )
 		);
 
-		if ( !$this->mPage->hasViewableContent() && $wgSend404Code ) {
+		if ( !$this->mPage->hasViewableContent() && $wgSend404Code && !$validUserPage ) {
 			// If there's no backing content, send a 404 Not Found
 			// for better machine handling of broken links.
 			$this->getContext()->getRequest()->response()->header( "HTTP/1.1 404 Not Found" );
@@ -1266,7 +1274,7 @@ class Article extends Page {
 					'oldid' => $oldid
 				) + $extraParams
 			);
-		$prev = $this->getTitle()->getPreviousRevisionID( $oldid ) ;
+		$prev = $this->getTitle()->getPreviousRevisionID( $oldid );
 		$prevlink = $prev
 			? Linker::linkKnown(
 				$this->getTitle(),
@@ -1481,7 +1489,7 @@ class Article extends Page {
 				$reason = $this->generateReason( $hasHistory );
 			} catch ( MWException $e ) {
 				# if a page is horribly broken, we still want to be able to delete it. so be lenient about errors here.
-				wfDebug("Error while building auto delete summary: $e");
+				wfDebug( "Error while building auto delete summary: $e" );
 				$reason = '';
 			}
 		}

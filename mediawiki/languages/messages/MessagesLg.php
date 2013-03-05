@@ -728,7 +728,6 @@ Ekyasemba okuyingizibwa mu lukalala olw'ebifuddeyo lwa lwo bibino okwongera okuk
 'template-protected' => '(luno lusibidwa)',
 'template-semiprotected' => '(ebimu ku lupapula luno bisibidwa)',
 'hiddencategories' => 'Olupapula luno lusangibwa mu {{PLURAL:$1|ttuluba erikise limu|matuluba amakise $1}}:',
-'nocreatetitle' => 'Okukolawo empapula kuliko obukwakkulizo',
 'nocreatetext' => "Ku {{SITENAME}} tosobola okukolawo empapula mpya nga tokozesa buyinza obw'obwamemba. Kati oyinza kugenda n'okyusamu olupapula olulala olwakolebwa dda, oba oyinza [[Special:UserLogin|okufuna obuyinza obw'obwamemba]].",
 'nocreate-loggedin' => 'Tolina buyinza bwa kukolawo empapula mpya.',
 'sectioneditnotsupported-title' => 'Okukyusa mu bitundu tekukkirizibwa',
@@ -900,6 +899,9 @@ W'owandikira by'onoonya bw'osoosawo akagambo ''all:'', okunoonya kubuna Wikipedi
 
 'grouppage-sysop' => '{{ns:project}}:Abateesiteesi',
 
+# Special:Log/newusers
+'newuserlogpage' => "Olukalala olw'ebifudeyo mu kukolawo akawunti empya",
+
 # User rights log
 'rightslog' => "Olukalala lw'ebifudeyo ku by'endukusa za bamemba",
 
@@ -1016,9 +1018,6 @@ W'owandikira by'onoonya bw'osoosawo akagambo ''all:'', okunoonya kubuna Wikipedi
 'linksearch' => 'Ennyunzi eziggukira wabweru wa Wikipediya',
 'linksearch-ns' => 'Kuŋaanyizo:',
 'linksearch-ok' => 'Noonya',
-
-# Special:Log/newusers
-'newuserlogpage' => "Olukalala olw'ebifudeyo mu kukolawo akawunti empya",
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(lukalala lwa bamemba)',

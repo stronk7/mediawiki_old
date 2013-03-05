@@ -32,8 +32,8 @@ $namespaceNames = array(
 	NS_USER             => 'Удзельнік',
 	NS_USER_TALK        => 'Размовы_з_удзельнікам',
 	NS_PROJECT_TALK     => 'Размовы_пра_{{GRAMMAR:вінавальны|$1}}',
-	NS_FILE             => 'Выява',
-	NS_FILE_TALK        => 'Размовы_пра_выяву',
+	NS_FILE             => 'Файл',
+	NS_FILE_TALK        => 'Размовы_пра_файл',
 	NS_MEDIAWIKI        => 'MediaWiki',
 	NS_MEDIAWIKI_TALK   => 'Размовы_пра_MediaWiki',
 	NS_TEMPLATE         => 'Шаблон',
@@ -46,6 +46,8 @@ $namespaceNames = array(
 
 $namespaceAliases = array(
 	'$1_размовы' => NS_PROJECT_TALK,
+	'Выява' => NS_FILE,
+	'Размовы_пра_выяву' => NS_FILE_TALK,
 );
 
 $magicWords = array(
@@ -329,7 +331,7 @@ $1',
 'edithelp' => 'Даведка рэдактарскага акна',
 'edithelppage' => 'Help:Праўка',
 'helppage' => 'Help:Змест',
-'mainpage' => 'Першая старонка',
+'mainpage' => 'Галоўная старонка',
 'mainpage-description' => 'Першая старонка',
 'policy-url' => 'Project:Арганізацыйная палітыка',
 'portal' => 'Супольнасць',
@@ -481,6 +483,9 @@ $2',
 'logouttext' => "'''Вы выйшлі з сістэмы.'''
 
 Можна працягваць працу на {{SITENAME}} ананімна, або можна <span class='plainlinks'>[$1 ўвайсці ў сістэму ізноў]</span>, пад тым самым або пад іншым удзельніцкім імем. Заўважце, што некаторыя старонкі могуць паказвацца так, быццам вы яшчэ не выйшлі; у такім разе трэба ачысціць кэш вашага браўзера.",
+'welcomeuser' => 'Вітаем, $1!',
+'welcomecreation-msg' => 'Ваш рахунак быў створаны.
+Не забудзьцеся дапасаваць [[Special:Preferences|персанальныя настаўленні]] для {{SITENAME}}.',
 'yourname' => 'Імя ўдзельніка',
 'yourpassword' => 'Пароль',
 'yourpasswordagain' => 'Паўтарыце пароль',
@@ -787,7 +792,6 @@ $2
 'template-protected' => '(ахоўваецца)',
 'template-semiprotected' => '(часткова ахоўвацца)',
 'hiddencategories' => 'Старонка належыць да {{PLURAL:$1|1 схаванай катэгорыі|$1 схаваных катэгорый}}:',
-'nocreatetitle' => 'Стварэнне старонак абмежавана',
 'nocreatetext' => 'На пляцоўцы {{SITENAME}} магчымасці стварэння новых старонак абмежаваныя.
 Вы можаце папрацаваць з існуючай старонкай, або [[Special:UserLogin|увайсці ў сістэму, або завесці сабе рахунак]].',
 'nocreate-loggedin' => 'Вам не дазволена ствараць новых старонак.',
@@ -1305,12 +1309,13 @@ $1",
 'right-sendemail' => 'Адправіць па электроннай пошце іншым карыстальнікам',
 'right-passwordreset' => 'прагляд электронных лістоў са змяненнем пароля',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Журнал рэгістрацыі ўдзельнікаў',
+'newuserlogpagetext' => 'Гэта журнал рэгістрацыі новых удзельнікаў.',
+
 # User rights log
 'rightslog' => 'Журнал правоў удзельнікаў',
 'rightslogtext' => 'Журнал змяненняў у дазволах, прыпісаных удзельнікам.',
-'rightslogentry' => 'зменена групавая прыналежнасць $1 з $2 на $3',
-'rightslogentry-autopromote' => 'быў аўтаматычна перакладзены з $2 да $3',
-'rightsnone' => '(няма)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'чытаць гэтую старонку',
@@ -1905,10 +1910,6 @@ $1',
 'activeusers-hidesysops' => 'Без адміністратараў',
 'activeusers-noresult' => 'Няма такіх удзельнікаў.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Журнал рэгістрацыі ўдзельнікаў',
-'newuserlogpagetext' => 'Гэта журнал рэгістрацыі новых удзельнікаў.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Дазволы для груп удзельнікаў',
 'listgrouprights-summary' => 'Гэты пералік вызначаных у гэтай вікі груп удзельнікаў, разам з прыпісанымі ім дазволамі.
@@ -2036,6 +2037,8 @@ $UNWATCHURL
 
 Зваротная сувязь і дапамога
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'створана',
+'changed' => 'зменена',
 
 # Delete
 'deletepage' => 'Сцерці старонку',
@@ -3524,7 +3527,7 @@ MediaWiki распаўсюджваецца, спадзеючыся на прыд
 'logentry-newusers-create' => '$1 стварыў уліковы запіс удзельніка',
 'logentry-newusers-create2' => '$1 стварыў уліковы запіс удзельніка $3',
 'logentry-newusers-autocreate' => 'Аўтаматычна створаны ўліковы запіс $1',
-'newuserlog-byemail' => 'пароль адасланы эл.поштай',
+'rightsnone' => '(няма)',
 
 # Feedback
 'feedback-bugornote' => 'Калі вы гатовыя падрабязна апісаць тэхнічную праблему, калі ласка, [$1 паведаміце пра памылку].

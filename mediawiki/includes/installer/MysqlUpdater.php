@@ -203,10 +203,8 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField', 'revision',      'rev_sha1',         'patch-rev_sha1.sql' ),
 			array( 'addField', 'archive',       'ar_sha1',          'patch-ar_sha1.sql' ),
 			array( 'addIndex', 'page', 'page_redirect_namespace_len', 'patch-page_redirect_namespace_len.sql' ),
-			array( 'modifyField', 'user_groups', 'ug_group', 'patch-ug_group-length-increase.sql' ),
 			array( 'addField',	'uploadstash',	'us_chunk_inx',		'patch-uploadstash_chunk.sql' ),
 			array( 'addfield', 'job',           'job_timestamp',    'patch-jobs-add-timestamp.sql' ),
-			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase.sql' ),
 
 			// 1.20
 			array( 'addIndex', 'revision', 'page_user_timestamp', 'patch-revision-user-page-index.sql' ),
@@ -228,6 +226,9 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField', 'job',           'job_attempts',       'patch-job_attempts.sql' ),
 			array( 'doEnableProfiling' ),
 			array( 'addField', 'uploadstash',      'us_props',      'patch-uploadstash-us_props.sql' ),
+			array( 'modifyField', 'user_groups', 'ug_group', 'patch-ug_group-length-increase-255.sql' ),
+			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase-255.sql' ),
+			array( 'addIndex', 'page_props', 'pp_propname_page',  'patch-page_props-propname-page-index.sql' ),
 		);
 	}
 
@@ -240,6 +241,10 @@ class MysqlUpdater extends DatabaseUpdater {
 	 * @param $patchFile String: path to the patch to correct the field
 	 */
 	protected function checkBin( $table, $field, $patchFile ) {
+		if ( !$this->doTable( $table ) ) {
+			return true;
+		}
+
 		$tableName = $this->db->tableName( $table );
 		$res = $this->db->query( "SELECT $field FROM $tableName LIMIT 0", __METHOD__ );
 		$flags = explode( ' ', mysql_field_flags( $res->result, 0 ) );
@@ -260,6 +265,10 @@ class MysqlUpdater extends DatabaseUpdater {
 	 * @return Boolean
 	 */
 	protected function indexHasField( $table, $index, $field ) {
+		if ( !$this->doTable( $table ) ) {
+			return true;
+		}
+
 		$info = $this->db->indexInfo( $table, $index, __METHOD__ );
 		if ( $info ) {
 			foreach ( $info as $row ) {
@@ -278,6 +287,10 @@ class MysqlUpdater extends DatabaseUpdater {
 	 */
 	protected function doInterwikiUpdate() {
 		global $IP;
+
+		if ( !$this->doTable( 'interwiki' ) ) {
+			return true;
+		}
 
 		if ( $this->db->tableExists( "interwiki", __METHOD__ ) ) {
 			$this->output( "...already have interwiki table\n" );
@@ -317,7 +330,7 @@ class MysqlUpdater extends DatabaseUpdater {
 		}
 
 		if( $this->applyPatch( 'patch-fix-il_from.sql', false, "Fixing ancient broken imagelinks table." ) ) {
-			$this->output("NOTE: you will have to run maintenance/refreshLinks.php after this." );
+			$this->output( "NOTE: you will have to run maintenance/refreshLinks.php after this." );
 		}
 	}
 
@@ -567,6 +580,10 @@ class MysqlUpdater extends DatabaseUpdater {
 	}
 
 	protected function doUserUniqueUpdate() {
+		if ( !$this->doTable( 'user' ) ) {
+			return true;
+		}
+
 		$duper = new UserDupes( $this->db, array( $this, 'output' ) );
 		if ( $duper->hasUniqueIndex() ) {
 			$this->output( "...already have unique user_name index.\n" );
@@ -580,6 +597,10 @@ class MysqlUpdater extends DatabaseUpdater {
 	}
 
 	protected function doUserGroupsUpdate() {
+		if ( !$this->doTable( 'user_groups' ) ) {
+			return true;
+		}
+
 		if ( $this->db->tableExists( 'user_groups', __METHOD__ ) ) {
 			$info = $this->db->fieldInfo( 'user_groups', 'ug_group' );
 			if ( $info->type() == 'int' ) {
@@ -779,20 +800,28 @@ class MysqlUpdater extends DatabaseUpdater {
 
 	protected function doEnableProfiling() {
 		global $wgProfileToDatabase;
+
+		if ( !$this->doTable( 'profiling' ) ) {
+			return true;
+		}
+
 		if ( $wgProfileToDatabase === true && ! $this->db->tableExists( 'profiling', __METHOD__ ) ) {
 			$this->applyPatch( 'patch-profiling.sql', false, 'Add profiling table' );
 		}
 	}
 
 	protected function doMaybeProfilingMemoryUpdate() {
+		if ( !$this->doTable( 'profiling' ) ) {
+			return true;
+		}
+
 		if ( !$this->db->tableExists( 'profiling', __METHOD__ ) ) {
 			return true;
 		} elseif ( $this->db->fieldExists( 'profiling', 'pf_memory', __METHOD__ ) ) {
 			$this->output( "...profiling table has pf_memory field.\n" );
 			return true;
-		} else {
-			$this->applyPatch( 'patch-profiling-memory.sql', false, "Adding pf_memory field to table profiling" );
 		}
+		return $this->applyPatch( 'patch-profiling-memory.sql', false, "Adding pf_memory field to table profiling" );
 	}
 
 	protected function doFilearchiveIndicesUpdate() {
@@ -857,6 +886,10 @@ class MysqlUpdater extends DatabaseUpdater {
 	}
 
 	protected function doUserNewTalkTimestampNotNull() {
+		if ( !$this->doTable( 'user_newtalk' ) ) {
+			return true;
+		}
+
 		$info = $this->db->fieldInfo( 'user_newtalk', 'user_last_timestamp' );
 		if ( $info === false ) {
 			return;

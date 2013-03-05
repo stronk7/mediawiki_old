@@ -19,6 +19,12 @@ class BackupDumperPageTest extends DumpTestCase {
 	private $namespace, $talk_namespace;
 
 	function addDBData() {
+		// be sure, titles created here using english namespace names
+		$this->setMwGlobals( array(
+			'wgLanguageCode' => 'en',
+			'wgContLang' => Language::factory( 'en' ),
+		) );
+
 		$this->tablesUsed[] = 'page';
 		$this->tablesUsed[] = 'revision';
 		$this->tablesUsed[] = 'text';
@@ -30,7 +36,7 @@ class BackupDumperPageTest extends DumpTestCase {
 			if ( $this->namespace === $this->talk_namespace ) {
 				//@todo: work around this.
 				throw new MWException( "The default wikitext namespace is the talk namespace. "
-					. " We can't currently deal with that.");
+					. " We can't currently deal with that." );
 			}
 
 			$this->pageTitle1 = Title::newFromText( 'BackupDumperTestP1', $this->namespace );
@@ -79,11 +85,6 @@ class BackupDumperPageTest extends DumpTestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->setMwGlobals( array(
-			'wgLanguageCode' => 'en',
-			'wgContLang' => Language::factory( 'en' ),
-		));
-
 		// Since we will restrict dumping by page ranges (to allow
 		// working tests, even if the db gets prepopulated by a base
 		// class), we have to assert, that the page id are consecutively
@@ -95,10 +96,10 @@ class BackupDumperPageTest extends DumpTestCase {
 
 	}
 
-	function testFullTextPlain () {
+	function testFullTextPlain() {
 		// Preparing the dump
 		$fname = $this->getNewTempFile();
-		$dumper = new BackupDumper( array ( "--output=file:" . $fname ) );
+		$dumper = new BackupDumper( array( "--output=file:" . $fname ) );
 		$dumper->startId = $this->pageId1;
 		$dumper->endId = $this->pageId4 + 1;
 		$dumper->reporting = false;
@@ -146,10 +147,10 @@ class BackupDumperPageTest extends DumpTestCase {
 		$this->assertDumpEnd();
 	}
 
-	function testFullStubPlain () {
+	function testFullStubPlain() {
 		// Preparing the dump
 		$fname = $this->getNewTempFile();
-		$dumper = new BackupDumper( array ( "--output=file:" . $fname ) );
+		$dumper = new BackupDumper( array( "--output=file:" . $fname ) );
 		$dumper->startId = $this->pageId1;
 		$dumper->endId = $this->pageId4 + 1;
 		$dumper->reporting = false;
@@ -191,10 +192,10 @@ class BackupDumperPageTest extends DumpTestCase {
 		$this->assertDumpEnd();
 	}
 
-	function testCurrentStubPlain () {
+	function testCurrentStubPlain() {
 		// Preparing the dump
 		$fname = $this->getNewTempFile();
-		$dumper = new BackupDumper( array ( "--output=file:" . $fname ) );
+		$dumper = new BackupDumper( array( "--output=file:" . $fname ) );
 		$dumper->startId = $this->pageId1;
 		$dumper->endId = $this->pageId4 + 1;
 		$dumper->reporting = false;
@@ -230,10 +231,12 @@ class BackupDumperPageTest extends DumpTestCase {
 		$this->assertDumpEnd();
 	}
 
-	function testCurrentStubGzip () {
+	function testCurrentStubGzip() {
+		$this->checkHasGzip();
+
 		// Preparing the dump
 		$fname = $this->getNewTempFile();
-		$dumper = new BackupDumper( array ( "--output=gzip:" . $fname ) );
+		$dumper = new BackupDumper( array( "--output=gzip:" . $fname ) );
 		$dumper->startId = $this->pageId1;
 		$dumper->endId = $this->pageId4 + 1;
 		$dumper->reporting = false;
@@ -271,8 +274,7 @@ class BackupDumperPageTest extends DumpTestCase {
 	}
 
 
-
-	function testXmlDumpsBackupUseCase () {
+	function testXmlDumpsBackupUseCase() {
 		// xmldumps-backup typically performs a single dump that that writes
 		// out three files
 		// * gzipped stubs of everything (meta-history)
@@ -283,15 +285,17 @@ class BackupDumperPageTest extends DumpTestCase {
 		// We reproduce such a setup with our mini fixture, although we omit
 		// chunks, and all the other gimmicks of xmldumps-backup.
 		//
+		$this->checkHasGzip();
+
 		$fnameMetaHistory = $this->getNewTempFile();
 		$fnameMetaCurrent = $this->getNewTempFile();
 		$fnameArticles = $this->getNewTempFile();
 
-		$dumper = new BackupDumper( array ( "--output=gzip:" . $fnameMetaHistory,
-				"--output=gzip:" . $fnameMetaCurrent, "--filter=latest",
-				"--output=gzip:" . $fnameArticles, "--filter=latest",
-				"--filter=notalk", "--filter=namespace:!NS_USER",
-				"--reporting=1000" ) );
+		$dumper = new BackupDumper( array( "--output=gzip:" . $fnameMetaHistory,
+			"--output=gzip:" . $fnameMetaCurrent, "--filter=latest",
+			"--output=gzip:" . $fnameArticles, "--filter=latest",
+			"--filter=notalk", "--filter=namespace:!NS_USER",
+			"--reporting=1000" ) );
 		$dumper->startId = $this->pageId1;
 		$dumper->endId = $this->pageId4 + 1;
 		$dumper->setDb( $this->db );
@@ -301,7 +305,7 @@ class BackupDumperPageTest extends DumpTestCase {
 		// computer. We only check that reporting does not crash the dumping
 		// and that something is reported
 		$dumper->stderr = fopen( 'php://output', 'a' );
-		if ( $dumper->stderr === FALSE ) {
+		if ( $dumper->stderr === false ) {
 			$this->fail( "Could not open stream for stderr" );
 		}
 
@@ -399,7 +403,6 @@ class BackupDumperPageTest extends DumpTestCase {
 
 		$this->expectETAOutput();
 	}
-
 
 
 }

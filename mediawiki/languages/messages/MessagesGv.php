@@ -492,7 +492,6 @@ Chammah as shen, t’ou gialdyn dooin dy screeu oo hene eh, ny ren oo coip jeh n
 'template-protected' => '(glast)',
 'template-semiprotected' => '(lieh-ghlast)',
 'hiddencategories' => "Ta'n duillag shoh ayns {{PLURAL:$1|ronney follit|ronney follit|ronney follit|ronnaghyn follit}}",
-'nocreatetitle' => 'Crooaght duillag jeorit',
 'nocreatetext' => "Ta ablid duillagyn noa y chroo lhiettalit ec {{SITENAME}}.<br />
 Foddee shiu goll er ash as reaghey duillag t'ayn nish, ny [[Special:UserLogin|loggal stiagh ny croo coontys]].",
 'nocreate-loggedin' => 'Cha nel kied ayd duillagyn noa y chroo er {{SITENAME}}.',
@@ -708,9 +707,11 @@ My bailliu eh y chiarail, bee eh ymmydit son cur gys lieh y chur dhyt er son yn 
 'right-upload' => 'Laadey neese coadanyn',
 'right-delete' => 'Duillag y scryssey',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Lioar chooishyn ny h-ymmydeyryn noa',
+
 # User rights log
 'rightslog' => 'Lioar chooishyn kiartyn ymmydeyr',
-'rightsnone' => '(veg)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'y duillag shoh y lhaih',
@@ -954,9 +955,6 @@ Ta duillagyn er [[Special:Watchlist|dty rolley arrey]] ayns '''clou trome'''.",
 # Special:ListUsers
 'listusers-submit' => 'Taishbyn',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Lioar chooishyn ny h-ymmydeyryn noa',
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'Possan',
 'listgrouprights-rights' => 'Kiartyn',
@@ -1029,6 +1027,8 @@ $UNWATCHURL
 
 Aaveaghey as cooney s\'odjey:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'crooit',
+'changed' => 'ceaghlit',
 
 # Delete
 'deletepage' => 'Scryss y duillag',
@@ -1467,6 +1467,9 @@ Bee adsyn elley follit dy seyr-obbragh.<br />
 
 # Special:Tags
 'tags-edit' => 'reaghey',
+
+# New logging system
+'rightsnone' => '(veg)',
 
 # Search suggestions
 'searchsuggest-search' => 'Ronsaghey',
