@@ -205,13 +205,13 @@ class MediawikiPlayer
       $code .= "<script type='text/javascript'>\n";
       $code .= "// <![CDATA[\n";
 
-      $playerUrl = Xml::encodeJsVar($wgMWPlayerDir. '/player.swf');
+      $playerUrl = Xml::encodeJsVar($wgMWPlayerDir. '/jwplayer.flash.swf');
       $width = Xml::encodeJsVar($args['width']);
       $height = Xml::encodeJsVar($args['height']);
       
       if ($useSWF)
       {	
-      	$code .= "var s1 = new SWFObject($playerUrl, 'player', $width, $height,'9');\n";
+      	$code .= "var s1 = new SWFObject($playerUrl, 'jwplayer.flash', $width, $height,'9');\n";
       }
       else
       {      	
