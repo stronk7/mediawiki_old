@@ -66,7 +66,7 @@ $wgEnableUserEmail  = false;
 // Talk to Jordan if your confused by any of this, but dont mess with it (grrrrr!)
 
 // set default versions:
-$mdocsver = '22';
+$mdocsver = '24';
 $callpath = 'en';
 
 // Begin wizardy!
@@ -96,7 +96,7 @@ if (php_sapi_name() != 'cli') {
             $wgReadOnly="This translation has been archived and is in Read-Only mode."; // Cant touch this! do do do do do
         }else {
              // default version to serve. this should always be the newest version (mod_rewrite handles the rest)
-            $mdocsver = '20';
+            $mdocsver = '24';
         }
 
         /// Try to determine requested lang or test|dev
