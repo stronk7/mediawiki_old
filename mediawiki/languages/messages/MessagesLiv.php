@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Andrijko Z.
  * @author Erdemaslancan
  * @author Ohpuu
  * @author Warbola
@@ -497,7 +498,7 @@ Legend: '''({{int:cur}})''' = vaiţīd līdzinţõmizõks lǟndz redaktsijõks,,
 # Special:ListGroupRights
 'listgrouprights-members' => '(nõtkõmd nimkēra)',
 
-# E-mail user
+# Email user
 'emailuser' => 'Sōtõgid sīen kȭlbatijizõn e-kēra',
 
 # Watchlist

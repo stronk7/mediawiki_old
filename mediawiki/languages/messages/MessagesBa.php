@@ -11,6 +11,7 @@
  * @author Comp1089
  * @author Haqmar
  * @author Kaganer
+ * @author Matma Rex
  * @author Reedy
  * @author Roustammr
  * @author Sagan
@@ -180,7 +181,7 @@ $messages = array(
 'newwindow'     => '(яңы биттә)',
 'cancel'        => 'Бөтөрөргә',
 'moredotdotdot' => 'Дауамы...',
-'mypage'        => 'Шәхси бит',
+'mypage'        => 'Бит',
 'mytalk'        => 'Әңгәмә',
 'anontalk'      => 'Был IP-адресының фекер алышыу бите',
 'navigation'    => 'Төп йүнәлештәр',
@@ -204,7 +205,7 @@ $messages = array(
 'vector-action-protect'          => 'Һаҡларға',
 'vector-action-undelete'         => 'Тергеҙергә',
 'vector-action-unprotect'        => 'Һаҡлауҙы үҙгәртергә',
-'vector-simplesearch-preference' => 'Киңәйтелгән эҙләү тәҡдимдәрен ҡулланырға ("Векторлы" күренеш өсөн генә)',
+'vector-simplesearch-preference' => 'Ябайлаштырылған эҙләү тәҡдимдәрен ҡулланырға ("Векторлы" күренеш өсөн генә)',
 'vector-view-create'             => 'Яһау',
 'vector-view-edit'               => 'Үҙгәртергә',
 'vector-view-history'            => 'Тарихты ҡарау',
@@ -279,7 +280,7 @@ $1',
 'pool-errorunknown' => 'Билдәһеҙ хата',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite'            => '{{grammar:genitive|{{SITENAME}}}} тураһында',
+'aboutsite'            => '{{SITENAME}} тураһында',
 'aboutpage'            => 'Project:Тасуирлама',
 'copyright'            => '$1 ярашлы эстәлеге менән һәр кем файҙалана ала.',
 'copyrightpage'        => '{{ns:project}}:Авторлыҡ хоҡуҡтары',
@@ -363,7 +364,7 @@ $1',
 'error'                => 'Хата',
 'databaseerror'        => 'Мәғлүмәттәр базаһы хатаһы',
 'dberrortext'          => 'Мәғлүмәттәр базаһына ебәрелгән һорауҙа синтаксис хатаһы табылды.
-Был программала хата булыу мөмкинселеген күрһәтә.
+Был программала хата булыу мөмкинлеген күрһәтә.
 Мәғлүмәттәр базаһына ебәрелгән һуңғы һорау:
 <blockquote><tt>$1</tt></blockquote>
 <tt>«$2»</tt> функцияһынан.
@@ -421,7 +422,8 @@ $1',
 'protectedpagetext'    => 'Был бит мөхәррирләү өсөн ябыҡ.',
 'viewsourcetext'       => 'Һеҙ был биттең сығанаҡ текстын ҡарай һәм күсермәһен ала алаһығыҙ:',
 'viewyourtext'         => "Был биттәге '''үҙгәртеүҙәрегеҙҙең''' сығанаҡ текстын ҡарай һәм күсермәһен ала алаһығыҙ:",
-'protectedinterface'   => 'Был биттә программа арайөҙө белдереүҙәре бар. Вандализмға ҡаршы көрәш сәбәпле, был битте үҙгәртеү тыйыла.',
+'protectedinterface'   => 'Был биттә программаның интерфейс хәбәре бар. Вандализм осраҡтарын булдырмау өсөн, был битте үҙгәртеү тыйыла.
+Был хәбәрҙең тәржемәһен өҫтәү йәки үҙгәртеү өсөн, зинһар, MediaWiki проектының [//translatewiki.net/ translatewiki.net] локалләштереү сайтын ҡулланығыҙ.',
 'editinginterface'     => "'''Иғтибар.''' Һеҙ программаның арайөҙ тексты булған битте мөхәррирләйһегеҙ.
 Уны үҙгәртеү, башҡа ҡулланыусыларҙын арайөҙ күренешен үҙгәртәсәктер.
 Тәржемә өсөн [//translatewiki.net/wiki/Main_Page?setlang=ba translatewiki.net] адресын, MediaWiki-ны локалләштереү проектын ҡулланыу яҡшыраҡ буласаҡтыр.",
@@ -530,7 +532,7 @@ $2',
 'loginlanguagelabel'         => 'Тел: $1',
 'suspicious-userlogout'      => 'Һеҙҙең сеансты тамамлау тураһында һорауығыҙ кире ҡағылды, сөнки ул төҙөк булмаған браузер йәки кэшлаусы прокси тарафынан ебәрелгән һорауға оҡшаған.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHP-ның mail() функцияһында билдәһеҙ хата',
 'user-mail-no-addy'      => 'Электрон почта адресы булмайынса электрон хәбәр ебәреп ҡараны',
 
@@ -691,11 +693,10 @@ $2
 'userpage-userdoesnotexist'        => '«<nowiki>$1</nowiki>» иҫәп яҙыуы юҡ. Һеҙ бындай бит яһарға йәки битте үҙгәртергә теләһәгеҙ яңынан тикшерегеҙ.',
 'userpage-userdoesnotexist-view'   => '«$1» исемле иҫәп яҙыуы юҡ.',
 'blocked-notice-logextract'        => 'Хәҙергә был ҡатнашыусы ябылған. Һуңғы ҡулланыусы ябыу яҙмаһы:',
-'clearyourcache'                   => "'''Иҫкәрмә:''' Битте һаҡлағандан һуң үҙгәртеүҙерегеҙ күренһен өсөн браузерығыҙҙың кэшын таҙартығыҙ.
-* '''Firefox / Safari:''' ''Shift'' төймәһенә баҫып, ебәрмәйенсә, ҡоралдар панелендәге ''Яңыртырға'' төймәһенә баҫығыҙ, йәки ''Ctrl-F5'' йәки ''Ctrl-R'' (Mac-та ''⌘-R'') төймәләренә баҫығыҙ.
+'clearyourcache'                   => "'''Иҫкәрмә:''' Битте һаҡлағандан һуң үҙгәртеүҙерегеҙ күренһен өсөн, браузерығыҙҙың кэшын таҙартығыҙ.
+* '''Firefox / Safari:''' ''Shift'' төймәһенә баҫып, ебәрмәйенсә, ''Яңыртырға'' төймәһенә баҫығыҙ, йәки ''Ctrl-F5'' йә ''Ctrl-R'' (Mac-та ''⌘-R'') төймәләренә баҫығыҙ
 * '''Google Chrome:''' ''Ctrl-Shift-R'' төймәһенә баҫығыҙ (Mac-та ''⌘-Shift-R'')
 * '''Internet Explorer:''' ''Ctrl'' төймәһенә баҫып, ебәрмәйенсә, ''Яңыртырға'' төймәһенә баҫығыҙ, йәки ''Ctrl-F5'' төймәһенә баҫығыҙ
-* '''Konqueror:''' ''Яңыртырға'' йәки ''F5'' төймәһенә баҫығыҙ
 * '''Opera:''' ''Ҡоралдар → Көйләүҙәр' менюһында кеш таҙартыуҙы һайлағыҙ",
 'usercssyoucanpreview'             => "'''Кәңәш:''' Яңы CSS-файлды һаҡларҙан алда тикшерер өсөн \"{{int:showpreview}}\" төймәһенә баҫығыҙ.",
 'userjsyoucanpreview'              => "'''Кәңәш:''' Яңы JS-файлды һаҡларҙан алда тикшерер өсөн \"{{int:showpreview}}\" төймәһенә баҫығыҙ.",
@@ -821,7 +822,7 @@ $3 белдергән сәбәп: ''$2''",
 'currentrev'             => 'Ағымдағы версия',
 'currentrev-asof'        => '$1, ағымдағы версия',
 'revisionasof'           => '$1 версияһы',
-'revision-info'          => '<div id="viewingold-warning" style="background: #FFBDBD; border: 1px solid #BB7979; color: #000000; margin: 1em 0 .5em; padding: .5em 1em; vertical-align: middle; font-weight: bold; font-family: Palatino Linotype, Microsoft Sans Serif, Arial Unicode MS, Droid Sans; clear: both;">Хәҙер һеҙ был биттең иҫке, <span id="mw-revision-name">$2</span> тарафынан <span id="mw-revision-date">$1</span> һаҡланған версияһын ҡарайһығыҙ. Уның <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}}} ағымдағы версиянан] айырмаһы булыуы мөмкин</span>.</div>',
+'revision-info'          => 'Версия: $1; $2',
 'previousrevision'       => '← Алдағы',
 'nextrevision'           => 'Киләһе →',
 'currentrevisionlink'    => 'Ағымдағы версия',
@@ -936,7 +937,9 @@ $1",
 'revdelete-only-restricted'   => '$2, $1 ваҡытлы яҙманы йәшереүҙә хата: башҡа йәшереү көйләүҙәренең береһен һайламайынса яҙманы хәкимдәрҙән йәшерә алмайһығыҙ.',
 'revdelete-reason-dropdown'   => '* Ғәҙәттәге юйыу сәбәптәре
 ** Авторлыҡ хоҡуҡтарын боҙоу
-** Урынһыҙ шәхси мәғлүмәттәр',
+** Урынһыҙ комментарий йәки шәхси мәғлүмәт
+** Урынһыҙ ҡулланыусы исеме
+** Ялған булыуы ихтимал мәғлүмәт',
 'revdelete-otherreason'       => 'Башҡа/өҫтәмә сәбәп:',
 'revdelete-reasonotherlist'   => 'Башҡа сәбәп',
 'revdelete-edit-reasonlist'   => 'Сәбәптәр исемлеген мөхәррирләргә',
@@ -1126,7 +1129,7 @@ $1",
 'timezoneregion-indian'         => 'Һинд океаны',
 'timezoneregion-pacific'        => 'Тымыҡ океан',
 'allowemail'                    => 'Башҡа ҡулланыусыларҙан электрон хат алыуҙы рөхсәт итергә',
-'prefs-searchoptions'           => 'Эҙләү көйләүҙәре',
+'prefs-searchoptions'           => 'Эҙләү',
 'prefs-namespaces'              => 'Исем арауыҡтары',
 'defaultns'                     => 'Юғиһә киләһе исем арауыҡтарында эҙләргә:',
 'default'                       => 'ғәҙәттәге',
@@ -1180,7 +1183,7 @@ $1",
 'prefs-displaywatchlist'        => 'Күренеш көйләүҙәре',
 'prefs-diffs'                   => 'Айырмалар',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'E-mail адрес дөрөҫ булғанға оҡшаған',
 'email-address-validity-invalid' => 'Дөрөҫ e-mail адресын керетегеҙ',
 
@@ -1939,12 +1942,12 @@ $1',
 'listgrouprights-addgroup-self-all'    => 'Үҙенең иҫәп яҙмаһына бөтә төркөмдәрҙе өҫтәү',
 'listgrouprights-removegroup-self-all' => 'Үҙенең иҫәп яҙмаһынан бөтә төркөмдәрҙе юйыу',
 
-# E-mail user
+# Email user
 'mailnologin'          => 'Хат ебәреү өсөн адрес юҡ',
 'mailnologintext'      => 'Башҡа ҡатнашыусыларға хат ебәреү өсөн, һеҙ [[Special:UserLogin|танылырға]] һәм [[Special:Preferences|көйләүҙәрегеҙҙә]] ысын электрон адрес почтаһы кереткән булырға тейешһегеҙ.',
 'emailuser'            => 'Ҡатнашыусыға хат',
 'emailpage'            => 'Ҡатнашыусыға хат',
-'emailpagetext'        => 'Был ҡатнашыусыға электрон почта аша хат ебәреү өсөн, һеҙ түбәндәге форманы ҡуллана алаһығыҙ.
+'emailpagetext'        => 'Был {{GENDER:$1|ҡатнашыусы}} электрон почта аша хат ебәреү өсөн, һеҙ түбәндәге форманы ҡуллана алаһығыҙ.
 Яуап өсөн адрес булараҡ һеҙ [[Special:Preferences|көйләүҙәрегеҙҙә]] күрһәткән электрон почта адресы күрһәтеләсәк, шулай итеп, хатты алыусы һеҙгә тура яуап ебәрә аласаҡ.',
 'usermailererror'      => 'Хат ебәргән ваҡытта хата килеп сыҡты:',
 'defemailsubject'      => '{{SITENAME}} — $1 ҡулланыусыһынан хат',
@@ -1983,8 +1986,8 @@ $1',
 'watchnologin'         => 'Үҙегеҙҙе танытырға кәрәк',
 'watchnologintext'     => 'Күҙәтеү исемлегегеҙҙе мөхәррирләү өсөн, һеҙгә [[Special:UserLogin|танылырға]] кәрәк.',
 'addwatch'             => 'Күҙәтеү исемлегенә өҫтәргә',
-'addedwatchtext'       => "\"[[:\$1]]\" бите [[Special:Watchlist|күҙәтеү исемлегегеҙгә]] өҫтәлде.
-Был биттә һәм уның фекер алышыу битендә бөтә буласаҡ үҙгәртеүҙәр исемлектә һәм [[Special:RecentChanges|һуңғы үҙгәртеүҙәр]] исемлегендә уларҙы еңелерәк табыу өсөн '''ҡалын яҙыу''' менән күрһәтеләсәк.",
+'addedwatchtext'       => '"[[:$1]]" бите [[Special:Watchlist|күҙәтеү исемлегегеҙгә]] өҫтәлде.
+Был биттә һәм уның фекер алышыу битендә буласаҡ бар үҙгәртеүҙәр ундағы исемлектә күрһәтеләсәк.',
 'removewatch'          => 'Күҙәтеү исемлегенән сығарырға',
 'removedwatchtext'     => '«[[:$1]]» бите [[Special:Watchlist|күҙәтеү исемлегегеҙҙән]] сығарылды.',
 'watch'                => 'Күҙәтергә',
@@ -2740,7 +2743,7 @@ The wiki server cannot provide data in a format your client can read.',
 
 # Info page
 'pageinfo-title'            => '«$1» буйынса мәғлүмәт',
-'pageinfo-header-edits'     => 'Үҙгәртеүҙәр',
+'pageinfo-header-edits'     => 'Үҙгәртеүҙәр тарихы',
 'pageinfo-header-watchlist' => 'Күҙәтеү исемлеге',
 'pageinfo-header-views'     => 'Ҡарау',
 'pageinfo-subjectpage'      => 'Бит',
@@ -3257,7 +3260,7 @@ $1',
 'monthsall'     => 'бөтә',
 'limitall'      => 'бөтә',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => 'Электрон почта адресын раҫлау',
 'confirmemail_noemail'      => 'Һеҙҙең [[Special:Preferences|көйләүҙәрегеҙҙә]] дөрөҫ электрон почта адресы юҡ.',
 'confirmemail_text'         => '{{SITENAME}} проекты электрон почта мөмкинлектәрен ҡулланыр алдынан электрон почта адресының раҫланыуын талап итә.
@@ -3574,9 +3577,9 @@ MediaWiki файҙалы булыр, тигән өмөттә, ләкин БЕР 
 'logentry-move-move_redir-noredirect' => '$1 $3 битенең исемен йүнәлтеү ҡуймайынса һәм йүнәлтеү өҫтөнән үҙгәртте. Яңы исеме: $4',
 'logentry-patrol-patrol'              => '$1 $3 битенең $4 версияһын билдәләне.',
 'logentry-patrol-patrol-auto'         => '$1 $3 битенең $4 версияһын автоматик рәүештә билдәләне.',
-'logentry-newusers-newusers'          => '$1 ҡулланыусының иҫәп яҙыуын булдырҙы',
-'logentry-newusers-create'            => '$1 ҡулланыусының иҫәп яҙыуын булдырҙы',
-'logentry-newusers-create2'           => '$1 ҡулланыусы иҫәп яҙыуын яһаны $3',
+'logentry-newusers-newusers'          => '$1 ҡатнашыусыһының иҫәп яҙмаһы булдырылды',
+'logentry-newusers-create'            => '$1 ҡатнашыусыһының иҫәп яҙмаһы булдырылды',
+'logentry-newusers-create2'           => '$3 ҡатнашыусыһының иҫәп яҙмаһы $1 тарафынан булдырылды',
 'logentry-newusers-autocreate'        => 'Автоматик рәүештә $1 иҫәп яҙыуы яһалды',
 'newuserlog-byemail'                  => 'пароль электрон почта адресы аша ебәрелде',
 

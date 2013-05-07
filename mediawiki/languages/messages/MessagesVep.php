@@ -551,7 +551,7 @@ Olgat hüväd, varastagat pordon aigad edel ut naprindad.',
 'login-abort-generic'      => 'Teiden naprind tulda sistemha om satusetoi - Azotadud',
 'loginlanguagelabel'       => 'Kel’: $1',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Tundmatoi petuz PHP:n mail()-funkcijas',
 
 # Change password dialog
@@ -1101,7 +1101,7 @@ Ku tö kirjutat sen, nece nimi kävutadas, miše ozutada lehtpolen toižetajad.'
 'prefs-displaywatchlist'        => 'Nägun opcijad',
 'prefs-diffs'                   => 'Erod',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'Verkpočtan adres nägub korrektižeks.',
 'email-address-validity-invalid' => 'Antkat verkpočtan korrektine adres',
 
@@ -1712,7 +1712,7 @@ Kc. mugažo [[Special:WantedCategories|ectud kategorijoiden nimikirjutez]].',
 'listgrouprights-addgroup-self-all'    => 'Sab ližata kaik gruppad ičeze sistemkirjutandha',
 'listgrouprights-removegroup-self-all' => 'Sab heitta poiš kaik gruppad ičeze sistemkirjutandaspäi',
 
-# E-mail user
+# Email user
 'mailnologin'         => 'Ei ole adresan oigendamižen täht',
 'emailuser'           => 'Oigeta e-kirjeine necile kävutajale',
 'emailpage'           => 'Kirjeine kävutajale',
@@ -2608,6 +2608,7 @@ Ku fail redaktiruidihe sändan polhe, erased parametrad voidas erineda nügüdl�
 'exif-gpsareainformation'          => 'GPS-agjan nimi',
 'exif-gpsdatestamp'                => 'GPS-dat',
 'exif-gpsdifferential'             => 'GPS-differencialine kohenduz',
+'exif-jpegfilecomment'             => 'Kommentarii JPEG-failha',
 'exif-keywords'                    => 'Avadimsanad',
 'exif-worldregiondest'             => "Ozutadud mail'man region",
 'exif-countrydest'                 => 'Ozutadud ma',
@@ -2820,7 +2821,7 @@ Ku fail redaktiruidihe sändan polhe, erased parametrad voidas erineda nügüdl�
 'monthsall'     => 'kaik',
 'limitall'      => 'kaik',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'             => 'Vahvištoitta e-počtan adres',
 'confirmemail_send'        => 'Oigekat vahvištoitandkod',
 'confirmemail_sent'        => 'E-počtan adresan vahvištoitandkod om oigetud.',
@@ -2864,6 +2865,10 @@ Necen vahvištoitandkodan kävutamižen lopstrok om $4.',
 # action=purge
 'confirm_purge_button' => 'OK',
 'confirm-purge-top'    => 'Puhtastada necen lehtpolen keš?',
+
+# action=watch/unwatch
+'confirm-watch-button'   => 'OK',
+'confirm-unwatch-button' => 'OK',
 
 # Multipage image navigation
 'imgmultipageprev' => "← edeline lehtpol'",

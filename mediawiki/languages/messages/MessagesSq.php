@@ -332,7 +332,7 @@ $messages = array(
 'cancel'        => 'Anulo',
 'moredotdotdot' => 'Më shumë...',
 'mypage'        => 'Faqja ime',
-'mytalk'        => 'Diskutimet e mia',
+'mytalk'        => 'Diskutimet',
 'anontalk'      => 'Diskutimet për këtë IP',
 'navigation'    => 'Shfleto',
 'and'           => '&#32;dhe',
@@ -467,8 +467,7 @@ $1",
 'viewsourceold'           => 'shiko tekstin',
 'editlink'                => 'redakto',
 'viewsourcelink'          => 'Shiko tekstin',
-'editsectionhint'         => 'Redaktoni seksionin:
-Edit section: $1',
+'editsectionhint'         => 'Redaktoni seksionin: $1',
 'toc'                     => 'Përmbajtje',
 'showtoc'                 => 'trego',
 'hidetoc'                 => 'fshih',
@@ -682,7 +681,7 @@ Duhet të hyni brenda dhe të ndërroni fjalëkalimin tani nëse ky person jeni 
 'loginlanguagelabel'         => 'Gjuha: $1',
 'suspicious-userlogout'      => 'Kërkesa juaj për të shkëputet u mohua sepse duket sikur është dërguar nga një shfletues të thyer ose caching proxy.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Gabim i panjohur në funksionin e postës PHP ()',
 'user-mail-no-addy'      => 'Provuat të dërgoni një korrespondencë pa adresë elektronike',
 
@@ -1138,7 +1137,7 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'mergelogpagetext'   => 'Më poshtë jepet një listë e bashkimeve së fundmi nga historiku i një faqeje në historikun e një faqeje tjetër.',
 
 # Diffs
-'history-title'            => 'Historiku i redaktimeve te "$1"',
+'history-title'            => 'Historiku i redaktimeve të "$1"',
 'difference'               => '(Ndryshime midis versioneve)',
 'difference-multipage'     => '(Ndryshimi midis faqeve)',
 'lineno'                   => 'Rreshti $1:',
@@ -1337,7 +1336,7 @@ Kjo informatë është publike.',
 'prefs-displaywatchlist'        => 'Shfaq opsionet',
 'prefs-diffs'                   => 'Ndryshimet',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'E-mail adresa është e vlefshme.',
 'email-address-validity-invalid' => 'Futni një e-mali adresë të vlefshme.',
 
@@ -2093,7 +2092,7 @@ Protokolle të mbështetura: <code>$1<code> (mos shtoni ndonjërin nga këta në
 'listgrouprights-addgroup-self-all'    => 'Shtoni të gjitha grupet tek llogaria',
 'listgrouprights-removegroup-self-all' => 'Hiq të gjitha grupet nga llogaria',
 
-# E-mail user
+# Email user
 'mailnologin'          => "S'ka adresë dërgimi",
 'mailnologintext'      => 'Duhet të keni [[Special:UserLogin|hyrë brenda]] dhe të keni një adresë të saktë në [[Special:Preferences|parapëlqimet]] tuaja për tu dërguar email përdoruesve të tjerë.',
 'emailuser'            => 'Email përdoruesit',
@@ -2407,7 +2406,7 @@ $1',
 # Contributions
 'contributions'       => 'Kontributet',
 'contributions-title' => 'Kontributet e përdoruesit për $1',
-'mycontris'           => 'Redaktimet e mia',
+'mycontris'           => 'Kontributet',
 'contribsub2'         => 'Për $1 ($2)',
 'nocontribs'          => 'Nuk ka asnjë ndryshim që përputhet me këto kritere.',
 'uctop'               => ' (sipër)',
@@ -2448,7 +2447,7 @@ Bllokimi i funditë është më poshtë për referencë:',
 'whatlinkshere-hideredirs' => '$1 përcjellimet',
 'whatlinkshere-hidetrans'  => '$1 përfshirjet',
 'whatlinkshere-hidelinks'  => '$1 lidhjet',
-'whatlinkshere-hideimages' => '$1 lidhjet e figurave',
+'whatlinkshere-hideimages' => '$1 lidhjet me skedat',
 'whatlinkshere-filters'    => 'Filtra',
 
 # Block/unblock
@@ -2547,7 +2546,7 @@ Regjistri i bllokimeve është poshtë për referncë:',
 'blocklogtext'                    => 'Ky është një regjistër bllokimesh dhe çbllokimesh të përdoruesve. IP-të e bllokuara automatikisht nuk janë të dhëna. Shikoni dhe [[Special:BlockList|listën e IP-ve të bllokuara]] për një listë të bllokimeve të tanishme.',
 'unblocklogentry'                 => 'çbllokoi "$1"',
 'block-log-flags-anononly'        => 'vetëm anonimët',
-'block-log-flags-nocreate'        => 'krijimi i kontove është pamundësuar',
+'block-log-flags-nocreate'        => 'krijimi i llogarive është pamundësuar',
 'block-log-flags-noautoblock'     => 'vetëbllokimi është pamundësuar',
 'block-log-flags-noemail'         => 'posta elektronike është e bllokuar',
 'block-log-flags-nousertalk'      => 'nuk mund të redaktojë faqen e tij të diskutimit',
@@ -3420,7 +3419,7 @@ Në qoftë se skeda është ndryshuar nga gjendja origjinale, disa hollësira mu
 'monthsall'     => 'të gjitha',
 'limitall'      => 'Të gjitha',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => 'Vërtetoni adresën tuaj',
 'confirmemail_noemail'      => 'Ju nuk keni dhënë email të sakt te [[Special:Preferences|parapëlqimet e juaja]].',
 'confirmemail_text'         => 'Për të marrë email duhet të vërtetoni adresen tuaj. Shtypni butonin e mëposhtëm për të dërguar një email vërtetimi tek adresa juaj. Email-i do të përmbajë një lidhje me kod të shifruar. Duke ndjekur lidhjen nëpërmjet shfletuesit tuaj do të vërtetoni adresën.',

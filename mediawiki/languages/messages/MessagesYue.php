@@ -8,6 +8,7 @@
  * @file
  *
  * @author Horacewai2
+ * @author Justincheng12345
  * @author Kaganer
  * @author KaiesTse
  * @author Mark85296341
@@ -701,7 +702,7 @@ $1',
 'loginlanguagelabel'         => '語言：$1',
 'suspicious-userlogout'      => '你去登出嘅要求已經拒絕咗，因為佢可能由壞咗嘅瀏覽器或者快取代理傳送。',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => '響 PHP 嘅 mail() 參數度出現咗未知嘅錯誤',
 
 # Change password dialog
@@ -1099,7 +1100,7 @@ $1",
 'mergelogpagetext'   => '下面係一個最近由一版嘅修訂記錄合併到另一個嘅一覽。',
 
 # Diffs
-'history-title'            => '"$1"嘅修訂歷史',
+'history-title'            => '「$1」嘅修訂歷史',
 'difference'               => '（修訂之間嘅差異）',
 'difference-multipage'     => '（版之間嘅差異）',
 'lineno'                   => '第$1行：',
@@ -1183,7 +1184,7 @@ $1",
 
 # Preferences page
 'preferences'                   => '喜好設定',
-'mypreferences'                 => '安排與架生',
+'mypreferences'                 => '自訂喜好',
 'prefs-edits'                   => '編輯數:',
 'prefsnologin'                  => '重未登入',
 'prefsnologintext'              => '你一定要去<span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} 登入]</span>設定好用戶喜好值先。',
@@ -1293,7 +1294,7 @@ $1",
 'prefs-displaywatchlist'        => '顯示選項',
 'prefs-diffs'                   => '差異',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => '電郵地址睇嚟有效',
 'email-address-validity-invalid' => '請打一個有效嘅電郵地址',
 
@@ -1867,7 +1868,7 @@ Template:搞清楚',
 'listusers-editsonly'     => '只顯示有編輯嘅用戶',
 'listusers-creationsort'  => '按建立日期排序',
 'usereditcount'           => '$1次編輯',
-'usercreated'             => '響$1 $2建立',
+'usercreated'             => '響$1 $2{{GENDER:$3|建立}}',
 'newpages'                => '新頁',
 'newpages-username'       => '用戶名：',
 'ancientpages'            => '舊頁面',
@@ -1980,7 +1981,7 @@ Template:搞清楚',
 'listgrouprights-addgroup-self-all'    => '加入全部組到自己嘅戶口度',
 'listgrouprights-removegroup-self-all' => '響自己嘅戶口度可以拎走全部組',
 
-# E-mail user
+# Email user
 'mailnologin'          => '冇傳送地址',
 'mailnologintext'      => '你一定要[[Special:UserLogin|登入咗]]同埋喺你嘅[[Special:Preferences|喜好設定]]度有個有效嘅電郵地址先可以傳送電郵畀其他用戶。',
 'emailuser'            => '發電郵畀呢位用戶',
@@ -2331,7 +2332,7 @@ $1',
 'ipusubmit'                       => '拎走呢個封鎖',
 'unblocked'                       => '"[[User:$1|$1]]"已經解封',
 'unblocked-id'                    => '$1嘅封鎖已經拎走咗',
-'ipblocklist'                     => 'IP地址同用戶名阻止名單',
+'ipblocklist'                     => '封咗嘅用戶',
 'ipblocklist-legend'              => '搵一位封咗嘅用戶',
 'ipblocklist-submit'              => '搵',
 'ipblocklist-localblock'          => '本地封鎖',
@@ -2818,7 +2819,7 @@ Variants for Chinese language
 'metadata-help'     => '呢個檔案有額外嘅資料。佢應該係數碼相機或者掃描器整出來嘅。如果佢整咗之後畀人改過，裏面嘅資料未必同改過之後相符。',
 'metadata-expand'   => '打開詳細資料',
 'metadata-collapse' => '收埋詳細資料',
-'metadata-fields'   => '響呢個信息列出嘅 EXIF 元數據項目會喺圖像頁中包含起嚟，而且個元數據表除咗喺下面列出嘅項目之外，其它嘅項目預設會被隱藏。
+'metadata-fields'   => '響呢個信息列出嘅EXIF元數據項目會喺圖像頁中包含起嚟，而且個元數據表除咗喺下面列出嘅項目之外，其它嘅項目預設會隱藏。
 * make
 * model
 * datetimeoriginal
@@ -3107,7 +3108,7 @@ Variants for Chinese language
 'monthsall'     => '全部',
 'limitall'      => '全部',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => '確認電郵地址',
 'confirmemail_noemail'      => '你唔需要響你嘅[[Special:Preferences|用戶喜好設定]]度設定一個有效嘅電郵地址。',
 'confirmemail_text'         => '{{SITENAME}}需要你喺使用電郵功能之前驗證吓你嘅電郵地址。啟用下邊個掣嚟發封確認信去你個地址度。封信入面會附帶一條包含代碼嘅連結；喺你個瀏覽器度打開條連結嚟確認你嘅電郵地址係有效嘅。',

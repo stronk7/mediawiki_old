@@ -199,13 +199,13 @@ $messages = array(
 
 'underline-always'  => 'હંમેશાં',
 'underline-never'   => 'કદી નહિ',
-'underline-default' => 'બ્રાઉઝરના સેટીંગ્સ પ્રમાણે',
+'underline-default' => 'પૂર્વ નિર્ધારિત સ્કિન કે બ્રાઉઝર',
 
 # Font style option in Special:Preferences
 'editfont-style'     => 'ક્ષેત્ર લિપિ શૈલીનું સંપાદન:',
 'editfont-default'   => 'બ્રાઉઝરના સેટીંગ્સ પ્રમાણે',
-'editfont-monospace' => 'Monospaced font',
-'editfont-sansserif' => 'Sans-serif font',
+'editfont-monospace' => 'મોનોસ્પેસ્ડ ફોન્ટ',
+'editfont-sansserif' => 'સાન્સ-સેરિફ ફોન્ટ',
 'editfont-serif'     => 'Serif font',
 
 # Dates
@@ -286,8 +286,8 @@ $messages = array(
 'newwindow'     => '(નવા પાનામાં ખુલશે)',
 'cancel'        => 'રદ કરો',
 'moredotdotdot' => 'વધારે...',
-'mypage'        => 'મારું પાનું',
-'mytalk'        => 'મારી ચર્ચા',
+'mypage'        => 'પાનું',
+'mytalk'        => 'ચર્ચા',
 'anontalk'      => 'આ IP માટેનું ચર્ચા પાનું',
 'navigation'    => 'ભ્રમણ',
 'and'           => '&#32;અને',
@@ -311,7 +311,7 @@ $messages = array(
 'vector-action-protect'          => 'સુરક્ષિત કરો',
 'vector-action-undelete'         => 'રદ કરેલું પાછું વાળો',
 'vector-action-unprotect'        => 'સુરક્ષા બદલો',
-'vector-simplesearch-preference' => 'શોધ સંબંધી વિશિષ્ઠ સુઝાવના પર્યાયને સક્રીય  કરો (Vector skin only)',
+'vector-simplesearch-preference' => 'સરળ શોધ પટ્ટી સક્રીય કરો (માત્ર વેક્ટર સ્કિન)',
 'vector-view-create'             => 'બનાવો',
 'vector-view-edit'               => 'ફેરફાર કરો',
 'vector-view-history'            => 'ઇતિહાસ જુઓ',
@@ -503,8 +503,8 @@ $1',
 'internalerror_info'   => 'આંતરિક ત્રુટિ: $1',
 'fileappenderrorread'  => 'ઉમેરો કરતાં "$1" વાંચી શકાયું નથી',
 'fileappenderror'      => '"$1" ને "$2" શાથે જોડી શકાશે નહીં.',
-'filecopyerror'        => '"$1" થી "$2"માં નકલ નાકામયાબ.',
-'filerenameerror'      => '"$1" નું નામ બદલીને "$2" કરવામાં નાકામયાબ.',
+'filecopyerror'        => '"$1" થી "$2"માં નકલ નિષ્ફળ.',
+'filerenameerror'      => '"$1" નું નામ બદલીને "$2" કરવામાં નિષ્ફળ.',
 'filedeleteerror'      => '"$1" ફાઇલ હટાવી ન શકાઇ.',
 'directorycreateerror' => 'ડીરેક્ટરી "$1" ન બનાવી શકાઇ.',
 'filenotfound'         => 'ફાઇલ "$1" ન મળી.',
@@ -529,7 +529,7 @@ Query: $2',
 'viewsource-title'     => '$1 માટે સ્રોત જુઓ',
 'actionthrottled'      => 'અકાળે અટાકાવી દીધેલી ક્રિયા',
 'actionthrottledtext'  => 'સ્પામ નિયંત્રણ તકેદારી રૂપે આ ક્રિયા અમુક મર્યાદામાં જ કરી શકો છો, અને તમે તે મર્યાદા વટાવી દીધી છે. કૃપા કરી થોડાક સમય પછી ફરી પ્રયત્ન કરો.',
-'protectedpagetext'    => 'ફેરફારો થતાં રોકવા માટે આ પાનું સુરક્ષિત કરવામાં આવ્યું છે.',
+'protectedpagetext'    => 'ફેરફારો કે એવું કંઈ પણ થતું રોકવા માટે આ પાનું સુરક્ષિત કરવામાં આવ્યું છે.',
 'viewsourcetext'       => 'આપ આ પાનાનો મૂળ સ્રોત નિહાળી શકો છો અને તેની નકલ (copy) પણ કરી શકો છો:',
 'viewyourtext'         => "આપ આ પાનાનાં '''આપનાં સંપાદનો'''નો મૂળ સ્રોત નિહાળી શકો છો અને તેની નકલ (copy) પણ કરી શકો છો:",
 'protectedinterface'   => 'આ પાનું સોફ્ટવેર માટે ઇન્ટરફેઇસ ટેક્સટ આપે છે, અને તેને દુરુપયોગ રોકવા માટે સ્થગિત કર્યું છે.
@@ -624,16 +624,14 @@ $2',
 જો બીજા કોઇએ આ વિનંતી કરી હોય અથવા તમને તમારી જુની ગુપ્ત સંજ્ઞા યાદ આવી ગઇ હોય અને તમે તે બદલવા ન માંગતા હો તો આ સંદેશ અવગણીને તમારી જુની ગુપ્ત સંજ્ઞા વાપરવાનું ચાલુ રાખો.',
 'noemail'                    => 'સભ્ય "$1"નું કોઇ ઇ-મેલ સરનામું નોંધાયેલું નથી.',
 'noemailcreate'              => 'વૈધ ઇ-મેલ આપશો',
-'passwordsent'               => 'A new password has been sent to the e-mail address registered for "$1".
-Please log in again after you receive it.
-"$1" ની નવી ગુપ્તસંજ્ઞા (પાસવર્ડ) આપના ઇમેઇલ પર મોકલવામાં આવ્યો છે.
+'passwordsent'               => '"$1" ની નવી ગુપ્તસંજ્ઞા (પાસવર્ડ) આપના ઇમેઇલ પર મોકલવામાં આવ્યો છે.
 કૃપા કરી તે મળ્યા બાદ ફરી લોગ ઇન કરો.',
 'blocked-mailpassword'       => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.
 ફેરફાર કરવા માટે તમારું IP એડ્રેસ  સ્થગિત કરી દેવાયું છે તેથી દૂરુપયોગ ટાળવા માટે તમને ગુપ્તસંજ્ઞા રીકવરી કરવાની છૂટ નથી.',
 'eauthentsent'               => 'પુષ્ટિ કરવા માટે તમે આપેલા સરનામાં પર ઇમેઇલ મોકલવામાં આવ્યો છે.
 એ જ સરનામે બીજો ઇમેઇલ થતાં પહેલાં તમારે ઇમેઇલમાં લખેલી સૂચનાઓ પ્રમાણે કરવું પડશે જેથી એ પુષ્ટિ થઇ શકે કે આપેલું સરનામું તમારું છે.',
-'throttled-mailpassword'     => 'ગુપ્ત સંજ્ઞા યાદ અપાવતી ઇમેઇલ છેલ્લા {{PLURAL:$1|કલાક|$1 કલાકમાં}} મોકલેલી છે.
-દૂરુપયોગ રોકવા માટે, {{PLURAL:$1|કલાક|$1 કલાકમાં}} ફક્ત એક જ આવી મેઇલ કરવામાં આવે છે.',
+'throttled-mailpassword'     => 'ગુપ્ત સંજ્ઞા યાદ અપાવતી ઇમેઇલ છેલ્લા {{PLURAL:$1|કલાકમાં|$1 કલાકોમાં}} મોકલેલી છે.
+દૂરુપયોગ રોકવા માટે, {{PLURAL:$1|કલાકમાં|$1 કલાકોમાં}} ફક્ત એક જ આવી મેઇલ કરવામાં આવે છે.',
 'mailerror'                  => 'મેઇલ મોકલવામાં ત્રુટિ: $1',
 'acct_creation_throttle_hit' => 'આ વિકિના મુલાકાતીઓએ તમારું IP વાપરીને ગઈ કાલે {{PLURAL:$1|1 ખાતું |$1 ખાતા}} ખોલ્યાં છે,જે પ્રવાનગીની મહત્તમ સંખ્યા છે. આને પરિણામે મુલાકાતી આ ક્ષણેવધુ ખાતા નહીં ખોલી શકે.',
 'emailauthenticated'         => 'તમારૂં ઇ-મેઇલ સરનામું $2 ના $3 સમયે પ્રમાણિત કરેલું છે.',
@@ -660,7 +658,7 @@ Please log in again after you receive it.
 'loginlanguagelabel'         => 'ભાષા: $1',
 'suspicious-userlogout'      => 'લોગ આઉટ કરવાની તમારી વિનંતિ પૂરી ન કરી શકાઇ. એમ લાગે છે કે તેને તૃટિ પામેલ બ્રાઉઝર કે પ્રોક્સી દ્વારા મોકલાઈ હતી.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHPની મેલ() કામગીરીમાં અજ્ઞાત ત્રુટિ',
 'user-mail-no-addy'      => 'ઈ મેલ એડ્રસ વગર ઈ મેલ મોકલવા પ્રયત્ન કરેલ.',
 
@@ -685,7 +683,7 @@ Please log in again after you receive it.
 
 # Special:PasswordReset
 'passwordreset'                    => 'પાસવર્ડ રીસેટ કરો',
-'passwordreset-text'               => 'આપના ઈ મેલ ખાતા ની માહિતી મેળવવા માટે આ ફોર્મ માં વિગતો ભરો.',
+'passwordreset-text'               => 'તમારો પાસવર્ડ બદલવા માટે આ ફોર્મ પૂરુ કરો.',
 'passwordreset-legend'             => 'પાસવર્ડ રીસેટ કરો',
 'passwordreset-disabled'           => 'આ વિકી પર પાસવર્ડ રીસેટ કરવા પર પ્રતિબંધ છે.',
 'passwordreset-pretext'            => '{{PLURAL: $1| | એક નીચે માહિતીના ટુકડાઓ દાખલ}}',
@@ -695,22 +693,22 @@ Please log in again after you receive it.
 'passwordreset-capture-help'       => 'જો તમે આ ઓપ્શન સિલેક્ટ કરશો, તો તમને અને યુઝર ને ઈ મેલ (કામચલાઉ પાસવર્ડ સાથે) દેખાડવામાં આવશે.',
 'passwordreset-email'              => 'ઇ મેલ સરનામું:',
 'passwordreset-emailtitle'         => '{{SITENAME}} માટે ખાતુ બનાવ્યું',
-'passwordreset-emailtext-ip'       => 'કોઈક (કદાચ તમો , $1 IP એડ્રેસ થી) એ તમારી વેબસાઈટ {{SITENAME}}  ($4) ના ખાતા ની વિગત અંગે યાદ દેવડાવાની રજૂઆત કરી છે. આ ઈ-મેઈલ એડ્રેસ સાથે {{PLURAL:$3|નું ખાતું|ના ખાતા}} જોડાયેલા છે.
+'passwordreset-emailtext-ip'       => 'કોઈકે (કદાચ તમોએ , $1 IP એડ્રેસ થી) તમારી વેબસાઈટ {{SITENAME}}  ($4) નો પાસવર્ડ રિસેટ કરવાની રજૂઆત કરી છે. આ ઈમેઈલ એડ્રેસ સાથે {{PLURAL:$3|નું ખાતું|ના ખાતા}} જોડાયેલા છે.
 .
 .
 
 $2
 
-{{PLURAL:$3|આ કામચલાઉ પાસવર્ડ|આ બધા કામચલાઉ પાસવર્ડ}} {{PLURAL:$5|એક દિવસ|$5 દિવસ}} માં નષ્ટ થઇ જશે. તમારે અત્યારે જ ખાતું ખોલીને નવો પાસવર્ડ સેટ કરી લેવો જોઈએ .જો કોઈ બીજા એ આ રજૂઆત કરી હોય, અથવા જો તમને પોતાનો અસલ પાસવર્ડ યાદ હોય, અને તેને બદલવા નથી માગતા, તો આ સંદેશાને જતો કરીને પોતાના અસલ પાસવર્ડ ને વાપરી શકો છો.',
-'passwordreset-emailtext-user'     => 'વેબસાઈટ  {{SITENAME}} ($4) ના વપરાશકર્તા $1 એ તમારી ના ખાતા ની વિગત અંગે યાદ દેવડાવાની રજૂઆત કરી છે. આ ઈ-મેઈલ એડ્રેસ સાથે {{PLURAL:$3|નું ખાતું|ના ખાતા}} જોડાયેલા છે.
+{{PLURAL:$3|આ કામચલાઉ પાસવર્ડ|આ બધા કામચલાઉ પાસવર્ડ}} {{PLURAL:$5|એક દિવસ|$5 દિવસો}} માં નષ્ટ થઇ જશે. તમારે અત્યારે જ ખાતું ખોલીને નવો પાસવર્ડ સેટ કરી લેવો જોઈએ .જો કોઈ બીજા એ આ રજૂઆત કરી હોય, અથવા જો તમને પોતાનો અસલ પાસવર્ડ યાદ હોય, અને તેને બદલવા નથી માગતા, તો આ સંદેશાને જતો કરીને પોતાના અસલ પાસવર્ડ ને વાપરી શકો છો.',
+'passwordreset-emailtext-user'     => 'વેબસાઈટ  {{SITENAME}} ના વપરાશકર્તા $1 એ તમારા {{SITENAME}} ($4) નો પાસવર્ડ રિસેટ કરવાની રજૂઆત કરી છે. આ ઈમેઈલ એડ્રેસ સાથે {{PLURAL:$3|નું ખાતું|ના ખાતા}} જોડાયેલ છે.
 
 $2
 
 {{PLURAL:$3|આ કામચલાઉ પાસવર્ડ|આ બધા કામચલાઉ પાસવર્ડ}} {{PLURAL:$5|એક દિવસ|$5 દિવસ}} માં નષ્ટ થઇ જશે. તમારે અત્યારે જ ખાતું ખોલીને નવો પાસવર્ડ સેટ કરી લેવો જોઈએ .જો કોઈ બીજા એ આ રજૂઆત કરી હોય, અથવા જો તમને પોતાનો અસલ પાસવર્ડ યાદ હોય, અને તેને બદલવા નથી માગતા, તો આ સંદેશાને જતો કરીને પોતાના અસલ પાસવર્ડ ને વાપરી શકો છો..',
 'passwordreset-emailelement'       => 'વપરાશકર્તા નામ: $1
 કામચલાઉ પાસવર્ડ: $2',
-'passwordreset-emailsent'          => 'એક સ્મૃતિપત્ર ઈ મેલ મોકલવામાં આવ્યો છે.',
-'passwordreset-emailsent-capture'  => 'એક સ્મૃતિપત્ર ઈ મેલ મોકલવામાં આવ્યો છે, જે આ પ્રમાણે છે.',
+'passwordreset-emailsent'          => 'પાસવર્ડ બદલવાનો ઇમેલ મોકલવામાં આવ્યો છે.',
+'passwordreset-emailsent-capture'  => 'પાસવર્ડ બદલવાનો ઇમેલ મોકલવામાં આવ્યો છે, જે નીચે પ્રમાણે છે.',
 'passwordreset-emailerror-capture' => 'એક સ્મૃતિપત્ર ઈ મેલ બનાવવા માં આવ્યો છે, જે આ પ્રમાણે છે, પરંતુ તે યુઝર ને મોકલવા માં નિષ્ફળ થયો છે: $1',
 
 # Special:ChangeEmail
@@ -858,7 +856,7 @@ $2
 આ પાનાને ખરાબ થતો અટકાવવા આ ફેરફાર રદ્દ કરાયો છે. 
 જ્યારે તમે વેબ આધારિત  અજ્ઞાત પ્રોક્સી વાપરતા હોવ ત્યારે આવું બની શકે છે.",
 'edit_form_incomplete'             => "'''ફેરફાર પત્રનો અમુક ભાગ સર્વર સુધી ન પહોંચ્યો; ખાત્રી કરો કે તમે કરેલા ફેરફાર બરાબર છે અને ફરી પ્રયત્ન કરો.'''",
-'editing'                          => '$1નો ફેરફાર કરી રહ્યા છે',
+'editing'                          => '$1નો ફેરફાર કરી રહ્યા છો.',
 'editingsection'                   => '$1 (પરિચ્છેદ)નો ફેરફાર કરી રહ્યા છો',
 'editingcomment'                   => '$1 (પરિચ્છેદ)નો ફેરફાર કરી રહ્યા છો',
 'editconflict'                     => 'ફેરફારમાં વિસંગતતા: $1',
@@ -871,8 +869,8 @@ $2
 'storedversion'                    => 'રક્ષિત પુનરાવર્તન',
 'nonunicodebrowser'                => "'''ચેતવણી: તમારું બ્રાઉઝર યુનિકોડ ઉકેલવા સક્ષમ નથી.'''
 અહીં તમે સુરક્ષિત રીતે ફેરફારો નહીં કરી શકો: ASCII સિવાયના અક્ષરો સંપાદન ચોકઠામાં હેક્સાડેસિમલ સ્વરૂપે દેખાશે.",
-'editingold'                       => "'''ચેતવણી: તમે કાલાતિત ફેરફારો ને બદલી રહ્યાં છો.'''
-જો તમે તેને સાચવશો , વચમાં થયેલ ફેરફારો સાચવી ન શકાય.",
+'editingold'                       => "'''ચેતવણી: તમે આ પાનાની ખૂબ જૂની આવૃત્તિમાં ફેરફાર કરી રહ્યાં છો.'''
+જો તમે તેને સાચવશો તો, તે આવૃત્તિ પછી થયેલા બધા ફેરફારો નાબુદ થઈ જશે.",
 'yourdiff'                         => 'ભેદ',
 'copyrightwarning'                 => "મહેરબાની કરીને એ વાતની નોંધ લેશો કે {{SITENAME}}માં કરેલું બધુંજ યોગદાન $2 હેઠળ પ્રકાશિત કરેલું માનવામાં આવે છે (વધુ માહિતિ માટે $1 જુઓ).
 જો આપ ના ચાહતા હોવ કે તમારા યોગદાનમાં અન્ય કોઇ વ્યક્તિ બેધડક પણે ફેરફાર કરે અને તેને પુનઃપ્રકાશિત કરે, તો અહીં યોગદાન કરશો નહી.<br />
@@ -885,7 +883,7 @@ $2
 'longpageerror'                    => "ત્રુટિ: તમે લખેલ લેખ {{PLURAL:$1|એક કિલોબાઈટ|$1 કિલોબાઈટ્સ}} કિલોબાઇટ લાંબો છે, જે {{PLURAL:$1|એક કિલોબાઈટ|$2 કિલોબાઈટ્સ}}  કિલોબાઇટની મહત્તમ સીમા કરતાં વધુ છે.'''
 તેને સાચવી ન શકાયા.",
 'readonlywarning'                  => "'''ચેતવણી: માહિતીસંચ સમારકામ માટે બંધ કરાયો છે, તમે તમારા ફેરફારો હમણા સાચવી નહીં શકો.'''
-તમે તમારું લેખ કોઇ ટેક્સ્ટ ફાઇલ માં સેવ કરી મૂકી દો અને માહિતી સંચ ખુલતા વિકિ પર સાચવી શકશો. 
+તમે તમારું લખાણ કોઇ ટેક્સ્ટ ફાઇલ માં સેવ કરી મૂકી દો અને માહિતીસંચ ખુલતા વિકિ પર સાચવી શકશો. 
 
 જે પ્રબંધકે માહિતીસંચ બંધ કર્યો છે તેણે આ કારણ આપ્યું છે: $1",
 'protectedpagewarning'             => "'''ચેતવણી : આ પાના પર સંરક્ષણ વિકલ્પ સક્રીય છે અને માત્ર પ્રબંધકો જ આમાં ફેરફાર કરી શકે.'''
@@ -945,7 +943,7 @@ $2
 'undo-success' => 'આ ફેરફારોને ઉલટાવી શકાશે .
 નીચે આપેલ સરકામણી સરખાવો અને ચકાસો શું તમે રાખવા માંગો છો અને ફેરફારો સાચવો.',
 'undo-failure' => 'વચ્ચે થયેલા અન્ય ફેરફાર થવાને કારણે આ ફેરફારો ઉલટાવી ન શકાયા',
-'undo-norev'   => 'ફેરફાર સાચવે ન શકાયો કેમકે યા તો તે અસ્તિત્વમાં નથી અહ્તવાતો ભૂંસી નખાયા છે.',
+'undo-norev'   => 'ફેરફાર સાચવી ન શકાયો કેમકે તે અસ્તિત્વમાં નથી અથવા તો ભૂંસી નખાયો છે.',
 'undo-summary' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|talk]])એ કરેલો ફેરફાર $1 પાછો વાળ્યો',
 
 # Account creation failure
@@ -1049,7 +1047,7 @@ $3 દ્વારા અપાયેલ કારણ છે ''$2''",
 'revdelete-radio-set'         => 'હા',
 'revdelete-radio-unset'       => 'ના',
 'revdelete-suppress'          => 'પ્રબંધક કે અન્યો સૌની માહિતી છુપાવો',
-'revdelete-unsuppress'        => 'સમા કરાયેલા પુનરાવર્તન પરનાપ્રતિબંધ હટાવો',
+'revdelete-unsuppress'        => 'સમા કરાયેલા પુનરાવર્તનો પરના પ્રતિબંધ હટાવો',
 'revdelete-log'               => 'કારણ:',
 'revdelete-submit'            => 'પસંદ કરેલા {{PLURAL:$1|ફેરફાર|ફેરફારો}} પર લગાડો',
 'revdelete-success'           => 'પુનરવર્તન દ્રશ્યતાસફળતા પૂર્વક અદ્યતન બનાવાઈ',
@@ -1175,7 +1173,7 @@ $1",
 'search-mwsuggest-enabled'         => 'સુઝાવ સહિત',
 'search-mwsuggest-disabled'        => 'સુઝાવ વિના',
 'search-relatedarticle'            => 'શોધ સંબંધિત',
-'mwsuggest-disable'                => 'AJAX સુઝાવો નિષ્ક્રીય કરો',
+'mwsuggest-disable'                => 'શોધ સુઝાવો નિષ્ક્રીય કરો',
 'searcheverything-enable'          => 'નામસ્થળોમાં શોધો:',
 'searchrelated'                    => 'શોધ સંબંધિત',
 'searchall'                        => 'બધા',
@@ -1190,7 +1188,7 @@ $1",
 'powersearch-ns'                   => 'નામસ્થળોમાં શોધો:',
 'powersearch-redir'                => 'અન્યત્ર વાળેલાં પાનાંની યાદી',
 'powersearch-field'                => 'નાં માટે શોધો',
-'powersearch-togglelabel'          => ' ચકાસો:',
+'powersearch-togglelabel'          => 'ચકાસો:',
 'powersearch-toggleall'            => 'બધા',
 'powersearch-togglenone'           => 'એકે નહિ',
 'search-external'                  => 'બાહ્ય શોધ',
@@ -1209,7 +1207,7 @@ $1",
 
 # Preferences page
 'preferences'                   => 'પસંદ',
-'mypreferences'                 => 'મારી પસંદ',
+'mypreferences'                 => 'પસંદ',
 'prefs-edits'                   => 'સંપાદનોની સંખ્યા',
 'prefsnologin'                  => 'પ્રવેશ કરેલ નથી',
 'prefsnologintext'              => 'સભ્યના અધિકારો બદલવા તમે <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} logged in]</span> પ્રવેશ કરેલો હોવો જોઈએ',
@@ -1223,15 +1221,15 @@ $1",
 'prefs-personal'                => 'સભ્ય ઓળખ',
 'prefs-rc'                      => 'તાજા ફેરફારો',
 'prefs-watchlist'               => 'ધ્યાનસૂચિ',
-'prefs-watchlist-days'          => 'ધ્યાનસૂચિમાઁ દર્શાવવના દિવસો',
+'prefs-watchlist-days'          => 'ધ્યાનસૂચિમાં દર્શાવવાના દિવસો:',
 'prefs-watchlist-days-max'      => 'મહત્તમ $1 {{PLURAL:$1|દિવસ|દિવસો}}',
 'prefs-watchlist-edits'         => 'વિસ્તરીત ધ્યાનસૂચિ માં બતાવનારા ફેરફારોની સંખ્યા',
 'prefs-watchlist-edits-max'     => 'મહત્તમ સંખ્યા : ૧૦૦૦',
 'prefs-watchlist-token'         => 'ધ્યાનસૂચિ ચિઠ્ઠી',
 'prefs-misc'                    => 'પરચૂરણ',
 'prefs-resetpass'               => 'ગુપ્તસંજ્ઞા બદલો',
-'prefs-changeemail'             => 'ઈ મેલ સરનામું બદલવા માટે',
-'prefs-setemail'                => 'ઈ મેલ સરનામું સેટ કરો',
+'prefs-changeemail'             => 'ઈ-મેલ સરનામું બદલવા માટે',
+'prefs-setemail'                => 'ઈ-મેલ સરનામું ગોઠવો',
 'prefs-email'                   => 'ઈ-મેલ સંબંધી વિકલ્પો',
 'prefs-rendering'               => 'દેખાવ',
 'saveprefs'                     => 'સાચવો',
@@ -1320,12 +1318,12 @@ HTML નાકું ચકાસો',
 'prefs-advancedrendering'       => 'અદ્યતન વિકલ્પો',
 'prefs-advancedsearchoptions'   => 'અદ્યતન વિકલ્પો',
 'prefs-advancedwatchlist'       => 'અદ્યતન વિકલ્પો',
-'prefs-displayrc'               => ' પ્રદર્શન વિકલ્પો',
-'prefs-displaysearchoptions'    => ' પ્રદર્શન વિકલ્પો',
-'prefs-displaywatchlist'        => ' પ્રદર્શન વિકલ્પો',
+'prefs-displayrc'               => 'પ્રદર્શન વિકલ્પો',
+'prefs-displaysearchoptions'    => 'પ્રદર્શન વિકલ્પો',
+'prefs-displaywatchlist'        => 'પ્રદર્શન વિકલ્પો',
 'prefs-diffs'                   => 'ફરક',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'ઈ-મેલ યોગ્ય લાગે છે.',
 'email-address-validity-invalid' => 'પ્રમાણભૂત શૈલિમાં ઈ-મેલ એડ્રેસ લખો',
 
@@ -1448,14 +1446,14 @@ HTML નાકું ચકાસો',
 'action-edit'                 => 'આ પાનામાં ફેરફાર કરો',
 'action-createpage'           => 'નવો લેખ શરૂ કરો',
 'action-createtalk'           => 'ચર્ચાનું પાનું બનાવો',
-'action-createaccount'        => ' ખાતું ખોલો',
+'action-createaccount'        => 'આ સભ્ય ખાતું બનાવો',
 'action-minoredit'            => ' આ ફેરફારને એક નાના સુધારા તરીકે નોંધો',
 'action-move'                 => 'આ પાનું ખસેડો',
-'action-move-subpages'        => 'આ પાનું અને તેના ઉપપાના ખસેડો',
+'action-move-subpages'        => 'આ પાનું અને તેના ઉપપાનાં ખસેડો',
 'action-move-rootuserpages'   => 'મૂળ સભ્ય પાના હટાવો',
-'action-movefile'             => 'આ ફાઈલા ખસેડો',
+'action-movefile'             => 'આ ફાઈલ ખસેડો',
 'action-upload'               => 'આ ફાઈલ ચઢવો',
-'action-reupload'             => 'વિહરમાન ફાઇલ પર પુનર્લેખન કરો',
+'action-reupload'             => 'હાજર ફાઇલ પર પુનર્લેખન કરો',
 'action-reupload-shared'      => 'સર્વ સામાન્ય ફાઈલ સંગ્રહ પર આ ફાઇલ અવગણી આગળ વધો',
 'action-upload_by_url'        => 'URL પરથી આ ફાઇલ ચઢાવો',
 'action-writeapi'             => 'લેખન API વાપરો',
@@ -1497,7 +1495,7 @@ HTML નાકું ચકાસો',
 'rcshowhidebots'                    => 'બૉટો $1',
 'rcshowhideliu'                     => 'લૉગ ઇન થયેલાં સભ્યો $1',
 'rcshowhideanons'                   => 'અનામી સભ્યો $1',
-'rcshowhidepatr'                    => ' $1 ચોકીયાત ફેરફારો',
+'rcshowhidepatr'                    => '$1 ચોકીયાત ફેરફારો',
 'rcshowhidemine'                    => 'મારા ફેરફારો $1',
 'rclinks'                           => 'છેલ્લાં $2 દિવસમાં થયેલા છેલ્લાં $1 ફેરફારો દર્શાવો<br />$3',
 'diff'                              => 'ભેદ',
@@ -2087,13 +2085,13 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'listgrouprights-addgroup-self-all'    => 'દરેક જૂથને તેમના પોતાના ખાતા માં ઉમેરો',
 'listgrouprights-removegroup-self-all' => 'બધા જૂથને તેમના પોતાના ખાતામાંથી હટાવો',
 
-# E-mail user
+# Email user
 'mailnologin'          => 'મેળવનારનું સરનામું નથી',
 'mailnologintext'      => 'અન્ય સભ્યને ઇ-મેલ મોકલવા માટે તમે [[Special:UserLogin|logged in]] પ્રવેશ કરેલ હોવો જોઈએ અને તમારા[[Special:Preferences|preferences]] વિકલ્પોમાં તમારા ઈ-મેલ સરનામાની પુષ્ટિ થયેલી હોવી જોઈએ',
 'emailuser'            => 'સભ્યને ઇ-મેલ કરો',
 'emailpage'            => 'ઈ-મેલ સભ્ય',
-'emailpagetext'        => 'તમે નીચે દર્શાવેલ ફોર્મ વાપરી ઇ-મેલ મોકલી શકો છો.
-તમે તમારી માહિતીમાં [[Special:Preferences|your user preferences]] જે ઇ-મેલ લખ્યો હશે  તે દ્વારા ના નામ હેઠળ દેખાશે, જેથી ઇ-મેલ મેળવનાર તમને સંદેશાનો જવાબ આપી શકશે.',
+'emailpagetext'        => 'તમે નીચે દર્શાવેલ ફોર્મ વાપરી આ {{GENDER:$1|સભ્ય}}ને ઇ-મેલ મોકલી શકો છો.
+તમે [[Special:Preferences|તમારી પસંદમાં]] જે ઇ-મેલ લખ્યો હશે તે "દ્વારા"ના નામ હેઠળ દેખાશે, જેથી ઇ-મેલ મેળવનાર તમને સંદેશાનો જવાબ આપી શકશે.',
 'usermailererror'      => 'મેલ વસ્તુ પાઠવવામાં ત્રુટિ',
 'defemailsubject'      => '{{SITENAME}} સભ્ય $1 તરફથી ઈ-મેલ',
 'usermaildisabled'     => 'સભ્યનો ઈ-મેલ નિષ્ક્રિય કરાયો',
@@ -2123,8 +2121,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'usermessage-editor'  => 'તંત્ર સંદેશાઓ',
 
 # Watchlist
-'watchlist'            => 'મારી ધ્યાનસૂચી',
-'mywatchlist'          => 'મારી ધ્યાનસૂચિ',
+'watchlist'            => 'ધ્યાનસૂચી',
+'mywatchlist'          => 'ધ્યાનસૂચિ',
 'watchlistfor2'        => 'ધ્યાન સૂચિ $1 $2',
 'nowatchlist'          => 'તમારી ધ્યાન સૂચિ ખાલી છે',
 'watchlistanontext'    => 'તમારી ધ્યાનસૂચિની વસ્તુઓ જોવા અને ફેરફાર કરવા $1 કરો',
@@ -2132,7 +2130,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'watchnologintext'     => 'ધ્યાનસૂચિમાં ફેરફારાકરવા તમે પ્રવેશ [[Special:UserLogin|logged in]] કરેલો હોવો જરૂરી છે.',
 'addwatch'             => 'ધ્યાનસૂચિ માં ઉમેરો',
 'addedwatchtext'       => 'પાનું "[[:$1]]" તમારી [[Special:Watchlist|ધ્યાનસૂચિ]]માં ઉમેરાઈ ગયું છે.
-ભવિષ્યમાં આ પાના અને તેનાં સંલગ્ન ચર્ચાનાં પાનામાં થનારા ફેરફારોની યાદી ત્યાં આપવામાં આવશે અને આ પાનું [[Special:RecentChanges|તાજેતરમાં થયેલા ફેરફારોની યાદી]]માં ઘાટા અક્ષરે જોવા મળશે, જેથી આપ સહેલાઇથી તેને અલગ તારવી શકો.',
+ભવિષ્યમાં આ પાના અને તેનાં સંલગ્ન ચર્ચાનાં પાનામાં થનારા ફેરફારોની યાદી ત્યાં આપવામાં આવશે.',
 'removewatch'          => 'ધ્યાનસૂચિમાંથી કાઢી નાખો',
 'removedwatchtext'     => '"[[:$1]]" શીર્ષક હેઠળનું પાનું [[Special:Watchlist|તમારી ધ્યાનસૂચિમાંથી]] કાઢી નાંખવામાં આવ્યું છે.',
 'watch'                => 'ધ્યાનમાં રાખો',
@@ -2158,7 +2156,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 'unwatching'     => 'નજર રાખવાની બંધ કરી છે...',
 'watcherrortext' => 'તમારી ધ્યાનસૂચિ નાં સેટિંગ્સ માં "$1" માં ફેરફાર કરતી વખતે ભૂલ આવી.',
 
-'enotif_mailer'                => '{{SITENAME}} સૂચના ઈ-મેલ પાઠક',
+'enotif_mailer'                => '{{SITENAME}} સૂચના ઈ-મેલ પ્રેષક',
 'enotif_reset'                 => 'બધા પાનાને મુલાકાત લેવાયેલા અંકિત કરો',
 'enotif_newpagetext'           => 'આ નવું પાનું છે.',
 'enotif_impersonal_salutation' => '{{SITENAME}} સભ્ય',
@@ -2289,9 +2287,9 @@ Deleting it may disrupt database operations of {{SITENAME}};',
 
 તમે આ પાનાઓનું સંરક્ષણ સ્તર બદલી શકો છો, પરંતુ તેની અસર ધોધાકાર સંરક્ષણ પર પડવી જોઇએ નહીં.',
 'protect-default'             => 'બધા સભ્યોને પરવાનગી',
-'protect-fallback'            => '"$1" પરવાનગી જરૂરી',
-'protect-level-autoconfirmed' => 'નવા અને નહી નોંધાયેલા સભ્યો પર પ્રતિબંધ',
-'protect-level-sysop'         => 'માત્ર પ્રબંધકો',
+'protect-fallback'            => 'માત્ર "$1" પરવાનગી સાથેના સભ્યોને માન્ય રાખો',
+'protect-level-autoconfirmed' => 'માત્ર આપમેળે ખાતરી થયેલા સભ્યોને માન્ય રાખો',
+'protect-level-sysop'         => 'માત્ર પ્રબંધકોને માન્ય રાખો',
 'protect-summary-cascade'     => 'ધોધાકાર',
 'protect-expiring'            => '$1 (UTC) એ સમાપ્ત થાય છે',
 'protect-expiring-local'      => '$1ના નિવૃત્ત થશે',
@@ -2391,7 +2389,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 # Contributions
 'contributions'       => 'સભ્યનું યોગદાન',
 'contributions-title' => 'સભ્ય $1નું યોગદાન',
-'mycontris'           => 'મારૂં યોગદાન',
+'mycontris'           => 'યોગદાન',
 'contribsub2'         => '$1 માટે ($2)',
 'nocontribs'          => 'આ પરિમાણને મળતી પરિણામ નથી મળ્યાં',
 'uctop'               => '(છેક ઉપર)',
@@ -2417,7 +2415,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'sp-contributions-submit'              => 'શોધો',
 
 # What links here
-'whatlinkshere'            => 'અહિં શું જોડાય છે',
+'whatlinkshere'            => 'અહી શું જોડાય છે',
 'whatlinkshere-title'      => '"$1" સાથે જોડાયેલાં પાનાં',
 'whatlinkshere-page'       => 'પાનું:',
 'linkshere'                => "નીચેના પાનાઓ '''[[:$1]]''' સાથે જોડાય છે:",
@@ -2432,7 +2430,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'whatlinkshere-hideredirs' => 'અન્યત્ર વાળેલાં પાનાં $1',
 'whatlinkshere-hidetrans'  => '$1 આરપાર સમાવેશનો',
 'whatlinkshere-hidelinks'  => 'કડીઓ $1',
-'whatlinkshere-hideimages' => '$1 ચિત્ર કડીઓ',
+'whatlinkshere-hideimages' => '$1 ફાઇલની કડીઓ',
 'whatlinkshere-filters'    => 'ચાળણી',
 
 # Block/unblock
@@ -2463,7 +2461,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'ipbemailban'                     => 'સભ્યના ઇ-મેલ મોકલવા પર પ્રતિબંધ મૂકો',
 'ipbenableautoblock'              => 'આ સભ્ય દ્વારા વપરાયેલ  IP સરનામા પર અને તત-પશ્ચ્યાત વપરાયેલ IP સરનામા ને સ્વયંચાલિત રીતે રોક લગાવો',
 'ipbsubmit'                       => 'આ સભ્ય પર પ્રતિબંધ મૂકો',
-'ipbother'                        => 'અન્ય સમય',
+'ipbother'                        => 'અન્ય સમય:',
 'ipboptions'                      => '૨ કલાક:2 hours,૧ દિવસ:1 day,૩ દિવસ:3 days,૧ સપ્તાહ:1 week,૨ સપ્તાહ:2 weeks,૧ માસ:1 month,૩ માસ:3 months,૬ માસ:6 months,૧ વર્ષ:1 year,અમર્યાદ:infinite',
 'ipbotheroption'                  => 'અન્ય',
 'ipbotherreason'                  => 'અન્ય/વધારાનું કારણ:',
@@ -2593,13 +2591,13 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 # Move page
 'move-page'                    => '$1 ખસેડો',
 'move-page-legend'             => 'પાનું ખસેડો',
-'movepagetext'                 => "નીચેનું ફોર્મ વાપરવાથી આ પાનાનું નામ બદલાઇ જશે અને તેમાં રહેલી બધી મહિતિ નવા નામે બનેલાં પાનામાં ખસેડાઇ જશે.
+'movepagetext'                 => "નીચેનું ફોર્મ વાપરવાથી આ પાનાનું નામ બદલાઇ જશે અને તેમાં રહેલી બધી માહિતી નવા નામે બનેલાં પાનામાં ખસેડાઇ જશે.
 જુનું પાનું, નવા બનેલા પાના તરફ વાળતું થશે.
 તમે આવા અન્યત્ર વાળેલાં પનાઓને આપોઆપ જ તેના મુળ શીર્ષક સાથે જોડી શકશો.
 જો તમે તેમ કરવા ના ઇચ્છતા હોવ તો, [[Special:DoubleRedirects|બેવડા]] અથવા [[Special:BrokenRedirects|ત્રુટક કડી વાળા]] અન્યત્ર વાળેલા પાનાઓની યાદી ચકાસીને ખાતરી કરી લેશો.
 કડી જે પાના પર લઈ જવી જોઈએ તે જ પાના સાથે જોડે તેની ખાતરી કરી લેવી તે તમારી જવાબદારી છે.
 
-એ વાતની નોંધ લેશો કે, જો તમે પસંદ કરેલા નવા નામ વાળું પાનું અસ્તિત્વમાં હશે તો જુનું પાનું '''નહી ખસે''', સિવાયકે તે પાનું ખાલી હોય અથવા તે પણ અન્યત્ર વાળતું પાનું હોય અને તેનો કોઈ ઇતિહાસ ના હોય.
+એ વાતની નોંધ લેશો કે, જો તમે પસંદ કરેલા નવા નામ વાળું પાનું અસ્તિત્વમાં હશે તો જુનું પાનું '''નહી ખસે''', સિવાયકે તે પણ અન્યત્ર વાળતું પાનું હોય અને તેનો કોઈ ઇતિહાસ ના હોય.
 આનો અર્થ એમ થાય છે કે જો તમે કોઈ તબક્કે ભુલ કરશો તો જે પાનાનું નામ બદલવાનો પ્રયત્ન કરતા હોવ તેને તમે ફરી પાછા જુના નામ પર જ પાછું વાળી શકશો, અને બીજું કે પહેલેથી બનેલા પાનાનું નામ તમે નામફેર કરવા માટે ના વાપરી શકો.
 
 '''ચેતવણી!'''
@@ -3409,7 +3407,7 @@ To perform a selective restoration, check the boxes corresponding to the revisio
 'monthsall'     => 'બધા',
 'limitall'      => 'બધા',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => 'તમારા ઇ-મેઇલ સરનામાની પુષ્ટિ કરો',
 'confirmemail_noemail'      => 'તમારા [[Special:Preferences|user preferences]] માં વૈધ ઈ-મેલ સરનામું નથી.',
 'confirmemail_text'         => '{{SITENAME}} માં તમારા ઇ-મેલ સરનામાની પુષ્ટિ થયેલી હોવી જરૂરી છે.
@@ -3577,7 +3575,7 @@ $5
 'version-mediahandlers'         => 'દ્રશ્યશ્રાવ્ય માધ્યમના ધારક',
 'version-hooks'                 => 'ખૂંટા',
 'version-extension-functions'   => 'વિસ્તારક કાર્ય',
-'version-parser-extensiontags'  => 'પદચ્ચેદ વિસ્તારક નાકા',
+'version-parser-extensiontags'  => 'પૃથક્કરણ વિસ્તારક ટૅગ્સ',
 'version-parser-function-hooks' => 'પદચ્છેદ કાર્ય ખૂંટા',
 'version-hook-name'             => 'ખૂંટાનું નામ્',
 'version-hook-subscribedby'     => 'દ્વ્રારા લાભાન્વીત',
@@ -3626,7 +3624,7 @@ $5
 'specialpages-group-highuse'     => 'વધુ વપરાશ ધરાવતા પાના',
 'specialpages-group-pages'       => 'પાનાની યાદીઓ',
 'specialpages-group-pagetools'   => 'પાના સાધનો',
-'specialpages-group-wiki'        => 'વિકિ માહિતીસંચ અને સાધનો',
+'specialpages-group-wiki'        => 'માહિતી અને સાધનો',
 'specialpages-group-redirects'   => 'ખાસ પાના પરના સમૂહ દિશાનિર્દેશન',
 'specialpages-group-spam'        => 'સ્પેમ સાધનો',
 
@@ -3646,14 +3644,14 @@ $5
 
 # Special:Tags
 'tags'                    => 'વૈધ ફેરફાર પાના',
-'tag-filter'              => '[[Special:Tags|Tag]] ચાળણી',
+'tag-filter'              => '[[Special:Tags|ટૅગ]] ચાળણી',
 'tag-filter-submit'       => 'ચાળણી',
-'tags-title'              => 'નાકા',
-'tags-intro'              => 'આ પાના પર સોફ્ટવેર દ્વારા અંકિત ફેરફારના ચિન્હો અને તેમનો અર્થ બતાવે છે.',
-'tags-tag'                => 'નાકાનું નામ',
-'tags-display-header'     => 'ફેરફારની યાદિમાં અવતરણ',
+'tags-title'              => 'ટૅગ્સ',
+'tags-intro'              => 'આ પાના પર સૉફ્ટવૅર દ્વારા, સંપાદનને ચિહ્નિત કરાયેલાં ટૅગ્સની યાદી અને તેનાં અર્થ છે.',
+'tags-tag'                => 'ટૅગનું નામ',
+'tags-display-header'     => 'ફેરફારની યાદિઓમાં દેખાવ',
 'tags-description-header' => 'અર્થનું પૂર્ણ વિવરણ',
-'tags-hitcount-header'    => 'અંકિત ફેરફાર',
+'tags-hitcount-header'    => 'અંકિત ફેરફારો',
 'tags-edit'               => 'ફેરફાર કરો',
 'tags-hitcount'           => '$1 {{PLURAL:$1|ફેરફાર|ફેરફારો}}',
 
@@ -3721,9 +3719,9 @@ $5
 'logentry-move-move_redir-noredirect' => '$1એ દિશાનિર્દેશન કરીને પાના $3ને $4 પર વાળ્યું પણ પાછળ દિશાનિર્દેશન છોડ્યું નહી',
 'logentry-patrol-patrol'              => '$1 આવૃત્તિ ચિહ્નિત થયેલ પાનાં $4 $3 ચોકી કરવા ફરવા નીકળવું',
 'logentry-patrol-patrol-auto'         => '$1 આપોઆપ ચિહ્નિત ચોકી પહેરો કરવા લાગ્યા આવૃત્તિ પાનું $4 $3',
-'logentry-newusers-newusers'          => '$1એ સભ્ય ખાતું બનાવ્યું',
-'logentry-newusers-create'            => '$1એ સભ્ય ખાતું બનાવ્યું',
-'logentry-newusers-create2'           => '$1એ $3 નામે સભ્ય ખાતું બનાવ્યું',
+'logentry-newusers-newusers'          => 'સભ્ય ખાતું $1 બનાવવામાં આવ્યું',
+'logentry-newusers-create'            => 'સભ્ય ખાતું $1 બનાવવામાં આવ્યું',
+'logentry-newusers-create2'           => 'સભ્ય ખાતું $3 $1 વડે બનાવવામાં આવ્યું',
 'logentry-newusers-autocreate'        => 'એકાઉન્ટ $1 બનાવનાર આપોઆપ',
 'newuserlog-byemail'                  => 'ગુપ્ત સંજ્ઞા ઇ-મેલ દ્વારા મોકલાઇ છે.',
 

@@ -406,13 +406,13 @@ $messages = array(
 # Categories related messages
 'pagecategories'                 => '{{PLURAL:$1|Thể loại|Thể loại}}',
 'category_header'                => 'Các trang trong thể loại “$1”',
-'subcategories'                  => 'Tiểu thể loại',
+'subcategories'                  => 'Thể loại con',
 'category-media-header'          => 'Các tập tin trong thể loại “$1”',
 'category-empty'                 => "''Thể loại này hiện không có trang hay tập tin nào.''",
 'hidden-categories'              => '{{PLURAL:$1|Thể loại ẩn|Thể loại ẩn}}',
 'hidden-category-category'       => 'Thể loại ẩn',
-'category-subcat-count'          => 'Thể loại này gồm {{PLURAL:$2|tiểu thể loại sau|{{PLURAL:$1||$1}} tiểu thể loại sau, trên tổng số $2 tiểu thể loại}}.',
-'category-subcat-count-limited'  => 'Thể loại này gồm {{PLURAL:$1|tiểu thể loại|$1 tiểu thể loại}} sau.',
+'category-subcat-count'          => 'Thể loại này gồm {{PLURAL:$2|thể loại con sau|{{PLURAL:$1||$1}} thể loại con sau, trên tổng số $2 thể loại con}}.',
+'category-subcat-count-limited'  => 'Thể loại này gồm {{PLURAL:$1|thể loại con|$1 thể loại con}} sau.',
 'category-article-count'         => '{{PLURAL:$2|Thể loại này gồm trang sau.|{{PLURAL:$1|Trang|$1 trang}} sau nằm trong thể loại này, trên tổng số $2 trang.}}',
 'category-article-count-limited' => '{{PLURAL:$1|Trang|$1 trang}} sau nằm trong thể loại hiện hành.',
 'category-file-count'            => '{{PLURAL:$2|Thể loại này gồm tập tin sau.|{{PLURAL:$1|Tập tin|$1 tập tin}} sau nằm trong thể loại này, trong tổng số $2 tập tin.}}',
@@ -428,7 +428,7 @@ $messages = array(
 'cancel'        => 'Hủy bỏ',
 'moredotdotdot' => 'Thêm nữa…',
 'mypage'        => 'Trang cá nhân',
-'mytalk'        => 'Thảo luận',
+'mytalk'        => 'Tin nhắn',
 'anontalk'      => 'Thảo luận với IP này',
 'navigation'    => 'Xem nhanh',
 'and'           => '&#32;và',
@@ -502,7 +502,7 @@ $messages = array(
 'userpage'          => 'Xem trang thành viên',
 'projectpage'       => 'Xem trang dự án',
 'imagepage'         => 'Xem trang tập tin',
-'mediawikipage'     => 'Thông báo giao diện',
+'mediawikipage'     => 'Thông điệp giao diện',
 'templatepage'      => 'Trang bản mẫu',
 'viewhelppage'      => 'Trang trợ giúp',
 'categorypage'      => 'Trang thể loại',
@@ -542,8 +542,8 @@ $1',
 'policy-url'           => 'Project:Quy định và hướng dẫn',
 'portal'               => 'Cộng đồng',
 'portal-url'           => 'Project:Cộng đồng',
-'privacy'              => 'Chính sách về sự riêng tư',
-'privacypage'          => 'Project:Chính sách về sự riêng tư',
+'privacy'              => 'Quy định quyền riêng tư',
+'privacypage'          => 'Project:Quy định quyền riêng tư',
 
 'badaccess'        => 'Lỗi về quyền truy cập',
 'badaccess-group0' => 'Bạn không được phép thực hiện thao tác này.',
@@ -591,7 +591,7 @@ $1',
 'nstab-special'   => 'Trang đặc biệt',
 'nstab-project'   => 'Dự án',
 'nstab-image'     => 'Tập tin',
-'nstab-mediawiki' => 'Thông báo',
+'nstab-mediawiki' => 'Thông điệp',
 'nstab-template'  => 'Bản mẫu',
 'nstab-help'      => 'Trợ giúp',
 'nstab-category'  => 'Thể loại',
@@ -662,11 +662,11 @@ Truy vấn: $2',
 'viewsource-title'     => 'Xem mã nguồn của $1',
 'actionthrottled'      => 'Thao tác bị giới hạn',
 'actionthrottledtext'  => 'Để nhằm tránh spam, bạn không thể thực hiện thao tác này quá nhiều lần trong một thời gian ngắn.  Xin hãy chờ vài phút trước khi thực hiện lại.',
-'protectedpagetext'    => 'Trang này đã bị khóa không cho sửa đổi.',
+'protectedpagetext'    => 'Trang này đã bị khóa không cho sửa đổi hoặc tác động khác.',
 'viewsourcetext'       => 'Bạn vẫn có thể xem và chép xuống mã nguồn của trang này:',
 'viewyourtext'         => "Bạn vẫn có thể xem và chép xuống mã nguồn '''các sửa đổi của bạn''' tại trang này:",
-'protectedinterface'   => 'Trang này cung cấp một thông báo trong giao diện phần mềm, và bị khóa để tránh phá hoại. Để bổ sung hoặc thay đổi bản dịch ở bất cứ wiki nào, xin vui lòng đóng góp vào [//translatewiki.net/wiki/Main_Page?setlang=vi translatewiki.net], dự án bản địa hóa của MediaWiki.',
-'editinginterface'     => "'''Lưu ý:''' Bạn đang sửa chữa một trang dùng để cung cấp thông báo giao diện cho phần mềm. Những thay đổi tại trang này sẽ ảnh hưởng đến giao diện của rất nhiều người dùng wiki này. Để bổ sung hoặc thay đổi bản dịch ở bất cứ wiki nào, xin vui lòng đóng góp vào [//translatewiki.net/wiki/Main_Page?setlang=vi translatewiki.net], dự án bản địa hóa của MediaWiki.",
+'protectedinterface'   => 'Trang này cung cấp một thông điệp trong giao diện phần mềm, và bị khóa để tránh phá hoại. Để bổ sung hoặc thay đổi bản dịch ở bất cứ wiki nào, xin vui lòng đóng góp vào [//translatewiki.net/wiki/Main_Page?setlang=vi translatewiki.net], dự án bản địa hóa của MediaWiki.',
+'editinginterface'     => "'''Lưu ý:''' Bạn đang sửa chữa một trang dùng để cung cấp thông điệp giao diện cho phần mềm. Những thay đổi tại trang này sẽ ảnh hưởng đến giao diện của rất nhiều người dùng wiki này. Để bổ sung hoặc thay đổi bản dịch ở bất cứ wiki nào, xin vui lòng đóng góp vào [//translatewiki.net/wiki/Main_Page?setlang=vi translatewiki.net], dự án bản địa hóa của MediaWiki.",
 'sqlhidden'            => '(đã giấu truy vấn SQL)',
 'cascadeprotected'     => 'Trang này đã bị khóa không cho sửa đổi, vì nó được nhúng vào {{PLURAL:$1|trang|những trang}} đã bị khóa với tùy chọn “khóa theo tầng” được kích hoạt:
 $2',
@@ -760,7 +760,7 @@ Hãy nhập một địa chỉ có định dạng đúng hoặc bỏ trống ô 
 'createaccount-title'        => 'Tài khoản mới tại {{SITENAME}}',
 'createaccount-text'         => 'Ai đó đã tạo một tài khoản với tên $2 tại {{SITENAME}} ($4). Mật khẩu của "$2" là "$3". Bạn nên đăng nhập và đổi mật khẩu ngay bây giờ.
 
-Xin hãy bỏ qua thông báo này nếu tài khoản này không phải do bạn tạo ra.',
+Xin hãy bỏ qua thông điệp này nếu tài khoản này không phải do bạn tạo ra.',
 'usernamehasherror'          => 'Tên người dùng không thể chứa dấu rào',
 'login-throttled'            => 'Bạn đã thử quá nhiều mật khẩu của tài khoản này.
 Xin hãy đợi chốc lát rồi thử lại.',
@@ -768,7 +768,7 @@ Xin hãy đợi chốc lát rồi thử lại.',
 'loginlanguagelabel'         => 'Ngôn ngữ: $1',
 'suspicious-userlogout'      => 'Đã bỏ qua yêu cầu đăng xuất bạn, hình như được gửi từ trình duyệt hoặc máy proxy nhớ đệm hư.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Lỗi không rõ trong hàm PHP mail()',
 'user-mail-no-addy'      => 'Không có địa chỉ để gửi thư điện tử đến',
 
@@ -792,7 +792,7 @@ Có thể bạn đã thay đổi thành công mật khẩu của mình hoặc đ
 
 # Special:PasswordReset
 'passwordreset'                    => 'Tái tạo mật khẩu',
-'passwordreset-text'               => 'Hãy điền mẫu đơn này để nhận thư điện tử nhắc nhở về thông tin tài khoản của bạn.',
+'passwordreset-text'               => 'Hãy điền mẫu đơn này để tái tạo mật khẩu.',
 'passwordreset-legend'             => 'Tái tạo mật khẩu',
 'passwordreset-disabled'           => 'Chức năng tái tạo mật khẩu đã bị tắt trên wiki này.',
 'passwordreset-pretext'            => '{{PLURAL:$1||Nhập một trong những thông tin được yêu cầu ở dưới}}',
@@ -802,33 +802,30 @@ Có thể bạn đã thay đổi thành công mật khẩu của mình hoặc đ
 'passwordreset-capture-help'       => 'Nếu bạn kiểm hộp này, bạn sẽ xem thư điện tử có mật khẩu tạm lúc khi nó được gửi cho người dùng.',
 'passwordreset-email'              => 'Địa chỉ thư điện tử:',
 'passwordreset-emailtitle'         => 'Thông tin tài khoản tại {{SITENAM}}',
-'passwordreset-emailtext-ip'       => 'Ai đó (có thể là bạn, từ địa chỉ IP $1) đã yêu cầu một lời
-nhắc nhở các thông tin tài khoản của bạn tại {{SITENAME}} ($4).
-{{PLURAL:$3|Tài khoản|Các tài khoản}} ở dưới có đặt địa chỉ thư điện tử này:
+'passwordreset-emailtext-ip'       => 'Ai đó (có thể là bạn, từ địa chỉ IP $1) đã yêu cầu tái tạo mật khẩu của bạn 
+tại {{SITENAME}} ($4). {{PLURAL:$3|Tài khoản|Các tài khoản}} dưới đây gắn liền 
+với địa chỉ thư điện tử này:
 
 $2
 
 {{PLURAL:$3|Mật khẩu|Các mật khẩu}} tạm này sẽ hết hạn trong vòng {{PLURAL:$5|một ngày|$5 ngày}}. Bạn nên đăng nhập
 ngay bây giờ để chọn mật khẩu mới. Nếu bạn không phải là người yêu cầu
-đặt lại mật khẩu hoặc đã nhớ lại mật khẩu hiện hành, và bạn không còn
-muốn thay đổi nó, xin vui lòng kệ thông điệp này và tiếp tục sử dụng
+hoặc đã nhớ lại mật khẩu hiện hành, và bạn không còn
+muốn thay đổi nó, xin vui lòng bỏ qua thông điệp này và tiếp tục sử dụng
 mật khẩu cũ.',
-'passwordreset-emailtext-user'     => 'Thành viên $1 tại {{SITENAME}} đã yêu cầu một lời nhắc nhở
-các thông tin tài khoản của bạn tại {{SITENAME}} ($4). {{PLURAL:$3|Tài
-khoản|Các
-tài khoản}} ở dưới có đặt địa chỉ thư điện tử này:
+'passwordreset-emailtext-user'     => 'Thành viên $1 tại {{SITENAME}} đã yêu cầu tái tạo mật khẩu tại {{SITENAME}} 
+($4). {{PLURAL:$3|Tài khoản|Các tài khoản}} dưới đây gắn liền với địa chỉ thư điện tử này:
 
 $2
 
 {{PLURAL:$3|Mật khẩu|Các mật khẩu}} tạm này sẽ hết hạn trong vòng {{PLURAL:$5|một ngày|$5 ngày}}. Bạn nên đăng nhập
-ngay bây giờ để chọn mật khẩu mới. Nếu bạn không phải là người yêu cầu
-đặt lại mật khẩu hoặc đã nhớ lại mật khẩu hiện hành, và bạn không còn
-muốn thay đổi nó, xin vui lòng kệ thông điệp này và tiếp tục sử dụng
+ngay bây giờ để chọn mật khẩu mới. Nếu bạn không phải là người yêu cầu hoặc đã nhớ lại mật khẩu hiện hành, và bạn không còn
+muốn thay đổi nó, xin vui lòng bỏ qua thông điệp này và tiếp tục sử dụng
 mật khẩu cũ.',
 'passwordreset-emailelement'       => 'Tên người dùng: $1
 Mật khẩu tạm: $2',
-'passwordreset-emailsent'          => 'Đã gửi thư điện tử nhắc nhở.',
-'passwordreset-emailsent-capture'  => 'Thư điện tử nhắc nhở ở dưới đã được gửi:',
+'passwordreset-emailsent'          => 'Đã gửi thư điện tử để tái tạo mật khẩu.',
+'passwordreset-emailsent-capture'  => 'Thư điện tử để tái tạo mật khẩu đã được gửi, nội dung như sau.',
 'passwordreset-emailerror-capture' => 'Không thể gửi thư điện tử nhắc nhở ở dưới cho người dùng: $1',
 
 # Special:ChangeEmail
@@ -924,7 +921,7 @@ Có thể nó đã bị di chuyển hoặc xóa đi trong khi bạn đang xem tr
 
 Có thể đổi mật khẩu cho tài khoản mới này tại trang ''[[Special:ChangePassword|đổi mật khẩu]]'' sau khi đã đăng nhập.",
 'newarticle'                       => '(Mới)',
-'newarticletext'                   => "Bạn đi đến đây từ một liên kết đến một trang chưa tồn tại. Để tạo trang, hãy bắt đầu gõ vào ô bên dưới (xem [[{{MediaWiki:Helppage}}|trang trợ giúp]] để có thêm thông tin). Nếu bạn đến đây do nhầm lẫn, chỉ cần nhấn vào nút '''Back''' trên trình duyệt của bạn.",
+'newarticletext'                   => "Bạn đi đến đây từ một liên kết đến một trang chưa tồn tại. Để tạo trang, hãy bắt đầu gõ vào ô bên dưới (xem [[{{MediaWiki:Helppage}}|trang trợ giúp]] để có thêm thông tin). Nếu bạn đến đây do nhầm lẫn, chỉ cần nhấn vào nút '''Lùi''' (''Back'') trong trình duyệt của bạn.",
 'anontalkpagetext'                 => "----''Đây là trang thảo luận của một người dùng vô danh chưa tạo tài khoản hoặc có tài khoản nhưng không đăng nhập.
 Do đó chúng ta phải dùng một dãy số gọi là địa chỉ IP để xác định anh/chị ta.
 Một địa chỉ IP như vậy có thể có nhiều người cùng dùng chung.
@@ -939,9 +936,9 @@ hoặc <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE
 'userpage-userdoesnotexist-view'   => 'Chưa có tài khoản với tên “$1”.',
 'blocked-notice-logextract'        => 'Người dùng này hiện đang bị cấm sửa đổi. Nhật trình cấm gần nhất được ghi ở dưới để tiện theo dõi:',
 'clearyourcache'                   => "'''Chú ý:''' Sau khi lưu trang, có thể bạn sẽ phải xóa bộ nhớ đệm của trình duyệt để xem các thay đổi.
-* '''Firefox / Safari:''' Giữ phím ''Shift'' trong khi nhấn ''Tải lại'' (''Reload''), hoặc nhấn tổ hợp ''Ctrl-F5'' hay ''Ctrl-R'' (⌘R trên Mac)
+* '''Firefox / Safari:''' Nhấn giữ phím ''Shift'' trong khi nhấn ''Tải lại'' (''Reload''), hoặc nhấn tổ hợp ''Ctrl-F5'' hay ''Ctrl-R'' (⌘R trên Mac)
 * '''Google Chrome:''' Nhấn tổ hợp ''Ctrl-Shift-R'' (⇧⌘R trên Mac)
-* '''Internet Explorer:''' Giữ phím ''Ctrl'' trong khi nhấn ''Làm tươi'' (''Refresh''), hoặc nhấn tổ hợp ''Ctrl-F5''
+* '''Internet Explorer:''' Nhấn giữ phím ''Ctrl'' trong khi nhấn ''Làm tươi'' (''Refresh''), hoặc nhấn tổ hợp ''Ctrl-F5''
 * '''Opera:''' Xóa bộ nhớ đệm trong ''Công cụ → Sở thích'' (''Tools → Preferences'')",
 'usercssyoucanpreview'             => "'''Mẹo:''' Sử dụng nút “{{int:showpreview}}” để kiểm thử bản CSS của bạn trước khi lưu trang.",
 'userjsyoucanpreview'              => "'''Mẹo:''' Sử dụng nút “{{int:showpreview}}” để kiểm thử bản JS của bạn trước khi lưu trang.",
@@ -958,9 +955,9 @@ Nó chưa được lưu!'''",
 'previewnote'                      => "'''Đây chỉ mới là xem thử.'''
 Các thay đổi của bạn vẫn chưa được lưu!",
 'previewconflict'                  => 'Phần xem thử này là kết quả của văn bản trong vùng soạn thảo phía trên và nó sẽ xuất hiện như vậy nếu bạn chọn lưu trang.',
-'session_fail_preview'             => "'''Những sửa đổi của bạn chưa được lưu giữ do mất dữ liệu về phiên làm việc.
+'session_fail_preview'             => "'''Rất tiếc, những sửa đổi của bạn chưa được lưu giữ do mất dữ liệu về phiên làm việc.'''
 Xin hãy thử lần nữa.
-Nếu vẫn không thành công, hãy thử [[Special:UserLogout|đăng xuất]] rồi đăng nhập lại.'''",
+Nếu vẫn không thành công, hãy thử [[Special:UserLogout|đăng xuất]] rồi đăng nhập lại.",
 'session_fail_preview_html'        => "'''Những sửa đổi của bạn chưa được lưu giữ do mất dữ liệu về phiên làm việc.'''
 
 ''Do {{SITENAME}} cho phép dùng mã HTML, trang xem thử được ẩn đi để đề phòng bị tấn công bằng JavaScript.''
@@ -1042,10 +1039,10 @@ Nó nên ít hơn $2 {{PLURAL:$2|lần gọi|lần gọi}}, hiện giờ đang l
 'expensive-parserfunction-category'       => 'Trang có quá nhiều lời gọi hàm cú pháp cần mức độ xử lý cao',
 'post-expand-template-inclusion-warning'  => 'Cảnh báo: Kích thước bản mẫu nhúng vào quá lớn.
 Một số bản mẫu sẽ không được đưa vào.',
-'post-expand-template-inclusion-category' => 'Những trang có kích thước bản mẫu nhúng vào vượt quá giới hạn cho phép',
-'post-expand-template-argument-warning'   => 'Cảnh báo: Trang này có chứa ít nhất một giá trị bản mẫu có kích thước bung ra quá lớn.
-Những giá trị này sẽ bị bỏ đi.',
-'post-expand-template-argument-category'  => 'Những trang có chứa những giá trị bản mẫu bị loại bỏ',
+'post-expand-template-inclusion-category' => 'Trang có kích thước bản mẫu nhúng vào vượt quá giới hạn cho phép',
+'post-expand-template-argument-warning'   => 'Cảnh báo: Trang này có chứa ít nhất một tham số bản mẫu có kích thước bung ra quá lớn.
+Những tham số này sẽ bị bỏ đi.',
+'post-expand-template-argument-category'  => 'Trang có chứa tham số bản mẫu bị loại bỏ',
 'parser-template-loop-warning'            => 'Phát hiện bản mẫu lặp vòng: [[$1]]',
 'parser-template-recursion-depth-warning' => 'Bản mẫu đã vượt quá giới hạn về độ sâu đệ quy ($1)',
 'language-converter-depth-warning'        => 'Đã vượt quá giới hạn độ sâu của bộ chuyển đổi ngôn ngữ ($1)',
@@ -1077,9 +1074,8 @@ Lý do được $3 đưa ra là ''$2''",
 'last'                   => 'trước',
 'page_first'             => 'đầu',
 'page_last'              => 'cuối',
-'histlegend'             => 'Chọn so sánh: đánh dấu để chọn các phiên bản để so sánh rồi nhấn enter hoặc nút ở dưới.<br />
-Chú giải: (hiện) = khác với phiên bản hiện hành,
-(trước) = khác với phiên bản trước, n = sửa đổi nhỏ.',
+'histlegend'             => "Chọn so sánh: Đánh dấu để chọn các phiên bản để so sánh rồi nhấn Enter hoặc nút ở dưới.<br />
+Chú giải: '''({{int:cur}})''' = khác với phiên bản hiện hành, '''({{int:last}})''' = khác với phiên bản trước, '''{{int:minoreditletter}}''' = sửa đổi nhỏ.",
 'history-fieldset-title' => 'Tìm trong lịch sử',
 'history-show-deleted'   => 'Chỉ bị xóa',
 'histfirst'              => 'Cũ nhất',
@@ -1270,7 +1266,7 @@ Xin hãy bảo đảm giữ vững tính liên tục của lịch sử trang.',
 'searchprofile-everything-tooltip' => 'Tìm tất cả nội dung (gồm cả các trang thảo luận)',
 'searchprofile-advanced-tooltip'   => 'Tìm trong không gian tên tùy chọn',
 'search-result-size'               => '$1 ({{PLURAL:$2|1 từ|$2 từ}})',
-'search-result-category-size'      => '{{PLURAL:$1|1 trang thành viên|$1 trang thành viên}} ({{PLURAL:$2|1 tiểu thể loại|$2 tiểu thể loại}}, {{PLURAL:$3|1 tập tin|$3 tập tin}})',
+'search-result-category-size'      => '$1 trang thành viên ($2 thể loại con, $3 tập tin)',
 'search-result-score'              => 'Độ phù hợp: $1%',
 'search-redirect'                  => '(đổi hướng $1)',
 'search-section'                   => '(đề mục $1)',
@@ -1281,7 +1277,7 @@ Xin hãy bảo đảm giữ vững tính liên tục của lịch sử trang.',
 'search-mwsuggest-enabled'         => 'có gợi ý',
 'search-mwsuggest-disabled'        => 'không có gợi ý',
 'search-relatedarticle'            => 'Liên quan',
-'mwsuggest-disable'                => 'Tắt gợi ý bằng AJAX',
+'mwsuggest-disable'                => 'Tắt gợi ý tìm kiếm',
 'searcheverything-enable'          => 'Tìm trong tất cả không gian tên',
 'searchrelated'                    => 'có liên quan',
 'searchall'                        => 'tất cả',
@@ -1394,7 +1390,7 @@ Không có thể lùi lại tác động này.',
 'yourrealname'                  => 'Tên thật:',
 'yourlanguage'                  => 'Ngôn ngữ:',
 'yourvariant'                   => 'Dạng chữ của nội dung:',
-'prefs-help-variant'            => 'Phép chính tả hoặc bộ chữ để hiển thị nội dung của các trang tại wiki này.',
+'prefs-help-variant'            => 'Bộ chữ để hiển thị nội dung của các trang tại wiki này.',
 'yournick'                      => 'Chữ ký:',
 'prefs-help-signature'          => 'Các ý kiến tại trang thảo luận nên được ký tên bằng cách gõ "<nowiki>~~~~</nowiki>", nó sẽ được đổi thành chữ ký của bạn cùng với thời điểm thảo luận.',
 'badsig'                        => 'Chữ ký không hợp lệ; hãy kiểm tra thẻ HTML.',
@@ -1427,7 +1423,7 @@ Nếu bạn đồng ý cung cấp, nó sẽ dùng để ghi nhận công lao c�
 'prefs-displaywatchlist'        => 'Tùy chọn hiển thị',
 'prefs-diffs'                   => 'Khác biệt',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'Có vẻ hợp lệ',
 'email-address-validity-invalid' => 'Yêu cầu địa chỉ hợp lệ!',
 
@@ -2053,9 +2049,9 @@ Các mục <del>bị gạch bỏ</del> là các trang đã được sửa.',
 'mostlinked'              => 'Trang được liên kết đến nhiều nhất',
 'mostlinkedcategories'    => 'Thể loại có nhiều trang nhất',
 'mostlinkedtemplates'     => 'Bản mẫu được liên kết đến nhiều nhất',
-'mostcategories'          => 'Các trang có nhiều thể loại nhất',
+'mostcategories'          => 'Trang có nhiều thể loại nhất',
 'mostimages'              => 'Tập tin được liên kết đến nhiều nhất',
-'mostrevisions'           => 'Các trang được sửa đổi nhiều lần nhất',
+'mostrevisions'           => 'Trang được sửa đổi nhiều lần nhất',
 'prefixindex'             => 'Tất cả các trang trùng với tiền tố',
 'prefixindex-namespace'   => 'Tất cả các trang trùng với tiền tố (không gian $1)',
 'shortpages'              => 'Trang ngắn nhất',
@@ -2067,7 +2063,7 @@ Các mục <del>bị gạch bỏ</del> là các trang đã được sửa.',
 'protectedpages-cascade'  => 'Chỉ hiển thị khóa theo tầng',
 'protectedpagestext'      => 'Các trang này bị khóa không cho sửa đổi hay di chuyển',
 'protectedpagesempty'     => 'Hiện không có trang nào bị khóa với các thông số này.',
-'protectedtitles'         => 'Các tựa trang được bảo vệ',
+'protectedtitles'         => 'Tên trang bị khóa',
 'protectedtitlestext'     => 'Các tựa trang sau đây đã bị khóa không cho tạo mới',
 'protectedtitlesempty'    => 'Không có tựa trang nào bị khóa với các thông số như vậy.',
 'listusers'               => 'Danh sách thành viên',
@@ -2075,14 +2071,14 @@ Các mục <del>bị gạch bỏ</del> là các trang đã được sửa.',
 'listusers-creationsort'  => 'Xếp theo ngày khởi tạo',
 'usereditcount'           => '$1 {{PLURAL:$1|sửa đổi|sửa đổi}}',
 'usercreated'             => '{{GENDER:$3}}mở $1 lúc $2',
-'newpages'                => 'Các trang mới nhất',
+'newpages'                => 'Trang mới',
 'newpages-username'       => 'Tên người dùng:',
-'ancientpages'            => 'Các trang cũ nhất',
+'ancientpages'            => 'Trang cũ nhất',
 'move'                    => 'Di chuyển',
 'movethispage'            => 'Di chuyển trang này',
 'unusedimagestext'        => 'Các tập tin sau tồn tại nhưng chưa được nhúng vào trang nào.
 Xin lưu ý là các trang Web bên ngoài có thể liên kết đến một tập tin ở đây qua một địa chỉ URL trực tiếp, do đó nhiều tập tin vẫn được liệt kê ở đây dù có thể nó đang được sử dụng.',
-'unusedcategoriestext'    => 'Các trang thể loại này tồn tại mặc dù không có trang hay tiểu thể loại nào thuộc về nó.',
+'unusedcategoriestext'    => 'Các trang thể loại này tồn tại mặc dù không có trang hay thể loại con nào thuộc về nó.',
 'notargettitle'           => 'Chưa có mục tiêu',
 'notargettext'            => 'Xin chỉ rõ trang hoặc thành viên cần thực hiện tác vụ.',
 'nopagetitle'             => 'Không có trang đích nào như vậy',
@@ -2158,7 +2154,7 @@ Xem thêm [[Special:WantedCategories|thể loại cần thiết]].',
 # Special:ActiveUsers
 'activeusers'            => 'Danh sách thành viên tích cực',
 'activeusers-intro'      => 'Dánh sách này liệt kê các thành viên đã hoạt động cách nào đó trong $1 ngày qua.',
-'activeusers-count'      => '$1 {{PLURAL:$1|sửa đổi|sửa đổi}} trong {{PLURAL:$3|ngày|$3 ngày}} gần đây',
+'activeusers-count'      => '$1 tác vụ trong {{PLURAL:$3|ngày|$3 ngày}} qua',
 'activeusers-from'       => 'Hiển thị thành viên bắt đầu từ:',
 'activeusers-hidebots'   => 'Ẩn robot',
 'activeusers-hidesysops' => 'Ẩn bảo quản viên',
@@ -2187,7 +2183,7 @@ Có [[{{MediaWiki:Listgrouprights-helppage}}|thông tin thêm]] về từng nhó
 'listgrouprights-addgroup-self-all'    => 'Có thể đưa tài khoản của chính mình vào tất cả các nhóm',
 'listgrouprights-removegroup-self-all' => 'Có thể loại tài khoản của chính mình ra khỏi tất cả các nhóm',
 
-# E-mail user
+# Email user
 'mailnologin'          => 'Không có địa chỉ gửi thư',
 'mailnologintext'      => 'Bạn phải [[Special:UserLogin|đăng nhập]] và khai báo một địa chỉ thư điện tử hợp lệ trong phần [[Special:Preferences|tùy chọn cá nhân]] thì mới gửi được thư cho người khác.',
 'emailuser'            => 'Gửi thư cho người này',
@@ -2219,11 +2215,11 @@ Có [[{{MediaWiki:Listgrouprights-helppage}}|thông tin thêm]] về từng nhó
 'emailuserfooter'      => 'Thư điện tử này được $1 gửi đến $2 thông qua chức năng “Gửi thư cho người này” của {{SITENAME}}.',
 
 # User Messenger
-'usermessage-summary' => 'Đang để lại thông báo hệ thống.',
-'usermessage-editor'  => 'Trình thông báo hệ thống',
+'usermessage-summary' => 'Đang để lại thông điệp hệ thống.',
+'usermessage-editor'  => 'Trình thông điệp hệ thống',
 
 # Watchlist
-'watchlist'            => 'Trang tôi theo dõi',
+'watchlist'            => 'Danh sách theo dõi',
 'mywatchlist'          => 'Trang theo dõi',
 'watchlistfor2'        => 'Của $1 $2',
 'nowatchlist'          => 'Danh sách theo dõi của bạn không có gì.',
@@ -2231,8 +2227,8 @@ Có [[{{MediaWiki:Listgrouprights-helppage}}|thông tin thêm]] về từng nhó
 'watchnologin'         => 'Chưa đăng nhập',
 'watchnologintext'     => 'Bạn phải [[Special:UserLogin|đăng nhập]] mới sửa đổi được danh sách theo dõi.',
 'addwatch'             => 'Thêm vào danh sách theo dõi',
-'addedwatchtext'       => "Trang “[[:$1]]” đã vào [[Special:Watchlist|danh sách theo dõi]] của bạn.
-Những sửa đổi đối với trang này và trang thảo luận của nó sẽ được liệt kê và '''tô đậm''' trong [[Special:RecentChanges|danh sách các “Thay đổi gần đây”]] để dễ nhận ra.",
+'addedwatchtext'       => 'Trang “[[:$1]]” đã vào [[Special:Watchlist|danh sách theo dõi]] của bạn.
+Những sửa đổi đối với trang này và trang thảo luận của nó sẽ được liệt kê ở đấy.',
 'removewatch'          => 'Gỡ khỏi danh sách theo dõi',
 'removedwatchtext'     => 'Trang “[[:$1]]” đã được đưa ra khỏi [[Special:Watchlist|danh sách theo dõi]] của bạn.',
 'watch'                => 'Theo dõi',
@@ -2379,9 +2375,9 @@ hiện tại của trang '''$1''':",
 Đây là trạng thái hiện tại của trang '''$1''':",
 'protect-cascadeon'           => 'Trang này hiện bị khóa vì nó được nhúng vào {{PLURAL:$1|những trang|trang}} dưới đây bị khóa với tùy chọn “khóa theo tầng” được kích hoạt. Bạn có thể đổi mức độ khóa của trang này, nhưng nó sẽ không ảnh hưởng đến việc khóa theo tầng.',
 'protect-default'             => 'Cho phép mọi thành viên',
-'protect-fallback'            => 'Cần quyền “$1”',
-'protect-level-autoconfirmed' => 'Cấm thành viên mới và người dùng chưa mở tài khoản',
-'protect-level-sysop'         => 'Cấm mọi thành viên (trừ bảo quản viên)',
+'protect-fallback'            => 'Chỉ cho phép những người dùng có quyền “$1”',
+'protect-level-autoconfirmed' => 'Chỉ cho phép các thành viên tự động xác nhận',
+'protect-level-sysop'         => 'Chỉ cho phép các bảo quản viên',
 'protect-summary-cascade'     => 'khóa theo tầng',
 'protect-expiring'            => 'hết hạn $1 (UTC)',
 'protect-expiring-local'      => 'hết hạn $1',
@@ -2580,8 +2576,8 @@ Xem lại những lần cấm tại [[Special:BlockList|danh sách cấm]].',
 'unblocked'                       => '[[User:$1|$1]] đã hết bị cấm',
 'unblocked-range'                 => '$1 đã được bỏ cấm',
 'unblocked-id'                    => '$1 đã hết bị cấm',
-'blocklist'                       => 'Những người dùng bị cấm',
-'ipblocklist'                     => 'Những người dùng bị cấm',
+'blocklist'                       => 'Người dùng bị cấm',
+'ipblocklist'                     => 'Người dùng bị cấm',
 'ipblocklist-legend'              => 'Tìm một thành viên bị cấm',
 'blocklist-userblocks'            => 'Ẩn tác vụ cấm tài khoản',
 'blocklist-tempblocks'            => 'Ẩn tác vụ cấm có thời hạn',
@@ -2680,7 +2676,7 @@ Bạn có thể cập nhật tự động các trang đổi hướng đến tên
 Nếu bạn chọn không cập nhật, hãy nhớ kiểm tra [[Special:DoubleRedirects|đổi hướng kép]] hoặc [[Special:BrokenRedirects|đổi hướng đến trang không tồn tại]].
 Bạn phải chịu trách nhiệm đảm bảo các liên kết đó tiếp tục trỏ đến nơi chúng cần đến.
 
-Chú ý rằng trang sẽ '''không''' bị di chuyển nếu đã có một trang tại tên mới, trừ khi nó rỗng hoặc là trang đổi hướng và không có lịch sử sửa đổi trước đây.
+Chú ý rằng trang sẽ '''không''' bị di chuyển nếu đã có một trang tại tên mới, trừ khi trang tại tên mới là trang đổi hướng và không có lịch sử sửa đổi trước đây.
 Điều này có nghĩa là bạn có thể đổi tên trang lại như cũ nếu bạn có nhầm lẫn, và bạn không thể ghi đè lên một trang đã có sẵn.
 
 '''CẢNH BÁO!'''
@@ -2786,12 +2782,12 @@ Trong trường hợp sau bạn cũng có thể dùng một liên kết, ví d�
 'export-pagelinks'  => 'Gồm cả các trang liên kết sâu đến:',
 
 # Namespace 8 related
-'allmessages'                   => 'Thông báo hệ thống',
-'allmessagesname'               => 'Tên thông báo',
+'allmessages'                   => 'Thông điệp hệ thống',
+'allmessagesname'               => 'Tên thông điệp',
 'allmessagesdefault'            => 'Nội dung mặc định',
 'allmessagescurrent'            => 'Nội dung hiện thời',
-'allmessagestext'               => 'Đây là toàn bộ thông báo hệ thống có trong không gian tên MediaWiki.
-Mời vào [//www.mediawiki.org/wiki/Localisation Địa phương hóa MediaWiki]  và [//translatewiki.net translatewiki.net] nếu bạn muốn đóng góp dịch chung cả MediaWiki.',
+'allmessagestext'               => 'Đây là toàn bộ thông điệp hệ thống có trong không gian tên MediaWiki.
+Mời vào [//www.mediawiki.org/wiki/Localisation?uselang=vi Địa phương hóa MediaWiki] và [//translatewiki.net/wiki/?uselang=vi translatewiki.net] nếu bạn muốn đóng góp dịch chung cả MediaWiki.',
 'allmessagesnotsupportedDB'     => "Trang này không dùng được vì biến '''\$wgUseDatabaseMessages''' đã bị tắt.",
 'allmessages-filter-legend'     => 'Bộ lọc',
 'allmessages-filter'            => 'Lọc theo tình trạng sửa đổi:',
@@ -2891,10 +2887,10 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'tooltip-pt-anonlogin'                => 'Không đăng nhập vẫn tham gia được, tuy nhiên đăng nhập sẽ lợi hơn.',
 'tooltip-pt-logout'                   => 'Đăng xuất',
 'tooltip-ca-talk'                     => 'Thảo luận về trang này',
-'tooltip-ca-edit'                     => 'Bạn có thể sửa được trang này. Xin xem thử trước khi lưu.',
+'tooltip-ca-edit'                     => 'Bạn có thể sửa được trang này! (Xin vui lòng xem thử trước khi lưu.)',
 'tooltip-ca-addsection'               => 'Bắt đầu một đề mục mới',
 'tooltip-ca-viewsource'               => 'Trang này được khóa. Bạn có thể xem mã nguồn.',
-'tooltip-ca-history'                  => 'Những phiên bản cũ của trang này.',
+'tooltip-ca-history'                  => 'Các phiên bản cũ của trang này',
 'tooltip-ca-protect'                  => 'Khóa trang này lại',
 'tooltip-ca-unprotect'                => 'Thay đổi mức khóa của trang này',
 'tooltip-ca-delete'                   => 'Xóa trang này',
@@ -2923,13 +2919,13 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'tooltip-t-specialpages'              => 'Danh sách các trang đặc biệt',
 'tooltip-t-print'                     => 'Bản để in ra của trang',
 'tooltip-t-permalink'                 => 'Liên kết thường trực đến phiên bản này của trang',
-'tooltip-ca-nstab-main'               => 'Xem trang nội dung này',
-'tooltip-ca-nstab-user'               => 'Xem trang về người này',
+'tooltip-ca-nstab-main'               => 'Xem trang nội dung',
+'tooltip-ca-nstab-user'               => 'Xem trang cá nhân',
 'tooltip-ca-nstab-media'              => 'Xem trang phương tiện',
 'tooltip-ca-nstab-special'            => 'Đây là một trang đặc biệt, bạn không thể sửa đổi nó.',
 'tooltip-ca-nstab-project'            => 'Xem trang dự án',
 'tooltip-ca-nstab-image'              => 'Xem trang miêu tả tập tin',
-'tooltip-ca-nstab-mediawiki'          => 'Xem thông báo hệ thống',
+'tooltip-ca-nstab-mediawiki'          => 'Xem thông điệp hệ thống',
 'tooltip-ca-nstab-template'           => 'Xem bản mẫu',
 'tooltip-ca-nstab-help'               => 'Xem trang trợ giúp',
 'tooltip-ca-nstab-category'           => 'Xem trang thể loại',
@@ -2989,12 +2985,12 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Attribution
 'anonymous'        => '{{PLURAL:$1|Người dùng|Người dùng}} vô danh của {{SITENAME}}',
 'siteuser'         => 'thành viên $1 của {{SITENAME}}',
-'anonuser'         => 'người vô danh $1 tại {{SITENAME}}',
+'anonuser'         => 'người dùng vô danh $1 tại {{SITENAME}}',
 'lastmodifiedatby' => 'Trang này được $3 cập nhật lần cuối lúc $2 $1.',
 'othercontribs'    => 'Dựa trên công trình của $1.',
 'others'           => 'những người khác',
 'siteusers'        => '{{PLURAL:$2|Thành viên|Các thành viên}} $1 của {{SITENAME}}',
-'anonusers'        => '{{plural:$2|người|những người}} vô danh $1 tại {{SITENAME}}',
+'anonusers'        => '{{PLURAL:$2|người dùng|những người dùng}} vô danh $1 tại {{SITENAME}}',
 'creditspage'      => 'Trang ghi nhận đóng góp',
 'nocredits'        => 'Không có thông tin ghi nhận đóng góp cho trang này.',
 
@@ -3041,7 +3037,7 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'markedaspatrollederror-noautopatrol' => 'Bạn không được đánh dấu tuần tra vào sửa đổi của bạn.',
 
 # Patrol log
-'patrol-log-page'      => 'Nhật ký tuần tra',
+'patrol-log-page'      => 'Nhật trình tuần tra',
 'patrol-log-header'    => 'Đây là nhật trình tuần tra phiên bản.',
 'log-show-hide-patrol' => '$1 nhật trình tuần tra',
 
@@ -3265,7 +3261,7 @@ Những thông tin khác mặc định sẽ được ẩn đi.
 'exif-gpslongituderef'             => 'Kinh độ đông hay tây',
 'exif-gpslongitude'                => 'Kinh độ',
 'exif-gpsaltituderef'              => 'Tham chiếu cao độ',
-'exif-gpsaltitude'                 => 'Độ cao',
+'exif-gpsaltitude'                 => 'Cao độ',
 'exif-gpstimestamp'                => 'Giờ GPS (đồng hồ nguyên tử)',
 'exif-gpssatellites'               => 'Vệ tinh nhân tạo dùng để đo',
 'exif-gpsstatus'                   => 'Tình trạng đầu thu',
@@ -3580,7 +3576,7 @@ Những thông tin khác mặc định sẽ được ẩn đi.
 'monthsall'     => 'tất cả',
 'limitall'      => 'tất cả',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => 'Xác nhận thư điện tử',
 'confirmemail_noemail'      => 'Bạn chưa đưa vào địa chỉ thư điện tử hợp lệ ở [[Special:Preferences|tùy chọn cá nhân]].',
 'confirmemail_text'         => '{{SITENAME}} đòi hỏi bạn xác minh thư điện tử của mình
@@ -3662,7 +3658,7 @@ Xin hãy xác nhận bạn thực sự muốn tạo lại trang này.",
 'recreate'                 => 'Tạo ra lại',
 
 # action=purge
-'confirm_purge_button' => 'Làm mới',
+'confirm_purge_button' => 'Làm tươi',
 'confirm-purge-top'    => 'Làm sạch vùng nhớ đệm của trang này?',
 'confirm-purge-bottom' => 'Làm mới một trang sẽ giúp xóa bộ đệm và buộc hiển thị phiên bản gần nhất.',
 
@@ -3858,7 +3854,7 @@ Các hình ảnh được hiển thị ở kích thước tối đa, còn các l
 * <strong class="mw-specialpagerestricted">Trang đặc biệt được hạn chế.</strong>
 * <span class="mw-specialpagecached">Trang đặc biệt được lấy từ vùng nhớ đệm (có thể lỗi thời).</span>',
 'specialpages-group-maintenance' => 'Báo cáo bảo quản',
-'specialpages-group-other'       => 'Những trang đặc biệt khác',
+'specialpages-group-other'       => 'Trang đặc biệt khác',
 'specialpages-group-login'       => 'Đăng nhập / Mở tài khoản',
 'specialpages-group-changes'     => 'Thay đổi gần đây và nhật trình',
 'specialpages-group-media'       => 'Báo cáo và tải lên phương tiện',
@@ -3866,7 +3862,7 @@ Các hình ảnh được hiển thị ở kích thước tối đa, còn các l
 'specialpages-group-highuse'     => 'Trang được dùng nhiều',
 'specialpages-group-pages'       => 'Danh sách các trang',
 'specialpages-group-pagetools'   => 'Công cụ cho trang',
-'specialpages-group-wiki'        => 'Dữ liệu và công cụ cho wiki',
+'specialpages-group-wiki'        => 'Dữ liệu và công cụ',
 'specialpages-group-redirects'   => 'Đang đổi hướng trang đặc biệt',
 'specialpages-group-spam'        => 'Công cụ chống spam',
 
@@ -3885,7 +3881,7 @@ Các hình ảnh được hiển thị ở kích thước tối đa, còn các l
 #Hãy đặt các mẩu biểu thức chính quy ở phía trên dòng này. Hãy để yên dòng này</pre>',
 
 # Special:Tags
-'tags'                    => 'Các thẻ đánh dấu thay đổi hợp lệ',
+'tags'                    => 'Thẻ đánh dấu thay đổi hợp lệ',
 'tag-filter'              => 'Bộ lọc [[Special:Tags|thẻ]]:',
 'tag-filter-submit'       => 'Bộ lọc',
 'tags-title'              => 'Thẻ đánh dấu',
@@ -3905,8 +3901,8 @@ Các hình ảnh được hiển thị ở kích thước tối đa, còn các l
 'compare-rev1'                => 'Phiên bản 1',
 'compare-rev2'                => 'Phiên bản 2',
 'compare-submit'              => 'So sánh',
-'compare-invalid-title'       => 'Tựa trang chỉ định không hợp lệ.',
-'compare-title-not-exists'    => 'Tựa trang chỉ định không tồn tại.',
+'compare-invalid-title'       => 'Tên trang chỉ định không hợp lệ.',
+'compare-title-not-exists'    => 'Tên trang chỉ định không tồn tại.',
 'compare-revision-not-exists' => 'Phiên bản chỉ định không tồn tại.',
 
 # Database error messages

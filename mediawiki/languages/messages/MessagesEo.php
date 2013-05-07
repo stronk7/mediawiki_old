@@ -11,12 +11,14 @@
  * @author Airon90
  * @author Amikeco
  * @author Amire80
+ * @author Anakmalaysia
  * @author ArnoLagrange
  * @author Blahma
  * @author Castelobranco
  * @author Iketsi
  * @author Jens Liebenau
  * @author Kaganer
+ * @author KuboF
  * @author Lucas
  * @author LyzTyphone
  * @author Malafaya
@@ -469,7 +471,7 @@ $messages = array(
 'vector-action-move'             => 'Alinomigi',
 'vector-action-protect'          => 'Protekti',
 'vector-action-undelete'         => 'Malforigi',
-'vector-action-unprotect'        => 'Ŝanĝi protekadon',
+'vector-action-unprotect'        => 'Ŝanĝi protektadon',
 'vector-simplesearch-preference' => 'Ebligi simpligitan serĉan strion (nur Vektora etoso)',
 'vector-view-create'             => 'Krei',
 'vector-view-edit'               => 'Redakti',
@@ -804,7 +806,7 @@ Bonvolu ĝisatendi antaŭ retrovi.',
 'loginlanguagelabel'         => 'Lingvo: $1',
 'suspicious-userlogout'      => 'Via peto por elsaluti estis malpermesita ĉar verŝajne ĝi estis sendita de trompita retumilo aŭ kaŝiganta proksima servilo.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Nekonata eraro en la funkcio mail() de PHP',
 'user-mail-no-addy'      => 'Provis sendi retpoŝton sen retpoŝtadreso.',
 
@@ -828,7 +830,7 @@ Vi eble jam ŝanĝis vian pasvorton aŭ petis novan provizoran pasvorton.',
 
 # Special:PasswordReset
 'passwordreset'                    => 'Restarigo de pasvorto',
-'passwordreset-text'               => 'Plenumigu ĉi tiun formularon por ricevi retpoŝtan memoraĵon de viaj kontaj detaloj.',
+'passwordreset-text'               => 'Plenigu ĉi tiun formularon por renovigi vian pasvorton.',
 'passwordreset-legend'             => 'Refari pasvorton',
 'passwordreset-disabled'           => 'Pasvortaj restarigoj estis malŝaltitaj en ĉi tiu vikio.',
 'passwordreset-pretext'            => '{{PLURAL:$1||Enigi unu el la jenaj datenoj}}',
@@ -860,8 +862,8 @@ aŭ se vi memoris vian originalan pasvorton, kaj vi ne plu volas ŝanĝi
 ĝin, vi povas ignori ĉi tiun mesaĝon kaj uzi vian malnovan pasvorton.',
 'passwordreset-emailelement'       => 'Salutnomo: $1
 Provizora pasvorto: $2',
-'passwordreset-emailsent'          => 'Rememoriga retpoŝto estis sendita.',
-'passwordreset-emailsent-capture'  => 'Memoriga retpoŝto estis sendita, kiu estas montrata sube.',
+'passwordreset-emailsent'          => 'Renovigita pasvorto estis retpoŝte sendita.',
+'passwordreset-emailsent-capture'  => 'Retpoŝto kun renovigita pasvorto estis sendita, kiu estas montrata sube.',
 'passwordreset-emailerror-capture' => 'Memoriga retpoŝto estis generita, montrata sube, sed sendado al uzanto malsukcesis: $1',
 
 # Special:ChangeEmail
@@ -905,7 +907,8 @@ Provizora pasvorto: $2',
 'showpreview'                      => 'Antaŭrigardo',
 'showlivepreview'                  => 'Aktiva antaŭvido',
 'showdiff'                         => 'Montri ŝanĝojn',
-'anoneditwarning'                  => 'Vi ne estas ensalutinta. Via IP-adreso enregistriĝos en la ŝango-historio de tiu ĉi paĝo.',
+'anoneditwarning'                  => "'''Averto:''' Vi ne estas ensalutinta.
+Via IP-adreso enregistriĝos en la redakta historio de tiu ĉi paĝo.",
 'anonpreviewwarning'               => "''Vi ne estas ensalutita. La konservo de la paĝo registros vian IP-adreson en kronologio de ĉi tiu paĝo.''",
 'missingsummary'                   => "'''Rememorigilo:''' Vi ne provizis redaktan resumon. Se vi alklakos denove la konservan butonon, via redaktaĵo estos konservita sen resumo.",
 'missingcommenttext'               => 'Bonvolu entajpi komenton malsupre.',
@@ -1316,7 +1319,7 @@ Certigu ke ĉi tiu ŝanĝo tenos kontinuecon de la historia paĝo.',
 'search-mwsuggest-enabled'         => 'kun sugestoj',
 'search-mwsuggest-disabled'        => 'sen sugestoj',
 'search-relatedarticle'            => 'Relataj',
-'mwsuggest-disable'                => 'Malŝalti AJAX-sugestojn',
+'mwsuggest-disable'                => 'Malŝalti serĉajn sugestojn',
 'searcheverything-enable'          => 'Traserĉi ĉiujn nomspacojn',
 'searchrelated'                    => 'rilataj',
 'searchall'                        => 'ĉiuj',
@@ -1411,7 +1414,7 @@ Jen hazarde generita valoro por via uzo: $1',
 'timezoneregion-indian'         => 'Hinda Oceano',
 'timezoneregion-pacific'        => 'Pacifiko',
 'allowemail'                    => 'Rajtigi retmesaĝojn de aliaj uzantoj',
-'prefs-searchoptions'           => 'Serĉu',
+'prefs-searchoptions'           => 'Serĉi',
 'prefs-namespaces'              => 'Nomspacoj',
 'defaultns'                     => 'Alimaniere, traserĉi la jenajn nomspacojn:',
 'default'                       => 'defaŭlte',
@@ -1462,7 +1465,7 @@ Jen hazarde generita valoro por via uzo: $1',
 'prefs-displaywatchlist'        => 'Montraj opcioj',
 'prefs-diffs'                   => 'Diferencoj',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'Ŝajnas ke la retpoŝtadreso estas valida',
 'email-address-validity-invalid' => 'Tajpu validan retpoŝtadreson',
 
@@ -1641,7 +1644,7 @@ Jen hazarde generita valoro por via uzo: $1',
 'hist'                              => 'historio',
 'hide'                              => 'Kaŝi',
 'show'                              => 'Montri',
-'minoreditletter'                   => 'E',
+'minoreditletter'                   => 'e',
 'newpageletter'                     => 'N',
 'boteditletter'                     => 'R',
 'number_of_watching_users_pageview' => '[$1 {{PLURAL:$1|priatentanta uzanto|priatentantaj uzantoj}}]',
@@ -2212,7 +2215,7 @@ Estas [[{{MediaWiki:Listgrouprights-helppage}}|aldona informo]] pri individuaj r
 'listgrouprights-addgroup-self-all'    => 'Povas aldoni ĉiujn grupojn al propra konto',
 'listgrouprights-removegroup-self-all' => 'Povas forigi ĉiujn grupojn de propra konto',
 
-# E-mail user
+# Email user
 'mailnologin'          => 'Neniu alsendota adreso',
 'mailnologintext'      => 'Vi nepre estu [[Special:UserLogin|salutanta]] kaj havanta validan retpoŝtadreson en viaj [[Special:Preferences|preferoj]] por retpoŝti al aliaj uzantoj.',
 'emailuser'            => 'Retpoŝti ĉi tiun uzanton',
@@ -2248,7 +2251,7 @@ La retadreso kiun vi enigis en [[Special:Preferences|viaj preferoj]] aperos kiel
 'usermessage-editor'  => 'Mesaĝanto de sistemo',
 
 # Watchlist
-'watchlist'            => 'Atentaro',
+'watchlist'            => 'Mia atentaro',
 'mywatchlist'          => 'Atentaro',
 'watchlistfor2'        => 'Por $1 $2',
 'nowatchlist'          => 'Vi ne jam elektis priatenti iun ajn paĝon.',
@@ -2256,7 +2259,7 @@ La retadreso kiun vi enigis en [[Special:Preferences|viaj preferoj]] aperos kiel
 'watchnologin'         => 'Ne ensalutinta',
 'watchnologintext'     => 'Nepras [[Special:UserLogin|ensaluti]] por ŝanĝi vian atentaron.',
 'addwatch'             => 'Aldoniĝi al atentaro',
-'addedwatchtext'       => "La paĝo \"[[:\$1]]\" estis aldonita al via [[Special:Watchlist|atentaro]]. Estontaj ŝanĝoj de tiu ĉi paĝo aperos en '''grasa tiparo''' en la [[Special:RecentChanges|listo de Lastaj Ŝanĝoj]], kaj estos listigitaj en via atentaro. Se vi poste volos forigi la paĝon el via atentaro, alklaku \"Malatentu paĝon\" en la ilobreto.",
+'addedwatchtext'       => 'La paĝo "[[:$1]]" aldoniĝis al via [[Special:Watchlist|atentaro]]. Estontaj ŝanĝoj de tiu paĝo kaj de ĝia rilata diskutpaĝo aperos tie.',
 'removewatch'          => 'Forigi el atentaro',
 'removedwatchtext'     => 'La paĝo "[[:$1]]" estas forigita el via [[Special:Watchlist|atentaro]].',
 'watch'                => 'Atenti',
@@ -2400,9 +2403,9 @@ Jen la aktualaj valoroj por la paĝo '''$1''':",
 'protect-cascadeon'           => 'Ĉi paĝo estas nun protektita kontraŭ redaktado ĉar ĝi estas inkluzivita en {{PLURAL:$1|jena paĝo, kiu mem estas protektita|jenaj paĝoj, kiuj mem estas protektitaj}} per kaskada protekto.
 Vi povas ŝanĝi ties protektnivelon, sed tio ne ŝanĝos la kaskadan protekton.',
 'protect-default'             => 'Permesigi ĉiujn uzantojn',
-'protect-fallback'            => 'Rajto "$1" nepras.',
+'protect-fallback'            => 'Permesi nur uzantojn kun la rajto  "$1"',
 'protect-level-autoconfirmed' => 'Bloki novajn kaj neregistritajn uzantojn',
-'protect-level-sysop'         => 'Nur administrantoj',
+'protect-level-sysop'         => 'Permesi nur administrantojn',
 'protect-summary-cascade'     => 'kaskada',
 'protect-expiring'            => 'finiĝas je $1 (UTC)',
 'protect-expiring-local'      => 'eksdatiĝas $1',
@@ -3335,6 +3338,7 @@ Aliaj estos kaŝitaj defaŭlte.
 'exif-compression-2' => 'CCITT-Grupo 3 modifita ciferado laŭ Huffman Dimensio-1',
 'exif-compression-3' => 'CCITT Grupo-3 ĉifrado por faksilo',
 'exif-compression-4' => 'CCITT Grupo-4 ĉifrado por faksilo',
+'exif-compression-8' => 'Malŝveli (Adobe)',
 
 'exif-copyrighted-true'  => 'Sub aŭtorrajto',
 'exif-copyrighted-false' => 'Sub publika domajno',
@@ -3551,7 +3555,7 @@ Aliaj estos kaŝitaj defaŭlte.
 'monthsall'     => 'ĉiuj',
 'limitall'      => 'ĉiuj',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => 'Konfirmi retadreson',
 'confirmemail_noemail'      => 'Vi ne havas validan retpoŝtan adreson notitan en viaj [[Special:Preferences|Preferoj]].',
 'confirmemail_text'         => 'Ĉi tiu vikio postulas ke vi validigu vian retadreson antaŭ ol uzadi la retmesaĝpreferojn. Bonvolu alklaki la suban butonon por sendi konfirmesaĝon al via adreso. La mesaĝo entenos ligilon kun kodo; bonvolu alŝuti la ligilon en vian foliumilon por konfirmi ke via retadreso validas.',
@@ -3699,6 +3703,64 @@ Vi povas ankaŭ [[Special:EditWatchlist|redakti norme]].',
 'watchlisttools-edit' => 'Rigardi kaj redakti atentaron',
 'watchlisttools-raw'  => 'Redakti krudan atentaron',
 
+# Iranian month names
+'iranian-calendar-m1'  => 'farvardino',
+'iranian-calendar-m2'  => 'ordibeheŝto',
+'iranian-calendar-m3'  => 'ĥordado',
+'iranian-calendar-m4'  => 'tiro',
+'iranian-calendar-m5'  => 'mordado',
+'iranian-calendar-m6'  => 'ŝahrivaro',
+'iranian-calendar-m7'  => 'mehro',
+'iranian-calendar-m8'  => 'abano',
+'iranian-calendar-m9'  => 'azaro',
+'iranian-calendar-m10' => 'dejo',
+'iranian-calendar-m11' => 'bahmano',
+'iranian-calendar-m12' => 'esfando',
+
+# Hijri month names
+'hijri-calendar-m1'  => 'muharamo',
+'hijri-calendar-m2'  => 'safaro',
+'hijri-calendar-m3'  => 'rabi-ul-aŭŭalo',
+'hijri-calendar-m4'  => 'rabi-us-sanio',
+'hijri-calendar-m5'  => 'ĵumada-l-ulo',
+'hijri-calendar-m6'  => 'ĵumada-l-aĥiro',
+'hijri-calendar-m7'  => 'raĵabo',
+'hijri-calendar-m8'  => 'ŝabano',
+'hijri-calendar-m9'  => 'ramadano',
+'hijri-calendar-m10' => 'ŝaŭalo',
+'hijri-calendar-m11' => 'du-l-kado',
+'hijri-calendar-m12' => 'du-l-hiĵo',
+
+# Hebrew month names
+'hebrew-calendar-m1'      => 'tiŝrio',
+'hebrew-calendar-m2'      => 'ĥeŝvano',
+'hebrew-calendar-m3'      => 'kislevo',
+'hebrew-calendar-m4'      => 'teveto',
+'hebrew-calendar-m5'      => 'ŝevato',
+'hebrew-calendar-m6'      => 'adaro',
+'hebrew-calendar-m6a'     => 'adaro 1',
+'hebrew-calendar-m6b'     => 'adaro 2',
+'hebrew-calendar-m7'      => 'nisano',
+'hebrew-calendar-m8'      => 'ijaro',
+'hebrew-calendar-m9'      => 'sivano',
+'hebrew-calendar-m10'     => 'tamuzo',
+'hebrew-calendar-m11'     => 'abo',
+'hebrew-calendar-m12'     => 'elulo',
+'hebrew-calendar-m1-gen'  => 'tiŝrio',
+'hebrew-calendar-m2-gen'  => 'ĥeŝvano',
+'hebrew-calendar-m3-gen'  => 'kislevo',
+'hebrew-calendar-m4-gen'  => 'teveto',
+'hebrew-calendar-m5-gen'  => 'ŝevato',
+'hebrew-calendar-m6-gen'  => 'adaro',
+'hebrew-calendar-m6a-gen' => 'adaro 1',
+'hebrew-calendar-m6b-gen' => 'adaro 2',
+'hebrew-calendar-m7-gen'  => 'nisano',
+'hebrew-calendar-m8-gen'  => 'ijaro',
+'hebrew-calendar-m9-gen'  => 'sivano',
+'hebrew-calendar-m10-gen' => 'tamuzo',
+'hebrew-calendar-m11-gen' => 'abo',
+'hebrew-calendar-m12-gen' => 'elulo',
+
 # Signatures
 'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|diskuto]])',
 
@@ -3768,7 +3830,7 @@ Bildoj montriĝas en plena distingivo, aliaj dosiertipoj estas malfermataj rekte
 'specialpages-group-highuse'     => 'Plej uzitaj paĝoj',
 'specialpages-group-pages'       => 'Listoj de paĝoj',
 'specialpages-group-pagetools'   => 'Paĝaj iloj',
-'specialpages-group-wiki'        => 'Vikidatenoj kaj iloj',
+'specialpages-group-wiki'        => 'Datenoj kaj iloj',
 'specialpages-group-redirects'   => 'Alidirektantaj specialaj paĝoj',
 'specialpages-group-spam'        => 'Kontraŭspamiloj',
 
@@ -3912,7 +3974,7 @@ Aŭ vi povas uzi la facilan formularon sube. Via komento estos aldonita al la pa
 'api-error-nomodule'                      => 'Interna eraro: ne troveblas alŝuta helpilaro.',
 'api-error-ok-but-empty'                  => 'Interna eraro: nenia respondo de la servilo.',
 'api-error-overwrite'                     => 'Anstataŭigo de ekzistanta dosiero ne permesatas.',
-'api-error-stashfailed'                   => 'Interna eraro: la servilo malsukcesis stoki dumtempan dosieron.',
+'api-error-stashfailed'                   => 'Interna eraro: la servilo malsukcesis stoki provizoran dosieron.',
 'api-error-timeout'                       => 'La servilo ne respondis ene de la antaŭvidita tempo.',
 'api-error-unclassified'                  => 'Okazis nekonata eraro',
 'api-error-unknown-code'                  => 'Nekonata eraro: "$1"',

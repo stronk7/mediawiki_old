@@ -11,6 +11,7 @@
  * @author Chavash
  * @author FLAGELLVM DEI
  * @author PCode
+ * @author Salam
  * @author Александр Сигачёв
  */
 
@@ -70,6 +71,7 @@ $messages = array(
 'tog-enotifminoredits'        => 'Пĕчĕк улшăнусене те эл. почта урлă пĕлтермелле',
 'tog-enotifrevealaddr'        => 'Асăрхаттару пĕлтерĕвĕсенче ман эл. адреса кăтартмалла',
 'tog-shownumberswatching'     => 'Страницăна миçе хутшăнакан сăнав списокне кĕртнине кăтартмалла',
+'tog-oldsig'                  => 'Хальхи алӑ пусни:',
 'tog-fancysig'                => 'Хăвăр тунă алă пуснин вики-паллисем',
 'tog-externaleditor'          => 'Палăртман чухне тулашри редактора усă курмалла',
 'tog-externaldiff'            => 'Палăртман чухне версисене танлаштарма тулашри программăна усă курмалла',
@@ -895,7 +897,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'listgrouprights-group'    => 'Ушкăн',
 'listgrouprights-helppage' => 'Help:Ушкăн прависем',
 
-# E-mail user
+# Email user
 'emailuser'       => 'Хутшăнакана çыру яр... (Письмо участнику)',
 'usermailererror' => 'Электронлă почта урлă пĕлтерӳ янă чухне йăнăш тухрĕ:',
 'noemailtitle'    => 'Электронлă почта адресĕ çук',
@@ -1155,7 +1157,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'watchlistall2' => 'пурте',
 'namespacesall' => 'пурте',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail_sent'     => 'Çирĕплетмелли ыйтуллă çырăва ятăмăр.',
 'confirmemail_success'  => 'Сирĕн электронлă почтăн адресне çирĕплентĕ.',
 'confirmemail_loggedin' => 'Сирĕн электронлă почтăн адресне çирĕплетрĕмĕр.',

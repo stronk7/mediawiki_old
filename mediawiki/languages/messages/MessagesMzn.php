@@ -200,30 +200,30 @@ $messages = array(
 'thu'           => 'پنجشنبه',
 'fri'           => 'جـومه',
 'sat'           => 'شمبه',
-'january'       => 'جـانـویـه',
+'january'       => 'ژانویه',
 'february'      => 'فوریه',
-'march'         => 'مـارچ',
+'march'         => 'مارس',
 'april'         => 'آوریل',
 'may_long'      => 'مه',
 'june'          => 'ژوئن',
-'july'          => 'جـولای',
+'july'          => 'ژوئیه',
 'august'        => 'ئـوگـه‌سـت',
 'september'     => 'سـه‌پـتـه‌مـبـر',
 'october'       => 'اکتبر',
 'november'      => 'نـووه‌مـبـر',
-'december'      => 'ده‌سـه‌مـبـر',
-'january-gen'   => 'جـانـویـه',
+'december'      => 'دسامبر',
+'january-gen'   => 'ژانویه',
 'february-gen'  => 'فوریه',
 'march-gen'     => 'مـارس',
 'april-gen'     => 'آوریـل',
 'may-gen'       => 'مه',
 'june-gen'      => 'جـون',
-'july-gen'      => 'جـولای',
+'july-gen'      => 'ژوئیه',
 'august-gen'    => 'ئوگـه‌سـت',
 'september-gen' => 'سـه‌پـتـه‌مـبـر',
 'october-gen'   => 'اکتبر',
 'november-gen'  => 'نـووه‌مـبـر',
-'december-gen'  => 'ده‌سـه‌مـبـر',
+'december-gen'  => 'دسامبر',
 'jan'           => 'جانویه',
 'feb'           => 'فه‌وریه',
 'mar'           => 'مارچ',
@@ -235,7 +235,7 @@ $messages = array(
 'sep'           => 'سه‌پته‌مبر',
 'oct'           => 'ئوکتوبر',
 'nov'           => 'نووه‌مبر',
-'dec'           => 'ده‌سه‌مبر',
+'dec'           => 'دسامبر',
 
 # Categories related messages
 'pagecategories'                 => '{{PLURAL:$1|رج|رج‌ئون}}',
@@ -837,7 +837,7 @@ $2، $1',
 # Special:ListGroupRights
 'listgrouprights-members' => '(کارورون لیست)',
 
-# E-mail user
+# Email user
 'mailnologintext' => 'برای برسنی‌ین پوست الکترونیکی به کارورون دیگه ونه [[Special:UserLogin|بورین سامانه دله]] و نشونی پوست الکترونیکی معتبری تو [[Special:Preferences|ترجیحات]] خادت ره داشته بایی.',
 'emailuser'       => 'این کارور وسّه ایمیل بَرسِن',
 'emailpage'       => 'ئـی-مه‌یـل ای کـارور وه‌سه',
@@ -1059,7 +1059,7 @@ $2، $1',
 'namespacesall' => 'همه',
 'monthsall'     => 'همه ماه‌ئون',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail_body_changed' => 'ات نفر، احتمالاً خاد شمِا، از نشونی آی‌پی $1 نشونی پوست ایلکتورونیک حیساب «$2» {{SITENAME}} ره تغییر هدائه.
 
 برای تایید این که این حیساب واقعاً شمه شه و فعال هکردن دبارهٔ ویژگی پوست ایلکتورونیک {{SITENAME}}، پیوند زیر دله ره شه مرورگر دله وا هکنین:

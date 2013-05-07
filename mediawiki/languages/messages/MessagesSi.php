@@ -243,7 +243,7 @@ $messages = array(
 
 'underline-always'  => 'සැමවිටම කරන්න',
 'underline-never'   => 'කිසිවිටෙක නොකරන්න',
-'underline-default' => 'බ්‍රවුසරයෙහි පෙරනිමිය අනුවය',
+'underline-default' => 'සම හෝ ගවේෂකයෙහි පෙරනිමිය',
 
 # Font style option in Special:Preferences
 'editfont-style'     => 'අකුරු විලාසයන් සංස්කරණ පෙදෙස:',
@@ -330,7 +330,7 @@ $messages = array(
 'newwindow'     => '(නව කවුළුවක විවෘතවේ)',
 'cancel'        => 'අත් හරින්න',
 'moredotdotdot' => 'තවත්...',
-'mypage'        => 'මගේ පිටුව',
+'mypage'        => 'පිටුව',
 'mytalk'        => 'සාකච්ඡාව',
 'anontalk'      => 'මෙම අයිපී ලිපිනය සඳහා සාකච්ඡාව',
 'navigation'    => 'යාත්‍රණය',
@@ -354,7 +354,7 @@ $messages = array(
 'vector-action-protect'          => 'ආරක්‍ෂණය',
 'vector-action-undelete'         => 'මකාදැමීම අවලංගු කරන්න',
 'vector-action-unprotect'        => 'ආරක්ෂණ තත්වය වෙනස් කරන්න',
-'vector-simplesearch-preference' => 'වැඩිදියුණුකළ සෙවුම් යෝජනා සක්‍රීය කරන්න (වෙක්ටර් තීමය සඳහා පමණි)',
+'vector-simplesearch-preference' => 'සුළු කළ සෙවුම් බාරය (වෙක්ටර් තීමය සඳහා පමණි)',
 'vector-view-create'             => 'තනන්න',
 'vector-view-edit'               => 'සංස්කරණය',
 'vector-view-history'            => 'ඉතිහාසය නරඹන්න',
@@ -696,7 +696,7 @@ $2',
 'loginlanguagelabel'         => 'භාෂාව: $1',
 'suspicious-userlogout'      => 'නිෂ්ක්‍රමණය සඳහා ඔබගේ අයැදුම නිෂ්ප්‍රභා කෙරුනේ එය යොමු කොට ඇත්තේ භින්න(කැඩුනු) බ්‍රවුසරයකින් හෝ නිවේෂණය කෙරෙමින් පවතින ප්‍රොක්සියක් වෙතින් යැයි බැලූ බැල්මට පෙනෙන බැවිනි.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'php mail() ශ්‍රිතයේ හඳුනානොගත් ගැටළුවකි',
 'user-mail-no-addy'      => 'විද්‍යුත් තැපැල් ලිපිනයක් නොමැතිව විද්‍යුත් තැපැල් පණිවුඩයක් යැවීමට උත්සහ දරා ඇත.',
 
@@ -1206,7 +1206,7 @@ $1",
 'search-mwsuggest-enabled'         => 'ඉඟි සමගින්',
 'search-mwsuggest-disabled'        => 'ඉඟි නොමැත',
 'search-relatedarticle'            => 'සහසම්බන්ධිත',
-'mwsuggest-disable'                => 'AJAX ඇඟවිලි අක්‍රීය කරන්න',
+'mwsuggest-disable'                => 'සෙවුම් යෝජනා අක්‍රීය කරන්න',
 'searcheverything-enable'          => 'සියළු නාමඅවකාශයන්හි ගවේෂණය කරන්න',
 'searchrelated'                    => 'ආශ්‍රිත',
 'searchall'                        => 'සියල්ල',
@@ -1355,7 +1355,7 @@ HTML ටැගයන් පිරික්සන්න.',
 'prefs-displaywatchlist'        => 'විකල්ප පෙන්වන්න',
 'prefs-diffs'                   => 'වෙනස',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid'   => 'විද්‍යුත්-තැපැල් ලිපිනය අනීතික බවක් පෙනෙයි.',
 'email-address-validity-invalid' => 'වලංගු විද්‍යුත් ලිපිනයක් ඇතුලත් කරන්න',
 
@@ -1932,9 +1932,9 @@ When filtered by user, only files where that user uploaded the most recent versi
 
 'disambiguations'      => 'නිරාකරණ පිටු සඳහා සබැදෙන පිටු',
 'disambiguationspage'  => 'Template:තේරුම් නිරාකරණය',
-'disambiguations-text' => "ඉදිරි පිටු '''වක්‍රෝත්තිහරණ පිටුව'''කට සබැ‍ඳේ.
+'disambiguations-text' => "පහත දැක්වෙන පිටු අතර '''වක්‍රෝත්තිහරණ පිටුවකට''' සබැඳෙන එක් සබැඳියක් හෝ ඇත.
 ඒවා ඒ වෙනුවට අනුරූප මාතෘකාවට සබැඳිය යුතුය.<br />
-යම් පිටුවක් වක්‍රෝත්තිහරණ පිටුවක් ලෙස සලකනුයේ එය [[MediaWiki:Disambiguationspage]] වෙතින් සබැඳුනු සැකිල්ලක් භාවිතා කරන්නේ නම්ය",
+යම් පිටුවක් වක්‍රෝත්තිහරණ පිටුවක් ලෙස සලකනුයේ එය [[MediaWiki:Disambiguationspage]] වෙතින් සබැඳුනු සැකිල්ලක් භාවිතා කරන්නේ නම්ය.",
 
 'doubleredirects'                   => 'ද්විත්ව යළි-යොමුකිරීම්',
 'doubleredirectstext'               => 'අනෙකුත් යළි-යොමුවීම් පිටුවලට යළි-යොමුවන පිටුවල ලැයිස්තුවක් මෙම පිටුවේ දැක්වේ.
@@ -2120,7 +2120,7 @@ When filtered by user, only files where that user uploaded the most recent versi
 'listgrouprights-addgroup-self-all'    => 'සි‍යළු කාණ්ඩයන් ස්වීය ගිණුමට එක්කරන්න',
 'listgrouprights-removegroup-self-all' => 'සියළු කාණ්ඩයන් ස්වීය ගිණුමෙන් ඉවත් කරන්න',
 
-# E-mail user
+# Email user
 'mailnologin'          => 'යායුතු ලිපිනය නොමැත',
 'mailnologintext'      => 'අනෙකුත් පරිශීලකයන්හට  විද්‍යුත්-තැපැල් යැවුමට පෙරාතුව, ඔබ [[Special:UserLogin|ප්‍රවිෂ්ට වී]], ඔබගේ  [[Special:Preferences|අභිරුචියන්හි]]  නීතික විද්‍යුත්-තැපැල් ලිපිනයක් සඳහන් කර තිබිය යුතුය.',
 'emailuser'            => 'මෙම පරිශීලක වෙත විද්‍යුත්-ලිපියක් යවන්න',
@@ -2156,7 +2156,7 @@ When filtered by user, only files where that user uploaded the most recent versi
 'usermessage-editor'  => 'පද්ධති පණිවුඩ කරු',
 
 # Watchlist
-'watchlist'            => 'මගේ මුර-ලැයිස්තුව',
+'watchlist'            => 'මුරලැයිස්තුව',
 'mywatchlist'          => 'මුර-ලැයිස්තුව',
 'watchlistfor2'        => '$1 සඳහා ($2)',
 'nowatchlist'          => 'ඔබගේ මුර-ලැයිස්තුවේ කිසිදු අයිතමයක් නොමැත.',
@@ -2318,9 +2318,9 @@ $2 ගේ අවසන් අනුවාදය වෙතට යළි වෙන
 'protect-cascadeon'           => 'තීරු දර්ශන ආරක්ෂණය (cascading protection) බල ගන්වා ඇති පහත  {{PLURAL:$1|පිටුව|පිටු}} අන්තර්ගත වීම හේතුවෙන් මෙම පිටුව දැනට ආරක්ෂණයට ලක්ව ඇත.
 පිටුවෙහි ආරක්ෂණ මට්ටම ඔබ විසින් වෙනස් කල හැකි නමුදු, එම ක්‍රියාව තීරු දර්ශන ආරක්ෂණය කෙරෙහි බලපෑම් ඇති නොකරනු ඇත.',
 'protect-default'             => 'සියළු පරිශිලකයන්ට ඉඩ සලසන්න',
-'protect-fallback'            => '"$1" අවසරය අවශ්‍ය වේ',
-'protect-level-autoconfirmed' => 'නව සහ ලියාපදිංචි වී නොමැති පරිශීලකයන් වාරණය කරන්න',
-'protect-level-sysop'         => 'පරිපාලකවරුන්ට පමණයි',
+'protect-fallback'            => '"$1" අවසරය සහිත පරිශීලකයන්ට පමණක් ඉඩදෙන්න',
+'protect-level-autoconfirmed' => 'ස්වයංතහවුරු කල පරිශීලකයන්ට පමණක් ඉඩදෙන්න',
+'protect-level-sysop'         => 'පරිපාලකවරුන්ට පමණක් ඉඩදෙන්න',
 'protect-summary-cascade'     => 'තීරු දර්ශනය (cascading)',
 'protect-expiring'            => 'ඉකුත් වේ  $1 (යූටීසි)',
 'protect-expiring-local'      => 'කල් ඉකුත්වීම $1',
@@ -3517,7 +3517,7 @@ Others will be hidden by default.
 'monthsall'     => 'සියළු',
 'limitall'      => 'සියල්ලම',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail'              => 'විද්‍යුත්-තැපැල් ලිපිනය තහවුරු කරන්න',
 'confirmemail_noemail'      => 'ඔබගේ  [[Special:Preferences|පරිශීලක අභිරුචියන්]] හි නීතික විද්‍යුත්-තැපැල් ලිපිනයක් ඔබ විසින් පිහිටුවා නොමැත.',
 'confirmemail_text'         => 'විද්‍යුත්-තැපැල් අංගයන් භාවිතා කිරීමට පෙර  ඔබගේ විද්‍යුත්-තැපැල් ලිපිනය නීතිකරණය කල යුතු බවට {{SITENAME}} අවධාරණය කරයි.
