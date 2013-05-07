@@ -89,6 +89,10 @@ if (php_sapi_name() != 'cli') {
             $mdocsver = '24';
             # Disable this for email notifications:
             #            $wgEnableEmail = false;
+	}else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '25') {
+	    $mdocsver = '25';
+		$wgEnableEmail=false;
+		$wgEnotifWatchlist = false;
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
             $mdocsver = '2x';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
@@ -273,7 +277,7 @@ if ($mdocsver == 'archive') {
             $mdocsinternal = '19';
 
             // only permitted langs
-            $permitted = array('es','fi','fr','is','eu','hr','pt_br');
+            $permitted = array('ca','es','fi','fr','is','eu','hr','pt_br');
             if (!in_array($callpath, $permitted)) {
                 $callpath = ''; // will 404
             }
