@@ -177,11 +177,6 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'ﺎﻠﻋﺮﺒﻳﺓ';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
-        case 'ca':
-            $wgLanguageCode     = 'ca';
-            $wgLanguageName     = 'Català';
-            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-        break;
         case 'cs':
             $wgLanguageCode     = 'cs';
             $wgLanguageName     = 'Čeština';
@@ -298,6 +293,11 @@ if ($mdocsver == 'archive') {
     $wgUploadDirectory  = "{$IP}/{$mdocsinternal}images/images_{$callpath}";
 
     switch ($callpath) {
+        case 'ca':
+            $wgLanguageCode     = 'ca';
+            $wgLanguageName     = 'Català';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+        break;
         case 'de':
             $wgLanguageCode     = 'de';
             $wgLanguageName     = 'Deutsch';
