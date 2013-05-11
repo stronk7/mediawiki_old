@@ -165,16 +165,60 @@ class AuthMoodle extends AuthPlugin {
 				       "username=".$dbr->addQuotes($username)." and mnethostid=". $this->mAuthMoodleMnethostid ." and confirmed=1",
                        //End Mod
 				       "AuthMoodle::authenticate" );
-        //Start Moodle Mod - User cannot be "guest", try both with and without salt
-		if( $res && strtolower($username) != 'guest' &&
-              ( $res->password == MD5( $password . $this->mAuthMoodleSalt) || $res->password == MD5( $password ))) {
+		// Start Moodle Mod - User cannot be "guest", trying all the historically allowed passords in moodle.org.
+		if ($res && strtolower($username) != 'guest' &&
+				$this->verify_pass_with_moodleorg_hash($password, $res->password)) {
 		//Commented line:if( $res && ( $res->password == MD5( $password ))) {
-        //End Mod
+		// End Mod.
 			return true;
 		} else {
 			return false;
 		}
 	}
+
+	// Start Moodle Mod - Add function in charge of validating passwords - (both old md5() and new crypt() ones).
+	/**
+	 * Verify introduced password and moodle.org hash match.
+	 *
+	 * Using different methods, verify that the introduced password
+	 * matches the existing hash in moodle.org database, attempting the
+	 * following methods (from current to older):
+	 *  - crypt() based hashing.
+	 *  - md5() with site salt.
+	 *  - md5() without salt.
+	 *
+	 * @param string $password The password introduced by the user.
+	 * @param string $hash The hash @ moodle.org database to verify against.
+	 * @return boolen If the password matches the hash (true) or no (false).
+	 */
+	private function verify_pass_with_moodleorg_hash($password, $hash) {
+		// First, try the new crypt() passwords.
+		// Code borrowed from password_verify() in moodle 2.5 codebase
+		// with some changes in logic to allow it to continue to fallback methods.
+		if (function_exists('crypt')) {
+			$ret = crypt($password, $hash);
+			if (is_string($ret) and strlen($ret) == strlen($hash) and strlen($ret) > 13) {
+				$status = 0;
+				for ($i = 0; $i < strlen($ret); $i++) {
+					$status |= (ord($ret[$i]) ^ ord($hash[$i]));
+				}
+				if ($status === 0) {
+					return true;
+				}
+			}
+		}
+		// Then, fallback to the older md5() with salt passwords.
+		if ($hash === md5($password . $this->mAuthMoodleSalt)) {
+			return true;
+		}
+		// Finally, fallback to the oldest md5() without salt.
+		if ($hash === md5($password)) {
+			return true;
+		}
+		// Arrived here, no match, so wrong pass.
+		return false;
+	}
+	// End Mod
 		    
 	
 	/**
