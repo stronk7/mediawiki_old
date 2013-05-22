@@ -587,4 +587,8 @@ $wgAllowExternalImagesFrom = array('http://tracker.moodle.org/', 'http://moodle.
 # See MDLSITE-1511 for more info
 $wgResourceLoaderValidateStaticJS = false;
 
+# Try and prevent spammers (MDLSITE-2282)
+$wgAutoConfirmAge = 86400*3;
+$wgAutoConfirmCount = 1;
+
 ?>
