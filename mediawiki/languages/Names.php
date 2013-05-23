@@ -22,21 +22,21 @@
  */
 
 /**
-  * These determine things like interwikis, language selectors, and so on.
-  * Safe to change without running scripts on the respective sites.
-  *
-  * \xE2\x80\x8E is the left-to-right marker and
-  * \xE2\x80\x8F is the right-to-left marker.
-  * They are required for ensuring the correct display of brackets in
-  * mixed rtl/ltr environment.
-  *
-  * Some writing systems require some line-height fixes. This includes
-  * most Indic scripts, like Devanagari.
-  * If you are adding support for such a language, add it also to
-  * the relevant section in skins/common/shared.css.
-  *
-  * @ingroup Language
-  */
+ * These determine things like interwikis, language selectors, and so on.
+ * Safe to change without running scripts on the respective sites.
+ *
+ * \xE2\x80\x8E is the left-to-right marker and
+ * \xE2\x80\x8F is the right-to-left marker.
+ * They are required for ensuring the correct display of brackets in
+ * mixed rtl/ltr environment.
+ *
+ * Some writing systems require some line-height fixes. This includes
+ * most Indic scripts, like Devanagari.
+ * If you are adding support for such a language, add it also to
+ * the relevant section in skins/common/shared.css.
+ *
+ * @ingroup Language
+ */
 /* private */ $coreLanguageNames = array(
 	'aa' => 'Qafár af',	# Afar
 	'ab' => 'Аҧсшәа',	# Abkhaz
@@ -54,7 +54,7 @@
 	'arn' => 'mapudungun',	# Mapuche, Mapudungu, Araucanian (Araucano)
 	'ary' => 'Maġribi',	# Moroccan Spoken Arabic
 	'arz' => 'مصرى',	# Egyptian Spoken Arabic
-	'as' => 'অসমীয়া',	# Assamese
+	'as' => 'অসমীয়া',	# Assamese
 	'ast' => 'asturianu',	# Asturian
 	'av' => 'авар',	# Avar
 	'avk' => 'Kotava', # Kotava
@@ -165,7 +165,7 @@
 	'ho' => 'Hiri Motu',	# Hiri Motu
 	'hr' => 'hrvatski',		# Croatian
 	'hsb' => 'hornjoserbsce',	# Upper Sorbian
-	'ht'  => 'Kreyòl ayisyen',		# Haitian Creole French
+	'ht' => 'Kreyòl ayisyen',		# Haitian Creole French
 	'hu' => 'magyar',		# Hungarian
 	'hy' => 'Հայերեն',	# Armenian
 	'hz' => 'Otsiherero',	# Herero
@@ -219,7 +219,7 @@
 	'ks-arab' => 'کٲشُر',	# Kashmiri (Perso-Arabic script)
 	'ks-deva' => 'कॉशुर',	# Kashmiri (Devanagari script)
 	'ksh' => 'Ripoarisch',	# Ripuarian
-	'ku'  => 'Kurdî',	# Kurdish (multiple scripts - defaults to Latin)
+	'ku' => 'Kurdî',	# Kurdish (multiple scripts - defaults to Latin)
 	'ku-latn' => "Kurdî (latînî)\xE2\x80\x8E",	# Northern Kurdish (Latin script)
 	'ku-arab' => "كوردي (عەرەبی)\xE2\x80\x8F",	# Northern Kurdish (Arabic script) (falls back to ckb)
 	'kv' => 'коми',	# Komi-Zyrian (Cyrillic is common script but also written in Latin script)
@@ -237,7 +237,7 @@
 	'liv' => 'Līvõ kēļ',	# Livonian
 	'lmo' => 'lumbaart',	# Lombard
 	'ln' => 'lingála',		# Lingala
-	'lo' => 'ລາວ',# Laotian
+	'lo' => 'ລາວ',	# Laotian
 	'loz' => 'Silozi', # Lozi
 	'lt' => 'lietuvių',	# Lithuanian
 	'ltg' => 'latgaļu', 	# Latgalian
@@ -288,7 +288,7 @@
 	'ny' => 'Chi-Chewa',	# Chichewa
 	'oc' => 'occitan',		# Occitan
 	'om' => 'Oromoo',		# Oromo
-	'or' => 'ଓଡ଼ିଆ',		# Oriya
+	'or' => 'ଓଡ଼ିଆ',		# Oriya
 	'os' => 'Ирон', # Ossetic -- fixed per bug 29091
 	'pa' => 'ਪੰਜਾਬੀ', # Eastern Punjabi (Gurmukhi script) (pan)
 	'pag' => 'Pangasinan',	# Pangasinan
@@ -298,7 +298,7 @@
 	'pdc' => 'Deitsch',	# Pennsylvania German
 	'pdt' => 'Plautdietsch',	# Plautdietsch/Mennonite Low German
 	'pfl' => 'Pälzisch',	# Palatinate German
-	'pi' => 'पाळि',	# Pali
+	'pi' => 'पालि',	# Pali
 	'pih' => 'Norfuk / Pitkern', # Norfuk/Pitcairn/Norfolk
 	'pl' => 'polski',		# Polish
 	'pms' => 'Piemontèis',	# Piedmontese

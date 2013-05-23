@@ -29,15 +29,15 @@
 class IPTC {
 
 	/**
-	* This takes the results of iptcparse() and puts it into a
-	* form that can be handled by mediawiki. Generally called from
-	* BitmapMetadataHandler::doApp13.
-	*
-	* @see http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
-	*
-	* @param $rawData String app13 block from jpeg containing iptc/iim data
-	* @return Array iptc metadata array
-	*/
+	 * This takes the results of iptcparse() and puts it into a
+	 * form that can be handled by mediawiki. Generally called from
+	 * BitmapMetadataHandler::doApp13.
+	 *
+	 * @see http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
+	 *
+	 * @param string $rawData app13 block from jpeg containing iptc/iim data
+	 * @return Array iptc metadata array
+	 */
 	static function parse( $rawData ) {
 		$parsed = iptcparse( $rawData );
 		$data = Array();
@@ -63,7 +63,7 @@ class IPTC {
 				wfDebugLog( 'iptc', "IPTC tag $tag had only whitespace as its value." );
 				continue;
 			}
-			switch( $tag ) {
+			switch ( $tag ) {
 				case '2#120': /*IPTC caption. mapped with exif ImageDescription*/
 					$data['ImageDescription'] = self::convIPTC( $val, $c );
 					break;
@@ -198,7 +198,7 @@ class IPTC {
 					/* original transmission ref.
 					 * "A code representing the location of original transmission ac-
 					 * cording to practises of the provider."
-					*/
+					 */
 					$data['OriginalTransmissionRef'] = self::convIPTC( $val, $c );
 					break;
 				case '2#118': /*contact*/
@@ -350,14 +350,14 @@ class IPTC {
 	}
 
 	/**
-	* Convert an iptc date and time tags into the exif format
-	*
-	* @todo Potentially this should also capture the timezone offset.
-	* @param Array $date The date tag
-	* @param Array $time The time tag
-	* @param $c
-	* @return String Date in exif format.
-	*/
+	 * Convert an iptc date and time tags into the exif format
+	 *
+	 * @todo Potentially this should also capture the timezone offset.
+	 * @param array $date The date tag
+	 * @param array $time The time tag
+	 * @param $c
+	 * @return String Date in exif format.
+	 */
 	private static function timeHelper( $date, $time, $c ) {
 		if ( count( $date ) === 1 ) {
 			//the standard says this should always be 1
@@ -396,7 +396,7 @@ class IPTC {
 			return null;
 		}
 
-		$tz = ( intval( substr( $time, 7, 2 ) ) *60*60 )
+		$tz = ( intval( substr( $time, 7, 2 ) ) * 60 * 60 )
 			+ ( intval( substr( $time, 9, 2 ) ) * 60 );
 
 		if ( substr( $time, 6, 1 ) === '-' ) {
@@ -417,13 +417,13 @@ class IPTC {
 	}
 
 	/**
-	* Helper function to convert charset for iptc values.
-	* @param $data string|array The iptc string
-	* @param $charset String: The charset
+	 * Helper function to convert charset for iptc values.
+	 * @param string|array $data The iptc string
+	 * @param string $charset The charset
 	 *
 	 * @return string|array
-	*/
-	private static function convIPTC ( $data, $charset ) {
+	 */
+	private static function convIPTC( $data, $charset ) {
 		if ( is_array( $data ) ) {
 			foreach ( $data as &$val ) {
 				$val = self::convIPTCHelper( $val, $charset );
@@ -435,13 +435,13 @@ class IPTC {
 		return $data;
 	}
 	/**
-	* Helper function of a helper function to convert charset for iptc values.
-	* @param $data Mixed String or Array: The iptc string
-	* @param $charset String: The charset
-	*
-	* @return string
-	*/
-	private static function convIPTCHelper ( $data, $charset ) {
+	 * Helper function of a helper function to convert charset for iptc values.
+	 * @param $data Mixed String or Array: The iptc string
+	 * @param string $charset The charset
+	 *
+	 * @return string
+	 */
+	private static function convIPTCHelper( $data, $charset ) {
 		if ( $charset ) {
 			wfSuppressWarnings();
 			$data = iconv( $charset, "UTF-8//IGNORE", $data );
@@ -465,13 +465,13 @@ class IPTC {
 	}
 
 	/**
-	* take the value of 1:90 tag and returns a charset
-	* @param String $tag 1:90 tag.
-	* @return string charset name or "?"
-	* Warning, this function does not (and is not intended to) detect
-	* all iso 2022 escape codes. In practise, the code for utf-8 is the
-	* only code that seems to have wide use. It does detect that code.
-	*/
+	 * take the value of 1:90 tag and returns a charset
+	 * @param string $tag 1:90 tag.
+	 * @return string charset name or "?"
+	 * Warning, this function does not (and is not intended to) detect
+	 * all iso 2022 escape codes. In practise, the code for utf-8 is the
+	 * only code that seems to have wide use. It does detect that code.
+	 */
 	static function getCharset( $tag ) {
 
 		//According to iim standard, charset is defined by the tag 1:90.
@@ -530,7 +530,7 @@ class IPTC {
 			case "\x1b(K":
 				$c = "ISO646-DE";
 				break;
-			case "\x1b(N":  //crylic
+			case "\x1b(N": //crylic
 				$c = "ISO_5427";
 				break;
 			case "\x1b(`": //iso646-NO

@@ -11,6 +11,7 @@
  * @author Istabani
  * @author Meno25
  * @author Muhammad Shuaib
+ * @author Noor2020
  * @author O.bangash
  * @author Rachitrali
  * @author Reedy
@@ -53,13 +54,13 @@ $specialPageAliases = array(
 	'Ancientpages'              => array( 'قدیم_صفحات' ),
 	'Badtitle'                  => array( 'خراب_عنوان' ),
 	'Blankpage'                 => array( 'خالی_صفحہ' ),
-	'Block'                     => array( 'پابندی،_دستور_شبکی_پابندی،_پابندی_بر_صارف' ),
+	'Block'                     => array( 'پابندی', 'دستور_شبکی_پابندی', 'پابندی_بر_صارف' ),
 	'Blockme'                   => array( 'میری_پابندی' ),
 	'Booksources'               => array( 'کتابی_وسائل' ),
 	'BrokenRedirects'           => array( 'شکستہ_رجوع_مکررات' ),
 	'Categories'                => array( 'زمرہ_جات' ),
 	'ChangeEmail'               => array( 'ڈاک_تبدیل' ),
-	'ChangePassword'            => array( 'کلمہ_شناخت_تبدیل،_تنظیم_کلمہ_شناخت' ),
+	'ChangePassword'            => array( 'کلمہ_شناخت_تبدیل', 'تنظیم_کلمہ_شناخت' ),
 	'ComparePages'              => array( 'موازنہ_صفحات' ),
 	'Confirmemail'              => array( 'تصدیق_ڈاک' ),
 	'Contributions'             => array( 'شراکتیں' ),
@@ -77,15 +78,15 @@ $specialPageAliases = array(
 	'Import'                    => array( 'درآمدگی' ),
 	'Invalidateemail'           => array( 'ڈاک_تصدیق_منسوخ' ),
 	'JavaScriptTest'            => array( 'تجربہ_جاوا_اسکرپٹ' ),
-	'BlockList'                 => array( 'فہرست_ممنوع،_فہرست_دستور_شبکی_ممنوع' ),
+	'BlockList'                 => array( 'فہرست_ممنوع', 'فہرست_دستور_شبکی_ممنوع' ),
 	'LinkSearch'                => array( 'تلاش_روابط' ),
 	'Listadmins'                => array( 'فہرست_منتظمین' ),
 	'Listbots'                  => array( 'فہرست_روبہ_جات' ),
-	'Listfiles'                 => array( 'فہرست_املاف،_فہرست_تصاویر' ),
-	'Listgrouprights'           => array( 'فہرست_اختیارات_گروہ،_صارفی_گروہ_اختیارات' ),
+	'Listfiles'                 => array( 'فہرست_املاف', 'فہرست_تصاویر' ),
+	'Listgrouprights'           => array( 'فہرست_اختیارات_گروہ', 'صارفی_گروہ_اختیارات' ),
 	'Listredirects'             => array( 'فہرست_رجوع_مکررات' ),
 	'Listusers'                 => array( 'فہرست_صارفین،_صارف_فہرست' ),
-	'Log'                       => array( 'نوشتہ،_نوشتہ_جات' ),
+	'Log'                       => array( 'نوشتہ', 'نوشتہ_جات' ),
 	'Lonelypages'               => array( 'یتیم_صفحات' ),
 	'Longpages'                 => array( 'طویل_صفحات' ),
 	'MergeHistory'              => array( 'ضم_تاریخچہ' ),
@@ -94,7 +95,7 @@ $specialPageAliases = array(
 	'Mypage'                    => array( 'میرا_صفحہ' ),
 	'Mytalk'                    => array( 'میری_گفتگو' ),
 	'Myuploads'                 => array( 'میرے_زبراثقالات' ),
-	'Newimages'                 => array( 'جدید_املاف،_جدید_تصاویر' ),
+	'Newimages'                 => array( 'جدید_املاف', 'جدید_تصاویر' ),
 	'Newpages'                  => array( 'جدید_صفحات' ),
 	'PermanentLink'             => array( 'مستقل_ربط' ),
 	'Popularpages'              => array( 'مقبول_صفحات' ),
@@ -102,7 +103,7 @@ $specialPageAliases = array(
 	'Prefixindex'               => array( 'اشاریہ_سابقہ' ),
 	'Protectedpages'            => array( 'محفوظ_صفحات' ),
 	'Protectedtitles'           => array( 'محفوظ_عناوین' ),
-	'Randompage'                => array( 'تصادف،_تصادفی_مقالہ' ),
+	'Randompage'                => array( 'تصادف', 'تصادفی_مقالہ' ),
 	'Randomredirect'            => array( 'تصادفی_رجوع_مکرر' ),
 	'Recentchanges'             => array( 'حالیہ_تبدیلیاں' ),
 	'Recentchangeslinked'       => array( 'متعلقہ_تبدیلیاں' ),
@@ -112,12 +113,12 @@ $specialPageAliases = array(
 	'Specialpages'              => array( 'خصوصی_صفحات' ),
 	'Statistics'                => array( 'شماریات' ),
 	'Uncategorizedcategories'   => array( 'غیر_زمرہ_بند_زمرہ_جات' ),
-	'Uncategorizedimages'       => array( 'غیر_زمرہ_بند_املاف،_غیر_زمرہ_بند_تصاویر' ),
+	'Uncategorizedimages'       => array( 'غیر_زمرہ_بند_املاف', 'غیر_زمرہ_بند_تصاویر' ),
 	'Uncategorizedpages'        => array( 'غیر_زمرہ_بند_صفحات' ),
 	'Uncategorizedtemplates'    => array( 'غیر_زمرہ_بند_سانچے' ),
 	'Undelete'                  => array( 'بحال' ),
 	'Unusedcategories'          => array( 'غیر_مستعمل_زمرہ_جات' ),
-	'Unusedimages'              => array( 'غیر_مستعمل_املاف،_غیر_مستعمل_تصاویر' ),
+	'Unusedimages'              => array( 'غیر_مستعمل_املاف', 'غیر_مستعمل_تصاویر' ),
 	'Unusedtemplates'           => array( 'غیر_مستعمل_سانچے' ),
 	'Unwatchedpages'            => array( 'نادیدہ_صفحات' ),
 	'Upload'                    => array( 'زبراثقال' ),
@@ -127,7 +128,7 @@ $specialPageAliases = array(
 	'Version'                   => array( 'اخراجہ' ),
 	'Wantedcategories'          => array( 'مطلوب_زمرہ_جات' ),
 	'Wantedfiles'               => array( 'مطلوب_املاف' ),
-	'Wantedpages'               => array( 'مطلوب_صفحات،_شکستہ_روابط' ),
+	'Wantedpages'               => array( 'مطلوب_صفحات', 'شکستہ_روابط' ),
 	'Wantedtemplates'           => array( 'مطلوب_سانچے' ),
 	'Watchlist'                 => array( 'زیر_نظر_فہرست' ),
 	'Whatlinkshere'             => array( 'یہاں_کس_کا_رابطہ' ),
@@ -139,9 +140,11 @@ $magicWords = array(
 	'notoc'                     => array( '0', '_فہرست_نہیں_', '__NOTOC__' ),
 	'toc'                       => array( '0', '__فہرست__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__ناتحریرقسم__', '__NOEDITSECTION__' ),
+	'pagename'                  => array( '1', 'نام_صفحہ', 'PAGENAME' ),
+	'namespace'                 => array( '1', 'نام_فضا', 'NAMESPACE' ),
 	'msg'                       => array( '0', 'پیغام:', 'MSG:' ),
-	'subst'                     => array( '0', 'نقل:', 'SUBST:' ),
-	'safesubst'                 => array( '0', 'محفوظ_نقل:', 'SAFESUBST:' ),
+	'subst'                     => array( '0', 'جا:', 'نقل:', 'SUBST:' ),
+	'safesubst'                 => array( '0', 'محفوظ_جا:', 'محفوظ_نقل:', 'SAFESUBST:' ),
 	'img_thumbnail'             => array( '1', 'تصغیر', 'thumbnail', 'thumb' ),
 	'img_right'                 => array( '1', 'دائیں', 'right' ),
 	'img_left'                  => array( '1', 'بائیں', 'left' ),
@@ -186,9 +189,6 @@ $messages = array(
 'tog-shownumberswatching' => 'دیکھنے والے صارفین کی تعداد دکھاؤ',
 'tog-oldsig' => 'موجودہ دستخط:',
 'tog-fancysig' => '(سادہ دستخط بلا خودکار ربط)',
-'tog-externaleditor' => 'ہمیشہ بیرونی تدوین کار استعمال کرو (صرف ماہرین کیلئے، اِس کیلئے شمارندہ پر خاص ترتیبات درکار ہوتی ہیں۔
-[//www.mediawiki.org/wiki/Manual:External_editors مزید معلومات.])',
-'tog-externaldiff' => '',
 'tog-showjumplinks' => 'Enable "jump to" accessibility links',
 'tog-uselivepreview' => 'براہِ راست نمائش استعمال کرو (JavaScript چاہئے نیز تجرباتی)',
 'tog-forceeditsummary' => 'جب میں ترمیمی خلاصہ خالی چھوڑوں تو مجھے آگاہ کرو',
@@ -201,6 +201,7 @@ $messages = array(
 'tog-ccmeonemails' => 'دیگر صارفین کو ارسال کردہ برقی خطوط کی نقول مجھے ارسال کریں۔',
 'tog-diffonly' => 'مختلفات کے نیچے صفحے کی مشمولات مت دکھاؤ',
 'tog-showhiddencats' => 'پوشیدہ زمرہ جات دکھاؤ',
+'tog-useeditwarning' => 'خبردار مجھے جب میں غیر محفوظ کردہ تبدیلیوں کے ساتھ ایک ترمیم کے صفحے کو چھوڑ دو',
 
 'underline-always' => 'ہمیشہ',
 'underline-never' => 'کبھی نہیں',
@@ -539,7 +540,10 @@ Warning: Page may not contain recent updates.',
 آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے <span class='plainlinks'>[$1 دوبارہ داخلِ نوشتہ]</span> بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
 'yourname' => 'اسمِ رکنیت',
 'yourpassword' => 'کلمۂ شناخت',
+'createacct-yourpassword-ph' => 'ایک پاس ورڈ داخل کریں',
 'yourpasswordagain' => 'کلمۂ شناخت دوبارہ لکھیں',
+'createacct-yourpasswordagain' => 'کلمۂ اجازت تصدیق کریں',
+'createacct-yourpasswordagain-ph' => 'پاس ورڈ پھر داخل کریں',
 'remembermypassword' => 'اِس متصفح پر میرے داخلِ نوشتگی معلومات یاد رکھو (زیادہ سے زیادہ $1 {{PLURAL:$1|دِن|ایام}} کیلئے)',
 'yourdomainname' => 'آپکا ڈومین',
 'password-change-forbidden' => 'آپ اس ویکی پر پارلفظ (پاس روڈ) تبدیل نہیں کر سکتے',
@@ -558,12 +562,25 @@ Warning: Page may not contain recent updates.',
 'gotaccount' => "پہلے سے کھاتہ بنا ہوا ہے? '''$1'''.",
 'gotaccountlink' => 'داخل ہوجائیے',
 'userlogin-resetlink' => 'داخلِ نوشتہ ہونے کی تفاصیل بھول گئے ہیں؟',
+'createacct-join' => 'اپنی معلومات نیچے لکھیں۔',
+'createacct-emailrequired' => 'ای میل پتہ',
+'createacct-emailoptional' => 'ای میل ایڈریس (اختیاری)',
+'createacct-email-ph' => 'اپنا برقی پتہ لکھیں',
 'createaccountmail' => 'بذریعۂ برقی ڈاک',
+'createacct-realname' => 'اصلی نام (اختیاری)',
 'createaccountreason' => 'وجہ:',
+'createacct-reason' => 'وجہ',
+'createacct-captcha' => 'حفاظتی تدبیر',
+'createacct-imgcaptcha-ph' => 'آپ اوپر دیکھ متن داخل کریں',
+'createacct-benefit-heading' => '{{SITENAME}} آپ جیسے لوگوں کی طرف سے بنایا گیا ہے ۔',
+'createacct-benefit-body1' => 'ترمیم',
+'createacct-benefit-body2' => 'صفحات',
+'createacct-benefit-body3' => 'شرکت کرنے والے اس ماہ کے',
 'badretype' => 'درج شدہ کلمۂ شناخت اصل سے مطابقت نہیں رکھتا۔',
 'userexists' => 'داخل کردہ اسم صارف پہلے سے مستعمل ہے۔
 براہِ کرم! کوئی دوسرا اسم منتخب کیجئے۔',
 'loginerror' => 'داخلے میں غلطی',
+'createacct-error' => 'تخلیق کھاتہ میں نقص',
 'createaccounterror' => 'کھاتہ $1 بنایا نہیں جاسکا',
 'nocookiesnew' => 'کھاتۂ صارف بنادیا گیا ہے، لیکن آپ کا داخلہ نہیں ہوا.
 صارفین کے داخلہ کیلئے {{SITENAME}} کوکیز استعمال کرتا ہے.
@@ -628,7 +645,7 @@ Warning: Page may not contain recent updates.',
 دوبارہ کوشش کرنے سے پہلے انتظار فرمائیے.',
 'loginlanguagelabel' => 'زبان: $1',
 
-# E-mail sending
+# Email sending
 'user-mail-no-addy' => 'برقی ڈاک بھیجنے کی کوشش بغیر برقی ڈاک پتہ',
 
 # Change password dialog
@@ -943,10 +960,6 @@ $1",
 'searchdisabled' => '{{SITENAME}} تلاش غیرفعال.
 آپ فی الحال گوگل کے ذریعے تلاش کرسکتے ہیں.
 یاد رکھئے کہ اُن کے {{SITENAME}} اشاریے ممکناً پرانے ہوسکتے ہیں.',
-
-# Quickbar
-'qbsettings' => 'فوری‌بار',
-'qbsettings-none' => 'ہیچ',
 
 # Preferences page
 'preferences' => 'ترجیحات',
@@ -1296,7 +1309,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Special:ListGroupRights
 'listgrouprights-members' => '(اراکین کی فہرست)',
 
-# E-mail user
+# Email user
 'mailnologintext' => 'دیگر ارکان کو برقی خط ارسال کرنے کیلیۓ لازم ہے کہ آپ [[Special:UserLogin|داخل شدہ]] حالت میں ہوں اور آپ کی [[Special:Preferences|ترجیحات]] ایک درست برقی خط کا پتا درج ہو۔',
 'emailuser' => 'صارف کو برقی خط لکھیں',
 'defemailsubject' => '{{SITENAME}} سے برقی خط',
@@ -1566,6 +1579,9 @@ $1 × $2 عکصر (پکسلز)، حجم ملف: $3، MIME قسم: $4',
 'showhidebots' => '($1 بوٹ)',
 'ilsubmit' => 'تلاش',
 'bydate' => 'بالحاظ تاریخ',
+
+# Video information, used by Language::formatTimePeriod() to format lengths in the above messages
+'weeks' => '{{PLURAL:$1|$1ہفتہ| $1  ہفتے}}',
 
 # Bad image list
 'bad_image_list' => 'شکلبند درج ذیل ہے:

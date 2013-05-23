@@ -60,7 +60,7 @@ class ResourceLoader {
 	 * requests its own information. This sacrifice of modularity yields a substantial
 	 * performance improvement.
 	 *
-	 * @param $modules Array: List of module names to preload information for
+	 * @param array $modules List of module names to preload information for
 	 * @param $context ResourceLoaderContext: Context to load the information within
 	 */
 	public function preloadModuleInfo( array $modules, ResourceLoaderContext $context ) {
@@ -127,8 +127,8 @@ class ResourceLoader {
 	 * If $data is empty, only contains whitespace or the filter was unknown,
 	 * $data is returned unmodified.
 	 *
-	 * @param $filter String: Name of filter to run
-	 * @param $data String: Text to filter, such as JavaScript or CSS text
+	 * @param string $filter Name of filter to run
+	 * @param string $data Text to filter, such as JavaScript or CSS text
 	 * @return String: Filtered data, or a comment containing an error message
 	 */
 	protected function filter( $filter, $data ) {
@@ -174,9 +174,10 @@ class ResourceLoader {
 			// Save filtered text to Memcached
 			$cache->set( $key, $result );
 		} catch ( Exception $exception ) {
+			wfDebugLog( 'resourceloader', __METHOD__ . ": minification failed: $e" );
+			$this->hasErrors = true;
 			// Return exception as a comment
 			$result = $this->makeComment( $exception->__toString() );
-			$this->hasErrors = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -201,7 +202,7 @@ class ResourceLoader {
 		$this->addSource( $wgResourceLoaderSources );
 
 		// Register core modules
-		$this->register( include( "$IP/resources/Resources.php" ) );
+		$this->register( include "$IP/resources/Resources.php" );
 		// Register extension modules
 		wfRunHooks( 'ResourceLoaderRegisterModules', array( &$this ) );
 		$this->register( $wgResourceModules );
@@ -210,7 +211,6 @@ class ResourceLoader {
 			$this->registerTestModules();
 		}
 
-
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -218,7 +218,7 @@ class ResourceLoader {
 	 * Registers a module with the ResourceLoader system.
 	 *
 	 * @param $name Mixed: Name of module as a string or List of name/object pairs as an array
-	 * @param $info array Module info array. For backwards compatibility with 1.17alpha,
+	 * @param array $info Module info array. For backwards compatibility with 1.17alpha,
 	 *   this may also be a ResourceLoaderModule object. Optional when using
 	 *   multiple-registration calling style.
 	 * @throws MWException: If a duplicate module registration is attempted
@@ -235,6 +235,7 @@ class ResourceLoader {
 		foreach ( $registrations as $name => $info ) {
 			// Disallow duplicate registrations
 			if ( isset( $this->moduleInfos[$name] ) ) {
+				wfProfileOut( __METHOD__ );
 				// A module has already been registered by this name
 				throw new MWException(
 					'ResourceLoader duplicate registration error. ' .
@@ -244,6 +245,7 @@ class ResourceLoader {
 
 			// Check $name for validity
 			if ( !self::isValidModuleName( $name ) ) {
+				wfProfileOut( __METHOD__ );
 				throw new MWException( "ResourceLoader module name '$name' is invalid, see ResourceLoader::isValidModuleName()" );
 			}
 
@@ -252,6 +254,7 @@ class ResourceLoader {
 				// Old calling convention
 				// Validate the input
 				if ( !( $info instanceof ResourceLoaderModule ) ) {
+					wfProfileOut( __METHOD__ );
 					throw new MWException( 'ResourceLoader invalid module error. ' .
 						'Instances of ResourceLoaderModule expected.' );
 				}
@@ -281,17 +284,21 @@ class ResourceLoader {
 
 		// Get core test suites
 		$testModules = array();
-		$testModules['qunit'] = include( "$IP/tests/qunit/QUnitTestResources.php" );
+		$testModules['qunit'] = include "$IP/tests/qunit/QUnitTestResources.php";
 		// Get other test suites (e.g. from extensions)
 		wfRunHooks( 'ResourceLoaderTestModules', array( &$testModules, &$this ) );
 
 		// Add the testrunner (which configures QUnit) to the dependencies.
 		// Since it must be ready before any of the test suites are executed.
-		foreach( $testModules['qunit'] as $moduleName => $moduleProps ) {
-			$testModules['qunit'][$moduleName]['dependencies'][] = 'mediawiki.tests.qunit.testrunner';
+		foreach ( $testModules['qunit'] as &$module ) {
+			// Make sure all test modules are top-loading so that when QUnit starts
+			// on document-ready, it will run once and finish. If some tests arrive
+			// later (possibly after QUnit has already finished) they will be ignored.
+			$module['position'] = 'top';
+			$module['dependencies'][] = 'mediawiki.tests.qunit.testrunner';
 		}
 
-		foreach( $testModules as $id => $names ) {
+		foreach ( $testModules as $id => $names ) {
 			// Register test modules
 			$this->register( $testModules[$id] );
 
@@ -309,10 +316,10 @@ class ResourceLoader {
 	 * 'loadScript': URL (either fully-qualified or protocol-relative) of load.php for this source
 	 *
 	 * @param $id Mixed: source ID (string), or array( id1 => props1, id2 => props2, ... )
-	 * @param $properties Array: source properties
+	 * @param array $properties source properties
 	 * @throws MWException
 	 */
-	public function addSource( $id, $properties = null) {
+	public function addSource( $id, $properties = null ) {
 		// Allow multiple sources to be registered in one call
 		if ( is_array( $id ) ) {
 			foreach ( $id as $key => $value ) {
@@ -353,12 +360,12 @@ class ResourceLoader {
 	 * If the given framework id is unknkown, or if the in-object variable is not an array,
 	 * then it will return an empty array.
 	 *
-	 * @param $framework String: Optional. Get only the test module names for one
+	 * @param string $framework Optional. Get only the test module names for one
 	 * particular framework.
 	 * @return Array
 	 */
 	public function getTestModuleNames( $framework = 'all' ) {
-		/// @TODO: api siteinfo prop testmodulenames modulenames
+		/// @todo api siteinfo prop testmodulenames modulenames
 		if ( $framework == 'all' ) {
 			return $this->testModuleNames;
 		} elseif ( isset( $this->testModuleNames[$framework] ) && is_array( $this->testModuleNames[$framework] ) ) {
@@ -371,7 +378,7 @@ class ResourceLoader {
 	/**
 	 * Get the ResourceLoaderModule object for a given module name.
 	 *
-	 * @param $name String: Module name
+	 * @param string $name Module name
 	 * @return ResourceLoaderModule if module has been registered, null otherwise
 	 */
 	public function getModule( $name ) {
@@ -447,11 +454,14 @@ class ResourceLoader {
 				// Do not allow private modules to be loaded from the web.
 				// This is a security issue, see bug 34907.
 				if ( $module->getGroup() === 'private' ) {
-					$errors .= $this->makeComment( "Cannot show private module \"$name\"" );
+					wfDebugLog( 'resourceloader', __METHOD__ . ": request for private module denied: $e" );
 					$this->hasErrors = true;
+					// Add exception to the output as a comment
+					$errors .= $this->makeComment( "Cannot show private module \"$name\"" );
+
 					continue;
 				}
-				$modules[$name] = $this->getModule( $name );
+				$modules[$name] = $module;
 			} else {
 				$missing[] = $name;
 			}
@@ -460,13 +470,14 @@ class ResourceLoader {
 		// Preload information needed to the mtime calculation below
 		try {
 			$this->preloadModuleInfo( array_keys( $modules ), $context );
-		} catch( Exception $e ) {
+		} catch ( Exception $e ) {
+			wfDebugLog( 'resourceloader', __METHOD__ . ": preloading module info failed: $e" );
+			$this->hasErrors = true;
 			// Add exception to the output as a comment
 			$errors .= $this->makeComment( $e->__toString() );
-			$this->hasErrors = true;
 		}
 
-		wfProfileIn( __METHOD__.'-getModifiedTime' );
+		wfProfileIn( __METHOD__ . '-getModifiedTime' );
 
 		// To send Last-Modified and support If-Modified-Since, we need to detect
 		// the last modified time
@@ -479,13 +490,14 @@ class ResourceLoader {
 				// Calculate maximum modified time
 				$mtime = max( $mtime, $module->getModifiedTime( $context ) );
 			} catch ( Exception $e ) {
+				wfDebugLog( 'resourceloader', __METHOD__ . ": calculating maximum modified time failed: $e" );
+				$this->hasErrors = true;
 				// Add exception to the output as a comment
 				$errors .= $this->makeComment( $e->__toString() );
-				$this->hasErrors = true;
 			}
 		}
 
-		wfProfileOut( __METHOD__.'-getModifiedTime' );
+		wfProfileOut( __METHOD__ . '-getModifiedTime' );
 
 		// If there's an If-Modified-Since header, respond with a 304 appropriately
 		if ( $this->tryRespondLastModified( $context, $mtime ) ) {
@@ -531,8 +543,8 @@ class ResourceLoader {
 	/**
 	 * Send content type and last modified headers to the client.
 	 * @param $context ResourceLoaderContext
-	 * @param $mtime string TS_MW timestamp to use for last-modified
-	 * @param $error bool Whether there are commented-out errors in the response
+	 * @param string $mtime TS_MW timestamp to use for last-modified
+	 * @param bool $error Whether there are commented-out errors in the response
 	 * @return void
 	 */
 	protected function sendResponseHeaders( ResourceLoaderContext $context, $mtime, $errors ) {
@@ -541,12 +553,12 @@ class ResourceLoader {
 		// to propagate to clients quickly
 		// If there were errors, we also need a shorter expiry time so we can recover quickly
 		if ( is_null( $context->getVersion() ) || $errors ) {
-			$maxage  = $wgResourceLoaderMaxage['unversioned']['client'];
+			$maxage = $wgResourceLoaderMaxage['unversioned']['client'];
 			$smaxage = $wgResourceLoaderMaxage['unversioned']['server'];
 		// If a version was specified we can use a longer expiry time since changing
 		// version numbers causes cache misses
 		} else {
-			$maxage  = $wgResourceLoaderMaxage['versioned']['client'];
+			$maxage = $wgResourceLoaderMaxage['versioned']['client'];
 			$smaxage = $wgResourceLoaderMaxage['versioned']['server'];
 		}
 		if ( $context->getOnly() === 'styles' ) {
@@ -570,7 +582,7 @@ class ResourceLoader {
 	 * If there's an If-Modified-Since header, respond with a 304 appropriately
 	 * and clear out the output buffer. If the client cache is too old then do nothing.
 	 * @param $context ResourceLoaderContext
-	 * @param $mtime string The TS_MW timestamp to check the header against
+	 * @param string $mtime The TS_MW timestamp to check the header against
 	 * @return bool True iff 304 header sent and output handled
 	 */
 	protected function tryRespondLastModified( ResourceLoaderContext $context, $mtime ) {
@@ -595,6 +607,8 @@ class ResourceLoader {
 				// no matter how often we call ob_get_clean(), so instead of doing
 				// the more intuitive while ( ob_get_level() > 0 ) ob_get_clean();
 				// we have to be safe here and avoid an infinite loop.
+				// Caching the level is not an option, need to allow it to
+				// shorten the loop on-the-fly (bug 46836)
 				for ( $i = 0; $i < ob_get_level(); $i++ ) {
 					ob_end_clean();
 				}
@@ -629,7 +643,7 @@ class ResourceLoader {
 		if ( !$good ) {
 			try { // RL always hits the DB on file cache miss...
 				wfGetDB( DB_SLAVE );
-			} catch( DBConnectionError $e ) { // ...check if we need to fallback to cache
+			} catch ( DBConnectionError $e ) { // ...check if we need to fallback to cache
 				$good = $fileCache->isCacheGood(); // cache existence check
 			}
 		}
@@ -667,13 +681,13 @@ class ResourceLoader {
 	 * Generates code for a response
 	 *
 	 * @param $context ResourceLoaderContext: Context in which to generate a response
-	 * @param $modules Array: List of module objects keyed by module name
-	 * @param $missing Array: List of unavailable modules (optional)
+	 * @param array $modules List of module objects keyed by module name
+	 * @param array $missing List of unavailable modules (optional)
 	 * @return String: Response data
 	 */
 	public function makeModuleResponse( ResourceLoaderContext $context,
-		array $modules, $missing = array() )
-	{
+		array $modules, $missing = array()
+	) {
 		$out = '';
 		$exceptions = '';
 		if ( $modules === array() && $missing === array() ) {
@@ -686,9 +700,10 @@ class ResourceLoader {
 			try {
 				$blobs = MessageBlobStore::get( $this, $modules, $context->getLanguage() );
 			} catch ( Exception $e ) {
+				wfDebugLog( 'resourceloader', __METHOD__ . ": pre-fetching blobs from MessageBlobStore failed: $e" );
+				$this->hasErrors = true;
 				// Add exception to the output as a comment
 				$exceptions .= $this->makeComment( $e->__toString() );
-				$this->hasErrors = true;
 			}
 		} else {
 			$blobs = array();
@@ -792,9 +807,10 @@ class ResourceLoader {
 						break;
 				}
 			} catch ( Exception $e ) {
+				wfDebugLog( 'resourceloader', __METHOD__ . ": generating module package failed: $e" );
+				$this->hasErrors = true;
 				// Add exception to the output as a comment
 				$exceptions .= $this->makeComment( $e->__toString() );
-				$this->hasErrors = true;
 
 				// Register module as missing
 				$missing[] = $name;
@@ -835,7 +851,7 @@ class ResourceLoader {
 	 * Returns JS code to call to mw.loader.implement for a module with
 	 * given properties.
 	 *
-	 * @param $name string Module name
+	 * @param string $name Module name
 	 * @param $scripts Mixed: List of URLs to JavaScript files or String of JavaScript code
 	 * @param $styles Mixed: Array of CSS strings keyed by media type, or an array of lists of URLs to
 	 * CSS files keyed by media type
@@ -864,7 +880,9 @@ class ResourceLoader {
 				// output javascript "[]" instead of "{}". This fixes that.
 				(object)$styles,
 				(object)$messages
-			) );
+			),
+			ResourceLoader::inDebugMode()
+		);
 	}
 
 	/**
@@ -883,7 +901,7 @@ class ResourceLoader {
 	 * Combines an associative array mapping media type to CSS into a
 	 * single stylesheet with "@media" blocks.
 	 *
-	 * @param $stylePairs Array: Array keyed by media type containing (arrays of) CSS strings.
+	 * @param array $stylePairs Array keyed by media type containing (arrays of) CSS strings.
 	 *
 	 * @return Array
 	 */
@@ -893,7 +911,7 @@ class ResourceLoader {
 			// ResourceLoaderFileModule::getStyle can return the styles
 			// as a string or an array of strings. This is to allow separation in
 			// the front-end.
-			$styles = (array) $styles;
+			$styles = (array)$styles;
 			foreach ( $styles as $style ) {
 				$style = trim( $style );
 				// Don't output an empty "@media print { }" block (bug 40498)
@@ -904,7 +922,7 @@ class ResourceLoader {
 
 					if ( $media === '' || $media == 'all' ) {
 						$out[] = $style;
-					} else if ( is_string( $media ) ) {
+					} elseif ( is_string( $media ) ) {
 						$out[] = "@media $media {\n" . str_replace( "\n", "\n\t", "\t" . $style ) . "}";
 					}
 					// else: skip
@@ -943,12 +961,12 @@ class ResourceLoader {
 	 * which will have values corresponding to $name, $version, $dependencies
 	 * and $group as supplied.
 	 *
-	 * @param $name String: Module name
+	 * @param string $name Module name
 	 * @param $version Integer: Module version number as a timestamp
-	 * @param $dependencies Array: List of module names on which this module depends
-	 * @param $group String: Group which the module is in.
-	 * @param $source String: Source of the module, or 'local' if not foreign.
-	 * @param $script String: JavaScript code
+	 * @param array $dependencies List of module names on which this module depends
+	 * @param string $group Group which the module is in.
+	 * @param string $source Source of the module, or 'local' if not foreign.
+	 * @param string $script JavaScript code
 	 *
 	 * @return string
 	 */
@@ -976,21 +994,21 @@ class ResourceLoader {
 	 *     ) ):
 	 *        Registers modules with the given names and parameters.
 	 *
-	 * @param $name String: Module name
+	 * @param string $name Module name
 	 * @param $version Integer: Module version number as a timestamp
-	 * @param $dependencies Array: List of module names on which this module depends
-	 * @param $group String: group which the module is in.
-	 * @param $source String: source of the module, or 'local' if not foreign
+	 * @param array $dependencies List of module names on which this module depends
+	 * @param string $group group which the module is in.
+	 * @param string $source source of the module, or 'local' if not foreign
 	 *
 	 * @return string
 	 */
 	public static function makeLoaderRegisterScript( $name, $version = null,
-		$dependencies = null, $group = null, $source = null )
-	{
+		$dependencies = null, $group = null, $source = null
+	) {
 		if ( is_array( $name ) ) {
 			return Xml::encodeJsCall( 'mw.loader.register', array( $name ) );
 		} else {
-			$version = (int) $version > 1 ? (int) $version : 1;
+			$version = (int)$version > 1 ? (int)$version : 1;
 			return Xml::encodeJsCall( 'mw.loader.register',
 				array( $name, $version, $dependencies, $group, $source ) );
 		}
@@ -1006,8 +1024,8 @@ class ResourceLoader {
 	 *   - ResourceLoader::makeLoaderSourcesScript( array( $id1 => $props1, $id2 => $props2, ... ) );
 	 *       Register sources with the given IDs and properties.
 	 *
-	 * @param $id String: source ID
-	 * @param $properties Array: source properties (see addSource())
+	 * @param string $id source ID
+	 * @param array $properties source properties (see addSource())
 	 *
 	 * @return string
 	 */
@@ -1023,7 +1041,7 @@ class ResourceLoader {
 	 * Returns JS code which runs given JS code if the client-side framework is
 	 * present.
 	 *
-	 * @param $script String: JavaScript code
+	 * @param string $script JavaScript code
 	 *
 	 * @return string
 	 */
@@ -1035,12 +1053,12 @@ class ResourceLoader {
 	 * Returns JS code which will set the MediaWiki configuration array to
 	 * the given value.
 	 *
-	 * @param $configuration Array: List of configuration values keyed by variable name
+	 * @param array $configuration List of configuration values keyed by variable name
 	 *
 	 * @return string
 	 */
 	public static function makeConfigSetScript( array $configuration ) {
-		return Xml::encodeJsCall( 'mw.config.set', array( $configuration ) );
+		return Xml::encodeJsCall( 'mw.config.set', array( $configuration ), ResourceLoader::inDebugMode() );
 	}
 
 	/**
@@ -1048,7 +1066,7 @@ class ResourceLoader {
 	 *
 	 * For example, array( 'foo.bar', 'foo.baz', 'bar.baz', 'bar.quux' )
 	 * becomes 'foo.bar,baz|bar.baz,quux'
-	 * @param $modules array of module names (strings)
+	 * @param array $modules of module names (strings)
 	 * @return string Packed query string
 	 */
 	public static function makePackedModulesString( $modules ) {
@@ -1086,16 +1104,16 @@ class ResourceLoader {
 
 	/**
 	 * Build a load.php URL
-	 * @param $modules array of module names (strings)
-	 * @param $lang string Language code
-	 * @param $skin string Skin name
-	 * @param $user string|null User name. If null, the &user= parameter is omitted
-	 * @param $version string|null Versioning timestamp
-	 * @param $debug bool Whether the request should be in debug mode
-	 * @param $only string|null &only= parameter
-	 * @param $printable bool Printable mode
-	 * @param $handheld bool Handheld mode
-	 * @param $extraQuery array Extra query parameters to add
+	 * @param array $modules of module names (strings)
+	 * @param string $lang Language code
+	 * @param string $skin Skin name
+	 * @param string|null $user User name. If null, the &user= parameter is omitted
+	 * @param string|null $version Versioning timestamp
+	 * @param bool $debug Whether the request should be in debug mode
+	 * @param string|null $only &only= parameter
+	 * @param bool $printable Printable mode
+	 * @param bool $handheld Handheld mode
+	 * @param array $extraQuery Extra query parameters to add
 	 * @return string URL to load.php. May be protocol-relative (if $wgLoadScript is procol-relative)
 	 */
 	public static function makeLoaderURL( $modules, $lang, $skin, $user = null, $version = null, $debug = false, $only = null,
@@ -1151,7 +1169,7 @@ class ResourceLoader {
 	 * Module names may not contain pipes (|), commas (,) or exclamation marks (!) and can be
 	 * at most 255 bytes.
 	 *
-	 * @param $moduleName string Module name to check
+	 * @param string $moduleName Module name to check
 	 * @return bool Whether $moduleName is a valid module name
 	 */
 	public static function isValidModuleName( $moduleName ) {

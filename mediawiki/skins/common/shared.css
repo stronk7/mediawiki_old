@@ -232,6 +232,9 @@ td.mw-label {
 .prefsection table {
 	width: 100%;
 }
+.prefsection table.mw-htmlform-matrix {
+	width: auto;
+}
 td.mw-submit {
 	white-space: nowrap;
 }
@@ -252,6 +255,11 @@ tr.mw-htmlform-vertical-label td.mw-label {
 	display: inline;
 	margin-right: 1em;
 	white-space: nowrap;
+}
+
+.mw-htmlform-matrix td {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 
 input#wpSummary {
@@ -535,9 +543,12 @@ table.collapsed tr.collapsable {
 	font-size: larger;
 	border: 2px solid;
 	padding: .5em 1em;
-	float: left;
 	margin-bottom: 2em;
 	color: #000;
+	display: -moz-inline-block;
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
 }
 .errorbox {
 	border-color: red;
@@ -676,7 +687,7 @@ ul#filetoc {
 	padding-right: 2em;
 }
 
-/* Classes for EXIF data display */
+/* Classes for Exif data display */
 table.mw_metadata {
 	font-size: 0.8em;
 	margin-left: 0.5em;
@@ -1084,9 +1095,36 @@ table.floatleft {
 	z-index: 99;
 }
 
-.editsection, .toctoggle {
+.mw-editsection, .editsection, .toctoggle {
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+/* Display editsection links smaller and next to headings */
+.mw-editsection {
+	font-size: small;
+	font-weight: normal;
+	margin-left: 1em;
+	vertical-align: baseline;
+	/* Reset line-height; headings tend to have it set to larger values */
+	line-height: 1em;
+	/* As .mw-editsection is a <span> (inline element), it is treated as part */
+	/* of the heading content when selecting text by multiple clicks and thus */
+	/* selected together with heading content, despite the user-select: none; */
+	/* rule set above. This enforces non-selection without changing the look. */
+	display: inline-block;
+}
+
+/* Correct directionality when page dir is different from site/user dir */
+/* @noflip */
+.mw-content-ltr .mw-editsection,
+.mw-content-rtl .mw-content-ltr .mw-editsection {
+	margin-left: 1em;
+}
+/* @noflip */
+.mw-content-rtl .mw-editsection,
+.mw-content-ltr .mw-content-rtl .mw-editsection {
+	margin-right: 1em;
 }

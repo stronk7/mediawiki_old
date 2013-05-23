@@ -104,7 +104,7 @@ class WebInstallerOutput {
 
 	/**
 	 * Get the raw vector CSS, flipping if needed
-	 * @param $dir String 'ltr' or 'rtl'
+	 * @param string $dir 'ltr' or 'rtl'
 	 * @return String
 	 */
 	public function getCSS( $dir ) {
@@ -146,7 +146,7 @@ class WebInstallerOutput {
 		}
 		wfRestoreWarnings();
 
-		if( $dir == 'rtl' ) {
+		if ( $dir == 'rtl' ) {
 			$css = CSSJanus::transform( $css, true );
 		}
 
@@ -157,7 +157,7 @@ class WebInstallerOutput {
 	 * "<link>" to index.php?css=foobar for the "<head>"
 	 * @return String
 	 */
-	private function getCssUrl( ) {
+	private function getCssUrl() {
 		return Html::linkedStyle( $_SERVER['PHP_SELF'] . '?css=' . $this->getDir() );
 	}
 
@@ -223,7 +223,7 @@ class WebInstallerOutput {
 			$this->parent->request->response()->header( 'X-Frame-Options: DENY' );
 		}
 		if ( $this->redirectTarget ) {
-			$this->parent->request->response()->header( 'Location: '.$this->redirectTarget );
+			$this->parent->request->response()->header( 'Location: ' . $this->redirectTarget );
 			return;
 		}
 

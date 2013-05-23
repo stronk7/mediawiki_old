@@ -66,7 +66,6 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 
 			$this->user = $this->userUser;
 		}
-
 	}
 
 	function setUserPerm( $perm ) {
@@ -234,7 +233,7 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 
 		if ( $this->isWikitextNS( NS_MAIN ) ) {
 			//NOTE: some content models don't allow moving
-			//@todo: find a Wikitext namespace for testing
+			// @todo find a Wikitext namespace for testing
 
 			$this->setTitle( NS_MAIN );
 			$this->setUser( 'anon' );
@@ -317,7 +316,6 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 				$this->title->userCan( $action, $this->user, true ) );
 			$this->assertEquals( $check[$action][3],
 				$this->title->quickUserCan( $action, $this->user ) );
-
 			# count( User::getGroupsWithPermissions( $action ) ) < 1
 		}
 	}
@@ -538,7 +536,6 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 			$this->title->userCan( 'edit', $this->user ) );
 		$this->assertEquals( array(),
 			$this->title->getUserPermissionsErrors( 'edit', $this->user ) );
-
 	}
 
 	function testActionPermissions() {
@@ -561,7 +558,6 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 			$this->title->getUserPermissionsErrors( 'create', $this->user ) );
 		$this->assertEquals( true,
 			$this->title->userCan( 'create', $this->user ) );
-
 
 		$this->setUserPerm( array( 'createpage' ) );
 		$this->assertEquals( array( array( 'titleprotected', 'Useruser', 'test' ) ),
@@ -605,7 +601,6 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 			$this->title->getUserPermissionsErrors( 'move-target', $this->user ) );
 		$this->assertEquals( false,
 			$this->title->userCan( 'move-target', $this->user ) );
-
 	}
 
 	function testUserBlock() {
@@ -648,13 +643,13 @@ class TitlePermissionTest extends MediaWikiLangTestCase {
 		global $wgLocalTZoffset;
 		$wgLocalTZoffset = -60;
 		$this->user->mBlockedby = $this->user->getName();
-		$this->user->mBlock = new Block( '127.0.8.1', 0, 1, 'no reason given', $now, 0, 10 );
+		$this->user->mBlock = new Block( '127.0.8.1', 0, $this->user->getId(),
+			'no reason given', $now, 0, 10 );
 		$this->assertEquals( array( array( 'blockedtext',
 				'[[User:Useruser|Useruser]]', 'no reason given', '127.0.0.1',
 				'Useruser', null, '23:00, 31 December 1969', '127.0.8.1',
 				$wgLang->timeanddate( wfTimestamp( TS_MW, $now ), true ) ) ),
 			$this->title->getUserPermissionsErrors( 'move-target', $this->user ) );
-
 		# $action != 'read' && $action != 'createaccount' && $user->isBlockedFrom( $this )
 		#   $user->blockedFor() == ''
 		#   $user->mBlock->mExpiry == 'infinity'

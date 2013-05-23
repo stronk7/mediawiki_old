@@ -45,7 +45,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		}
 
 		if ( !$this->isWikitextNS( NS_MAIN ) ) {
-			//@todo: cover the case of non-wikitext content in the main namespace
+			// @todo cover the case of non-wikitext content in the main namespace
 			return;
 		}
 
@@ -87,6 +87,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		# sort them numerically so we will compare simply that we received
 		# the expected matches.
 		sort( $matches );
+
 		return $matches;
 	}
 
@@ -172,5 +173,4 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			$this->fetchIds( $this->search->searchTitle( 'smithee' ) ),
 			"Title power search failed" );
 	}
-
 }

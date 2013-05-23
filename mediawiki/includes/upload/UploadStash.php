@@ -97,7 +97,7 @@ class UploadStash {
 	 * Get a file and its metadata from the stash.
 	 * The noAuth param is a bit janky but is required for automated scripts which clean out the stash.
 	 *
-	 * @param $key String: key under which file information is stored
+	 * @param string $key key under which file information is stored
 	 * @param $noAuth Boolean (optional) Don't check authentication. Used by maintenance scripts.
 	 * @throws UploadStashFileNotFoundException
 	 * @throws UploadStashNotLoggedInException
@@ -155,10 +155,10 @@ class UploadStash {
 	/**
 	 * Getter for file metadata.
 	 *
-	 * @param $key String: key under which file information is stored
+	 * @param string $key key under which file information is stored
 	 * @return Array
 	 */
-	public function getMetadata ( $key ) {
+	public function getMetadata( $key ) {
 		$this->getFile( $key );
 		return $this->fileMetadata[$key];
 	}
@@ -166,10 +166,10 @@ class UploadStash {
 	/**
 	 * Getter for fileProps
 	 *
-	 * @param $key String: key under which file information is stored
+	 * @param string $key key under which file information is stored
 	 * @return Array
 	 */
-	public function getFileProps ( $key ) {
+	public function getFileProps( $key ) {
 		$this->getFile( $key );
 		return $this->fileProps[$key];
 	}
@@ -177,8 +177,8 @@ class UploadStash {
 	/**
 	 * Stash a file in a temp directory and record that we did this in the database, along with other metadata.
 	 *
-	 * @param $path String: path to file you want stashed
-	 * @param $sourceType String: the type of upload that generated this file (currently, I believe, 'file' or null)
+	 * @param string $path path to file you want stashed
+	 * @param string $sourceType the type of upload that generated this file (currently, I believe, 'file' or null)
 	 * @throws UploadStashBadPathException
 	 * @throws UploadStashFileException
 	 * @throws UploadStashNotLoggedInException
@@ -209,7 +209,7 @@ class UploadStash {
 		list( $usec, $sec ) = explode( ' ', microtime() );
 		$usec = substr( $usec, 2 );
 		$key = wfBaseConvert( $sec . $usec, 10, 36 ) . '.' .
-			wfBaseConvert( mt_rand(), 10, 36 ) . '.'.
+			wfBaseConvert( mt_rand(), 10, 36 ) . '.' .
 			$this->userId . '.' .
 			$extension;
 
@@ -338,7 +338,7 @@ class UploadStash {
 			__METHOD__
 		);
 
-		if( !$row ) {
+		if ( !$row ) {
 			throw new UploadStashNoSuchKeyException( "No such key ($key), cannot remove" );
 		}
 
@@ -348,7 +348,6 @@ class UploadStash {
 
 		return $this->removeFileNoAuth( $key );
 	}
-
 
 	/**
 	 * Remove a file (see removeFile), but doesn't check ownership first.
@@ -423,6 +422,7 @@ class UploadStash {
 	 * @return string
 	 */
 	public static function getExtensionForPath( $path ) {
+		global $wgFileBlacklist;
 		// Does this have an extension?
 		$n = strrpos( $path, '.' );
 		$extension = null;
@@ -442,20 +442,28 @@ class UploadStash {
 			throw new UploadStashFileException( "extension is null" );
 		}
 
-		return File::normalizeExtension( $extension );
+		$extension = File::normalizeExtension( $extension );
+		if ( in_array( $extension, $wgFileBlacklist ) ) {
+			// The file should already be checked for being evil.
+			// However, if somehow we got here, we definitely
+			// don't want to give it an extension of .php and
+			// put it in a web accesible directory.
+			return '';
+		}
+		return $extension;
 	}
 
 	/**
 	 * Helper function: do the actual database query to fetch file metadata.
 	 *
-	 * @param $key String: key
+	 * @param string $key key
 	 * @param $readFromDB: constant (default: DB_SLAVE)
 	 * @return boolean
 	 */
 	protected function fetchFileMetadata( $key, $readFromDB = DB_SLAVE ) {
 		// populate $fileMetadata[$key]
 		$dbr = null;
-		if( $readFromDB === DB_MASTER ) {
+		if ( $readFromDB === DB_MASTER ) {
 			// sometimes reading from the master is necessary, if there's replication lag.
 			$dbr = $this->repo->getMasterDb();
 		} else {
@@ -482,7 +490,7 @@ class UploadStash {
 	/**
 	 * Helper function: Initialize the UploadStashFile for a given file.
 	 *
-	 * @param $key String: key under which to store the object
+	 * @param string $key key under which to store the object
 	 * @throws UploadStashZeroLengthFileException
 	 * @return bool
 	 */
@@ -506,8 +514,8 @@ class UploadStashFile extends UnregisteredLocalFile {
 	 * Arguably UnregisteredLocalFile should be handling its own file repo but that class is a bit retarded currently
 	 *
 	 * @param $repo FileRepo: repository where we should find the path
-	 * @param $path String: path to file
-	 * @param $key String: key to store the path and any stashed data under
+	 * @param string $path path to file
+	 * @param string $key key to store the path and any stashed data under
 	 * @throws UploadStashBadPathException
 	 * @throws UploadStashFileNotFoundException
 	 */
@@ -556,7 +564,7 @@ class UploadStashFile extends UnregisteredLocalFile {
 	 * The actual argument is the result of thumbName although we seem to have
 	 * buggy code elsewhere that expects a boolean 'suffix'
 	 *
-	 * @param $thumbName String: name of thumbnail (e.g. "120px-123456.jpg" ), or false to just get the path
+	 * @param string $thumbName name of thumbnail (e.g. "120px-123456.jpg" ), or false to just get the path
 	 * @return String: path thumbnail should take on filesystem, or containing directory if thumbname is false
 	 */
 	public function getThumbPath( $thumbName = false ) {
@@ -572,7 +580,7 @@ class UploadStashFile extends UnregisteredLocalFile {
 	 * We override this because we want to use the pretty url name instead of the
 	 * ugly file name.
 	 *
-	 * @param $params Array: handler-specific parameters
+	 * @param array $params handler-specific parameters
 	 * @param $flags integer Bitfield that supports THUMB_* constants
 	 * @return String: base name for URL, like '120px-12345.jpg', or null if there is no handler
 	 */
@@ -595,7 +603,7 @@ class UploadStashFile extends UnregisteredLocalFile {
 	 * the thumbnail urls be predictable. However, in our model the URL is not based on the filename
 	 * (that's hidden in the db)
 	 *
-	 * @param $thumbName String: basename of thumbnail file -- however, we don't want to use the file exactly
+	 * @param string $thumbName basename of thumbnail file -- however, we don't want to use the file exactly
 	 * @return String: URL to access thumbnail, or URL with partial path
 	 */
 	public function getThumbUrl( $thumbName = false ) {

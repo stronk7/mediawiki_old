@@ -11,6 +11,7 @@
  * @author Comp1089
  * @author Haqmar
  * @author Kaganer
+ * @author Matma Rex
  * @author Reedy
  * @author Roustammr
  * @author Sagan
@@ -176,8 +177,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Битте күҙәтеү исемлегенә өҫтәгән ҡулланыусылар һанын күрһәтергә',
 'tog-oldsig' => 'Хәҙерге имза:',
 'tog-fancysig' => 'Имзаның үҙ вики-тамғаһы (автоматик һылтанмаһыҙ)',
-'tog-externaleditor' => 'Махсус билдәләнмәһә, тышҡы мөхәррирләүсе ҡулланырға (белгестәр өсөн генә, компьютер махсус көйләнгән булырға тейеш)',
-'tog-externaldiff' => 'Махсус билдәләнмәһә, версияларҙы сағыштырыу өсөн тышҡы программа ҡулланырға (белгестәр өсөн генә, компьютер махсус көйләнгән булырға тейеш)',
 'tog-showjumplinks' => '«Күс» ярҙамсы һылтанмалары асылһын',
 'tog-uselivepreview' => 'Тиҙ ҡарап алыуҙы ҡулланырға (JavaScript, эксперименталь)',
 'tog-forceeditsummary' => 'Төҙәтеүҙе тасуирлау юлы тултырылмаһа, мине киҫәт',
@@ -191,6 +190,7 @@ $messages = array(
 'tog-diffonly' => 'Версия сағыштырыу аҫтында бит эстәлеге күрһәтелмәһен',
 'tog-showhiddencats' => 'Йәшерен категорияларҙы күрһәтергә',
 'tog-norollbackdiff' => 'Кире ҡайтарыуҙан һуң версия айырмалары күрһәтелмәһен',
+'tog-useeditwarning' => 'Мөхәррирләү битенән үҙгәртеүҙәрҙе һаҡламайынса сыҡҡан ваҡытта мине киҫәтергә',
 
 'underline-always' => 'Һәр ваҡыт',
 'underline-never' => 'Бер ҡасан да',
@@ -378,7 +378,7 @@ $1',
 'pool-errorunknown' => 'Билдәһеҙ хата',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite' => '{{grammar:genitive|{{SITENAME}}}} тураһында',
+'aboutsite' => '{{SITENAME}} тураһында',
 'aboutpage' => 'Project:Тасуирлама',
 'copyright' => '$1 ярашлы эстәлеге менән һәр кем файҙалана ала.',
 'copyrightpage' => '{{ns:project}}:Авторлыҡ хоҡуҡтары',
@@ -562,9 +562,13 @@ $2',
 'welcomecreation-msg' => 'Иҫәп яҙыуығыҙ яһалды.
 Шәхси [[Special:Preferences|{{SITENAME}} көйләүҙәрен]] үҙегеҙгә уңайлы итеп үҙгәртергә онотмағыҙ.',
 'yourname' => 'Ҡатнашыусы исеме',
+'userlogin-yourname' => 'Ҡулланыусы исеме',
 'yourpassword' => 'Һеҙҙең пароль',
+'userlogin-yourpassword' => 'Пароль',
+'userlogin-yourpassword-ph' => 'Яңы паролде яҙығыҙ',
 'yourpasswordagain' => 'Паролде ҡабаттан яҙыу',
 'remembermypassword' => 'Был компьютерҙа паролемде иҫләргә ($1 {{PLURAL:$1|көндән|көндән}} күп түгел)',
+'userlogin-remembermypassword' => 'Хәтерҙә ҡалдырырға',
 'securelogin-stick-https' => 'Танылғандан һуң HTTPS менән бәйләнеште ҡалдырырға',
 'yourdomainname' => 'Һеҙҙең домен',
 'password-change-forbidden' => 'Был викила паролегеҙҙе үҙгәртә алмайһығыҙ.',
@@ -645,7 +649,7 @@ $2',
 'loginlanguagelabel' => 'Тел: $1',
 'suspicious-userlogout' => 'Һеҙҙең сеансты тамамлау тураһында һорауығыҙ кире ҡағылды, сөнки ул төҙөк булмаған браузер йәки кэшлаусы прокси тарафынан ебәрелгән һорауға оҡшаған.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHP-ның mail() функцияһында билдәһеҙ хата',
 'user-mail-no-addy' => 'Электрон почта адресы булмайынса электрон хәбәр ебәреп ҡараны',
 
@@ -911,6 +915,8 @@ $2
 'content-failed-to-parse' => '$2 эстәлеге $1 төрөнә тура килмәй: $3.',
 'invalid-content-data' => 'Ярамаған мәғлүмәт',
 'content-not-allowed-here' => '"$1" эстәлеге [[$2]] бит өсөн ярамай',
+'editwarning-warning' => 'Икенсе биткә күсеү һеҙ индергән үҙгәрештәрҙең юғалыуына килтереүе мөмкин.
+Әгәр системала танылыу үтһәгеҙ, көйләүҙәрегеҙ битенең "Мөхәррирләү" бүлегендә был киҫәтеүҙе һүндерә алаһығыҙ.',
 
 # Content models
 'content-model-wikitext' => 'викияҙма',
@@ -958,7 +964,7 @@ $3 белдергән сәбәп: ''$2''",
 'currentrev' => 'Ағымдағы версия',
 'currentrev-asof' => '$1, ағымдағы версия',
 'revisionasof' => '$1 версияһы',
-'revision-info' => '<div id="viewingold-warning" style="background: #FFBDBD; border: 1px solid #BB7979; color: #000000; margin: 1em 0 .5em; padding: .5em 1em; vertical-align: middle; font-weight: bold; font-family: Palatino Linotype, Microsoft Sans Serif, Arial Unicode MS, Droid Sans; clear: both;">Хәҙер һеҙ был биттең иҫке, <span id="mw-revision-name">$2</span> тарафынан <span id="mw-revision-date">$1</span> һаҡланған версияһын ҡарайһығыҙ. Уның <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}}} ағымдағы версиянан] айырмаһы булыуы мөмкин</span>.</div>',
+'revision-info' => 'Версия: $1; $2',
 'previousrevision' => '← Алдағы',
 'nextrevision' => 'Киләһе →',
 'currentrevisionlink' => 'Ағымдағы версия',
@@ -1195,15 +1201,6 @@ $1",
 Хәҙергә эҙләүҙе Google менән үтәй алаһығыҙ.
 Тик унда {{SITENAME}} өсөн индекслауҙың иҫке булыуы мөмкинлеген онотмағыҙ.',
 
-# Quickbar
-'qbsettings' => 'Тиҙ күсеү',
-'qbsettings-none' => 'Һис бере',
-'qbsettings-fixedleft' => 'Һулда нығытылған',
-'qbsettings-fixedright' => 'Уңда нығытылған',
-'qbsettings-floatingleft' => 'Һулда күсеүсе',
-'qbsettings-floatingright' => 'Уңда күсеүсе',
-'qbsettings-directionality' => 'Беркетелгән, телегеҙҙең яҙыу йүнәлешенә бәйле',
-
 # Preferences page
 'preferences' => 'Көйләүҙәр',
 'mypreferences' => 'Көйләүҙәр',
@@ -1323,7 +1320,7 @@ $1",
 'prefs-displaywatchlist' => 'Күренеш көйләүҙәре',
 'prefs-diffs' => 'Айырмалар',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'E-mail адрес дөрөҫ булғанға оҡшаған',
 'email-address-validity-invalid' => 'Дөрөҫ e-mail адресын керетегеҙ',
 
@@ -1752,7 +1749,6 @@ $1',
 'http-read-error' => 'HTTP уҡыу хатаһы.',
 'http-timed-out' => 'HTTP-һорауҙы көтөү ваҡыты үтте.',
 'http-curl-error' => 'URL адрес буйынса мөрәжәғәт итеү хатаһы: $1',
-'http-host-unreachable' => 'URL адрес буйынса мөрәжәғәт итеү мөмкин түгел.',
 'http-bad-status' => 'HTTP-һорауҙы эшкәрткән ваҡытта ҡыйынлыҡтар тыуҙы: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2103,7 +2099,7 @@ $1',
 'listgrouprights-addgroup-self-all' => 'Үҙенең иҫәп яҙмаһына бөтә төркөмдәрҙе өҫтәү',
 'listgrouprights-removegroup-self-all' => 'Үҙенең иҫәп яҙмаһынан бөтә төркөмдәрҙе юйыу',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Хат ебәреү өсөн адрес юҡ',
 'mailnologintext' => 'Башҡа ҡатнашыусыларға хат ебәреү өсөн, һеҙ [[Special:UserLogin|танылырға]] һәм [[Special:Preferences|көйләүҙәрегеҙҙә]] ысын электрон адрес почтаһы кереткән булырға тейешһегеҙ.',
 'emailuser' => 'Ҡатнашыусыға хат',
@@ -2161,8 +2157,8 @@ $1',
 'notvisiblerev' => 'Башҡа ҡатнашыусы тарафынан керетелгән һуңғы өлгө юйылған',
 'watchnochange' => 'Күрһәтелгән арауыҡта күҙәтеүҙәр исемлегенән бер ни ҙә үҙгәрмәгән.',
 'watchlist-details' => 'Һеҙҙең күҙәтеү исемлегегеҙҙә, фекер алышыу биттәрен һанамағанда, {{PLURAL:$1|$1 бит|$1 бит}} бар.',
-'wlheader-enotif' => '* Электрон почта аша белдереү һайланған',
-'wlheader-showupdated' => "* Һеҙҙең аҙаҡҡы кереүегеҙҙән һуң үҙгәргән биттәр '''ҡалын''' шрифт менән күрһәтелгән.",
+'wlheader-enotif' => 'Электрон почта аша белдереү һайланған',
+'wlheader-showupdated' => "Һеҙҙең аҙаҡҡы кереүегеҙҙән һуң үҙгәргән биттәр '''ҡалын''' шрифт менән күрһәтелгән.",
 'watchmethod-recent' => 'күҙәтелгән биттәр өсөн аҙаҡҡы үҙгәртеүҙәрҙе ҡарау',
 'watchmethod-list' => 'аҙаҡҡы үҙгәртеүҙәр өсөн күҙәтелгән биттәрҙе ҡарау',
 'watchlistcontains' => 'Һеҙҙең күҙәтеү исемлегендә $1 {{PLURAL:$1|бит|бит}}бар.',
@@ -2959,11 +2955,7 @@ The wiki server cannot provide data in a format your client can read.',
 'pageinfo-protect-cascading-from' => 'Бынан башлап һикәлтәле һаҡлау',
 
 # Skin names
-'skinname-standard' => 'Классик',
 'skinname-cologneblue' => 'Кёльн һағышы',
-'skinname-myskin' => 'Шәхси',
-'skinname-chick' => 'Себеш',
-'skinname-simple' => 'Ябай',
 'skinname-modern' => 'Заманса',
 'skinname-vector' => 'Векторлы',
 
@@ -3073,7 +3065,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Киңлек',
 'exif-imagelength' => 'Бейеклек',
 'exif-bitspersample' => 'Төҫтәрҙең тәрәнлеге',
@@ -3251,7 +3243,7 @@ $1',
 'exif-originalimageheight' => 'Кадрлауға тиклемге рәсем бейеклеге',
 'exif-originalimagewidth' => 'Кадрлауға тиклемге рәсем киңлеге',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Ҡыҫылмаған',
 'exif-compression-2' => 'CCITT Group 3, Хаффман сериялары оҙонлоҡтарын кодлауҙың 1 үлсәмле модификацияһы',
 'exif-compression-3' => 'CCITT Group 3, факслы кодлау',
@@ -3472,7 +3464,7 @@ $1',
 'monthsall' => 'бөтә',
 'limitall' => 'бөтә',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Электрон почта адресын раҫлау',
 'confirmemail_noemail' => 'Һеҙҙең [[Special:Preferences|көйләүҙәрегеҙҙә]] дөрөҫ электрон почта адресы юҡ.',
 'confirmemail_text' => '{{SITENAME}} проекты электрон почта мөмкинлектәрен ҡулланыр алдынан электрон почта адресының раҫланыуын талап итә.
@@ -3665,13 +3657,6 @@ MediaWiki файҙалы булыр, тигән өмөттә, ләкин БЕР 
 'version-entrypoints' => 'Инеш өсөн URL адрестар',
 'version-entrypoints-header-entrypoint' => 'Инеш урыны',
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Файлға юл',
-'filepath-page' => 'Файл:',
-'filepath-submit' => 'Күсеү',
-'filepath-summary' => 'Был махсус бит файлдың тулы юлын ҡайтара.
-Рәсемдәр тулы асыҡлыҡта күрһәтелә, башҡа файлдар билдәләнгән программалары аша турана-тура асыла.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Бер иш файлдарҙы эҙләү',

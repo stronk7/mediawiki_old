@@ -20,7 +20,6 @@
  * @file
  */
 
-
 /**
  * Some functions to help implement an external link filter for spam control.
  *
@@ -37,7 +36,7 @@ class LinkFilter {
 	 * Check whether $content contains a link to $filterEntry
 	 *
 	 * @param $content Content: content to check
-	 * @param $filterEntry String: domainparts, see makeRegex() for more details
+	 * @param string $filterEntry domainparts, see makeRegex() for more details
 	 * @return Integer: 0 if no match or 1 if there's at least one match
 	 */
 	static function matchEntry( Content $content, $filterEntry ) {
@@ -57,7 +56,7 @@ class LinkFilter {
 	/**
 	 * Builds a regex pattern for $filterEntry.
 	 *
-	 * @param $filterEntry String: URL, if it begins with "*.", it'll be
+	 * @param string $filterEntry URL, if it begins with "*.", it'll be
 	 *        replaced to match any subdomain
 	 * @return String: regex pattern, for preg_match()
 	 */
@@ -85,7 +84,7 @@ class LinkFilter {
 	 *
 	 * Asterisks in any other location are considered invalid.
 	 *
-	 * @param $filterEntry String: domainparts
+	 * @param string $filterEntry domainparts
 	 * @param $prot        String: protocol
 	 * @return Array to be passed to DatabaseBase::buildLike() or false on error
 	 */
@@ -119,13 +118,13 @@ class LinkFilter {
 		// Reverse the labels in the hostname, convert to lower case
 		// For emails reverse domainpart only
 		if ( $prot == 'mailto:' && strpos( $host, '@' ) ) {
-			// complete email adress
+			// complete email address
 			$mailparts = explode( '@', $host );
 			$domainpart = strtolower( implode( '.', array_reverse( explode( '.', $mailparts[1] ) ) ) );
 			$host = $domainpart . '@' . $mailparts[0];
 			$like = array( "$prot$host", $db->anyString() );
 		} elseif ( $prot == 'mailto:' ) {
-			// domainpart of email adress only. do not add '.'
+			// domainpart of email address only. do not add '.'
 			$host = strtolower( implode( '.', array_reverse( explode( '.', $host ) ) ) );
 			$like = array( "$prot$host", $db->anyString() );
 		} else {
@@ -149,15 +148,15 @@ class LinkFilter {
 	/**
 	 * Filters an array returned by makeLikeArray(), removing everything past first pattern placeholder.
 	 *
-	 * @param $arr array: array to filter
+	 * @param array $arr array to filter
 	 * @return array filtered array
 	 */
 	public static function keepOneWildcard( $arr ) {
-		if( !is_array( $arr ) ) {
+		if ( !is_array( $arr ) ) {
 			return $arr;
 		}
 
-		foreach( $arr as $key => $value ) {
+		foreach ( $arr as $key => $value ) {
 			if ( $value instanceof LikeMatch ) {
 				return array_slice( $arr, 0, $key + 1 );
 			}

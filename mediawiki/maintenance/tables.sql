@@ -86,10 +86,12 @@ CREATE TABLE /*_*/user (
   -- Same with passwords.
   user_email tinytext NOT NULL,
 
-  -- This is a timestamp which is updated when a user
-  -- logs in, logs out, changes preferences, or performs
-  -- some other action requiring HTML cache invalidation
-  -- to ensure that the UI is updated.
+  -- If the browser sends an If-Modified-Since header, a 304 response is
+  -- suppressed if the value in this field for the current user is later than
+  -- the value in the IMS header. That is, this field is an invalidation timestamp
+  -- for the browser cache of logged-in users. Among other things, it is used
+  -- to prevent pages generated for a previously logged in user from being
+  -- displayed after a session expiry followed by a fresh login.
   user_touched binary(14) NOT NULL default '',
 
   -- A pseudorandomly generated value that is stored in
@@ -560,10 +562,10 @@ CREATE UNIQUE INDEX /*i*/cl_from ON /*_*/categorylinks (cl_from,cl_to);
 -- callers won't be using an index: fix this?
 CREATE INDEX /*i*/cl_sortkey ON /*_*/categorylinks (cl_to,cl_type,cl_sortkey,cl_from);
 
--- Not really used?
+-- Used by the API (and some extensions)
 CREATE INDEX /*i*/cl_timestamp ON /*_*/categorylinks (cl_to,cl_timestamp);
 
--- For finding rows with outdated collation
+-- FIXME: Not used, delete this
 CREATE INDEX /*i*/cl_collation ON /*_*/categorylinks (cl_collation);
 
 --
@@ -624,21 +626,6 @@ CREATE INDEX /*i*/el_from ON /*_*/externallinks (el_from, el_to(40));
 CREATE INDEX /*i*/el_to ON /*_*/externallinks (el_to(60), el_from);
 CREATE INDEX /*i*/el_index ON /*_*/externallinks (el_index(60));
 
-
---
--- Track external user accounts, if ExternalAuth is used
---
-CREATE TABLE /*_*/external_user (
-  -- Foreign key to user_id
-  eu_local_id int unsigned NOT NULL PRIMARY KEY,
-
-  -- Some opaque identifier provided by the external database
-  eu_external_id varchar(255) binary NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/eu_external_id ON /*_*/external_user (eu_external_id);
-
-
 --
 -- Track interlanguage links
 --
@@ -672,7 +659,8 @@ CREATE TABLE /*_*/iwlinks (
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/iwl_from ON /*_*/iwlinks (iwl_from, iwl_prefix, iwl_title);
-CREATE UNIQUE INDEX /*i*/iwl_prefix_title_from ON /*_*/iwlinks (iwl_prefix, iwl_title, iwl_from);
+CREATE INDEX /*i*/iwl_prefix_title_from ON /*_*/iwlinks (iwl_prefix, iwl_title, iwl_from);
+CREATE INDEX /*i*/iwl_prefix_from_title ON /*_*/iwlinks (iwl_prefix, iwl_from, iwl_title);
 
 
 --
@@ -819,7 +807,7 @@ CREATE TABLE /*_*/image (
   img_width int NOT NULL default 0,
   img_height int NOT NULL default 0,
 
-  -- Extracted EXIF metadata stored as a serialized PHP array.
+  -- Extracted Exif metadata stored as a serialized PHP array.
   img_metadata mediumblob NOT NULL,
 
   -- For images, bits per pixel if known.
@@ -860,6 +848,8 @@ CREATE INDEX /*i*/img_size ON /*_*/image (img_size);
 CREATE INDEX /*i*/img_timestamp ON /*_*/image (img_timestamp);
 -- Used in API and duplicate search
 CREATE INDEX /*i*/img_sha1 ON /*_*/image (img_sha1(10));
+-- Used to get media of one type
+CREATE INDEX /*i*/img_media_mime ON /*_*/image (img_media_type,img_major_mime,img_minor_mime);
 
 
 --
@@ -1062,7 +1052,7 @@ CREATE TABLE /*_*/recentchanges (
   -- rev_id of the prior revision, for generating diff links.
   rc_last_oldid int unsigned NOT NULL default 0,
 
-  -- The type of change entry (RC_EDIT,RC_NEW,RC_LOG)
+  -- The type of change entry (RC_EDIT,RC_NEW,RC_LOG,RC_EXTERNAL)
   rc_type tinyint unsigned NOT NULL default 0,
 
   -- If the Recent Changes Patrol option is enabled,

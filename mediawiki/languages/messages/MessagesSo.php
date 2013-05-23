@@ -44,8 +44,6 @@ $messages = array(
 'tog-shownumberswatching' => "I'tus tirada isticmaalayaasha wax waardiyeynaayo",
 'tog-oldsig' => 'Saxiixa jiro:',
 'tog-fancysig' => "u isticmaal saxiixa sida qoraalada wiki  (ayada oo linki auomaatik la'aan)",
-'tog-externaleditor' => "Isticmaal qoraal wax ka bedelyaal ka madaxbanaan (La'iskuogyahay)",
-'tog-externaldiff' => "Isticmaal qoraal wax ka bedelyaal ka madaxbanaan oo (La'iskuogyahay)",
 'tog-showjumplinks' => 'Shid "ku bood" links-ka la geli karo',
 'tog-uselivepreview' => 'Isticmaal horfiirinta tooska ah (JavaScript) (Wuxuu ku jiraa tijaabo)',
 'tog-forceeditsummary' => "I'xasuusi markii uusan qoraalkeyga raacsiisnay faahfaahin gaaban",
@@ -249,7 +247,7 @@ $1',
 'copyright' => 'Qoraalka wuxuu ku salaysanyahay $1.',
 'copyrightpage' => '{{ns:project}}: Ogolaashada koobiga',
 'currentevents' => 'Dhacdooyinka cusub',
-'currentevents-url' => 'Project:Maxaa cusub',
+'currentevents-url' => 'Project:Dhacdooyinka Hadda',
 'disclaimers' => "Masuul la'aan",
 'disclaimerpage' => "Project:Masuul la'aan guud",
 'edithelp' => 'Caawinaada wax ka bedelka',
@@ -626,8 +624,8 @@ Fadlan markale isku day. Hadii aysan weli shaqaynin, ka bax ee markale soo gudag
 '''Hadii wax ka bedlkaan uu yahay mid xaq ah, fadlan markale isku day. Hadii aysan weli shaqaynin, is kuday inaad  ka baxdo ee markale soo gudagal.'''",
 'editing' => 'Waxaad badalaysaa $1',
 'creating' => 'Sameyta $1',
-'editingsection' => 'Waxaa wax ka badaleysaa $1 (qeyb yar)',
-'editingcomment' => 'Waxaa wax ka badaleysaa $1 (qeyb yar)',
+'editingsection' => 'Waxaad wax ka bedelaysaa $1 (qeyb yar)',
+'editingcomment' => 'Waxaad wax ka bedelaysaa $1 (qeyb yar)',
 'editconflict' => 'Isku dhac badalaadka: $1',
 'yourtext' => 'Qoraalkaaga',
 'editingold' => "'''DIGNIIN: Waxaad wax ka bedeli rabtaa boggan caddadkiisa duqoobay.
@@ -776,9 +774,6 @@ sababteeda neh waxaa laga heli kartaa  [{{fullurl:{{#Special:Log}}/delete|page={
 'powersearch-toggleall' => 'Dhamaan',
 'powersearch-togglenone' => 'Waxna',
 
-# Quickbar
-'qbsettings-none' => 'Waxna',
-
 # Preferences page
 'preferences' => 'Dooqyada',
 'mypreferences' => 'Dooqyadeyda',
@@ -844,7 +839,7 @@ E-mailkaada mala sheegaayo markii ee dadka kale kula soo xiriirayaan.',
 'group-sysop-member' => '{{GENDER:$1|maamulaha}}',
 
 'grouppage-user' => '{{ns:project}}:Isticmaalada',
-'grouppage-autoconfirmed' => '{{ns:project}}:Gude gale la hubiyey si iskeeda ah',
+'grouppage-autoconfirmed' => '{{ns:project}}:Adeegsade la hubiyey',
 'grouppage-sysop' => '{{ns:project}}:Maamulada',
 
 # Rights
@@ -1126,12 +1121,12 @@ $PAGEINTRO $NEWPAGE
 
 Qaybta wax laga bedelay: $PAGESUMMARY $PAGEMINOREDIT
 
-La xariirka Tafaftiraha:
+La xariirka Tifaftiraha:
 mail: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
 Lama soo diri doono ogeysiin dambe hadii isbedel kale lagu sii sameeyo ilaa aad ka soo booqato bogga.
-Waxaad awoodaa inaad ka saarto liiska waardiyeha booga.
+Waxaad awoodaa inaad ka saarto liiska waardiyeha bogga.
 
 			 Nidaamka war gelinta {{SITENAME}} ee E-mailka
 
@@ -1410,7 +1405,7 @@ Hadii faylka wax laga badalay sida oo markiisa hore ahaa, waxaa laga yaabaa in e
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-iimcategory' => 'Qeybta',
 
 # External editor support
@@ -1455,10 +1450,6 @@ waxaad awoodaa [[Special:EditWatchlist/raw|Liiska wax ka bedel]].',
 
 # Special:Version
 'version-poweredby-others' => 'kuwa kale',
-
-# Special:FilePath
-'filepath-page' => 'Fayl:',
-'filepath-submit' => 'Soco',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-legend' => 'Raadi mid tusaale ah',

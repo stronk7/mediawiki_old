@@ -57,8 +57,6 @@ $messages = array(
 'tog-shownumberswatching' => 'ध्यान राखैबला प्रयोक्ताक संख्या',
 'tog-oldsig' => 'अखुनका दस्खत',
 'tog-fancysig' => 'हस्ताक्षरकें विकिटेक्सटक रूपमे देखू (स्वचालित श्रृंखला हीन)',
-'tog-externaleditor' => "↓पूर्वनिर्धारित रूपेँ बाह्य सम्पादक क' उपयोग करू (केवल विशेषज्ञसभक लेल, एकरा लेल संगणक पर विशेष सेटिंग चाही। [//www.mediawiki.org/wiki/Manual:External_editors आओर जानकारी।])",
-'tog-externaldiff' => 'पुरान संस्करणमे अंतर देखेबाक हेतु पूर्वनिविष्ट रूपमे बाहरक परिवर्तनक प्रयोग करू',
 'tog-showjumplinks' => 'करू "तड़पान" भेटैबला लिंक सभ',
 'tog-uselivepreview' => 'करू चल पूर्वावलोकन (जावास्क्रिप्ट चाही) (प्रायोगिक)',
 'tog-forceeditsummary' => 'हमरा सचेत करू जखन हम खाली सम्पादम सारांशमे जाइ',
@@ -514,7 +512,7 @@ $2',
 'loginlanguagelabel' => 'भाषा : $1',
 'suspicious-userlogout' => 'अहाँक निष्क्रमणक अनुरोध नै मानल गेल कारण ई लागल जे ई पुरान गवेषकक लागि वा दोसराइत उपस्मृति द्वारा पठाओल गेल छल।',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'पी.एच.पी.क संदेश कार्य() मे अज्ञात दोष',
 'user-mail-no-addy' => 'बिन ई-पत्र संकेतक ई-पत्र पठेबाक प्रयास',
 
@@ -1038,15 +1036,6 @@ $3 द्वारा देल कारण अछि ''$2''",
 अहाँक गूगलक माध्यमसँ ऐ बीच ताकि सकै छी।
 मोन राखू जे तकर विवरणी {{अन्तर्जाल}} सामिग्री समयातीत भऽ सकैए।',
 
-# Quickbar
-'qbsettings' => 'त्वरित दृश्य',
-'qbsettings-none' => 'कोनो नै',
-'qbsettings-fixedleft' => 'वाम कात सटल',
-'qbsettings-fixedright' => 'दहिन दिस सटल',
-'qbsettings-floatingleft' => 'वाम कात घुमैत',
-'qbsettings-floatingright' => 'दहिन कात घुमैत',
-'qbsettings-directionality' => 'कीलित, अहाँक भाषाक लिपि दिशा-निर्देशपर आधारित',
-
 # Preferences page
 'preferences' => 'विकल्प',
 'mypreferences' => 'खासमखास',
@@ -1168,7 +1157,7 @@ $3 द्वारा देल कारण अछि ''$2''",
 'prefs-displaywatchlist' => 'दृश्य विकल्प सभ',
 'prefs-diffs' => 'अन्तर निर्धारक सभ',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'ई-पत्र संकेत मान्य बुझाइत अछि',
 'email-address-validity-invalid' => 'एकटा मान्य ई-पत्र संकेत लिखू',
 
@@ -1554,7 +1543,6 @@ $1',
 'http-read-error' => 'परिसंविद पठन भ्रम',
 'http-timed-out' => 'परिसंविद आग्रह कालातीत',
 'http-curl-error' => 'भ्रम निकालैबला सार्वत्रिक विभव संकेत:$1',
-'http-host-unreachable' => 'सार्वत्रिक विभव संकेत नै पाबि सकल',
 'http-bad-status' => 'परिसंविद आग्रह काल एकटा समस्या छल: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1888,7 +1876,7 @@ $1',
 'listgrouprights-addgroup-self-all' => 'सभटा वर्गकेँ अपन खातामे जोड़ू',
 'listgrouprights-removegroup-self-all' => 'सभटा वर्गकेँ अपन खातासँ निकालू',
 
-# E-mail user
+# Email user
 'mailnologin' => 'कोनो पठेबाक पता नै',
 'mailnologintext' => 'अहाँ [[Special:UserLogin|सम्प्रवेशित]] हेबाक चाही आ अहाँक विकल्प [[Special:Preferences|preferences]]  मे एकटा मान्य ई-पत्र संकेत दोसर प्रयोक्ताकेँ पठेबा लेल हेबाक चाही।',
 'emailuser' => 'ऐ प्रयोक्ताकेँ ई-पत्र पठाउ',
@@ -1945,8 +1933,8 @@ $1',
 'notvisiblerev' => 'कोनो दोसर प्रयोक्ता द्वारा कएल अन्तिम परिवर्तन मेटा देल गेल',
 'watchnochange' => 'अहाँक साकांक्ष सूचीमे सँ कोनोमे ऐ अवधिमे सम्पादन नै कएल गेल।',
 'watchlist-details' => '{{PLURAL:$1|$1 पन्ना|$1 पन्ना सभ}} अहाँक साकांक्षसूचीमे, चौबटिया पन्ना नै गानल गेल।',
-'wlheader-enotif' => '* ई-पत्र सूचना लागू अछि।',
-'wlheader-showupdated' => "* पन्ना सभ जे अहाँक एतए अन्तिम बेर अएलाक बाद बदलल अछि तकर सूची देल अछि '''गाढ़''' मे",
+'wlheader-enotif' => 'ई-पत्र सूचना लागू अछि।',
+'wlheader-showupdated' => "पन्ना सभ जे अहाँक एतए अन्तिम बेर अएलाक बाद बदलल अछि तकर सूची देल अछि '''गाढ़''' मे",
 'watchmethod-recent' => 'साकांक्ष सूचीक हालक सम्पादन जाँचि रहल छी',
 'watchmethod-list' => 'साकांक्ष-सूचीक हालक सम्पादनकेँ देखि रहल छी',
 'watchlistcontains' => 'अहाँक साकांक्ष-सूचीमे अछि $1 {{PLURAL:$1|पन्ना|पन्ना}}।',
@@ -2679,9 +2667,6 @@ $1 एकर प्रतिबन्धक कारण अछि : "$2"',
 'pageinfo-authors' => 'भिन्न लेखक संख्या',
 
 # Skin names
-'skinname-standard' => 'प्राचीन',
-'skinname-nostalgia' => 'गामसँ प्रेम',
-'skinname-simple' => 'साधारण',
 'skinname-modern' => 'आधुनिक',
 'skinname-vector' => 'सदिश',
 
@@ -2770,8 +2755,6 @@ $1',
 
 /*
 Short names for language variants used for language conversion links.
-To disable showing a particular link, set it to 'disable', e.g.
-'variantname-zh-sg' => 'disable',
 Variants for Chinese language
 */
 'variantname-zh-cn' => 'cn',
@@ -2806,7 +2789,7 @@ Variants for Chinese language
 'metadata-langitem' => "'''$2:''' $1",
 'metadata-langitem-default' => '$1',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'चौड़ाई',
 'exif-imagelength' => 'ऊँच',
 'exif-bitspersample' => 'प्रति भाग अष्टक',
@@ -2985,7 +2968,7 @@ Variants for Chinese language
 'exif-originalimageheight' => 'काटहि सें पहिने तस्वीरक ऊँचाई',
 'exif-originalimagewidth' => 'काटहि सें पहिने तस्वीरक चौड़ाई',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'असम्पीडित',
 'exif-compression-2' => 'सी.सी.आइ.टी.टी. वर्ग ३ १ - बीम संशोधित हफमैन कूट सोझ लम्बाइ',
 'exif-compression-3' => 'सी.सी.आइ.टी.टी. वर्ग ३ फैक्स संकूट',
@@ -3206,7 +3189,7 @@ Variants for Chinese language
 'monthsall' => 'सभ',
 'limitall' => 'सभटा',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => ' ई-पत्र सत्यापित करू',
 'confirmemail_noemail' => 'अहाँ लग कोनो मान्य ई-पत्र संकेत नै अछि एतए [[Special:Preferences|प्रयोक्ताक पसिन्न सभ]] देबा लेल।',
 'confirmemail_text' => '{{जालस्थल}}  चाहैए जे अहाँ अपन ई-पत्र सुविधा प्रयोग करबासँ पहिने अपन ई-पत्र संकेतक सत्यापन करू।
@@ -3395,13 +3378,6 @@ $5
 'version-software' => 'प्रतिष्ठापित तंत्रांश',
 'version-software-product' => 'उत्पाद',
 'version-software-version' => 'संस्करण',
-
-# Special:FilePath
-'filepath' => 'संचिकाक रस्ता',
-'filepath-page' => 'संचिका',
-'filepath-submit' => 'जाऊ',
-'filepath-summary' => 'ई विशेष पन्ना संचिकाक पूर्ण रस्ता देखबैत अछि।
-चित्र सभ पूर्ण आकारमे देखाएल जाइत अछि, दोसर संचिका प्रकार चालित होइए सोझे सम्बन्धित संविधि द्वारा।',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'द्वितीयक संचिका ताकू',

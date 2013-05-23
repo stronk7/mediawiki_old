@@ -42,8 +42,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Nişon dodani şumorai korbaroni pajgir',
 'tog-oldsig' => 'Peşnamoişi imzoi vuçuddoşta:',
 'tog-fancysig' => 'Imzoro ba surati vikimatn ba nazar bigir (be pajvandi xudkor)',
-'tog-externaleditor' => 'Istifoda az viroişgari xoriçī ba tavri peşfarz (faqat baroi korbaroni peşrafta, nijozmandi tanzimoti viƶa dar rojonai şumo ast. [//www.mediawiki.org/wiki/Manual:External_editors Ittilooti beştar.])',
-'tog-externaldiff' => 'Istifoda az tafovutgiri (diff) xoriçī ba tavri peşfarz (faqat baroi korbaroni peşrafta, nijozmandi tanzimoti viƶa dar rojonai şumo ast. [//www.mediawiki.org/wiki/Manual:External_editors Ittilooti beştar.])',
 'tog-showjumplinks' => 'Namoişi pajvandhoi dastrasiji "çahiş ba" dar fehristi mundariçot',
 'tog-uselivepreview' => 'Istifoda az peşnamoişi zinda (ÇavaSkript) (Ozmoişī)',
 'tog-forceeditsummary' => 'Hangome ki xulosai viroiş nanaviştaam jua man isloh bideh',
@@ -733,14 +731,6 @@ Itminon hosil kuned, ki in taƣjir davomnokiji ta'rixiji sahifaro nigoh dorad.",
 'search-external' => 'Çustuçūi xoriçī',
 'searchdisabled' => "Çustuçu dar {{SITENAME}} ƣajrifa'ol karda şudaast. Şumo metavoned tariqi Google dar hol çustuçū kuned. Tavaççūh kuned, ki natoiçi çustuçū {{SITENAME}} metavonad barūz naboşad.",
 
-# Quickbar
-'qbsettings' => 'Tanzimoti tezxat (Quickbar)',
-'qbsettings-none' => 'Naboşad',
-'qbsettings-fixedleft' => 'Sabti cap',
-'qbsettings-fixedright' => 'Sabti rost',
-'qbsettings-floatingleft' => 'Şinovar cap',
-'qbsettings-floatingright' => 'Şinovar rost',
-
 # Preferences page
 'preferences' => 'Tarçihot',
 'mypreferences' => 'Tarçihoti man',
@@ -1236,7 +1226,7 @@ Jak klik kardani rūi unvoni sutunho boisi taƣjiri tartibi namoişi parvandaho 
 'listgrouprights-helppage' => 'Help:Dastrasihoi gurūhī',
 'listgrouprights-members' => "(fehristi a'zojon)",
 
-# E-mail user
+# Email user
 'mailnologin' => 'Nişonae az firistanda vuçud nadorad',
 'mailnologintext' => "Baroi firistodani poctai elektronī baroi korbaroni digar bojad [[Special:UserLogin|ba sistem vorid şaved]] va nişonai poctai elektroniji mū'tabar dar [[Special:Preferences|tarçihoti]] xud doşta boşed.",
 'emailuser' => 'Firistodani email ba in korbar',
@@ -1275,8 +1265,8 @@ Agar şumo dertar az fehristi nazarotaton in sahifaro hazv kardan xohed, dar men
 'notvisiblerev' => 'Nusxa hazf şud',
 'watchnochange' => 'Jagon mavridi pajgirihoi şumo dar davrai zamoni namoişjofta viroiş naşuda ast.',
 'watchlist-details' => '{{PLURAL:$1|$1 sahifai|$1 sahifahoi}} dar fehristi pajgirihoi şumo, biduni hisobi sahifahoi bahs.',
-'wlheader-enotif' => '* Ittiloorasoniji tariqi poctai elektronī (E-mail) imkonpazir ast.',
-'wlheader-showupdated' => "* Sahifahoe, ki pas az oxirin sar zadanaton ba onho taƣjir kardaand '''purrang''' nişon doda şudaand",
+'wlheader-enotif' => 'Ittiloorasoniji tariqi poctai elektronī (E-mail) imkonpazir ast.',
+'wlheader-showupdated' => "Sahifahoe, ki pas az oxirin sar zadanaton ba onho taƣjir kardaand '''purrang''' nişon doda şudaand",
 'watchmethod-recent' => 'barrasiji viroişhoi oxir baroi sahifahoi pajgirişuda',
 'watchmethod-list' => 'barrasiji sahifahoi pajgirişuda baroi viroişhoi oxir',
 'watchlistcontains' => 'Fehristi pajgirihoi şumo $1 {{PLURAL:$1|sahifaro|sahifahoro}} dar bar megirad.',
@@ -1871,7 +1861,7 @@ Faqat satrhoe, ki bo * şurū' şavand ba nazar girifta meşavand. Avvalin pajva
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => "Vase'ī",
 'exif-imagelength' => 'Balandī',
 'exif-bitspersample' => "Nuqta dar har çuz'",
@@ -1985,7 +1975,7 @@ Faqat satrhoe, ki bo * şurū' şavand ba nazar girifta meşavand. Avvalin pajva
 'exif-gpsdatestamp' => "Ta'rixi ÇPS",
 'exif-gpsdifferential' => "Tashehi çuz'iji ÇPS",
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Ƣajrifişurda',
 
 'exif-unknowndate' => "Ta'rixi noma'lum",
@@ -2126,7 +2116,7 @@ Faqat satrhoe, ki bo * şurū' şavand ba nazar girifta meşavand. Avvalin pajva
 'monthsall' => 'hama',
 'limitall' => 'hama',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Tasdiqi nişonai poctai elektronī',
 'confirmemail_noemail' => "Şumo dar sahifai [[Special:Preferences|tarçihoti korbarii]] xud nişonai poctai elektroniji mū'tabarero vorid nakardaed.",
 'confirmemail_text' => "{{SITENAME}} ta'jidi e'tiboi poctai elektroniji şumoro peş az istifoda xidmati elektronī talab mekunad. Tugmai zerinro fa'ol kuned to nomai ta'jidī ba poctai elektroniji şumo firistoda şavad. In noma pajvandero dar bar megirad, ki kode dorad; pajvandro dar mururgar boz kuned, to ki poctai elektroniaton  dar haqiqat ta'jid şavad.",
@@ -2279,15 +2269,6 @@ Tavaççūh kuned, ki şumo metavoned az [[Special:EditWatchlist|viroişgari sta
 'version-software' => 'Nusxai nasbşuda',
 'version-software-product' => 'Mahsul',
 'version-software-version' => 'Nusxa',
-
-# Special:FilePath
-'filepath' => 'Masiri parvanda',
-'filepath-page' => 'Parvanda:',
-'filepath-submit' => 'Masir',
-'filepath-summary' => 'In sahifai viƶa nişonai komil baroi jak parvandaro nişon medihad.
-Aksho bo kajfijat bo haçmi purraaşon nişon doda meşavand, digar nav\'hoi parvandahoi digar bo barnomahoi aloqamandi maxsus ba xudaşon boz meşavand.
-
-Nişonai pajvandro biduni peşvand "{{ns:file}}:" vorid kuned.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Çustuçū baroi parvandahoi takrorī',

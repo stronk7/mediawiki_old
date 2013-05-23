@@ -342,8 +342,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Näytä sivua tarkkailevien käyttäjien määrä',
 'tog-oldsig' => 'Nykyinen allekirjoitus',
 'tog-fancysig' => 'Muotoilematon allekirjoitus ilman automaattista linkkiä',
-'tog-externaleditor' => 'Käytä ulkoista tekstieditoria oletuksena. Vain kokeneille käyttäjille, vaatii selaimen asetusten muuttamista. (<span class="plainlinks">[//www.mediawiki.org/wiki/Manual:External_editors Ohje]</span>)',
-'tog-externaldiff' => 'Käytä oletuksena ulkoista työkalua sivun eri versioiden välisten erojen tarkasteluun. Vain kokeneille käyttäjille, vaatii selaimen asetusten muuttamista. (<span class="plainlinks">[//www.mediawiki.org/wiki/Manual:External_editors Ohje]</span>)',
 'tog-showjumplinks' => 'Lisää loikkaa-käytettävyyslinkit sivun alkuun',
 'tog-uselivepreview' => 'Käytä pikaesikatselua (JavaScript) (kokeellinen)',
 'tog-forceeditsummary' => 'Huomauta, jos yhteenvetoa ei ole annettu',
@@ -358,6 +356,7 @@ $messages = array(
 'tog-showhiddencats' => 'Näytä piilotetut luokat',
 'tog-noconvertlink' => 'Älä muunna linkkien otsikoita toiseen kirjoitusjärjestelmään',
 'tog-norollbackdiff' => 'Älä näytä eroavaisuuksia palauttamisen jälkeen',
+'tog-useeditwarning' => 'Varoita minua, kun poistun muokkaussivulta tallentamatta muutoksia',
 
 'underline-always' => 'Aina',
 'underline-never' => 'Ei koskaan',
@@ -721,9 +720,18 @@ Huomaa, että jotkut sivut saattavat näkyä edelleen kuin olisit kirjautunut si
 'welcomecreation-msg' => 'Käyttäjätunnuksesi on luotu.
 Älä unohda virittää {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|asetuksiasi]].',
 'yourname' => 'Käyttäjätunnus',
+'userlogin-yourname' => 'Käyttäjätunnus',
+'userlogin-yourname-ph' => 'Kirjoita käyttäjätunnus',
 'yourpassword' => 'Salasana',
+'userlogin-yourpassword' => 'Salasana',
+'userlogin-yourpassword-ph' => 'Kirjoita salasana',
+'createacct-yourpassword-ph' => 'Kirjoita salasana',
 'yourpasswordagain' => 'Salasana uudelleen',
+'createacct-yourpasswordagain' => 'Vahvista salasana',
+'createacct-yourpasswordagain-ph' => 'Kirjoita salasana uudelleen',
 'remembermypassword' => 'Muista minut (enintään $1 {{PLURAL:$1|päivä|päivää}})',
+'userlogin-remembermypassword' => 'Pidä minut kirjautuneena',
+'userlogin-signwithsecure' => 'Käytä salattua yhteyttä',
 'securelogin-stick-https' => 'Jatka salatun yhteyden käyttämistä sisäänkirjautumisen jälkeen',
 'yourdomainname' => 'Verkkonimi',
 'password-change-forbidden' => 'Et voi muuttaa salasanoja tässä wikissä.',
@@ -736,17 +744,37 @@ Huomaa, että jotkut sivut saattavat näkyä edelleen kuin olisit kirjautunut si
 'logout' => 'Kirjaudu ulos',
 'userlogout' => 'Kirjaudu ulos',
 'notloggedin' => 'Et ole kirjautunut',
+'userlogin-noaccount' => 'Eikö sinulla vielä ole käyttäjätunnusta?',
+'userlogin-joinproject' => 'Liity {{GRAMMAR:illative|{{SITENAME}}}}',
 'nologin' => "Jos sinulla ei ole vielä käyttäjätunnusta, '''$1'''.",
 'nologinlink' => 'voit luoda sellaisen',
 'createaccount' => 'Luo uusi käyttäjätunnus',
 'gotaccount' => "Jos sinulla on jo tunnus, voit '''$1'''.",
 'gotaccountlink' => 'kirjautua sisään',
 'userlogin-resetlink' => 'Unohditko salasanasi?',
+'userlogin-resetpassword-link' => 'Salasanan alustus',
+'helplogin-url' => 'Help:Sisäänkirjautuminen',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Auta sisäänkirjautumisessa]]',
+'createacct-join' => 'Kirjoita tietosi alle.',
+'createacct-emailrequired' => 'Sähköpostiosoite',
+'createacct-emailoptional' => 'Sähköpostiosoite (vapaaehtoinen)',
+'createacct-email-ph' => 'Anna sähköpostiosoitteesi',
 'createaccountmail' => 'Käytä satunnaista väliaikaissalasanaa ja lähetä se alla määritettyyn sähköpostiosoitteeseen',
+'createacct-realname' => 'Oikea nimi (valinnainen)',
 'createaccountreason' => 'Syy',
+'createacct-reason' => 'Syy',
+'createacct-reason-ph' => 'Tunnuksen luomisen syy',
+'createacct-captcha' => 'Turvatarkastus',
+'createacct-imgcaptcha-ph' => 'Kirjoita teksti, jonka näet edellä',
+'createacct-submit' => 'Luo tunnus',
+'createacct-benefit-heading' => '{{SITENAME}} on sinun kaltaisesi ihmisten tekemä.',
+'createacct-benefit-body1' => '{{PLURAL:$1|muokkaus|muokkausta}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|sivu|sivua}}',
+'createacct-benefit-body3' => '{{PLURAL:$1|viimeikainen muokkaaja|viimeaikaista muokkaajaa}}',
 'badretype' => 'Syöttämäsi salasanat ovat erilaiset.',
 'userexists' => 'Pyytämäsi käyttäjänimi on jo käytössä. Valitse toinen käyttäjänimi.',
 'loginerror' => 'Sisäänkirjautumisvirhe',
+'createacct-error' => 'Tunnuksen luontivirhe',
 'createaccounterror' => 'Tunnuksen luonti ei onnistunut: $1',
 'nocookiesnew' => 'Käyttäjä luotiin, mutta et ole kirjautunut sisään. {{SITENAME}} käyttää evästeitä sisäänkirjautumisen yhteydessä. Selaimesi ei salli evästeistä. Kytke ne päälle, ja sitten kirjaudu sisään juuri luomallasi käyttäjänimellä ja salasanalla.',
 'nocookieslogin' => '{{SITENAME}} käyttää evästeitä sisäänkirjautumisen yhteydessä. Selaimesi ei salli evästeitä. Ota ne käyttöön, ja yritä uudelleen.',
@@ -773,7 +801,7 @@ Jos joku muu on tehnyt tämän pyynnön, tai jos olet muistanut salasanasi ja et
 'passwordsent' => 'Uusi salasana on lähetetty käyttäjän <b>$1</b> sähköpostiosoitteeseen.',
 'blocked-mailpassword' => 'Osoitteellesi on asetettu muokkausesto, joka estää käyttämästä salasanamuistutustoimintoa.',
 'eauthentsent' => 'Varmennussähköposti on lähetetty annettuun sähköpostiosoitteeseen. Muita viestejä ei lähetetä, ennen kuin olet toiminut viestin ohjeiden mukaan ja varmistanut, että sähköpostiosoite kuuluu sinulle.',
-'throttled-mailpassword' => 'Salasanamuistutus on lähetetty {{PLURAL:$1|kuluvan|kuluvien $1}} tunnin aikana. Salasanamuistutuksia lähetään enintään {{PLURAL:$1|tunnin|$1 tunnin}} välein.',
+'throttled-mailpassword' => 'Salasananpalautusviesti on lähetetty {{PLURAL:$1|kuluvan|kuluvien $1}} tunnin aikana. Salasananpalautusviestejä lähetetään enintään {{PLURAL:$1|tunnin|$1 tunnin}} välein.',
 'mailerror' => 'Virhe lähetettäessä sähköpostia: $1',
 'acct_creation_throttle_hit' => 'IP-osoitteestasi on luotu tähän wikiin jo {{PLURAL:$1|yksi tunnus|$1 tunnusta}} päivän aikana, joka suurin sallittu määrä tälle ajalle.
 Tästä johtuen tästä IP-osoitteesta ei voi tällä hetkellä luoda uusia tunnuksia.',
@@ -820,12 +848,14 @@ Odota ennen kuin yrität uudelleen.',
 'resetpass-wrong-oldpass' => 'Virheellinen väliaikainen tai nykyinen salasana.
 Olet saattanut jo onnistuneesti vaihtaa salasanasi tai pyytää uutta väliaikaista salasanaa.',
 'resetpass-temp-password' => 'Väliaikainen salasana:',
+'resetpass-abort-generic' => 'Lisäosa hylkäsi salasanan vaihdon.',
 
 # Special:PasswordReset
 'passwordreset' => 'Salasanan alustus',
-'passwordreset-text' => 'Saat sähköpostimuistutuksen tunnuksesi tiedoista, kun täytät tämän lomakkeen.',
+'passwordreset-text' => 'Täytä tämä lomake vaihtaaksesi salasanasi.',
 'passwordreset-legend' => 'Salasanan vaihto',
 'passwordreset-disabled' => 'Salasanojen alustus ei ole mahdollista tässä wikissä.',
+'passwordreset-emaildisabled' => 'Sähköpostitoiminnot on poistettu käytöstä tässä wikissä.',
 'passwordreset-pretext' => '{{PLURAL:$1||Kirjoita jokin jäljempänä pyydetty tieto}}',
 'passwordreset-username' => 'Käyttäjätunnus',
 'passwordreset-domain' => 'Verkkotunnus',
@@ -833,14 +863,15 @@ Olet saattanut jo onnistuneesti vaihtaa salasanasi tai pyytää uutta väliaikai
 'passwordreset-capture-help' => 'Jos valitset tämän, sähköposti (tilapäisellä salasanalla) näytetään sinulle sekä lähetetään käyttäjälle.',
 'passwordreset-email' => 'Sähköpostiosoite',
 'passwordreset-emailtitle' => 'Tunnuksen tiedot {{GRAMMAR:inessive|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Joku (todennäköisesti sinä, IP-osoitteesta $1) pyysi muistutusta tunnuksesi tiedoista sivustolla {{SITENAME}} ($4).
-{{PLURAL:$3|Seuraava käyttäjätunnus on|Seuraavat käyttäjätunnukset ovat}} liitetty tähän sähköpostiosoitteeseen:
+'passwordreset-emailtext-ip' => 'Joku (todennäköisesti sinä, IP-osoitteesta $1) pyysi salasanasi
+palautusta sivustolla {{SITENAME}} ($4). {{PLURAL:$3|Seuraava käyttäjätili on|Seuraavat käyttäjätilit ovat}}
+yhdistettynä tähän sähköpostiosoitteeseen:
 
 $2
 
-{{PLURAL:$3|Tämä väliaikainen salasana vanhentuu|Nämä väliaikaiset salasanat vanhentuvat}} {{PLURAL:$5|yhden päivän|$5 päivän}} kuluttua.
-Sinun kannattaa kirjautua sisään ja valita uusi salasana. Jos joku toinen teki tämän
-pyynnön, tai muistat sittenkin vanhan salasanasi, etkä halua muuttaa sitä,
+{{PLURAL:$3|Tämä väliaikainen salasana vanhenee|Nämä väliaikaiset salasanat vanhenevat}} {{PLURAL:$5|yhden päivän|$5 päivän}} kuluttua.
+Ole hyvä ja kirjaudu sisään nyt ja valitse uusi salasana. Jos joku toinen pyysi tätä,
+tai jos muistit jo vanhan salasanasi, etkä halua enää muuttaa sitä
 voit jättää tämän viestin huomiotta ja jatkaa vanhan salasanan käyttöä.',
 'passwordreset-emailtext-user' => 'Käyttäjä $1 pyysi muistutusta tunnuksesi tiedoista sivustolla {{SITENAME}} ($4).
 {{PLURAL:$3|Seuraava käyttäjätunnus on|Seuraavat käyttäjätunnukset ovat}} liitetty tähän sähköpostiosoitteeseen:
@@ -853,8 +884,8 @@ pyynnön, tai muistat sittenkin vanhan salasanasi, etkä halua muuttaa sitä,
 voit jättää tämän viestin huomiotta ja jatkaa vanhan salasanan käyttöä.',
 'passwordreset-emailelement' => 'Käyttäjätunnus: $1
 Väliaikainen salasana: $2',
-'passwordreset-emailsent' => 'Sähköpostimuistutus on lähetetty.',
-'passwordreset-emailsent-capture' => 'Muistutussähköposti on lähetetty. Se näkyy myös alla.',
+'passwordreset-emailsent' => 'Salasananpalautusviesti on lähetetty.',
+'passwordreset-emailsent-capture' => 'Salasananpalautusviesti on lähetetty, se näkyy myös alla.',
 'passwordreset-emailerror-capture' => 'Alla näytettävä sähköpostiviesti luotiin, mutta sen lähettäminen käyttäjälle epäonnistui: $1',
 
 # Special:ChangeEmail
@@ -1055,6 +1086,8 @@ Se on jo olemassa.',
 'content-failed-to-parse' => 'Sisältö tyypiltään $2 ei jäsenny tyypiksi $1: $3',
 'invalid-content-data' => 'Virheellinen sisältö',
 'content-not-allowed-here' => 'Sivun [[$2]] sisältö ei voi olla tyyppiä $1.',
+'editwarning-warning' => 'Tältä sivulta poistuminen saattaa aiheuttaa kaikkien tekemiesi muutosten katoamisen.
+Jos olet kirjautuneena sisään, voit poistaa tämän varoituksen käytöstä asetuksissa osiossa ”{{int:prefs-editing}}”.',
 
 # Content models
 'content-model-wikitext' => 'wikiteksti',
@@ -1333,15 +1366,6 @@ Kokeile lisätä haun alkuun ''all:'', niin haku kohdistuu kaikkeen sisältöön
 'powersearch-togglenone' => 'Poista valinnat',
 'search-external' => 'Ulkoinen haku',
 'searchdisabled' => 'Tekstihaku on poistettu toistaiseksi käytöstä suuren kuorman vuoksi. Voit käyttää alla olevaa Googlen hakukenttää sivujen etsimiseen, kunnes haku tulee taas käyttöön. <small>Huomaa, että ulkopuoliset kopiot {{GRAMMAR:genitive|{{SITENAME}}}} sisällöstä eivät välttämättä ole ajan tasalla.</small>',
-
-# Quickbar
-'qbsettings' => 'Pikavalikko',
-'qbsettings-none' => 'Ei mitään',
-'qbsettings-fixedleft' => 'Tekstin mukana, vasen',
-'qbsettings-fixedright' => 'Tekstin mukana, oikea',
-'qbsettings-floatingleft' => 'Pysyen vasemmalla',
-'qbsettings-floatingright' => 'Pysyen oikealla',
-'qbsettings-directionality' => 'Kiinteä, riippuen käyttämäsi kielen kirjoitusjärjestelmän suunnasta',
 
 # Preferences page
 'preferences' => 'Asetukset',
@@ -1880,7 +1904,6 @@ Parhaan turvallisuuden vuoksi img_auth.php on poissa käytöstä.',
 'http-read-error' => 'HTTP-lukuvirhe.',
 'http-timed-out' => 'HTTP-pyyntö aikakatkaistiin.',
 'http-curl-error' => 'Virhe noudettaessa verkko-osoitetta: $1',
-'http-host-unreachable' => 'Ei voitu tavoittaa verkko-osoitetta',
 'http-bad-status' => 'HTTP-pyynnön aikana oli ongelma: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2034,6 +2057,12 @@ Syöte: sisältötyyppi/alatyyppi, esimerkiksi <code>image/jpeg</code>.',
 'disambiguations-text' => "Seuraavilla sivuilla on linkkejä ''täsmennyssivuihin''.
 Täsmennyssivun sijaan ne voisivat linkittää suoraan asianomaiseen aiheeseen.<br />
 Sivua kohdellaan täsmennyssivuna, jos se käyttää mallinetta, johon on linkki sivulta [[MediaWiki:Disambiguationspage]].",
+
+'pageswithprop' => 'Sivut sivun ominaisuuden mukaan',
+'pageswithprop-legend' => 'Sivut sivun ominaisuuden mukaan',
+'pageswithprop-text' => 'Tällä sivulla on lueteltu sivut, jotka käyttävät erityistä sivun ominaisuutta.',
+'pageswithprop-prop' => 'Ominaisuuden nimi',
+'pageswithprop-submit' => 'Siirry',
 
 'doubleredirects' => 'Kaksinkertaiset ohjaukset',
 'doubleredirectstext' => 'Tässä listassa on ohjaussivut, jotka ohjaavat toiseen ohjaussivuun.
@@ -2283,8 +2312,8 @@ Tulevaisuudessa sivuun ja sen keskustelusivuun tehtävät muutokset listataan t�
 'notvisiblerev' => 'Versio on poistettu',
 'watchnochange' => 'Valittuna ajanjaksona yhtäkään tarkkailemistasi sivuista ei muokattu.',
 'watchlist-details' => 'Tarkkailulistalla on {{PLURAL:$1|$1 sivu|$1 sivua}} keskustelusivuja mukaan laskematta.',
-'wlheader-enotif' => '* Sähköposti-ilmoitukset ovat käytössä.',
-'wlheader-showupdated' => "* Sivut, joita on muokattu viimeisen käyntisi jälkeen, on '''lihavoitu'''.",
+'wlheader-enotif' => 'Sähköposti-ilmoitukset ovat käytössä.',
+'wlheader-showupdated' => "Sivut, joita on muokattu viimeisen käyntisi jälkeen, on '''lihavoitu'''.",
 'watchmethod-recent' => 'tarkistetaan tuoreimpia muutoksia tarkkailluille sivuille',
 'watchmethod-list' => 'tarkistetaan tarkkailtujen sivujen tuoreimmat muutokset',
 'watchlistcontains' => 'Tarkkailulistallasi on {{PLURAL:$1|yksi sivu|$1 sivua}}.',
@@ -2468,9 +2497,8 @@ Viimeisimmän muokkauksen on tehnyt käyttäjä [[User:$3|$3]] ([[User talk:$3|k
 Voit palauttaa versioita valikoivasti valitsemalla vain niiden versioiden valintalaatikot, jotka haluat palauttaa.",
 'undeleterevisions' => '{{PLURAL:$1|Versio|$1 versiota}} arkistoitu.',
 'undeletehistory' => 'Jos palautat sivun, kaikki versiot lisätään sivun historiaan. Jos uusi sivu samalla nimellä on luotu poistamisen jälkeen, palautetut versiot lisätään sen historiaan.',
-'undeleterevdel' => "Palautusta ei tehdä, jos sen seurauksena sivun uusin versio olisi osittain piilotettu. 
-Tässä tilanteessa älä valitse palautettavaksi näkyviin viimeisintä poistettua versiota tai poista version piilotus.<br />
-Tiedostoversioita, joihin sinulla ei ole katseluoikeutta (''häivytetyt versiot''), ei palauteta.",
+'undeleterevdel' => 'Palautusta ei tehdä, jos sen seurauksena sivun uusin versio olisi osittain piilotettu. 
+Tässä tilanteessa älä valitse palautettavaksi näkyviin viimeisintä poistettua versiota tai poista version piilotus.',
 'undeletehistorynoadmin' => 'Tämä sivu on poistettu. Syy sivun poistamiseen näkyy yhteenvedossa, jossa on myös tiedot, ketkä ovat muokanneet tätä sivua ennen poistamista. Sivujen varsinainen sisältö on vain ylläpitäjien luettavissa.',
 'undelete-revision' => 'Poistettu sivu $1 hetkellä $4 kello $5. Tekijä: $3.',
 'undeleterevision-missing' => 'Virheellinen tai puuttuva versio. Se on saatettu palauttaa tai poistaa arkistosta.',
@@ -2978,13 +3006,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Stylesheets
 'common.css' => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
-'standard.css' => '/* Tämä sivu sisältää Perus-ulkoasua muuttavia tyylejä. */',
-'nostalgia.css' => '/* Tämä sivu sisältää Nostalgia-ulkoasua muuttavia tyylejä. */',
 'cologneblue.css' => '/* Tämä sivu sisältää Kölnin sininen -ulkoasua muuttavia tyylejä. */',
 'monobook.css' => '/* Tämä sivu sisältää Monobook-ulkoasua muuttavia tyylejä. */',
-'myskin.css' => '/* Tämä sivu sisältää Oma tyylisivu -ulkoasua muuttavia tyylejä. */',
-'chick.css' => '/* Tämä sivu sisältää Chick-ulkoasua muuttavia tyylejä. */',
-'simple.css' => '/* Tämä sivu sisältää Yksinkertainen-ulkoasua muuttavia tyylejä. */',
 'modern.css' => '/* Tämä sivu sisältää Moderni-ulkoasua muuttavia tyylejä. */',
 'vector.css' => '/* Tämä sivu sisältää Vector-ulkoasua muuttavia tyylejä. */',
 'print.css' => '/* Tämä sivu sisältää tulostettua sivua muuttavia tyylejä */',
@@ -2996,13 +3019,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Scripts
 'common.js' => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
-'standard.js' => '/* Tämän sivun JavaScript-koodi liitetään Perus-tyyliin */',
-'nostalgia.js' => '/* Tämän sivun JavaScript-koodi liitetään Nostalgia-tyyliin */',
 'cologneblue.js' => '/* Tämän sivun JavaScript-koodi liitetään Kölnin sininen -tyyliin */',
 'monobook.js' => '/* Tämän sivun JavaScript-koodi liitetään Monobook-tyyliin */',
-'myskin.js' => '/* Tämän sivun JavaScript-koodi liitetään Oma tyylisivu -tyyliin */',
-'chick.js' => '/* Tämän sivun JavaScript-koodi liitetään Chick-tyyliin */',
-'simple.js' => '/* Tämän sivun JavaScript-koodi liitetään Yksinkertaistettuun tyyliin */',
 'modern.js' => '/* Tämän sivun JavaScript-koodi liitetään Moderni-tyyliin */',
 'vector.js' => '/* Tämän sivun JavaScript-koodi liitetään Vector-tyyliin */',
 'group-autoconfirmed.js' => '/* Tämän sivun JavaScript-koodi liitetään vain automaattisesti hyväksytyille käyttäjille */',
@@ -3078,13 +3096,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 'pageinfo-category-files' => 'Tiedostojen määrä',
 
 # Skin names
-'skinname-standard' => 'Perus',
-'skinname-nostalgia' => 'Nostalgia',
 'skinname-cologneblue' => 'Kölnin sininen',
 'skinname-monobook' => 'Monobook',
-'skinname-myskin' => 'Oma tyylisivu',
-'skinname-chick' => 'Chick',
-'skinname-simple' => 'Yksinkertainen',
 'skinname-modern' => 'Moderni',
 
 # Patrolling
@@ -3162,10 +3175,24 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.",
 'minutes' => '{{PLURAL:$1|$1 minuutti|$1 minuuttia}}',
 'hours' => '{{PLURAL:$1|$1 tunti|$1 tuntia}}',
 'days' => '{{PLURAL:$1|$1 päivä|$1 päivää}}',
+'weeks' => '{{PLURAL:$1|viikko|$1 viikkoa}}',
 'months' => '{{PLURAL:$1|$1 kuukausi|$1 kuukautta}}',
 'years' => '{{PLURAL:$1|$1 vuosi|$1 vuotta}}',
 'ago' => '$1 sitten',
 'just-now' => 'juuri nyt',
+
+# Human-readable timestamps
+'hours-ago' => '{{PLURAL:$1|tunti|$1 tuntia}} sitten',
+'minutes-ago' => '{{PLURAL:$1|minuutti|$1 minuuttia}} sitten',
+'seconds-ago' => '{{PLURAL:$1|sekunti|$1 sekuntia}} sitten',
+'monday-at' => 'Maanantaina klo $1',
+'tuesday-at' => 'Tiistaina klo $1',
+'wednesday-at' => 'Keskiviikkona klo $1',
+'thursday-at' => 'Torstaina klo $1',
+'friday-at' => 'Perjantaina klo $1',
+'saturday-at' => 'Lauantaina klo $1',
+'sunday-at' => 'Sunnuntaina klo $1',
+'yesterday-at' => 'Eilen klo $1',
 
 # Bad image list
 'bad_image_list' => 'Listan muoto on seuraava:
@@ -3194,7 +3221,7 @@ Kaikki muut linkit ovat poikkeuksia eli toisin sanoen sivuja, joissa tiedostoa s
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Leveys',
 'exif-imagelength' => 'Korkeus',
 'exif-bitspersample' => 'Bittiä komponentissa',
@@ -3372,7 +3399,7 @@ Kaikki muut linkit ovat poikkeuksia eli toisin sanoen sivuja, joissa tiedostoa s
 'exif-originalimageheight' => 'Kuvan korkeus ennen kuin sitä rajattiin',
 'exif-originalimagewidth' => 'Kuvan leveys ennen kuin sitä rajattiin',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Pakkaamaton',
 'exif-compression-2' => 'CCITT:n Group 3 -yksiulotteinen muokattu Huffman-ajopituuskoodaus',
 'exif-compression-3' => 'CCITT:n Group 3 -faksipakkaus',
@@ -3784,12 +3811,11 @@ Sinun olisi pitänyt saada [{{SERVER}}{{SCRIPTPATH}}/COPYING kopio GNU General P
 'version-entrypoints-header-entrypoint' => 'Aloituskohta',
 'version-entrypoints-header-url' => 'URL',
 
-# Special:FilePath
-'filepath' => 'Tiedoston osoite',
-'filepath-page' => 'Tiedosto',
-'filepath-submit' => 'Siirry',
-'filepath-summary' => 'Tämä toimintosivu palauttaa tiedoston URL-osoitteen.
-Kuvat näytetään täysikokoisina. Muut tiedostot avataan niille määritetyssä ohjelmassa.',
+# Special:Redirect
+'redirect' => 'Uudelleenohjaa tiedoston, käyttäjän tai muutostunnuksen mukaan',
+'redirect-legend' => 'Uudelleenohjaa tiedostoon tai sivulle',
+'redirect-submit' => 'Siirry',
+'redirect-file' => 'Tiedostonimi',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Kaksoiskappaleiden haku',
@@ -3879,23 +3905,25 @@ Kuvat näytetään täysikokoisina. Muut tiedostot avataan niille määritetyss�
 'htmlform-submit' => 'Lähetä',
 'htmlform-reset' => 'Kumoa muutokset',
 'htmlform-selectorother-other' => 'Muu',
+'htmlform-no' => 'Ei',
+'htmlform-yes' => 'Kyllä',
 
 # SQLite database support
 'sqlite-has-fts' => '$1, jossa on tuki kokotekstihaulle',
 'sqlite-no-fts' => '$1, jossa ei ole tukea kokotekstihaulle',
 
 # New logging system
-'logentry-delete-delete' => '$1 poisti sivun $3',
-'logentry-delete-restore' => '$1 palautti sivun $3',
-'logentry-delete-event' => '$1 muutti {{PLURAL:$5|lokitapahtuman|$5 lokitapahtuman}} näkyvyyttä kohteessa $3: $4',
-'logentry-delete-revision' => '$1 muutti {{PLURAL:$5|version|$5 version}} näkyvyyttä sivulla $3: $4',
-'logentry-delete-event-legacy' => '$1 muutti kohteen $3 lokitapahtumien näkyvyyttä',
-'logentry-delete-revision-legacy' => '$1 muutti sivun $3 versioiden näkyvyyttä',
-'logentry-suppress-delete' => '$1 häivytti sivun $3',
-'logentry-suppress-event' => '$1 muutti salaa {{PLURAL:$5|lokitapahtuman|$5 lokitapahtuman}} näkyvyyttä kohteessa $3: $4',
-'logentry-suppress-revision' => '$1 muutti salaa {{PLURAL:$5|muutoksen|$5 muutoksen}} näkyvyyttä sivulla $3: $4',
-'logentry-suppress-event-legacy' => '$1 muutti salaa kohteen $3 lokitapahtumien näkyvyyttä',
-'logentry-suppress-revision-legacy' => '$1 muutti salaa sivun $3 versioiden näkyvyyttä',
+'logentry-delete-delete' => '$1 {{GENDER:$2|poisti}} sivun $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|palautti}} sivun $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|muutti}} {{PLURAL:$5|lokitapahtuman|$5 lokitapahtuman}} näkyvyyttä kohteessa $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|muutti}} {{PLURAL:$5|version|$5 version}} näkyvyyttä sivulla $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|muutti}} kohteen $3 lokitapahtumien näkyvyyttä',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|muutti}} sivun $3 versioiden näkyvyyttä',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|häivytti}} sivun $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|muutti}} salaa {{PLURAL:$5|lokitapahtuman|$5 lokitapahtuman}} näkyvyyttä kohteessa $3: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|muutti}} salaa {{PLURAL:$5|muutoksen|$5 muutoksen}} näkyvyyttä sivulla $3: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|muutti}} salaa kohteen $3 lokitapahtumien näkyvyyttä',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|muutti}} salaa sivun $3 versioiden näkyvyyttä',
 'revdelete-content-hid' => 'sisältö piilotettu',
 'revdelete-summary-hid' => 'muokkausyhteenveto piilotettu',
 'revdelete-uname-hid' => 'käyttäjätunnus piilotettu',
@@ -3904,20 +3932,20 @@ Kuvat näytetään täysikokoisina. Muut tiedostot avataan niille määritetyss�
 'revdelete-uname-unhid' => 'käyttäjätunnus palautettu näkyviin',
 'revdelete-restricted' => 'asetti rajoitukset ylläpitäjille',
 'revdelete-unrestricted' => 'poisti rajoitukset ylläpitäjiltä',
-'logentry-move-move' => '$1 siirsi sivun $3 uudelle nimelle $4',
-'logentry-move-move-noredirect' => '$1 siirsi sivun $3 uudelle nimelle $4 luomatta ohjausta',
-'logentry-move-move_redir' => '$1 siirsi sivun $3 ohjauksen $4 päälle',
-'logentry-move-move_redir-noredirect' => '$1 siirsi sivun $3 ohjauksen $4 päälle luomatta ohjausta',
-'logentry-patrol-patrol' => '$1 merkitsi sivun $3 muutoksen $4 tarkastetuksi',
-'logentry-patrol-patrol-auto' => '$1 merkitsi automaattisesti sivun $3 muutoksen $4 tarkastetuksi',
-'logentry-newusers-newusers' => 'Käyttäjätunnus $1 luotiin',
-'logentry-newusers-create' => 'Käyttäjätunnus $1 luotiin',
-'logentry-newusers-create2' => '$1 loi käyttäjätunnuksen $3',
-'logentry-newusers-byemail' => '$1 loi käyttäjätunnuksen $3 ja salasana lähetettiin sähköpostitse',
-'logentry-newusers-autocreate' => 'Käyttäjätunnus $1 luotiin automaattisesti',
-'logentry-rights-rights' => '$1 muutti käyttäjän $3 oikeudet ryhmistä $4 ryhmiin $5',
-'logentry-rights-rights-legacy' => '$1 muutti käyttäjän $3 jäsenyyttä ryhmässä',
-'logentry-rights-autopromote' => '$1 ylennettiin automaattisesti ryhmistä $4 ryhmiin $5',
+'logentry-move-move' => '$1 {{GENDER:$2|siirsi}} sivun $3 uudelle nimelle $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|siirsi}} sivun $3 uudelle nimelle $4 luomatta ohjausta',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|siirsi}} sivun $3 ohjauksen $4 päälle',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|siirsi}} sivun $3 ohjauksen $4 päälle luomatta ohjausta',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|merkitsi}} sivun $3 muutoksen $4 tarkastetuksi',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|merkitsi}} automaattisesti sivun $3 muutoksen $4 tarkastetuksi',
+'logentry-newusers-newusers' => 'Käyttäjätunnus $1 {{GENDER:$2|luotiin}}',
+'logentry-newusers-create' => 'Käyttäjätunnus $1 {{GENDER:$2|luotiin}}',
+'logentry-newusers-create2' => '$1 {{GENDER:$2|loi}} käyttäjätunnuksen $3',
+'logentry-newusers-byemail' => '$1 {{GENDER:$2|loi}} käyttäjätunnuksen $3 ja salasana lähetettiin sähköpostitse',
+'logentry-newusers-autocreate' => 'Käyttäjätunnus $1 {{GENDER:$2|luotiin}} automaattisesti',
+'logentry-rights-rights' => '$1 {{GENDER:$2|muutti}} käyttäjän $3 oikeudet ryhmistä $4 ryhmiin $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|muutti}} käyttäjän $3 jäsenyyttä ryhmässä',
+'logentry-rights-autopromote' => '$1 {{GENDER:$2|muutettiin}} automaattisesti ryhmistä $4 ryhmiin $5',
 'rightsnone' => '(ei oikeuksia)',
 
 # Feedback
@@ -3993,6 +4021,4 @@ Muussa tapauksessa voit käyttää alla olevaa helpompaa lomaketta. Kommenttisi 
 'duration-centuries' => '$1 {{PLURAL:$1|vuosisata|vuosisataa}}',
 'duration-millennia' => '$1 {{PLURAL:$1|vuosituhat|vuosituhatta}}',
 
-# Unknown messages
-'pageswithprop-submit' => 'Siirry',
 );

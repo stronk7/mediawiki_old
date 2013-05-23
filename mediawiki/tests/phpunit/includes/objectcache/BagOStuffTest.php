@@ -104,4 +104,34 @@ class BagOStuffTest extends MediaWikiTestCase {
 			}
 		}
 	}
+
+	public function testAdd() {
+		$key = wfMemcKey( 'test' );
+		$this->assertTrue( $this->cache->add( $key, 'test' ) );
+	}
+
+	public function testGet() {
+		$value = array( 'this' => 'is', 'a' => 'test' );
+
+		$key = wfMemcKey( 'test' );
+		$this->cache->add( $key, $value );
+		$this->assertEquals( $this->cache->get( $key ), $value );
+	}
+
+	public function testGetMulti() {
+		$value1 = array( 'this' => 'is', 'a' => 'test' );
+		$value2 = array( 'this' => 'is', 'another' => 'test' );
+
+		$key1 = wfMemcKey( 'test1' );
+		$key2 = wfMemcKey( 'test2' );
+
+		$this->cache->add( $key1, $value1 );
+		$this->cache->add( $key2, $value2 );
+
+		$this->assertEquals( $this->cache->getMulti( array( $key1, $key2 ) ), array( $key1 => $value1, $key2 => $value2 ) );
+
+		// cleanup
+		$this->cache->delete( $key1 );
+		$this->cache->delete( $key2 );
+	}
 }

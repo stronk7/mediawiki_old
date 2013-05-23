@@ -94,8 +94,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Pokoż, wjela sprowjorzy dowo pozůr',
 'tog-oldsig' => 'Teroźni wyglůnd Twojygo szrajbowańo',
 'tog-fancysig' => 'Szrajbńij s kodůma wiki (bez autůmatycznygo linka)',
-'tog-externaleditor' => 'Sztandardowo używej zewnyntrzny edytor (jyno do ekspertůw, trza mjyć ekstra sztalowańy we systymje)',
-'tog-externaldiff' => 'Sztandardowo używej zewnyntrzny program do filowańo we pomjyńańach (jyno do ekspertůw, trza mjyć ekstra sztalowańy we systymje)',
 'tog-showjumplinks' => 'Zapńij cajchnůndzki "przyńdź do"',
 'tog-uselivepreview' => 'Używej dynamiczne uobźyrańy (JavaScript) (eksperymentalny)',
 'tog-forceeditsummary' => 'Pedź, kejbych ńic ńy naszkryfloł we uopiśe pomjyńań',
@@ -533,7 +531,7 @@ Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano 
 'loginlanguagelabel' => 'Godka: $1',
 'suspicious-userlogout' => 'Żądanie wylogowania zostało odrzucone ponieważ wygląda na to, że zostało wysłane przez uszkodzoną przeglądarkę lub buforujący serwer proxy.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Ńyznany feler we funkcyji mail()',
 'user-mail-no-addy' => 'Próba wysłania e‐maila bez adresu odbiorcy',
 
@@ -982,14 +980,6 @@ $1',
 'powersearch-togglenone' => 'żodno',
 'search-external' => 'Šnupańy zewnyntřne',
 'searchdisabled' => 'Šnupańy we {{GRAMMAR:MS.lp|{{SITENAME}}}} zostouo zawarte. Zańim go zouůnčům, možeš sprůbować šnupańo bez Google. Ino zauwaž, co informacyje uo treśći {{GRAMMAR:MS.lp|{{SITENAME}}}} můgům być we Google ńyakuratne.',
-
-# Quickbar
-'qbsettings' => 'Gurt šybkigo dostympu',
-'qbsettings-none' => 'Brak',
-'qbsettings-fixedleft' => 'Stouy, s lewyj',
-'qbsettings-fixedright' => 'Stouy, s prawyj',
-'qbsettings-floatingleft' => 'Unošůncy śe, s lewyj',
-'qbsettings-floatingright' => 'Unošůncy śe, s prawyj',
 
 # Preferences page
 'preferences' => 'Preferyncyje',
@@ -1645,7 +1635,7 @@ Sprowdź zajta [[{{MediaWiki:Listgrouprights-helppage}}|s dodatkowymi informacja
 'listgrouprights-removegroup-all' => 'Idźe wyćepać s wszyjstkich grup',
 'listgrouprights-addgroup-self' => 'Je mogebny dać swe konto do {{PLURAL:$2|grupy|grup:}} $1',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Brak adresu',
 'mailnologintext' => 'Muśyš śe [[Special:UserLogin|zalůgować]] i mjeć wpisany aktualny adres e-brif w swojich [[Special:Preferences|preferyncyjach]], coby můc wysuać e-brif do inkšygo užytkowńika.',
 'emailuser' => 'Poślij tymu używoczowi e-brif',
@@ -1693,8 +1683,8 @@ Na tyi liśće bydźeš mjou rejer přišuych sprowjyń tyi zajty i jeji zajty g
 'notvisiblerev' => 'Wersyja zostoua wyćepano',
 'watchnochange' => 'Žodno ze zajtůw, na kere dowoš pozůr, ńy bůua sprowjano w podanym uokreśe.',
 'watchlist-details' => 'Na pozorliśće {{PLURAL:$1|je 1 artikel|sům $1 artikle|je $1 artikli}} ńy rachujůnc zajtůw godek.',
-'wlheader-enotif' => '* Wysůuańy powjadůmjyń na adres e-brif je zouůnčůne',
-'wlheader-showupdated' => "* Zajty, kere bouy sprowjane uod Twoi uostatńi wizyty na ńych zostoy naškryflane '''tuustym'''",
+'wlheader-enotif' => 'Wysůuańy powjadůmjyń na adres e-brif je zouůnčůne',
+'wlheader-showupdated' => "Zajty, kere bouy sprowjane uod Twoi uostatńi wizyty na ńych zostoy naškryflane '''tuustym'''",
 'watchmethod-recent' => 'šnupańy za půmjyńanymi na uostatku w zajtach, na kere dowoš pozůr',
 'watchmethod-list' => 'šnupańy w zajtach, na kere dowoš pozůr pośrůd půmjyńanych na uostatku',
 'watchlistcontains' => 'Lista zajtůw, na kere dowoš pozůr mo {{PLURAL:$1|jedna pozycja|$1 pozycje|$1 pozycyji}}.',
@@ -2380,7 +2370,7 @@ Eli plik był modyfikowany, dane mogům w tajli ńy być we zgodźe ze parametr�
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Šyrokość',
 'exif-imagelength' => 'Wysokość',
 'exif-bitspersample' => 'Bitůw na průbka',
@@ -2494,7 +2484,7 @@ Eli plik był modyfikowany, dane mogům w tajli ńy być we zgodźe ze parametr�
 'exif-gpsdatestamp' => 'Data GPS',
 'exif-gpsdifferential' => 'Korekcyjo růžńicy GPS',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'ńyskůmpresowany',
 
 'exif-unknowndate' => 'ńyznano data',
@@ -2646,7 +2636,7 @@ Eli plik był modyfikowany, dane mogům w tajli ńy być we zgodźe ze parametr�
 'namespacesall' => 'wszyjske',
 'monthsall' => 'wšyskie',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Potwjerdź adres e-brif',
 'confirmemail_noemail' => 'Ńy podoužeś prawiduowygo adresa e-brifa we [[Special:Preferences|preferencyjach]].',
 'confirmemail_text' => 'Projekt {{SITENAME}} wymago weryfikacyji adresa e-brif před užyćym fůnkcyji kořistajůncych s počty.
@@ -2785,15 +2775,6 @@ Možeš tyž [[Special:EditWatchlist|užyć standardowygo edytora]].',
 'version-software' => 'Zainstalowane uoprůgramowańy',
 'version-software-product' => 'Mjano',
 'version-software-version' => 'Wersjo',
-
-# Special:FilePath
-'filepath' => 'Śćežka do plika',
-'filepath-page' => 'Plik:',
-'filepath-submit' => 'Śćežka',
-'filepath-summary' => 'Ta ekstra zajta zwraco peuno śćyžka do plika.
-Grafiki sům pokazywane w peunyj rozdźelčośći, inkše typy plikůw sům uodmykane we skojařůnym ś ńimi průgramje.
-
-Naškryflej sam mjano plika bez prefiksu „{{ns:file}}:”.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Šnupej za duplikatym plika',

@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Bawoor
  * @author Slamet Serayu (on map-bms.wikipedia.org)
  * @author StefanusRA
  * @author לערי ריינהארט
@@ -45,8 +46,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Tidhokna jumlah pangawas',
 'tog-oldsig' => 'Tapak asma sekiye:',
 'tog-fancysig' => 'Tapak asma dianggep dadi teks wiki (ora nganggo pranala otomatis)',
-'tog-externaleditor' => 'Gunakna editor eksternal secara gawan (kanggo sing ahli thok, perlu pengaturan mligi nang komputere rika. [//www.mediawiki.org/wiki/Manual:External_editors Informasi selengkape.])',
-'tog-externaldiff' => 'Gunakna diff eksternal secara gawan (kanggo sing ahli thok, perlu pengaturan mligi nang komputere rika. [//www.mediawiki.org/wiki/Manual:External_editors Informasi selengkape.])',
 'tog-showjumplinks' => 'Aktifna pranala pitulung "mlumpat maring"',
 'tog-uselivepreview' => 'Gunakna pratayang langsung (mbutuhna JavaScript) (egin jajalan)',
 'tog-forceeditsummary' => 'Emutna inyong anggere durung ngisi kotak ringkesan suntingan',
@@ -185,7 +184,7 @@ $messages = array(
 'errorpagetitle' => 'Kasalahan',
 'returnto' => 'Bali maring $1.',
 'tagline' => 'Sekang {{SITENAME}}',
-'help' => 'Rewang',
+'help' => 'Réwang',
 'search' => 'golet tulisan',
 'searchbutton' => 'Goleti',
 'go' => 'golet',
@@ -291,7 +290,7 @@ Deleng [[Special:Version|kaca versi]].',
 'viewsourcelink' => 'deleng sumbere',
 'editsectionhint' => 'Sunting bagian: $1',
 'toc' => 'Isi',
-'showtoc' => 'tidokna',
+'showtoc' => 'tidhokna',
 'hidetoc' => 'umpetna',
 'collapsible-collapse' => 'Umpetna',
 'collapsible-expand' => 'Tidokna',
@@ -514,7 +513,7 @@ Tulung ngenteni sedela sedurunge njajal maning.',
 'loginlanguagelabel' => 'Basa: $1',
 'suspicious-userlogout' => "Panjalukan Rika nggo metu log ditolak jalarak ketone dikirim nang panjlajah sing rusak utawa proksi panyinggah (''caching proxy'').",
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Kasalahan sing ora genah nang fungsi mail() PHP.',
 'user-mail-no-addy' => 'Njajal ngirimna imel tanpa nganggo alamat imel.',
 
@@ -588,12 +587,12 @@ Tembung sandhi sauntara: $2',
 'summary' => 'Ringkesan:',
 'subject' => 'Subyek/judhul:',
 'minoredit' => 'Kiye suntingan cilik',
-'watchthis' => 'Awasana kaca kiye',
+'watchthis' => 'Awasi kaca kiyé',
 'savearticle' => 'Simpen',
 'preview' => 'Pra tayang',
 'showpreview' => 'Pra tayang',
 'showlivepreview' => 'Pratayang langsung',
-'showdiff' => 'Deleng beda',
+'showdiff' => 'Ndeleng bedané',
 'anoneditwarning' => 'Rika ora kadaftar mlebu.
 Alamat IP-ne Rika bakal dicatet nang sajarah panyuntingane kaca kiye.',
 'anonpreviewwarning' => "''Rika durung mlebu log. Nyimpen kaca bakal nyatetna alamat IP-ne Rika nang riwayat suntingan kaca kiye.''",
@@ -909,15 +908,6 @@ Jajal aweh awalan ''all:'' kanggo nggolèti kabèh isi (kalebu kaca dhiskusi, ci
 Rika teyeng nggoleti nganggo Google disit.
 Ningen Rika kudu eling nek indeks Google kanggo {{SITENAME}} bisa baen isine anu sing lawas lan durung dianyari.',
 
-# Quickbar
-'qbsettings' => 'Pangaturan bar pintas',
-'qbsettings-none' => 'Ora ana',
-'qbsettings-fixedleft' => 'Tetep sisih kiwa',
-'qbsettings-fixedright' => 'Tetep sisih tengen',
-'qbsettings-floatingleft' => 'Ngambang sisih kiwa',
-'qbsettings-floatingright' => 'Ngambang sisih tengen',
-'qbsettings-directionality' => 'Tetep, ngetutna maring bentuk skrip sekang basane Rika',
-
 # Preferences page
 'preferences' => 'Preferensi',
 'mypreferences' => 'Preferensi',
@@ -1036,7 +1026,7 @@ Aja kuatir, alamat imele Rika ora ditidokna dong pangganggo sejen ngontak Rika.'
 'prefs-displaywatchlist' => 'Opsi tampilan',
 'prefs-diffs' => 'Prabédan',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'Alamatimel ketone wis sah',
 'email-address-validity-invalid' => 'Monggo dilebokna alamat imel sing bener',
 
@@ -1200,7 +1190,7 @@ Aja kuatir, alamat imele Rika ora ditidokna dong pangganggo sejen ngontak Rika.'
 'diff' => 'bédane',
 'hist' => 'versi',
 'hide' => 'Umpetna',
-'show' => 'Tidokna',
+'show' => 'Tidhokna',
 'minoreditletter' => 'c',
 'newpageletter' => 'A',
 'boteditletter' => 'b',
@@ -1453,7 +1443,7 @@ Rika teyeng mbatesi tampilan kanthi milih jinis log, jeneng panganggo (sensitif 
 # Special:ListGroupRights
 'listgrouprights-members' => '(daftar anggota)',
 
-# E-mail user
+# Email user
 'emailuser' => 'Kirim imel maring panganggo kiye',
 'emailtarget' => 'Lebokna jeneng panganggo utawa panampa',
 'emailusername' => 'Jeneng panganggo:',
@@ -1471,12 +1461,12 @@ Rika teyeng mbatesi tampilan kanthi milih jinis log, jeneng panganggo (sensitif 
 'emailuserfooter' => 'Layang kiye dikirimna sekang $1 ming $2 nggunakna fungsi "Layangpanganggo" nang {{SITENAME}}.',
 
 # Watchlist
-'watchlist' => 'Daftar pangawasane inyong',
-'mywatchlist' => 'Daptar pangawasane inyong',
+'watchlist' => 'Daftar sawangané inyong',
+'mywatchlist' => 'Daftar sawangané inyong',
 'watchlistfor2' => 'Kanggo $1 $2',
 'watch' => 'Pantau',
 'unwatch' => 'Batalna pantauan',
-'watchlist-details' => 'Ana {{PLURAL:$1|$1 kaca|$1 kaca}} nang daftar pangawasane Rika, ningen ora ngitung kaca dhiskusi.',
+'watchlist-details' => 'Ana {{PLURAL:$1|$1 kaca|$1 kaca}} nang daftar pangawasané Rika, ningèn kaca dhiskusiné ora mélu diétung.',
 'wlshowlast' => 'Tidokna $1 jam $2 dina $3 pungkasan',
 'watchlist-options' => 'Opsi daftar pangawasan',
 
@@ -1754,7 +1744,7 @@ Sing liyane bakal diumpetna sacara ''default''.
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-lightsource' => 'Sumber cahya',
 
 'exif-meteringmode-6' => 'Sebagiyan',

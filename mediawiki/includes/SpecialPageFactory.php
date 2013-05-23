@@ -162,6 +162,7 @@ class SpecialPageFactory {
 		'Mytalk'                    => 'SpecialMytalk',
 		'Myuploads'                 => 'SpecialMyuploads',
 		'PermanentLink'             => 'SpecialPermanentLink',
+		'Redirect'                  => 'SpecialRedirect',
 		'Revisiondelete'            => 'SpecialRevisionDelete',
 		'Specialpages'              => 'SpecialSpecialpages',
 		'Userlogout'                => 'SpecialUserlogout',
@@ -200,7 +201,7 @@ class SpecialPageFactory {
 				self::$mList['ChangeEmail'] = 'SpecialChangeEmail';
 			}
 
-			if( $wgEnableJavaScriptTest ) {
+			if ( $wgEnableJavaScriptTest ) {
 				self::$mList['JavaScriptTest'] = 'SpecialJavaScriptTest';
 			}
 
@@ -222,7 +223,7 @@ class SpecialPageFactory {
 	/**
 	 * Initialise and return the list of special page aliases.  Returns an object with
 	 * properties which can be accessed $obj->pagename - each property is an array of
-	 * aliases; the first in the array is the cannonical alias.  All registered special
+	 * aliases; the first in the array is the canonical alias.  All registered special
 	 * pages are guaranteed to have a property entry, and for that property array to
 	 * contain at least one entry (English fallbacks will be added if necessary).
 	 * @return Object
@@ -286,8 +287,11 @@ class SpecialPageFactory {
 	 *
 	 * @param $page Mixed: SpecialPage or string
 	 * @param $group String
+	 * @deprecated since 1.21 Override SpecialPage::getGroupName
 	 */
 	public static function setGroup( $page, $group ) {
+		wfDeprecated( __METHOD__, '1.21' );
+
 		global $wgSpecialPageGroups;
 		$name = is_object( $page ) ? $page->getName() : $page;
 		$wgSpecialPageGroups[$name] = $group;
@@ -298,34 +302,18 @@ class SpecialPageFactory {
 	 *
 	 * @param $page SpecialPage
 	 * @return String
+	 * @deprecated since 1.21 Use SpecialPage::getFinalGroupName
 	 */
 	public static function getGroup( &$page ) {
-		$name = $page->getName();
+		wfDeprecated( __METHOD__, '1.21' );
 
-		global $wgSpecialPageGroups;
-		static $specialPageGroupsCache = array();
-		if ( isset( $specialPageGroupsCache[$name] ) ) {
-			return $specialPageGroupsCache[$name];
-		}
-		$msg = wfMessage( 'specialpages-specialpagegroup-' . strtolower( $name ) );
-		if ( !$msg->isBlank() ) {
-			$group = $msg->text();
-		} else {
-			$group = isset( $wgSpecialPageGroups[$name] )
-				? $wgSpecialPageGroups[$name]
-				: '-';
-		}
-		if ( $group == '-' ) {
-			$group = 'other';
-		}
-		$specialPageGroupsCache[$name] = $group;
-		return $group;
+		return $page->getFinalGroupName();
 	}
 
 	/**
 	 * Check if a given name exist as a special page or as a special page alias
 	 *
-	 * @param $name String: name of a special page
+	 * @param string $name name of a special page
 	 * @return Boolean: true if a special page exists with this name
 	 */
 	public static function exists( $name ) {
@@ -336,7 +324,7 @@ class SpecialPageFactory {
 	/**
 	 * Find the object with a given name and return it (or NULL)
 	 *
-	 * @param $name String Special page name, may be localised and/or an alias
+	 * @param string $name Special page name, may be localised and/or an alias
 	 * @return SpecialPage|null SpecialPage object or null if the page doesn't exist
 	 */
 	public static function getPage( $name ) {
@@ -477,9 +465,8 @@ class SpecialPageFactory {
 			if ( $name != $page->getLocalName() && !$context->getRequest()->wasPosted() ) {
 				$query = $context->getRequest()->getQueryValues();
 				unset( $query['title'] );
-				$query = wfArrayToCgi( $query );
 				$title = $page->getTitle( $par );
-				$url = $title->getFullUrl( $query );
+				$url = $title->getFullURL( $query );
 				$context->getOutput()->redirect( $url );
 				wfProfileOut( __METHOD__ );
 				return $title;

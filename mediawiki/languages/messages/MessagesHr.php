@@ -343,8 +343,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Prikaži broj suradnika koji prate stranicu (u nedavnim izmjenama, popisu praćenja i samim člancima)',
 'tog-oldsig' => 'Pregled postojećeg potpisa:',
 'tog-fancysig' => 'Običan potpis kao wikitekst (bez automatske poveznice)',
-'tog-externaleditor' => 'Uvijek koristi vanjski program za uređivanje (samo za napredne, potrebne su posebne postavke na računalu. [//www.mediawiki.org/wiki/Manual:External_editors Dodatne informacije.])',
-'tog-externaldiff' => 'Uvijek koristi vanjski program za usporedbu (samo za napredne, potrebne su posebne postavke na računalu. [//www.mediawiki.org/wiki/Manual:External_editors Dodatne informacije.])',
 'tog-showjumplinks' => 'Uključi pomoćne poveznice "Skoči na"',
 'tog-uselivepreview' => 'Uključi trenutačni pretpregled (JavaScript) (eksperimentalno)',
 'tog-forceeditsummary' => 'Podsjeti me ako sažetak uređivanja ostavljam praznim',
@@ -358,6 +356,7 @@ $messages = array(
 'tog-diffonly' => 'Ne prikazuj sadržaj stranice prilikom usporedbe inačica',
 'tog-showhiddencats' => 'Prikaži skrivene kategorije',
 'tog-norollbackdiff' => 'Izostavi razliku nakon upotrebe ukloni',
+'tog-useeditwarning' => 'Upozori me kad napuštam stranicu za uređivanje bez spremanja izmjena',
 
 'underline-always' => 'Uvijek',
 'underline-never' => 'Nikad',
@@ -430,7 +429,7 @@ $messages = array(
 'category-empty' => "''U ovoj kategoriji trenutačno nema članaka ni medija.''",
 'hidden-categories' => '{{PLURAL:$1|Skrivena kategorija|Skrivene kategorije|Skrivenih kategorija}}',
 'hidden-category-category' => 'Skrivene kategorije',
-'category-subcat-count' => '{{PLURAL:$2|Ova kategorija ima samo sljedeću podkategoriju.|Ova kategorija ima {{PLURAL:$1|podkategoriju|$1 podkategorije|$1 podkategorija}}, od njih $2 ukupno.}}',
+'category-subcat-count' => 'Ova kategorija sadrži $2 {{PLURAL:$2|podkategoriju|podkategorije|podkategorija}}, ovaj popis prikazuje $1.',
 'category-subcat-count-limited' => 'Ova kategorija ima {{PLURAL:$1|podkategoriju|$1 podkategorije|$1 podkategorija}}.',
 'category-article-count' => '{{PLURAL:$2|Ova kategorija sadrži $2 članak.|{{PLURAL:$1|Prikazano je $1 članak|Prikazana su $1 članka|Prikazano je $1 članaka}} od njih $2 ukupno.}}',
 'category-article-count-limited' => '{{PLURAL:$1|stranica je|$1 stranice su|$1 stranica je}} u ovoj kategoriji.',
@@ -491,7 +490,7 @@ $messages = array(
 'history' => 'Stare izmjene',
 'history_short' => 'Stare izmjene',
 'updatedmarker' => 'obnovljeno od zadnjeg posjeta',
-'printableversion' => 'Verzija za ispis',
+'printableversion' => 'Inačica za ispis',
 'permalink' => 'Trajna poveznica',
 'print' => 'Ispiši',
 'view' => 'Vidi',
@@ -811,7 +810,7 @@ Molimo Vas da pričekate prije nego što pokušate ponovo.',
 'loginlanguagelabel' => 'Jezik: $1',
 'suspicious-userlogout' => 'Vaš zahtjev za odjavu je odbijen jer to izgleda kao da je poslan preko pokvarenog preglednika ili keširanog posrednika (proxyja).',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Nepoznata pogreška u PHP-mail() funkciji',
 'user-mail-no-addy' => 'Pokušaj slanja e-maila bez e-mail adrese.',
 
@@ -979,7 +978,7 @@ Više informacija možete pronaći u [{{fullurl:{{#Special:Log}}/delete|page={{F
 'userpage-userdoesnotexist-view' => 'Suradnički račun "$1" nije registriran.',
 'blocked-notice-logextract' => 'Ovaj suradnik je trenutačno blokiran.
 Posljednja stavka evidencije blokiranja navedena je niže kao napomena:',
-'clearyourcache' => "'''Napomena:''' Nakon snimanja možda ćete trebate očistiti međuspremnik svog preglednika kako biste vidjeli promjene.
+'clearyourcache' => "'''Napomena:''' Nakon snimanja ćete možda trebati očistiti međuspremnik svog preglednika kako biste vidjeli promjene.
 * '''Firefox / Safari:''' držite ''Shift'' i pritisnite ''Reload'', ili pritisnite bilo ''Ctrl-F5'' ili ''Ctrl-R'' (''Command-R'' na Macu)
 * '''Google Chrome:''' pritisnite ''Ctrl-Shift-R'' (''Command-Shift-R'' na Macu)
 * '''Internet Explorer:''' držite ''Ctrl'' i kliknite ''Refresh'', ili pritisnite ''Ctrl-F5''
@@ -1076,6 +1075,8 @@ Stranica već postoji.',
 'content-failed-to-parse' => "Obrada (''parsiranje'') formata $2 za model $1 nije uspjela: $3",
 'invalid-content-data' => 'Nevaljani sadržaj',
 'content-not-allowed-here' => 'Sadržaj napisan u obliku "$1"-a nije dozvoljen na stranici [[$2]]',
+'editwarning-warning' => 'Napuštanje ove stranice može uzrokovati gubitak svake izmjene koju ste napravili.
+Možete onemogućiti ovo upozorenje u odjeljku "{{int:prefs-editing}}" Vaših postavki.',
 
 # Content models
 'content-model-wikitext' => 'wikitekst',
@@ -1356,15 +1357,6 @@ Više informacija možete pronaći u [{{fullurl:{{#Special:Log}}/delete|page={{F
 'search-external' => 'Vanjski pretraživač',
 'searchdisabled' => '<p>Oprostite! Pretraga po cjelokupnoj bazi je zbog bržeg rada projekta {{SITENAME}} trenutačno onemogućena. Možete se poslužiti tražilicom Google.</p>',
 
-# Quickbar
-'qbsettings' => 'Traka',
-'qbsettings-none' => 'Bez',
-'qbsettings-fixedleft' => 'Lijevo nepomično',
-'qbsettings-fixedright' => 'Desno nepomično',
-'qbsettings-floatingleft' => 'Lijevo leteće',
-'qbsettings-floatingright' => 'Desno leteće',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
-
 # Preferences page
 'preferences' => 'Postavke',
 'mypreferences' => 'Moje postavke',
@@ -1478,9 +1470,9 @@ Ne smije biti duži od $1 {{PLURAL:$1|znaka|znaka|znakova}}.',
 'prefs-displaywatchlist' => 'Opcije prikaza',
 'prefs-diffs' => 'razl',
 
-# User preference: e-mail validation using jQuery
-'email-address-validity-valid' => 'E-mail adresa se pokazuje ispravnom',
-'email-address-validity-invalid' => 'Unesite valjanu e-mail adresu',
+# User preference: email validation using jQuery
+'email-address-validity-valid' => 'Adresa e-pošte pokazuje se ispravnom',
+'email-address-validity-invalid' => 'Unesite valjanu adresu e-pošte',
 
 # User rights
 'userrights' => 'Upravljanje suradničkim pravima',
@@ -1897,7 +1889,6 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 'http-read-error' => 'Pogrješka pri čitanju HTTP.',
 'http-timed-out' => 'HTTP zahtjev je istekao.',
 'http-curl-error' => 'Pogrješka pri otvaranju URL-a: $1',
-'http-host-unreachable' => 'URL nije dostupan.',
 'http-bad-status' => 'Došlo je do problema tijekom HTTP zahtjeva: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1987,7 +1978,7 @@ Možda želite urediti njen opis na [$2 stranici opisa datoteke].',
 'filedelete-success' => "Datoteka '''$1''' je izbrisana.",
 'filedelete-success-old' => "Inačica datoteke '''[[Media:$1|$1]]''' od $3, $2 je obrisana.",
 'filedelete-nofile' => "'''$1''' ne postoji.",
-'filedelete-nofile-old' => "Nema arhivirane verzije datoteke '''$1''' s zadanim parametrima.",
+'filedelete-nofile-old' => "Nema arhivirane inačice datoteke '''$1''' sa zadanim parametrima.",
 'filedelete-otherreason' => 'Drugi/dodatni razlog:',
 'filedelete-reason-otherlist' => 'Drugi razlog',
 'filedelete-reason-dropdown' => '*Česti razlozi brisanja
@@ -2241,7 +2232,7 @@ Dodatne informacije o pojedinim pravim se mogu pronaći [[{{MediaWiki:Listgroupr
 'listgrouprights-addgroup-self-all' => 'Dodaj sve skupine vlastitom računu',
 'listgrouprights-removegroup-self-all' => 'Uklonite sve skupine iz vlastitog računa',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Nema adrese pošiljaoca',
 'mailnologintext' => 'Morate biti [[Special:UserLogin|prijavljeni]]
 i imati valjanu adresu e-pošte u svojim [[Special:Preferences|postavkama]]
@@ -2302,8 +2293,8 @@ Promjene na toj stranici i njenoj stranici za razgovor bit će prikazane na popi
 'notvisiblerev' => 'Izmjena je obrisana',
 'watchnochange' => 'Niti jedna od praćenih stranica nije promijenjena od Vašeg zadnjeg posjeta.',
 'watchlist-details' => '{{PLURAL:$1|$1 stranica|$1 stranice|$1 stranica}} se nalazi na popisu praćenja, ne brojeći stranice za razgovor.',
-'wlheader-enotif' => '* Uključeno je izvješćivanje e-mailom.',
-'wlheader-showupdated' => "* Stranice koje su promijenjene od Vašeg zadnjeg posjeta prikazane su '''podebljano'''",
+'wlheader-enotif' => 'Uključeno je izvješćivanje e-mailom.',
+'wlheader-showupdated' => "Stranice koje su promijenjene od Vašeg zadnjeg posjeta prikazane su '''podebljano'''",
 'watchmethod-recent' => 'provjera nedavnih promjena praćenih stranica',
 'watchmethod-list' => 'provjera praćanih stranica za nedavne promjene',
 'watchlistcontains' => 'Vaš popis praćenja sadrži $1 {{PLURAL:$1|stranicu|stranice|stranica}}.',
@@ -2663,7 +2654,7 @@ Pogledajte [[Special:BlockList|popis blokiranja]] za pregled blokiranih suradnik
 'anononlyblock' => 'samo IP adrese',
 'noautoblockblock' => 'blokiranje samoga sebe je onemogućeno',
 'createaccountblock' => 'blokirano stvaranje suradničkog računa',
-'emailblock' => 'e-mail je blokiran',
+'emailblock' => 'e-pošta je blokirana',
 'blocklist-nousertalk' => 'bez uređivanja vlastite stranice za razgovor',
 'ipblocklist-empty' => 'Popis blokiranja je prazan.',
 'ipblocklist-no-results' => 'Tražena IP adresa ili suradničko ime nije blokirano.',
@@ -2671,7 +2662,7 @@ Pogledajte [[Special:BlockList|popis blokiranja]] za pregled blokiranih suradnik
 'unblocklink' => 'deblokiraj',
 'change-blocklink' => 'promijeni blokiranje',
 'contribslink' => 'doprinosi',
-'emaillink' => 'pošalji e-mail',
+'emaillink' => 'pošalji e-poruku',
 'autoblocker' => 'Automatski ste blokirani jer je Vašu IP adresu nedavno koristio "[[User:$1|$1]]" koji je blokiran zbog: "$2".',
 'blocklogpage' => 'Evidencija blokiranja',
 'blocklog-showlog' => 'Ovaj suradnik je ranije blokiran.
@@ -2832,7 +2823,7 @@ Molimo odaberite drugo ime.',
 
 # Export
 'export' => 'Izvezi stranice',
-'exporttext' => 'Možete izvesti tekst i prijašnje promjene jedne ili više stranica uklopljene u XML kod. U budućim verzijama MediaWiki softvera bit će moguće uvesti ovakvu stranicu u neki drugi wiki. Trenutačna verzija to još ne podržava.
+'exporttext' => 'Možete izvesti tekst i prijašnje promjene jedne ili više stranica uklopljene u kȏd XML. U budućim inačicama MediaWiki softvera bit će moguće uvesti ovakvu stranicu u neki drugi wiki. Trenutačna inačica to još ne podržava.
 
 Za izvoz stranica unesite njihove naslove u polje ispod, jedan naslov po retku, i označite želite li trenutačnu inačicu zajedno sa svim prijašnjima, ili samo trenutačnu inačicu s informacijom o zadnjoj promjeni.
 
@@ -3091,12 +3082,8 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 'pageinfo-protect-cascading-from' => 'Prenosiva zaštita počinje od',
 
 # Skin names
-'skinname-standard' => 'Standardna',
-'skinname-nostalgia' => 'Nostalgija',
 'skinname-cologneblue' => 'Kölnska plava',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Chick',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označi za pregledano',
@@ -3206,7 +3193,7 @@ Svaka sljedeća poveznica u istom retku je izuzetak, npr. kod stranica gdje se s
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Širina',
 'exif-imagelength' => 'Visina',
 'exif-bitspersample' => 'Dubina boje',
@@ -3384,7 +3371,7 @@ Svaka sljedeća poveznica u istom retku je izuzetak, npr. kod stranica gdje se s
 'exif-originalimageheight' => 'Visina slike prije nego što je obrezana',
 'exif-originalimagewidth' => 'Širina slike prije nego što je obrezana',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Nesažeto',
 'exif-compression-2' => 'CCITT Grupa 3 1 — Dimenzionalno izmijenjeno Huffmanovo šifriranje po dužini',
 'exif-compression-3' => 'CCITT Grupa 3 faks kodiranje',
@@ -3605,7 +3592,7 @@ Svaka sljedeća poveznica u istom retku je izuzetak, npr. kod stranica gdje se s
 'monthsall' => 'sve',
 'limitall' => 'sve',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Potvrda e-mail adrese',
 'confirmemail_noemail' => 'Niste unijeli važeću e-mail adresu u Vaše [[Special:Preferences|suradničke postavke]].',
 'confirmemail_text' => 'U ovom wikiju morate prije korištenja e-mail naredbi potvrditi svoju e-mail adresu. Kliknite na gumb ispod kako biste poslali poruku s potvrdom na Vašu adresu. U poruci će biti poveznica koju morate otvoriti u svom web pregledniku i time potvrditi svoju e-mail adresu.',
@@ -3852,13 +3839,6 @@ Trebali ste primiti [{{SERVER}}{{SCRIPTPATH}}/COPYING kopiju GNU opće javne lic
 'version-entrypoints' => 'URL adresa instalacije',
 'version-entrypoints-header-entrypoint' => 'Početna adresa',
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Putanja datoteke',
-'filepath-page' => 'Datoteka:',
-'filepath-submit' => 'Idi',
-'filepath-summary' => 'Ova posebna stranica daje Vam kompletnu putanju do neke datoteke.
-Slike se na taj način prikazuju u punoj rezoluciji, a drugi tipovi datoteka se otvaraju na klik (kako je već namješteno u Vašem operacijskom sustavu).',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Traži kopije datoteka',

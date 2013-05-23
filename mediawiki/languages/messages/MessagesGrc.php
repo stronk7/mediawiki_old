@@ -67,8 +67,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Δεικνύναι τὸν ἀριθμὸν τῶν παρακολουθούντων χρωμένων',
 'tog-oldsig' => 'Προθεώρησις τῆς ὑπαρχούσης ὑπογραφῆς:',
 'tog-fancysig' => 'Ἀκατέργασται ὑπογραφαί ἐν εἴδει βικι-κειμένου (ἄνευ αὐτομάτου συνδέσμου)',
-'tog-externaleditor' => 'Χρῆσθαι ἐξωτέρῳ προγράμματι ἐπεξεργασίας κειμένων κατὰ προεπιλογήν (πρὸς εἰδικοὺς μόνον· ἀπαραίτητοι εἰσὶν εἰδικαὶ ῥυθμίσεις τινὲς ἐν τῇ σῇ ὑπολογιστικῇ μηχανῇ)',
-'tog-externaldiff' => 'Χρῆσθαι ἐξωτέρῳ λογισμικῷ ἀντιπαραβολῆς κατὰ προεπιλογὴν (πρὸς εἰδικοὺς μόνον· ἀπαραίτητοι εἰσὶν εἰδικαὶ ῥυθμίσεις τινες ἐν τῇ σῇ ὑπολογιστικῇ μηχανῇ)',
 'tog-showjumplinks' => 'Ἐνεργοποιεῖν τοὺς "ἅλμα πρὸς" συνδέσμους προσβασιμότητος',
 'tog-uselivepreview' => 'Χρῆσθαι ἀμέσῳ προθεωρήσει (JavaScript) (Πειραστικόν)',
 'tog-forceeditsummary' => 'Προμήνυσόν με εἰ εἰσάγω κενὴν σύνοψιν μεταγραφῆς',
@@ -839,14 +837,6 @@ $1",
 'powersearch-togglenone' => 'Οὐδέν',
 'search-external' => 'Ἐξωτέρα ἀναζήτησις',
 
-# Quickbar
-'qbsettings' => 'Ταχεῖα πρόσβασις',
-'qbsettings-none' => 'Οὐδέν',
-'qbsettings-fixedleft' => 'Σταθερὰ ἀριστερώς',
-'qbsettings-fixedright' => 'Σταθερὰ δεξιώς',
-'qbsettings-floatingleft' => 'Πλανώμενα αριστερώς',
-'qbsettings-floatingright' => 'Πλανώμενα δεξιώς',
-
 # Preferences page
 'preferences' => 'Προαιρέσεις',
 'mypreferences' => 'Αἱ προαιρέσεις μου',
@@ -1500,7 +1490,7 @@ $1",
 'listgrouprights-addgroup-self-all' => 'Προστιθέναι ἁπάσας τὰς ὁμάδας τῷ λογισμῷ ἐμοῦ τοῦ ἰδίου',
 'listgrouprights-removegroup-self-all' => 'Ἀφαιρεῖν ἁπάσας τὰς ὁμάδας ἀπὸ τὸν λογισμὸν ἐμοῦ τοῦ ἰδίου',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Οὐδεμία διεύθυνσις παραλήπτου',
 'emailuser' => 'Ἠλεκτρονικὴν ἐπιστολὴν τῷδε τῷ χρωμένῳ πέμπειν',
 'emailpage' => 'Χρώμενος ἠλ.-ταχυδρομείου',
@@ -1544,7 +1534,7 @@ $1",
 'notvisiblerev' => 'Ἀναθεώρησις διαγεγραμμένη',
 'watchnochange' => 'Οὐδὲν ἐκ τῶν ἐφορωμένων τεμαχίων σου μετεγράφη τῷ δεικνυμένῳ χρόνῳ.',
 'watchlist-details' => '{{PLURAL:$1|$1 δέλτος|$1 δέλτοι}} ἐφορωμέναι, ἄνευ τῶν δέλτων διαλέξεως περιλαμβανομένων.',
-'wlheader-enotif' => '* Σύστημα εἰδήσεως μέσῳ ἠλ-ἐπιστολῶν ἐνεργόν.',
+'wlheader-enotif' => 'Σύστημα εἰδήσεως μέσῳ ἠλ-ἐπιστολῶν ἐνεργόν.',
 'watchmethod-recent' => 'ἐλέγχειν προσφάτους μεταγραφὰς περὶ ἐφορωμένων δέλτων',
 'watchmethod-list' => 'ἐλέγχειν ἐφορωμένας δέλτους περὶ μεταγραφὰς προσφάτους',
 'watchlistcontains' => 'Ἡ ἐφοροδιαλογὴ σου περιέχει $1 {{PLURAL:$1|δέλτον|δέλτους}}.',
@@ -2197,7 +2187,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Πλάτος',
 'exif-imagelength' => 'Ὕψος',
 'exif-bitspersample' => 'Δυφία ἀνὰ συνιστῶσαν',
@@ -2319,7 +2309,7 @@ $1',
 'exif-label' => 'Ἐπιγραφή',
 'exif-disclaimer' => 'Ἀποποίησις εὐθύνης',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Ἀσυμπίεστος',
 
 'exif-copyrighted-true' => 'Ὑποκείμενον έν δικαιώμασιν',
@@ -2486,7 +2476,7 @@ $1',
 'monthsall' => 'ἅπαντες',
 'limitall' => 'ἅπασαι',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Ἐπιβεβαίωσον διεύθυνσιν ἠλ-ταχυδρομείου',
 'confirmemail_send' => 'Ταχυδρομήσειν κώδικα ἐπιβεβαιώσεως',
 'confirmemail_sent' => 'Ἐπιβεβαίωσις διευθύνσεως ἠλ.-ταχυδρομείου ἐστάλη.',
@@ -2613,11 +2603,6 @@ $5
 'version-software' => 'Ἐγκατεστημένον λογισμικόν',
 'version-software-product' => 'Προϊόν',
 'version-software-version' => 'Ἔκδοσις',
-
-# Special:FilePath
-'filepath' => 'Διαδρομὴ ἀρχείου',
-'filepath-page' => 'Ἀρχεῖον:',
-'filepath-submit' => 'Ἰέναι',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Ζήτησις διπλότυπων ἀρχείων',

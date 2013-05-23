@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that populates the rev_len field for old revisions
@@ -48,8 +48,8 @@ class PopulateRevisionLength extends LoggedUpdateMaintenance {
 		$db = $this->getDB( DB_MASTER );
 		if ( !$db->tableExists( 'revision' ) ) {
 			$this->error( "revision table does not exist", true );
-		} else if ( !$db->fieldExists( 'revision', 'rev_sha1', __METHOD__ ) ) {
-			$this->output( "rev_sha1 column does not exist\n\n", true );
+		} elseif ( !$db->fieldExists( 'revision', 'rev_len', __METHOD__ ) ) {
+			$this->output( "rev_len column does not exist\n\n", true );
 			return false;
 		}
 
@@ -67,14 +67,19 @@ class PopulateRevisionLength extends LoggedUpdateMaintenance {
 		$blockEnd = intval( $start ) + $this->mBatchSize - 1;
 		$count = 0;
 		$missing = 0;
+		$fields = Revision::selectFields();
 		while ( $blockStart <= $end ) {
 			$this->output( "...doing rev_id from $blockStart to $blockEnd\n" );
-			$res = $db->select( 'revision',
-						Revision::selectFields(),
-						array( "rev_id >= $blockStart",
-						   "rev_id <= $blockEnd",
-						   "rev_len IS NULL" ),
-						__METHOD__ );
+			$res = $db->select(
+				'revision',
+				$fields,
+				array(
+					"rev_id >= $blockStart",
+					"rev_id <= $blockEnd",
+					"rev_len IS NULL"
+				),
+				__METHOD__
+			);
 			# Go through and update rev_len from these rows.
 			foreach ( $res as $row ) {
 				$rev = new Revision( $row );
@@ -104,4 +109,4 @@ class PopulateRevisionLength extends LoggedUpdateMaintenance {
 }
 
 $maintClass = "PopulateRevisionLength";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

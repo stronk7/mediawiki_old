@@ -56,7 +56,7 @@ class ApiUpload extends ApiBase {
 		$this->mParams['chunk'] = $request->getFileName( 'chunk' );
 
 		// Copy the session key to the file key, for backward compatibility.
-		if( !$this->mParams['filekey'] && $this->mParams['sessionkey'] ) {
+		if ( !$this->mParams['filekey'] && $this->mParams['sessionkey'] ) {
 			$this->mParams['filekey'] = $this->mParams['sessionkey'];
 		}
 
@@ -71,6 +71,7 @@ class ApiUpload extends ApiBase {
 		$this->checkPermissions( $user );
 
 		// Fetch the file (usually a no-op)
+		/** @var $status Status */
 		$status = $this->mUpload->fetchFile();
 		if ( !$status->isGood() ) {
 			$errors = $status->getErrorsArray();
@@ -80,16 +81,17 @@ class ApiUpload extends ApiBase {
 
 		// Check if the uploaded file is sane
 		if ( $this->mParams['chunk'] ) {
-			$maxSize = $this->mUpload->getMaxUploadSize( );
-			if( $this->mParams['filesize'] > $maxSize ) {
+			$maxSize = $this->mUpload->getMaxUploadSize();
+			if ( $this->mParams['filesize'] > $maxSize ) {
 				$this->dieUsage( 'The file you submitted was too large', 'file-too-large' );
 			}
 			if ( !$this->mUpload->getTitle() ) {
 				$this->dieUsage( 'Invalid file title supplied', 'internal-error' );
 			}
-		} elseif ( $this->mParams['async'] ) {
+		} elseif ( $this->mParams['async'] && $this->mParams['filekey'] ) {
 			// defer verification to background process
 		} else {
+			wfDebug( __METHOD__ . 'about to verify' );
 			$this->verifyUpload();
 		}
 
@@ -116,13 +118,13 @@ class ApiUpload extends ApiBase {
 	}
 
 	/**
-	 * Get an uplaod result based on upload context
+	 * Get an upload result based on upload context
 	 * @return array
 	 */
 	private function getContextResult() {
 		$warnings = $this->getApiWarnings();
 		if ( $warnings && !$this->mParams['ignorewarnings'] ) {
-			// Get warnings formated in result array format
+			// Get warnings formatted in result array format
 			return $this->getWarningsResult( $warnings );
 		} elseif ( $this->mParams['chunk'] ) {
 			// Add chunk, and get result
@@ -137,12 +139,12 @@ class ApiUpload extends ApiBase {
 	}
 
 	/**
-	 * Get Stash Result, throws an expetion if the file could not be stashed.
-	 * @param $warnings array Array of Api upload warnings
+	 * Get Stash Result, throws an exception if the file could not be stashed.
+	 * @param array $warnings Array of Api upload warnings
 	 * @return array
 	 */
 	private function getStashResult( $warnings ) {
-		$result = array ();
+		$result = array();
 		// Some uploads can request they be stashed, so as not to publish them immediately.
 		// In this case, a failure to stash ought to be fatal
 		try {
@@ -160,7 +162,7 @@ class ApiUpload extends ApiBase {
 
 	/**
 	 * Get Warnings Result
-	 * @param $warnings array Array of Api upload warnings
+	 * @param array $warnings Array of Api upload warnings
 	 * @return array
 	 */
 	private function getWarningsResult( $warnings ) {
@@ -180,7 +182,7 @@ class ApiUpload extends ApiBase {
 
 	/**
 	 * Get the result of a chunk upload.
-	 * @param $warnings array Array of Api upload warnings
+	 * @param array $warnings Array of Api upload warnings
 	 * @return array
 	 */
 	private function getChunkResult( $warnings ) {
@@ -194,9 +196,15 @@ class ApiUpload extends ApiBase {
 		$chunkPath = $request->getFileTempname( 'chunk' );
 		$chunkSize = $request->getUpload( 'chunk' )->getSize();
 		if ( $this->mParams['offset'] == 0 ) {
-			$filekey = $this->performStash();
+			try {
+				$filekey = $this->performStash();
+			} catch ( MWException $e ) {
+				// FIXME: Error handling here is wrong/different from rest of this
+				$this->dieUsage( $e->getMessage(), 'stashfailed' );
+			}
 		} else {
 			$filekey = $this->mParams['filekey'];
+			/** @var $status Status */
 			$status = $this->mUpload->addChunk(
 				$chunkPath, $chunkSize, $this->mParams['offset'] );
 			if ( !$status->isGood() ) {
@@ -220,10 +228,9 @@ class ApiUpload extends ApiBase {
 				$ok = JobQueueGroup::singleton()->push( new AssembleUploadChunksJob(
 					Title::makeTitle( NS_FILE, $this->mParams['filekey'] ),
 					array(
-						'filename'  => $this->mParams['filename'],
-						'filekey'   => $this->mParams['filekey'],
-						'session'   => $this->getRequest()->exportUserSession(),
-						'userid'    => $this->getUser()->getId()
+						'filename' => $this->mParams['filename'],
+						'filekey' => $this->mParams['filekey'],
+						'session' => $this->getContext()->exportSession()
 					)
 				) );
 				if ( $ok ) {
@@ -279,9 +286,9 @@ class ApiUpload extends ApiBase {
 	 * Throw an error that the user can recover from by providing a better
 	 * value for $parameter
 	 *
-	 * @param $error array Error array suitable for passing to dieUsageMsg()
-	 * @param $parameter string Parameter that needs revising
-	 * @param $data array Optional extra data to pass to the user
+	 * @param array $error Error array suitable for passing to dieUsageMsg()
+	 * @param string $parameter Parameter that needs revising
+	 * @param array $data Optional extra data to pass to the user
 	 * @throws UsageException
 	 */
 	private function dieRecoverableError( $error, $parameter, $data = array() ) {
@@ -353,7 +360,7 @@ class ApiUpload extends ApiBase {
 		if ( $this->mParams['chunk'] ) {
 			// Chunk upload
 			$this->mUpload = new UploadFromChunks();
-			if( isset( $this->mParams['filekey'] ) ) {
+			if ( isset( $this->mParams['filekey'] ) ) {
 				// handle new chunk
 				$this->mUpload->continueChunks(
 					$this->mParams['filename'],
@@ -439,13 +446,13 @@ class ApiUpload extends ApiBase {
 	/**
 	 * Performs file verification, dies on error.
 	 */
-	protected function verifyUpload( ) {
-		$verification = $this->mUpload->verifyUpload( );
+	protected function verifyUpload() {
+		$verification = $this->mUpload->verifyUpload();
 		if ( $verification['status'] === UploadBase::OK ) {
 			return;
-		} else {
-			return $this->checkVerification( $verification );
 		}
+
+		$this->checkVerification( $verification );
 	}
 
 	/**
@@ -454,8 +461,8 @@ class ApiUpload extends ApiBase {
 	protected function checkVerification( array $verification ) {
 		global $wgFileExtensions;
 
-		// TODO: Move them to ApiBase's message map
-		switch( $verification['status'] ) {
+		// @todo Move them to ApiBase's message map
+		switch ( $verification['status'] ) {
 			// Recoverable errors
 			case UploadBase::MIN_LENGTH_PARTNAME:
 				$this->dieRecoverableError( 'filename-tooshort', 'filename' );
@@ -515,7 +522,6 @@ class ApiUpload extends ApiBase {
 		}
 	}
 
-
 	/**
 	 * Check warnings.
 	 * Returns a suitable array for inclusion into API results if there were warnings
@@ -553,12 +559,11 @@ class ApiUpload extends ApiBase {
 		return $warnings;
 	}
 
-
 	/**
 	 * Perform the actual upload. Returns a suitable result array on success;
 	 * dies on failure.
 	 *
-	 * @param $warnings array Array of Api upload warnings
+	 * @param array $warnings Array of Api upload warnings
 	 * @return array
 	 */
 	protected function performUpload( $warnings ) {
@@ -567,6 +572,7 @@ class ApiUpload extends ApiBase {
 			$this->mParams['text'] = $this->mParams['comment'];
 		}
 
+		/** @var $file File */
 		$file = $this->mUpload->getLocalFile();
 		$watch = $this->getWatchlistValue( $this->mParams['watchlist'], $file->getTitle() );
 
@@ -588,13 +594,12 @@ class ApiUpload extends ApiBase {
 			$ok = JobQueueGroup::singleton()->push( new PublishStashedFileJob(
 				Title::makeTitle( NS_FILE, $this->mParams['filename'] ),
 				array(
-					'filename'  => $this->mParams['filename'],
-					'filekey'   => $this->mParams['filekey'],
-					'comment'   => $this->mParams['comment'],
-					'text'      => $this->mParams['text'],
-					'watch'     => $watch,
-					'session'   => $this->getRequest()->exportUserSession(),
-					'userid'    => $this->getUser()->getId()
+					'filename' => $this->mParams['filename'],
+					'filekey' => $this->mParams['filekey'],
+					'comment' => $this->mParams['comment'],
+					'text' => $this->mParams['text'],
+					'watch' => $watch,
+					'session' => $this->getContext()->exportSession()
 				)
 			) );
 			if ( $ok ) {
@@ -605,6 +610,7 @@ class ApiUpload extends ApiBase {
 					"Failed to start PublishStashedFile.php", 'publishfailed' );
 			}
 		} else {
+			/** @var $status Status */
 			$status = $this->mUpload->performUpload( $this->mParams['comment'],
 				$this->mParams['text'], $watch, $this->getUser() );
 

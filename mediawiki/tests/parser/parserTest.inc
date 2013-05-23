@@ -143,13 +143,12 @@ class ParserTest {
 			$wgUser, $wgLang, $wgOut, $wgRequest, $wgStyleDirectory, $wgEnableParserCache,
 			$wgNamespaceAliases, $wgNamespaceProtection, $wgLocalFileRepo,
 			$parserMemc, $wgThumbnailScriptPath, $wgScriptPath,
-			$wgArticlePath, $wgStyleSheetPath, $wgScript, $wgStylePath, $wgExtensionAssetsPath,
+			$wgArticlePath, $wgScript, $wgStylePath, $wgExtensionAssetsPath,
 			$wgMainCacheType, $wgMessageCacheType, $wgParserCacheType, $wgLockManagers;
 
 		$wgScript = '/index.php';
 		$wgScriptPath = '/';
 		$wgArticlePath = '/wiki/$1';
-		$wgStyleSheetPath = '/skins';
 		$wgStylePath = '/skins';
 		$wgExtensionAssetsPath = '/extensions';
 		$wgThumbnailScriptPath = false;
@@ -487,7 +486,7 @@ class ParserTest {
 		} elseif ( isset( $opts['comment'] ) ) {
 			$out = Linker::formatComment( $input, $title, $local );
 		} elseif ( isset( $opts['preload'] ) ) {
-			$out = $parser->getpreloadText( $input, $title, $options );
+			$out = $parser->getPreloadText( $input, $title, $options );
 		} else {
 			$output = $parser->parse( $input, $title, $options, true, true, 1337 );
 			$out = $output->getText();
@@ -518,18 +517,23 @@ class ParserTest {
 		}
 
 		$this->teardownGlobals();
-		return $this->showTestResult( $desc, $result, $out );
+
+		$testResult = new ParserTestResult( $desc );
+		$testResult->expected = $result;
+		$testResult->actual = $out;
+
+		return $this->showTestResult( $testResult );
 	}
 
 	/**
-	 *
+	 * Refactored in 1.22 to use ParserTestResult
 	 */
-	function showTestResult( $desc, $result, $out ) {
-		if ( $result === $out ) {
-			$this->showSuccess( $desc );
+	function showTestResult( ParserTestResult $testResult ) {
+		if ( $testResult->isSuccess() ) {
+			$this->showSuccess( $testResult );
 			return true;
 		} else {
-			$this->showFailure( $desc, $result, $out );
+			$this->showFailure( $testResult );
 			return false;
 		}
 	}
@@ -664,7 +668,6 @@ class ParserTest {
 			),
 			'wgEnableUploads' => self::getOptionValue( 'wgEnableUploads', $opts, true ),
 			'wgStylePath' => '/skins',
-			'wgStyleSheetPath' => '/skins',
 			'wgSitename' => 'MediaWiki',
 			'wgLanguageCode' => $lang,
 			'wgDBprefix' => $this->db->getType() != 'oracle' ? 'parsertest_' : 'pt_',
@@ -869,17 +872,35 @@ class ParserTest {
 		$this->uploadDir = $this->setupUploadDir();
 		$user = User::createNew( 'WikiSysop' );
 		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Foobar.jpg' ) );
+		# note that the size/width/height/bits/etc of the file
+		# are actually set by inspecting the file itself; the arguments
+		# to recordUpload2 have no effect.  That said, we try to make things
+		# match up so it is less confusing to readers of the code & tests.
 		$image->recordUpload2( '', 'Upload of some lame file', 'Some lame file', array(
-			'size' => 12345,
+			'size' => 7881,
 			'width' => 1941,
 			'height' => 220,
-			'bits' => 24,
+			'bits' => 8,
 			'media_type' => MEDIATYPE_BITMAP,
 			'mime' => 'image/jpeg',
 			'metadata' => serialize( array() ),
-			'sha1' => wfBaseConvert( '', 16, 36, 31 ),
+			'sha1' => wfBaseConvert( '1', 16, 36, 31 ),
 			'fileExists' => true
 		), $this->db->timestamp( '20010115123500' ), $user );
+
+		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Thumb.png' ) );
+		# again, note that size/width/height below are ignored; see above.
+		$image->recordUpload2( '', 'Upload of some lame thumbnail', 'Some lame thumbnail', array(
+			'size' => 22589,
+			'width' => 135,
+			'height' => 135,
+			'bits' => 8,
+			'media_type' => MEDIATYPE_BITMAP,
+			'mime' => 'image/png',
+			'metadata' => serialize( array() ),
+			'sha1' => wfBaseConvert( '2', 16, 36, 31 ),
+			'fileExists' => true
+		), $this->db->timestamp( '20130225203040' ), $user );
 
 		# This image will be blacklisted in [[MediaWiki:Bad image list]]
 		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Bad.jpg' ) );
@@ -891,7 +912,7 @@ class ParserTest {
 			'media_type' => MEDIATYPE_BITMAP,
 			'mime' => 'image/jpeg',
 			'metadata' => serialize( array() ),
-			'sha1' => wfBaseConvert( '', 16, 36, 31 ),
+			'sha1' => wfBaseConvert( '3', 16, 36, 31 ),
 			'fileExists' => true
 		), $this->db->timestamp( '20010115123500' ), $user );
 	}
@@ -960,6 +981,8 @@ class ParserTest {
 
 		wfMkdirParents( $dir . '/3/3a', null, __METHOD__ );
 		copy( "$IP/skins/monobook/headbg.jpg", "$dir/3/3a/Foobar.jpg" );
+		wfMkdirParents( $dir . '/e/ea', null, __METHOD__ );
+		copy( "$IP/skins/monobook/wiki.png", "$dir/e/ea/Thumb.png" );
 		wfMkdirParents( $dir . '/0/09', null, __METHOD__ );
 		copy( "$IP/skins/monobook/headbg.jpg", "$dir/0/09/Bad.jpg" );
 
@@ -1008,6 +1031,8 @@ class ParserTest {
 				"$dir/thumb/3/3a/Foobar.jpg/70px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/960px-Foobar.jpg",
 
+				"$dir/e/ea/Thumb.png",
+
 				"$dir/0/09/Bad.jpg",
 
 				"$dir/math/f/a/5/fa50b8b616463173474302ca3e63586b.png",
@@ -1023,6 +1048,9 @@ class ParserTest {
 				"$dir/thumb/3/3a/Foobar.jpg",
 				"$dir/thumb/3/3a",
 				"$dir/thumb/3",
+
+				"$dir/e/ea",
+				"$dir/e",
 
 				"$dir/0/09/",
 				"$dir/0/",
@@ -1070,10 +1098,12 @@ class ParserTest {
 	/**
 	 * Print a happy success message.
 	 *
-	 * @param $desc String: the test name
+	 * Refactored in 1.22 to use ParserTestResult
+	 *
+	 * @param $testResult ParserTestResult
 	 * @return Boolean
 	 */
-	protected function showSuccess( $desc ) {
+	protected function showSuccess( ParserTestResult $testResult ) {
 		if ( $this->showProgress ) {
 			print $this->term->color( '1;32' ) . 'PASSED' . $this->term->reset() . "\n";
 		}
@@ -1085,28 +1115,29 @@ class ParserTest {
 	 * Print a failure message and provide some explanatory output
 	 * about what went wrong if so configured.
 	 *
-	 * @param $desc String: the test name
-	 * @param $result String: expected HTML output
-	 * @param $html String: actual HTML output
+	 * Refactored in 1.22 to use ParserTestResult
+	 *
+	 * @param $testResult ParserTestResult
 	 * @return Boolean
 	 */
-	protected function showFailure( $desc, $result, $html ) {
+	protected function showFailure( ParserTestResult $testResult ) {
 		if ( $this->showFailure ) {
 			if ( !$this->showProgress ) {
 				# In quiet mode we didn't show the 'Testing' message before the
 				# test, in case it succeeded. Show it now:
-				$this->showTesting( $desc );
+				$this->showTesting( $testResult->description );
 			}
 
 			print $this->term->color( '31' ) . 'FAILED!' . $this->term->reset() . "\n";
 
 			if ( $this->showOutput ) {
-				print "--- Expected ---\n$result\n--- Actual ---\n$html\n";
+				print "--- Expected ---\n{$testResult->expected}\n";
+				print "--- Actual ---\n{$testResult->actual}\n";
 			}
 
 			if ( $this->showDiffs ) {
-				print $this->quickDiff( $result, $html );
-				if ( !$this->wellFormed( $html ) ) {
+				print $this->quickDiff( $testResult->expected, $testResult->actual );
+				if ( !$this->wellFormed( $testResult->actual ) ) {
 					print "XML error: $this->mXmlError\n";
 				}
 			}
@@ -1141,9 +1172,10 @@ class ParserTest {
 
 		global $wgDiff3;
 		// we assume that people with diff3 also have usual diff
-		$diff = ( wfIsWindows() && !$wgDiff3 )
-			? `fc $shellInfile $shellOutfile`
-			: `diff -au $shellInfile $shellOutfile`;
+		$shellCommand = ( wfIsWindows() && !$wgDiff3 ) ? 'fc' : 'diff -au';
+
+		$diff = wfShellExec( "$shellCommand $shellInfile $shellOutfile" );
+
 		unlink( $infile );
 		unlink( $outfile );
 

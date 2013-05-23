@@ -39,6 +39,7 @@
  * @author Zack90
  * @author ZxxZxxZ
  * @author לערי ריינהארט
+ * @author جواد
  * @author محک
  */
 
@@ -74,34 +75,35 @@ $namespaceAliases = array(
 
 $specialPageAliases = array(
 	'Activeusers'               => array( 'کاربران_فعال' ),
-	'Allmessages'               => array( 'تمام_پیغام‌ها' ),
-	'Allpages'                  => array( 'تمام_صفحه‌ها' ),
-	'Ancientpages'              => array( 'صفحه‌های_قدیمی' ),
+	'Allmessages'               => array( 'تمام_پیام‌ها' ),
+	'Allpages'                  => array( 'تمام_برگه‌ها' ),
+	'Ancientpages'              => array( 'برگه‌های_قدیمی' ),
 	'Badtitle'                  => array( 'عنوان_بد' ),
-	'Blankpage'                 => array( 'صفحه_خالی' ),
+	'Blankpage'                 => array( 'برگه‌ی_خالی' ),
 	'Block'                     => array( 'بستن_نشانی_آی‌پی' ),
 	'Blockme'                   => array( 'بستن_من' ),
 	'Booksources'               => array( 'منابع_کتاب' ),
 	'BrokenRedirects'           => array( 'تغییرمسیرهای_خراب' ),
-	'Categories'                => array( 'رده‌ها' ),
+	'Categories'                => array( 'دسته‌ها' ),
 	'ChangeEmail'               => array( 'تغییر_رایانامه' ),
 	'ChangePassword'            => array( 'از_نو_کردن_گذرواژه' ),
-	'ComparePages'              => array( 'مقایسه_صفحات' ),
-	'Confirmemail'              => array( 'تایید_رایانامه' ),
+	'ComparePages'              => array( 'مقایسه‌ی_برگه‌ها' ),
+	'Confirmemail'              => array( 'پذیرش_رایانامه' ),
 	'Contributions'             => array( 'مشارکت‌ها' ),
 	'CreateAccount'             => array( 'ایجاد_حساب_کاربری' ),
-	'Deadendpages'              => array( 'صفحه‌های_بن‌بست' ),
-	'DeletedContributions'      => array( 'مشارکت‌های_حذف_شده' ),
+	'Deadendpages'              => array( 'برگه‌های_بن‌بست' ),
+	'DeletedContributions'      => array( 'مشارکت‌های_پاک_شده' ),
 	'Disambiguations'           => array( 'ابهام‌زدایی' ),
 	'DoubleRedirects'           => array( 'تغییرمسیرهای_دوتایی' ),
 	'EditWatchlist'             => array( 'ویرایش_فهرست_پی‌گیری‌ها' ),
 	'Emailuser'                 => array( 'نامه_به_کاربر' ),
-	'Export'                    => array( 'برون_بری_صفحه' ),
+	'Export'                    => array( 'برون_بری_برگه' ),
 	'Fewestrevisions'           => array( 'کمترین_نسخه' ),
 	'FileDuplicateSearch'       => array( 'جستجوی_پرونده_تکراری' ),
 	'Filepath'                  => array( 'مسیر_پرونده' ),
 	'Import'                    => array( 'درون_ریزی_صفحه' ),
 	'Invalidateemail'           => array( 'باطل_کردن_رایانامه' ),
+	'JavaScriptTest'            => array( 'تست_جاوا_اسکریپت' ),
 	'BlockList'                 => array( 'فهرست_بستن_نشانی_آی‌پی' ),
 	'LinkSearch'                => array( 'جستجوی_پیوند' ),
 	'Listadmins'                => array( 'فهرست_مدیران' ),
@@ -112,60 +114,60 @@ $specialPageAliases = array(
 	'Listusers'                 => array( 'فهرست_کاربران' ),
 	'Lockdb'                    => array( 'قفل_کردن_پایگاه_داده' ),
 	'Log'                       => array( 'سیاهه‌ها' ),
-	'Lonelypages'               => array( 'صفحه‌های_یتیم' ),
-	'Longpages'                 => array( 'صفحه‌های_بلند' ),
+	'Lonelypages'               => array( 'برگه‌های_بی‌نام‌ونشان' ),
+	'Longpages'                 => array( 'برگه‌های_بلند' ),
 	'MergeHistory'              => array( 'ادغام_تاریخچه' ),
 	'MIMEsearch'                => array( 'جستجوی_MIME' ),
-	'Mostcategories'            => array( 'بیشترین_رده' ),
+	'Mostcategories'            => array( 'بیشترین_دسته' ),
 	'Mostimages'                => array( 'بیشترین_تصویر' ),
 	'Mostlinked'                => array( 'بیشترین_پیوند' ),
 	'Mostlinkedcategories'      => array( 'رده_با_بیشترین_پیوند' ),
 	'Mostlinkedtemplates'       => array( 'الگو_با_بیشترین_پیوند' ),
 	'Mostrevisions'             => array( 'بیشترین_نسخه' ),
-	'Movepage'                  => array( 'انتقال_صفحه' ),
+	'Movepage'                  => array( 'جابجایی_برگه' ),
 	'Mycontributions'           => array( 'مشارکت‌های_من' ),
-	'Mypage'                    => array( 'صفحه_من' ),
-	'Mytalk'                    => array( 'بحث_من' ),
+	'Mypage'                    => array( 'برگه‌ی_من' ),
+	'Mytalk'                    => array( 'گفتگوی_من' ),
 	'Myuploads'                 => array( 'بارگذاری‌های_من' ),
-	'Newimages'                 => array( 'تصاویر_جدید' ),
-	'Newpages'                  => array( 'صفحه‌های_تازه' ),
+	'Newimages'                 => array( 'تصاویر_تازه' ),
+	'Newpages'                  => array( 'برگه‌های_تازه' ),
 	'PasswordReset'             => array( 'بازنشاندن_گذرواژه' ),
 	'PermanentLink'             => array( 'پیوند_دائمی' ),
-	'Popularpages'              => array( 'صفحه‌های_محبوب' ),
+	'Popularpages'              => array( 'برگه‌های_محبوب' ),
 	'Preferences'               => array( 'ترجیحات' ),
 	'Prefixindex'               => array( 'نمایه_پیشوندی' ),
-	'Protectedpages'            => array( 'صفحه‌های_محافظت_شده' ),
+	'Protectedpages'            => array( 'برگه‌های_محافظت_شده' ),
 	'Protectedtitles'           => array( 'عنوان‌های_محافظت_شده' ),
-	'Randompage'                => array( 'صفحه_تصادفی' ),
+	'Randompage'                => array( 'برگه‌ی_تصادفی' ),
 	'Randomredirect'            => array( 'تغییرمسیر_تصادفی' ),
 	'Recentchanges'             => array( 'تغییرات_اخیر' ),
 	'Recentchangeslinked'       => array( 'تغییرات_مرتبط' ),
-	'Revisiondelete'            => array( 'حذف_نسخه' ),
+	'Revisiondelete'            => array( 'پاک_کردن_نسخه' ),
 	'Search'                    => array( 'جستجو' ),
-	'Shortpages'                => array( 'صفحه‌های_کوتاه' ),
-	'Specialpages'              => array( 'صفحه‌های_ویژه' ),
+	'Shortpages'                => array( 'برگه‌های_کوتاه' ),
+	'Specialpages'              => array( 'برگه‌های_ویژه' ),
 	'Statistics'                => array( 'آمار' ),
 	'Tags'                      => array( 'برچسب‌ها' ),
 	'Unblock'                   => array( 'باز_کردن' ),
-	'Uncategorizedcategories'   => array( 'رده‌های_رده‌بندی_نشده' ),
+	'Uncategorizedcategories'   => array( 'دسته‌های_رده‌بندی_نشده' ),
 	'Uncategorizedimages'       => array( 'تصویرهای_رده‌بندی_‌نشده' ),
 	'Uncategorizedpages'        => array( 'صفحه‌های_رده‌بندی_نشده' ),
 	'Uncategorizedtemplates'    => array( 'الگوهای_رده‌بندی_نشده' ),
-	'Undelete'                  => array( 'احیای_صفحهٔ_حذف‌شده' ),
+	'Undelete'                  => array( 'احیای_صفحهٔ_پاک‌شده' ),
 	'Unlockdb'                  => array( 'باز_کردن_پایگاه_داده' ),
-	'Unusedcategories'          => array( 'رده‌های_استفاده_نشده' ),
+	'Unusedcategories'          => array( 'دسته‌های_استفاده_نشده' ),
 	'Unusedimages'              => array( 'تصاویر_استفاده_نشده' ),
 	'Unusedtemplates'           => array( 'الگوهای_استفاده_نشده' ),
-	'Unwatchedpages'            => array( 'صفحه‌های_پی‌گیری_نشده' ),
+	'Unwatchedpages'            => array( 'دسته‌های_پی‌گیری_نشده' ),
 	'Upload'                    => array( 'بارگذاری_پرونده' ),
 	'UploadStash'               => array( 'بارگذاری_انبوه' ),
 	'Userlogin'                 => array( 'ورود_به_سامانه' ),
 	'Userlogout'                => array( 'خروج_از_سامانه' ),
 	'Userrights'                => array( 'اختیارات_کاربر' ),
-	'Version'                   => array( 'نسخه' ),
-	'Wantedcategories'          => array( 'رده‌های_مورد_نیاز' ),
+	'Version'                   => array( 'نگارش' ),
+	'Wantedcategories'          => array( 'دسته‌های_مورد_نیاز' ),
 	'Wantedfiles'               => array( 'پرونده‌های_مورد_نیاز' ),
-	'Wantedpages'               => array( 'صفحه‌های_مورد_نیاز' ),
+	'Wantedpages'               => array( 'برگه‌های_مورد_نیاز' ),
 	'Wantedtemplates'           => array( 'الگوهای_مورد_نیاز' ),
 	'Watchlist'                 => array( 'فهرست_پی‌گیری' ),
 	'Whatlinkshere'             => array( 'پیوند_به_این_صفحه' ),
@@ -458,8 +460,6 @@ $messages = array(
 'tog-shownumberswatching' => 'شمار کاربران پی‌گیری‌کننده نمایش یابد',
 'tog-oldsig' => 'امضای کنونی:',
 'tog-fancysig' => 'امضا به صورت ویکی‌متن در نظر گرفته شود (بدون درج خودکار پیوند)',
-'tog-externaleditor' => 'استفاده از ویرایشگر خارجی به‌طور پیش‌فرض (فقط برای کاربران حرفه‌ای؛ نیازمند تنظیمات ویژه در رایانهٔ شما است. [//www.mediawiki.org/wiki/Manual:External_editors اطلاعات بیشتر].)',
-'tog-externaldiff' => 'استفاده از تفاوت‌گیر (diff) خارجی به‌طور پیش‌فرض (فقط برای کاربران حرفه‌ای؛ نیازمند تنظیمات ویژه در رایانهٔ شما است. [//www.mediawiki.org/wiki/Manual:External_editors اطلاعات بیشتر].)',
 'tog-showjumplinks' => 'پیوندهای دسترسی‌پذیری «پرش به» فعال باشد',
 'tog-uselivepreview' => 'استفاده از پیش‌نمایش زنده (نیازمند جاوااسکریپت) (آزمایشی)',
 'tog-forceeditsummary' => 'هنگامی که خلاصهٔ ویرایش ننوشته‌ام به من اطلاع داده شود',
@@ -474,6 +474,7 @@ $messages = array(
 'tog-showhiddencats' => 'رده‌های پنهان نمایش داده شود',
 'tog-noconvertlink' => 'تبدیل عنوان پیوند غیرفعال شود',
 'tog-norollbackdiff' => 'بعد از واگردانی تفاوت نشان داده نشود',
+'tog-useeditwarning' => 'زمان خروج از صفحهٔ ویرایش در صورت داشتن ویرایش‌های‌ ذخیره‌نشده به من هشدار داده شود',
 
 'underline-always' => 'همیشه',
 'underline-never' => 'هرگز',
@@ -1229,6 +1230,8 @@ $2
 'content-failed-to-parse' => 'عدم موفقیت در تجزیه محتوای $2 برای مدل $1: $3',
 'invalid-content-data' => 'داده محتوای نامعتبر',
 'content-not-allowed-here' => 'محتوای «$1» در صفحهٔ [[$2]] مجاز نیست',
+'editwarning-warning' => 'خروج از این صفحه ممکن است باعث از دست رفتن هرچه نوشته‌اید شود.
+اگر شما با نام کاربری وارد شده‌اید می‌توانید این هشدار را در بخش «در حال ویرایش» ترجیحاتتان بیابید.',
 
 # Content models
 'content-model-wikitext' => 'ویکی‌متن',
@@ -1513,15 +1516,6 @@ $1",
 'searchdisabled' => 'جستجو در {{SITENAME}} فعال نیست.
 موقتاً می‌توانید از جستجوی Google استفاده کنید.
 توجه کنید که نتایج حاصل از جستجو با آن روش ممکن است به‌روز نباشند.',
-
-# Quickbar
-'qbsettings' => 'نوار سریع',
-'qbsettings-none' => 'نباشد',
-'qbsettings-fixedleft' => 'ثابت چپ',
-'qbsettings-fixedright' => 'ثابت راست',
-'qbsettings-floatingleft' => 'شناور چپ',
-'qbsettings-floatingright' => 'شناور راست',
-'qbsettings-directionality' => 'ثابت، بسته به جهت نگارش زبان شما',
 
 # Preferences page
 'preferences' => 'ترجیحات',
@@ -2078,7 +2072,6 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 'http-read-error' => 'خطای خواندن اچ‌تی‌تی‌پی.',
 'http-timed-out' => 'مهلت درخواست اچ‌تی‌تی‌پی به سر رسید.',
 'http-curl-error' => 'خطا در آوردن نشانی اینترنتی: $1',
-'http-host-unreachable' => 'دسترسی به نشانی اینترنتی ممکن نشد.',
 'http-bad-status' => 'در حین درخواست اچ‌تی‌تی‌پی خطایی رخ داد: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2237,6 +2230,12 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 'disambiguations-text' => "صفحه‌های زیر حاوی حداقل یک پیوند به یک '''صفحهٔ ابهام‌زدایی''' هستند.
 این صفحه‌ها شاید در عوض به موضوعات مرتبط پیوند داده شوند.<br />
 یک صفحه هنگامی صفحهٔ ابهام‌زدایی در نظر گرفته می‌شود که در آن از الگویی که به [[MediaWiki:Disambiguationspage]] پیوند دارد استفاده شده باشد.",
+
+'pageswithprop' => 'صفحه‌های دارای خاصیت صفحه',
+'pageswithprop-legend' => 'صفحه‌های دارای خاصیت صفحه',
+'pageswithprop-text' => 'این صفحه فهرستی است از صفحه‌هایی که از یک خاصیت صفحهٔ خاص استفاده می‌کنند.',
+'pageswithprop-prop' => 'نام خاصیت:',
+'pageswithprop-submit' => 'برو',
 
 'doubleredirects' => 'تغییرمسیرهای دوتایی',
 'doubleredirectstext' => 'این صفحه فهرستی از صفحه‌های تغییرمسیری را ارائه می‌کند که به صفحهٔ تغییرمسیر دیگری اشاره می‌کنند.
@@ -2638,7 +2637,7 @@ $PAGEINTRO $NEWPAGE
 شما می‌توانید سطح محافظت این صفحه را تغییر بدهید اما این کار تاثیری بر محافظت آبشاری صفحه نخواهد گذاشت.',
 'protect-default' => 'همهٔ کاربرها',
 'protect-fallback' => 'فقط به کاربرهایی که دسترسی «$1» دارند، اجازه داده می‌شود',
-'protect-level-autoconfirmed' => 'اجازه فقط برای به کاربرهای تائیدشده',
+'protect-level-autoconfirmed' => 'تنها کاربران تائیدشده',
 'protect-level-sysop' => 'فقط مدیران',
 'protect-summary-cascade' => 'آبشاری',
 'protect-expiring' => 'زمان سرآمدن $1 (UTC)',
@@ -2744,7 +2743,7 @@ $1',
 'mycontris' => 'مشارکت‌ها',
 'contribsub2' => 'برای $1 ($2)',
 'nocontribs' => 'هیچ تغییری با این مشخصات یافت نشد.',
-'uctop' => ' (بالا)',
+'uctop' => '(بالا)',
 'month' => 'در این ماه (و پیش از آن):',
 'year' => 'در این سال (و پیش از آن):',
 
@@ -3301,13 +3300,8 @@ $1',
 'pageinfo-category-files' => 'تعداد پرونده‌ها',
 
 # Skin names
-'skinname-standard' => 'کلاسیک',
-'skinname-nostalgia' => 'نوستالژی',
 'skinname-cologneblue' => 'آبی کلن',
 'skinname-monobook' => 'مونوبوک',
-'skinname-myskin' => 'پوستهٔ من',
-'skinname-chick' => 'شیک',
-'skinname-simple' => 'ساده',
 'skinname-modern' => 'مدرن',
 'skinname-vector' => 'برداری',
 
@@ -3392,6 +3386,19 @@ $1',
 'ago' => '$1 پیش',
 'just-now' => 'هم‌اکنون',
 
+# Human-readable timestamps
+'hours-ago' => '$1 {{PLURAL:$1|ساعت|ساعت}} قبل',
+'minutes-ago' => '$1 {{PLURAL:$1|دقیقه|دقیقه}} قبل',
+'seconds-ago' => '$1 {{PLURAL:$1|ثانیه|ثانیه}} قبل',
+'monday-at' => 'دوشنبهٔ $1',
+'tuesday-at' => 'سه‌شنبهٔ $1',
+'wednesday-at' => 'چهارشنبهٔ $1',
+'thursday-at' => 'پنج‌شنبهٔ $1',
+'friday-at' => 'جمعهٔ $1',
+'saturday-at' => 'شنبهٔ $1',
+'sunday-at' => 'یک‌شنبهٔ $1',
+'yesterday-at' => 'دیروز $1',
+
 # Bad image list
 'bad_image_list' => 'اطلاعات را باید اینگونه وارد کنید:
 
@@ -3419,7 +3426,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'عرض',
 'exif-imagelength' => 'طول',
 'exif-bitspersample' => 'نقطه در هر جزء',
@@ -3598,7 +3605,7 @@ $1',
 'exif-originalimageheight' => 'بلندی تصویر قبل از برش دادن',
 'exif-originalimagewidth' => 'پهنای تصویر قبل از برش دادن',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'غیرفشرده',
 'exif-compression-2' => 'رمزگذاری سی‌سی‌آی‌تی‌تی گروه ۳ یک بعدی به روش هافمن تغییریافته روی طول',
 'exif-compression-3' => 'رمزگذاری نمابر سی‌سی‌آی‌تی‌تی گروه ۳',
@@ -4077,12 +4084,6 @@ $5
 'version-entrypoints-articlepath' => '[https://www.mediawiki.org/wiki/Manual:$wgArticlePath مسیر مقاله]',
 'version-entrypoints-scriptpath' => '[https://www.mediawiki.org/wiki/Manual:$wgScriptPath مسیر اسکریپت]',
 
-# Special:FilePath
-'filepath' => 'مسیر پرونده',
-'filepath-page' => 'پرونده:',
-'filepath-submit' => 'برو',
-'filepath-summary' => 'این صفحهٔ ویژه نشانی کامل برای یک پرونده را نشان می‌دهد. تصاویر با کیفیت وضوح کامل نشان داده می‌شوند، سایر انواع پرونده با برنامه مخصوص به خودشان باز می‌شوند.',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'جستجو برای پرونده‌های تکراری',
 'fileduplicatesearch-summary' => 'جستجو برای پرونده‌های تکراری بر اساس مقدار درهم‌شدهٔ آن‌ها صورت می‌گیرد.',
@@ -4284,5 +4285,8 @@ $5
 'duration-decades' => '$1 دهه',
 'duration-centuries' => '$1 قرن',
 'duration-millennia' => '{{PLURAL:$1|هزار سال |$1 هزار سال}}',
+
+# Image rotation
+'rotate-comment' => 'تصویر به دست $1 {{PLURAL:$1|درجهٔ|درجهٔ}} ساعت‌گرد چرخانده شد',
 
 );

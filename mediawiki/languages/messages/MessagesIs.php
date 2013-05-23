@@ -262,8 +262,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Sýna fjölda vaktandi notenda',
 'tog-oldsig' => 'Núverandi undirskrift:',
 'tog-fancysig' => 'Meðhöndla undirskrift sem wikimál (án sjálfvirks tengils)',
-'tog-externaleditor' => 'Nota utanaðkomandi ritil sjálfgefið (eingöngu fyrir reynda, þarfnast sérstakra stillinga á tölvunni þinni. [//www.mediawiki.org/wiki/Manual:External_editors Frekari upplýsingar.])',
-'tog-externaldiff' => 'Nota utanaðkomandi mismun sjálfgefið (eingöngu fyrir reynda, þarfnast sérstakra stillinga á tölvunni þinni. [//www.mediawiki.org/wiki/Manual:External_editors Frekari upplýsingar.])',
 'tog-showjumplinks' => 'Virkja „stökkva á“ aðgengitengla',
 'tog-uselivepreview' => 'Nota beina forskoðun (JavaScript) (Á tilraunastigi)',
 'tog-forceeditsummary' => 'Birta áminningu þegar breytingarágripið er tómt',
@@ -277,6 +275,7 @@ $messages = array(
 'tog-diffonly' => 'Ekki sýna síðuefni undir mismunum',
 'tog-showhiddencats' => 'Sýna falda flokka',
 'tog-norollbackdiff' => 'Sleppa breytingu eftir að endurvakning síðu hefur verið gerð.',
+'tog-useeditwarning' => 'Vara mig við þegar ég fer frá breytingarsíðu með óvistaðar breytingar',
 
 'underline-always' => 'Alltaf',
 'underline-never' => 'Aldrei',
@@ -713,8 +712,8 @@ halda áfram að nota gamla lykilorðið.',
 Vinsamlegast skráðu þig inn á ný þegar þú hefur móttekið það.',
 'blocked-mailpassword' => 'Þér er ekki heimilt að gera breytingar frá þessu netfangi og  því getur þú ekki fengið nýtt lykilorð í pósti.  Þetta er gert til þess að koma í veg fyrir skemmdarverk.',
 'eauthentsent' => 'Staðfestingarpóstur hefur verið sendur á uppgefið netfang. Þú verður að fylgja leiðbeiningunum í póstinum til þess að virkja netfangið og staðfesta að það sé örugglega þitt.',
-'throttled-mailpassword' => 'Áminning fyrir lykilorð hefur nú þegar verið send, innan við {{PLURAL:$1|síðasta klukkutímans|$1 síðustu klukkutímanna}}.
-Til að koma í veg fyrir misnotkun, er aðeins ein áminning send {{PLURAL:$1|hvern klukkutíma|hverja $1 klukkutíma}}.',
+'throttled-mailpassword' => 'Tölvupóstur til að endursetja lykilorðið hefur þegar verið sent, innan við {{PLURAL:$1|síðasta klukkutímans|$1 síðustu klukkutímanna}}.
+Til að koma í veg fyrir misnotkun, er aðeins einn tölvupóstur sendur {{PLURAL:$1|hvern klukkutíma|hverja $1 klukkutíma}}.',
 'mailerror' => 'Upp kom villa við sendingu tölvupósts: $1',
 'acct_creation_throttle_hit' => 'Því miður, hafa verið búnir til {{PLURAL:$1|1 aðgang|$1 aðganga}} nýr aðgangar í dag sem er hámarksfjöldi nýskráninga á einum degi.
 Þú getur því miður ekki búið til nýjan aðgang frá þessari IP-tölu að svo stöddu.',
@@ -766,7 +765,7 @@ Til að klára að skrá þig inn, verður þú að endurstilla lykilorðið hé
 
 # Special:PasswordReset
 'passwordreset' => 'Endurstilla lykilorð',
-'passwordreset-text' => 'Fylltu út þennan reit til að fá tölvupóst um áminningu um notendauplýsingarnar þínar.',
+'passwordreset-text' => 'Fylltu út þennan reit til að endursetja lykilorðið þitt.',
 'passwordreset-legend' => 'Endurstilla lykilorð',
 'passwordreset-disabled' => 'Lokað hefur verið fyrir að endurstilla lykilorð á þessum wiki.',
 'passwordreset-pretext' => '{{PLURAL:$1||Sláðu inn einn hluta gagnanna hér fyrir neðan}}',
@@ -776,14 +775,15 @@ Til að klára að skrá þig inn, verður þú að endurstilla lykilorðið hé
 'passwordreset-capture-help' => 'Ef þú hakar við þennan reit verður tölvupósturinn (með tímabundna lykilorðinu) sýndur þér og einnig sendur notandanum.',
 'passwordreset-email' => 'Netfang:',
 'passwordreset-emailtitle' => 'Notendaupplýsingar á {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Einhver (líklegast þú, á vistfanginu $1) hefur beðið um notendaupplýsingar þínar fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
+'passwordreset-emailtext-ip' => 'Einhver (líklegast þú, á vistfanginu $1) hefur beðið um 
+endursetningu lykilorðsins þíns fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
 
 $2
 
 Ef þetta er það sem þú vildir, þarftu að skrá þig inn og velja nýtt lykilorð. {{PLURAL:$3|Tímabundna lykilorð|Tímabundnu lykilorðin}} renna út eftir {{PLURAL:$5|einn dag|$5 daga}}.
 
 Ef það varst ekki þú sem fórst fram á þetta, eða ef þú mannst lykilorðið þitt, og villt ekki lengur breyta því, skaltu hunsa þessi skilaboð og halda áfram að nota gamla lykilorðið.',
-'passwordreset-emailtext-user' => 'Notandinn $1 á {{SITENAME}} hefur beðið um notendaupplýsingar þínar fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
+'passwordreset-emailtext-user' => 'Notandinn $1 á {{SITENAME}} hefur beðið um endursetningu lykilorðsins þíns fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
 
 $2
 
@@ -792,9 +792,9 @@ Ef þetta er það sem þú vildir, þarftu að skrá þig inn og velja nýtt ly
 Ef það varst ekki þú sem fórst fram á þetta, eða ef þú mannst lykilorðið þitt, og villt ekki lengur breyta því, skaltu hunsa þessi skilaboð og halda áfram að nota gamla lykilorðið.',
 'passwordreset-emailelement' => 'Notendanafn: $1
 Tímabundið lykilorð: $2',
-'passwordreset-emailsent' => 'Áminning hefur verið send í tölvupósti.',
-'passwordreset-emailsent-capture' => 'Áminning hefur verið send í tölvupósti, sem er sýnd hér fyrir neðan.',
-'passwordreset-emailerror-capture' => 'Áminning var búin til, sem er sýnd hér fyrir neðan, en ekki tókst að senda hana til notandans: $1',
+'passwordreset-emailsent' => 'Töluvpóstur til að endursetja lykilorðið hefur verið sendur.',
+'passwordreset-emailsent-capture' => 'Tölvupóstur til að endursetja lykilorðið hefur verið sendur í tölvupósti, sem er sýndur hér fyrir neðan.',
+'passwordreset-emailerror-capture' => 'Tölvupóstur til að endursetja lykilorðið var búinn til, sem er sýndur hér fyrir neðan, en ekki tókst að senda hana til {{GENDER:$2|notandans}}: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Breyting netfangs',
@@ -1009,6 +1009,8 @@ Hún er nú þegar til.',
 'content-failed-to-parse' => 'Gat ekki þáttað $2 efni samkvæmt $1 líkani: $3',
 'invalid-content-data' => 'Ógild efnisgögn.',
 'content-not-allowed-here' => '„$1“ efni er ekki leyfilegt á síðunni [[$2]]',
+'editwarning-warning' => 'Ef farið er frá þessari síðu gætu þær breytingar sem þú hefur gert tapast.
+Ef þú ert skráður inn, þá getur þú óvirkjað þessi skilaboð í „Breytingarflipanum" undir stillingum.',
 
 # Content models
 'content-model-wikitext' => 'wiki-texti',
@@ -1295,15 +1297,6 @@ Frekari upplýsingar eru í [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENA
 'searchdisabled' => '{{SITENAME}}-leit er óvirk.
 Þú getur leitað í genum Google á meðan.
 Athugaðu að skrár þeirra yfir {{SITENAME}}-efni kunna að vera úreltar.',
-
-# Quickbar
-'qbsettings' => 'Valblað',
-'qbsettings-none' => 'Sleppa',
-'qbsettings-fixedleft' => 'Fast vinstra megin',
-'qbsettings-fixedright' => 'Fast hægra megin',
-'qbsettings-floatingleft' => 'Fljótandi til vinstri',
-'qbsettings-floatingright' => 'Fljótandi til hægri',
-'qbsettings-directionality' => 'Lagað, fer eftir því í hvaða átt er skrifað á þínu tungumáli.',
 
 # Preferences page
 'preferences' => 'Stillingar',
@@ -1853,7 +1846,6 @@ Vegna öryggissjónarmiða er img_auth.php óvirkt.',
 'http-read-error' => 'HTTP lesturs villa.',
 'http-timed-out' => 'Tímamörk HTTP beiðni rann út.',
 'http-curl-error' => 'Villa við að sækja vefslóð: $1',
-'http-host-unreachable' => 'Gat ekki náð í vefslóðina',
 'http-bad-status' => 'Mistök við HTTP beiðnina: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2261,8 +2253,8 @@ Frekari breytingar á henni eða spallsíðu hennar munu verða sýndar þar.',
 'notvisiblerev' => 'Síðasta breyting eftir annan notanda hefur verið eytt.',
 'watchnochange' => 'Engri síðu á vaktlistanum þínum hefur verið breytt á tilgreindu tímabili.',
 'watchlist-details' => '{{PLURAL:$1|$1 síða|$1 síður}} á vaktlistanum þínum, fyrir utan spjallsíður.',
-'wlheader-enotif' => '* Tilkynning með tölvupósti er virk.',
-'wlheader-showupdated' => "* Síðum sem hefur verið breytt síðan þú skoðaðir þær síðast eru '''feitletraðar'''",
+'wlheader-enotif' => 'Tilkynning með tölvupósti er virk.',
+'wlheader-showupdated' => "Síðum sem hefur verið breytt síðan þú skoðaðir þær síðast eru '''feitletraðar'''",
 'watchmethod-recent' => 'kanna hvort nýlegar breytingar innihalda vaktaðar síður',
 'watchmethod-list' => 'leita að breytingum í vöktuðum síðum',
 'watchlistcontains' => 'Vaktlistinn þinn inniheldur {{PLURAL:$1|$1 síðu|$1 síður}}.',
@@ -3069,13 +3061,8 @@ Vinsamlegast reyndu aftur.',
 'pageinfo-category-files' => 'Fjöldi skráa',
 
 # Skin names
-'skinname-standard' => 'Sígilt',
-'skinname-nostalgia' => 'Gamaldags',
 'skinname-cologneblue' => 'Kölnarblátt',
 'skinname-monobook' => 'EinBók',
-'skinname-myskin' => 'Mitt þema',
-'skinname-chick' => 'Gella',
-'skinname-simple' => 'Einfalt',
 'skinname-modern' => 'Nútímalegt',
 
 # Patrolling
@@ -3184,7 +3171,7 @@ Ef skránni hefur verið breytt, kann að vera að einhverjar upplýsingar eigi 
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Breidd',
 'exif-imagelength' => 'Hæð',
 'exif-bitspersample' => 'Bæti á einingu',
@@ -3343,7 +3330,7 @@ Ef skránni hefur verið breytt, kann að vera að einhverjar upplýsingar eigi 
 'exif-originalimageheight' => 'Hæð myndarinnar fyrir skerðingu',
 'exif-originalimagewidth' => 'Breidd myndar fyrir skerðingu',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Ósamþjappað',
 
 'exif-copyrighted-true' => 'Höfundaréttarvarið',
@@ -3720,13 +3707,6 @@ MediaWiki er útgefin í þeirri von að hann sé gagnlegur, en ÁN ALLRAR ÁBYR
 'version-software-version' => 'Útgáfa',
 'version-entrypoints-header-url' => 'vefslóð',
 
-# Special:FilePath
-'filepath' => 'Slóð skráar',
-'filepath-page' => 'Skrá:',
-'filepath-submit' => 'Áfram',
-'filepath-summary' => 'Þessi kerfisíða birtir fulla vefslóð skráar. 
-Myndir eru sýndar í fullri upplausn og önnur skráarsnið eru ræst í sjálfvöldu forriti til þess að opna skránna.',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Leita að afriti',
 'fileduplicatesearch-summary' => 'Leita að afritum sem hafa sama hakk gildi.',
@@ -3822,17 +3802,17 @@ Tæknilegir örðugleikar eru á þessari síðu.',
 'sqlite-no-fts' => '$1 án fullum texta leitar stuðningi',
 
 # New logging system
-'logentry-delete-delete' => '$1 eyddi síðunni $3',
-'logentry-delete-restore' => '$1 endurvakti $3',
-'logentry-delete-event' => '$1 breytti sýnileika {{PLURAL:$5|færslu|$5 færslna}} á $3: $4',
-'logentry-delete-revision' => '$1 breytti sýnileika {{PLURAL:$5|útgáfu|$5 útgáfna}} á $3: $4',
-'logentry-delete-event-legacy' => '$1 breytti sýnileika færslna á $3',
-'logentry-delete-revision-legacy' => '$1 breytti sýnileika útgáfna á $3',
-'logentry-suppress-delete' => '$1 bældi niður síðuna $3',
-'logentry-suppress-event' => '$1 breytti leynilega sýnileika {{PLURAL:$5|færslu|$5 færslna}} á $3: $4',
-'logentry-suppress-revision' => '$1 breytti leynilega sýnileika {{PLURAL:$5|útgáfu|$5 útgáfna}} á $3: $4',
-'logentry-suppress-event-legacy' => '$1 breytti leynilega sýnileika færslna á $3',
-'logentry-suppress-revision-legacy' => '$1 breytti leynilega sýnileika útgáfna á $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|eyddi}} síðunni $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|endurvakti}} $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|breytti}} sýnileika {{PLURAL:$5|færslu|$5 færslna}} á $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|breytti}} sýnileika {{PLURAL:$5|útgáfu|$5 útgáfna}} á $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|breytti}} sýnileika færslna á $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|breytti}} sýnileika útgáfna á $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|bældi niður}} síðuna $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|breytti}} leynilega sýnileika {{PLURAL:$5|færslu|$5 færslna}} á $3: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|breytti}} leynilega sýnileika {{PLURAL:$5|útgáfu|$5 útgáfna}} á $3: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|breytti}} leynilega sýnileika færslna á $3',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|breytti}} leynilega sýnileika útgáfna á $3',
 'revdelete-content-hid' => 'efni falið',
 'revdelete-summary-hid' => 'breytingarágrip falið',
 'revdelete-uname-hid' => 'notandanafn falið',
@@ -3841,20 +3821,20 @@ Tæknilegir örðugleikar eru á þessari síðu.',
 'revdelete-uname-unhid' => 'notandanafn birt',
 'revdelete-restricted' => 'hömlur settar á stjórnendur',
 'revdelete-unrestricted' => 'fjarlægja hömlur á stjórnendur',
-'logentry-move-move' => '$1 færði $3 á $4',
-'logentry-move-move-noredirect' => '$1 færði $3 á $4 án þess að skilja eftir tilvísun',
-'logentry-move-move_redir' => '$1 færði $3 á $4 yfir tilvísun',
-'logentry-move-move_redir-noredirect' => '$1 færði $3 á $4 yfir tilvísun, án þess að skilja eftir tilvísun',
-'logentry-patrol-patrol' => '$1 merkti útgáfu $3 frá $4 sem yfirfarna',
-'logentry-patrol-patrol-auto' => '$1 merkti sjálfvirkt útgáfu $3 frá $4 sem yfirfarna',
-'logentry-newusers-newusers' => 'Notandaaðgangurinn $1 var stofnaður',
-'logentry-newusers-create' => 'Notandaaðgangurinn $1 var stofnaður',
-'logentry-newusers-create2' => '$1 stofnaði notandaaðganginn $3',
-'logentry-newusers-byemail' => 'Notandaaðgangurinn $3 var búinn til af $1 og lykilorðið var sent með tölvupósti',
-'logentry-newusers-autocreate' => 'Aðgangurinn $1 var stofnaður sjálfvirkt',
-'logentry-rights-rights' => '$1 breytti réttindum $3 frá $4 í $5',
-'logentry-rights-rights-legacy' => '$1 breytti réttindum $3',
-'logentry-rights-autopromote' => '$1 fékk sjálfvirkt aukin réttindi frá $4 til $5',
+'logentry-move-move' => '$1 {{GENDER:$2|færði}} $3 á $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|færði}} $3 á $4 án þess að skilja eftir tilvísun',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|færði}} $3 á $4 yfir tilvísun',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|færði}} $3 á $4 yfir tilvísun, án þess að skilja eftir tilvísun',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|merkti}} útgáfu $3 frá $4 sem yfirfarna',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|merkti}} sjálfvirkt útgáfu $3 frá $4 sem yfirfarna',
+'logentry-newusers-newusers' => 'Notandaaðgangurinn $1 var {{GENDER:$2|stofnaður}}',
+'logentry-newusers-create' => 'Notandaaðgangurinn $1 var {{GENDER:$2|stofnaður}}',
+'logentry-newusers-create2' => '$1 {{GENDER:$2|stofnaði}} notandaaðganginn $3',
+'logentry-newusers-byemail' => 'Notandaaðgangurinn $3 var {{GENDER:$2|búinn til}} af $1 og lykilorðið var sent með tölvupósti',
+'logentry-newusers-autocreate' => 'Aðgangurinn $1 var {{GENDER:$2|stofnaður}} sjálfvirkt',
+'logentry-rights-rights' => '$1 {{GENDER:$2|breytti}} réttindum $3 frá $4 í $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|breytti}} réttindum $3',
+'logentry-rights-autopromote' => '$1 fékk sjálfvirkt {{GENDER:$2|aukin}} réttindi frá $4 til $5',
 'rightsnone' => '(engum)',
 
 # Feedback
@@ -3929,5 +3909,8 @@ Ef ekki, þá getur þú notað einfalt eyðublað hér fyrir neðan. Athugasemd
 'duration-decades' => '$1 {{PLURAL:$1|áratugur|áratugir}}',
 'duration-centuries' => '$1 {{PLURAL:$1|öld|aldir}}',
 'duration-millennia' => '$1 {{PLURAL:$1|árþúsund}}',
+
+# Image rotation
+'rotate-comment' => 'Myndinni var snúið um $1 {{PLURAL:$1|gráðu|gráður}} réttsælis',
 
 );

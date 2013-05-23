@@ -41,7 +41,7 @@ class GitInfo {
 	private static $viewers = false;
 
 	/**
-	 * @param $dir string The root directory of the repo where the .git dir can be found
+	 * @param string $dir The root directory of the repo where the .git dir can be found
 	 */
 	public function __construct( $dir ) {
 		$this->basedir = "{$dir}/.git";
@@ -70,7 +70,7 @@ class GitInfo {
 	/**
 	 * Check if a string looks like a hex encoded SHA1 hash
 	 *
-	 * @param $str string The string to check
+	 * @param string $str The string to check
 	 * @return bool Whether or not the string looks like a SHA1
 	 */
 	public static function isSHA1( $str ) {
@@ -121,6 +121,32 @@ class GitInfo {
 	}
 
 	/**
+	 * Return the commit date of HEAD entry of the git code repository
+	 *
+	 * @since 1.22
+	 * @return int|bool Commit date (UNIX timestamp) or false
+	 */
+	public function getHeadCommitDate() {
+		global $wgGitBin;
+
+		if ( !is_file( $wgGitBin ) || !is_executable( $wgGitBin ) ) {
+			return false;
+		}
+
+		$environment = array( "GIT_DIR" => $this->basedir );
+		$cmd = wfEscapeShellArg( $wgGitBin ) . " show -s --format=format:%ct HEAD";
+		$retc = false;
+		$commitDate = wfShellExec( $cmd, $retc, $environment );
+
+		if ( $retc !== 0 ) {
+			return false;
+		} else {
+			return (int)$commitDate;
+		}
+
+	 }
+
+	/**
 	 * Return the name of the current branch, or HEAD if not found
 	 * @return string The branch name, HEAD, or false
 	 */
@@ -151,7 +177,7 @@ class GitInfo {
 		if ( isset( $configArray['remote origin'] ) ) {
 			$remote = $configArray['remote origin'];
 		} else {
-			foreach( $configArray as $sectionName => $sectionConf ) {
+			foreach ( $configArray as $sectionName => $sectionConf ) {
 				if ( substr( $sectionName, 0, 6 ) == 'remote' ) {
 					$remote = $sectionConf;
 				}
@@ -166,7 +192,7 @@ class GitInfo {
 		if ( substr( $url, -4 ) !== '.git' ) {
 			$url .= '.git';
 		}
-		foreach( self::getViewers() as $repo => $viewer ) {
+		foreach ( self::getViewers() as $repo => $viewer ) {
 			$pattern = '#^' . $repo . '$#';
 			if ( preg_match( $pattern, $url ) ) {
 				$viewerUrl = preg_replace( $pattern, $viewer, $url );
@@ -212,7 +238,7 @@ class GitInfo {
 	protected static function getViewers() {
 		global $wgGitRepositoryViewers;
 
-		if( self::$viewers === false ) {
+		if ( self::$viewers === false ) {
 			self::$viewers = $wgGitRepositoryViewers;
 			wfRunHooks( 'GitViewers', array( &self::$viewers ) );
 		}

@@ -11,10 +11,10 @@
  */
 class ApiEditPageTest extends ApiTestCase {
 
-	public function setup() {
+	public function setUp() {
 		global $wgExtraNamespaces, $wgNamespaceContentModels, $wgContentHandlers, $wgContLang;
 
-		parent::setup();
+		parent::setUp();
 
 		$wgExtraNamespaces[12312] = 'Dummy';
 		$wgExtraNamespaces[12313] = 'Dummy_talk';
@@ -28,7 +28,7 @@ class ApiEditPageTest extends ApiTestCase {
 		$this->doLogin();
 	}
 
-	public function teardown() {
+	public function tearDown() {
 		global $wgExtraNamespaces, $wgNamespaceContentModels, $wgContentHandlers, $wgContLang;
 
 		unset( $wgExtraNamespaces[12312] );
@@ -40,7 +40,7 @@ class ApiEditPageTest extends ApiTestCase {
 		MWNamespace::getCanonicalNamespaces( true ); # reset namespace cache
 		$wgContLang->resetNamespaces(); # reset namespace cache
 
-		parent::teardown();
+		parent::tearDown();
 	}
 
 	function testEdit() {
@@ -124,7 +124,7 @@ class ApiEditPageTest extends ApiTestCase {
 		$this->assertEquals( $data, $page->getContent()->serialize() );
 	}
 
-	static function provideEditAppend() {
+	public static function provideEditAppend() {
 		return array(
 			array( #0: append
 				'foo', 'append', 'bar', "foobar"
@@ -161,13 +161,13 @@ class ApiEditPageTest extends ApiTestCase {
 		if ( $text !== null ) {
 			if ( $text === '' ) {
 				// can't create an empty page, so create it with some content
-				list( $re, , ) = $this->doApiRequestWithToken( array(
+				$this->doApiRequestWithToken( array(
 					'action' => 'edit',
 					'title' => $name,
 					'text' => '(dummy)', ) );
 			}
 
-			list( $re, , ) = $this->doApiRequestWithToken( array(
+			list( $re ) = $this->doApiRequestWithToken( array(
 				'action' => 'edit',
 				'title' => $name,
 				'text' => $text, ) );
@@ -176,7 +176,7 @@ class ApiEditPageTest extends ApiTestCase {
 		}
 
 		// -- try append/prepend --------------------------------------------
-		list( $re, , ) = $this->doApiRequestWithToken( array(
+		list( $re ) = $this->doApiRequestWithToken( array(
 			'action' => 'edit',
 			'title' => $name,
 			$op . 'text' => $append, ) );
@@ -224,7 +224,7 @@ class ApiEditPageTest extends ApiTestCase {
 
 		// try to save edit, expect conflict
 		try {
-			list( $re, , ) = $this->doApiRequestWithToken( array(
+			$this->doApiRequestWithToken( array(
 				'action' => 'edit',
 				'title' => $name,
 				'text' => 'nix bar!',
@@ -280,7 +280,7 @@ class ApiEditPageTest extends ApiTestCase {
 
 		// try again, without following the redirect. Should fail.
 		try {
-			list( $re, , ) = $this->doApiRequestWithToken( array(
+			$this->doApiRequestWithToken( array(
 				'action' => 'edit',
 				'title' => $rname,
 				'text' => 'nix bar!',
@@ -344,7 +344,7 @@ class ApiEditPageTest extends ApiTestCase {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->update( 'revision',
-			array( 'rev_timestamp' => $timestamp ),
+			array( 'rev_timestamp' => $dbw->timestamp( $timestamp ) ),
 			array( 'rev_id' => $page->getLatest() ) );
 
 		$page->clear();

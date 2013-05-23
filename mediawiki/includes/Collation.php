@@ -40,7 +40,7 @@ abstract class Collation {
 	 * @return Collation
 	 */
 	static function factory( $collationName ) {
-		switch( $collationName ) {
+		switch ( $collationName ) {
 			case 'uppercase':
 				return new UppercaseCollation;
 			case 'identity':
@@ -62,7 +62,7 @@ abstract class Collation {
 				}
 
 				// If all else fails...
-				throw new MWException( __METHOD__.": unknown collation type \"$collationName\"" );
+				throw new MWException( __METHOD__ . ": unknown collation type \"$collationName\"" );
 		}
 	}
 
@@ -148,8 +148,9 @@ class IdentityCollation extends Collation {
 	}
 }
 
-
 class IcuCollation extends Collation {
+	const FIRST_LETTER_VERSION = 1;
+
 	var $primaryCollator, $mainCollator, $locale;
 	var $firstLetterData;
 
@@ -181,35 +182,55 @@ class IcuCollation extends Collation {
 	);
 
 	/**
-	 * Additional characters (or character groups) to be considered first-letters
+	 * Additional characters (or character groups) to be considered separate
+	 * letters for given languages, or to be removed from the list of such
+	 * letters (denoted by keys starting with '-').
 	 *
-	 * Generated based on the primary level of Unicode collation tailorings
-	 * available at http://developer.mimer.com/charts/tailorings.htm .
+	 * These are additions to (or subtractions from) the data stored in the
+	 * first-letters-root.ser file (which among others includes full basic latin,
+	 * cyrillic and greek alphabets).
+	 *
+	 * "Separate letter" is a letter that would have a separate heading/section
+	 * for it in a dictionary or a phone book in this language. This data isn't
+	 * used for sorting (the ICU library handles that), only for deciding which
+	 * characters (or character groups) to use as headings.
+	 *
+	 * Initially generated based on the primary level of Unicode collation
+	 * tailorings available at http://developer.mimer.com/charts/tailorings.htm ,
+	 * later modified.
 	 *
 	 * Empty arrays are intended; this signifies that the data for the language is
 	 * available and that there are, in fact, no additional letters to consider.
 	 */
 	static $tailoringFirstLetters = array(
 		// Verified by native speakers
-		'pl' => array( "Ą", "Ć", "Ę", "Ł", "Ń", "Ó", "Ś", "Ź", "Ż" ),
+		'be' => array( "Ё" ),
+		'be-tarask' => array( "Ё" ),
+		'en' => array(),
 		'fi' => array( "Å", "Ä", "Ö" ),
+		'hu' => array( "Cs", "Dz", "Dzs", "Gy", "Ly", "Ny", "Ö", "Sz", "Ty", "Ü", "Zs" ),
+		'it' => array(),
+		'pl' => array( "Ą", "Ć", "Ę", "Ł", "Ń", "Ó", "Ś", "Ź", "Ż" ),
+		'pt' => array(),
+		'ru' => array(),
+		'sv' => array( "Å", "Ä", "Ö" ),
+		'uk' => array( "Ґ", "Ь" ),
+		'vi' => array( "Ă", "Â", "Đ", "Ê", "Ô", "Ơ", "Ư" ),
 		// Not verified, but likely correct
 		'af' => array(),
-		'ast' => array( "CH", "LL", "Ñ" ),
+		'ast' => array( "Ch", "Ll", "Ñ" ),
 		'az' => array( "Ç", "Ə", "Ğ", "İ", "Ö", "Ş", "Ü" ),
-		'be' => array( "Ё" ),
 		'bg' => array(),
-		'br' => array( "CH", "C'H" ),
-		'bs' => array( "Č", "Ć", "DŽ", "Đ", "LJ", "NJ", "Š", "Ž" ),
+		'br' => array( "Ch", "C'h" ),
+		'bs' => array( "Č", "Ć", "Dž", "Đ", "Lj", "Nj", "Š", "Ž" ),
 		'ca' => array(),
 		'co' => array(),
-		'cs' => array( "Č", "CH", "Ř", "Š", "Ž" ),
-		'cy' => array( "CH", "DD", "FF", "NG", "LL", "PH", "RH", "TH" ),
+		'cs' => array( "Č", "Ch", "Ř", "Š", "Ž" ),
+		'cy' => array( "Ch", "Dd", "Ff", "Ng", "Ll", "Ph", "Rh", "Th" ),
 		'da' => array( "Æ", "Ø", "Å" ),
 		'de' => array(),
-		'dsb' => array( "Č", "Ć", "DŹ", "Ě", "CH", "Ł", "Ń", "Ŕ", "Š", "Ś", "Ž", "Ź" ),
+		'dsb' => array( "Č", "Ć", "Dź", "Ě", "Ch", "Ł", "Ń", "Ŕ", "Š", "Ś", "Ž", "Ź" ),
 		'el' => array(),
-		'en' => array(),
 		'eo' => array( "Ĉ", "Ĝ", "Ĥ", "Ĵ", "Ŝ", "Ŭ" ),
 		'es' => array( "Ñ" ),
 		'et' => array( "Š", "Ž", "Õ", "Ä", "Ö", "Ü" ),
@@ -220,12 +241,10 @@ class IcuCollation extends Collation {
 		'fy' => array(),
 		'ga' => array(),
 		'gd' => array(),
-		'gl' => array( "CH", "LL", "Ñ" ),
-		'hr' => array( "Č", "Ć", "DŽ", "Đ", "LJ", "NJ", "Š", "Ž" ),
-		'hsb' => array( "Č", "DŹ", "Ě", "CH", "Ł", "Ń", "Ř", "Š", "Ć", "Ž" ),
-		'hu' => array( "CS", "DZ", "DZS", "GY", "LY", "NY", "Ö", "SZ", "TY", "Ü", "ZS" ),
+		'gl' => array( "Ch", "Ll", "Ñ" ),
+		'hr' => array( "Č", "Ć", "Dž", "Đ", "Lj", "Nj", "Š", "Ž" ),
+		'hsb' => array( "Č", "Dź", "Ě", "Ch", "Ł", "Ń", "Ř", "Š", "Ć", "Ž" ),
 		'is' => array( "Á", "Ð", "É", "Í", "Ó", "Ú", "Ý", "Þ", "Æ", "Ö", "Å" ),
-		'it' => array(),
 		'kk' => array( "Ү", "І" ),
 		'kl' => array( "Æ", "Ø", "Å" ),
 		'ku' => array( "Ç", "Ê", "Î", "Ş", "Û" ),
@@ -236,29 +255,24 @@ class IcuCollation extends Collation {
 		'lv' => array( "Č", "Ģ", "Ķ", "Ļ", "Ņ", "Š", "Ž" ),
 		'mk' => array(),
 		'mo' => array( "Ă", "Â", "Î", "Ş", "Ţ" ),
-		'mt' => array( "Ċ", "Ġ", "GĦ", "Ħ", "Ż" ),
+		'mt' => array( "Ċ", "Ġ", "Għ", "Ħ", "Ż" ),
 		'nl' => array(),
 		'no' => array( "Æ", "Ø", "Å" ),
 		'oc' => array(),
-		'pt' => array(),
 		'rm' => array(),
 		'ro' => array( "Ă", "Â", "Î", "Ş", "Ţ" ),
-		'ru' => array(),
 		'rup' => array( "Ă", "Â", "Î", "Ľ", "Ń", "Ş", "Ţ" ),
 		'sco' => array(),
-		'sk' => array( "Ä", "Č", "CH", "Ô", "Š", "Ž" ),
+		'sk' => array( "Ä", "Č", "Ch", "Ô", "Š", "Ž" ),
 		'sl' => array( "Č", "Š", "Ž" ),
 		'smn' => array( "Á", "Č", "Đ", "Ŋ", "Š", "Ŧ", "Ž", "Æ", "Ø", "Å", "Ä", "Ö" ),
-		'sq' => array( "Ç", "DH", "Ë", "GJ", "LL", "NJ", "RR", "SH", "TH", "XH", "ZH" ),
+		'sq' => array( "Ç", "Dh", "Ë", "Gj", "Ll", "Nj", "Rr", "Sh", "Th", "Xh", "Zh" ),
 		'sr' => array(),
-		'sv' => array( "Å", "Ä", "Ö" ),
 		'tk' => array( "Ç", "Ä", "Ž", "Ň", "Ö", "Ş", "Ü", "Ý" ),
-		'tl' => array( "Ñ", "NG" ), /* 'fil' in the data source */
+		'tl' => array( "Ñ", "Ng" ),
 		'tr' => array( "Ç", "Ğ", "İ", "Ö", "Ş", "Ü" ),
 		'tt' => array( "Ә", "Ө", "Ү", "Җ", "Ң", "Һ" ),
-		'uk' => array( "Ґ", "Ь" ),
-		'uz' => array( "CH", "G'", "NG", "O'", "SH" ),
-		'vi' => array( "Ă", "Â", "Đ", "Ê", "Ô", "Ơ", "Ư" ),
+		'uz' => array( "Ch", "G'", "Ng", "O'", "Sh" ),
 	);
 
 	const RECORD_LENGTH = 14;
@@ -334,16 +348,23 @@ class IcuCollation extends Collation {
 		$cacheKey = wfMemcKey( 'first-letters', $this->locale );
 		$cacheEntry = $cache->get( $cacheKey );
 
-		if ( $cacheEntry ) {
+		if ( $cacheEntry && isset( $cacheEntry['version'] )
+			&& $cacheEntry['version'] == self::FIRST_LETTER_VERSION
+		) {
 			$this->firstLetterData = $cacheEntry;
 			return $this->firstLetterData;
 		}
 
 		// Generate data from serialized data file
 
-		if ( isset ( self::$tailoringFirstLetters[$this->locale] ) ) {
+		if ( isset( self::$tailoringFirstLetters[$this->locale] ) ) {
 			$letters = wfGetPrecompiledData( "first-letters-root.ser" );
+			// Append additional characters
 			$letters = array_merge( $letters, self::$tailoringFirstLetters[$this->locale] );
+			// Remove unnecessary ones, if any
+			if ( isset( self::$tailoringFirstLetters['-' . $this->locale] ) ) {
+				$letters = array_diff( $letters, self::$tailoringFirstLetters['-' . $this->locale] );
+			}
 		} else {
 			$letters = wfGetPrecompiledData( "first-letters-{$this->locale}.ser" );
 			if ( $letters === false ) {
@@ -374,9 +395,76 @@ class IcuCollation extends Collation {
 			}
 		}
 		ksort( $letterMap, SORT_STRING );
+		// Remove duplicate prefixes. Basically if something has a sortkey
+		// which is a prefix of some other sortkey, then it is an
+		// expansion and probably should not be considered a section
+		// header.
+		//
+		// For example 'þ' is sometimes sorted as if it is the letters
+		// 'th'. Other times it is its own primary element. Another
+		// example is '₨'. Sometimes its a currency symbol. Sometimes it
+		// is an 'R' followed by an 's'.
+		//
+		// Additionally an expanded element should always sort directly
+		// after its first element due to they way sortkeys work.
+		//
+		// UCA sortkey elements are of variable length but no collation
+		// element should be a prefix of some other element, so I think
+		// this is safe. See:
+		// * https://ssl.icu-project.org/repos/icu/icuhtml/trunk/design/collation/ICU_collation_design.htm
+		// * http://site.icu-project.org/design/collation/uca-weight-allocation
+		//
+		// Additionally, there is something called primary compression to
+		// worry about. Basically, if you have two primary elements that
+		// are more than one byte and both start with the same byte then
+		// the first byte is dropped on the second primary. Additionally
+		// either \x03 or \xFF may be added to mean that the next primary
+		// does not start with the first byte of the first primary.
+		//
+		// This shouldn't matter much, as the first primary is not
+		// changed, and that is what we are comparing against.
+		//
+		// tl;dr: This makes some assumptions about how icu implements
+		// collations. It seems incredibly unlikely these assumptions
+		// will change, but nonetheless they are assumptions.
+
+		$prev = false;
+		$duplicatePrefixes = array();
+		foreach ( $letterMap as $key => $value ) {
+			// Remove terminator byte. Otherwise the prefix
+			// comparison will get hung up on that.
+			$trimmedKey = rtrim( $key, "\0" );
+			if ( $prev === false || $prev === '' ) {
+				$prev = $trimmedKey;
+				// We don't yet have a collation element
+				// to compare against, so continue.
+				continue;
+			}
+
+			// Due to the fact the array is sorted, we only have
+			// to compare with the element directly previous
+			// to the current element (skipping expansions).
+			// An element "X" will always sort directly
+			// before "XZ" (Unless we have "XY", but we
+			// do not update $prev in that case).
+			if ( substr( $trimmedKey, 0, strlen( $prev ) ) === $prev ) {
+				$duplicatePrefixes[] = $key;
+				// If this is an expansion, we don't want to
+				// compare the next element to this element,
+				// but to what is currently $prev
+				continue;
+			}
+			$prev = $trimmedKey;
+		}
+		foreach ( $duplicatePrefixes as $badKey ) {
+			wfDebug( "Removing '{$letterMap[$badKey]}' from first letters." );
+			unset( $letterMap[$badKey] );
+			// This code assumes that unsetting does not change sort order.
+		}
 		$data = array(
 			'chars' => array_values( $letterMap ),
-			'keys' => array_keys( $letterMap )
+			'keys' => array_keys( $letterMap ),
+			'version' => self::FIRST_LETTER_VERSION,
 		);
 
 		// Reduce memory usage before caching
@@ -413,13 +501,13 @@ class IcuCollation extends Collation {
 	 * Do a binary search, and return the index of the largest item that sorts
 	 * less than or equal to the target value.
 	 *
-	 * @param $valueCallback array A function to call to get the value with
+	 * @param array $valueCallback A function to call to get the value with
 	 *     a given array index.
-	 * @param $valueCount int The number of items accessible via $valueCallback,
+	 * @param int $valueCount The number of items accessible via $valueCallback,
 	 *     indexed from 0 to $valueCount - 1
-	 * @param $comparisonCallback array A callback to compare two values, returning
+	 * @param array $comparisonCallback A callback to compare two values, returning
 	 *     -1, 0 or 1 in the style of strcmp().
-	 * @param $target string The target value to find.
+	 * @param string $target The target value to find.
 	 *
 	 * @return int|bool The item index of the lower bound, or false if the target value
 	 *     sorts before all items.

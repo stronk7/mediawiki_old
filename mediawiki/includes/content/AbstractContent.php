@@ -203,7 +203,6 @@ abstract class AbstractContent implements Content {
 		return $this->getNativeData() === $that->getNativeData();
 	}
 
-
 	/**
 	 * Returns a list of DataUpdate objects for recording information about this
 	 * Content in some secondary data store.
@@ -242,7 +241,6 @@ abstract class AbstractContent implements Content {
 
 		return $parserOutput->getSecondaryDataUpdates( $title, $recursive );
 	}
-
 
 	/**
 	 * @see Content::getRedirectChain
@@ -424,8 +422,8 @@ abstract class AbstractContent implements Content {
 	 * This base implementation calls the hook ConvertContent to enable custom conversions.
 	 * Subclasses may override this to implement conversion for "their" content model.
 	 *
-	 * @param String  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
-	 * @param String  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
+	 * @param string  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
+	 * @param string  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
 	 * not allowed, full round-trip conversion is expected to work without losing information.
 	 *
 	 * @return Content|bool A content object with the content model $toModel, or false if

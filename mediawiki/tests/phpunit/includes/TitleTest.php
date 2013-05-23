@@ -38,7 +38,7 @@ class TitleTest extends MediaWikiTestCase {
 	function testBug31100FixSpecialName( $text, $expectedParam ) {
 		$title = Title::newFromText( $text );
 		$fixed = $title->fixSpecialName();
-		$stuff = explode( '/', $fixed->getDbKey(), 2 );
+		$stuff = explode( '/', $fixed->getDBkey(), 2 );
 		if ( count( $stuff ) == 2 ) {
 			$par = $stuff[1];
 		} else {
@@ -96,7 +96,7 @@ class TitleTest extends MediaWikiTestCase {
 	 * @param string $action
 	 * @param array|string|true $expected Required error
 	 *
-	 * @covers Title::checkReadPermission
+	 * @covers Title::checkReadPermissions
 	 * @dataProvider dataWgWhitelistReadRegexp
 	 */
 	function testWgWhitelistReadRegexp( $whitelistRegexp, $source, $action, $expected ) {
@@ -197,6 +197,7 @@ class TitleTest extends MediaWikiTestCase {
 		foreach ( $errors as $error ) {
 			$result[] = $error[0];
 		}
+
 		return $result;
 	}
 
@@ -230,7 +231,7 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	function provideCasesForGetpageviewlanguage() {
+	public static function provideCasesForGetpageviewlanguage() {
 		# Format:
 		# - expected
 		# - Title name
@@ -280,7 +281,7 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	function provideBaseTitleCases() {
+	public static function provideBaseTitleCases() {
 		return array(
 			# Title, expected base, optional message
 			array( 'User:John_Doe/subOne/subTwo', 'John Doe/subOne' ),
@@ -319,7 +320,7 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	function provideSubpageTitleCases() {
+	public static function provideSubpageTitleCases() {
 		return array(
 			# Title, expected base, optional message
 			array( 'User:John_Doe/subOne/subTwo', 'subTwo' ),

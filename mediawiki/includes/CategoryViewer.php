@@ -71,9 +71,9 @@ class CategoryViewer extends ContextSource {
 	 * @since 1.19 $context is a second, required parameter
 	 * @param $title Title
 	 * @param $context IContextSource
-	 * @param $from Array An array with keys page, subcat,
+	 * @param array $from An array with keys page, subcat,
 	 *        and file for offset of results of each section (since 1.17)
-	 * @param $until Array An array with 3 keys for until of each section (since 1.17)
+	 * @param array $until An array with 3 keys for until of each section (since 1.17)
 	 * @param $query Array
 	 */
 	function __construct( $title, IContextSource $context, $from = array(), $until = array(), $query = array() ) {
@@ -249,7 +249,7 @@ class CategoryViewer extends ContextSource {
 		$link = Linker::link( $title );
 		if ( $isRedirect ) {
 			// This seems kind of pointless given 'mw-redirect' class,
-			// but keeping for back-compatiability with user css.
+			// but keeping for back-compatibility with user css.
 			$link = '<span class="redirect-in-category">' . $link . '</span>';
 		}
 		$this->articles[] = $link;
@@ -288,10 +288,10 @@ class CategoryViewer extends ContextSource {
 			# the collation in the database differs from the one
 			# set in $wgCategoryCollation, pagination might go totally haywire.
 			$extraConds = array( 'cl_type' => $type );
-			if ( $this->from[$type] !== null ) {
+			if ( isset( $this->from[$type] ) && $this->from[$type] !== null ) {
 				$extraConds[] = 'cl_sortkey >= '
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->from[$type] ) );
-			} elseif ( $this->until[$type] !== null ) {
+			} elseif ( isset( $this->until[$type] ) && $this->until[$type] !== null ) {
 				$extraConds[] = 'cl_sortkey < '
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->until[$type] ) );
 				$this->flip[$type] = true;
@@ -392,7 +392,7 @@ class CategoryViewer extends ContextSource {
 		$r = '';
 
 		# @todo FIXME: Here and in the other two sections: we don't need to bother
-		# with this rigamarole if the entire category contents fit on one page
+		# with this rigmarole if the entire category contents fit on one page
 		# and have already been retrieved.  We can just use $rescnt in that
 		# case and save a query and some logic.
 		$dbcnt = $this->cat->getPageCount() - $this->cat->getSubcatCount()
@@ -441,13 +441,13 @@ class CategoryViewer extends ContextSource {
 	 * Get the paging links for a section (subcats/pages/files), to go at the top and bottom
 	 * of the output.
 	 *
-	 * @param $type String: 'page', 'subcat', or 'file'
+	 * @param string $type 'page', 'subcat', or 'file'
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
 	private function getSectionPagingLinks( $type ) {
-		if ( $this->until[$type] !== null ) {
+		if ( isset( $this->until[$type] ) && $this->until[$type] !== null ) {
 			return $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
-		} elseif ( $this->nextPage[$type] !== null || $this->from[$type] !== null ) {
+		} elseif ( $this->nextPage[$type] !== null || ( isset( $this->from[$type] ) && $this->from[$type] !== null ) ) {
 			return $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
 		} else {
 			return '';
@@ -573,9 +573,9 @@ class CategoryViewer extends ContextSource {
 	/**
 	 * Create paging links, as a helper method to getSectionPagingLinks().
 	 *
-	 * @param $first String The 'until' parameter for the generated URL
-	 * @param $last String The 'from' parameter for the genererated URL
-	 * @param $type String A prefix for parameters, 'page' or 'subcat' or
+	 * @param string $first The 'until' parameter for the generated URL
+	 * @param string $last The 'from' parameter for the generated URL
+	 * @param string $type A prefix for parameters, 'page' or 'subcat' or
 	 *     'file'
 	 * @return String HTML
 	 */
@@ -616,7 +616,7 @@ class CategoryViewer extends ContextSource {
 	 * corresponds to the correct segment of the category.
 	 *
 	 * @param Title $title: The title (usually $this->title)
-	 * @param String $section: Which section
+	 * @param string $section: Which section
 	 * @throws MWException
 	 * @return Title
 	 */
@@ -650,9 +650,9 @@ class CategoryViewer extends ContextSource {
 	 * category-subcat-count-limited, category-file-count,
 	 * category-file-count-limited.
 	 *
-	 * @param $rescnt Int: The number of items returned by our database query.
-	 * @param $dbcnt Int: The number of items according to the category table.
-	 * @param $type String: 'subcat', 'article', or 'file'
+	 * @param int $rescnt The number of items returned by our database query.
+	 * @param int $dbcnt The number of items according to the category table.
+	 * @param string $type 'subcat', 'article', or 'file'
 	 * @return String: A message giving the number of items, to output to HTML.
 	 */
 	private function getCountMessage( $rescnt, $dbcnt, $type ) {
@@ -677,7 +677,9 @@ class CategoryViewer extends ContextSource {
 		}
 
 		$fromOrUntil = false;
-		if ( $this->from[$pagingType] !== null || $this->until[$pagingType] !== null ) {
+		if ( ( isset( $this->from[$pagingType] ) && $this->from[$pagingType] !== null ) ||
+			( isset( $this->until[$pagingType] ) && $this->until[$pagingType] !== null )
+		) {
 			$fromOrUntil = true;
 		}
 

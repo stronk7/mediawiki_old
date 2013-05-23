@@ -92,7 +92,7 @@ class MaintenanceFixup extends Maintenance {
 			// Someone generated a MaintenanceFixup instance without calling
 			// simulateShutdown. We'd have to raise a PHPUnit exception to correctly
 			// flag this illegal usage. However, we are already in a destruktor, which
-			// would trigger undefined behaviour. Hence, we can only report to the
+			// would trigger undefined behavior. Hence, we can only report to the
 			// error output :( Hopefully people read the PHPUnit output.
 			$name = $this->testCase->getName();
 			fwrite( STDERR, "ERROR! Instance of " . __CLASS__ . " for test $name "
@@ -128,7 +128,6 @@ class MaintenanceFixup extends Maintenance {
 	public function execute() {
 		$this->testCase->fail( __METHOD__ . " called unexpectedly" );
 	}
-
 }
 
 class MaintenanceTest extends MediaWikiTestCase {
@@ -184,8 +183,7 @@ class MaintenanceTest extends MediaWikiTestCase {
 	// Although the following tests do not seem to be too consistent (compare for
 	// example the newlines within the test.*StringString tests, or the
 	// test.*Intermittent.* tests), the objective of these tests is not to describe
-	// consistent behaviour, but rather currently existing behaviour.
-
+	// consistent behavior, but rather currently existing behavior.
 
 	function testOutputEmpty() {
 		$this->m->output( "" );
@@ -815,6 +813,4 @@ class MaintenanceTest extends MediaWikiTestCase {
 		$m2->simulateShutdown();
 		$this->assertOutputPrePostShutdown( "foobar\n\n", false );
 	}
-
-
 }

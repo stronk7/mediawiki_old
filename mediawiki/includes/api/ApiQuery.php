@@ -150,9 +150,9 @@ class ApiQuery extends ApiBase {
 	 * If no such connection has been requested before, it will be created.
 	 * Subsequent calls with the same $name will return the same connection
 	 * as the first, regardless of the values of $db and $groups
-	 * @param $name string Name to assign to the database connection
-	 * @param $db int One of the DB_* constants
-	 * @param $groups array Query groups
+	 * @param string $name Name to assign to the database connection
+	 * @param int $db One of the DB_* constants
+	 * @param array $groups Query groups
 	 * @return DatabaseBase
 	 */
 	public function getNamedDB( $name, $db, $groups ) {
@@ -201,7 +201,7 @@ class ApiQuery extends ApiBase {
 	/**
 	 * Get whether the specified module is a prop, list or a meta query module
 	 * @deprecated since 1.21, use getModuleManager()->getModuleGroup()
-	 * @param $moduleName string Name of the module to find type for
+	 * @param string $moduleName Name of the module to find type for
 	 * @return mixed string or null
 	 */
 	function getModuleType( $moduleName ) {
@@ -382,7 +382,6 @@ class ApiQuery extends ApiBase {
 		$modules = $allModules;
 		$tmp = $completeModules;
 		$wasPosted = $this->getRequest()->wasPosted();
-		$main = $this->getMain();
 
 		/** @var $module ApiQueryBase */
 		foreach ( $allModules as $moduleName => $module ) {
@@ -433,8 +432,8 @@ class ApiQuery extends ApiBase {
 
 	/**
 	 * Create instances of all modules requested by the client
-	 * @param $modules Array to append instantiated modules to
-	 * @param $param string Parameter name to read modules from
+	 * @param array $modules to append instantiated modules to
+	 * @param string $param Parameter name to read modules from
 	 */
 	private function instantiateModules( &$modules, $param ) {
 		if ( isset( $this->mParams[$param] ) ) {
@@ -507,12 +506,13 @@ class ApiQuery extends ApiBase {
 			);
 		}
 		// Report special pages
+		/** @var $title Title */
 		foreach ( $pageSet->getSpecialTitles() as $fakeId => $title ) {
 			$vals = array();
 			ApiQueryBase::addTitleInfo( $vals, $title );
 			$vals['special'] = '';
 			if ( $title->isSpecialPage() &&
-					!SpecialPageFactory::exists( $title->getDbKey() ) ) {
+					!SpecialPageFactory::exists( $title->getDBkey() ) ) {
 				$vals['missing'] = '';
 			} elseif ( $title->getNamespace() == NS_MEDIA &&
 					!wfFindFile( $title ) ) {
@@ -576,6 +576,7 @@ class ApiQuery extends ApiBase {
 		$titles = $pageSet->getGoodTitles();
 		if ( count( $titles ) ) {
 			$user = $this->getUser();
+			/** @var $title Title */
 			foreach ( $titles as $title ) {
 				if ( $title->userCan( 'read', $user ) ) {
 					$exportTitles[] = $title;
@@ -662,7 +663,7 @@ class ApiQuery extends ApiBase {
 
 	/**
 	 * For all modules of a given group, generate help messages and join them together
-	 * @param $group string Module group
+	 * @param string $group Module group
 	 * @return string
 	 */
 	private function makeHelpMsgHelper( $group ) {
@@ -695,7 +696,7 @@ class ApiQuery extends ApiBase {
 	}
 
 	public function getParamDescription() {
-		return $this->getPageSet()->getParamDescription() + array(
+		return $this->getPageSet()->getFinalParamDescription() + array(
 			'prop' => 'Which properties to get for the titles/revisions/pageids. Module help is available below',
 			'list' => 'Which lists to get. Module help is available below',
 			'meta' => 'Which metadata to get about the site. Module help is available below',
@@ -721,7 +722,7 @@ class ApiQuery extends ApiBase {
 	public function getPossibleErrors() {
 		return array_merge(
 			parent::getPossibleErrors(),
-			$this->getPageSet()->getPossibleErrors()
+			$this->getPageSet()->getFinalPossibleErrors()
 		);
 	}
 
@@ -734,6 +735,7 @@ class ApiQuery extends ApiBase {
 
 	public function getHelpUrls() {
 		return array(
+			'https://www.mediawiki.org/wiki/API:Query',
 			'https://www.mediawiki.org/wiki/API:Meta',
 			'https://www.mediawiki.org/wiki/API:Properties',
 			'https://www.mediawiki.org/wiki/API:Lists',

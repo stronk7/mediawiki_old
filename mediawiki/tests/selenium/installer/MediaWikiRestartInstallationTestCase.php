@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MediaWikiRestartInstallationTestCase
  *
@@ -22,20 +21,15 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Maintenance
- *
  */
 
-
-require_once ( __DIR__ . '/MediaWikiInstallationCommonFunction.php' );
+require_once __DIR__ . '/MediaWikiInstallationCommonFunction.php';
 
 /**
  * Test Case ID   : 11, 12 (http://www.mediawiki.org/wiki/New_installer/Test_plan)
  * Test Case Name : Install mediawiki on a already installed Mediawiki.
  * Version        : MediaWiki 1.18alpha
  */
-
 class MediaWikiRestartInstallationTestCase extends MediaWikiInstallationCommonFunction {
 	function setUp() {
 		parent::setUp();

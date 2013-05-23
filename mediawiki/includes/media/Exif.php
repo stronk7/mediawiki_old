@@ -31,15 +31,16 @@
  */
 class Exif {
 
-	const BYTE      = 1;    //!< An 8-bit (1-byte) unsigned integer.
-	const ASCII     = 2;    //!< An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL.
-	const SHORT     = 3;    //!< A 16-bit (2-byte) unsigned integer.
-	const LONG      = 4;    //!< A 32-bit (4-byte) unsigned integer.
-	const RATIONAL  = 5;    //!< Two LONGs. The first LONG is the numerator and the second LONG expresses the denominator
-	const UNDEFINED = 7;    //!< An 8-bit byte that can take any value depending on the field definition
-	const SLONG     = 9;    //!< A 32-bit (4-byte) signed integer (2's complement notation),
-	const SRATIONAL = 10;   //!< Two SLONGs. The first SLONG is the numerator and the second SLONG is the denominator.
-	const IGNORE    = -1;   // A fake value for things we don't want or don't support.
+	const BYTE = 1; //!< An 8-bit (1-byte) unsigned integer.
+	const ASCII = 2; //!< An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL.
+	const SHORT = 3; //!< A 16-bit (2-byte) unsigned integer.
+	const LONG = 4; //!< A 32-bit (4-byte) unsigned integer.
+	const RATIONAL = 5; //!< Two LONGs. The first LONG is the numerator and the second LONG expresses the denominator
+	const SHORT_OR_LONG = 6; //!< A 16-bit (2-byte) or 32-bit (4-byte) unsigned integer.
+	const UNDEFINED = 7; //!< An 8-bit byte that can take any value depending on the field definition
+	const SLONG = 9; //!< A 32-bit (4-byte) signed integer (2's complement notation),
+	const SRATIONAL = 10; //!< Two SLONGs. The first SLONG is the numerator and the second SLONG is the denominator.
+	const IGNORE = -1; // A fake value for things we don't want or don't support.
 
 	//@{
 	/* @var array
@@ -102,8 +103,8 @@ class Exif {
 	/**
 	 * Constructor
 	 *
-	 * @param $file String: filename.
-	 * @param $byteOrder String Type of byte ordering either 'BE' (Big Endian) or 'LE' (Little Endian). Default ''.
+	 * @param string $file filename.
+	 * @param string $byteOrder Type of byte ordering either 'BE' (Big Endian) or 'LE' (Little Endian). Default ''.
 	 * @throws MWException
 	 * @todo FIXME: The following are broke:
 	 * SubjectArea. Need to test the more obscure tags.
@@ -113,7 +114,7 @@ class Exif {
 	 */
 	function __construct( $file, $byteOrder = '' ) {
 		/**
-		 * Page numbers here refer to pages in the EXIF 2.2 standard
+		 * Page numbers here refer to pages in the Exif 2.2 standard
 		 *
 		 * Note, Exif::UNDEFINED is treated as a string, not as an array of bytes
 		 * so don't put a count parameter for any UNDEFINED values.
@@ -124,8 +125,8 @@ class Exif {
 			# TIFF Rev. 6.0 Attribute Information (p22)
 			'IFD0' => array(
 				# Tags relating to image structure
-				'ImageWidth' => Exif::SHORT.','.Exif::LONG,		# Image width
-				'ImageLength' => Exif::SHORT.','.Exif::LONG,		# Image height
+				'ImageWidth' => Exif::SHORT_OR_LONG,		# Image width
+				'ImageLength' => Exif::SHORT_OR_LONG,		# Image height
 				'BitsPerSample' => array( Exif::SHORT, 3 ),		# Number of bits per component
 				# "When a primary image is JPEG compressed, this designation is not"
 				# "necessary and is omitted." (p23)
@@ -134,25 +135,25 @@ class Exif {
 				'Orientation' => Exif::SHORT,				# Orientation of image #p24
 				'SamplesPerPixel' => Exif::SHORT,			# Number of components
 				'PlanarConfiguration' => Exif::SHORT,			# Image data arrangement #p24
-				'YCbCrSubSampling' => array( Exif::SHORT, 2),		# Subsampling ratio of Y to C #p24
+				'YCbCrSubSampling' => array( Exif::SHORT, 2 ),		# Subsampling ratio of Y to C #p24
 				'YCbCrPositioning' => Exif::SHORT,			# Y and C positioning #p24-25
 				'XResolution' => Exif::RATIONAL,			# Image resolution in width direction
 				'YResolution' => Exif::RATIONAL,			# Image resolution in height direction
 				'ResolutionUnit' => Exif::SHORT,			# Unit of X and Y resolution #(p26)
 
 				# Tags relating to recording offset
-				'StripOffsets' => Exif::SHORT.','.Exif::LONG,			# Image data location
-				'RowsPerStrip' => Exif::SHORT.','.Exif::LONG,			# Number of rows per strip
-				'StripByteCounts' => Exif::SHORT.','.Exif::LONG,		# Bytes per compressed strip
-				'JPEGInterchangeFormat' => Exif::SHORT.','.Exif::LONG,		# Offset to JPEG SOI
-				'JPEGInterchangeFormatLength' => Exif::SHORT.','.Exif::LONG,	# Bytes of JPEG data
+				'StripOffsets' => Exif::SHORT_OR_LONG,			# Image data location
+				'RowsPerStrip' => Exif::SHORT_OR_LONG,			# Number of rows per strip
+				'StripByteCounts' => Exif::SHORT_OR_LONG,		# Bytes per compressed strip
+				'JPEGInterchangeFormat' => Exif::SHORT_OR_LONG,		# Offset to JPEG SOI
+				'JPEGInterchangeFormatLength' => Exif::SHORT_OR_LONG,	# Bytes of JPEG data
 
 				# Tags relating to image data characteristics
 				'TransferFunction' => Exif::IGNORE,			# Transfer function
-				'WhitePoint' => array( Exif::RATIONAL, 2),		# White point chromaticity
-				'PrimaryChromaticities' => array( Exif::RATIONAL, 6),	# Chromaticities of primarities
-				'YCbCrCoefficients' => array( Exif::RATIONAL, 3),	# Color space transformation matrix coefficients #p27
-				'ReferenceBlackWhite' => array( Exif::RATIONAL, 6),	# Pair of black and white reference values
+				'WhitePoint' => array( Exif::RATIONAL, 2 ),		# White point chromaticity
+				'PrimaryChromaticities' => array( Exif::RATIONAL, 6 ),	# Chromaticities of primarities
+				'YCbCrCoefficients' => array( Exif::RATIONAL, 3 ),	# Color space transformation matrix coefficients #p27
+				'ReferenceBlackWhite' => array( Exif::RATIONAL, 6 ),	# Pair of black and white reference values
 
 				# Other tags
 				'DateTime' => Exif::ASCII,				# File change date and time
@@ -167,8 +168,8 @@ class Exif {
 			# Exif IFD Attribute Information (p30-31)
 			'EXIF' => array(
 				# TODO: NOTE: Nonexistence of this field is taken to mean nonconformance
-				# to the EXIF 2.1 AND 2.2 standards
-				'ExifVersion' =>  Exif::UNDEFINED,			# Exif version
+				# to the Exif 2.1 AND 2.2 standards
+				'ExifVersion' => Exif::UNDEFINED,			# Exif version
 				'FlashPixVersion' => Exif::UNDEFINED,			# Supported Flashpix version #p32
 
 				# Tags relating to Image Data Characteristics
@@ -177,8 +178,8 @@ class Exif {
 				# Tags relating to image configuration
 				'ComponentsConfiguration' => Exif::UNDEFINED,			# Meaning of each component #p33
 				'CompressedBitsPerPixel' => Exif::RATIONAL,			# Image compression mode
-				'PixelYDimension' => Exif::SHORT.','.Exif::LONG,		# Valid image width
-				'PixelXDimension' => Exif::SHORT.','.Exif::LONG,		# Valid image height
+				'PixelYDimension' => Exif::SHORT_OR_LONG,		# Valid image width
+				'PixelXDimension' => Exif::SHORT_OR_LONG,		# Valid image height
 
 				# Tags relating to related user information
 				'MakerNote' => Exif::IGNORE,				# Manufacturer notes
@@ -218,7 +219,7 @@ class Exif {
 				'FocalPlaneXResolution' => Exif::RATIONAL,		# Focal plane X resolution
 				'FocalPlaneYResolution' => Exif::RATIONAL,		# Focal plane Y resolution
 				'FocalPlaneResolutionUnit' => Exif::SHORT,		# Focal plane resolution unit #p46
-				'SubjectLocation' => array( Exif::SHORT, 2),		# Subject location
+				'SubjectLocation' => array( Exif::SHORT, 2 ),		# Subject location
 				'ExposureIndex' => Exif::RATIONAL,			# Exposure index
 				'SensingMethod' => Exif::SHORT,				# Sensing method #p46
 				'FileSource' => Exif::UNDEFINED,			# File source #p47
@@ -250,12 +251,12 @@ class Exif {
 				'GPSLatitudeRef' => Exif::ASCII,			# North or South Latitude #p52-53
 				'GPSLatitude' => array( Exif::RATIONAL, 3 ),		# Latitude
 				'GPSLongitudeRef' => Exif::ASCII,			# East or West Longitude #p53
-				'GPSLongitude' => array( Exif::RATIONAL, 3),		# Longitude
+				'GPSLongitude' => array( Exif::RATIONAL, 3 ),		# Longitude
 				'GPSAltitudeRef' => Exif::UNDEFINED,
 				# Altitude reference. Note, the exif standard says this should be an EXIF::Byte,
 				# but php seems to disagree.
 				'GPSAltitude' => Exif::RATIONAL,			# Altitude
-				'GPSTimeStamp' => array( Exif::RATIONAL, 3),		# GPS time (atomic clock)
+				'GPSTimeStamp' => array( Exif::RATIONAL, 3 ),		# GPS time (atomic clock)
 				'GPSSatellites' => Exif::ASCII,				# Satellites used for measurement
 				'GPSStatus' => Exif::ASCII,				# Receiver status #p54
 				'GPSMeasureMode' => Exif::ASCII,			# Measurement mode #p54-55
@@ -296,7 +297,7 @@ class Exif {
 		}
 
 		$this->debugFile( $this->basename, __FUNCTION__, true );
-		if( function_exists( 'exif_read_data' ) ) {
+		if ( function_exists( 'exif_read_data' ) ) {
 			wfSuppressWarnings();
 			$data = exif_read_data( $this->file, 0, true );
 			wfRestoreWarnings();
@@ -346,24 +347,24 @@ class Exif {
 	}
 
 	/**
-	* Collapse some fields together.
-	* This converts some fields from exif form, to a more friendly form.
-	* For example GPS latitude to a single number.
-	*
-	* The rationale behind this is that we're storing data, not presenting to the user
-	* For example a longitude is a single number describing how far away you are from
-	* the prime meridian. Well it might be nice to split it up into minutes and seconds
-	* for the user, it doesn't really make sense to split a single number into 4 parts
-	* for storage. (degrees, minutes, second, direction vs single floating point number).
-	*
-	* Other things this might do (not really sure if they make sense or not):
-	* Dates -> mediawiki date format.
-	* convert values that can be in different units to be in one standardized unit.
-	*
-	* As an alternative approach, some of this could be done in the validate phase
-	* if we make up our own types like Exif::DATE.
-	*/
-	function collapseData( ) {
+	 * Collapse some fields together.
+	 * This converts some fields from exif form, to a more friendly form.
+	 * For example GPS latitude to a single number.
+	 *
+	 * The rationale behind this is that we're storing data, not presenting to the user
+	 * For example a longitude is a single number describing how far away you are from
+	 * the prime meridian. Well it might be nice to split it up into minutes and seconds
+	 * for the user, it doesn't really make sense to split a single number into 4 parts
+	 * for storage. (degrees, minutes, second, direction vs single floating point number).
+	 *
+	 * Other things this might do (not really sure if they make sense or not):
+	 * Dates -> mediawiki date format.
+	 * convert values that can be in different units to be in one standardized unit.
+	 *
+	 * As an alternative approach, some of this could be done in the validate phase
+	 * if we make up our own types like Exif::DATE.
+	 */
+	function collapseData() {
 
 		$this->exifGPStoNumber( 'GPSLatitude' );
 		$this->exifGPStoNumber( 'GPSDestLatitude' );
@@ -393,7 +394,7 @@ class Exif {
 		//ComponentsConfiguration should really be an array instead of a string...
 		//This turns a string of binary numbers into an array of numbers.
 
-		if ( isset ( $this->mFilteredExifData['ComponentsConfiguration'] ) ) {
+		if ( isset( $this->mFilteredExifData['ComponentsConfiguration'] ) ) {
 			$val = $this->mFilteredExifData['ComponentsConfiguration'];
 			$ccVals = array();
 			for ( $i = 0; $i < strlen( $val ); $i++ ) {
@@ -410,7 +411,7 @@ class Exif {
 		//Also change exif tag name from GPSVersion (what php exif thinks it is)
 		//to GPSVersionID (what the exif standard thinks it is).
 
-		if ( isset ( $this->mFilteredExifData['GPSVersion'] ) ) {
+		if ( isset( $this->mFilteredExifData['GPSVersion'] ) ) {
 			$val = $this->mFilteredExifData['GPSVersion'];
 			$newVal = '';
 			for ( $i = 0; $i < strlen( $val ); $i++ ) {
@@ -434,12 +435,12 @@ class Exif {
 
 	}
 	/**
-	* Do userComment tags and similar. See pg. 34 of exif standard.
-	* basically first 8 bytes is charset, rest is value.
-	* This has not been tested on any shift-JIS strings.
-	* @param $prop String prop name.
-	*/
-	private function charCodeString ( $prop ) {
+	 * Do userComment tags and similar. See pg. 34 of exif standard.
+	 * basically first 8 bytes is charset, rest is value.
+	 * This has not been tested on any shift-JIS strings.
+	 * @param string $prop prop name.
+	 */
+	private function charCodeString( $prop ) {
 		if ( isset( $this->mFilteredExifData[$prop] ) ) {
 
 			if ( strlen( $this->mFilteredExifData[$prop] ) <= 8 ) {
@@ -495,22 +496,22 @@ class Exif {
 		}
 	}
 	/**
-	* Convert an Exif::UNDEFINED from a raw binary string
-	* to its value. This is sometimes needed depending on
-	* the type of UNDEFINED field
-	* @param $prop String name of property
-	*/
-	private function exifPropToOrd ( $prop ) {
+	 * Convert an Exif::UNDEFINED from a raw binary string
+	 * to its value. This is sometimes needed depending on
+	 * the type of UNDEFINED field
+	 * @param string $prop name of property
+	 */
+	private function exifPropToOrd( $prop ) {
 		if ( isset( $this->mFilteredExifData[$prop] ) ) {
 			$this->mFilteredExifData[$prop] = ord( $this->mFilteredExifData[$prop] );
 		}
 	}
 	/**
-	* Convert gps in exif form to a single floating point number
-	* for example 10 degress 20`40`` S -> -10.34444
-	* @param String $prop a gps coordinate exif tag name (like GPSLongitude)
-	*/
-	private function exifGPStoNumber ( $prop ) {
+	 * Convert gps in exif form to a single floating point number
+	 * for example 10 degress 20`40`` S -> -10.34444
+	 * @param string $prop a gps coordinate exif tag name (like GPSLongitude)
+	 */
+	private function exifGPStoNumber( $prop ) {
 		$loc =& $this->mFilteredExifData[$prop];
 		$dir =& $this->mFilteredExifData[$prop . 'Ref'];
 		$res = false;
@@ -545,7 +546,7 @@ class Exif {
 	 *
 	 * @deprecated since 1.18
 	 */
-	function makeFormattedData( ) {
+	function makeFormattedData() {
 		wfDeprecated( __METHOD__, '1.18' );
 		$this->mFormattedExifData = FormatMetadata::getFormattedData(
 			$this->mFilteredExifData );
@@ -677,7 +678,7 @@ class Exif {
 	 */
 	private function isRational( $in ) {
 		$m = array();
-		if ( !is_array( $in ) && @preg_match( '/^(\d+)\/(\d+[1-9]|[1-9]\d*)$/', $in, $m ) ) { # Avoid division by zero
+		if ( !is_array( $in ) && preg_match( '/^(\d+)\/(\d+[1-9]|[1-9]\d*)$/', $in, $m ) ) { # Avoid division by zero
 			return $this->isLong( $m[1] ) && $this->isLong( $m[2] );
 		} else {
 			$this->debug( $in, __FUNCTION__, 'fed a non-fraction value' );
@@ -727,8 +728,8 @@ class Exif {
 	 * Validates if a tag has a legal value according to the Exif spec
 	 *
 	 * @private
-	 * @param $section String: section where tag is located.
-	 * @param $tag String: the tag to check.
+	 * @param string $section section where tag is located.
+	 * @param string $tag the tag to check.
 	 * @param $val Mixed: the value of the tag.
 	 * @param $recursive Boolean: true if called recursively for array types.
 	 * @return bool
@@ -737,26 +738,27 @@ class Exif {
 		$debug = "tag is '$tag'";
 		$etype = $this->mExifTags[$section][$tag];
 		$ecount = 1;
-		if( is_array( $etype ) ) {
+		if ( is_array( $etype ) ) {
 			list( $etype, $ecount ) = $etype;
-			if ( $recursive )
+			if ( $recursive ) {
 				$ecount = 1; // checking individual elements
+			}
 		}
 		$count = count( $val );
-		if( $ecount != $count ) {
+		if ( $ecount != $count ) {
 			$this->debug( $val, __FUNCTION__, "Expected $ecount elements for $tag but got $count" );
 			return false;
 		}
-		if( $count > 1 ) {
-			foreach( $val as $v ) {
-				if( !$this->validate( $section, $tag, $v, true ) ) {
+		if ( $count > 1 ) {
+			foreach ( $val as $v ) {
+				if ( !$this->validate( $section, $tag, $v, true ) ) {
 					return false;
 				}
 			}
 			return true;
 		}
 		// Does not work if not typecast
-		switch( (string)$etype ) {
+		switch ( (string)$etype ) {
 			case (string)Exif::BYTE:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isByte( $val );
@@ -772,6 +774,9 @@ class Exif {
 			case (string)Exif::RATIONAL:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isRational( $val );
+			case (string)Exif::SHORT_OR_LONG:
+				$this->debug( $val, __FUNCTION__, $debug );
+				return $this->isShort( $val ) || $this->isLong( $val );
 			case (string)Exif::UNDEFINED:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isUndefined( $val );
@@ -781,9 +786,6 @@ class Exif {
 			case (string)Exif::SRATIONAL:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isSrational( $val );
-			case (string)Exif::SHORT.','.Exif::LONG:
-				$this->debug( $val, __FUNCTION__, $debug );
-				return $this->isShort( $val ) || $this->isLong( $val );
 			case (string)Exif::IGNORE:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return false;
@@ -808,7 +810,7 @@ class Exif {
 		}
 		$type = gettype( $in );
 		$class = ucfirst( __CLASS__ );
-		if ( $type === 'array' ) {
+		if ( is_array( $in ) ) {
 			$in = print_r( $in, true );
 		}
 
@@ -828,7 +830,7 @@ class Exif {
 	 *
 	 * @private
 	 *
-	 * @param $fname String: the name of the function calling this function
+	 * @param string $fname the name of the function calling this function
 	 * @param $io Boolean: Specify whether we're beginning or ending
 	 */
 	private function debugFile( $fname, $io ) {

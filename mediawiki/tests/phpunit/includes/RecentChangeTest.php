@@ -225,7 +225,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @todo: Emulate these edits somehow and extract
+	 * @todo Emulate these edits somehow and extract
 	 * raw edit summary from RecentChange object
 	 * --
 	 */
@@ -276,5 +276,4 @@ class RecentChangeTest extends MediaWikiTestCase {
 			$msg
 		);
 	}
-
 }

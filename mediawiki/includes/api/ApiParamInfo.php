@@ -69,7 +69,7 @@ class ApiParamInfo extends ApiBase {
 	 * @param array $params user parameters array
 	 * @param string $type parameter name
 	 * @param array $res store results in this array
-	 * @param array $resultObj results object to set indexed tag.
+	 * @param ApiResult $resultObj results object to set indexed tag.
 	 */
 	private function addModulesInfo( $params, $type, &$res, $resultObj ) {
 		if ( !is_array( $params[$type] ) ) {
@@ -149,7 +149,7 @@ class ApiParamInfo extends ApiBase {
 				$item = array();
 				if ( is_numeric( $k ) ) {
 					$retval['examples'] .= $v;
-					$result->setContent( $item, $v );
+					ApiResult::setContent( $item, $v );
 				} else {
 					if ( !is_array( $v ) ) {
 						$item['description'] = $v;
@@ -157,7 +157,7 @@ class ApiParamInfo extends ApiBase {
 						$item['description'] = implode( $v, "\n" );
 					}
 					$retval['examples'] .= $item['description'] . ' ' . $k;
-					$result->setContent( $item, $k );
+					ApiResult::setContent( $item, $k );
 				}
 				$retval['allexamples'][] = $item;
 			}
@@ -291,7 +291,7 @@ class ApiParamInfo extends ApiBase {
 				$retval['props'][] = $propResult;
 			}
 
-			// default is true for query modules, false for other modules, overriden by ApiBase::PROP_LIST
+			// default is true for query modules, false for other modules, overridden by ApiBase::PROP_LIST
 			if ( $listResult === true || ( $listResult !== false && $obj instanceof ApiQueryBase ) ) {
 				$retval['listresult'] = '';
 			}
@@ -300,7 +300,7 @@ class ApiParamInfo extends ApiBase {
 		}
 
 		// Errors
-		$retval['errors'] = $this->parseErrors( $obj->getPossibleErrors() );
+		$retval['errors'] = $this->parseErrors( $obj->getFinalPossibleErrors() );
 		$result->setIndexedTagName( $retval['errors'], 'error' );
 
 		return $retval;

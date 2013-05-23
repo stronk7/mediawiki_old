@@ -12,6 +12,7 @@
  * @author Liangent
  * @author Meno25
  * @author Michaello
+ * @author Milicevic01
  * @author Rancher
  * @author Red Baron
  * @author Reedy
@@ -332,8 +333,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Prikaži broj korisnika koji nadgledaju',
 'tog-oldsig' => 'Tekući potpis:',
 'tog-fancysig' => 'Smatraj potpis kao vikitekst (bez samopovezivanja)',
-'tog-externaleditor' => 'Uvek koristi spoljni uređivač (samo za napredne — potrebne su posebne postavke na računaru)',
-'tog-externaldiff' => 'Uvek koristi spoljni program za upoređivanje (samo za napredne — potrebne su posebne postavke na računaru)',
 'tog-showjumplinks' => 'Omogući pomoćne veze „Idi na“',
 'tog-uselivepreview' => 'Koristi trenutan pregled (javaskript, probna mogućnost)',
 'tog-forceeditsummary' => 'Opomeni me pri unosu praznog opisa',
@@ -348,6 +347,7 @@ $messages = array(
 'tog-showhiddencats' => 'Prikaži skrivene kategorije',
 'tog-noconvertlink' => 'Onemogući pretvaranje naslova veza',
 'tog-norollbackdiff' => 'Izostavi razliku nakon izvršenog vraćanja',
+'tog-useeditwarning' => 'Upozori me kada napustim stranicu sa nesačuvanim promenama',
 
 'underline-always' => 'uvek podvlači',
 'underline-never' => 'nikad ne podvlači',
@@ -816,7 +816,7 @@ Sačekajte nekoliko minuta i pokušajte ponovo.',
 'loginlanguagelabel' => 'Jezik: $1',
 'suspicious-userlogout' => 'Vaš zahtev za odjavu je odbijen jer je poslat od strane neispravnog pregledača ili posrednika.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Nepoznata greška u funkciji PHP mail().',
 'user-mail-no-addy' => 'Pokušali ste da pošaljete poruku bez e-adrese.',
 
@@ -1095,6 +1095,8 @@ Izgleda da ona već postoji.',
 'content-failed-to-parse' => 'Ne mogu da raščlanim sadržaj tipa $2 za model $1: $3',
 'invalid-content-data' => 'Neispravni podaci sadržaja',
 'content-not-allowed-here' => 'Sadržaj modela „$1“ nije dozvoljen na stranici [[$2]]',
+'editwarning-warning' => 'Ako napustite ovu stranicu, izgubićete sve izmene koje ste napravili.
+Ako ste prijavljeni, možete onemogućiti ovo upozorenje u svojim podešavanjima, u odeljku „Uređivanje“.',
 
 # Content models
 'content-model-wikitext' => 'vikitekst',
@@ -1383,15 +1385,6 @@ Ako želite sve da pretražite, dodajte prefiks '''all:''' ispred traženog sadr
 U međuvremenu možete tražiti preko Gugla.
 Upamtite da njegovi popisi ovog vikija mogu biti zastareli.',
 
-# Quickbar
-'qbsettings' => 'Bočna paleta',
-'qbsettings-none' => 'Ništa',
-'qbsettings-fixedleft' => 'Pričvršćena levo',
-'qbsettings-fixedright' => 'Pričvršćena desno',
-'qbsettings-floatingleft' => 'Plutajuća levo',
-'qbsettings-floatingright' => 'Plutajuća desno',
-'qbsettings-directionality' => 'Fiksno, u zavisnosti od smera pisanja vašeg jezika',
-
 # Preferences page
 'preferences' => 'Podešavanja',
 'mypreferences' => 'Podešavanja',
@@ -1513,7 +1506,7 @@ Ako izaberete da ga unesete, ono će biti korišćeno za pripisivanje vašeg rad
 'prefs-displaywatchlist' => 'Postavke prikaza',
 'prefs-diffs' => 'Razlike',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'E-adresa je ispravna',
 'email-address-validity-invalid' => 'Unesite ispravnu e-adresu',
 
@@ -1963,7 +1956,6 @@ Radi sigurnosti, img_auth.php je onemogućen.',
 'http-read-error' => 'HTTP greška pri čitanju.',
 'http-timed-out' => 'Zahtev HTTP je istekao.',
 'http-curl-error' => 'Greška pri otvaranju adrese: $1',
-'http-host-unreachable' => 'Ne mogu da pristupim adresi.',
 'http-bad-status' => 'Došlo je do problema tokom zahteva HTTP: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2319,7 +2311,7 @@ Pogledajte [[{{MediaWiki:Listgrouprights-helppage}}|više detalja]] o pojedinač
 'listgrouprights-addgroup-self-all' => 'Dodaj sve grupe na sopstveni nalog',
 'listgrouprights-removegroup-self-all' => 'Ukloni sve grupe sa sopstvenog naloga',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Nema adrese za slanje',
 'mailnologintext' => 'Morate biti [[Special:UserLogin|prijavljeni]] i imati ispravnu e-adresu u [[Special:Preferences|podešavanjima]] da biste slali e-poruke drugim korisnicima.',
 'emailuser' => 'Pošalji e-poruku',
@@ -2380,8 +2372,8 @@ Ukoliko budete želeli da uklonite stranicu sa spiska nadgledanja, kliknite opet
 'notvisiblerev' => 'Izmena je obrisana',
 'watchnochange' => 'Ništa što nadgledate nije promenjeno u prikazanom vremenu.',
 'watchlist-details' => '{{PLURAL:$1|$1 stranica|$1 stranice|$1 stranica}} na vašem spisku nadgledanja, ne računajući stranice za razgovor.',
-'wlheader-enotif' => '* E-obaveštenje je omogućeno.',
-'wlheader-showupdated' => "* Stranice koje su izmenjene otkad ste ih poslednji put posetili su '''podebljane'''",
+'wlheader-enotif' => 'E-obaveštenje je omogućeno.',
+'wlheader-showupdated' => "Stranice koje su izmenjene otkad ste ih poslednji put posetili su '''podebljane'''",
 'watchmethod-recent' => 'proverava se da li ima nadgledanih stranica u skorašnjim izmenama',
 'watchmethod-list' => 'proverava se da li ima skorašnjih izmena u nadgledanim stranicama',
 'watchlistcontains' => 'Vaš spisak nadgledanja sadrži $1 {{PLURAL:$1|stranicu|stranice|stranica}}.',
@@ -2627,7 +2619,7 @@ $1',
 'mycontris' => 'Doprinosi',
 'contribsub2' => 'Za $1 ($2)',
 'nocontribs' => 'Izmene koje odgovaraju ovim uslovima nisu pronađene.',
-'uctop' => '(vrh)',
+'uctop' => '(poslednja)',
 'month' => 'od meseca (i ranije):',
 'year' => 'od godine (i ranije):',
 
@@ -3111,17 +3103,11 @@ Pokušajte ponovo.',
 
 # Stylesheets
 'common.css' => '/** CSS postavljen ovde će se odraziti na sve teme */',
-'standard.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Standardno“ */',
-'nostalgia.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Nostalgija“ */',
 'cologneblue.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Kelnsko plava“ */',
 'monobook.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Monobuk“ */',
-'myskin.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Moja tema“ */',
-'chick.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Šik“ */',
-'simple.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Prosto“ */',
 'modern.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Savremeno“ */',
 'vector.css' => '/* CSS postavljen ovde će uticati na sve korisnike teme „Vektorsko“ */',
 'print.css' => '/* CSS postavljen ovde će uticati na izdanje za štampu */',
-'handheld.css' => '/* CSS postavljen ovde će uticati na ručne uređaje s temom prilagođenom u $wgHandheldStyle */',
 'noscript.css' => '/* CSS postavljen ovde će uticati na sve korisnike kojima je onemogućen javaskript */',
 'group-autoconfirmed.css' => '/* CSS postavljen ovde će uticati na samopotvrđene korisnike */',
 'group-bot.css' => '/* CSS postavljen ovde će uticati samo na botove */',
@@ -3130,13 +3116,8 @@ Pokušajte ponovo.',
 
 # Scripts
 'common.js' => '/* Javaskript postavljen ovde će se koristiti za sve korisnike pri otvaranju svake stranice. */',
-'standard.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Standardno“ */',
-'nostalgia.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Nostalgija“ */',
 'cologneblue.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Kelnsko plava“ */',
 'monobook.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Monobuk“ */',
-'myskin.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste „Moju temu“ */',
-'chick.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Šik“ */',
-'simple.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Prosto“ */',
 'modern.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Savremeno“ */',
 'vector.js' => '/* Javaskript postavljen ovde će se učitati za sve one koji koriste temu „Vektorsko“ */',
 'group-autoconfirmed.js' => '/* Javaskript postavljen ovde će se učitati za samopotvrđene korisnike */',
@@ -3210,13 +3191,8 @@ Ovo je verovatno izazvano vezom do spoljašnjeg sajta koji se nalazi na crnoj li
 'pageinfo-protect-cascading-from' => 'Stranice sa prenosivom zaštitom od',
 
 # Skin names
-'skinname-standard' => 'Klasično',
-'skinname-nostalgia' => 'Nostalgija',
 'skinname-cologneblue' => 'Kelnsko plava',
 'skinname-monobook' => 'Monobuk',
-'skinname-myskin' => 'Moja tema',
-'skinname-chick' => 'Šik',
-'skinname-simple' => 'Prosto',
 'skinname-modern' => 'Savremeno',
 'skinname-vector' => 'Vektorsko',
 
@@ -3311,8 +3287,6 @@ Sve daljnje veze u istom redu smatraju se izuzecima.',
 
 /*
 Short names for language variants used for language conversion links.
-To disable showing a particular link, set it to 'disable', e.g.
-'variantname-zh-sg' => 'disable',
 Variants for Chinese language
 */
 'variantname-zh-hans' => 'hans',
@@ -3387,7 +3361,7 @@ Ako je prvobitno stanje datoteke promenjeno, moguće je da neki detalji ne opisu
 'metadata-langitem' => "'''$2:''' $1",
 'metadata-langitem-default' => '$1',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Širina',
 'exif-imagelength' => 'Visina',
 'exif-bitspersample' => 'Dubina boje',
@@ -3580,7 +3554,7 @@ $4, $5, $6 $7
 $8',
 'exif-subjectnewscode-value' => '$2 ($1)',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Nesažeto',
 'exif-compression-2' => 'CCITT Group 3 1 – Dimenzionalno izmenjeno Hafmanovo kodiranje po dužini',
 'exif-compression-3' => 'CCITT Group 3 faks kodiranje',
@@ -3827,7 +3801,7 @@ $8',
 'monthsall' => 'sve',
 'limitall' => 'sve',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Potvrda e-adrese',
 'confirmemail_noemail' => 'Niste uneli ispravnu e-adresu u [[Special:Preferences|podešavanjima]].',
 'confirmemail_text' => '{{SITENAME}} zahteva da potvrdite e-adresu pre nego što počnete da koristite mogućnosti e-pošte.
@@ -4095,13 +4069,6 @@ Trebalo bi da ste primili [{{SERVER}}{{SCRIPTPATH}}/COPYING primerak GNU-ove op�
 'version-entrypoints' => 'Adrese ulazne tačke',
 'version-entrypoints-header-entrypoint' => 'Ulazna tačka',
 'version-entrypoints-header-url' => 'Adresa',
-
-# Special:FilePath
-'filepath' => 'Putanja datoteke',
-'filepath-page' => 'Datoteka:',
-'filepath-submit' => 'Idi',
-'filepath-summary' => 'Ova posebna stranica prikazuje potpunu putanju datoteke.
-Slike su prikazane u punoj veličini, a druge vrste datoteka se pokreću pomoću njima pridruženim programima.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Pretraga duplikata',

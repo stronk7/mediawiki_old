@@ -42,7 +42,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @return resource
 	 */
 	protected function doQuery( $sql ) {
-		if( $this->bufferResults() ) {
+		if ( $this->bufferResults() ) {
 			$ret = mysql_query( $sql, $this->mConn );
 		} else {
 			$ret = mysql_unbuffered_query( $sql, $this->mConn );
@@ -68,6 +68,7 @@ class DatabaseMysql extends DatabaseBase {
 		# Fail now
 		# Otherwise we get a suppressed fatal error, which is very hard to track down
 		if ( !function_exists( 'mysql_connect' ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new DBConnectionError( $this, "MySQL functions missing, have you compiled PHP with the --with-mysql option?\n" );
 		}
 
@@ -152,7 +153,7 @@ class DatabaseMysql extends DatabaseBase {
 
 		// Tell the server we're communicating with it in UTF-8.
 		// This may engage various charset conversions.
-		if( $wgDBmysql5 ) {
+		if ( $wgDBmysql5 ) {
 			$this->query( 'SET NAMES utf8', __METHOD__ );
 		} else {
 			$this->query( 'SET NAMES binary', __METHOD__ );
@@ -208,8 +209,8 @@ class DatabaseMysql extends DatabaseBase {
 		// Unfortunately, mysql_fetch_object does not reset the last errno.
 		// Only check for CR_SERVER_LOST and CR_UNKNOWN_ERROR, as
 		// these are the only errors mysql_fetch_object can cause.
-		// See http://dev.mysql.com/doc/refman/5.0/es/mysql-fetch-row.html.
-		if( $errno == 2000 || $errno == 2013 ) {
+		// See http://dev.mysql.com/doc/refman/5.0/en/mysql-fetch-row.html.
+		if ( $errno == 2000 || $errno == 2013 ) {
 			throw new DBUnexpectedError( $this, 'Error in fetchObject(): ' . htmlspecialchars( $this->lastError() ) );
 		}
 		return $row;
@@ -232,8 +233,8 @@ class DatabaseMysql extends DatabaseBase {
 		// Unfortunately, mysql_fetch_array does not reset the last errno.
 		// Only check for CR_SERVER_LOST and CR_UNKNOWN_ERROR, as
 		// these are the only errors mysql_fetch_object can cause.
-		// See http://dev.mysql.com/doc/refman/5.0/es/mysql-fetch-row.html.
-		if( $errno == 2000 || $errno == 2013 ) {
+		// See http://dev.mysql.com/doc/refman/5.0/en/mysql-fetch-row.html.
+		if ( $errno == 2000 || $errno == 2013 ) {
 			throw new DBUnexpectedError( $this, 'Error in fetchRow(): ' . htmlspecialchars( $this->lastError() ) );
 		}
 		return $row;
@@ -251,9 +252,11 @@ class DatabaseMysql extends DatabaseBase {
 		wfSuppressWarnings();
 		$n = mysql_num_rows( $res );
 		wfRestoreWarnings();
-		if( $this->lastErrno() ) {
-			throw new DBUnexpectedError( $this, 'Error in numRows(): ' . htmlspecialchars( $this->lastError() ) );
-		}
+		// Unfortunately, mysql_num_rows does not reset the last errno.
+		// We are not checking for any errors here, since
+		// these are no errors mysql_num_rows can cause.
+		// See http://dev.mysql.com/doc/refman/5.0/en/mysql-fetch-row.html.
+		// See https://bugzilla.wikimedia.org/42430
 		return $n;
 	}
 
@@ -325,7 +328,7 @@ class DatabaseMysql extends DatabaseBase {
 		} else {
 			$error = mysql_error();
 		}
-		if( $error ) {
+		if ( $error ) {
 			$error .= ' (' . $this->mServer . ')';
 		}
 		return $error;
@@ -345,7 +348,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @param $fname string
 	 * @return ResultWrapper
 	 */
-	function replace( $table, $uniqueIndexes, $rows, $fname = 'DatabaseMysql::replace' ) {
+	function replace( $table, $uniqueIndexes, $rows, $fname = __METHOD__ ) {
 		return $this->nativeReplace( $table, $rows, $fname );
 	}
 
@@ -361,7 +364,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @param $options string|array
 	 * @return int
 	 */
-	public function estimateRowCount( $table, $vars = '*', $conds = '', $fname = 'DatabaseMysql::estimateRowCount', $options = array() ) {
+	public function estimateRowCount( $table, $vars = '*', $conds = '', $fname = __METHOD__, $options = array() ) {
 		$options['EXPLAIN'] = true;
 		$res = $this->select( $table, $vars, $conds, $fname, $options );
 		if ( $res === false ) {
@@ -390,9 +393,9 @@ class DatabaseMysql extends DatabaseBase {
 			return false;
 		}
 		$n = mysql_num_fields( $res->result );
-		for( $i = 0; $i < $n; $i++ ) {
+		for ( $i = 0; $i < $n; $i++ ) {
 			$meta = mysql_fetch_field( $res->result, $i );
-			if( $field == $meta->name ) {
+			if ( $field == $meta->name ) {
 				return new MySQLField( $meta );
 			}
 		}
@@ -408,7 +411,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @param $fname string
 	 * @return bool|array|null False or null on failure
 	 */
-	function indexInfo( $table, $index, $fname = 'DatabaseMysql::indexInfo' ) {
+	function indexInfo( $table, $index, $fname = __METHOD__ ) {
 		# SHOW INDEX works in MySQL 3.23.58, but SHOW INDEXES does not.
 		# SHOW INDEX should work for 3.x and up:
 		# http://dev.mysql.com/doc/mysql/en/SHOW_INDEX.html
@@ -449,7 +452,7 @@ class DatabaseMysql extends DatabaseBase {
 	function strencode( $s ) {
 		$sQuoted = mysql_real_escape_string( $s, $this->mConn );
 
-		if( $sQuoted === false ) {
+		if ( $sQuoted === false ) {
 			$this->ping();
 			$sQuoted = mysql_real_escape_string( $s, $this->mConn );
 		}
@@ -534,11 +537,11 @@ class DatabaseMysql extends DatabaseBase {
 	function getLagFromProcesslist() {
 		wfDeprecated( __METHOD__, '1.19' );
 		$res = $this->query( 'SHOW PROCESSLIST', __METHOD__ );
-		if( !$res ) {
+		if ( !$res ) {
 			return false;
 		}
 		# Find slave SQL thread
-		foreach( $res as $row ) {
+		foreach ( $res as $row ) {
 			/* This should work for most situations - when default db
 			 * for thread is not specified, it had no events executed,
 			 * and therefore it doesn't know yet how lagged it is.
@@ -574,12 +577,12 @@ class DatabaseMysql extends DatabaseBase {
 	 * @return bool|string
 	 */
 	function masterPosWait( DBMasterPos $pos, $timeout ) {
-		$fname = 'DatabaseBase::masterPosWait';
+		$fname = __METHOD__;
 		wfProfileIn( $fname );
 
 		# Commit any open transactions
 		if ( $this->mTrxLevel ) {
-			$this->commit( __METHOD__ );
+			$this->commit( $fname );
 		}
 
 		if ( !is_null( $this->mFakeSlaveLag ) ) {
@@ -668,7 +671,7 @@ class DatabaseMysql extends DatabaseBase {
 	/**
 	 * @return string
 	 */
-	public static function getSoftwareLink() {
+	public function getSoftwareLink() {
 		return '[http://www.mysql.com/ MySQL]';
 	}
 
@@ -695,8 +698,8 @@ class DatabaseMysql extends DatabaseBase {
 	/**
 	 * Check to see if a named lock is available. This is non-blocking.
 	 *
-	 * @param $lockName String: name of lock to poll
-	 * @param $method String: name of method calling us
+	 * @param string $lockName name of lock to poll
+	 * @param string $method name of method calling us
 	 * @return Boolean
 	 * @since 1.20
 	 */
@@ -718,7 +721,7 @@ class DatabaseMysql extends DatabaseBase {
 		$result = $this->query( "SELECT GET_LOCK($lockName, $timeout) AS lockstatus", $method );
 		$row = $this->fetchObject( $result );
 
-		if( $row->lockstatus == 1 ) {
+		if ( $row->lockstatus == 1 ) {
 			return true;
 		} else {
 			wfDebug( __METHOD__ . " failed to acquire lock\n" );
@@ -749,13 +752,13 @@ class DatabaseMysql extends DatabaseBase {
 	public function lockTables( $read, $write, $method, $lowPriority = true ) {
 		$items = array();
 
-		foreach( $write as $table ) {
+		foreach ( $write as $table ) {
 			$tbl = $this->tableName( $table ) .
 					( $lowPriority ? ' LOW_PRIORITY' : '' ) .
 					' WRITE';
 			$items[] = $tbl;
 		}
-		foreach( $read as $table ) {
+		foreach ( $read as $table ) {
 			$items[] = $this->tableName( $table ) . ' READ';
 		}
 		$sql = "LOCK TABLES " . implode( ',', $items );
@@ -812,7 +815,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @throws DBUnexpectedError
 	 * @return bool|ResultWrapper
 	 */
-	function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds, $fname = 'DatabaseBase::deleteJoin' ) {
+	function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds, $fname = __METHOD__ ) {
 		if ( !$conds ) {
 			throw new DBUnexpectedError( $this, 'DatabaseBase::deleteJoin() called with empty $conds' );
 		}
@@ -882,7 +885,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @param $temporary bool
 	 * @param $fname string
 	 */
-	function duplicateTableStructure( $oldName, $newName, $temporary = false, $fname = 'DatabaseMysql::duplicateTableStructure' ) {
+	function duplicateTableStructure( $oldName, $newName, $temporary = false, $fname = __METHOD__ ) {
 		$tmp = $temporary ? 'TEMPORARY ' : '';
 		$newName = $this->addIdentifierQuotes( $newName );
 		$oldName = $this->addIdentifierQuotes( $oldName );
@@ -893,20 +896,20 @@ class DatabaseMysql extends DatabaseBase {
 	/**
 	 * List all tables on the database
 	 *
-	 * @param $prefix string Only show tables with this prefix, e.g. mw_
-	 * @param $fname String: calling function name
+	 * @param string $prefix Only show tables with this prefix, e.g. mw_
+	 * @param string $fname calling function name
 	 * @return array
 	 */
-	function listTables( $prefix = null, $fname = 'DatabaseMysql::listTables' ) {
-		$result = $this->query( "SHOW TABLES", $fname);
+	function listTables( $prefix = null, $fname = __METHOD__ ) {
+		$result = $this->query( "SHOW TABLES", $fname );
 
 		$endArray = array();
 
-		foreach( $result as $table ) {
+		foreach ( $result as $table ) {
 			$vars = get_object_vars( $table );
 			$table = array_pop( $vars );
 
-			if( !$prefix || strpos( $table, $prefix ) === 0 ) {
+			if ( !$prefix || strpos( $table, $prefix ) === 0 ) {
 				$endArray[] = $table;
 			}
 		}
@@ -919,8 +922,8 @@ class DatabaseMysql extends DatabaseBase {
 	 * @param $fName string
 	 * @return bool|ResultWrapper
 	 */
-	public function dropTable( $tableName, $fName = 'DatabaseMysql::dropTable' ) {
-		if( !$this->tableExists( $tableName, $fName ) ) {
+	public function dropTable( $tableName, $fName = __METHOD__ ) {
+		if ( !$this->tableExists( $tableName, $fName ) ) {
 			return false;
 		}
 		return $this->query( "DROP TABLE IF EXISTS " . $this->tableName( $tableName ), $fName );
@@ -963,7 +966,7 @@ class MySQLField implements Field {
 	private $name, $tablename, $default, $max_length, $nullable,
 		$is_pk, $is_unique, $is_multiple, $is_key, $type;
 
-	function __construct ( $info ) {
+	function __construct( $info ) {
 		$this->name = $info->name;
 		$this->tablename = $info->table;
 		$this->default = $info->def;

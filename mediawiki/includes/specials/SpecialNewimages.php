@@ -21,7 +21,6 @@
  * @ingroup SpecialPage
  */
 class SpecialNewFiles extends IncludableSpecialPage {
-
 	public function __construct() {
 		parent::__construct( 'Newimages' );
 	}
@@ -37,19 +36,22 @@ class SpecialNewFiles extends IncludableSpecialPage {
 			$form->prepareForm();
 			$form->displayForm( '' );
 		}
+
 		$this->getOutput()->addHTML( $pager->getBody() );
 		if ( !$this->including() ) {
 			$this->getOutput()->addHTML( $pager->getNavigationBar() );
 		}
 	}
-}
 
+	protected function getGroupName() {
+		return 'changes';
+	}
+}
 
 /**
  * @ingroup SpecialPage Pager
  */
 class NewFilesPager extends ReverseChronologicalPager {
-
 	/**
 	 * @var ImageGallery
 	 */
@@ -70,9 +72,10 @@ class NewFilesPager extends ReverseChronologicalPager {
 		$conds = $jconds = array();
 		$tables = array( 'image' );
 
-		if( !$this->showbots ) {
+		if ( !$this->showbots ) {
 			$groupsWithBotPermission = User::getGroupsWithPermission( 'bot' );
-			if( count( $groupsWithBotPermission ) ) {
+
+			if ( count( $groupsWithBotPermission ) ) {
 				$tables[] = 'user_groups';
 				$conds[] = 'ug_group IS NULL';
 				$jconds['user_groups'] = array(
@@ -85,11 +88,15 @@ class NewFilesPager extends ReverseChronologicalPager {
 			}
 		}
 
-		if( !$wgMiserMode && $this->like !== null ) {
+		if ( !$wgMiserMode && $this->like !== null ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$likeObj = Title::newFromURL( $this->like );
-			if( $likeObj instanceof Title ) {
-				$like = $dbr->buildLike( $dbr->anyString(), strtolower( $likeObj->getDBkey() ), $dbr->anyString() );
+			if ( $likeObj instanceof Title ) {
+				$like = $dbr->buildLike(
+					$dbr->anyString(),
+					strtolower( $likeObj->getDBkey() ),
+					$dbr->anyString()
+				);
 				$conds[] = "LOWER(img_name) $like";
 			}
 		}
@@ -112,6 +119,7 @@ class NewFilesPager extends ReverseChronologicalPager {
 		if ( !$this->gallery ) {
 			$this->gallery = new ImageGallery();
 		}
+
 		return '';
 	}
 
@@ -125,11 +133,12 @@ class NewFilesPager extends ReverseChronologicalPager {
 
 		$title = Title::makeTitle( NS_FILE, $name );
 		$ul = Linker::link( $user->getUserpage(), $user->getName() );
+		$time = $this->getLanguage()->userTimeAndDate( $row->img_timestamp, $this->getUser() );
 
 		$this->gallery->add(
 			$title,
 			"$ul<br />\n<i>"
-				. htmlspecialchars( $this->getLanguage()->userTimeAndDate( $row->img_timestamp, $this->getUser() ) )
+				. htmlspecialchars( $time )
 				. "</i><br />\n"
 		);
 	}
@@ -147,7 +156,6 @@ class NewFilesPager extends ReverseChronologicalPager {
 				'type' => 'check',
 				'label' => $this->msg( 'showhidebots', $this->msg( 'show' )->plain() )->escaped(),
 				'name' => 'showbots',
-			#	'default' => $this->getRequest()->getBool( 'showbots', 0 ),
 			),
 			'limit' => array(
 				'type' => 'hidden',
@@ -161,7 +169,7 @@ class NewFilesPager extends ReverseChronologicalPager {
 			),
 		);
 
-		if( $wgMiserMode ) {
+		if ( $wgMiserMode ) {
 			unset( $fields['like'] );
 		}
 

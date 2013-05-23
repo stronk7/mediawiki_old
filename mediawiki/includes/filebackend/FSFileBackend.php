@@ -70,7 +70,7 @@ class FSFileBackend extends FileBackendStore {
 		if ( isset( $config['containerPaths'] ) ) {
 			$this->containerPaths = (array)$config['containerPaths'];
 			foreach ( $this->containerPaths as &$path ) {
-				$path = rtrim( $path, '/' );  // remove trailing slash
+				$path = rtrim( $path, '/' ); // remove trailing slash
 			}
 		}
 
@@ -102,7 +102,7 @@ class FSFileBackend extends FileBackendStore {
 	/**
 	 * Sanity check a relative file system path for validity
 	 *
-	 * @param $path string Normalized relative path
+	 * @param string $path Normalized relative path
 	 * @return bool
 	 */
 	protected function isLegalRelPath( $path ) {
@@ -137,7 +137,7 @@ class FSFileBackend extends FileBackendStore {
 	/**
 	 * Get the absolute file system path for a storage path
 	 *
-	 * @param $storagePath string Storage path
+	 * @param string $storagePath Storage path
 	 * @return string|null
 	 */
 	protected function resolveToFSPath( $storagePath ) {
@@ -145,7 +145,7 @@ class FSFileBackend extends FileBackendStore {
 		if ( $relPath === null ) {
 			return null; // invalid
 		}
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $storagePath );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $storagePath );
 		$fsPath = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		if ( $relPath != '' ) {
 			$fsPath .= "/{$relPath}";
@@ -319,7 +319,7 @@ class FSFileBackend extends FileBackendStore {
 			$status->value = new FSFileOpHandle( $this, $params, 'Copy', $cmd, $dest );
 		} else { // immediate write
 			$this->trapWarnings();
-			$ok = copy( $source, $dest );
+			$ok = ( $source === $dest ) ? true : copy( $source, $dest );
 			$this->untrapWarnings();
 			// In some cases (at least over NFS), copy() returns true when it fails
 			if ( !$ok || ( filesize( $source ) !== filesize( $dest ) ) ) {
@@ -383,7 +383,7 @@ class FSFileBackend extends FileBackendStore {
 			$status->value = new FSFileOpHandle( $this, $params, 'Move', $cmd );
 		} else { // immediate write
 			$this->trapWarnings();
-			$ok = rename( $source, $dest );
+			$ok = ( $source === $dest ) ? true : rename( $source, $dest );
 			$this->untrapWarnings();
 			clearstatcache(); // file no longer at source
 			if ( !$ok ) {
@@ -460,7 +460,7 @@ class FSFileBackend extends FileBackendStore {
 	 */
 	protected function doPrepareInternal( $fullCont, $dirRel, array $params ) {
 		$status = Status::newGood();
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		$existed = is_dir( $dir ); // already there?
@@ -487,7 +487,7 @@ class FSFileBackend extends FileBackendStore {
 	 */
 	protected function doSecureInternal( $fullCont, $dirRel, array $params ) {
 		$status = Status::newGood();
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		// Seed new directories with a blank index.html, to prevent crawling...
@@ -518,7 +518,7 @@ class FSFileBackend extends FileBackendStore {
 	 */
 	protected function doPublishInternal( $fullCont, $dirRel, array $params ) {
 		$status = Status::newGood();
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		// Unseed new directories with a blank index.html, to allow crawling...
@@ -549,7 +549,7 @@ class FSFileBackend extends FileBackendStore {
 	 */
 	protected function doCleanInternal( $fullCont, $dirRel, array $params ) {
 		$status = Status::newGood();
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		$this->trapWarnings();
@@ -577,7 +577,7 @@ class FSFileBackend extends FileBackendStore {
 		if ( $stat ) {
 			return array(
 				'mtime' => wfTimestamp( TS_MW, $stat['mtime'] ),
-				'size'  => $stat['size']
+				'size' => $stat['size']
 			);
 		} elseif ( !$hadError ) {
 			return false; // file does not exist
@@ -598,7 +598,7 @@ class FSFileBackend extends FileBackendStore {
 	 * @return bool|null
 	 */
 	protected function doDirectoryExists( $fullCont, $dirRel, array $params ) {
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 
@@ -614,7 +614,7 @@ class FSFileBackend extends FileBackendStore {
 	 * @return Array|null
 	 */
 	public function getDirectoryListInternal( $fullCont, $dirRel, array $params ) {
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		$exists = is_dir( $dir );
@@ -633,7 +633,7 @@ class FSFileBackend extends FileBackendStore {
 	 * @return Array|FSFileBackendFileList|null
 	 */
 	public function getFileListInternal( $fullCont, $dirRel, array $params ) {
-		list( $b, $shortCont, $r ) = FileBackend::splitStoragePath( $params['dir'] );
+		list( , $shortCont, ) = FileBackend::splitStoragePath( $params['dir'] );
 		$contRoot = $this->containerFSRoot( $shortCont, $fullCont ); // must be valid
 		$dir = ( $dirRel != '' ) ? "{$contRoot}/{$dirRel}" : $contRoot;
 		$exists = is_dir( $dir );
@@ -747,7 +747,7 @@ class FSFileBackend extends FileBackendStore {
 	/**
 	 * Chmod a file, suppressing the warnings
 	 *
-	 * @param $path string Absolute file system path
+	 * @param string $path Absolute file system path
 	 * @return bool Success
 	 */
 	protected function chmod( $path ) {
@@ -779,7 +779,7 @@ class FSFileBackend extends FileBackendStore {
 	/**
 	 * Clean up directory separators for the given OS
 	 *
-	 * @param $path string FS path
+	 * @param string $path FS path
 	 * @return string
 	 */
 	protected function cleanPathSlashes( $path ) {
@@ -810,8 +810,9 @@ class FSFileBackend extends FileBackendStore {
 	 * @param $errno integer
 	 * @param $errstr string
 	 * @return bool
+	 * @access private
 	 */
-	private function handleWarning( $errno, $errstr ) {
+	public function handleWarning( $errno, $errstr ) {
 		wfDebugLog( 'FSFileBackend', $errstr ); // more detailed error logging
 		$this->hadWarningErrors[count( $this->hadWarningErrors ) - 1] = true;
 		return true; // suppress from PHP handler
@@ -857,12 +858,12 @@ abstract class FSFileBackendList implements Iterator {
 	protected $params = array();
 
 	/**
-	 * @param $dir string file system directory
+	 * @param string $dir file system directory
 	 * @param $params array
 	 */
 	public function __construct( $dir, array $params ) {
 		$path = realpath( $dir ); // normalize
-		if( $path === false ) {
+		if ( $path === false ) {
 			$path = $dir;
 		}
 		$this->suffixStart = strlen( $path ) + 1; // size of "path/to/dir/"
@@ -878,7 +879,7 @@ abstract class FSFileBackendList implements Iterator {
 	/**
 	 * Return an appropriate iterator object to wrap
 	 *
-	 * @param $dir string file system directory
+	 * @param string $dir file system directory
 	 * @return Iterator
 	 */
 	protected function initIterator( $dir ) {
@@ -963,7 +964,7 @@ abstract class FSFileBackendList implements Iterator {
 	 */
 	protected function getRelPath( $dir ) {
 		$path = realpath( $dir );
-		if( $path === false ) {
+		if ( $path === false ) {
 			$path = $dir;
 		}
 		return strtr( substr( $path, $this->suffixStart ), '\\', '/' );

@@ -18,6 +18,7 @@ class WfGetCallerTest extends MediaWikiTestCase {
 		if ( $n > 0 ) {
 			return self::intermediateFunction( $level, $n - 1 );
 		}
+
 		return wfGetCaller( $level );
 	}
 
@@ -29,7 +30,8 @@ class WfGetCallerTest extends MediaWikiTestCase {
 		$this->assertEquals( 'WfGetCallerTest::testN', self::intermediateFunction( 2, 0 ) );
 		$this->assertEquals( 'WfGetCallerTest::intermediateFunction', self::intermediateFunction( 1, 0 ) );
 
-		for ( $i = 0; $i < 10; $i++ )
+		for ( $i = 0; $i < 10; $i++ ) {
 			$this->assertEquals( 'WfGetCallerTest::intermediateFunction', self::intermediateFunction( $i + 1, $i ) );
+		}
 	}
 }

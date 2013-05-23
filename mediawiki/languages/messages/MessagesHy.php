@@ -303,8 +303,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ցույց տալ էջ հսկող մասնակիցների թիվը',
 'tog-oldsig' => 'Ներկայիս ստորագրությունն է․',
 'tog-fancysig' => 'Ստորագրությունը վիքիտեքստի տեսքով (առանց ավտոմատ հղման)',
-'tog-externaleditor' => 'Օգտագործել արտաքին խմբագրիչ ըստ լռության (պահանջում է հատուկ նախընտրություններ ձեր համակարգչում)',
-'tog-externaldiff' => 'Օգտագործել տարբերակների համեմատման արտաքին ծրագիր ըստ լռության (պահանջում է հատուկ նախընտրություններ ձեր համակարգչում)',
 'tog-showjumplinks' => 'Միացնել «անցնել դեպի» օգնական հղումները',
 'tog-uselivepreview' => 'Օգտագործել ուղիղ նախադիտում (JavaScript) (Փորձնական)',
 'tog-forceeditsummary' => 'Նախազգուշացնել խմբագրման ամփոփումը դատարկ թողնելու դեպքում',
@@ -318,6 +316,7 @@ $messages = array(
 'tog-diffonly' => 'Չցուցադրել էջի պարունակությունը տարբերությունների ներքևից',
 'tog-showhiddencats' => 'Ցուցադրել թաքնված կատեգորիաները',
 'tog-norollbackdiff' => 'Չցուցադրել տարբերությունները հետ գլորելուց հետո',
+'tog-useeditwarning' => 'Զգուշացնել ինձ, երբ ես լքում եմ խմբագրման էջը առանց կատարած փոփոխությունները հիշելու։',
 
 'underline-always' => 'Միշտ',
 'underline-never' => 'Երբեք',
@@ -425,7 +424,7 @@ $messages = array(
 # Vector skin
 'vector-action-addsection' => 'Ավելացնել քննարկում',
 'vector-action-delete' => 'Ջնջել',
-'vector-action-move' => 'Վերանվանել',
+'vector-action-move' => 'Տեղափոխել այս էջը',
 'vector-action-protect' => 'Պաշտպանել',
 'vector-action-undelete' => 'Վերականգնել',
 'vector-action-unprotect' => 'Հանել պաշտպանումից',
@@ -502,7 +501,7 @@ $1',
 'pool-errorunknown' => 'Անհայտ սխալ',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite' => '{{grammar:genitive|{{SITENAME}}}}ի մասին',
+'aboutsite' => '{{grammar:genitive|{{SITENAME}}}} մասին',
 'aboutpage' => 'Project:Էությունը',
 'copyright' => 'Կայքի բովանդակությունը գտնվում է «$1» արտոնագրի տակ։',
 'copyrightpage' => '{{ns:project}}:Հեղինակային իրավունքներ',
@@ -672,7 +671,7 @@ $2',
 'welcomecreation-msg' => 'Ձեր հաշիվն ստեղծված է։
 Չմոռանաք փոփոխել ձեր [[Special:Preferences|նախընտրությունները]]։',
 'yourname' => 'Մասնակցի անուն՝',
-'yourpassword' => 'Գաղտնաբառ.',
+'yourpassword' => 'Գաղտնաբառ՝',
 'yourpasswordagain' => 'Կրկնեք գաղտնաբառը',
 'remembermypassword' => 'Հիշել իմ մուտքագրված տվյալները այս համակարգչում ($1 {{PLURAL:$1|օրից|օրից}} ոչ ավել ժամկետով)',
 'yourdomainname' => 'Ձեր դոմենը՝',
@@ -686,14 +685,25 @@ $2',
 'logout' => 'Դուրս գալ համակարգից',
 'userlogout' => 'Ելնել համակարգից',
 'notloggedin' => 'Դուք չեք մտել համակարգ',
-'nologin' => "Դեռևս չե՞ք գրանցվել։ '''$1'''։",
+'userlogin-joinproject' => 'Միցել է {{SITENAME}}-{{grammar:genitive|ը}}',
+'nologin' => "Դեռևս չե՞ք գրանցվել '''$1'''։",
 'nologinlink' => 'Ստեղծեք մասնակցային հաշիվ',
 'createaccount' => 'Ստեղծել նոր հաշիվ',
 'gotaccount' => "Դուք արդեն գրանցվա՞ծ եք։ '''$1'''։",
 'gotaccountlink' => 'Մուտք գործեք համակարգ',
 'userlogin-resetlink' => 'Մոռացե՞լ եք Ձեր լոգին տվյալները։',
+'createacct-emailrequired' => 'Էլ-փոստի հասցեն',
 'createaccountmail' => 'էլ-փոստով',
 'createaccountreason' => 'Պատճառը՝',
+'createacct-reason' => 'Պատճառ',
+'createacct-reason-ph' => 'Ինչու եք ստեղծել մեկ այլ հաշիվ',
+'createacct-captcha' => 'Անվտանգության ստուգում',
+'createacct-imgcaptcha-ph' => 'Մուտքագրեք տեքստը տեսնում եք վերը նշվածը',
+'createacct-submit' => 'Ստեղծեք ձեր հաշիվը',
+'createacct-benefit-heading' => '{{SITENAME}}-ը կատարվում է նման մարդկանց համար:',
+'createacct-benefit-body1' => '{{PLURAL:$1|խմբագրել|խմբագրումներ}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|էջ|էջեր}}',
+'createacct-benefit-body3' => 'վերջին {{PLURAL:$1|ներդրումը|ներդրումները}}',
 'badretype' => 'Ձեր մուտքագրած գաղտնաբառերը չեն համընկնում։',
 'userexists' => 'Այս մասնակցի անունը արդեն զբաղված է։ Խնդրում ենք ընտրել մեկ այլ անուն։',
 'loginerror' => 'Մուտքի սխալ',
@@ -778,7 +788,9 @@ $2',
 'passwordreset-legend' => 'Վերականգնել գաղտնաբառը',
 'passwordreset-disabled' => 'Գաղտնաբառի վերականգնումը այս վիքիում թույլատրված չէ։',
 'passwordreset-username' => 'Մասնակցի անուն՝',
+'passwordreset-domain' => 'Դոմեն՝',
 'passwordreset-email' => 'Էլ-փոստի հասցեն՝',
+'passwordreset-emailtitle' => '{{SITENAME}} հաշվի մանրամասները',
 'passwordreset-emailelement' => 'Մասնակցային անունը՝ $1
 Ժամանակավոր գաղտնաբառը՝ $2',
 'passwordreset-emailsent' => 'Ուղարկվեց հիշեցնող էլ․ նամակ։',
@@ -1004,9 +1016,12 @@ $2',
 'edit-conflict' => 'Խմբագրման ընհարում։',
 'edit-no-change' => 'Ձեր խմբագրումը անտեսվել է, քանի որ ոչ մի փոփոխություն չի կատարվել տեքստի մեջ։',
 'defaultmessagetext' => 'Լռելյան տեքստը',
+'editwarning-warning' => 'Այս էջը լքելով դուք կարող եք կորցնել ձեր կատարած փոփոխությունները։
+Եթե դուք գրանցված եք համակարգում, կարող եք անջատել այս նախազգուշացումը ձեր նախընրությունների «{{int:prefs-editing}}» բաժնում։',
 
 # Content models
 'content-model-wikitext' => 'վիքիտեքստ',
+'content-model-javascript' => 'ՋավաՍկրիպտ',
 
 # "Undo" feature
 'undo-success' => 'Խմբագրումը կարող է հետ շրջվել։ Ստուգեք տարբերակների համեմատությունը ստորև, որպեսզի համոզվեք, որ դա է ձեզ հետաքրքրող փոփոխությունը և մատնահարեք «Հիշել էջը»՝ գործողությունն ավարտելու համար։',
@@ -1180,14 +1195,6 @@ $3 մասնակիցը տվել է հետևյալ պատճառը. ''$2''",
 'search-external' => 'Արտաքին որոնում',
 'searchdisabled' => '{{SITENAME}} կայքի ներքին որոնումը անջատված է։ Դուք կարող եք որոնել կայքի պարունակությունը արտաքին որոնման շարժիչներով (Google, Yahoo...), սակայն, ի նկատի ունեցեք, որ կայքի իրենց ինդեքսները կարող են հնացած լինել։',
 
-# Quickbar
-'qbsettings' => 'Արագ անցման վահանակ',
-'qbsettings-none' => 'Չցուցադրել',
-'qbsettings-fixedleft' => 'Ձախից անշարժ',
-'qbsettings-fixedright' => 'Աջից անշարժ',
-'qbsettings-floatingleft' => 'Ձախից լողացող',
-'qbsettings-floatingright' => 'Աջից լողացող',
-
 # Preferences page
 'preferences' => 'Նախընտրություններ',
 'mypreferences' => 'Նախընտրություններ',
@@ -1261,7 +1268,7 @@ $3 մասնակիցը տվել է հետևյալ պատճառը. ''$2''",
 'prefs-emailconfirm-label' => 'Էլ-փոստի վավերացում․',
 'prefs-textboxsize' => 'Խմբագրման պատուհանի չափը',
 'youremail' => 'Էլեկտրոնային փոստ.',
-'username' => 'Մասնակցի անուն.',
+'username' => '{{GENDER:$1|Մասնակցի անուն}}՝',
 'uid' => 'Մասնակցի իդենտիֆիկատոր.',
 'prefs-memberingroups' => 'Անդամակցության {{PLURAL:$1|խումբ|խմբեր}}.',
 'prefs-registration' => 'Գրանցման ամսաթիվը․',
@@ -1622,6 +1629,8 @@ $3 մասնակիցը տվել է հետևյալ պատճառը. ''$2''",
 Փոխարենը նրանք, հավանաբար, պետք է հղեն համապատասխան թեմային։<br />
 Էջը համարվում է երկիմաստության փարատման էջ, եթե այն պարունակում է [[MediaWiki:Disambiguationspage]] էջում ընդգրկված կաղապարներից որևէ մեկը։',
 
+'pageswithprop-submit' => 'Անցնել',
+
 'doubleredirects' => 'Կրկնակի վերահղումներ',
 'doubleredirectstext' => 'Այս էջում բերված են վերահղման էջերին վերահղող էջերը։ Յուրաքանչյուր տող պարունակում է հղումներ դեպի առաջին և երկրորդ վերահղումները, ինչպես նաև երկրորդ վերահղման նպատակային էջի առաջին տողը, որում սովորաբար նշված է էջի անվանումը, որին պետք է հղի նաև առաջին վերահղումը։',
 'double-redirect-fixed-move' => '«[[$1]]» էջը վերանվանված է և այժմ վերահղում է «[[$2]]» էջին։',
@@ -1810,8 +1819,8 @@ $1-ը հղվել է $2 ից',
 'notanarticle' => 'Հոդված չէ',
 'watchnochange' => 'Ոչ մի հսկվող էջ չի փոփոխվել ցուցադրվող ժամանակահատվածում։',
 'watchlist-details' => 'Ձեր հսկացանկում կա {{PLURAL:$1|$1 էջ|$1 էջ}}` քննարկման էջերը չհաշված։',
-'wlheader-enotif' => '* Էլ-փոստով տեղեկացումը միացված է։',
-'wlheader-showupdated' => "* Էջերը, որոնք փոփոխվել են ձեր դրանց վերջին այցից հետո բերված են '''թավատառ'''։",
+'wlheader-enotif' => 'Էլ-փոստով տեղեկացումը միացված է։',
+'wlheader-showupdated' => "Էջերը, որոնք փոփոխվել են ձեր դրանց վերջին այցից հետո բերված են '''թավատառ'''։",
 'watchmethod-recent' => 'վերջին փոփոխությունները հսկվող էջերի համար',
 'watchmethod-list' => 'հսկվող էջերի վերջին փոփոխությունները',
 'watchlistcontains' => 'Ձեր հսկացանկում կա $1 {{PLURAL:$1|էջ|էջ}}։',
@@ -1958,9 +1967,9 @@ $NEWPAGE
 
 # Restrictions (nouns)
 'restriction-edit' => 'Խմբագրում',
-'restriction-move' => 'Տեղափոխում',
+'restriction-move' => 'Տեղափոխել',
 'restriction-create' => 'Ստեղծում',
-'restriction-upload' => 'Բեռնում',
+'restriction-upload' => 'Բեռնել',
 
 # Restriction levels
 'restriction-level-sysop' => 'լրիվ պաշտպանված',
@@ -2324,13 +2333,13 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'tooltip-ca-protect' => 'Պաշտպանել այս էջը',
 'tooltip-ca-delete' => 'Ջնջել այս էջը',
 'tooltip-ca-undelete' => 'Վերականգնել այս էջի խմբագրումները՝ կատարված ջնջումից առաջ',
-'tooltip-ca-move' => 'Վերանվանել էջը',
+'tooltip-ca-move' => 'Տեղափոխել այս էջը',
 'tooltip-ca-watch' => 'Ավելացնել այս էջը ձեր հսկողության ցանկին',
 'tooltip-ca-unwatch' => 'Հանել այս էջը ձեր հսկողության ցանկից',
 'tooltip-search' => 'Որոնել {{SITENAME}} կայքում',
 'tooltip-search-go' => 'Անցնել այս ճշգրիտ անվանումով էջին',
 'tooltip-search-fulltext' => 'Գտնել այս տեքստով էջերը',
-'tooltip-p-logo' => 'Գլխավոր էջ',
+'tooltip-p-logo' => 'Այցելեք Գլխավոր Էջը',
 'tooltip-n-mainpage' => 'Այցելեք Գլխավոր Էջը',
 'tooltip-n-mainpage-description' => 'Անցնել գլխավոր էջ',
 'tooltip-n-portal' => 'Նախագծի մասին, որտեղ գտնել ինչը, ինչով կարող եք օգնել',
@@ -2437,13 +2446,10 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'pageinfo-protect-cascading-yes' => 'Այո',
 
 # Skin names
-'skinname-standard' => 'Դասական',
-'skinname-nostalgia' => 'Հայրենաբաղձություն',
 'skinname-cologneblue' => 'Քյոլնի թախիծ',
 'skinname-monobook' => 'ՄիաԳիրք',
-'skinname-myskin' => 'ԻմՏեսք',
-'skinname-chick' => 'Ծիտ',
-'skinname-simple' => 'Պարզ',
+'skinname-modern' => 'Մոդերն',
+'skinname-vector' => 'Սովորական',
 
 # Patrolling
 'markaspatrolleddiff' => 'Նշել որպես ստուգված',
@@ -2480,6 +2486,7 @@ $1',
 'mediawarning' => "'''Զգուշացում'''. այս նիշքի տեսակը կարող է պարունակել վնասակար ծրագրային կոդ։ Այն կիրարկելը կարող է վտանգել ձեր համակարգը։",
 'imagemaxsize' => 'Պատկերի էջում պատկերի չափի սահմանափակում.',
 'thumbsize' => 'Պատկերների փոքրացված չափ.',
+'widthheight' => '$1 × $2',
 'widthheightpage' => '$1 × $2, $3 էջեր',
 'file-info' => 'նիշքի չափ՝ $1, MIME-տեսակ՝ $2',
 'file-info-size' => '$1 × $2 փիքսել, նիշքի չափը՝ $3, MIME-տեսակը՝ $4',
@@ -2536,7 +2543,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Լայնք',
 'exif-imagelength' => 'Բարձրություն',
 'exif-artist' => 'Հեղինակ',
@@ -2547,6 +2554,8 @@ $1',
 'exif-componentsconfiguration-0' => 'գոյություն չունի',
 
 'exif-urgency-normal' => 'Նորմալ ($1)',
+'exif-urgency-low' => 'Թույլ ($1)',
+'exif-urgency-high' => 'Ուժեղ ($1)',
 
 # External editor support
 'edit-externally' => 'Խմբագրել այս նիշքը արտաքին խմբագրիչով',
@@ -2676,10 +2685,6 @@ $3
 
 # Special:Version
 'version' => 'ՄեդիաՎիքի տարբերակը',
-
-# Special:FilePath
-'filepath-page' => 'Նիշք՝',
-'filepath-submit' => 'Անցնել',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Փնտրել կրկնօրինակ պատկերներ',

@@ -28,12 +28,12 @@
  * Constructor class for key/value blob data kept in external repositories.
  *
  * Objects in external stores are defined by a special URL. The URL is of
- * the form "<store protocal>://<location>/<object name>". The protocal is used
+ * the form "<store protocol>://<location>/<object name>". The protocol is used
  * to determine what ExternalStoreMedium class is used. The location identifies
  * particular storage instances or database clusters for store class to use.
  *
  * When an object is inserted into a store, the calling code uses a partial URL of
- * the form "<store protocal>://<location>" and receives the full object URL on success.
+ * the form "<store protocol>://<location>" and receives the full object URL on success.
  * This is useful since object names can be sequential IDs, UUIDs, or hashes.
  * Callers are not responsible for unique name generation.
  *
@@ -47,8 +47,8 @@ class ExternalStore {
 	/**
 	 * Get an external store object of the given type, with the given parameters
 	 *
-	 * @param $proto string Type of external storage, should be a value in $wgExternalStores
-	 * @param $params array Associative array of ExternalStoreMedium parameters
+	 * @param string $proto Type of external storage, should be a value in $wgExternalStores
+	 * @param array $params Associative array of ExternalStoreMedium parameters
 	 * @return ExternalStoreMedium|bool The store class or false on error
 	 */
 	public static function getStoreObject( $proto, array $params = array() ) {
@@ -60,14 +60,14 @@ class ExternalStore {
 
 		$class = 'ExternalStore' . ucfirst( $proto );
 		// Any custom modules should be added to $wgAutoLoadClasses for on-demand loading
-		return MWInit::classExists( $class ) ? new $class( $params ) : false;
+		return class_exists( $class ) ? new $class( $params ) : false;
 	}
 
 	/**
 	 * Fetch data from given URL
 	 *
-	 * @param $url string The URL of the text to get
-	 * @param $params array Associative array of ExternalStoreMedium parameters
+	 * @param string $url The URL of the text to get
+	 * @param array $params Associative array of ExternalStoreMedium parameters
 	 * @return string|bool The text stored or false on error
 	 * @throws MWException
 	 */
@@ -95,9 +95,9 @@ class ExternalStore {
 	 * The protocol part is used to identify the class, the rest is passed to the
 	 * class itself as a parameter.
 	 *
-	 * @param $url String A partial external store URL ("<store type>://<location>")
+	 * @param string $url A partial external store URL ("<store type>://<location>")
 	 * @param $data string
-	 * @param $params array Associative array of ExternalStoreMedium parameters
+	 * @param array $params Associative array of ExternalStoreMedium parameters
 	 * @return string|bool The URL of the stored data item, or false on error
 	 * @throws MWException
 	 */
@@ -126,7 +126,7 @@ class ExternalStore {
 	 * itself. It also fails-over to the next possible clusters.
 	 *
 	 * @param $data string
-	 * @param $params array Associative array of ExternalStoreMedium parameters
+	 * @param array $params Associative array of ExternalStoreMedium parameters
 	 * @return string|bool The URL of the stored data item, or false on error
 	 * @throws MWException
 	 */

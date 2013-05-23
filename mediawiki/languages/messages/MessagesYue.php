@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Anson2812
  * @author Horacewai2
  * @author Justincheng12345
  * @author Kaganer
@@ -16,6 +17,7 @@
  * @author Waihorace
  * @author William915
  * @author Wong128hk
+ * @author Yfdyh000
  */
 
 $namespaceNames = array(
@@ -261,8 +263,6 @@ $messages = array(
 'tog-shownumberswatching' => '顯示有幾多人監視',
 'tog-oldsig' => '原有簽名嘅預覽：',
 'tog-fancysig' => '將簽名以維基字對待（冇自動連結）',
-'tog-externaleditor' => '預設用外掛編輯器（高階者專用，需要響你部電腦度做一啲特別設定。[//www.mediawiki.org/wiki/Manual:External_editors 更多資訊。]）',
-'tog-externaldiff' => '預設用外掛比較器（高階者專用，需要響你部電腦度做一啲特別設定。[//www.mediawiki.org/wiki/Manual:External_editors 更多資訊。]）',
 'tog-showjumplinks' => '啟用 "跳至" 協助連結',
 'tog-uselivepreview' => '用即時預覽（需要JavaScript）（實驗緊）',
 'tog-forceeditsummary' => '我冇入修改註解時通知我',
@@ -277,6 +277,7 @@ $messages = array(
 'tog-showhiddencats' => '顯示隱藏類',
 'tog-noconvertlink' => '唔轉連結標題',
 'tog-norollbackdiff' => '進行反轉之後略過差異',
+'tog-useeditwarning' => '當我離開未保存好嘅修改嗰陣警告我',
 
 'underline-always' => '全部',
 'underline-never' => '永不',
@@ -695,7 +696,7 @@ $1',
 'loginlanguagelabel' => '語言：$1',
 'suspicious-userlogout' => '你去登出嘅要求已經拒絕咗，因為佢可能由壞咗嘅瀏覽器或者快取代理傳送。',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => '響 PHP 嘅 mail() 參數度出現咗未知嘅錯誤',
 
 # Change password dialog
@@ -826,7 +827,7 @@ $1',
 '''佢嘅內容重未儲存！'''",
 'userinvalidcssjstitle' => "'''警告：''' 無叫做 \"\$1\" 嘅畫面。請記住自訂介面的 .css 和 .js 頁面時應使用細楷，例如：{{ns:user}}:Foo/vector.css 而唔係 {{ns:user}}:Foo/Vector.css 。",
 'updated' => '(己更新)',
-'note' => "'''留意:'''",
+'note' => "'''留意：'''",
 'previewnote' => "'''請記住呢個只係預覽。'''
 更改嘅内容重未儲存！",
 'previewconflict' => '呢個預覽係反映如果你選擇儲存嘅話，嘅上面嘅文字編輯區裏面嘅字會儲存落嚟。',
@@ -903,6 +904,8 @@ $1',
 'edit-no-change' => '你嘅編輯已經略過，因為文字無改過。',
 'edit-already-exists' => '唔可以開一新版。
 佢已經存在。',
+'editwarning-warning' => '離開呢一版會令到你嘅修改唔見咗。
+你可以響你嘅喜好設定嘅"{{int:prefs-editing}}"小節度停用呢個警告。',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => '警告: 呢一版有太多耗費嘅語法功能呼叫。
@@ -1162,14 +1165,6 @@ $1",
 'search-external' => '出面搵嘢',
 'searchdisabled' => '{{SITENAME}}嘅搜尋功能已經關閉。你可以利用Google嚟搵。不過佢哋對{{SITENAME}}嘅索引可能唔係最新嘅。',
 
-# Quickbar
-'qbsettings' => '快捷列',
-'qbsettings-none' => '無',
-'qbsettings-fixedleft' => '左邊固定',
-'qbsettings-fixedright' => '右邊固定',
-'qbsettings-floatingleft' => '左邊浮動',
-'qbsettings-floatingright' => '右邊浮動',
-
 # Preferences page
 'preferences' => '喜好設定',
 'mypreferences' => '自訂喜好',
@@ -1199,7 +1194,7 @@ $1",
 'resetprefs' => '清除未保存嘅更改',
 'restoreprefs' => '恢復全部預設設定',
 'prefs-editing' => '編輯中',
-'prefs-edit-boxsize' => '編輯框大細',
+'prefs-edit-boxsize' => '編寫框大細',
 'rows' => '列：',
 'columns' => '行：',
 'searchresultshead' => '搵嘢',
@@ -1242,7 +1237,7 @@ $1",
 'prefs-common-css-js' => '共有嘅CSS同埋JavaScript畀所有畫面用：',
 'prefs-reset-intro' => '你可以用呢版去重設你嘅喜好設定到網站預設值。呢個動作無得番轉頭。',
 'prefs-emailconfirm-label' => '電郵確認:',
-'prefs-textboxsize' => '編輯窗大細',
+'prefs-textboxsize' => '編寫框大細',
 'youremail' => '電郵:',
 'username' => '用戶名:',
 'uid' => '用戶 ID:',
@@ -1282,7 +1277,7 @@ $1",
 'prefs-displaywatchlist' => '顯示選項',
 'prefs-diffs' => '差異',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => '電郵地址睇嚟有效',
 'email-address-validity-invalid' => '請打一個有效嘅電郵地址',
 
@@ -1644,7 +1639,6 @@ $1',
 'http-read-error' => 'HTTP讀取錯誤。',
 'http-timed-out' => 'HTTP請求已過時。',
 'http-curl-error' => '擷取URL嗰陣出錯：$1',
-'http-host-unreachable' => '到唔到URL。',
 'http-bad-status' => '當做緊HTTP請求嗰陣出現咗問題：$1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1967,7 +1961,7 @@ Template:搞清楚',
 'listgrouprights-addgroup-self-all' => '加入全部組到自己嘅戶口度',
 'listgrouprights-removegroup-self-all' => '響自己嘅戶口度可以拎走全部組',
 
-# E-mail user
+# Email user
 'mailnologin' => '冇傳送地址',
 'mailnologintext' => '你一定要[[Special:UserLogin|登入咗]]同埋喺你嘅[[Special:Preferences|喜好設定]]度有個有效嘅電郵地址先可以傳送電郵畀其他用戶。',
 'emailuser' => '發電郵畀呢位用戶',
@@ -2017,8 +2011,8 @@ Template:搞清楚',
 'notvisiblerev' => '上次由唔同用戶嘅修訂已經刪除咗',
 'watchnochange' => '響顯示嘅時間之內，你所監視嘅頁面並無任何嘅更改。',
 'watchlist-details' => '唔計討論頁，有 $1 版響你個監視清單度。',
-'wlheader-enotif' => '* 電子郵件通知已經啟用。',
-'wlheader-showupdated' => "* '''粗體字'''嘅頁響你上次嚟之後被人改過",
+'wlheader-enotif' => '電子郵件通知已經啟用。',
+'wlheader-showupdated' => "'''粗體字'''嘅頁響你上次嚟之後被人改過",
 'watchmethod-recent' => '睇緊最近修改中有邊頁監視緊',
 'watchmethod-list' => '睇緊被監視頁有乜新修改',
 'watchlistcontains' => '你嘅監視清單裏面有$1頁。',
@@ -2644,27 +2638,16 @@ $1',
 
 # Stylesheets
 'common.css' => '/* 響呢度放 CSS 碼來改成個網站嘅畫面 */',
-'standard.css' => '/* 響呢度放 CSS 碼去改用戶用嘅傳統畫面 */',
-'nostalgia.css' => '/* 響呢度放 CSS 碼去改用戶用嘅懷舊畫面 */',
 'cologneblue.css' => '/* 響呢度放 CSS 碼去改用戶用嘅科隆藍畫面 */',
 'monobook.css' => '/* 響呢度放 CSS 碼去改用戶用嘅 Monobook 畫面 */',
-'myskin.css' => '/* 響呢度放 CSS 碼去改用戶用嘅我嘅畫面 */',
-'chick.css' => '/* 響呢度放 CSS 碼去改用戶用嘅俏畫面 */',
-'simple.css' => '/* 響呢度放 CSS 碼去改用戶用嘅簡單畫面 */',
 'modern.css' => '/* 響呢度放 CSS 碼去改用戶用嘅摩登畫面 */',
 'vector.css' => '/* 響呢度放 CSS 碼去改用戶用嘅域達畫面 */',
 'print.css' => '/* 響呢度放 CSS 碼去改打印輸出 */',
-'handheld.css' => '/* 響呢度放 CSS 碼去改響 $wgHandheldStyle 設定手提裝置畫面 */',
 
 # Scripts
 'common.js' => '/* 響每一次個頁面載入時，所有用戶都會載入呢度任何嘅JavaScript。 */',
-'standard.js' => '/* 響每一次個頁面載入時，用標準畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'nostalgia.js' => '/* 響每一次個頁面載入時，用懷舊畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'cologneblue.js' => '/* 響每一次個頁面載入時，用科隆藍畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'monobook.js' => '/* 響每一次個頁面載入時，用 Monobook 畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'myskin.js' => '/* 響每一次個頁面載入時，用我嘅畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'chick.js' => '/* 響每一次個頁面載入時，用俏畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'simple.js' => '/* 響每一次個頁面載入時，用簡單畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'modern.js' => '/* 響每一次個頁面載入時，用摩登畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'vector.js' => '/* 響每一次個頁面載入時，用域達畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 
@@ -2693,13 +2676,8 @@ $1',
 'spam_blanking' => '全部版本都含有指去$1嘅連結，留空',
 
 # Skin names
-'skinname-standard' => '傳統',
-'skinname-nostalgia' => '懷舊',
 'skinname-cologneblue' => '科隆藍',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => '我嘅畫面',
-'skinname-chick' => '俏',
-'skinname-simple' => '簡單',
 'skinname-modern' => '摩登',
 'skinname-vector' => 'Vector',
 
@@ -2771,8 +2749,6 @@ $1',
 
 /*
 Short names for language variants used for language conversion links.
-To disable showing a particular link, set it to 'disable', e.g.
-'variantname-zh-sg' => 'disable',
 Variants for Chinese language
 */
 'variantname-zh-hans' => '簡體',
@@ -2818,7 +2794,7 @@ Variants for Chinese language
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => '闊',
 'exif-imagelength' => '高',
 'exif-bitspersample' => '每部位位元數',
@@ -2934,7 +2910,7 @@ Variants for Chinese language
 'exif-gpsdifferential' => 'GPS 差動修正',
 'exif-objectname' => '短標題',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => '未壓過',
 
 'exif-unknowndate' => '未知日期',
@@ -3092,7 +3068,7 @@ Variants for Chinese language
 'monthsall' => '全部',
 'limitall' => '全部',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => '確認電郵地址',
 'confirmemail_noemail' => '你唔需要響你嘅[[Special:Preferences|用戶喜好設定]]度設定一個有效嘅電郵地址。',
 'confirmemail_text' => '{{SITENAME}}需要你喺使用電郵功能之前驗證吓你嘅電郵地址。啟用下邊個掣嚟發封確認信去你個地址度。封信入面會附帶一條包含代碼嘅連結；喺你個瀏覽器度打開條連結嚟確認你嘅電郵地址係有效嘅。',
@@ -3261,12 +3237,6 @@ MediaWiki是基於使用目的而加以發佈，但係就唔會負上任何嘅�
 'version-software' => '裝咗嘅軟件',
 'version-software-product' => '產品',
 'version-software-version' => '版本',
-
-# Special:FilePath
-'filepath' => '檔案路徑',
-'filepath-page' => '檔名:',
-'filepath-submit' => '去',
-'filepath-summary' => '呢個特別頁拎一個檔案嘅完整路徑。圖像會以完整嘅解像度顯示，其它嘅檔案類型會以同佢哋關聯咗嘅程式啟動。',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => '㨂重覆檔案',

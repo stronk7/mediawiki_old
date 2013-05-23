@@ -43,7 +43,7 @@ class ScopedLock {
 
 	/**
 	 * @param $manager LockManager
-	 * @param $paths Array List of storage paths
+	 * @param array $paths List of storage paths
 	 * @param $type integer LockManager::LOCK_* constant
 	 * @param $status Status
 	 */
@@ -62,7 +62,7 @@ class ScopedLock {
 	 * The status object is updated with any errors or warnings.
 	 *
 	 * @param $manager LockManager
-	 * @param $paths Array List of storage paths
+	 * @param array $paths List of storage paths
 	 * @param $type integer LockManager::LOCK_* constant
 	 * @param $status Status
 	 * @return ScopedLock|null Returns null on failure
@@ -76,6 +76,19 @@ class ScopedLock {
 			return new self( $manager, $paths, $type, $status );
 		}
 		return null;
+	}
+
+	/**
+	 * Release a scoped lock and set any errors in the attatched Status object.
+	 * This is useful for early release of locks before function scope is destroyed.
+	 * This is the same as setting the lock object to null.
+	 *
+	 * @param ScopedLock $lock
+	 * @return void
+	 * @since 1.21
+	 */
+	public static function release( ScopedLock &$lock = null ) {
+		$lock = null;
 	}
 
 	function __destruct() {

@@ -31,7 +31,7 @@ class UploadFromChunks extends UploadFromFile {
 	protected $mOffset, $mChunkIndex, $mFileKey, $mVirtualTempPath;
 
 	/**
-	 * Setup local pointers to stash, repo and user ( similar to UploadFromStash )
+	 * Setup local pointers to stash, repo and user (similar to UploadFromStash)
 	 *
 	 * @param $user User
 	 * @param $stash UploadStash
@@ -41,16 +41,16 @@ class UploadFromChunks extends UploadFromFile {
 		// user object. sometimes this won't exist, as when running from cron.
 		$this->user = $user;
 
-		if( $repo ) {
+		if ( $repo ) {
 			$this->repo = $repo;
 		} else {
 			$this->repo = RepoGroup::singleton()->getLocalRepo();
 		}
 
-		if( $stash ) {
+		if ( $stash ) {
 			$this->stash = $stash;
 		} else {
-			if( $user ) {
+			if ( $user ) {
 				wfDebug( __METHOD__ . " creating new UploadFromChunks instance for " . $user->getId() . "\n" );
 			} else {
 				wfDebug( __METHOD__ . " creating new UploadFromChunks instance with no user\n" );
@@ -66,13 +66,15 @@ class UploadFromChunks extends UploadFromFile {
 	 *
 	 * @return UploadStashFile stashed file
 	 */
-	public function stashFile() {
+	public function stashFile( User $user = null ) {
 		// Stash file is the called on creating a new chunk session:
 		$this->mChunkIndex = 0;
 		$this->mOffset = 0;
+
+		$this->verifyChunk();
 		// Create a local stash target
 		$this->mLocalFile = parent::stashFile();
-		// Update the initial file offset ( based on file size )
+		// Update the initial file offset (based on file size)
 		$this->mOffset = $this->mLocalFile->getSize();
 		$this->mFileKey = $this->mLocalFile->getFileKey();
 
@@ -112,7 +114,7 @@ class UploadFromChunks extends UploadFromFile {
 		// Concatenate all the chunks to mVirtualTempPath
 		$fileList = Array();
 		// The first chunk is stored at the mVirtualTempPath path so we start on "chunk 1"
-		for( $i = 0; $i <= $this->getChunkIndex(); $i++ ) {
+		for ( $i = 0; $i <= $this->getChunkIndex(); $i++ ) {
 			$fileList[] = $this->getVirtualChunkLocation( $i );
 		}
 
@@ -127,13 +129,22 @@ class UploadFromChunks extends UploadFromFile {
 		$tStart = microtime( true );
 		$status = $this->repo->concatenate( $fileList, $tmpPath, FileRepo::DELETE_SOURCE );
 		$tAmount = microtime( true ) - $tStart;
-		if( !$status->isOk() ) {
+		if ( !$status->isOk() ) {
 			return $status;
 		}
 		wfDebugLog( 'fileconcatenate', "Combined $i chunks in $tAmount seconds.\n" );
-		// Update the mTempPath and mLocalFile
-		// ( for FileUpload or normal Stash to take over )
+
 		$this->mTempPath = $tmpPath; // file system path
+		$this->mFileSize = filesize( $this->mTempPath ); //Since this was set for the last chunk previously
+		$ret = $this->verifyUpload();
+		if ( $ret['status'] !== UploadBase::OK ) {
+			wfDebugLog( 'fileconcatenate', "Verification failed for chunked upload" );
+			$status->fatal( $this->getVerificationErrorCode( $ret['status'] ) );
+			return $status;
+		}
+
+		// Update the mTempPath and mLocalFile
+		// (for FileUpload or normal Stash to take over)
 		$tStart = microtime( true );
 		$this->mLocalFile = parent::stashFile( $this->user );
 		$tAmount = microtime( true ) - $tStart;
@@ -173,24 +184,33 @@ class UploadFromChunks extends UploadFromFile {
 	/**
 	 * Add a chunk to the temporary directory
 	 *
-	 * @param $chunkPath string path to temporary chunk file
-	 * @param $chunkSize int size of the current chunk
-	 * @param $offset int offset of current chunk ( mutch match database chunk offset )
+	 * @param string $chunkPath path to temporary chunk file
+	 * @param int $chunkSize size of the current chunk
+	 * @param int $offset offset of current chunk ( mutch match database chunk offset )
 	 * @return Status
 	 */
 	public function addChunk( $chunkPath, $chunkSize, $offset ) {
 		// Get the offset before we add the chunk to the file system
 		$preAppendOffset = $this->getOffset();
 
-		if ( $preAppendOffset + $chunkSize > $this->getMaxUploadSize()) {
+		if ( $preAppendOffset + $chunkSize > $this->getMaxUploadSize() ) {
 			$status = Status::newFatal( 'file-too-large' );
 		} else {
 			// Make sure the client is uploading the correct chunk with a matching offset.
 			if ( $preAppendOffset == $offset ) {
 				// Update local chunk index for the current chunk
 				$this->mChunkIndex++;
+				try {
+					# For some reason mTempPath is set to first part
+					$oldTemp = $this->mTempPath;
+					$this->mTempPath = $chunkPath;
+					$this->verifyChunk();
+					$this->mTempPath = $oldTemp;
+				} catch ( UploadChunkVerificationException $e ) {
+					return Status::newFatal( $e->getMessage() );
+				}
 				$status = $this->outputChunk( $chunkPath );
-				if( $status->isGood() ) {
+				if ( $status->isGood() ) {
 					// Update local offset:
 					$this->mOffset = $preAppendOffset + $chunkSize;
 					// Update chunk table status db
@@ -257,7 +277,7 @@ class UploadFromChunks extends UploadFromFile {
 	 * @return Integer index of the current chunk
 	 */
 	private function getChunkIndex() {
-		if( $this->mChunkIndex !== null ) {
+		if ( $this->mChunkIndex !== null ) {
 			return $this->mChunkIndex;
 		}
 		return 0;
@@ -307,12 +327,31 @@ class UploadFromChunks extends UploadFromFile {
 	}
 
 	private function getChunkFileKey( $index = null ) {
-		if( $index === null ) {
+		if ( $index === null ) {
 			$index = $this->getChunkIndex();
 		}
 		return $this->mFileKey . '.' . $index;
+	}
+
+	/**
+	 * Verify that the chunk isn't really an evil html file
+	 *
+	 * @throws UploadChunkVerificationException
+	 */
+	private function verifyChunk() {
+		// Rest mDesiredDestName here so we verify the name as if it were mFileKey
+		$oldDesiredDestName = $this->mDesiredDestName;
+		$this->mDesiredDestName = $this->mFileKey;
+		$this->mTitle = false;
+		$res = $this->verifyPartialFile();
+		$this->mDesiredDestName = $oldDesiredDestName;
+		$this->mTitle = false;
+		if( is_array( $res ) ) {
+			throw new UploadChunkVerificationException( $res[0] );
+		}
 	}
 }
 
 class UploadChunkZeroLengthFileException extends MWException {};
 class UploadChunkFileException extends MWException {};
+class UploadChunkVerificationException extends MWException {};

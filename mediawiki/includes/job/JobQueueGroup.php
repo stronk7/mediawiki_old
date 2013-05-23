@@ -37,16 +37,17 @@ class JobQueueGroup {
 	protected $wiki; // string; wiki ID
 
 	const TYPE_DEFAULT = 1; // integer; jobs popped by default
-	const TYPE_ANY     = 2; // integer; any job
+	const TYPE_ANY = 2; // integer; any job
 
 	const USE_CACHE = 1; // integer; use process or persistent cache
+	const USE_PRIORITY = 2; // integer; respect deprioritization
 
 	const PROC_CACHE_TTL = 15; // integer; seconds
 
 	const CACHE_VERSION = 1; // integer; cache version
 
 	/**
-	 * @param $wiki string Wiki ID
+	 * @param string $wiki Wiki ID
 	 */
 	protected function __construct( $wiki ) {
 		$this->wiki = $wiki;
@@ -54,7 +55,7 @@ class JobQueueGroup {
 	}
 
 	/**
-	 * @param $wiki string Wiki ID
+	 * @param string $wiki Wiki ID
 	 * @return JobQueueGroup
 	 */
 	public static function singleton( $wiki = false ) {
@@ -146,6 +147,9 @@ class JobQueueGroup {
 	 */
 	public function pop( $qtype = self::TYPE_DEFAULT, $flags = 0 ) {
 		if ( is_string( $qtype ) ) { // specific job type
+			if ( ( $flags & self::USE_PRIORITY ) && $this->isQueueDeprioritized( $qtype ) ) {
+				return false; // back off
+			}
 			$job = $this->get( $qtype )->pop();
 			if ( !$job ) {
 				JobQueueAggregator::singleton()->notifyQueueEmpty( $this->wiki, $qtype );
@@ -167,6 +171,9 @@ class JobQueueGroup {
 			shuffle( $types ); // avoid starvation
 
 			foreach ( $types as $type ) { // for each queue...
+				if ( ( $flags & self::USE_PRIORITY ) && $this->isQueueDeprioritized( $type ) ) {
+					continue; // back off
+				}
 				$job = $this->get( $type )->pop();
 				if ( $job ) { // found
 					return $job;
@@ -202,6 +209,25 @@ class JobQueueGroup {
 	}
 
 	/**
+	 * Wait for any slaves or backup queue servers to catch up.
+	 *
+	 * This does nothing for certain queue classes.
+	 *
+	 * @return void
+	 * @throws MWException
+	 */
+	public function waitForBackups() {
+		global $wgJobTypeConf;
+
+		wfProfileIn( __METHOD__ );
+		// Try to avoid doing this more than once per queue storage medium
+		foreach ( $wgJobTypeConf as $type => $conf ) {
+			$this->get( $type )->waitForBackups();
+		}
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
 	 * Get the list of queue types
 	 *
 	 * @return array List of strings
@@ -234,6 +260,28 @@ class JobQueueGroup {
 			}
 		}
 		return $types;
+	}
+
+	/**
+	 * Check if jobs should not be popped of a queue right now.
+	 * This is only used for performance, such as to avoid spamming
+	 * the queue with many sub-jobs before they actually get run.
+	 *
+	 * @param $type string
+	 * @return bool
+	 */
+	public function isQueueDeprioritized( $type ) {
+		if ( $this->cache->has( 'isDeprioritized', $type, 5 ) ) {
+			return $this->cache->get( 'isDeprioritized', $type );
+		}
+		if ( $type === 'refreshLinks2' ) {
+			// Don't keep converting refreshLinks2 => refreshLinks jobs if the
+			// later jobs have not been done yet. This helps throttle queue spam.
+			$deprioritized = !$this->get( 'refreshLinks' )->isEmpty();
+			$this->cache->set( 'isDeprioritized', $type, $deprioritized );
+			return $deprioritized;
+		}
+		return false;
 	}
 
 	/**

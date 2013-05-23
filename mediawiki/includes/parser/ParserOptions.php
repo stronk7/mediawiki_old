@@ -312,7 +312,7 @@ class ParserOptions {
 	function setAllowSpecialInclusion( $x )     { return wfSetVar( $this->mAllowSpecialInclusion, $x ); }
 	function setTidy( $x )                      { return wfSetVar( $this->mTidy, $x ); }
 
-	/** @deprecated in 1.19; will be removed in 1.20 */
+	/** @deprecated in 1.19 */
 	function setSkin( $x )                      { wfDeprecated( __METHOD__, '1.19' ); }
 	function setInterfaceMessage( $x )          { return wfSetVar( $this->mInterfaceMessage, $x ); }
 	function setTargetLanguage( $x )            { return wfSetVar( $this->mTargetLanguage, $x, true ); }
@@ -505,7 +505,6 @@ class ParserOptions {
 			$confstr .= '*';
 		}
 
-
 		// Space assigned for the stubthreshold but unused
 		// since it disables the parser cache, its value will always
 		// be 0 when this function is called by parsercache.
@@ -539,7 +538,7 @@ class ParserOptions {
 
 		// add in language specific options, if any
 		// @todo FIXME: This is just a way of retrieving the url/user preferred variant
-		if( !is_null( $title ) ) {
+		if ( !is_null( $title ) ) {
 			$confstr .= $title->getPageLanguage()->getExtraHashOptions();
 		} else {
 			global $wgContLang;
@@ -558,8 +557,9 @@ class ParserOptions {
 			$confstr .= '!printable=1';
 		}
 
-		if ( $this->mExtraKey != '' )
+		if ( $this->mExtraKey != '' ) {
 			$confstr .= $this->mExtraKey;
+		}
 
 		// Give a chance for extensions to modify the hash, if they have
 		// extra options or other effects on the parser cache.

@@ -30,21 +30,21 @@ if ( PHP_SAPI != 'cli' ) {
 
 define( 'SELENIUMTEST', true );
 
-require( __DIR__ . '/../maintenance/Maintenance.php' );
+require __DIR__ . '/../maintenance/Maintenance.php';
 
-require_once( 'PHPUnit/Runner/Version.php' );
+require_once 'PHPUnit/Runner/Version.php';
 if ( version_compare( PHPUnit_Runner_Version::id(), '3.5.0', '>=' ) ) {
 	# PHPUnit 3.5.0 introduced a nice autoloader based on class name
-	require_once( 'PHPUnit/Autoload.php' );
+	require_once 'PHPUnit/Autoload.php';
 } else {
-	# Keep the old pre PHPUnit 3.5.0 behaviour for compatibility
-	require_once( 'PHPUnit/TextUI/Command.php' );
+	# Keep the old pre PHPUnit 3.5.0 behavior for compatibility
+	require_once 'PHPUnit/TextUI/Command.php';
 }
 
-require_once( 'PHPUnit/Extensions/SeleniumTestCase.php' );
-include_once( 'PHPUnit/Util/Log/JUnit.php' );
+require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
+include_once 'PHPUnit/Util/Log/JUnit.php';
 
-require_once( __DIR__ . "/selenium/SeleniumServerManager.php" );
+require_once __DIR__ . "/selenium/SeleniumServerManager.php";
 
 class SeleniumTester extends Maintenance {
 	protected $selenium;
@@ -85,7 +85,7 @@ class SeleniumTester extends Maintenance {
 
 	protected function startServer() {
 		if ( $this->seleniumServerExecPath == '' ) {
-			die ( "The selenium server exec path is not set in " .
+			die( "The selenium server exec path is not set in " .
 				"selenium_settings.ini. Cannot start server \n" .
 				"as requested - terminating RunSeleniumTests\n" );
 		}
@@ -96,11 +96,11 @@ class SeleniumTester extends Maintenance {
 			case 'started':
 				break;
 			case 'failed':
-				die ( "Unable to start the Selenium Server - " .
+				die( "Unable to start the Selenium Server - " .
 					"terminating RunSeleniumTests\n" );
 			case 'running':
-				echo ( "Warning: The Selenium Server is " .
-					"already running\n" );
+				echo "Warning: The Selenium Server is " .
+					"already running\n";
 				break;
 		}
 
@@ -108,17 +108,17 @@ class SeleniumTester extends Maintenance {
 	}
 
 	protected function stopServer() {
-		if ( !isset ( $this->serverManager ) ) {
-			echo ( "Warning: Request to stop Selenium Server, but it was " .
+		if ( !isset( $this->serverManager ) ) {
+			echo "Warning: Request to stop Selenium Server, but it was " .
 				"not stared by RunSeleniumTests\n" .
 				"RunSeleniumTests cannot stop a Selenium Server it " .
-				"did not start\n" );
+				"did not start\n";
 		} else {
 			switch ( $this->serverManager->stop() ) {
 				case 'stopped':
 					break;
 				case 'failed':
-					echo ( "unable to stop the Selenium Server\n" );
+					echo "unable to stop the Selenium Server\n";
 			}
 		}
 		return;
@@ -133,7 +133,7 @@ class SeleniumTester extends Maintenance {
 		}
 
 		foreach ( $seleniumTestSuites as $testSuiteName => $testSuiteFile ) {
-			require( $testSuiteFile );
+			require $testSuiteFile;
 			$suite = new $testSuiteName();
 			$suite->setName( $testSuiteName );
 			$suite->addTests();
@@ -255,4 +255,4 @@ class SeleniumTester extends Maintenance {
 
 $maintClass = "SeleniumTester";
 
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

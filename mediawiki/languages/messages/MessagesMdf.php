@@ -173,8 +173,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Няфтемс мъзяра сувсида конат арафтозь лопать эсь мельгеваномазост',
 'tog-oldsig' => 'Афкуксонь кядьтяшкс',
 'tog-fancysig' => 'Кядьтяшкст улихть викитекстокс (эслек тиеви сюлмафксфтома)',
-'tog-externaleditor' => 'Нолдамс тевс ушеширень петнить мъзярс илякс изь мярьгов (аньцек тевонь содайхненди, сяс мес эрявихть башка кядьёнкст-арафнемат содама машинаса [//www.mediawiki.org/wiki/Manual:External_editors сяда тов.])',
-'tog-externaldiff' => 'Нолдамс тевс ушеширень програм верзиень ваксс путоманкса мъзярс илякс изь мярьгов (аньцек тевонь содайхненди, сяс мес эрявихть башка кядьёнкст-арафнемат содама машинаса[//www.mediawiki.org/wiki/Manual:External_editors сяда тов.])',
 'tog-showjumplinks' => 'Мярьгомс "юпадемс" сатовома сюлмафкстненди',
 'tog-uselivepreview' => 'Максомс эряй васень няфтемась (JavaScript) (Варжамань)',
 'tog-forceeditsummary' => 'Няфтемс мондине мезе сёрмадомс шава петнема вальмас сувамста',
@@ -633,7 +631,7 @@ $2',
 'loginlanguagelabel' => 'Кяль: $1',
 'suspicious-userlogout' => 'Вешфксце лисемс кардафоль сяс мес няеви тянь кучезь колаф интернетс вятиень эли ётка ёкамань сервер вельде.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Аф содаф эльбятькс PHP сёрмавятемань функциеса.',
 'user-mail-no-addy' => 'Тяряфтыхть кучемс е-сёрма е-паргафтома',
 
@@ -1041,14 +1039,6 @@ $3 макссь туфталсь - ''$2''",
 'powersearch-togglenone' => 'Фкявок аш',
 'search-external' => 'Ушеширень вешендема',
 'searchdisabled' => '{{SITENAME}}-са тяни вешендемась аш. Ули кода вешендемс Google эли иля вешендемань интернет програпнень вельде. Шарфтк мяльце тостонь {{SITENAME}}-нь потмонц верзиец, улема, сирелгодсь.',
-
-# Quickbar
-'qbsettings' => 'Навигациень седяфкс',
-'qbsettings-none' => 'Аф няфтемс',
-'qbsettings-fixedleft' => 'Кержи шири киртьф',
-'qbsettings-fixedright' => 'Види шири киртьф',
-'qbsettings-floatingleft' => 'Кержи ширеса уенди',
-'qbsettings-floatingright' => 'Виде ширеса уенди',
 
 # Preferences page
 'preferences' => 'Арафнематне',
@@ -1685,7 +1675,7 @@ $3 макссь туфталсь - ''$2''",
 'listgrouprights-addgroup-all' => 'Ули кода поладомс сембе полгатне',
 'listgrouprights-removegroup-all' => 'Ули кода сембе полгатне валхтомс',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Аш кучема адрес',
 'mailnologintext' => 'Тондейть эряви [[Special:UserLogin|сувамс]]
 ди эряви кондясти электрононь адресце тонь [[Special:Preferences|арафнемасот]] иля тиихненди электрононь сёрмат кучемаснонды.',
@@ -1732,8 +1722,8 @@ $3 макссь туфталсь - ''$2''",
 'notvisiblerev' => 'Верзиесь нардафоль',
 'watchnochange' => 'Мезеге изь полафтов тонь мельгеванома лувомастот тя пингеёткса.',
 'watchlist-details' => '{{PLURAL:$1|$1 лопа|$1 лопат}} мельгеваномацень ала корхнема лопат аф лувомок.',
-'wlheader-enotif' => '* Электрононь сёрма вельде пачфнема нолдаф тевс.',
-'wlheader-showupdated' => "* Лопат конань полафтозь тонь мекольце сувсемадот меле няфтевсть '''эчке тяшкса'''.",
+'wlheader-enotif' => 'Электрононь сёрма вельде пачфнема нолдаф тевс.',
+'wlheader-showupdated' => "Лопат конань полафтозь тонь мекольце сувсемадот меле няфтевсть '''эчке тяшкса'''.",
 'watchmethod-recent' => 'мельге ванома ала лопатнень коряс мекольце петнематнень ванондома',
 'watchmethod-list' => 'мекольце петнематнень коряс мельге ванома ала лопат ванондома',
 'watchlistcontains' => 'Тонь мельгеваномасот $1 {{PLURAL:$1|лопа|лопат}}.',
@@ -2426,7 +2416,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Келец',
 'exif-imagelength' => 'Серец',
 'exif-bitspersample' => 'Битт фкя компонентс',
@@ -2540,7 +2530,7 @@ $1',
 'exif-gpsdatestamp' => 'GPS ши',
 'exif-gpsdifferential' => 'GPS диференциень петнема',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Аф компрезияф',
 
 'exif-unknowndate' => 'Аф содаф шись',
@@ -2692,7 +2682,7 @@ $1',
 'namespacesall' => 'сембе',
 'monthsall' => 'сембе',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Кемостамс электрононь адресть',
 'confirmemail_noemail' => 'Тонь аш кондясти электрононь адрес тяштьф тонь [[Special:Preferences|тиить арафнематнень]] эса.',
 'confirmemail_text' => '{{SITENAME}} веши тонь электрононь адресцень кемокстамац электрононь адресть арафнематнень тевс нолдамада инголе.
@@ -2831,13 +2821,6 @@ $5
 'version-software' => 'Нолдаф програпне',
 'version-software-product' => 'Нолдафкс',
 'version-software-version' => 'Верзие',
-
-# Special:FilePath
-'filepath' => 'Файлти ян',
-'filepath-page' => 'Файл:',
-'filepath-submit' => 'Ян',
-'filepath-summary' => 'Тя башка тевонь лопась няфнесы сембе янць файлти.
-Архтофксне няфневихть сембе синь кувалмосост, иля файлонь сортсна нолдавихть видеста програпнень вельде конат сотфт мархтост.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Вешендемс кафонзаф файлхне',

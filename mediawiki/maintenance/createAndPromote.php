@@ -23,7 +23,7 @@
  * @author Pablo Castellano <pablo@anche.no>
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to create an account and grant it administrator rights.
@@ -38,11 +38,11 @@ class CreateAndPromote extends Maintenance {
 		parent::__construct();
 		$this->mDescription = "Create a new user account and/or grant it additional rights";
 		$this->addOption( "force", "If acccount exists already, just grant it rights or change password." );
-		foreach( self::$permitRoles as $role ) {
+		foreach ( self::$permitRoles as $role ) {
 			$this->addOption( $role, "Add the account to the {$role} group" );
 		}
 		$this->addArg( "username", "Username of new user" );
-		$this->addArg( "password", "Password to set (not required if --force is used)", false);
+		$this->addArg( "password", "Password to set (not required if --force is used)", false );
 	}
 
 	public function execute() {
@@ -60,10 +60,10 @@ class CreateAndPromote extends Maintenance {
 
 		if ( $exists && !$force ) {
 			$this->error( "Account exists. Perhaps you want the --force option?", true );
-		} else if ( !$exists && !$password ) {
+		} elseif ( !$exists && !$password ) {
 			$this->error( "Argument <password> required!", false );
 			$this->maybeHelp( true );
-		} else if ( $exists ) {
+		} elseif ( $exists ) {
 			$inGroups = $user->getGroups();
 		}
 
@@ -72,7 +72,7 @@ class CreateAndPromote extends Maintenance {
 		if ( $exists && !$password && count( $promotions ) === 0 ) {
 			$this->output( "Account exists and nothing to do.\n" );
 			return;
-		} else if ( count( $promotions ) !== 0 ) {
+		} elseif ( count( $promotions ) !== 0 ) {
 			$promoText = "User:{$username} into " . implode( ', ', $promotions ) . "...\n";
 			if ( $exists ) {
 				$this->output( wfWikiID() . ": Promoting $promoText" );
@@ -114,4 +114,4 @@ class CreateAndPromote extends Maintenance {
 }
 
 $maintClass = "CreateAndPromote";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

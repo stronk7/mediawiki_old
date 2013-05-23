@@ -50,7 +50,7 @@ class ImagePage extends Article {
 
 	/**
 	 * Constructor from a page id
-	 * @param $id Int article ID to load
+	 * @param int $id article ID to load
 	 * @return ImagePage|null
 	 */
 	public static function newFromID( $id ) {
@@ -108,7 +108,7 @@ class ImagePage extends Article {
 		$diff = $request->getVal( 'diff' );
 		$diffOnly = $request->getBool( 'diffonly', $this->getContext()->getUser()->getOption( 'diffonly' ) );
 
-		if ( $this->getTitle()->getNamespace() != NS_FILE || ( isset( $diff ) && $diffOnly ) ) {
+		if ( $this->getTitle()->getNamespace() != NS_FILE || ( $diff !== null && $diffOnly ) ) {
 			parent::view();
 			return;
 		}
@@ -116,7 +116,7 @@ class ImagePage extends Article {
 		$this->loadFile();
 
 		if ( $this->getTitle()->getNamespace() == NS_FILE && $this->mPage->getFile()->getRedirected() ) {
-			if ( $this->getTitle()->getDBkey() == $this->mPage->getFile()->getName() || isset( $diff ) ) {
+			if ( $this->getTitle()->getDBkey() == $this->mPage->getFile()->getName() || $diff !== null ) {
 				// mTitle is the same as the redirect target so ask Article
 				// to perform the redirect for us.
 				$request->setVal( 'diffonly', 'true' );
@@ -206,7 +206,7 @@ class ImagePage extends Article {
 		}
 
 		// Add remote Filepage.css
-		if( !$this->repo->isLocal() ) {
+		if ( !$this->repo->isLocal() ) {
 			$css = $this->repo->getDescriptionStylesheetUrl();
 			if ( $css ) {
 				$out->addStyle( $css );
@@ -250,7 +250,7 @@ class ImagePage extends Article {
 	 *
 	 * @todo FIXME: Bad interface, see note on MediaHandler::formatMetadata().
 	 *
-	 * @param $metadata Array: the array containing the EXIF data
+	 * @param array $metadata the array containing the Exif data
 	 * @return String The metadata table. This is treated as Wikitext (!)
 	 */
 	protected function makeMetadataTable( $metadata ) {
@@ -262,7 +262,7 @@ class ImagePage extends Article {
 				# @todo FIXME: Why is this using escapeId for a class?!
 				$class = Sanitizer::escapeId( $v['id'] );
 				if ( $type == 'collapsed' ) {
-					$class .= ' collapsable';
+					$class .= ' collapsable'; // sic
 				}
 				$r .= "<tr class=\"$class\">\n";
 				$r .= "<th>{$v['name']}</th>\n";
@@ -330,13 +330,13 @@ class ImagePage extends Article {
 				if ( $width > $maxWidth || $height > $maxHeight ) {
 					# Calculate the thumbnail size.
 					# First case, the limiting factor is the width, not the height.
-					if ( $width / $height >= $maxWidth / $maxHeight ) { // FIXME: Possible divison by 0. bug 36911
-						$height = round( $height * $maxWidth / $width ); // FIXME: Possible divison by 0. bug 36911
+					if ( $width / $height >= $maxWidth / $maxHeight ) { // FIXME: Possible division by 0. bug 36911
+						$height = round( $height * $maxWidth / $width ); // FIXME: Possible division by 0. bug 36911
 						$width = $maxWidth;
 						# Note that $height <= $maxHeight now.
 					} else {
-						$newwidth = floor( $width * $maxHeight / $height ); // FIXME: Possible divison by 0. bug 36911
-						$height = round( $height * $newwidth / $width ); // FIXME: Possible divison by 0. bug 36911
+						$newwidth = floor( $width * $maxHeight / $height ); // FIXME: Possible division by 0. bug 36911
+						$height = round( $height * $newwidth / $width ); // FIXME: Possible division by 0. bug 36911
 						$width = $newwidth;
 						# Note that $height <= $maxHeight now, but might not be identical
 						# because of rounding.
@@ -550,7 +550,7 @@ EOT
 				$nofile = 'filepage-nofile';
 			}
 			// Note, if there is an image description page, but
-			// no image, then this setRobotPolicy is overriden
+			// no image, then this setRobotPolicy is overridden
 			// by Article::View().
 			$out->setRobotPolicy( 'noindex,nofollow' );
 			$out->wrapWikiMsg( "<div id='mw-imagepage-nofile' class='plainlinks'>\n$1\n</div>", $nofile );
@@ -565,7 +565,7 @@ EOT
 
 	/**
 	 * Creates an thumbnail of specified size and returns an HTML link to it
-	 * @param $params array Scaler parameters
+	 * @param array $params Scaler parameters
 	 * @param $width int
 	 * @param $height int
 	 * @return string
@@ -597,7 +597,7 @@ EOT
 		$descText = $this->mPage->getFile()->getDescriptionText();
 
 		/* Add canonical to head if there is no local page for this shared file */
-		if( $descUrl && $this->mPage->getID() == 0 ) {
+		if ( $descUrl && $this->mPage->getID() == 0 ) {
 			$out->setCanonicalUrl( $descUrl );
 		}
 
@@ -631,7 +631,7 @@ EOT
 	 * external editing (and instructions link) etc.
 	 */
 	protected function uploadLinksBox() {
-		global $wgEnableUploads, $wgUseExternalEditor;
+		global $wgEnableUploads;
 
 		if ( !$wgEnableUploads ) {
 			return;
@@ -652,25 +652,6 @@ EOT
 			$out->addHTML( "<li id=\"mw-imagepage-reupload-link\"><div class=\"plainlinks\">{$ulink}</div></li>\n" );
 		} else {
 			$out->addHTML( "<li id=\"mw-imagepage-upload-disallowed\">" . $this->getContext()->msg( 'upload-disallowed-here' )->escaped() . "</li>\n" );
-		}
-
-		# External editing link
-		if ( $wgUseExternalEditor ) {
-			$elink = Linker::linkKnown(
-				$this->getTitle(),
-				wfMessage( 'edit-externally' )->escaped(),
-				array(),
-				array(
-					'action' => 'edit',
-					'externaledit' => 'true',
-					'mode' => 'file'
-				)
-			);
-			$out->addHTML(
-				'<li id="mw-imagepage-edit-external">' . $elink . ' <small>' .
-					wfMessage( 'edit-externally-help' )->parse() .
-					"</small></li>\n"
-			);
 		}
 
 		$out->addHTML( "</ul>\n" );
@@ -719,7 +700,7 @@ EOT
 		$limit = 100;
 
 		$out = $this->getContext()->getOutput();
-		$res = $this->queryImageLinks( $this->getTitle()->getDbKey(), $limit + 1);
+		$res = $this->queryImageLinks( $this->getTitle()->getDBkey(), $limit + 1 );
 		$rows = array();
 		$redirects = array();
 		foreach ( $res as $row ) {
@@ -772,7 +753,7 @@ EOT
 
 		// Create links for every element
 		$currentCount = 0;
-		foreach( $rows as $element ) {
+		foreach ( $rows as $element ) {
 			$currentCount++;
 			if ( $currentCount > $limit ) {
 				break;
@@ -906,10 +887,10 @@ EOT
 	}
 
 	/**
-	 * Returns the corrosponding $wgImageLimits entry for the selected user option
+	 * Returns the corresponding $wgImageLimits entry for the selected user option
 	 *
 	 * @param $user User
-	 * @param $optionName string Name of a option to check, typically imagesize or thumbsize
+	 * @param string $optionName Name of a option to check, typically imagesize or thumbsize
 	 * @return array
 	 * @since 1.21
 	 */

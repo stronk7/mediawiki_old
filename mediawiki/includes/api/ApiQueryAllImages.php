@@ -42,7 +42,7 @@ class ApiQueryAllImages extends ApiQueryGeneratorBase {
 
 	/**
 	 * Override parent method to make sure the repo's DB is used
-	 * which may not necesarilly be the same as the local DB.
+	 * which may not necessarily be the same as the local DB.
 	 *
 	 * TODO: allow querying non-local repos.
 	 * @return DatabaseBase
@@ -189,7 +189,7 @@ class ApiQueryAllImages extends ApiQueryGeneratorBase {
 
 		if ( !is_null( $params['mime'] ) ) {
 			global $wgMiserMode;
-			if ( $wgMiserMode  ) {
+			if ( $wgMiserMode ) {
 				$this->dieUsage( 'MIME search disabled in Miser Mode', 'mimesearchdisabled' );
 			}
 
@@ -260,7 +260,7 @@ class ApiQueryAllImages extends ApiQueryGeneratorBase {
 	}
 
 	public function getAllowedParams() {
-		return array (
+		return array(
 			'sort' => array(
 				ApiBase::PARAM_DFLT => 'name',
 				ApiBase::PARAM_TYPE => array(

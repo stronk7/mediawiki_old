@@ -165,12 +165,10 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'doLogUsertextPopulation' ), # listed separately from the previous update because 1.16 was released without this update
 			array( 'doLogSearchPopulation' ),
 			array( 'addTable', 'l10n_cache',                        'patch-l10n_cache.sql' ),
-			array( 'addTable', 'external_user',                     'patch-external_user.sql' ),
 			array( 'addIndex', 'log_search',    'ls_field_val',     'patch-log_search-rename-index.sql' ),
 			array( 'addIndex', 'change_tag',    'change_tag_rc_tag', 'patch-change_tag-indexes.sql' ),
 			array( 'addField', 'redirect',      'rd_interwiki',     'patch-rd_interwiki.sql' ),
 			array( 'doUpdateTranscacheField' ),
-			array( 'renameEuWikiId' ),
 			array( 'doUpdateMimeMinorField' ),
 
 			// 1.17
@@ -179,7 +177,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField', 'updatelog',     'ul_value',         'patch-ul_value.sql' ),
 			array( 'addField', 'interwiki',     'iw_api',           'patch-iw_api_and_wikiid.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix',       'patch-kill-iwl_prefix.sql' ),
-			array( 'dropIndex', 'iwlinks',      'iwl_prefix_from_title', 'patch-kill-iwl_pft.sql' ),
 			array( 'addField', 'categorylinks', 'cl_collation',     'patch-categorylinks-better-collation.sql' ),
 			array( 'doClFieldsUpdate' ),
 			array( 'doCollationUpdate' ),
@@ -229,6 +226,11 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'modifyField', 'user_groups', 'ug_group', 'patch-ug_group-length-increase-255.sql' ),
 			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase-255.sql' ),
 			array( 'addIndex', 'page_props', 'pp_propname_page',  'patch-page_props-propname-page-index.sql' ),
+			array( 'addIndex', 'image', 'img_media_mime', 'patch-img_media_mime-index.sql' ),
+
+			// 1.22
+			array( 'doIwlinksIndexNonUnique' ),
+			array( 'addIndex', 'iwlinks', 'iwl_prefix_from_title',  'patch-iwlinks-from-title-index.sql' ),
 		);
 	}
 
@@ -236,9 +238,9 @@ class MysqlUpdater extends DatabaseUpdater {
 	 * 1.4 betas were missing the 'binary' marker from logging.log_title,
 	 * which causes a collation mismatch error on joins in MySQL 4.1.
 	 *
-	 * @param $table String: table name
-	 * @param $field String: field name to check
-	 * @param $patchFile String: path to the patch to correct the field
+	 * @param string $table table name
+	 * @param string $field field name to check
+	 * @param string $patchFile path to the patch to correct the field
 	 */
 	protected function checkBin( $table, $field, $patchFile ) {
 		if ( !$this->doTable( $table ) ) {
@@ -259,9 +261,9 @@ class MysqlUpdater extends DatabaseUpdater {
 	/**
 	 * Check whether an index contain a field
 	 *
-	 * @param $table String: table name
-	 * @param $index String: index name to check
-	 * @param $field String: field that should be in the index
+	 * @param string $table table name
+	 * @param string $index index name to check
+	 * @param string $field field that should be in the index
 	 * @return Boolean
 	 */
 	protected function indexHasField( $table, $index, $field ) {
@@ -329,7 +331,7 @@ class MysqlUpdater extends DatabaseUpdater {
 			return;
 		}
 
-		if( $this->applyPatch( 'patch-fix-il_from.sql', false, "Fixing ancient broken imagelinks table." ) ) {
+		if ( $this->applyPatch( 'patch-fix-il_from.sql', false, "Fixing ancient broken imagelinks table." ) ) {
 			$this->output( "NOTE: you will have to run maintenance/refreshLinks.php after this." );
 		}
 	}
@@ -366,7 +368,7 @@ class MysqlUpdater extends DatabaseUpdater {
 		$this->output( wfTimestamp( TS_DB ) );
 		$this->output( "......checking for duplicate entries.\n" );
 
-		list ( $cur, $old, $page, $revision, $text ) = $this->db->tableNamesN( 'cur', 'old', 'page', 'revision', 'text' );
+		list( $cur, $old, $page, $revision, $text ) = $this->db->tableNamesN( 'cur', 'old', 'page', 'revision', 'text' );
 
 		$rows = $this->db->query( "SELECT cur_title, cur_namespace, COUNT(cur_namespace) AS c
 				FROM $cur GROUP BY cur_title, cur_namespace HAVING c>1", __METHOD__ );
@@ -416,7 +418,7 @@ class MysqlUpdater extends DatabaseUpdater {
 				if ( $prev_title == $row->cur_title && $prev_namespace == $row->cur_namespace ) {
 					$deleteId[] = $row->cur_id;
 				}
-				$prev_title     = $row->cur_title;
+				$prev_title = $row->cur_title;
 				$prev_namespace = $row->cur_namespace;
 			}
 			$sql = "DELETE FROM $cur WHERE cur_id IN ( " . join( ',', $deleteId ) . ')';
@@ -523,12 +525,12 @@ class MysqlUpdater extends DatabaseUpdater {
 
 	protected function doNamespaceSize() {
 		$tables = array(
-			'page'          => 'page',
-			'archive'       => 'ar',
+			'page' => 'page',
+			'archive' => 'ar',
 			'recentchanges' => 'rc',
-			'watchlist'     => 'wl',
-			'querycache'    => 'qc',
-			'logging'       => 'log',
+			'watchlist' => 'wl',
+			'querycache' => 'qc',
+			'logging' => 'log',
 		);
 		foreach ( $tables as $table => $prefix ) {
 			$field = $prefix . '_namespace';
@@ -649,7 +651,7 @@ class MysqlUpdater extends DatabaseUpdater {
 			foreach ( $groups as $group ) {
 				$this->db->insert( 'user_groups',
 					array(
-						'ug_user'  => $row->ur_user,
+						'ug_user' => $row->ur_user,
 						'ug_group' => $group ),
 					__METHOD__ );
 			}
@@ -684,7 +686,7 @@ class MysqlUpdater extends DatabaseUpdater {
 		$this->db->query( "UPDATE $page SET page_random = RAND() WHERE page_random = 0", __METHOD__ );
 		$rows = $this->db->affectedRows();
 
-		if( $rows ) {
+		if ( $rows ) {
 			$this->output( "Set page_random to a random value on $rows rows where it was set to 0\n" );
 		} else {
 			$this->output( "...no page_random rows needed to be set\n" );
@@ -846,15 +848,6 @@ class MysqlUpdater extends DatabaseUpdater {
 		return $this->applyPatch( 'patch-pl-tl-il-unique.sql', false, "Making pl_namespace, tl_namespace and il_to indices UNIQUE" );
 	}
 
-	protected function renameEuWikiId() {
-		if ( $this->db->fieldExists( 'external_user', 'eu_local_id', __METHOD__ ) ) {
-			$this->output( "...eu_wiki_id already renamed to eu_local_id.\n" );
-			return;
-		}
-
-		$this->applyPatch( 'patch-eu_local_id.sql', false, "Renaming eu_wiki_id -> eu_local_id" );
-	}
-
 	protected function doUpdateMimeMinorField() {
 		if ( $this->updateRowExists( 'mime_minor_length' ) ) {
 			$this->output( "...*_mime_minor fields are already long enough.\n" );
@@ -900,5 +893,19 @@ class MysqlUpdater extends DatabaseUpdater {
 		}
 
 		$this->applyPatch( 'patch-user-newtalk-timestamp-null.sql', false, "Making user_last_timestamp nullable" );
+	}
+
+	protected function doIwlinksIndexNonUnique() {
+		$info = $this->db->indexInfo( 'iwlinks', 'iwl_prefix_title_from' );
+		if ( is_array( $info ) && $info[0]->Non_unique ) {
+			$this->output( "...iwl_prefix_title_from index is already non-UNIQUE.\n" );
+			return true;
+		}
+		if ( $this->skipSchema ) {
+			$this->output( "...skipping schema change (making iwl_prefix_title_from index non-UNIQUE).\n" );
+			return false;
+		}
+
+		return $this->applyPatch( 'patch-iwl_prefix_title_from-non-unique.sql', false, "Making iwl_prefix_title_from index non-UNIQUE" );
 	}
 }

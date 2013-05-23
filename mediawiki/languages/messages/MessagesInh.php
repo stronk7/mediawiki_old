@@ -12,6 +12,7 @@
  * @author Reedy
  * @author Sapral Mikail
  * @author Tagir
+ * @author Умар
  */
 
 $fallback = 'ru';
@@ -47,8 +48,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ший теркама дагарленгах оагӀув чулаьца бола дакъалаьцархой таьрах хьахьокха',
 'tog-oldsig' => 'Дола кулгайоазув:',
 'tog-fancysig' => 'Ший кулга яздара массахоамбаккхам (ший лоӀаме Ӏинка йоацаш)',
-'tog-externaleditor' => 'Арена гӀалатнийсдарца болх бе (ший болх ховш болачара мара мегаш дац, хьамлоархIара ший-тайпара оттам эша; [//www.mediawiki.org/wiki/Manual:External_editors хьажа эша])',
-'tog-externaldiff' => 'Арена бӀасакхосса болхоагӀувца болх бе (ший болх ховш болачара мара мегаш дац, хьамлоархIара ший-тайпара оттам эша; [//www.mediawiki.org/wiki/Manual:External_editors хьажа эша])',
 'tog-showjumplinks' => '"Дехьадала" яха новкъостала Ӏинк хьахьокха',
 'tog-uselivepreview' => 'Сиха бӀарахьажар (JavaScript) (Экспериментально)',
 'tog-forceeditsummary' => 'Хоам бе, хувцамий лоацам белгал даь деце',
@@ -556,9 +555,6 @@ $messages = array(
 'powersearch-toggleall' => 'Деррига',
 'powersearch-togglenone' => 'Цхьаккха',
 
-# Quickbar
-'qbsettings-none' => 'Цхьаккха',
-
 # Preferences page
 'preferences' => 'Оттамаш',
 'mypreferences' => 'Оттамаш',
@@ -796,7 +792,7 @@ $messages = array(
 # Special:ListGroupRights
 'listgrouprights-members' => '(тоабий дагарче)',
 
-# E-mail user
+# Email user
 'emailuser' => 'Дакъалаьцархочоа д-хоамни:',
 
 # Watchlist
@@ -1072,7 +1068,7 @@ $messages = array(
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Шерал',
 'exif-imagelength' => 'Лакхал',
 'exif-imagedescription' => 'Сурта цIи',
@@ -1131,11 +1127,6 @@ $messages = array(
 'version-specialpages' => 'ГIулакхий оагIувнаш',
 'version-version' => '(Доржам $1)',
 'version-software-version' => 'Доржам',
-
-# Special:FilePath
-'filepath' => 'Паьлачу никъ',
-'filepath-page' => 'Паьл:',
-'filepath-submit' => 'Дехьавала/яла',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'ПаьлацIи:',

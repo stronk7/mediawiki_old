@@ -46,7 +46,7 @@ class CssContent extends TextContent {
 	 */
 	public function preSaveTransform( Title $title, User $user, ParserOptions $popts ) {
 		global $wgParser;
-		// @todo: make pre-save transformation optional for script pages
+		// @todo Make pre-save transformation optional for script pages
 
 		$text = $this->getNativeData();
 		$pst = $wgParser->preSaveTransform( $text, $title, $user, $popts );
@@ -54,11 +54,10 @@ class CssContent extends TextContent {
 		return new CssContent( $pst );
 	}
 
-
-	protected function getHtml( ) {
+	protected function getHtml() {
 		$html = "";
 		$html .= "<pre class=\"mw-code mw-css\" dir=\"ltr\">\n";
-		$html .= $this->getHighlightHtml( );
+		$html .= $this->getHighlightHtml();
 		$html .= "\n</pre>\n";
 
 		return $html;

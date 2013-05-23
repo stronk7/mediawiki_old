@@ -95,7 +95,6 @@ class ApiQueryRevisions extends ApiQueryBase {
 				!is_null( $params['endid'] ) || $params['dir'] === 'newer' ||
 				!is_null( $params['start'] ) || !is_null( $params['end'] ) );
 
-
 		$pageSet = $this->getPageSet();
 		$pageCount = $pageSet->getGoodTitleCount();
 		$revCount = $pageSet->getRevisionCount();
@@ -147,17 +146,17 @@ class ApiQueryRevisions extends ApiQueryBase {
 		$prop = array_flip( $params['prop'] );
 
 		// Optional fields
-		$this->fld_ids = isset ( $prop['ids'] );
+		$this->fld_ids = isset( $prop['ids'] );
 		// $this->addFieldsIf('rev_text_id', $this->fld_ids); // should this be exposed?
-		$this->fld_flags = isset ( $prop['flags'] );
-		$this->fld_timestamp = isset ( $prop['timestamp'] );
-		$this->fld_comment = isset ( $prop['comment'] );
-		$this->fld_parsedcomment = isset ( $prop['parsedcomment'] );
-		$this->fld_size = isset ( $prop['size'] );
-		$this->fld_sha1 = isset ( $prop['sha1'] );
-		$this->fld_contentmodel = isset ( $prop['contentmodel'] );
+		$this->fld_flags = isset( $prop['flags'] );
+		$this->fld_timestamp = isset( $prop['timestamp'] );
+		$this->fld_comment = isset( $prop['comment'] );
+		$this->fld_parsedcomment = isset( $prop['parsedcomment'] );
+		$this->fld_size = isset( $prop['size'] );
+		$this->fld_sha1 = isset( $prop['sha1'] );
+		$this->fld_contentmodel = isset( $prop['contentmodel'] );
 		$this->fld_userid = isset( $prop['userid'] );
-		$this->fld_user = isset ( $prop['user'] );
+		$this->fld_user = isset( $prop['user'] );
 		$this->token = $params['token'];
 
 		if ( !empty( $params['contentformat'] ) ) {
@@ -168,7 +167,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 		$index = array();
 
 		$userMax = ( $this->fld_content ? ApiBase::LIMIT_SML1 : ApiBase::LIMIT_BIG1 );
-		$botMax  = ( $this->fld_content ? ApiBase::LIMIT_SML2 : ApiBase::LIMIT_BIG2 );
+		$botMax = ( $this->fld_content ? ApiBase::LIMIT_SML2 : ApiBase::LIMIT_BIG2 );
 		$limit = $params['limit'];
 		if ( $limit == 'max' ) {
 			$limit = $this->getMain()->canApiHighLimits() ? $botMax : $userMax;
@@ -197,6 +196,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 		if ( isset( $prop['content'] ) || !is_null( $this->difftotext ) ) {
 			// For each page we will request, the user must have read rights for that page
 			$user = $this->getUser();
+			/** @var $title Title */
 			foreach ( $pageSet->getGoodTitles() as $title ) {
 				if ( !$title->userCan( 'read', $user ) ) {
 					$this->dieUsage(
@@ -550,7 +550,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 				if ( !$content->isSupportedFormat( $format ) ) {
 					$name = $title->getPrefixedDBkey();
 
-					$this->dieUsage( "The requested format {$this->contentFormat} is not supported ".
+					$this->dieUsage( "The requested format {$this->contentFormat} is not supported " .
 									"for content model $model used by $name", 'badformat' );
 				}
 
@@ -593,7 +593,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 						$name = $title->getPrefixedDBkey();
 
-						$this->dieUsage( "The requested format {$this->contentFormat} is not supported for ".
+						$this->dieUsage( "The requested format {$this->contentFormat} is not supported for " .
 											"content model $model used by $name", 'badformat' );
 					}
 

@@ -125,7 +125,7 @@ abstract class ContextSource implements IContextSource {
 	/**
 	 * Get the Language object
 	 *
-	 * @deprecated 1.19 Use getLanguage instead
+	 * @deprecated since 1.19 Use getLanguage instead
 	 * @return Language
 	 */
 	public function getLang() {
@@ -163,5 +163,16 @@ abstract class ContextSource implements IContextSource {
 	public function msg( /* $args */ ) {
 		$args = func_get_args();
 		return call_user_func_array( array( $this->getContext(), 'msg' ), $args );
+	}
+
+	/**
+	 * Export the resolved user IP, HTTP headers, user ID, and session ID.
+	 * The result will be reasonably sized to allow for serialization.
+	 *
+	 * @return Array
+	 * @since 1.21
+	 */
+	public function exportSession() {
+		return $this->getContext()->exportSession();
 	}
 }

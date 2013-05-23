@@ -25,7 +25,7 @@
  * @author Antoine Musso
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that reports the number of jobs currently waiting
@@ -44,11 +44,16 @@ class ShowJobs extends Maintenance {
 		$group = JobQueueGroup::singleton();
 		if ( $this->hasOption( 'group' ) ) {
 			foreach ( $group->getQueueTypes() as $type ) {
-				$queue   = $group->get( $type );
+				$queue = $group->get( $type );
 				$pending = $queue->getSize();
 				$claimed = $queue->getAcquiredCount();
+				$abandoned = $queue->getAbandonedCount();
+				$active = ( $claimed - $abandoned );
 				if ( ( $pending + $claimed ) > 0 ) {
-					$this->output( "{$type}: $pending queued; $claimed acquired\n" );
+					$this->output(
+						"{$type}: $pending queued; " .
+						"$claimed claimed ($active active, $abandoned abandoned)\n"
+					);
 				}
 			}
 		} else {
@@ -62,4 +67,4 @@ class ShowJobs extends Maintenance {
 }
 
 $maintClass = "ShowJobs";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

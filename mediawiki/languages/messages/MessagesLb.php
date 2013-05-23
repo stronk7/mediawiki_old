@@ -195,7 +195,7 @@ $messages = array(
 'tog-editsection' => "Linke fir d'Ännere vun eenzelnen Abschnitter weisen",
 'tog-editsectiononrightclick' => 'Eenzel Abschnitter mat Rietsklick änneren (JavaScript)',
 'tog-showtoc' => 'Inhaltsverzeechnes weise bei Säite mat méi wéi dräi Iwwerschrëften',
-'tog-rememberpassword' => 'Meng Umeldung mat dësem Browser(fir maximal $1 {{PLURAL:$1|Dag|Deeg}}) verhalen',
+'tog-rememberpassword' => 'Meng Umeldung mat dësem Browser (fir maximal $1 {{PLURAL:$1|Dag|Deeg}}) verhalen',
 'tog-watchcreations' => 'Säiten déi ech uleeën a Fichieren déi ech eroplueden op meng Iwwerwaachungslëscht derbäisetzen',
 'tog-watchdefault' => 'Säiten a Fichieren déi ech änneren op meng Iwwerwaachungslëscht derbäisetzen',
 'tog-watchmoves' => 'Säiten a Fichieren déi ech réckelen automatesch op meng Iwwerwaachungslëscht derbäisetzen',
@@ -211,8 +211,6 @@ $messages = array(
 'tog-shownumberswatching' => "D'Zuel vun de Benotzer déi dës Säit iwwerwaache weisen",
 'tog-oldsig' => 'Aktuell Ënnerschrëft:',
 'tog-fancysig' => 'Ënnerschrëft als Wiki-Text behandelen (Ouni automatesche Link)',
-'tog-externaleditor' => 'Externen Editeur als Standard benotzen (Nëmme fir Experten, et musse speziell Astellungen op ärem Computer gemaach ginn. [//www.mediawiki.org/wiki/Manual:External_editors Méi Informatiounen.])',
-'tog-externaldiff' => 'En Externen Diff-Programm als Standard benotzen (nëmme fir Experten, et musse speziell Astellungen op ärem Computer gemaach ginn. [//www.mediawiki.org/wiki/Manual:External_editors Méi Informatiounen])',
 'tog-showjumplinks' => 'Aktivéiere vun de "Sprang op"-Linken',
 'tog-uselivepreview' => 'Live-Preview benotzen (JavaScript) (experimentell)',
 'tog-forceeditsummary' => 'Warnen, wa beim Späicheren de Resumé feelt',
@@ -227,6 +225,7 @@ $messages = array(
 'tog-showhiddencats' => 'Verstoppt Kategorië weisen',
 'tog-noconvertlink' => 'Ëmwandlung vum Titel desaktivéieren',
 'tog-norollbackdiff' => 'Ënnerscheed nom Zrécksetzen ënnerdrécken',
+'tog-useeditwarning' => "Mech warne wann ech d'Ännerung vun enger Säit verloosen, ouni Ännerunge gespäichert ze hunn",
 
 'underline-always' => 'Ëmmer',
 'underline-never' => 'Ni',
@@ -372,7 +371,7 @@ $messages = array(
 'delete' => 'Läschen',
 'deletethispage' => 'Dës Säit läschen',
 'undelete_short' => '$1 {{PLURAL:$1|Versioun|Versioune}} restauréieren',
-'viewdeleted_short' => '{{PLURAL:$1|Eng geläschte Versioun|$1 geläschte Versioune}} weisen',
+'viewdeleted_short' => '{{PLURAL:$1|Eng geläschte Versioun|$1 geläscht Versioune}} weisen',
 'protect' => 'Spären',
 'protect_change' => 'änneren',
 'protectthispage' => 'Dës Säit schützen',
@@ -399,7 +398,7 @@ $messages = array(
 'otherlanguages' => 'An anere Sproochen',
 'redirectedfrom' => '(Virugeleet vu(n) $1)',
 'redirectpagesub' => 'Viruleedungssäit',
-'lastmodifiedat' => "Dës Säit gouf den $1 ëm $2 Auer fir d'lescht geännert.",
+'lastmodifiedat' => "Dës Säit gouf de(n) $1 ëm $2 Auer fir d'lescht geännert.",
 'viewcount' => 'Dës Säit gouf bis elo {{PLURAL:$1|emol|$1-mol}} ofgefrot.',
 'protectedpage' => 'Gespaarte Säit',
 'jumpto' => 'Wiesselen op:',
@@ -497,7 +496,7 @@ Et kann awer och sinn datt et e Bug a(n) der Software op {{SITENAME}} gëtt.',
 'nosuchspecialpage' => 'Spezialsäit gëtt et net',
 'nospecialpagetext' => '<strong>Dir hutt eng Spezialsäit ofgefrot déi et net gëtt.</strong>
 
-All Spezialsäiten déi et gëtt, sinn op der [[Special:SpecialPages|Lëscht vun de Spezialsäiten]] ze fannen.',
+All Spezialsäiten déi et gëtt, sinn op der [[Special:SpecialPages|{{int:specialpages}}]] ze fannen.',
 
 # General errors
 'error' => 'Feeler',
@@ -566,7 +565,7 @@ Ufro: $2',
 Fir Iwwersetzungen fir all Wikien bäizesetzen oder z'änneren gitt w.e.g. op [//translatewiki.net/ translatewiki.net], de MediaWiki-Lokalisatiouns-Projet.",
 'editinginterface' => "'''Opgepasst:''' Dir sidd am Gaang, eng Säit z'änneren, déi do ass, fir Interface-Text fir d'Software ze liwweren. 
 Ännerungen op dëser Säit änneren den Interface-Text, jee no Kontext, op allen oder verschiddene Säiten, déi vun alle Benotzer op dëser Wiki gesi ginn. 
-Fir d'Iwwersetzungen fir all Wikien derbäizesetzen oder z'änneren gitt w.e.g. op [//translatewiki.net translatewiki.net], de MediaWiki-Lokalisatiouns-Projet.",
+Fir d'Iwwersetzunge fir all Wikien derbäizesetzen oder z'änneren gitt w.e.g. op [//translatewiki.net translatewiki.net], de MediaWiki-Lokalisatiouns-Projet.",
 'sqlhidden' => '(SQL-Offro verstoppt)',
 'cascadeprotected' => 'Dës Säit gouf fir Ännerunge gespaart, well se duerch Cascadeprotectioun vun {{PLURAL:$1|dëser Säit|dëse Säite}} gespaart ass mat der Cascadenoptioun:
 $2',
@@ -575,6 +574,9 @@ $2',
 'customjsprotected' => "Dir hutt net d'Recht dës JavaScript-Säit z'änneren, well dorop déi perséinlech Astellunge vun engem anere Benotzer gespäichert sinn.",
 'ns-specialprotected' => 'Spezialsäite kënnen net verännert ginn.',
 'titleprotected' => "Eng Säit mat dësem Numm kann net ugeluecht ginn. Dës Spär gouf vum [[User:$1|$1]] gemaach deen als Grond ''$2'' uginn huet.",
+'filereadonlyerror' => 'De Fichier "$1" konnt net geännert ginn well de Repertoire vun de Fichieren "$2" nëmme geliest däerf ginn.
+
+Den Administrateur den d\'Schreiwe gespaart huet, huet dës Erklärung uginn: "$3"',
 'invalidtitle-knownnamespace' => 'Net valabelen Titel mam Nummraum "$2" a mam Text "$3"',
 'invalidtitle-unknownnamespace' => 'Net valabelen Titel mat der onbekannter Nummraum-Zuel $1 a mam Text "$2"',
 'exception-nologin' => 'Net ageloggt',
@@ -595,9 +597,18 @@ Opgepasst: Op verschiddene Säite kann et nach esou aus gesinn, wéi wann Dir na
 'welcomecreation-msg' => "Äre Benotzerkont gouf ugeluecht.
 Vergiesst net fir Är [[Special:Preferences|{{SITENAME}} Astellungen]] z'änneren",
 'yourname' => 'Benotzernumm:',
+'userlogin-yourname' => 'Benotzernumm',
+'userlogin-yourname-ph' => 'Gitt Äre Benotzernumm an',
 'yourpassword' => 'Passwuert:',
+'userlogin-yourpassword' => 'Passwuert',
+'userlogin-yourpassword-ph' => 'Gitt Ärt Passwuert an',
+'createacct-yourpassword-ph' => 'Gitt e Passwuert an',
 'yourpasswordagain' => 'Passwuert nach eemol antippen:',
+'createacct-yourpasswordagain' => 'Passwuert confirméieren',
+'createacct-yourpasswordagain-ph' => 'Passwuert nach eng Kéier aginn',
 'remembermypassword' => 'Meng Umeldung op dësem Computer (fir maximal $1 {{PLURAL:$1|Dag|Deeg}}) verhalen',
+'userlogin-remembermypassword' => 'Mech ageloggt halen',
+'userlogin-signwithsecure' => 'Eng sécher Verbindung benotzen',
 'securelogin-stick-https' => 'Nom Umelle mat HTTPS verbonn bleiwen',
 'yourdomainname' => 'Ären Domain',
 'password-change-forbidden' => 'Dir däerft op dëser Wiki Passwierder net änneren.',
@@ -610,18 +621,38 @@ Vergiesst net fir Är [[Special:Preferences|{{SITENAME}} Astellungen]] z'ännere
 'logout' => 'Ofmellen',
 'userlogout' => 'Ausloggen',
 'notloggedin' => 'Net ageloggt',
+'userlogin-noaccount' => 'Hutt Dir kee Benotzerkont?',
+'userlogin-joinproject' => 'Maacht mat bäi {{SITENAME}}',
 'nologin' => "Hutt Dir kee Benotzerkont? '''$1'''.",
 'nologinlink' => 'Neie Benotzerkont maachen',
 'createaccount' => 'Neie Kont opmaachen',
 'gotaccount' => "Dir hutt schonn e Benotzerkont? '''$1'''.",
 'gotaccountlink' => 'Umellen',
 'userlogin-resetlink' => "Hutt Dir d'Detailer vun Ärem Login vergiess?",
+'userlogin-resetpassword-link' => 'Setzt Ärt Passwuert zréck',
+'helplogin-url' => 'Help:Aloggen',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Hëllef beim aloggen]]',
+'createacct-join' => 'Gitt Är Informatioune hei drënner an.',
+'createacct-emailrequired' => 'E-Mailadress',
+'createacct-emailoptional' => 'E-Mailadress (fakultativ)',
+'createacct-email-ph' => 'Gitt Är E-Mailadress an',
 'createaccountmail' => 'En temporäert Passwuert benotzen an et per E-Mail un déi E-Mailadress schécken déi hei drënner steet',
+'createacct-realname' => 'Richtegen Numm (fakultativ)',
 'createaccountreason' => 'Grond:',
+'createacct-reason' => 'Grond',
+'createacct-reason-ph' => 'Fir wat Dir een anere Benotzerkonnt uleet',
+'createacct-captcha' => 'Sécherheets-Check',
+'createacct-imgcaptcha-ph' => 'Gitt den Text an deen Dir hei driwwer gesitt',
+'createacct-submit' => 'Äre Benotzerkont uleeën',
+'createacct-benefit-heading' => '{{SITENAME}} gëtt vu Leit wéi Iech gemaach.',
+'createacct-benefit-body1' => '{{PLURAL:$1|Ännerung|Ännerungen}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|Säit|Säiten}}',
+'createacct-benefit-body3' => 'rezent {{PLURAL:$1|Mataarbechter}}',
 'badretype' => 'Är Passwierder stëmmen net iwwerdeneen.',
 'userexists' => 'De Benotzernumm deen agi gouf gëtt scho benotzt.
 Sicht Iech een anere Benotzernumm.',
 'loginerror' => 'Feeler beim Aloggen',
+'createacct-error' => 'Feeler beim Uleeë vum Benotzerkont',
 'createaccounterror' => 'Benotzerkont konnt net opgemaach ginn: $1',
 'nocookiesnew' => "De Benotzerkont gouf ugeluecht, awer Dir sidd net ageloggt.
 {{SITENAME}} brauch fir dës Funktioun Cookien.
@@ -660,8 +691,8 @@ Mellt Iech w.e.g. domat un, soubal Dir et kritt hutt.',
 'blocked-mailpassword' => "Déi vun Iech benotzten IP-Adress ass fir d'Ännere vu Säite gespaart. Fir Mëssbrauch ze verhënneren, gouf d'Méiglechkeet fir een neit Passwuert unzefroen och gespaart.",
 'eauthentsent' => "Eng Confirmatiouns-E-Mail gouf un déi Adress geschéckt déi Dir uginn hutt.<br />
 Ier iergendeng E-Mail vun anere Benotzer op dee Kont geschéckt ka ginn, musst Dir als éischt d'Instructiounen an der Confirmatiouns-E-Mail befollegen, fir ze bestätegen datt de Kont wierklech Ären eegenen ass.",
-'throttled-mailpassword' => "An {{PLURAL:$1|der leschter Stonn|de leschte(n) $1 Stonnen}} gouf eng Erënenrung un d'Passwuert verschéckt.
-Fir de Mëssbrauch vun dëser Funktioun ze verhënneren kann nëmmen all {{PLURAL:$1|Stonn|$1 Stonnen}} esou eng Erënnerung verschéckt ginn.",
+'throttled-mailpassword' => "An {{PLURAL:$1|der leschter Stonn|de leschte(n) $1 Stonnen}} eng E-Mail verschéckt fir d'Passwuert zréckzesetzen.
+Fir de Mëssbrauch vun dëser Funktioun ze verhënneren kann nëmmen all {{PLURAL:$1|Stonn|$1 Stonnen}} esou eng Mail verschéckt ginn.",
 'mailerror' => 'Feeler beim Schécke vun der E-Mail: $1',
 'acct_creation_throttle_hit' => 'Visiteure vun dëser Wiki déi Är IP-Adress hu {{PLURAL:$1|schonn $1 Benotzerkont|scho(nn) $1 Benotzerkonten}} an de leschten Deeg opgemaach, dëst ass déi maximal Zuel déi an dësem Zäitraum erlaabt ass.
 Dofir kënne Visiteure déi dës IP-Adress benotzen den Ament keng Benotzerkonten opmaachen.',
@@ -712,12 +743,14 @@ Loggt Iech elo an ...',
 'resetpass-wrong-oldpass' => 'Net valabelt temporäert oder aktuellt Passwuert.
 Vläicht hutt Dir Äert Passwuert scho geännert oder en neit temporäert Passwuert ugefrot.',
 'resetpass-temp-password' => 'Temporäert Passwuert:',
+'resetpass-abort-generic' => "D'Ännere vum Passwuert gouf duerch eng Erweiderung ofgebrach.",
 
 # Special:PasswordReset
 'passwordreset' => 'Passwuert zrécksetzen',
-'passwordreset-text' => 'Fëllt dëse Formulaire aus fir eng E-Mail Erënnerung vun den Detailer vun Ärem Benotzerkont ze kréien.',
+'passwordreset-text' => 'Fëllt dëse Formulaire aus fir Äert Passwuert zréckzesetzen.',
 'passwordreset-legend' => 'Passwuert zrécksetzen',
 'passwordreset-disabled' => "D'Zerécksetze vum Passwuert ass op dëser Wiki ausgeschalt.",
+'passwordreset-emaildisabled' => "D'E-Mail-Fonctioune goufen op dëser Wiki ausgeschalt.",
 'passwordreset-pretext' => '{{PLURAL:$1||Gitt eng vun dësen Donnéeën an}}',
 'passwordreset-username' => 'Benotzernumm:',
 'passwordreset-domain' => 'Domaine:',
@@ -725,17 +758,25 @@ Vläicht hutt Dir Äert Passwuert scho geännert oder en neit temporäert Passwu
 'passwordreset-capture-help' => 'Wann Dir dës Këscht ukräizt, gëtt de Mail (mam temporäre Passwuert) Iech gewisen an dem Benotzer geschéckt.',
 'passwordreset-email' => 'E-Mailadress:',
 'passwordreset-emailtitle' => 'Detailer vum Benotzerkont op{{SITENAME}}',
-'passwordreset-emailtext-ip' => "Iergendee mat der IP-Adress $1, wahrscheinlech Dir selwer, huet eng Erënnerung fir Är Benotzerkonteninformatiounen op {{SITENAME}} gefrot ($4). {{PLURAL:$3|De Benotzerkont ass|D'Benutzerkonte si}} mat dëser E-Mail-Adress verbonn:
+'passwordreset-emailtext-ip' => "Iergendee mat der IP-Adress $1, wahrscheinlech Dir selwer, huet d'Zrécksetze vun Ärem Passwuert op {{SITENAME}} gefrot ($4). {{PLURAL:$3|De Benotzerkont ass|D'Benutzerkonte si}} mat dëser E-Mail-Adress verbonn:
 
 $2
 
 {{PLURAL:$3|Dëst temporärt Passwuert leeft|Dës temporär Passwierder lafe}} bannent {{PLURAL:$5|engem Dag|$5 Deeg}} of.
 Dir sollt Iech aloggen an een neit Passwuert festleeën. Wann een Aneren déi Ufro gemaach huet oder Dir Iech erëm un Äert Passwuert erënnere kënnt an et net ännere wëllt, kënnt Dir dës Noriicht ignoréieren an Äert aalt Passwuert weider benotzen.",
+'passwordreset-emailtext-user' => "De Benotzer $1 vu(n) {{SITENAME}} huet d'Zrécksetze vun Ärem Passwuert op {{SITENAME}} gefrot ($4). {{PLURAL:$3|De Benotzerkont|D'Benutzerkonte}} 
+
+$2
+
+{{PLURAL:$3|ass|si}} mat dëser E-Mail-Adress verbonn.
+
+{{PLURAL:$3|Dëst temporärt Passwuert leeft|Dës temporär Passwierder lafe}} bannent {{PLURAL:$5|engem Dag|$5 Deeg}} of.
+Dir sollt Iech aloggen an een neit Passwuert festleeën. Wann een Aneren déi Ufro gemaach huet oder Dir Iech erëm un Äert Passwuert erënnere kënnt an et net ännere wëllt, kënnt Dir dës Noriicht ignoréieren an Äert aalt Passwuert weider benotzen.",
 'passwordreset-emailelement' => 'Benotzernumm: $1
 Temporärt Passwuert: $2',
-'passwordreset-emailsent' => 'Eng Erënnerungs-Mail gouf geschéckt.',
-'passwordreset-emailsent-capture' => "D'Erënnerungsmail gouf esou geschéckt wéi Dir se hei drënner gesitt.",
-'passwordreset-emailerror-capture' => "D'Erënnerungsmail gouf esou geschéckt wéi Dir se hei drënner gesitt, awer de Benotzer konnt se net kréien: $1",
+'passwordreset-emailsent' => "Eng Mail fir d'Passwuert zréckzesetze gouf geschéckt.",
+'passwordreset-emailsent-capture' => "Eng Mail fir d'Passwuert zréckzesetze gouf geschéckt, Dir gesitt se hei drënner.",
+'passwordreset-emailerror-capture' => "Eng Mail fir d'Passwuert zréckzesetze gouf geschéckt, Dir gesitt se hei drënner, awer de {{GENDER:$2|Benotzer}} konnt se net kréien: $1",
 
 # Special:ChangeEmail
 'changeemail' => 'Mailadress änneren',
@@ -839,7 +880,7 @@ D'Passwuert fir dësen neie Benotzerkont kann op der ''[[Special:ChangePassword|
 'newarticletext' => "Dir hutt op e Link vun enger Säit geklickt, déi et nach net gëtt. Fir déi Säit unzeleeën, gitt w.e.g. Ären Text an déi Këscht hei drënner an (kuckt d'[[{{MediaWiki:Helppage}}|Hëllef Säit]] fir méi Informatiounen). Wann Dir duerch een Iertum heihi komm sidd, da klickt einfach op de Knäppchen '''Zréck''' vun Ärem Browser.",
 'anontalkpagetext' => "---- ''Dëst ass d'Diskussiounssäit fir en anonyme Benotzer deen nach kee Kont opgemaach huet oder en net benotzt. Dowéinst musse mir d'IP Adress benotzen, fir de Benotzer z'identifizéieren.
 Sou eng IP Adress ka vun e puer Benotzer gedeelt ginn.
-Wann Dir en anonyme Benotzer sidd an Dir irrelevant Kommentäre krut, [[Special:UserLogin/signup|maacht w.e.g. e Kont op]] oder [[Special:UserLogin|loggt Iech an]], fir weider Verwiesselunge mat aneren anonyme Benotzer ze verhënneren.''",
+Wann Dir en anonyme Benotzer sidd an Dir irrelevant Bemierkunge krut, [[Special:UserLogin/signup|maacht w.e.g. e Kont op]] oder [[Special:UserLogin|loggt Iech an]], fir weider Verwiesselunge mat aneren anonyme Benotzer ze verhënneren.''",
 'noarticletext' => 'Dës Säit huet momentan keen Text.
 Dir kënnt op anere Säiten no [[Special:Search/{{PAGENAME}}|dësem Säitentitel sichen]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} an den entspriechende Logbicher nokucken] oder [{{fullurl:{{FULLPAGENAME}}|action=edit}} esou eng Säit uleeën]</span>.',
@@ -950,6 +991,8 @@ Si gouf anscheinend geläscht.",
 'defaultmessagetext' => 'Standardtext',
 'invalid-content-data' => 'Donnéeë vum Inhalt sinn net valabel',
 'content-not-allowed-here' => '"$1"-Inhalt ass op der Säit [[$2]] net erlaabt',
+'editwarning-warning' => 'Wann Dir dës Säit verloosst kann dat dozou féieren datt Dir all Ännerungen, déi Dir gemaach hutt, verléiert.
+Wann Dir ageloggt sidd, kënnt Dir dës Warnung an der Sektioun "{{int:prefs-editing}}" vun Ären Astellungen ausschalten.',
 
 # Content models
 'content-model-wikitext' => 'Wikitext',
@@ -1089,10 +1132,10 @@ $1",
 'logdelete-failure' => "'''D'Sichtbarkeet vum Logbuch konnt net agestllt ginn:'''
 $1",
 'revdel-restore' => 'Sichtbarkeet änneren',
-'revdel-restore-deleted' => 'geläschte Versiounen',
+'revdel-restore-deleted' => 'geläscht Versiounen',
 'revdel-restore-visible' => 'sichtbar Versiounen',
 'pagehist' => 'Versioune vun dëser Säit',
-'deletedhist' => 'Geläschte Versiounen',
+'deletedhist' => 'Geläscht Versiounen',
 'revdelete-hide-current' => 'Feeler beim Verstoppe vum Objet vum $2 ëm $1: et ass déi aktuell Versioun.
 Si kann net verstoppt ginn.',
 'revdelete-show-no-access' => 'Feeler beim Weise vum Objet vum $1 ëm $2 Auer: dësen Objet gouf als "limitéiert2 markéiert.
@@ -1103,7 +1146,7 @@ Dir hutt keen Zougang dozou.',
 'revdelete-no-change' => "'''Opgepasst:''' D'Element vum $2 ëm $1 Auer huet schonn déi ugefrote Sichtbarkeetsastellung.",
 'revdelete-concurrent-change' => "Feeler beim Ännere vum Element vum $1 ëm $2 Auer: säit Statut schéngt geännert ginn ze si während Dir vericht hutt et z'änneren.
 Kuckt w.e.g. an de Logbicher no.",
-'revdelete-only-restricted' => 'Feler beim verstoppe vum Objet vum $2, $1: Dir kënnt keng Objete virun den Administrateure verstoppen ouni och eng vun den aneren Optiounen vum weisen erauszesichen.',
+'revdelete-only-restricted' => 'Feeler beim verstoppe vum Element vum $2, $1: Dir kënnt keng Elementer virun den Administrateure verstoppen ouni och eng vun den aneren Optiounen vum weisen erauszesichen.',
 'revdelete-reason-dropdown' => "* Generell Läschgrënn
 ** Verletzung vun den Droits d'Auteur
 ** Net ubruechte perséinlech Informatioun
@@ -1159,10 +1202,14 @@ Denkt w.e.g drunn datt d'Navigatiounslinken d'Wiel vun de Versiounen nees zréck
 'difference-multipage' => '(Ënnerscheed tëschent Säiten)',
 'lineno' => 'Linn $1:',
 'compareselectedversions' => 'Ausgewielte Versioune vergläichen',
-'showhideselectedversions' => 'Erausgesichte Versioune weisen/verstoppen',
+'showhideselectedversions' => 'Erausgesicht Versioune weisen/verstoppen',
 'editundo' => 'zréck',
 'diff-multi' => '({{PLURAL:$1|Eng Tëscheversioun|$1 Tëscheversioune}} vun {{PLURAL:$2|engem|$2}} Benotzer {{PLURAL:$1|gëtt|ginn}} net gewisen)',
 'diff-multi-manyusers' => '({{PLURAL:$1|Eng Tëscheversioun|$1 Tëscheversioune}} vu méi wéi $2 {{PLURAL:$2|Benotzer|Benotzer}} ginn net gewisen)',
+'difference-missing-revision' => '{{PLURAL:$2|Eng Versioun|$2 Versioune}} vun dëser Differenz ($1) {{PLURAL:$2|gouf|goufen}} net fonnt.
+
+Dat geschitt normalerweis wann Dir op e vereelste Link vun enger Versioun vun enger Säit klickt déi geläscht ginn ass.
+Detailer fannt Dir am [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} Logbuch vum Läschen].',
 
 # Search results
 'searchresults' => 'Resultat vum Sichen',
@@ -1225,15 +1272,7 @@ Denkt w.e.g drunn datt d'Navigatiounslinken d'Wiel vun de Versiounen nees zréck
 'powersearch-togglenone' => 'Keen',
 'search-external' => 'Extern sichen',
 'searchdisabled' => "D'Sichfunktioun op {{SITENAME}} ass ausgeschalt. Dir kënnt iwwerdeems mat Hëllef vu Google sichen. Bedenkt awer, datt deenen hire  Sichindex fir {{SITENAME}} eventuell net dem aktuellste Stand entsprecht.",
-
-# Quickbar
-'qbsettings' => 'Geschirläischt',
-'qbsettings-none' => 'Keen',
-'qbsettings-fixedleft' => 'Lénks, fest',
-'qbsettings-fixedright' => 'Riets, fest',
-'qbsettings-floatingleft' => 'schwiewt lenks',
-'qbsettings-floatingright' => 'Schwiewt riets',
-'qbsettings-directionality' => 'Fix, ofhängeg vun der Schreiwrichtung vun Ärer Sprooch',
+'search-error' => 'Beim Sichen ass e Feeler geschitt: $1',
 
 # Preferences page
 'preferences' => 'Astellungen',
@@ -1376,6 +1415,7 @@ Si muss manner wéi $1 {{PLURAL:$1|Zeechen|Zeechen}} hunn.',
 'userrights-notallowed' => "Äre Benotzerkont hutt net déi néideg Rechter fir d'Rechter vun anere Benotzer z'änneren.",
 'userrights-changeable-col' => 'Gruppen déi Dir ännere kënnt',
 'userrights-unchangeable-col' => 'Gruppen déi Dir net ännere kënnt',
+'userrights-conflict' => 'Konflikt bäi de Benotzerrechter! Maacht Är Ännerunge w.e.g. nach eng Kéier.',
 
 # Groups
 'group' => 'Grupp:',
@@ -1426,10 +1466,11 @@ Si muss manner wéi $1 {{PLURAL:$1|Zeechen|Zeechen}} hunn.',
 'right-writeapi' => "API benotze fir d'Wiki z'änneren",
 'right-delete' => 'Säite läschen',
 'right-bigdelete' => 'Säite mat engem groussen Historique läschen',
+'right-deletelogentry' => 'Eenzel Androungen an de Logbicher läschen a restauréieren',
 'right-deleterevision' => 'Spezifesch Versioune vu Säite läschen a restauréieren',
-'right-deletedhistory' => 'Weis geläschte Versiounen am Historique, ouni den assoziéierten Text',
+'right-deletedhistory' => 'Weis geläscht Versiounen am Historique, ouni den associéierten Text',
 'right-deletedtext' => "Geläschten Text an d'Ännerungen tëschent de geläschte Versioune weisen",
-'right-browsearchive' => 'Geläschte Säite sichen',
+'right-browsearchive' => 'Geläscht Säite sichen',
 'right-undelete' => 'Eng Säit restauréieren',
 'right-suppressrevision' => 'Virun den Administrateure verstoppte Versiounen nokucken a restauréieren',
 'right-suppressionlog' => 'Privat Lëschte kucken',
@@ -1488,7 +1529,7 @@ Si muss manner wéi $1 {{PLURAL:$1|Zeechen|Zeechen}} hunn.',
 'action-writeapi' => "d'API mat Schreifzougrëff ze benotzen",
 'action-delete' => 'dës Säit ze läschen',
 'action-deleterevision' => 'dës Versioun ze läschen',
-'action-deletedhistory' => "d'Lëscht vun de geläschte Versiounen ze gesinn",
+'action-deletedhistory' => "d'Lëscht vun de geläschte Versiounen gesinn",
 'action-browsearchive' => 'no geläschte Säiten ze sichen',
 'action-undelete' => 'dës Säit ze restauréieren',
 'action-suppressrevision' => 'déi verstoppt Versioun kucken a restauréieren',
@@ -1765,7 +1806,6 @@ Fir eng oprimal Sécherheet ass img_auth.php ausgeschalt.",
 'http-read-error' => 'HTTP-Feeler beim Liesen.',
 'http-timed-out' => 'HTTP-Ufro huet ze laang gebraucht (time out).',
 'http-curl-error' => 'Feeler beim Ofruff vun der URL: $1',
-'http-host-unreachable' => "D'URL konnt net erreecht ginn.",
 'http-bad-status' => 'Et gouf e Problem bäi der HTTP-Ufro: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1924,7 +1964,10 @@ Si sollte am beschten op déi eigentlech gemengte Säit verlinkt sinn.<br />
 Eng Säite gëtt als Homonymie-Säit behandelt, wa si eng Schabloun benotzt déi vu [[MediaWiki:Disambiguationspage]] verlinkt ass.",
 
 'pageswithprop' => 'Säite mat enger Säiten-Eegeschaft',
+'pageswithprop-legend' => 'Säite mat enger Säiten-Eegeschaft',
+'pageswithprop-text' => 'Op dëser Säit sti Säiten déi eng speziell Säiteneegeschaft benotzen.',
 'pageswithprop-prop' => 'Numm vun der Eegeschaft:',
+'pageswithprop-submit' => 'Lass',
 
 'doubleredirects' => 'Duebel Viruleedungen',
 'doubleredirectstext' => 'Op dëser Säit stinn déi Säiten déi op aner Viruleedungssäite viruleeden.
@@ -1967,12 +2010,12 @@ An all Rei sti Linken zur éischter an zweeter Viruleedung, souwéi d\'Zil vun d
 'unusedimages' => 'Onbenotzte Biller',
 'popularpages' => 'Populär Säiten',
 'wantedcategories' => 'Gewënscht Kategorien',
-'wantedpages' => 'Gewënschte Säiten',
+'wantedpages' => 'Gewënscht Säiten',
 'wantedpages-badtitle' => 'Net valabelen Titel am Resultat: $1',
-'wantedfiles' => 'Gewënschte Fichieren',
+'wantedfiles' => 'Gewënscht Fichieren',
 'wantedfiletext-cat' => 'Dës Fichiere gi benotzt awer et gëtt se net. Fichiere aus frieme Repositorie kënnen hei gewise ginn och wann et se gëtt. All esou falsch Positiver ginn <del>duerchgestrach</del>. Zousätzlech gi Säiten an deene Fichieren dra sinn déi et net gëtt op [[:$1]] gewisen.',
 'wantedfiletext-nocat' => 'Dës Fichiere gi benotzt existéieren awer net. Fichieren aus frieme Repertoiren kënnen trotzdeem opgelëscht ginn. All dës positiv Fichiere ginn <del>duergestrach</del>.',
-'wantedtemplates' => 'Gewënschte Schablounen',
+'wantedtemplates' => 'Gewënscht Schablounen',
 'mostlinked' => 'Dacks verlinkte Säiten',
 'mostlinkedcategories' => 'Dacks benotzte Kategorien',
 'mostlinkedtemplates' => 'Dacks benotzte Schablounen',
@@ -2001,7 +2044,7 @@ An all Rei sti Linken zur éischter an zweeter Viruleedung, souwéi d\'Zil vun d
 'usercreated' => "{{GENDER:$3|De(n)|D'}} $1 ëm $2 Auer ugeluecht",
 'newpages' => 'Nei Säiten',
 'newpages-username' => 'Benotzernumm:',
-'ancientpages' => 'Eelste Säiten',
+'ancientpages' => 'Eelst Säiten',
 'move' => 'Réckelen',
 'movethispage' => 'Dës Säit réckelen',
 'unusedimagestext' => 'Dës Fichieren gëtt et, si sinn awer a kenger Säit agebonn.
@@ -2067,8 +2110,8 @@ Kuckt och [[Special:WantedCategories|Gewënscht Kategorien]].',
 'special-categories-sort-abc' => 'alphabetesch zortéieren',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Geläschte Kontributiounen',
-'deletedcontributions-title' => 'Geläschte Kontributiounen',
+'deletedcontributions' => 'Geläscht Kontributiounen',
+'deletedcontributions-title' => 'Geläscht Kontributiounen',
 'sp-deletedcontributions-contribs' => 'Kontributiounen',
 
 # Special:LinkSearch
@@ -2174,8 +2217,8 @@ All weider Ännerungen op dëser Säit an der assoziéierter Diskussiounssäit g
 'notvisiblerev' => 'Versioun gouf geläscht',
 'watchnochange' => 'Keng vun Ären iwwerwaachte Säite gouf während der ugewisener Zäit verännert.',
 'watchlist-details' => "{{PLURAL:$1|1 Säit|$1 Säiten}} sinn op ärer Iwwerwaachungsklëscht (d'Diskussiounssäite net matgezielt).",
-'wlheader-enotif' => '* E-Mail-Bescheed ass aktivéiert.',
-'wlheader-showupdated' => "* Säiten déi zënter ärer leschter Visite geännert goufen, si '''fett''' geschriwwen",
+'wlheader-enotif' => 'E-Mail-Notifikatioun ass ageschalt.',
+'wlheader-showupdated' => "Säiten déi zënter ärer leschter Visite geännert goufen, si '''fett''' geschriwwen",
 'watchmethod-recent' => 'Rezent Ännerunge ginn op iwwerwaacht Säiten iwwerpréift',
 'watchmethod-list' => 'Iwwerwaachte Säite ginn op rezent Ännerungen iwwerpréift',
 'watchlistcontains' => 'Op ärer Iwwerwaachungslëscht $1 {{PLURAL:$1|steet $1 Säit|stinn $1 Säiten}}.',
@@ -2198,6 +2241,10 @@ All weider Ännerungen op dëser Säit an der assoziéierter Diskussiounssäit g
 'enotif_subject_restored' => "D'{{SITENAME}}-Säit $1 gouf vum {{gender:$2|$2}} restauréiert",
 'enotif_subject_changed' => "D'{{SITENAME}}-Säit $1 gouf vum {{gender:$2|$2}} geännert",
 'enotif_body_intro_deleted' => 'D\'{{SITENAME}}-Säit $1 gouf de(n) $PAGEEDITDATE {{gender:$2|vum $2|vun der $2}} geläscht, kuckt $3.',
+'enotif_body_intro_created' => 'D\'{{SITENAME}}-Säit $1 gouf den $PAGEEDITDATE vum $2 {{GENDER:$2|ugeluecht}}, kuckt $3 fir déi aktuell Versioun.',
+'enotif_body_intro_moved' => 'D\'{{SITENAME}}-Säit $1 gouf den $PAGEEDITDATE vum $2 {{GENDER:$2|geréckelt}}, kuckt $3 fir déi aktuell Versioun.',
+'enotif_body_intro_restored' => 'D\'{{SITENAME}}-Säit $1 gouf den $PAGEEDITDATE vum $2 {{GENDER:$2|restauréiert}}, kuckt $3 fir déi aktuell Versioun.',
+'enotif_body_intro_changed' => 'D\'{{SITENAME}}-Säit $1 gouf den $PAGEEDITDATE vum $2  {{GENDER:$2|geännert}}, kuckt $3 fir déi aktuell Versioun',
 'enotif_lastvisited' => 'All Ännerungen op ee Bléck: $1',
 'enotif_lastdiff' => 'Kuckt $1 fir dës Ännerung.',
 'enotif_anon_editor' => 'Anonyme Benotzer $1',
@@ -2305,6 +2352,7 @@ Kuckt d'[[Special:ProtectedPages|Lëscht vun de gespaarte Säite]] fir eng Lësc
 'prot_1movedto2' => '[[$1]] gouf op [[$2]] geréckelt',
 'protect-badnamespace-title' => 'Nummraum deen net gespaart ka ginn',
 'protect-badnamespace-text' => 'Säiten an dësem Nummraum kënnen net gespaart ginn.',
+'protect-norestrictiontypes-text' => 'Dës Säit kann net gespaart gi well keng Restriktiounstypen disponibel sinn.',
 'protect-norestrictiontypes-title' => 'Säit kann net gespaart ginn',
 'protect-legend' => "Confirméiert d'Protectioun",
 'protectcomment' => 'Grond:',
@@ -2360,10 +2408,10 @@ Hei sinn déi aktuell Astellunge fir d'Säit '''$1''':",
 'restriction-level-all' => 'alleguerten',
 
 # Undelete
-'undelete' => 'Geläschte Säite restauréieren',
-'undeletepage' => 'Geläschte Säite kucken a restauréieren',
-'undeletepagetitle' => "'''Op dëser Lëscht sti geläschte Versioune vun [[:$1]]'''.",
-'viewdeletedpage' => 'Geläschte Säite weisen',
+'undelete' => 'Geläscht Säite restauréieren',
+'undeletepage' => 'Geläscht Säite kucken a restauréieren',
+'undeletepagetitle' => "'''Op dëser Lëscht sti geläscht Versioune vun [[:$1]]'''.",
+'viewdeletedpage' => 'Geläscht Säite weisen',
 'undeletepagetext' => "Dës {{PLURAL:$1|Säit gouf |Säite goufe}} geläscht mä sinn nach ëmmer am Archiv a kënne vun Administrateure restauréiert ginn. D'Archiv gëtt periodesch eidel gemaach.",
 'undelete-fieldset-title' => 'Versioune restauréieren',
 'undeleteextrahelp' => "Fir d'Säit komplett mat alle Versiounen ze restauréieren, markéiert keng vun den eenzelne Casë mat engem Krop a klickt op '''''{{int:undeletebtn}}'''''.
@@ -2391,8 +2439,8 @@ $1",
 'undeletedpage' => "'''$1''' gouf restauréiert.
 
 Am [[Special:Log/delete|Läsch-Logbuch]] fannt Dir déi geläscht a restauréiert Säiten.",
-'undelete-header' => 'Kuckt [[Special:Log/delete|Läschlescht]] fir rezent geläschte Säiten.',
-'undelete-search-title' => 'Geläschte Säite sichen',
+'undelete-header' => 'Kuckt [[Special:Log/delete|Läschlescht]] fir rezent geläscht Säiten.',
+'undelete-search-title' => 'Geläscht Säite sichen',
 'undelete-search-box' => 'Sichen no geläschte Säiten',
 'undelete-search-prefix' => 'Weis Säiten déi esou ufänken:',
 'undelete-search-submit' => 'Sichen',
@@ -2431,7 +2479,7 @@ $1',
 'sp-contributions-newbies-sub' => 'Fir déi Nei',
 'sp-contributions-newbies-title' => 'Kontributioune vun neie Benotzer',
 'sp-contributions-blocklog' => 'Spärlescht',
-'sp-contributions-deleted' => 'geläschte Benotzer-Kontributiounen',
+'sp-contributions-deleted' => 'geläscht Kontributiounen',
 'sp-contributions-uploads' => 'Eropgeluede Fichieren',
 'sp-contributions-logs' => 'Logbicher',
 'sp-contributions-talk' => 'diskutéieren',
@@ -2745,6 +2793,8 @@ Besicht w.e.g. [//www.mediawiki.org/wiki/Localisation MediaWiki Localisatioun] a
 'thumbnail-more' => 'vergréisseren',
 'filemissing' => 'Fichier feelt',
 'thumbnail_error' => 'Feeler beim Erstelle vun der Miniatur: $1',
+'thumbnail_error_remote' => 'Feelermessage vum $1:
+$2',
 'djvu_page_error' => 'DjVu-Säit baussent dem Säiteberäich',
 'djvu_no_xml' => 'Den XML ka fir den DjVu-Fichier net ofgeruff ginn',
 'thumbnail-temp-create' => "Den temporäre Fichier fir d'Minitaurbild konnt net ugeluecht ginn",
@@ -2817,7 +2867,9 @@ Späichert en op Ärem Computer of a luet en hei nees erop.',
 'javascripttest-pagetext-noframework' => 'Dës Säit ass fir Java-Script-Tester reservéiert.',
 'javascripttest-pagetext-unknownframework' => 'Onbekannten Test-Framework "$1".',
 'javascripttest-pagetext-frameworks' => 'Sicht w.e.g. eng vun dësen Test-Strukturen eraus: $1',
+'javascripttest-pagetext-skins' => "Sicht en Interface (skin) eraus fir d'Tester ze maachen:",
 'javascripttest-qunit-intro' => "Kuckt d'[$1 Dokumentatioun vun den Tester] op mediawiki.org",
+'javascripttest-qunit-heading' => 'JavaScript-QUnit Testserie op MediaWiki',
 
 # Tooltip help for the actions
 'tooltip-pt-userpage' => 'Är Benotzersäit',
@@ -2891,13 +2943,8 @@ Erlaabt et e Grond an de Resumé derbäizesetzen.',
 
 # Stylesheets
 'common.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Chick''  */",
-'standard.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Klassesch''  */",
-'nostalgia.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Nostalgie''  */",
 'cologneblue.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Köln Blo''  */",
 'monobook.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Monobook''  */",
-'myskin.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''MySkin''  */",
-'chick.css' => '/* Dës CSS huet nëmmen Afloss op de Skin "Chick" */',
-'simple.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Einfach''  */",
 'modern.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Modern''  */",
 
 # Scripts
@@ -2975,13 +3022,8 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 'pageinfo-category-files' => 'Zuel vun de Fichieren',
 
 # Skin names
-'skinname-standard' => 'Klassesch',
-'skinname-nostalgia' => 'Nostalgie',
 'skinname-cologneblue' => 'Köln Blo',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Chick',
-'skinname-simple' => 'Einfach',
 'skinname-modern' => 'Modern',
 
 # Patrolling
@@ -3040,6 +3082,7 @@ Duerch d'Opmaache vum Fichier kann Äre System beschiedegt ginn.",
 'file-info-png-repeat' => 'gouf $1 {{PLURAL:$1|mol|mol}} gespillt',
 'file-info-png-frames' => '$1 {{PLURAL:$1|Frame|Framen}}',
 'file-no-thumb-animation' => "''''Informatioun: Wéinst technesche Limitatioune sinn d'Miniatur-Biller vun dësem Fichier net animéiert.'''",
+'file-no-thumb-animation-gif' => "'''Hiweis:Aus technesche Grënn gi Miniature mat enger héijer Opléisung vu GIF Biller, esou wéi dëst, net animéiert.'''",
 
 # Special:NewFiles
 'newimages' => 'Gallerie vun den neie Biller',
@@ -3058,10 +3101,24 @@ Duerch d'Opmaache vum Fichier kann Äre System beschiedegt ginn.",
 'minutes' => '{{PLURAL:$1|enger Minutt|$1 Minutten}}',
 'hours' => '{{PLURAL:$1|enger Stonn|$1 Stonnen}}',
 'days' => '{{PLURAL:$1|engem Dag|$1 Deeg}}',
+'weeks' => '{{PLURAL: $1|eng Woch|$1 Wochen}}',
 'months' => '{{PLURAL:$1|ee Mount|$1 Méint}}',
 'years' => '{{PLURAL:$1|ee Joer|$1 Joer}}',
 'ago' => 'viru(n) $1',
 'just-now' => 'grad elo',
+
+# Human-readable timestamps
+'hours-ago' => '{{PLURAL:$1|virun 1 Stonn| viru(n) $1 Stonnen}}',
+'minutes-ago' => '{{PLURAL:$1|virun 1 Minutt| viru(n) $1 Minutten}}',
+'seconds-ago' => '{{PLURAL:$1|virun 1 Sekonn|viru(n) $1 Sekonnen}}',
+'monday-at' => 'Méindes ëm $1',
+'tuesday-at' => 'Dënschdes ëm $1',
+'wednesday-at' => 'Mëttwochs ëm $1',
+'thursday-at' => 'Donneschdes ëm $1',
+'friday-at' => 'Freides ëm $1',
+'saturday-at' => 'Samschdes ëm $1',
+'sunday-at' => 'Sonndes ëm $1',
+'yesterday-at' => 'Gëschter ëm $1',
 
 # Bad image list
 'bad_image_list' => 'Format:
@@ -3090,7 +3147,7 @@ Déi aner sinn am Standard verstoppt.
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Breet',
 'exif-imagelength' => 'Längt',
 'exif-bitspersample' => 'Bite pro Faarfkomponent',
@@ -3249,6 +3306,7 @@ Déi aner sinn am Standard verstoppt.
 'exif-copyrightowner' => "Titulaire vun den Droits d'auteur",
 'exif-usageterms' => 'Benotzungsbedingungen',
 'exif-webstatement' => 'Omline Copyright Deklaratioun',
+'exif-originaldocumentid' => 'Identifikatiounsnummer vum Original-Dokument',
 'exif-licenseurl' => 'URL vum Copyright (Lizenz)',
 'exif-morepermissionsurl' => 'Alternativ Lizenzinformatiounen',
 'exif-attributionurl' => 'Wann dëst Wierk weiderbenotzt gëtt, da linkt w.e.g. op',
@@ -3259,12 +3317,13 @@ Déi aner sinn am Standard verstoppt.
 'exif-giffilecomment' => 'Bemierkung zum GIF-Fichier',
 'exif-intellectualgenre' => 'Typ vum Element',
 'exif-subjectnewscode' => 'Code vum Sujet',
+'exif-event' => 'Duergestallten Evenement',
 'exif-organisationinimage' => 'Organisatioun um Bild',
 'exif-personinimage' => 'Persoun um Bild',
 'exif-originalimageheight' => 'Héicht vum Bild virum Ofschneiden',
 'exif-originalimagewidth' => 'Breet vum Bild virum Ofschneiden',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Onkompriméiert',
 
 'exif-copyrighted-true' => 'Duerch Copyright geschützt',
@@ -3573,7 +3632,7 @@ Dëse Confirmatiouns-Code leeft den $4 of.',
 'table_pager_first' => 'Éischt Säit',
 'table_pager_last' => 'Lescht Säit',
 'table_pager_limit' => '$1 Objete pro Säit weisen',
-'table_pager_limit_label' => 'Objete pro Säit:',
+'table_pager_limit_label' => 'Elementer pro Säit:',
 'table_pager_limit_submit' => 'Lass',
 'table_pager_empty' => 'Keng Resultater',
 
@@ -3660,12 +3719,17 @@ Dir misst eng [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie vun der GNU General Public
 'version-entrypoints-header-entrypoint' => 'Agangspunkt',
 'version-entrypoints-header-url' => 'URL',
 
-# Special:FilePath
-'filepath' => 'Pad bei de Fichier',
-'filepath-page' => 'Fichier:',
-'filepath-submit' => 'Lass',
-'filepath-summary' => 'Op dëser Spezialsäit kënnt Dir de komplette Pad vun der aktueller Versioun vun engem Fichier direkt offroen.
-Den ugefrote Fichier gëtt direkt gewise respektiv mat enger verbonner Applikatioun gestart.',
+# Special:Redirect
+'redirect' => 'Viruleedung duerch e Fichier, Benotzer oder Versiouns-ID',
+'redirect-legend' => 'Viruleedung op ee Fichier oder eng Säit',
+'redirect-summary' => 'Dës Spezialsäit ass eng Viruleedung op e Fichier (Fichiersnumm uginn), eng Säit (Versiounsnummer uginn) oder eng Benotzersäit (numeresch Benotzeridentifikatioun uginn).',
+'redirect-submit' => 'Lass',
+'redirect-lookup' => 'Nosichen:',
+'redirect-value' => 'Wäert:',
+'redirect-user' => 'Benotzernummer',
+'redirect-revision' => 'Versioun vun der Säit',
+'redirect-file' => 'Numm vum Fichier',
+'redirect-not-exists' => 'Wäert net fonnt',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'No duebele Fichiere sichen',
@@ -3756,20 +3820,26 @@ Den ugefrote Fichier gëtt direkt gewise respektiv mat enger verbonner Applikati
 'htmlform-submit' => 'Späicheren',
 'htmlform-reset' => 'Ännerungen zrécksetzen',
 'htmlform-selectorother-other' => 'Anerer',
+'htmlform-no' => 'Neen',
+'htmlform-yes' => 'Jo',
+'htmlform-chosen-placeholder' => 'Sicht eng Optioun eraus',
 
 # SQLite database support
 'sqlite-has-fts' => "$1 ënnerstëtzt d'Volltextsich",
 'sqlite-no-fts' => "$1 ënnerstëtzt d'Volltextsich net",
 
 # New logging system
-'logentry-delete-delete' => "$1 huet d'Säit $3 geläscht",
-'logentry-delete-restore' => "$1 huet d'Säit $3 restauréiert",
-'logentry-delete-event' => "$1 huet d'Visibilitéit vun {{PLURAL:$5|engem Evenement|$5 Evenementer}} am Logbuch op $3:$4 geännert",
-'logentry-delete-event-legacy' => "$1 huet d'Visibilitéit vun Elementer am Log op $3 geännert",
-'logentry-delete-revision-legacy' => "$1 huet d'Visibilitéit vu Versioune vun der Säit $3 geännert",
-'logentry-suppress-delete' => "$1 huet d'Säit $3 ewechgeholl",
-'logentry-suppress-event-legacy' => "$1 huet diskret d'Visibilitéit vun Elementer am Log op $3 geännert",
-'logentry-suppress-revision-legacy' => "$1 huet diskret d'Visibilitéit vu Versioune vun der Säit $3 geännert",
+'logentry-delete-delete' => "$1 {{GENDER:$2|huet}} d'Säit $3 geläscht",
+'logentry-delete-restore' => "$1 {{GENDER:$2|huet}} d'Säit $3 restauréiert",
+'logentry-delete-event' => "$1 huet d'Visibilitéit vun {{PLURAL:$5|engem Evenement|$5 Evenementer}} am Logbuch op $3:$4 {{GENDER:$2|geännert}}",
+'logentry-delete-revision' => "$1 huet d'Visibilitéit {{PLURAL:$5|vun enger Versioun|vu(n) $5 Versiounen}} op der Säit $3:$4 {{GENDER:$2|geännert}}",
+'logentry-delete-event-legacy' => "$1 huet d'Visibilitéit vun Elementer am Log op $3 {{GENDER:$2|geännert}}",
+'logentry-delete-revision-legacy' => "$1 huet d'Visibilitéit vu Versioune vun der Säit $3 {{GENDER:$2|geännert}}",
+'logentry-suppress-delete' => "$1 {{GENDER:$2|huet}} d'Säit $3 ewechgeholl",
+'logentry-suppress-event' => "$1 huet diskret d'Visibilitéit vu(n) {{PLURAL:$5|engem Evenement|$5 Evenementer}} am Logbuch op $3:$4 {{GENDER:$2|geännert}}",
+'logentry-suppress-revision' => "$1 huet diskret d'Visibilitéit {{PLURAL:$5|vun enger Versioun|vu(n) $5 Versiounen}} op der Säit $3:$4 {{GENDER:$2|geännert}}",
+'logentry-suppress-event-legacy' => "$1 {{GENDER:$2|huet}} diskret d'Visibilitéit vun Elementer am Log op $3 geännert",
+'logentry-suppress-revision-legacy' => "$1 huet diskret d'Visibilitéit vu Versioune vun der Säit $3 {{GENDER:$2|geännert}}",
 'revdelete-content-hid' => 'Inhalt verstoppt',
 'revdelete-summary-hid' => 'Resumé vun der Ännerung verstoppt',
 'revdelete-uname-hid' => 'Benotzernumm verstoppt',
@@ -3778,18 +3848,20 @@ Den ugefrote Fichier gëtt direkt gewise respektiv mat enger verbonner Applikati
 'revdelete-uname-unhid' => 'Benotzernumm net verstoppt',
 'revdelete-restricted' => 'Limitatioune fir Administrateuren ageschalt',
 'revdelete-unrestricted' => 'Limitatioune fir Administrateuren opgehuewen',
-'logentry-move-move' => "$1 huet d'Säit $3 op $4 geréckelt",
-'logentry-move-move-noredirect' => "$1 huet d'Säit $3 op $4 geréckelt ouni eng Viruleedung unzeleeën",
-'logentry-move-move_redir' => "$1 huet d'Säit $3 op $4 geréckelt an dobäi gouf eng Viruleedung iwwerschriwwen",
-'logentry-move-move_redir-noredirect' => "$1 huet d'Säit $3 op $4 geréckelt an dobäi gouf eng Viruleedung iwwerschriwwen an et et gouf keng nei Viruleedung ugeluecht",
-'logentry-patrol-patrol' => "$1 huet d'Versioun $4 vun der Säit $3 als nogekuckt markéiert",
-'logentry-patrol-patrol-auto' => "$1 huet d'Versioun $4 vun der Säit $3 automatesch als nogekuckt markéiert",
-'logentry-newusers-newusers' => 'De Benotzerkont $1 gouf ugeluecht',
-'logentry-newusers-create' => 'De Benotzerkont $1 gouf ugeluecht',
-'logentry-newusers-create2' => 'De Benotzerkont $3 gouf vum $1 ugeluecht',
-'logentry-newusers-byemail' => "De Benotzerkont $3 gouf vum $1 ugeluecht an d'Passwuert gouf per E-Mail geschéckt.",
-'logentry-newusers-autocreate' => 'De Benotzerkont $1 gouf automatesch ugeluecht',
-'logentry-rights-autopromote' => "De Benotzer $1 huet d'Benotzerrechter automatesch vu(n) $4 op $5 geännert",
+'logentry-move-move' => "$1 huet d'Säit $3 op $4 {{GENDER:$2|geréckelt}}",
+'logentry-move-move-noredirect' => "$1 huet d'Säit $3 op $4 {{GENDER:$2|geréckelt}} ouni eng Viruleedung unzeleeën",
+'logentry-move-move_redir' => "$1 huet d'Säit $3 op $4 {{GENDER:$2|geréckelt}} an dobäi gouf eng Viruleedung iwwerschriwwen",
+'logentry-move-move_redir-noredirect' => "$1 huet d'Säit $3 op $4 {{GENDER:$2|geréckelt}} an dobäi gouf eng Viruleedung iwwerschriwwen an et et gouf keng nei Viruleedung ugeluecht",
+'logentry-patrol-patrol' => "$1 huet d'Versioun $4 vun der Säit $3 als nogekuckt {{GENDER:$2|markéiert}}",
+'logentry-patrol-patrol-auto' => "$1 huet d'Versioun $4 vun der Säit $3 automatesch als nogekuckt  {{GENDER:$2|markéiert}}",
+'logentry-newusers-newusers' => 'De Benotzerkont $1 gouf {{GENDER:$2|ugeluecht}}',
+'logentry-newusers-create' => 'De Benotzerkont $1 gouf {{GENDER:$2|ugeluecht}}',
+'logentry-newusers-create2' => 'De Benotzerkont $3 gouf vum $1 {{GENDER:$2|ugeluecht}}',
+'logentry-newusers-byemail' => "De Benotzerkont $3 gouf vum $1 {{GENDER:$2|ugeluecht}} an d'Passwuert gouf per E-Mail geschéckt.",
+'logentry-newusers-autocreate' => 'De Benotzerkont $1 gouf automatesch {{GENDER:$2|ugeluecht}}',
+'logentry-rights-rights' => "$1 {{GENDER:$2|huet}} d'Gruppen zou deenen de Benotzer $3 gehéiert vu(n) $4 op $5 geännert",
+'logentry-rights-rights-legacy' => "$1 {{GENDER:$2|huet}} d'Gruppen zou deenen de Benotzer $3 gehéiert geännert",
+'logentry-rights-autopromote' => "De Benotzer $1 {{GENDER:$2|krut}} d'Benotzerrechter automatesch vu(n) $4 op $5 geännert",
 'rightsnone' => '(keen)',
 
 # Feedback
@@ -3865,7 +3937,7 @@ Soss kënnt Dir den einfache Formulär hei drënner benotzen. Är Bemierkung gë
 'duration-centuries' => '$1 {{PLURAL:$1|Joerhonnert|Joerhonnerten}}',
 'duration-millennia' => '$1 {{PLURAL:$1|Millenaire|Millenairen}}',
 
-# Unknown messages
-'pageswithprop-legend' => 'Säite mat enger Säiten-Eegeschaft',
-'pageswithprop-submit' => 'Lass',
+# Image rotation
+'rotate-comment' => 'Bild ëm $1 {{PLURAL:$1|Grad}} an der Richtung vun der Auer gedréint',
+
 );

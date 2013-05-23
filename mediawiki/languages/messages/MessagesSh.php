@@ -237,8 +237,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Prikaži broj korisnika koji prate',
 'tog-oldsig' => 'Postojeći potpis:',
 'tog-fancysig' => 'Smatraj potpis kao wikitekst (bez automatskog linka)',
-'tog-externaleditor' => 'Redovno koristite eksterni editor (samo za naprednije korisnike, potrebne su posebne postavke na vašem računaru)',
-'tog-externaldiff' => 'Redovno koristi vanjski (diff) program za prikaz razlika (samo za naprednije korisnike, potrebne posebne postavke na vašem računaru [//www.mediawiki.org/wiki/Manual:External_editors Više informacija.])',
 'tog-showjumplinks' => 'Omogući opciju "skoči na" linkove',
 'tog-uselivepreview' => 'Koristite pretpregled uživo (potreban JavaScript) (eksperimentalno)',
 'tog-forceeditsummary' => 'Opomeni me pri unosu praznog sažetka',
@@ -1286,15 +1284,6 @@ Pokušajte u svoju pretragu staviti ''all:'' da se pretražuje cjelokupan sadrž
 U međuvremenu možete pretraživati preko Googlea.
 Uzmite u obzir da njegovi indeksi za ovu Wiki ne moraju biti ažurirani.',
 
-# Quickbar
-'qbsettings' => 'Podešavanja brze palete',
-'qbsettings-none' => 'Nikakva',
-'qbsettings-fixedleft' => 'Fiksirana lijevo',
-'qbsettings-fixedright' => 'Fiksirana desno',
-'qbsettings-floatingleft' => 'Plutajuća lijevo',
-'qbsettings-floatingright' => 'Plutajuća desno',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
-
 # Preferences page
 'preferences' => 'Postavke',
 'mypreferences' => 'Postavke',
@@ -1844,7 +1833,6 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 'http-read-error' => 'Greška pri čitanju HTTP.',
 'http-timed-out' => 'Istekao HTTP zahtjev.',
 'http-curl-error' => 'Greška pri otvaranju URLa: $1',
-'http-host-unreachable' => 'Ovaj URL nije bilo moguće otvoriti',
 'http-bad-status' => 'Nastao je problem tokom HTTP zahtjeva: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2253,8 +2241,8 @@ Buduće promjene ove stranice i njoj pridružene stranice za razgovor će biti n
 'notvisiblerev' => 'Posljednja izmjena drugog korisnika je bila izbrisana',
 'watchnochange' => 'Ništa što pratite nije promjenjeno u prikazanom vremenu.',
 'watchlist-details' => '{{PLURAL:$1|$1 stranica praćena|$1 stranice praćene|$1 stranica praćeno}} ne računajući stranice za razgovor.',
-'wlheader-enotif' => '* Obavještavanje e-poštom je omogućeno.',
-'wlheader-showupdated' => "* Stranice koje su izmijenjene od kad ste ih posljednji put posjetili su prikazane '''podebljanim slovima'''",
+'wlheader-enotif' => 'Obavještavanje e-poštom je omogućeno.',
+'wlheader-showupdated' => "Stranice koje su izmijenjene od kad ste ih posljednji put posjetili su prikazane '''podebljanim slovima'''",
 'watchmethod-recent' => 'provjerava se da li ima praćenih stranica u nedavnim izmjenama',
 'watchmethod-list' => 'provjerava se da li ima nedavnih izmjena u praćenim stranicama',
 'watchlistcontains' => 'Vaš spisak praćenih članaka sadrži $1 {{PLURAL:$1|stranicu|stranica}}.',
@@ -3171,7 +3159,7 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Širina',
 'exif-imagelength' => 'Visina',
 'exif-bitspersample' => 'Bita po komponenti',
@@ -3351,7 +3339,7 @@ Svi drugi linkovi u istoj liniji se smatraju izuzecima, npr. kod stranica gdje s
 'exif-originalimageheight' => 'Visina slike prije nego što je odrezana',
 'exif-originalimagewidth' => 'Širina slike prije nego što je odrezana',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Nekompresovano',
 'exif-compression-2' => 'CCITT Grupa 3 1 — Dimenzionalno izmijenjeo Huffmanovo šifriranje po dužini',
 'exif-compression-3' => 'CCITT Group 3 faks kodiranje',
@@ -3767,13 +3755,6 @@ Trebali biste dobiti [{{SERVER}}{{SCRIPTPATH}}/KOPIJU GNU opće javne licence] z
 'version-entrypoints' => 'URL adresa instalacije',
 'version-entrypoints-header-entrypoint' => 'Ulazna tačka',
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Putanja datoteke',
-'filepath-page' => 'Datoteka:',
-'filepath-submit' => 'Idi',
-'filepath-summary' => 'Ova posebna stranica prikazuje potpunu putanju za datoteku.
-Slike su prikazane u punoj veličini, ostale vrste datoteka su prikazane direktno sa, s njima povezanim, programom.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Potraga za duplim datotekama',

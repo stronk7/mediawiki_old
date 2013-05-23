@@ -176,8 +176,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ipakita ang bilang ng mga nagbabantay na tagagamit',
 'tog-oldsig' => 'Umiiral na lagda:',
 'tog-fancysig' => 'Ituring ang lagda bilang teksto ng wiki (walang automatikong pagkawing)',
-'tog-externaleditor' => 'Gumamit ng nakatakdang panlabas na pampatnugot ayon sa likas na pagkakatakda (para sa mga dalubhasa lamang, kailangan ng natatanging mga pagtatakda sa iyong kompyuter. [//www.mediawiki.org/wiki/Manual:External_editors Marami pang kabatiran.])',
-'tog-externaldiff' => 'Gumamit ng likas na nakatakdang panlabas na pagkakaiba (para sa mga dalubhasa lamang, kailangan ng natatanging mga pagtatakda sa iyong kompyuter. [//www.mediawiki.org/wiki/Manual:External_editors Mas marami pang kabatiran.])',
 'tog-showjumplinks' => 'Payagan ang mga "tumalon sa" na kawing pampagamit',
 'tog-uselivepreview' => 'Gamitin ang buhay na paunang tingin (JavaScript) (Eksperimental)',
 'tog-forceeditsummary' => 'Pagsabihan ako kapag nagpapasok ng walang-lamang buod ng pagbabago',
@@ -192,6 +190,7 @@ $messages = array(
 'tog-showhiddencats' => 'Ipakita ang mga nakatagong kategorya',
 'tog-noconvertlink' => 'Huwag paganahin ang pagpapalit ng pamagat na pangkawing',
 'tog-norollbackdiff' => 'Alisin ang mga pagkakaiba pagkatapos isagawa ang pagpapagulong na pabalik sa dati',
+'tog-useeditwarning' => 'Magbabala sa akin kapag umalis ako sa isang pahina ng pampatnugot na hindi pa nasasagip ang mga pagbabago',
 
 'underline-always' => 'Palagi',
 'underline-never' => 'Hindi magpakailanman',
@@ -672,7 +671,7 @@ Maghintay po muna bago subukan uli.',
 'loginlanguagelabel' => 'Wika: $1',
 'suspicious-userlogout' => "Tinanggihan ang inyong kahilingang umalis sa pagkalagda dahil tila ito ay ipinadala ng sirang pambasa-basa o apoderadong pambaon (''caching proxy'')",
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Hindi malamang kamalian sa tungkulin ng liham ng PHP ()',
 'user-mail-no-addy' => 'Sinubukang magpadala ng e-liham na walang tirahan na para sa e-liham.',
 
@@ -950,6 +949,8 @@ Tila binura na ito.',
 'edit-already-exists' => 'Hindi makalikha ng isang bagong pahina.
 Umiiral na ito.',
 'defaultmessagetext' => 'Nakatakdang teksto ng mensahe',
+'editwarning-warning' => 'Ang paglisan mula sa pahinang ito ay maaaring makasanhi sa iyo ng pagkawala ng anumang mga pagbabagong ginawa mo.
+Kung nakalagda ka, maaari mong huwag paganahin ang babalang ito sa loob ng seksyong "May binabago" ng mga nais mo.',
 
 # Content models
 'content-model-wikitext' => 'wikiteksto',
@@ -1231,15 +1232,6 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 'search-external' => 'Panlabas na paghahanap',
 'searchdisabled' => 'Nakapatay ang paghahanap sa {{SITENAME}}. Maaari kang pansamantalang maghanap sa pamamagitan ng Google. Tandaan na maaaring luma na ang kanilang mga indeks sa nilalaman ng {{SITENAME}}.',
 
-# Quickbar
-'qbsettings' => 'Quickbar',
-'qbsettings-none' => 'Wala',
-'qbsettings-fixedleft' => 'Inayos ang kaliwa',
-'qbsettings-fixedright' => 'Inayos ang kanan',
-'qbsettings-floatingleft' => 'Kaliwa lumulutang',
-'qbsettings-floatingright' => 'Kanan lumulutang',
-'qbsettings-directionality' => 'Naayos na, ayon sa kapupuntahan ng panitik ng wika mo',
-
 # Preferences page
 'preferences' => 'Mga kagustuhan',
 'mypreferences' => 'Mga nais',
@@ -1358,7 +1350,7 @@ Kung pipiliin mong ibigay ito, gagamitin ito para mabigyan ka ng pagkilala para 
 'prefs-displaywatchlist' => 'Ipakita ang mga pagpipilian',
 'prefs-diffs' => 'Mga pagkakaiba',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'Mukhang katanggap-tanggap ang direkisyong e-liham',
 'email-address-validity-invalid' => 'Magpasok ng isang tanggap na direksiyong e-liham',
 
@@ -1797,7 +1789,6 @@ Para sa pinakamatatag na kaligtasan, hindi pinagana ang img_auth.php.',
 'http-read-error' => 'Kamalian sa pagbasa ng HTTP.',
 'http-timed-out' => 'Huminto ang kahilingang HTTP.',
 'http-curl-error' => 'Kamalian sa pagsalok ng URL: $1',
-'http-host-unreachable' => 'Hindi marating ang URL.',
 'http-bad-status' => 'Nagkaroon ng suliranin habang hinihiling ang HTTP na: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2148,7 +2139,7 @@ Maaaring may mga [[{{MediaWiki:Listgrouprights-helppage}}|karagdagang kabatiran]
 'listgrouprights-addgroup-self-all' => 'Idagdag ang lahat ng mga pangkat sa sariling akawnt',
 'listgrouprights-removegroup-self-all' => 'Alisin ang lahat ng mga pangkat mula sa sariling akawnt',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Walang adres na mapagpapadalahan',
 'mailnologintext' => 'Kailangan mong [[Special:UserLogin|lumagda]] at magkaroon ng tanggap na e-liham sa iyong [[Special:Preferences|mga kagustuhan]] para makapagpadala ng e-liham sa ibang mga tagagamit.',
 'emailuser' => 'Padalhan ng e-liham ang tagagamit',
@@ -2207,8 +2198,8 @@ Makikita doon ang lahat ng mga susunod na pagbabago sa pahinang ito pati na ang 
 'notvisiblerev' => 'Nabura na ang pagbabago',
 'watchnochange' => 'Wala sa binabantayan mo ang binago sa oras na nakikita.',
 'watchlist-details' => '{{PLURAL:$1|$1 pahinang|$1 mga pahinang}} nasa iyong talaan ng mga binabantayan, hindi binibilang ang mga pahina ng usapan.',
-'wlheader-enotif' => '* Umiiral ang pagpapahayag sa pamamagitan ng e-liham.',
-'wlheader-showupdated' => "* Ipinapakitang may '''makakapal na mga panitik''' ang nabagong/binagong mga pahina mula pa noong huli mong pagdalaw sa kanila",
+'wlheader-enotif' => 'Umiiral ang pagpapahayag sa pamamagitan ng e-liham.',
+'wlheader-showupdated' => "Ipinapakitang may '''makakapal na mga panitik''' ang nabagong/binagong mga pahina mula pa noong huli mong pagdalaw sa kanila",
 'watchmethod-recent' => 'sinusuri ang kamakailan lamang na mga pagbabago para sa binabantayang mga pahina',
 'watchmethod-list' => 'sinusuri ang binabantayang mga pahina para sa mga kamakailan lamang na mga pagbabago',
 'watchlistcontains' => 'Naglalaman ng $1 {{PLURAL:$1|pahina|mga pahina}} ang iyong talaan ng mga binabantayan.',
@@ -2924,17 +2915,11 @@ Sagipin mo ito sa iyong kompyuter at papaitaas na ikarga ito rito.',
 
 # Stylesheets
 'common.css' => '/* Ang inilagay na CSS dito ay gagamitin para sa lahat ng mga pabalat */',
-'standard.css' => '/* Ang inilagay na CSS dito ay makakaapekto sa mga tagagamit ng Karaniwang pabalat */',
-'nostalgia.css' => '/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na Nostalgia */',
 'cologneblue.css' => "/* Ang Cascading Style Sheets na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na Bughaw na Kolown (''Cologne Blue'') */",
 'monobook.css' => '/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na Monobook */',
-'myskin.css' => "/* Ang CSS na inilagay dito ay makakaapekto sa lahat ng mga tagagamit ng pabalat na Balatko (''MySkin'') */",
-'chick.css' => "/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na ''Chick'' */",
-'simple.css' => "/* Ang CSS na iniligay dito ay makakaapekto sa mga tagagamit ng Payak (''Simple'') na pabalat */",
 'modern.css' => "/* Ang CSS na iniligay dito ay makakaapekto sa tagagamit ng Makabagong (''Modern'') pabalat */",
 'vector.css' => '/* Ang inilagay na CSS dito ay makakaapekto sa mga tagagamit ng pabalat na Vector */',
 'print.css' => '/* Ang CSS na inilagay dito ay makakaapekto sa kalalabasan o resulta ng paglilimbag */',
-'handheld.css' => "/* Ang CSS na inilagay dito ay makakaapekto sa mga aparatong nahahawakan (''handheld device'') batay sa itinakdang pabalat sa ''\$wgHandheldStyle'' */",
 'noscript.css' => '/* Ang inilagay na Cascading Style Sheets dito ay makakaapekto sa mga tagagamit na hindi nagpapagana ng JavaScript */',
 'group-autoconfirmed.css' => '/* Ang inilagay na Mga Pilas ng Estilong Lumalagaslas (Cascading Style Sheets o CSS) dito ay makakaapekto lamang sa mga tagagamit na kusang natiyak */',
 'group-bot.css' => '/* Ang inilagay na Mga Pilas ng Estilong Lumalagaslas (Cascading Style Sheets o CSS) dito ay makakaapekto lamang sa mga bot */',
@@ -2943,13 +2928,8 @@ Sagipin mo ito sa iyong kompyuter at papaitaas na ikarga ito rito.',
 
 # Scripts
 'common.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa lahat ng mga tagagamit ng bawat pahinang ikinarga. */',
-'standard.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng Karaniwang pabalat */',
-'nostalgia.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng pabalat na Nostalgia */',
 'cologneblue.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit ng pabalat na Cologne Blue o Bughaw na Kolown */',
 'monobook.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng pabalat na MonoBook */',
-'myskin.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa tagagamit na gumagamit ng pabalat na MySkin o Balat Ko */',
-'chick.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng pabalat na Chick */',
-'simple.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng Payak na pabalat */',
 'modern.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng Modernong pabalat */',
 'vector.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng pabalat na Vector */',
 'group-autoconfirmed.js' => '/* Ang anumang JavaScript dito ay ikakarga para sa mga tagagamit na kusang natiyak lamang */',
@@ -3015,13 +2995,8 @@ Maaaring dahil ito sa isang kawing sa isang nakatalang hinarang dahil di-kinaisn
 'pageinfo-templates' => '{{PLURAL:$1|Suleras|Mga suleras}} ($1) na nasa transklusyon (kasama sa maraming mga lugar)',
 
 # Skin names
-'skinname-standard' => 'Klasiko',
-'skinname-nostalgia' => 'Nostalhiya',
 'skinname-cologneblue' => 'Bughaw na Kolown',
 'skinname-monobook' => 'MonoAklat ("isang aklat")',
-'skinname-myskin' => 'PabalatKo',
-'skinname-chick' => "\"Pambabae\" (''Chick'')",
-'skinname-simple' => 'Payak',
 'skinname-modern' => 'Makabago (Moderno)',
 'skinname-vector' => 'Vector',
 
@@ -3114,8 +3089,6 @@ Anumang susunod na mga kawing sa pinanggalingang linya ay tinuturing na mga ekse
 
 /*
 Short names for language variants used for language conversion links.
-To disable showing a particular link, set it to 'disable', e.g.
-'variantname-zh-sg' => 'disable',
 Variants for Chinese language
 */
 'variantname-zh-hans' => 'hans',
@@ -3191,7 +3164,7 @@ Likas na nakatakdang itago ang iba pa.
 'metadata-langitem' => "'''$2:''' $1",
 'metadata-langitem-default' => '$1',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Lapad',
 'exif-imagelength' => 'Taas',
 'exif-bitspersample' => 'Mga bit (piraso) ng bawat komponente (bahagi)',
@@ -3384,7 +3357,7 @@ $4, $5, $6 $7
 $8',
 'exif-subjectnewscode-value' => '$2 ($1)',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Walang kompresyon',
 'exif-compression-2' => 'CCITT Pangkat 3 1-kodigo sa haba ng pagtakbo ng Pangdimensiyong Huffman na May Bahagyang Pagbabago',
 'exif-compression-3' => 'Kodigo ng Pangkat 3 ng CCITT',
@@ -3631,7 +3604,7 @@ $8',
 'monthsall' => 'lahat',
 'limitall' => 'lahat',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Patotohanan ang adres ng e-liham',
 'confirmemail_noemail' => 'Wala kang nakatakdang tanggap na adres ng e-liham sa iyong [[Special:Preferences|mga kagustuhan ng tagagamit]].',
 'confirmemail_text' => "Pinagagawa ng {{SITENAME}} na patotohanan mo ang iyong adres ng e-liham bago gamitin ang mga kasangkapang-katangian ng e-liham.  Pindutin at buhayin ang pindutan sa ibaba para makapagpadala ng isang makapagpapatotoong e-liham (kompirmasyon) patungo sa iyong adres.
@@ -3915,13 +3888,6 @@ Dapat na nakatanggap ka ng [{{SERVER}}{{SCRIPTPATH}}/COPYING isang sipi ng Pangk
 'version-entrypoints-header-url' => 'URL',
 'version-entrypoints-articlepath' => '[https://www.mediawiki.org/wiki/Manual:$wgArticlePath Landas ng artikulo]',
 'version-entrypoints-scriptpath' => '[https://www.mediawiki.org/wiki/Manual:$wgScriptPath Landas ng panitik]',
-
-# Special:FilePath
-'filepath' => 'Lokasyon ng talaksan (file path)',
-'filepath-page' => 'Talaksan:',
-'filepath-submit' => 'Gawin',
-'filepath-summary' => 'Ibinabalik ng natatanging pahinang ito ang buong landas para sa isang talaksan.  
-Ipinapakita ang mga larawan sa buong kalinawan, tuwirang sinisimulan ang ibang uri ng mga talaksan sa pamamagitan ng kaugnay nilang mga programa.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Maghanap ng kaparehong mga talaksan',

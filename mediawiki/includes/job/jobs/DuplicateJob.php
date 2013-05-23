@@ -31,7 +31,7 @@ final class DuplicateJob extends Job {
 	 * Callers should use DuplicateJob::newFromJob() instead
 	 *
 	 * @param $title Title
-	 * @param $params Array: job parameters
+	 * @param array $params job parameters
 	 * @param $id Integer: job id
 	 */
 	function __construct( $title, $params, $id = 0 ) {
@@ -45,10 +45,10 @@ final class DuplicateJob extends Job {
 	 * @return Job
 	 */
 	public static function newFromJob( Job $job ) {
-		$djob = new self( $job->getTitle(), $job->getParams(), $job->getId() );
-		$djob->command  = $job->getType();
-		$djob->params   = is_array( $djob->params ) ? $djob->params : array();
-		$djob->params   = array( 'isDuplicate' => true ) + $djob->params;
+		$djob = new self( $job->getTitle(), $job->getParams(), $job->id );
+		$djob->command = $job->getType();
+		$djob->params = is_array( $djob->params ) ? $djob->params : array();
+		$djob->params = array( 'isDuplicate' => true ) + $djob->params;
 		$djob->metadata = $job->metadata;
 		return $djob;
 	}

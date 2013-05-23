@@ -50,16 +50,22 @@ class LoginForm extends SpecialPage {
 	var $mType, $mReason, $mRealName;
 	var $mAbortLoginErrorMsg = 'login-abort-generic';
 	private $mLoaded = false;
-
-	/**
-	 * @var ExternalUser
-	 */
-	private $mExtUser = null;
+	private $mSecureLoginUrl;
+	// TODO Remove old forms and mShowVForm gating after all WMF wikis have
+	// adapted messages and help links to new versions.
+	private $mShowVForm;
 
 	/**
 	 * @ var WebRequest
 	 */
 	private $mOverrideRequest = null;
+
+	/**
+	 * Effective request; set at the beginning of load
+	 *
+	 * @var WebRequest $mRequest
+	 */
+	private $mRequest = null;
 
 	/**
 	 * @param WebRequest $request
@@ -86,6 +92,7 @@ class LoginForm extends SpecialPage {
 		} else {
 			$request = $this->mOverrideRequest;
 		}
+		$this->mRequest = $request;
 
 		$this->mType = $request->getText( 'type' );
 		$this->mUsername = $request->getText( 'wpName' );
@@ -108,18 +115,18 @@ class LoginForm extends SpecialPage {
 		$this->mReturnTo = $request->getVal( 'returnto', '' );
 		$this->mReturnToQuery = $request->getVal( 'returntoquery', '' );
 
-		if( $wgEnableEmail ) {
+		if ( $wgEnableEmail ) {
 			$this->mEmail = $request->getText( 'wpEmail' );
 		} else {
 			$this->mEmail = '';
 		}
-		if( !in_array( 'realname', $wgHiddenPrefs ) ) {
+		if ( !in_array( 'realname', $wgHiddenPrefs ) ) {
 			$this->mRealName = $request->getText( 'wpRealName' );
 		} else {
 			$this->mRealName = '';
 		}
 
-		if( !$wgAuth->validDomain( $this->mDomain ) ) {
+		if ( !$wgAuth->validDomain( $this->mDomain ) ) {
 			$this->mDomain = $wgAuth->getDomain();
 		}
 		$wgAuth->setDomain( $this->mDomain );
@@ -128,7 +135,7 @@ class LoginForm extends SpecialPage {
 		# 2. Do not return to PasswordReset after a successful password change
 		#    but goto Wiki start page (Main_Page) instead ( bug 33997 )
 		$returnToTitle = Title::newFromText( $this->mReturnTo );
-		if( is_object( $returnToTitle ) && (
+		if ( is_object( $returnToTitle ) && (
 			$returnToTitle->isSpecial( 'Userlogout' )
 			|| $returnToTitle->isSpecial( 'PasswordReset' ) ) ) {
 			$this->mReturnTo = '';
@@ -137,22 +144,43 @@ class LoginForm extends SpecialPage {
 	}
 
 	function getDescription() {
-		return $this->msg( $this->getUser()->isAllowed( 'createaccount' ) ?
-			'userlogin' : 'userloginnocreate' )->text();
+		if ( !$this->getUser()->isAllowed( 'createaccount' ) ) {
+			return $this->msg( 'userloginnocreate' )->text();
+		}
+		if ( $this->mShowVForm ) {
+			if ( $this->mType === 'signup' ) {
+				return $this->msg( 'createaccount' )->text();
+			} else {
+				return $this->msg( 'login' )->text();
+			}
+		} else {
+			return $this->msg( 'userlogin' )->text();
+		}
 	}
 
-	public function execute( $par ) {
+	/*
+	 * @param $subPage string|null
+	 */
+	public function execute( $subPage ) {
 		if ( session_id() == '' ) {
 			wfSetupSession();
 		}
 
 		$this->load();
+
+		// Check for [[Special:Userlogin/signup]. This affects form display and
+		// page title.
+		if ( $subPage == 'signup' ) {
+			$this->mType = 'signup';
+		}
+		$this->mShowVForm = $this->shouldShowVForm();
+
 		$this->setHeaders();
 
+		// If logging in and not on HTTPS, either redirect to it or offer a link.
 		global $wgSecureLogin;
 		if (
 			$this->mType !== 'signup' &&
-			$wgSecureLogin &&
 			WebRequest::detectProtocol() !== 'https'
 		) {
 			$title = $this->getFullTitle();
@@ -162,19 +190,24 @@ class LoginForm extends SpecialPage {
 				'wpStickHTTPS' => $this->mStickHTTPS
 			);
 			$url = $title->getFullURL( $query, false, PROTO_HTTPS );
-			$this->getOutput()->redirect( $url );
-			return;
-		}
-
-		if ( $par == 'signup' ) { # Check for [[Special:Userlogin/signup]]
-			$this->mType = 'signup';
+			if ( $wgSecureLogin ) {
+				$this->getOutput()->redirect( $url );
+				return;
+			} else {
+				// A wiki without HTTPS login support should set $wgServer to
+				// http://somehost, in which case the secure URL generated
+				// above won't actually start with https://
+				if ( substr( $url, 0, 8 ) === 'https://' ) {
+					$this->mSecureLoginUrl = $url;
+				}
+			}
 		}
 
 		if ( !is_null( $this->mCookieCheck ) ) {
 			$this->onCookieRedirectCheck( $this->mCookieCheck );
 			return;
-		} elseif( $this->mPosted ) {
-			if( $this->mCreateaccount ) {
+		} elseif ( $this->mPosted ) {
+			if ( $this->mCreateaccount ) {
 				$this->addNewAccount();
 				return;
 			} elseif ( $this->mCreateaccountMail ) {
@@ -198,10 +231,10 @@ class LoginForm extends SpecialPage {
 		}
 
 		$status = $this->addNewaccountInternal();
-		if( !$status->isGood() ) {
+		if ( !$status->isGood() ) {
 			$error = $this->getOutput()->parse( $status->getWikiText() );
 			$this->mainLoginForm( $error );
-			return false;
+			return;
 		}
 
 		$u = $status->getValue();
@@ -217,7 +250,7 @@ class LoginForm extends SpecialPage {
 		$out = $this->getOutput();
 		$out->setPageTitle( $this->msg( 'accmailtitle' ) );
 
-		if( !$result->isGood() ) {
+		if ( !$result->isGood() ) {
 			$this->mainLoginForm( $this->msg( 'mailerror', $result->getWikiText() )->text() );
 		} else {
 			$out->addWikiMsg( 'accmailtext', $u->getName(), $u->getEmail() );
@@ -230,11 +263,11 @@ class LoginForm extends SpecialPage {
 	 * @return bool
 	 */
 	function addNewAccount() {
-		global $wgUser, $wgEmailAuthentication, $wgLoginLanguageSelector;
+		global $wgContLang, $wgUser, $wgEmailAuthentication, $wgLoginLanguageSelector;
 
 		# Create the account and abort if there's a problem doing so
 		$status = $this->addNewAccountInternal();
-		if( !$status->isGood() ) {
+		if ( !$status->isGood() ) {
 			$error = $this->getOutput()->parse( $status->getWikiText() );
 			$this->mainLoginForm( $error );
 			return false;
@@ -242,18 +275,30 @@ class LoginForm extends SpecialPage {
 
 		$u = $status->getValue();
 
-		# If we showed up language selection links, and one was in use, be
-		# smart (and sensible) and save that language as the user's preference
-		if( $wgLoginLanguageSelector && $this->mLanguage ) {
-			$u->setOption( 'language', $this->mLanguage );
+		# Only save preferences if the user is not creating an account for someone else.
+		if ( $this->getUser()->isAnon() ) {
+			# If we showed up language selection links, and one was in use, be
+			# smart (and sensible) and save that language as the user's preference
+			if ( $wgLoginLanguageSelector && $this->mLanguage ) {
+				$u->setOption( 'language', $this->mLanguage );
+			} else {
+
+				# Otherwise the user's language preference defaults to $wgContLang,
+				# but it may be better to set it to their preferred $wgContLang variant,
+				# based on browser preferences or URL parameters.
+				$u->setOption( 'language', $wgContLang->getPreferredVariant() );
+			}
+			if ( $wgContLang->hasVariants() ) {
+				$u->setOption( 'variant', $wgContLang->getPreferredVariant() );
+			}
 		}
 
 		$out = $this->getOutput();
 
 		# Send out an email authentication message if needed
-		if( $wgEmailAuthentication && Sanitizer::validateEmail( $u->getEmail() ) ) {
+		if ( $wgEmailAuthentication && Sanitizer::validateEmail( $u->getEmail() ) ) {
 			$status = $u->sendConfirmationMail();
-			if( $status->isGood() ) {
+			if ( $status->isGood() ) {
 				$out->addWikiMsg( 'confirmemail_oncreate' );
 			} else {
 				$out->addWikiText( $status->getWikiText( 'confirmemail_sendfailed' ) );
@@ -266,7 +311,7 @@ class LoginForm extends SpecialPage {
 		# If not logged in, assume the new account as the current one and set
 		# session cookies then show a "welcome" message or a "need cookies"
 		# message as needed
-		if( $this->getUser()->isAnon() ) {
+		if ( $this->getUser()->isAnon() ) {
 			$u->setCookies();
 			$wgUser = $u;
 			// This should set it for OutputPage and the Skin
@@ -275,7 +320,7 @@ class LoginForm extends SpecialPage {
 			$this->getContext()->setUser( $u );
 			wfRunHooks( 'AddNewAccount', array( $u, false ) );
 			$u->addNewUserLogEntry( 'create' );
-			if( $this->hasSessionCookie() ) {
+			if ( $this->hasSessionCookie() ) {
 				$this->successfulCreation();
 			} else {
 				$this->cookieRedirectCheck( 'new' );
@@ -302,7 +347,7 @@ class LoginForm extends SpecialPage {
 			$wgMinimalPasswordLength, $wgEmailConfirmToEdit;
 
 		// If the user passes an invalid domain, something is fishy
-		if( !$wgAuth->validDomain( $this->mDomain ) ) {
+		if ( !$wgAuth->validDomain( $this->mDomain ) ) {
 			return Status::newFatal( 'wrongpassword' );
 		}
 
@@ -311,8 +356,8 @@ class LoginForm extends SpecialPage {
 		// cation server before they create an account (otherwise, they can
 		// create a local account and login as any domain user). We only need
 		// to check this for domains that aren't local.
-		if( 'local' != $this->mDomain && $this->mDomain != '' ) {
-			if(
+		if ( 'local' != $this->mDomain && $this->mDomain != '' ) {
+			if (
 				!$wgAuth->canCreateAccounts() &&
 				(
 					!$wgAuth->userExists( $this->mUsername ) ||
@@ -410,7 +455,7 @@ class LoginForm extends SpecialPage {
 		$u->setRealName( $this->mRealName );
 
 		$abortError = '';
-		if( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
+		if ( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
 			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
 			return Status::newFatal( new RawMessage( $abortError ) );
@@ -433,7 +478,7 @@ class LoginForm extends SpecialPage {
 			}
 		}
 
-		if( !$wgAuth->addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
+		if ( !$wgAuth->addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
 			return Status::newFatal( 'externaldberror' );
 		}
 
@@ -467,14 +512,6 @@ class LoginForm extends SpecialPage {
 		$u->setToken();
 
 		$wgAuth->initUser( $u, $autocreate );
-
-		if ( $this->mExtUser ) {
-			$this->mExtUser->linkToLocal( $u->getId() );
-			$email = $this->mExtUser->getPref( 'emailaddress' );
-			if ( $email && !$this->mEmail ) {
-				$u->setEmail( $email );
-			}
-		}
 
 		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
 		$u->saveSettings();
@@ -538,12 +575,8 @@ class LoginForm extends SpecialPage {
 			return self::SUCCESS;
 		}
 
-		$this->mExtUser = ExternalUser::newFromName( $this->mUsername );
-
-		# TODO: Allow some magic here for invalid external names, e.g., let the
-		# user choose a different wiki name.
 		$u = User::newFromName( $this->mUsername );
-		if( !( $u instanceof User ) || !User::isUsableName( $u->getName() ) ) {
+		if ( !( $u instanceof User ) || !User::isUsableName( $u->getName() ) ) {
 			return self::ILLEGAL;
 		}
 
@@ -556,28 +589,18 @@ class LoginForm extends SpecialPage {
 				$isAutoCreated = true;
 			}
 		} else {
-			global $wgExternalAuthType, $wgAutocreatePolicy;
-			if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
-				&& is_object( $this->mExtUser )
-				&& $this->mExtUser->authenticate( $this->mPassword )
-			) {
-				# The external user and local user have the same name and
-				# password, so we assume they're the same.
-				$this->mExtUser->linkToLocal( $u->getID() );
-			}
-
 			$u->load();
 		}
 
 		// Give general extensions, such as a captcha, a chance to abort logins
 		$abort = self::ABORTED;
-		if( !wfRunHooks( 'AbortLogin', array( $u, $this->mPassword, &$abort, &$this->mAbortLoginErrorMsg ) ) ) {
+		if ( !wfRunHooks( 'AbortLogin', array( $u, $this->mPassword, &$abort, &$this->mAbortLoginErrorMsg ) ) ) {
 			return $abort;
 		}
 
 		global $wgBlockDisablesLogin;
 		if ( !$u->checkPassword( $this->mPassword ) ) {
-			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
+			if ( $u->checkTemporaryPassword( $this->mPassword ) ) {
 				// The e-mailed temporary password should not be used for actu-
 				// al logins; that's a very sloppy habit, and insecure if an
 				// attacker has a few seconds to click "search" on someone's o-
@@ -594,7 +617,7 @@ class LoginForm extends SpecialPage {
 				// As a side-effect, we can authenticate the user's e-mail ad-
 				// dress if it's not already done, since the temporary password
 				// was sent via e-mail.
-				if( !$u->isEmailConfirmed() ) {
+				if ( !$u->isEmailConfirmed() ) {
 					$u->confirmEmail();
 					$u->saveSettings();
 				}
@@ -604,7 +627,7 @@ class LoginForm extends SpecialPage {
 				// faces etc will probably just fail cleanly here.
 				$retval = self::RESET_PASS;
 			} else {
-				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
+				$retval = ( $this->mPassword == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
@@ -636,7 +659,7 @@ class LoginForm extends SpecialPage {
 	/**
 	 * Increment the login attempt throttle hit count for the (username,current IP)
 	 * tuple unless the throttle was already reached.
-	 * @param $username string The user name
+	 * @param string $username The user name
 	 * @return Bool|Integer The integer hit count or True if it is already at the limit
 	 */
 	public static function incLoginThrottle( $username ) {
@@ -664,7 +687,7 @@ class LoginForm extends SpecialPage {
 
 	/**
 	 * Clear the login attempt throttle hit count for the (username,current IP) tuple.
-	 * @param $username string The user name
+	 * @param string $username The user name
 	 * @return void
 	 */
 	public static function clearLoginThrottle( $username ) {
@@ -684,44 +707,26 @@ class LoginForm extends SpecialPage {
 	 * @return integer Status code
 	 */
 	function attemptAutoCreate( $user ) {
-		global $wgAuth, $wgAutocreatePolicy;
+		global $wgAuth;
 
 		if ( $this->getUser()->isBlockedFromCreateAccount() ) {
 			wfDebug( __METHOD__ . ": user is blocked from account creation\n" );
 			return self::CREATE_BLOCKED;
 		}
-
-		/**
-		 * If the external authentication plugin allows it, automatically cre-
-		 * ate a new account for users that are externally defined but have not
-		 * yet logged in.
-		 */
-		if ( $this->mExtUser ) {
-			# mExtUser is neither null nor false, so use the new ExternalAuth
-			# system.
-			if ( $wgAutocreatePolicy == 'never' ) {
-				return self::NOT_EXISTS;
-			}
-			if ( !$this->mExtUser->authenticate( $this->mPassword ) ) {
-				return self::WRONG_PLUGIN_PASS;
-			}
-		} else {
-			# Old AuthPlugin.
-			if ( !$wgAuth->autoCreate() ) {
-				return self::NOT_EXISTS;
-			}
-			if ( !$wgAuth->userExists( $user->getName() ) ) {
-				wfDebug( __METHOD__ . ": user does not exist\n" );
-				return self::NOT_EXISTS;
-			}
-			if ( !$wgAuth->authenticate( $user->getName(), $this->mPassword ) ) {
-				wfDebug( __METHOD__ . ": \$wgAuth->authenticate() returned false, aborting\n" );
-				return self::WRONG_PLUGIN_PASS;
-			}
+		if ( !$wgAuth->autoCreate() ) {
+			return self::NOT_EXISTS;
+		}
+		if ( !$wgAuth->userExists( $user->getName() ) ) {
+			wfDebug( __METHOD__ . ": user does not exist\n" );
+			return self::NOT_EXISTS;
+		}
+		if ( !$wgAuth->authenticate( $user->getName(), $this->mPassword ) ) {
+			wfDebug( __METHOD__ . ": \$wgAuth->authenticate() returned false, aborting\n" );
+			return self::WRONG_PLUGIN_PASS;
 		}
 
 		$abortError = '';
-		if( !wfRunHooks( 'AbortAutoAccount', array( $user, &$abortError ) ) ) {
+		if ( !wfRunHooks( 'AbortAutoAccount', array( $user, &$abortError ) ) ) {
 			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::attemptAutoCreate: a hook blocked creation: $abortError\n" );
 			$this->mAbortLoginErrorMsg = $abortError;
@@ -747,14 +752,14 @@ class LoginForm extends SpecialPage {
 			case self::SUCCESS:
 				# We've verified now, update the real record
 				$user = $this->getUser();
-				if( (bool)$this->mRemember != $user->getBoolOption( 'rememberpassword' ) ) {
+				if ( (bool)$this->mRemember != $user->getBoolOption( 'rememberpassword' ) ) {
 					$user->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
 					$user->saveSettings();
 				} else {
 					$user->invalidateCache();
 				}
 
-				if( $wgSecureLogin && !$this->mStickHTTPS ) {
+				if ( $wgSecureLogin && !$this->mStickHTTPS ) {
 					$user->setCookies( null, false );
 				} else {
 					$user->setCookies();
@@ -766,7 +771,7 @@ class LoginForm extends SpecialPage {
 				$key = wfMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
 				$wgMemc->delete( $key );
 
-				if( $this->hasSessionCookie() || $this->mSkipCookieCheck ) {
+				if ( $this->hasSessionCookie() || $this->mSkipCookieCheck ) {
 					/* Replace the language object to provide user interface in
 					 * correct language immediately on this first page load.
 					 */
@@ -796,7 +801,7 @@ class LoginForm extends SpecialPage {
 				$this->mainLoginForm( $this->msg( 'wrongpassword' )->text() );
 				break;
 			case self::NOT_EXISTS:
-				if( $this->getUser()->isAllowed( 'createaccount' ) ) {
+				if ( $this->getUser()->isAllowed( 'createaccount' ) ) {
 					$this->mainLoginForm( $this->msg( 'nosuchuser',
 						wfEscapeWikiText( $this->mUsername ) )->parse() );
 				} else {
@@ -814,7 +819,7 @@ class LoginForm extends SpecialPage {
 				$this->resetLoginForm( $this->msg( 'resetpass_announce' )->text() );
 				break;
 			case self::CREATE_BLOCKED:
-				$this->userBlockedMessage( $this->getUser()->mBlock );
+				$this->userBlockedMessage( $this->getUser()->isBlockedFromCreateAccount() );
 				break;
 			case self::THROTTLED:
 				$this->mainLoginForm( $this->msg( 'login-throttled' )->text() );
@@ -831,6 +836,9 @@ class LoginForm extends SpecialPage {
 		}
 	}
 
+	/**
+	 * @param $error string
+	 */
 	function resetLoginForm( $error ) {
 		$this->getOutput()->addHTML( Xml::element( 'p', array( 'class' => 'error' ), $error ) );
 		$reset = new SpecialChangePassword();
@@ -841,8 +849,8 @@ class LoginForm extends SpecialPage {
 	/**
 	 * @param $u User object
 	 * @param $throttle Boolean
-	 * @param $emailTitle String: message name of email title
-	 * @param $emailText String: message name of email text
+	 * @param string $emailTitle message name of email title
+	 * @param string $emailText message name of email text
 	 * @return Status object
 	 */
 	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext' ) {
@@ -852,7 +860,7 @@ class LoginForm extends SpecialPage {
 			return Status::newFatal( 'noemail', $u->getName() );
 		}
 		$ip = $this->getRequest()->getIP();
-		if( !$ip ) {
+		if ( !$ip ) {
 			return Status::newFatal( 'badipaddress' );
 		}
 
@@ -870,7 +878,6 @@ class LoginForm extends SpecialPage {
 		return $result;
 	}
 
-
 	/**
 	 * Run any hooks registered for logins, then HTTP redirect to
 	 * $this->mReturnTo (or Main Page if that's undefined).  Formerly we had a
@@ -887,7 +894,7 @@ class LoginForm extends SpecialPage {
 		$injected_html = '';
 		wfRunHooks( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
 
-		if( $injected_html !== '' ) {
+		if ( $injected_html !== '' ) {
 			$this->displaySuccessfulAction( $this->msg( 'loginsuccesstitle' ),
 				'loginsuccess', $injected_html );
 		} else {
@@ -923,7 +930,7 @@ class LoginForm extends SpecialPage {
 	/**
 	 * Display an "successful action" page.
 	 *
-	 * @param $title string|Message page's title
+	 * @param string|Message $title page's title
 	 * @param $msgname string
 	 * @param $injected_html string
 	 */
@@ -945,6 +952,7 @@ class LoginForm extends SpecialPage {
 	 * User::isBlockedFromCreateAccount(), which gets this block, ignores the 'hardblock'
 	 * setting on blocks (bug 13611).
 	 * @param $block Block the block causing this error
+	 * @throws ErrorPageError
 	 */
 	function userBlockedMessage( Block $block ) {
 		# Let's be nice about this, it's likely that this feature will be used
@@ -963,6 +971,29 @@ class LoginForm extends SpecialPage {
 				$block->getByName()
 			)
 		);
+	}
+
+	/**
+	 * Add a "return to" link or redirect to it.
+	 * Extensions can use this to reuse the "return to" logic after
+	 * inject steps (such as redirection) into the login process.
+	 *
+	 * @param $type string, one of the following:
+	 *    - error: display a return to link ignoring $wgRedirectOnLogin
+	 *    - success: display a return to link using $wgRedirectOnLogin if needed
+	 *    - successredirect: send an HTTP redirect using $wgRedirectOnLogin if needed
+	 * @param string $returnTo
+	 * @param array|string $returnToQuery
+	 * @param bool $stickHTTPs Keep redirect link on HTTPs
+	 * @since 1.22
+	 */
+	public function showReturnToPage(
+		$type, $returnTo = '', $returnToQuery = '', $stickHTTPs = false
+	) {
+		$this->mReturnTo = $returnTo;
+		$this->mReturnToQuery = $returnToQuery;
+		$this->mStickHTTPS = $stickHTTPs;
+		$this->executeReturnTo( $type );
 	}
 
 	/**
@@ -992,7 +1023,7 @@ class LoginForm extends SpecialPage {
 		if ( $wgSecureLogin && !$this->mStickHTTPS ) {
 			$options = array( 'http' );
 			$proto = PROTO_HTTP;
-		} elseif( $wgSecureLogin ) {
+		} elseif ( $wgSecureLogin ) {
 			$options = array( 'https' );
 			$proto = PROTO_HTTPS;
 		} else {
@@ -1009,6 +1040,22 @@ class LoginForm extends SpecialPage {
 	}
 
 	/**
+	 * Whether to show new vertically laid out login form.
+	 * ?useNew=1 forces new style, ?useNew=0 forces old style,
+	 * otherwise consult $wgUseVFormUserLogin.
+	 * @return Boolean
+	 */
+	private function shouldShowVForm() {
+		global $wgUseVFormCreateAccount, $wgUseVFormUserLogin;
+
+		if ( $this->mType == 'signup' ) {
+			return $this->mRequest->getBool( 'useNew', $wgUseVFormCreateAccount );
+		} else {
+			return $this->mRequest->getBool( 'useNew', $wgUseVFormUserLogin );
+		}
+	}
+
+	/**
 	 * @private
 	 */
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
@@ -1019,6 +1066,7 @@ class LoginForm extends SpecialPage {
 
 		$titleObj = $this->getTitle();
 		$user = $this->getUser();
+		$out = $this->getOutput();
 
 		if ( $this->mType == 'signup' ) {
 			// Block signup here if in readonly. Keeps user from
@@ -1045,13 +1093,36 @@ class LoginForm extends SpecialPage {
 		}
 
 		if ( $this->mType == 'signup' ) {
-			$template = new UsercreateTemplate();
+			$out->addModules( 'mediawiki.special.userlogin.signup' );
+			if ( $this->mShowVForm ) {
+				$template = new UsercreateTemplateVForm();
+				$out->addModuleStyles( array(
+					'mediawiki.ui',
+					'mediawiki.special.createaccount.vform'
+				) );
+				// XXX hack pending RL or JS parse() support for complex content messages
+				// https://bugzilla.wikimedia.org/show_bug.cgi?id=25349
+				$out->addJsConfigVars( 'wgCreateacctImgcaptchaHelp',
+					$this->msg( 'createacct-imgcaptcha-help' )->parse() );
+				$out->addModules( 'mediawiki.special.createaccount.vform.js' );
+				// Must match number of benefits defined in messages
+				$template->set( 'benefitCount', 3 );
+			} else {
+				$template = new UsercreateTemplate();
+			}
 			$q = 'action=submitlogin&type=signup';
 			$linkq = 'type=login';
 			$linkmsg = 'gotaccount';
-			$this->getOutput()->addModules( 'mediawiki.special.userlogin.signup' );
 		} else {
-			$template = new UserloginTemplate();
+			if ( $this->mShowVForm ) {
+				$template = new UserloginTemplateVForm();
+				$out->addModuleStyles( array(
+					'mediawiki.ui',
+					'mediawiki.special.userlogin.vform'
+				) );
+			} else {
+				$template = new UserloginTemplate();
+			}
 			$q = 'action=submitlogin&type=login';
 			$linkq = 'type=signup';
 			$linkmsg = 'nologin';
@@ -1067,16 +1138,23 @@ class LoginForm extends SpecialPage {
 			$linkq .= $returnto;
 		}
 
-		# Don't show a "create account" link if the user can't
-		if( $this->showCreateOrLoginLink( $user ) ) {
+		# Don't show a "create account" link if the user can't.
+		if ( $this->showCreateOrLoginLink( $user ) ) {
 			# Pass any language selection on to the mode switch link
-			if( $wgLoginLanguageSelector && $this->mLanguage ) {
+			if ( $wgLoginLanguageSelector && $this->mLanguage ) {
 				$linkq .= '&uselang=' . $this->mLanguage;
 			}
-			$link = Html::element( 'a', array( 'href' => $titleObj->getLocalURL( $linkq ) ),
-				$this->msg( $linkmsg . 'link' )->text() ); # Calling either 'gotaccountlink' or 'nologinlink'
+			if ( !$this->mShowVForm ) {
+				$link = Html::element( 'a', array( 'href' => $titleObj->getLocalURL( $linkq ) ),
+					$this->msg( $linkmsg . 'link' )->text() ); # Calling either 'gotaccountlink' or 'nologinlink'
 
-			$template->set( 'link', $this->msg( $linkmsg )->rawParams( $link )->parse() );
+					$template->set( 'link', $this->msg( $linkmsg )->rawParams( $link )->parse() );
+
+			} else {
+				// Supply URL, login template creates the button.
+				// (The template 'link' key, passed above, is obsolete in the VForm design.)
+				$template->set( 'createOrLoginHref', $titleObj->getLocalURL( $linkq ) );
+			}
 		} else {
 			$template->set( 'link', '' );
 		}
@@ -1091,6 +1169,7 @@ class LoginForm extends SpecialPage {
 			: is_array( $wgPasswordResetRoutes ) && in_array( true, array_values( $wgPasswordResetRoutes ) );
 
 		$template->set( 'header', '' );
+		$template->set( 'skin', $this->getSkin() );
 		$template->set( 'name', $this->mUsername );
 		$template->set( 'password', $this->mPassword );
 		$template->set( 'retype', $this->mRetype );
@@ -1129,15 +1208,16 @@ class LoginForm extends SpecialPage {
 		}
 
 		# Prepare language selection links as needed
-		if( $wgLoginLanguageSelector ) {
+		if ( $wgLoginLanguageSelector ) {
 			$template->set( 'languages', $this->makeLanguageSelector() );
-			if( $this->mLanguage ) {
+			if ( $this->mLanguage ) {
 				$template->set( 'uselang', $this->mLanguage );
 			}
 		}
 
+		$template->set( 'secureLoginUrl', $this->mSecureLoginUrl );
 		// Use loginend-https for HTTPS requests if it's not blank, loginend otherwise
-		// Ditto for signupend
+		// Ditto for signupend.  New forms use neither.
 		$usingHTTPS = WebRequest::detectProtocol() == 'https';
 		$loginendHTTPS = $this->msg( 'loginend-https' );
 		$signupendHTTPS = $this->msg( 'signupend-https' );
@@ -1160,7 +1240,6 @@ class LoginForm extends SpecialPage {
 			wfRunHooks( 'UserLoginForm', array( &$template ) );
 		}
 
-		$out = $this->getOutput();
 		$out->disallowUserJs(); // just in case...
 		$out->addTemplate( $template );
 	}
@@ -1173,9 +1252,9 @@ class LoginForm extends SpecialPage {
 	 * @return Boolean
 	 */
 	function showCreateOrLoginLink( &$user ) {
-		if( $this->mType == 'signup' ) {
+		if ( $this->mType == 'signup' ) {
 			return true;
-		} elseif( $user->isAllowed( 'createaccount' ) ) {
+		} elseif ( $user->isAllowed( 'createaccount' ) ) {
 			return true;
 		} else {
 			return false;
@@ -1254,7 +1333,7 @@ class LoginForm extends SpecialPage {
 	 */
 	private function renewSessionId() {
 		global $wgSecureLogin, $wgCookieSecure;
-		if( $wgSecureLogin && !$this->mStickHTTPS ) {
+		if ( $wgSecureLogin && !$this->mStickHTTPS ) {
 			$wgCookieSecure = false;
 		}
 
@@ -1313,10 +1392,10 @@ class LoginForm extends SpecialPage {
 	 */
 	function makeLanguageSelector() {
 		$msg = $this->msg( 'loginlanguagelinks' )->inContentLanguage();
-		if( !$msg->isBlank() ) {
+		if ( !$msg->isBlank() ) {
 			$langs = explode( "\n", $msg->text() );
 			$links = array();
-			foreach( $langs as $lang ) {
+			foreach ( $langs as $lang ) {
 				$lang = trim( $lang, '* ' );
 				$parts = explode( '|', $lang );
 				if ( count( $parts ) >= 2 ) {
@@ -1334,20 +1413,20 @@ class LoginForm extends SpecialPage {
 	 * Create a language selector link for a particular language
 	 * Links back to this page preserving type and returnto
 	 *
-	 * @param $text Link text
-	 * @param $lang Language code
+	 * @param string $text Link text
+	 * @param string $lang Language code
 	 * @return string
 	 */
 	function makeLanguageSelectorLink( $text, $lang ) {
-		if( $this->getLanguage()->getCode() == $lang ) {
+		if ( $this->getLanguage()->getCode() == $lang ) {
 			// no link for currently used language
 			return htmlspecialchars( $text );
 		}
 		$query = array( 'uselang' => $lang );
-		if( $this->mType == 'signup' ) {
+		if ( $this->mType == 'signup' ) {
 			$query['type'] = 'signup';
 		}
-		if( $this->mReturnTo !== '' ) {
+		if ( $this->mReturnTo !== '' ) {
 			$query['returnto'] = $this->mReturnTo;
 			$query['returntoquery'] = $this->mReturnToQuery;
 		}
@@ -1362,5 +1441,9 @@ class LoginForm extends SpecialPage {
 			$attr,
 			$query
 		);
+	}
+
+	protected function getGroupName() {
+		return 'login';
 	}
 }

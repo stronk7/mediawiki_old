@@ -27,7 +27,7 @@
  */
 class LinksUpdate extends SqlDataUpdate {
 
-	// @todo: make members protected, but make sure extensions don't break
+	// @todo make members protected, but make sure extensions don't break
 
 	public $mId,         //!< Page ID of the article linked from
 		$mTitle,         //!< Title object of the article linked from
@@ -265,8 +265,8 @@ class LinksUpdate extends SqlDataUpdate {
 
 	/**
 	 * Update all the appropriate counts in the category table.
-	 * @param $added array associative array of category name => sort key
-	 * @param $deleted array associative array of category name => sort key
+	 * @param array $added associative array of category name => sort key
+	 * @param array $deleted associative array of category name => sort key
 	 */
 	function updateCategoryCounts( $added, $deleted ) {
 		$a = WikiPage::factory( $this->mTitle );
@@ -354,7 +354,7 @@ class LinksUpdate extends SqlDataUpdate {
 	 */
 	private function getLinkInsertions( $existing = array() ) {
 		$arr = array();
-		foreach( $this->mLinks as $ns => $dbkeys ) {
+		foreach ( $this->mLinks as $ns => $dbkeys ) {
 			$diffs = isset( $existing[$ns] )
 				? array_diff_key( $dbkeys, $existing[$ns] )
 				: $dbkeys;
@@ -376,7 +376,7 @@ class LinksUpdate extends SqlDataUpdate {
 	 */
 	private function getTemplateInsertions( $existing = array() ) {
 		$arr = array();
-		foreach( $this->mTemplates as $ns => $dbkeys ) {
+		foreach ( $this->mTemplates as $ns => $dbkeys ) {
 			$diffs = isset( $existing[$ns] ) ? array_diff_key( $dbkeys, $existing[$ns] ) : $dbkeys;
 			foreach ( $diffs as $dbk => $id ) {
 				$arr[] = array(
@@ -398,7 +398,7 @@ class LinksUpdate extends SqlDataUpdate {
 	private function getImageInsertions( $existing = array() ) {
 		$arr = array();
 		$diffs = array_diff_key( $this->mImages, $existing );
-		foreach( $diffs as $iname => $dummy ) {
+		foreach ( $diffs as $iname => $dummy ) {
 			$arr[] = array(
 				'il_from' => $this->mId,
 				'il_to' => $iname
@@ -415,8 +415,8 @@ class LinksUpdate extends SqlDataUpdate {
 	private function getExternalInsertions( $existing = array() ) {
 		$arr = array();
 		$diffs = array_diff_key( $this->mExternals, $existing );
-		foreach( $diffs as $url => $dummy ) {
-			foreach( wfMakeUrlIndexes( $url ) as $index ) {
+		foreach ( $diffs as $url => $dummy ) {
+			foreach ( wfMakeUrlIndexes( $url ) as $index ) {
 				$arr[] = array(
 					'el_from' => $this->mId,
 					'el_to' => $url,
@@ -430,7 +430,7 @@ class LinksUpdate extends SqlDataUpdate {
 	/**
 	 * Get an array of category insertions
 	 *
-	 * @param $existing array mapping existing category names to sort keys. If both
+	 * @param array $existing mapping existing category names to sort keys. If both
 	 * match a link in $this, the link will be omitted from the output
 	 *
 	 * @return array
@@ -474,14 +474,14 @@ class LinksUpdate extends SqlDataUpdate {
 	/**
 	 * Get an array of interlanguage link insertions
 	 *
-	 * @param $existing Array mapping existing language codes to titles
+	 * @param array $existing mapping existing language codes to titles
 	 *
 	 * @return array
 	 */
 	private function getInterlangInsertions( $existing = array() ) {
 		$diffs = array_diff_assoc( $this->mInterlangs, $existing );
 		$arr = array();
-		foreach( $diffs as $lang => $title ) {
+		foreach ( $diffs as $lang => $title ) {
 			$arr[] = array(
 				'll_from' => $this->mId,
 				'll_lang' => $lang,
@@ -517,7 +517,7 @@ class LinksUpdate extends SqlDataUpdate {
 	 */
 	private function getInterwikiInsertions( $existing = array() ) {
 		$arr = array();
-		foreach( $this->mInterwikis as $prefix => $dbkeys ) {
+		foreach ( $this->mInterwikis as $prefix => $dbkeys ) {
 			$diffs = isset( $existing[$prefix] ) ? array_diff_key( $dbkeys, $existing[$prefix] ) : $dbkeys;
 			foreach ( $diffs as $dbk => $id ) {
 				$arr[] = array(
@@ -840,14 +840,14 @@ class LinksDeletionUpdate extends SqlDataUpdate {
 		$id = $this->mPage->getId();
 
 		# Delete restrictions for it
-		$this->mDb->delete( 'page_restrictions', array ( 'pr_page' => $id ), __METHOD__ );
+		$this->mDb->delete( 'page_restrictions', array( 'pr_page' => $id ), __METHOD__ );
 
 		# Fix category table counts
 		$cats = array();
 		$res = $this->mDb->select( 'categorylinks', 'cl_to', array( 'cl_from' => $id ), __METHOD__ );
 
 		foreach ( $res as $row ) {
-			$cats [] = $row->cl_to;
+			$cats[] = $row->cl_to;
 		}
 
 		$this->mPage->updateCategoryCounts( array(), $cats );
@@ -884,8 +884,8 @@ class LinksDeletionUpdate extends SqlDataUpdate {
 
 	/**
 	 * Update all the appropriate counts in the category table.
-	 * @param $added array associative array of category name => sort key
-	 * @param $deleted array associative array of category name => sort key
+	 * @param array $added associative array of category name => sort key
+	 * @param array $deleted associative array of category name => sort key
 	 */
 	function updateCategoryCounts( $added, $deleted ) {
 		$a = WikiPage::factory( $this->mTitle );

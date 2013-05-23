@@ -34,7 +34,7 @@
  * @author Antoine Musso <hashar at free dot fr>
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that compares documented and actually present mismatches.
@@ -115,7 +115,7 @@ class FindHooks extends Maintenance {
 	 */
 	private function getHooksFromDoc( $doc ) {
 		if ( $this->hasOption( 'online' ) ) {
-			return $this->getHooksFromOnlineDoc( );
+			return $this->getHooksFromOnlineDoc();
 		} else {
 			return $this->getHooksFromLocalDoc( $doc );
 		}
@@ -137,7 +137,7 @@ class FindHooks extends Maintenance {
 	 * Get hooks from www.mediawiki.org using the API
 	 * @return array of documented hooks
 	 */
-	private function getHooksFromOnlineDoc( ) {
+	private function getHooksFromOnlineDoc() {
 			// All hooks
 			$allhookdata = Http::get( 'http://www.mediawiki.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:MediaWiki_hooks&cmlimit=500&format=php' );
 			$allhookdata = unserialize( $allhookdata );
@@ -248,4 +248,4 @@ class FindHooks extends Maintenance {
 }
 
 $maintClass = 'FindHooks';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

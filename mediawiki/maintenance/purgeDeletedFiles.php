@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that scans the deletion log and purges affected files
@@ -53,8 +53,8 @@ class PurgeDeletedFiles extends Maintenance {
 
 		$conds = array(
 			'log_namespace' => NS_FILE,
-			'log_type'      => $logType,
-			'log_action'    => array( 'delete', 'revision' )
+			'log_type' => $logType,
+			'log_action' => array( 'delete', 'revision' )
 		);
 		$start = $this->getOption( 'starttime' );
 		if ( $start ) {
@@ -93,4 +93,4 @@ class PurgeDeletedFiles extends Maintenance {
 }
 
 $maintClass = "PurgeDeletedFiles";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

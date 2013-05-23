@@ -72,8 +72,6 @@ $messages = array(
 'tog-shownumberswatching' => "Mussar il dumber d'utilisaders che obervan questa pagina",
 'tog-oldsig' => 'Signatura actuala:',
 'tog-fancysig' => "Suttascripziun senza link automatic tar la pagina da l'utilisader.",
-'tog-externaleditor' => 'Utilisar sco standard in editur extern (be per experts, basegna ina configuraziun speziala da des computer. [//www.mediawiki.org/wiki/Manual:External_editors Dapli infurmaziuns.])',
-'tog-externaldiff' => 'Utilisar sco standard in program extern per visualisar differenzas tranter versiuns (be per experts, basegna ina configuraziun speziala da des computer. [//www.mediawiki.org/wiki/Manual:External_editors Dapli infurmaziuns.])',
 'tog-showjumplinks' => 'Activar las colliaziuns "seglir a"',
 'tog-uselivepreview' => 'Utilisar la prevista dinamica (basegna JavaScript) (experiment!)',
 'tog-forceeditsummary' => 'Avertir durant memoriar sche la resumaziun manca',
@@ -549,7 +547,7 @@ Spetga per plaschair avant ch'empruvar anc ina giada.",
 'loginlanguagelabel' => 'Lingua: $1',
 'suspicious-userlogout' => "Tia dumonda per partir è vegnida refusada perquai ch'i para ch'ella è vegnida tramessa d'in navigatur che funcziuna betg correctamain u d'in proxy da cache.",
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Errur nunenconuschenta en la funcziun mail() da PHP',
 'user-mail-no-addy' => 'Empruvà da trametter in e-mail senza ina adressa dad e-mail.',
 
@@ -1113,15 +1111,6 @@ Scriva il prefix ''all:'' avant il term che ti vuls tschertgar, per tschertgar e
 Ti pos tschertgar en il fratemp cun Google. 
 Considerescha che lur index da {{SITENAME}} po cuntegnair datas ch'èn betg pli actualas.",
 
-# Quickbar
-'qbsettings' => 'Glista laterala',
-'qbsettings-none' => 'Nagins',
-'qbsettings-fixedleft' => 'Sanester, fixà',
-'qbsettings-fixedright' => 'Dretg, fixà',
-'qbsettings-floatingleft' => 'Sanester, flottand',
-'qbsettings-floatingright' => 'Dretg, flottand',
-'qbsettings-directionality' => 'Fixà, dependent da la direcziun da scriver da tia lingua',
-
 # Preferences page
 'preferences' => 'Preferenzas',
 'mypreferences' => 'Preferenzas',
@@ -1241,7 +1230,7 @@ Tia adressa dad e-mail na vegn betg mussada sche auters utilisaders ta contactes
 'prefs-displaywatchlist' => 'Opziuns da visualisar',
 'prefs-diffs' => 'Cumparegliaziun da versiuns',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => "L'adressa da e-mail para dad esser valida",
 'email-address-validity-invalid' => 'Endatescha ina adressa dad e-mail valida',
 
@@ -1672,7 +1661,6 @@ Per cuntanscher segirezza opgimala è img_auth.php deactivà.",
 'http-read-error' => 'Sbagl da leger HTTP.',
 'http-timed-out' => 'Surpassà il temp durant la dumonda HTTP.',
 'http-curl-error' => "Errur cun recuperar l'URL: $1",
-'http-host-unreachable' => "Impussibel da cuntanscher l'URL.",
 'http-bad-status' => 'Durant la dumonda HTTP è ina errur capitada: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2023,7 +2011,7 @@ Infurmaziuns supplementaras davart ils singuls dretgs chattas [[{{MediaWiki:List
 'listgrouprights-addgroup-self-all' => "Agiuntar tut las gruppas a l'agen conto",
 'listgrouprights-removegroup-self-all' => "Allontanar tut las gruppas da l'agen conto",
 
-# E-mail user
+# Email user
 'mailnologin' => 'Nagina adressa per trametter',
 'mailnologintext' => "Ti stos [[Special:UserLogin|t'annunziar]] ed avair ina adressa dad e-mail valida en tias [[Special:Preferences|preferenzas]] per trametter e-mails ad auters utilisaders.",
 'emailuser' => 'Trametter in e-mail a quest utilisader',
@@ -2081,8 +2069,8 @@ Midadas futuras vid questa pagina e la pagina da discussiun appertegnenta vegnan
 'notvisiblerev' => "L'ultima versiun d'in auter utilisader è vegnida stizzada",
 'watchnochange' => 'Nagin dals artitgels che ti observeschas è vegnì midà durant la perioda da temp inditgada.',
 'watchlist-details' => "{{PLURAL:$1|Ina pagina|$1 paginas}} èn sin tia glista d'observaziun (senza dumbrar las paginas da discussiun).",
-'wlheader-enotif' => "* Il servetsch d'infurmaziun per e-mail è activà.",
-'wlheader-showupdated' => "* Artitgels ch'èn vegnids midads suenter che ti has vis els la davosa giada èn mussads '''grass'''",
+'wlheader-enotif' => "Il servetsch d'infurmaziun per e-mail è activà.",
+'wlheader-showupdated' => "Artitgels ch'èn vegnids midads suenter che ti has vis els la davosa giada èn mussads '''grass'''",
 'watchmethod-recent' => "intercurir las davosas midadas per la glista d'observaziun",
 'watchmethod-list' => 'intercurir las paginas observadas davart novas midadas',
 'watchlistcontains' => "Tia glista d'observaziun cuntegna $1 {{PLURAL:$1|pagina|paginas}}.",
@@ -2332,7 +2320,7 @@ $1',
 'blanknamespace' => '(principal)',
 
 # Contributions
-'contributions' => "Contribuziuns {{GENDER:$1|dal utilisader|da l'utilisadra}}",
+'contributions' => "Contribuziuns {{GENDER:$1|da l'utilisader|da l'utilisadra}}",
 'contributions-title' => "Contribuziuns d'utilisader da $1",
 'mycontris' => 'Contribuziuns',
 'contribsub2' => 'Per $1 ($2)',
@@ -2998,7 +2986,7 @@ Sche la datoteca è vegnida midada dal status original èn tscherts detagls even
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Ladezza',
 'exif-imagelength' => 'Autezza',
 'exif-bitspersample' => 'Bits per cumponenta da colur',
@@ -3176,7 +3164,7 @@ Sche la datoteca è vegnida midada dal status original èn tscherts detagls even
 'exif-originalimageheight' => 'Autezza avant tagliar',
 'exif-originalimagewidth' => 'Ladezza avant tagliar',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Betg cumprimà',
 'exif-compression-2' => 'GGITT gruppa 3 codaziun da lunghezza currenta Hufman modifitgada en 1 dimensiun',
 'exif-compression-3' => 'CCITT gruppa 3 codaziun da fax',
@@ -3397,7 +3385,7 @@ Sche la datoteca è vegnida midada dal status original èn tscherts detagls even
 'monthsall' => 'tuts',
 'limitall' => 'tuts',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => "Confermar l'adressa dad e-mail",
 'confirmemail_noemail' => "Ti n'has betg inditgà ina adressa dad e-mail valida en tias [[Special:Preferences|preferenzas]].",
 'confirmemail_text' => "{{SITENAME}} pretenda che ti confermas tia adressa dad e-mail avant che ti pos utilisar funcziuns dad e-mail. 
@@ -3591,15 +3579,6 @@ Ti duessas avair retschavì [{{SERVER}}{{SCRIPTPATH}}/COPYING ina copia da la GN
 'version-entrypoints' => "URLs dals puncts d'entrada",
 'version-entrypoints-header-entrypoint' => "Punct d'entrada",
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Percurs da la datoteca',
-'filepath-page' => 'Datoteca:',
-'filepath-submit' => 'Dai',
-'filepath-summary' => 'Questa pagina speciala inditgescha l\'adressa cumpletta per ina datoteca. 
-Maletgs vegnan mussads en resoluziun cumpletta, auters tips da datoteca vegnan averts directamain cun lur program assozià. 
-
-Endatescha il num da datoteca senza il prefix "{{ns:file}}:".',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Tschertgar datotecas dublas',

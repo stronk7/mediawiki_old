@@ -63,7 +63,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 		$this->addTables( 'ipblocks' );
 		$this->addFields( 'ipb_auto' );
 
-		$this->addFieldsIf ( 'ipb_id', $fld_id );
+		$this->addFieldsIf( 'ipb_id', $fld_id );
 		$this->addFieldsIf( array( 'ipb_address', 'ipb_user' ), $fld_user || $fld_userid );
 		$this->addFieldsIf( 'ipb_by_text', $fld_by );
 		$this->addFieldsIf( 'ipb_by', $fld_byid );
@@ -94,8 +94,9 @@ class ApiQueryBlocks extends ApiQueryBase {
 			list( $ip, $range ) = IP::parseCIDR( $params['ip'] );
 			if ( $ip && $range ) {
 				// We got a CIDR range
-				if ( $range < 16 )
+				if ( $range < 16 ) {
 					$this->dieUsage( 'CIDR ranges broader than /16 are not accepted', 'cidrtoobroad' );
+				}
 				$lower = wfBaseConvert( $ip, 10, 16, 8, false );
 				$upper = wfBaseConvert( $ip + pow( 2, 32 - $range ) - 1, 10, 16, 8, false );
 			} else {
@@ -120,10 +121,10 @@ class ApiQueryBlocks extends ApiQueryBase {
 			$show = array_flip( $params['show'] );
 
 			/* Check for conflicting parameters. */
-			if ( ( isset ( $show['account'] ) && isset ( $show['!account'] ) )
-					|| ( isset ( $show['ip'] ) && isset ( $show['!ip'] ) )
-					|| ( isset ( $show['range'] ) && isset ( $show['!range'] ) )
-					|| ( isset ( $show['temp'] ) && isset ( $show['!temp'] ) )
+			if ( ( isset( $show['account'] ) && isset( $show['!account'] ) )
+					|| ( isset( $show['ip'] ) && isset( $show['!ip'] ) )
+					|| ( isset( $show['range'] ) && isset( $show['!range'] ) )
+					|| ( isset( $show['temp'] ) && isset( $show['!temp'] ) )
 			) {
 				$this->dieUsageMsg( 'show' );
 			}

@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that syncs one file backend to another based on
@@ -40,6 +40,7 @@ class SyncFileBackend extends Maintenance {
 		$this->addOption( 'posdir', 'Directory to read/record journal positions', false, true );
 		$this->addOption( 'posdump', 'Just dump current journal position into the position dir.' );
 		$this->addOption( 'postime', 'For position dumps, get the ID at this time', false, true );
+		$this->addOption( 'backoff', 'Stop at entries younger than this age (sec).', false, true );
 		$this->addOption( 'verbose', 'Verbose mode', false, false, 'v' );
 		$this->setBatchSize( 50 );
 	}
@@ -57,10 +58,11 @@ class SyncFileBackend extends Maintenance {
 			}
 			if ( $this->hasOption( 'postime' ) ) {
 				$id = (int)$src->getJournal()->getPositionAtTime( $this->getOption( 'postime' ) );
+				$this->output( "Requested journal position is $id.\n" );
 			} else {
 				$id = (int)$src->getJournal()->getCurrentPosition();
+				$this->output( "Current journal position is $id.\n" );
 			}
-			$this->output( "Current journal position is $id.\n" );
 			if ( file_put_contents( $posFile, $id, LOCK_EX ) !== false ) {
 				$this->output( "Saved journal position file.\n" );
 			} else {
@@ -87,7 +89,13 @@ class SyncFileBackend extends Maintenance {
 		} else {
 			$startFromPosFile = false;
 		}
-		$end = $this->getOption( 'end', INF );
+
+		if ( $this->hasOption( 'backoff' ) ) {
+			$time = time() - $this->getOption( 'backoff', 0 );
+			$end = (int)$src->getJournal()->getPositionAtTime( $time );
+		} else {
+			$end = $this->getOption( 'end', INF );
+		}
 
 		$this->output( "Synchronizing backend '{$dst->getName()}' to '{$src->getName()}'...\n" );
 		$this->output( "Starting journal position is $start.\n" );
@@ -95,8 +103,15 @@ class SyncFileBackend extends Maintenance {
 			$this->output( "Ending journal position is $end.\n" );
 		}
 
+		// Periodically update the position file
+		$callback = function( $pos ) use ( $startFromPosFile, $posFile, $start ) {
+			if ( $startFromPosFile && $pos >= $start ) { // successfully advanced
+				file_put_contents( $posFile, $pos, LOCK_EX );
+			}
+		};
+
 		// Actually sync the dest backend with the reference backend
-		$lastOKPos = $this->syncBackends( $src, $dst, $start, $end );
+		$lastOKPos = $this->syncBackends( $src, $dst, $start, $end, $callback );
 
 		// Update the sync position file
 		if ( $startFromPosFile && $lastOKPos >= $start ) { // successfully advanced
@@ -130,9 +145,12 @@ class SyncFileBackend extends Maintenance {
 	 * @param $dst FileBackend
 	 * @param $start integer Starting journal position
 	 * @param $end integer Starting journal position
+	 * @param $callback Closure Callback to update any position file
 	 * @return integer|false Journal entry ID or false if there are none
 	 */
-	protected function syncBackends( FileBackend $src, FileBackend $dst, $start, $end ) {
+	protected function syncBackends(
+		FileBackend $src, FileBackend $dst, $start, $end, Closure $callback
+	) {
 		$lastOKPos = 0; // failed
 		$first = true; // first batch
 
@@ -163,6 +181,7 @@ class SyncFileBackend extends Maintenance {
 			$status = $this->syncFileBatch( array_keys( $pathsInBatch ), $src, $dst );
 			if ( $status->isOK() ) {
 				$lastOKPos = max( $lastOKPos, $lastPosInBatch );
+				$callback( $lastOKPos ); // update position file
 			} else {
 				$this->error( print_r( $status->getErrorsArray(), true ) );
 				break; // no gaps; everything up to $lastPos must be OK
@@ -277,4 +296,4 @@ class SyncFileBackend extends Maintenance {
 }
 
 $maintClass = "SyncFileBackend";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

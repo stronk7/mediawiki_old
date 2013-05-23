@@ -27,6 +27,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 	/* Protected Members */
 
 	protected $modifiedTime = array();
+	protected $targets = array( 'desktop', 'mobile' );
 
 	/* Protected Methods */
 
@@ -51,7 +52,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 		 */
 		$namespaceIds = $wgContLang->getNamespaceIds();
 		$caseSensitiveNamespaces = array();
-		foreach( MWNamespace::getCanonicalNamespaces() as $index => $name ) {
+		foreach ( MWNamespace::getCanonicalNamespaces() as $index => $name ) {
 			$namespaceIds[$wgContLang->lc( $name )] = $index;
 			if ( !MWNamespace::isCapitalized( $index ) ) {
 				$caseSensitiveNamespaces[] = $index;
@@ -184,7 +185,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 	 * @return string
 	 */
 	public function getScript( ResourceLoaderContext $context ) {
-		global $IP, $wgLoadScript, $wgLegacyJavaScriptGlobals;
+		global $IP, $wgLegacyJavaScriptGlobals;
 
 		$out = file_get_contents( "$IP/resources/startup.js" );
 		if ( $context->getOnly() === 'scripts' ) {
@@ -224,7 +225,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				"};\n";
 
 			// Conditional script injection
-			$scriptTag = Html::linkedScript( $wgLoadScript . '?' . wfArrayToCgi( $query ) );
+			$scriptTag = Html::linkedScript( wfAppendQuery( wfScript( 'load' ), $query ) );
 			$out .= "if ( isCompatible() ) {\n" .
 				"\t" . Xml::encodeJsCall( 'document.write', array( $scriptTag ) ) .
 				"}\n" .

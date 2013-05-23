@@ -40,7 +40,6 @@ class RedisConnectionPool {
 	protected $connectTimeout; // string; connection timeout
 	protected $persistent; // bool; whether connections persist
 	protected $password; // string; plaintext auth password
-	protected $poolSize; // integer; maximum number of idle connections
 	protected $serializer; // integer; the serializer to use (Redis::SERIALIZER_*)
 
 	protected $idlePoolSize = 0; // integer; current idle pool size
@@ -56,38 +55,22 @@ class RedisConnectionPool {
 	const SERVER_DOWN_TTL = 30; // integer; seconds to cache servers as "down"
 
 	/**
-	 * $options include:
-	 *   - connectTimeout : The timeout for new connections, in seconds.
-	 *                      Optional, default is 1 second.
-	 *   - persistent     : Set this to true to allow connections to persist across
-	 *                      multiple web requests. False by default.
-	 *   - poolSize       : Maximim number of idle connections. Default is 5.
-	 *   - password       : The authentication password, will be sent to Redis in clear text.
-	 *                      Optional, if it is unspecified, no AUTH command will be sent.
-	 *   - serializer     : Set to "php" or "igbinary". Default is "php".
 	 * @param array $options
 	 */
 	protected function __construct( array $options ) {
 		if ( !extension_loaded( 'redis' ) ) {
-			throw new MWException( __CLASS__. ' requires the phpredis extension: ' .
+			throw new MWException( __CLASS__ . ' requires the phpredis extension: ' .
 				'https://github.com/nicolasff/phpredis' );
 		}
-		$this->connectTimeout = isset( $options['connectTimeout'] )
-			? $options['connectTimeout']
-			: 1;
-		$this->persistent = isset( $options['persistent'] )
-			? $options['persistent']
-			: false;
-		$this->password = isset( $options['password'] )
-			? $options['password']
-			: '';
-		$this->poolSize = isset( $options['poolSize'] )
-			? $options['poolSize']
-			: 5;
+		$this->connectTimeout = $options['connectTimeout'];
+		$this->persistent = $options['persistent'];
+		$this->password = $options['password'];
 		if ( !isset( $options['serializer'] ) || $options['serializer'] === 'php' ) {
 			$this->serializer = Redis::SERIALIZER_PHP;
 		} elseif ( $options['serializer'] === 'igbinary' ) {
 			$this->serializer = Redis::SERIALIZER_IGBINARY;
+		} elseif ( $options['serializer'] === 'none' ) {
+			$this->serializer = Redis::SERIALIZER_NONE;
 		} else {
 			throw new MWException( "Invalid serializer specified." );
 		}
@@ -95,30 +78,50 @@ class RedisConnectionPool {
 
 	/**
 	 * @param $options Array
+	 * @return Array
+	 */
+	protected static function applyDefaultConfig( array $options ) {
+		if ( !isset( $options['connectTimeout'] ) ) {
+			$options['connectTimeout'] = 1;
+		}
+		if ( !isset( $options['persistent'] ) ) {
+			$options['persistent'] = false;
+		}
+		if ( !isset( $options['password'] ) ) {
+			$options['password'] = null;
+		}
+		return $options;
+	}
+
+	/**
+	 * @param $options Array
+	 * $options include:
+	 *   - connectTimeout : The timeout for new connections, in seconds.
+	 *                      Optional, default is 1 second.
+	 *   - persistent     : Set this to true to allow connections to persist across
+	 *                      multiple web requests. False by default.
+	 *   - password       : The authentication password, will be sent to Redis in clear text.
+	 *                      Optional, if it is unspecified, no AUTH command will be sent.
+	 *   - serializer     : Set to "php", "igbinary", or "none". Default is "php".
 	 * @return RedisConnectionPool
 	 */
 	public static function singleton( array $options ) {
+		$options = self::applyDefaultConfig( $options );
 		// Map the options to a unique hash...
-		$poolOptions = $options;
-		unset( $poolOptions['poolSize'] ); // avoid pool fragmentation
-		ksort( $poolOptions ); // normalize to avoid pool fragmentation
-		$id = sha1( serialize( $poolOptions ) );
+		ksort( $options ); // normalize to avoid pool fragmentation
+		$id = sha1( serialize( $options ) );
 		// Initialize the object at the hash as needed...
 		if ( !isset( self::$instances[$id] ) ) {
 			self::$instances[$id] = new self( $options );
 			wfDebug( "Creating a new " . __CLASS__ . " instance with id $id." );
 		}
-		// Simply grow the pool size if the existing one is too small
-		$psize = isset( $options['poolSize'] ) ? $options['poolSize'] : 1; // size requested
-		self::$instances[$id]->poolSize = max( $psize, self::$instances[$id]->poolSize );
-
 		return self::$instances[$id];
 	}
 
 	/**
 	 * Get a connection to a redis server. Based on code in RedisBagOStuff.php.
 	 *
-	 * @param $server string A hostname/port combination or the absolute path of a UNIX socket.
+	 * @param string $server A hostname/port combination or the absolute path of a UNIX socket.
 	 *                       If a hostname is specified but no port, port 6379 will be used.
 	 * @return RedisConnRef|bool Returns false on failure
 	 * @throws MWException
@@ -161,7 +164,7 @@ class RedisConnectionPool {
 			// TCP connection
 			$hostPort = IP::splitHostAndPort( $server );
 			if ( !$hostPort ) {
-				throw new MWException( __CLASS__.": invalid configured server \"$server\"" );
+				throw new MWException( __CLASS__ . ": invalid configured server \"$server\"" );
 			}
 			list( $host, $port ) = $hostPort;
 			if ( $port === false ) {
@@ -231,16 +234,16 @@ class RedisConnectionPool {
 	 * @return void
 	 */
 	protected function closeExcessIdleConections() {
-		if ( $this->idlePoolSize <= $this->poolSize ) {
-			return; // nothing to do
+		if ( $this->idlePoolSize <= count( $this->connections ) ) {
+			return; // nothing to do (no more connections than servers)
 		}
 
 		foreach ( $this->connections as $server => &$serverConnections ) {
 			foreach ( $serverConnections as $key => &$connection ) {
 				if ( $connection['free'] ) {
 					unset( $serverConnections[$key] );
-					if ( --$this->idlePoolSize <= $this->poolSize ) {
-						return; // done
+					if ( --$this->idlePoolSize <= count( $this->connections ) ) {
+						return; // done (no more connections than servers)
 					}
 				}
 			}
@@ -254,15 +257,14 @@ class RedisConnectionPool {
 	 * object and let it be reopened during the next request.
 	 *
 	 * @param $server string
-	 * @param $conn RedisConnRef
+	 * @param $cref RedisConnRef
 	 * @param $e RedisException
 	 * @return void
 	 */
-	public function handleException( $server, RedisConnRef $conn, RedisException $e ) {
-		wfDebugLog( 'redis',
-			"Redis exception on server $server: " . $e->getMessage() . "\n" );
+	public function handleException( $server, RedisConnRef $cref, RedisException $e ) {
+		wfDebugLog( 'redis', "Redis exception on server $server: " . $e->getMessage() . "\n" );
 		foreach ( $this->connections[$server] as $key => $connection ) {
-			if ( $connection['conn'] === $conn ) {
+			if ( $cref->isConnIdentical( $connection['conn'] ) ) {
 				$this->idlePoolSize -= $connection['free'] ? 1 : 0;
 				unset( $this->connections[$server][$key] );
 				break;
@@ -280,11 +282,10 @@ class RedisConnectionPool {
 class RedisConnRef {
 	/** @var RedisConnectionPool */
 	protected $pool;
-
-	protected $server; // string
-
 	/** @var Redis */
 	protected $conn;
+
+	protected $server; // string
 
 	/**
 	 * @param $pool RedisConnectionPool
@@ -299,6 +300,42 @@ class RedisConnRef {
 
 	public function __call( $name, $arguments ) {
 		return call_user_func_array( array( $this->conn, $name ), $arguments );
+	}
+
+	/**
+	 * @param string $script
+	 * @param array $params
+	 * @param integer $numKeys
+	 * @return mixed
+	 * @throws RedisException
+	 */
+	public function luaEval( $script, array $params, $numKeys ) {
+		$sha1 = sha1( $script ); // 40 char hex
+		$conn = $this->conn; // convenience
+
+		// Try to run the server-side cached copy of the script
+		$conn->clearLastError();
+		$res = $conn->evalSha( $sha1, $params, $numKeys );
+		// If the script is not in cache, use eval() to retry and cache it
+		if ( preg_match( '/^NOSCRIPT/', $conn->getLastError() ) ) {
+			$conn->clearLastError();
+			$res = $conn->eval( $script, $params, $numKeys );
+			wfDebugLog( 'redis', "Used eval() for Lua script $sha1." );
+		}
+
+		if ( $conn->getLastError() ) { // script bug?
+			wfDebugLog( 'redis', "Lua script error: " . $conn->getLastError() );
+		}
+
+		return $res;
+	}
+
+	/**
+	 * @param RedisConnRef $conn
+	 * @return bool
+	 */
+	public function isConnIdentical( Redis $conn ) {
+		return $this->conn === $conn;
 	}
 
 	function __destruct() {

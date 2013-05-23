@@ -23,7 +23,6 @@
  * @author Brad Jorsch
  */
 
-
 /**
  * Special:PagesWithProp to search the page_props table
  * @ingroup SpecialPage
@@ -70,9 +69,8 @@ class SpecialPagesWithProp extends QueryPage {
 			),
 		), $this->getContext() );
 		$form->setMethod( 'get' );
-		$form->setAction( $this->getTitle()->getFullUrl() );
 		$form->setSubmitCallback( array( $this, 'onSubmit' ) );
-		$form->setWrapperLegend( $this->msg( 'pageswithprop-legend' ) );
+		$form->setWrapperLegendMsg( 'pageswithprop-legend' );
 		$form->addHeaderText( $this->msg( 'pageswithprop-text' )->parseAsBlock() );
 		$form->setSubmitTextMsg( 'pageswithprop-submit' );
 
@@ -120,15 +118,24 @@ class SpecialPagesWithProp extends QueryPage {
 		return array( 'page_id' );
 	}
 
+	/**
+	 * @param Skin $skin
+	 * @param object $result Result row
+	 * @return string
+	 */
 	function formatResult( $skin, $result ) {
 		$title = Title::newFromRow( $result );
 		$ret = Linker::link( $title, null, array(), array(), array( 'known' ) );
 		if ( $result->pp_value !== '' ) {
-			$value = $this->msg( 'parentheses' )
-				->rawParams( Xml::span( $result->pp_value, 'prop-value' ) )
-				->escaped();
+			$propValue = Html::element( 'span', array( 'class' => 'prop-value' ), $result->pp_value );
+			$value = $this->msg( 'parentheses' )->rawParams( $propValue )->escaped();
 			$ret .= " $value";
 		}
+
 		return $ret;
+	}
+
+	protected function getGroupName() {
+		return 'pages';
 	}
 }

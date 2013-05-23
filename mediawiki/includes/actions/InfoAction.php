@@ -22,6 +22,11 @@
  * @ingroup Actions
  */
 
+/**
+ * Displays information about a page.
+ *
+ * @ingroup Actions
+ */
 class InfoAction extends FormlessAction {
 	/**
 	 * Returns the name of the action this object responds to.
@@ -48,6 +53,22 @@ class InfoAction extends FormlessAction {
 	 */
 	public function requiresWrite() {
 		return false;
+	}
+
+	/**
+	 * Clear the info cache for a given Title.
+	 *
+	 * @since 1.22
+	 * @param Title $title Title to clear cache for
+	 */
+	public static function invalidateCache( Title $title ) {
+		global $wgMemc;
+		// Clear page info.
+		$revision = WikiPage::factory( $title )->getRevision();
+		if ( $revision !== null ) {
+			$memcKey = wfMemcKey( 'infoaction', $title->getPrefixedText(), $revision->getId() );
+			$wgMemc->delete( $memcKey );
+		}
 	}
 
 	/**
@@ -121,7 +142,7 @@ class InfoAction extends FormlessAction {
 	/**
 	 * Creates a header that can be added to the output.
 	 *
-	 * @param $header The header text.
+	 * @param string $header The header text.
 	 * @return string The HTML.
 	 */
 	protected function makeHeader( $header ) {
@@ -132,9 +153,9 @@ class InfoAction extends FormlessAction {
 	/**
 	 * Adds a row to a table that will be added to the content.
 	 *
-	 * @param $table string The table that will be added to the content
-	 * @param $name string The name of the row
-	 * @param $value string The value of the row
+	 * @param string $table The table that will be added to the content
+	 * @param string $name The name of the row
+	 * @param string $value The value of the row
 	 * @return string The table with the row added
 	 */
 	protected function addRow( $table, $name, $value ) {
@@ -147,8 +168,8 @@ class InfoAction extends FormlessAction {
 	/**
 	 * Adds a table to the content that will be added to the output.
 	 *
-	 * @param $content string The content that will be added to the output
-	 * @param $table string The table
+	 * @param string $content The content that will be added to the output
+	 * @param string $table The table
 	 * @return string The content with the table added
 	 */
 	protected function addTable( $content, $table ) {
@@ -224,7 +245,7 @@ class InfoAction extends FormlessAction {
 		}
 
 		// Default sort key
-		$sortKey = $title->getCategorySortKey();
+		$sortKey = $title->getCategorySortkey();
 		if ( !empty( $pageProperties['defaultsort'] ) ) {
 			$sortKey = $pageProperties['defaultsort'];
 		}
@@ -597,7 +618,7 @@ class InfoAction extends FormlessAction {
 			'COUNT(*)',
 			array(
 				'wl_namespace' => $title->getNamespace(),
-				'wl_title'     => $title->getDBkey(),
+				'wl_title' => $title->getDBkey(),
 			),
 			__METHOD__
 		);

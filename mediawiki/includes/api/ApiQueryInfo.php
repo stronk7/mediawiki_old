@@ -56,11 +56,11 @@ class ApiQueryInfo extends ApiQueryBase {
 	 * @return void
 	 */
 	public function requestExtraData( $pageSet ) {
-		global $wgDisableCounters;
+		global $wgDisableCounters, $wgContentHandlerUseDB;
 
 		$pageSet->requestField( 'page_restrictions' );
 		// when resolving redirects, no page will have this field
-		if( !$pageSet->isResolvingRedirects() ) {
+		if ( !$pageSet->isResolvingRedirects() ) {
 			$pageSet->requestField( 'page_is_redirect' );
 		}
 		$pageSet->requestField( 'page_is_new' );
@@ -70,6 +70,9 @@ class ApiQueryInfo extends ApiQueryBase {
 		$pageSet->requestField( 'page_touched' );
 		$pageSet->requestField( 'page_latest' );
 		$pageSet->requestField( 'page_len' );
+		if ( $wgContentHandlerUseDB ) {
+			$pageSet->requestField( 'page_content_model' );
+		}
 	}
 
 	/**
@@ -321,6 +324,7 @@ class ApiQueryInfo extends ApiQueryBase {
 			$this->getDisplayTitle();
 		}
 
+		/** @var $title Title */
 		foreach ( $this->everything as $pageid => $title ) {
 			$pageInfo = $this->extractPageInfo( $pageid, $title );
 			$fit = $result->addValue( array(
@@ -338,7 +342,7 @@ class ApiQueryInfo extends ApiQueryBase {
 
 	/**
 	 * Get a result array with information about a title
-	 * @param $pageid int Page ID (negative for missing titles)
+	 * @param int $pageid Page ID (negative for missing titles)
 	 * @param $title Title object
 	 * @return array
 	 */
@@ -347,6 +351,10 @@ class ApiQueryInfo extends ApiQueryBase {
 		$titleExists = $pageid > 0; //$title->exists() needs pageid, which is not set for all title objects
 		$ns = $title->getNamespace();
 		$dbkey = $title->getDBkey();
+
+		$pageInfo['contentmodel'] = $title->getContentModel();
+		$pageInfo['pagelanguage'] = $title->getPageLanguage()->getCode();
+
 		if ( $titleExists ) {
 			global $wgDisableCounters;
 
@@ -462,6 +470,7 @@ class ApiQueryInfo extends ApiQueryBase {
 
 			$res = $this->select( __METHOD__ );
 			foreach ( $res as $row ) {
+				/** @var $title Title */
 				$title = $this->titles[$row->pr_page];
 				$a = array(
 					'type' => $row->pr_type,
@@ -474,7 +483,7 @@ class ApiQueryInfo extends ApiQueryBase {
 				$this->protections[$title->getNamespace()][$title->getDBkey()][] = $a;
 			}
 			// Also check old restrictions
-			foreach( $this->titles as $pageId => $title ) {
+			foreach ( $this->titles as $pageId => $title ) {
 				if ( $this->pageRestrictions[$pageId] ) {
 					$namespace = $title->getNamespace();
 					$dbKey = $title->getDBkey();
@@ -597,6 +606,7 @@ class ApiQueryInfo extends ApiQueryBase {
 	private function getTSIDs() {
 		$getTitles = $this->talkids = $this->subjectids = array();
 
+		/** @var $t Title */
 		foreach ( $this->everything as $t ) {
 			if ( MWNamespace::isTalk( $t->getNamespace() ) ) {
 				if ( $this->fld_subjectid ) {
@@ -816,7 +826,8 @@ class ApiQueryInfo extends ApiQueryBase {
 				'starttimestamp' => array(
 					ApiBase::PROP_TYPE => 'timestamp',
 					ApiBase::PROP_NULLABLE => true
-				)
+				),
+				'contentmodel' => 'string',
 			),
 			'watched' => array(
 				'watched' => 'boolean'

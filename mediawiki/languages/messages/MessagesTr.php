@@ -20,6 +20,7 @@
  * @author Erkan Yilmaz
  * @author Fryed-peach
  * @author Goktr001
+ * @author Gorizon
  * @author Hanberke
  * @author Hcagri
  * @author Hedda Gabler
@@ -377,8 +378,6 @@ $messages = array(
 'tog-shownumberswatching' => 'İzleyen kullanıcı sayısını göster',
 'tog-oldsig' => 'Mevcut imza:',
 'tog-fancysig' => 'İmzaya vikimetin muamelesi yap (otomatik bir bağlantı olmadan)',
-'tog-externaleditor' => 'Varsayılan olarak harici düzenleyici kullan (deneyimli kullanıcılar içindir ve bilgisayarınızda özel ayarlar gerektirir. [//www.mediawiki.org/wiki/Manual:External_editors Ayrıntılı bilgi için tıklayın.])',
-'tog-externaldiff' => 'Varsayılan olarak harici karşılaştırıcı kullan (deneyimli kullanıcılar içindir ve bilgisayarınızda özel ayarlar gerektirir. [//www.mediawiki.org/wiki/Manual:External_editors Ayrıntılı bilgi için tıklayın.])',
 'tog-showjumplinks' => '"{{int:jumpto}}" erişilebilirlik bağlantısı etkinleştir',
 'tog-uselivepreview' => 'Canlı ön izlemeyi kullan (JavaScript gerektirir ve özellik deneme aşamasındadır)',
 'tog-forceeditsummary' => 'Özeti boş bıraktığımda beni uyar',
@@ -393,6 +392,7 @@ $messages = array(
 'tog-showhiddencats' => 'Gizli kategorileri göster',
 'tog-noconvertlink' => 'Bağlantı başlığı dönüştürmesini devre dışı bırakma',
 'tog-norollbackdiff' => 'Geridönüş uygulandıktan sonra değişikliği atla',
+'tog-useeditwarning' => 'Kaydedilmemiş değişikliğe sahip bir değişiklik sayfasından çıkarken beni uyar',
 
 'underline-always' => 'Daima',
 'underline-never' => 'Asla',
@@ -756,7 +756,7 @@ Tarayıcınızın önbelleğini temizleyene kadar bazı sayfalar sanki hâlâ ot
 [[Special:Preferences|{{SITENAME}} tercihlerinizi]] değiştirmeyi unutmayın.',
 'yourname' => 'Kullanıcı adı:',
 'yourpassword' => 'Parola:',
-'yourpasswordagain' => 'Parolayı yeniden yaz:',
+'yourpasswordagain' => 'Parolayı yeniden girin:',
 'remembermypassword' => 'Girişimi bu tarayıcıda hatırla (en fazla $1 {{PLURAL:$1|gün|gün}} için)',
 'securelogin-stick-https' => "Giriş yaptıktan sonra HTTPS'e bağlı kal",
 'yourdomainname' => 'Alan adınız:',
@@ -1103,6 +1103,8 @@ Sayfa zaten mevcut.',
 'defaultmessagetext' => 'Varsayılan mesaj metni',
 'invalid-content-data' => 'Geçersiz içerik verisi',
 'content-not-allowed-here' => '"$1" içeriğine, [[$2]] sayfasında izin verilmemekte.',
+'editwarning-warning' => 'Bu sayfadan ayrılmak yaptığınız herhangi bir değişikliği kaybetmenize sebep olabilir.
+Eğer giriş yaptıysanız, bu uyarıyı, tercihlerinizin "{{int:prefs-editing}}" bölümünde devre dışı bırakabilirsiniz.',
 
 # Content models
 'content-model-wikitext' => 'vikimetin',
@@ -1381,15 +1383,6 @@ Aramanızın başına '''all:''' önekini ekleyerek tüm içeriği aramayı (tar
 'search-external' => 'Dış arama',
 'searchdisabled' => '{{SITENAME}} sitesinde arama yapma geçici olarak durdurulmuştur. Bu arada Google kullanarak {{SITENAME}} içinde arama yapabilirsiniz. Arama sitelerinde dizinlerin biraz eski kalmış olabileceğini göz önünde bulundurunuz.',
 
-# Quickbar
-'qbsettings' => 'Hızlı erişim sütun ayarları',
-'qbsettings-none' => 'Hiçbiri',
-'qbsettings-fixedleft' => 'Sola sabitlendi',
-'qbsettings-fixedright' => 'Sağa sabitlendi',
-'qbsettings-floatingleft' => 'Sola yaslanıyor',
-'qbsettings-floatingright' => 'Sağa yaslanıyor',
-'qbsettings-directionality' => 'Sabit, dilinizin komut dosyasının yönüne bağlı',
-
 # Preferences page
 'preferences' => 'Tercihler',
 'mypreferences' => 'Tercihler',
@@ -1487,7 +1480,7 @@ $1 {{PLURAL:$1|karakterin|karakterin}} altında olmalı.',
 'prefs-help-gender' => 'İsteğe bağlı: Yazılım tarafından doğru cinsiyet adreslemesi için kullanılır. Bu bilgi umumi olacaktır.',
 'email' => 'E-posta',
 'prefs-help-realname' => '* Gerçek isim (isteğe bağlı): eğer gerçek isminizi vermeyi seçerseniz, çalışmanızı size atfederken kullanılacaktır.',
-'prefs-help-email' => 'E-posta adresi isteğe bağlıdır; ancak eğer parolanızı unutursanız e-posta adresinize yeni parola gönderilmesine olanak sağlar.',
+'prefs-help-email' => 'E-posta adresi isteğe bağlıdır; ancak parolanızı unutmanız durumunda parola sıfırlamak için gerekecektir.',
 'prefs-help-email-others' => 'Ayrıca kullanıcı sayfanızdaki bir bağlantı yoluyla diğer kullanıcıların size e-posta atmasına izin vermeyi seçebilirsiniz.
 Diğer kullanıcılar sizinle bu yolla iletişime geçtiğinde e-posta adresiniz açıklanmaz.',
 'prefs-help-email-required' => 'E-posta adresi gerekmektedir.',
@@ -1912,7 +1905,6 @@ En uygun güvenlik için, img_auth.php devre dışı bırakıldı.",
 'http-read-error' => 'HTTP okuma hatası.',
 'http-timed-out' => 'HTTP isteği zaman aşımına uğradı.',
 'http-curl-error' => 'URL alınırken hata: $1',
-'http-host-unreachable' => "URL'ye ulaşılamıyor.",
 'http-bad-status' => 'HTTP isteği sırasında bir sorun oluştu: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1975,6 +1967,8 @@ Sıradaki liste sadece bu dosyaya bağlantı veren {{PLURAL:$1|ilk dosyayı|ilk 
 'sharedupload-desc-there' => 'Bu dosya $1 deposundan ve diğer projeler tarafından kullanılıyor olabilir. Daha fazla bilgi için lütfen [$2 dosya açıklama sayfasına] bakın.',
 'sharedupload-desc-here' => 'Bu dosya $1 deposundan ve diğer projeler tarafından kullanılıyor olabilir.
 Aşağıda [$2 dosya açıklama sayfasındaki] açıklama gösteriliyor.',
+'sharedupload-desc-create' => 'Bu dosya, $1 ve diğer projeler tarafından kullanılıyor olabilir. 
+Dosya açıklamasını düzenlemek isterseniz, [$2 dosya açıklama sayfası] bulunmaktadır.',
 'filepage-nofile' => 'Bu isimde bir dosya yok.',
 'filepage-nofile-link' => 'Bu isimde bir dosya yok, ama siz [$1 yükleyebilirsiniz].',
 'uploadnewversion-linktext' => 'Dosyanın yenisini yükleyin',
@@ -2060,6 +2054,8 @@ Aşağıda [$2 dosya açıklama sayfasındaki] açıklama gösteriliyor.',
 'disambiguations' => 'Anlam ayrım sayfalarına bağlantısı olan sayfalar',
 'disambiguationspage' => 'Template:Anlam ayrımı',
 'disambiguations-text' => 'İlk satırda yer alan sayfalar bir anlam ayrım sayfasına iç bağlantı olduğunu gösterir. İkinci sırada yer alan sayfalar anlam ayrım sayfalarını gösterir. <br />Burada [[MediaWiki:Disambiguationspage]] tüm anlam ayrım şablonlarına bağlantılar verilmesi gerekmektedir.',
+
+'pageswithprop-submit' => 'Git',
 
 'doubleredirects' => 'Çift yönlendirmeler',
 'doubleredirectstext' => 'Bu sayfa diğer yönlendirme sayfalarına yönlendirme yapan sayfaları listeler.
@@ -2303,8 +2299,8 @@ Bundan sonra, bu sayfaya ve ilgili tartışma sayfasına yapılacak değişiklik
 'notvisiblerev' => 'Revizyon silinmiş',
 'watchnochange' => 'İzleme listenizdeki sayfaların hiçbiri, gösterilen zaman aralığında güncellenmemiş.',
 'watchlist-details' => 'Tartışma sayfaları hariç {{PLURAL:$1|$1 sayfa|$1 sayfa}} izleme listenizdedir.',
-'wlheader-enotif' => '* E-posta ile haber verme açılmıştır.',
-'wlheader-showupdated' => "* Son ziyaretinizden sonraki sayfa değişiklikleri '''kalın yazıyla''' gösterilmiştir.",
+'wlheader-enotif' => 'E-posta ile haber verme açılmıştır.',
+'wlheader-showupdated' => "Son ziyaretinizden sonraki sayfa değişiklikleri '''kalın yazıyla''' gösterilmiştir.",
 'watchmethod-recent' => 'izlediğiniz sayfalarda yapılan son değişiklikler kontrol ediliyor',
 'watchmethod-list' => 'izlediğiniz sayfalarda yapılan son değişiklikler kontrol ediliyor',
 'watchlistcontains' => 'İzleme listenizde $1 tane {{PLURAL:$1|sayfa|sayfa}} var.',
@@ -3074,10 +3070,6 @@ Geçici dosya kayıp.',
 'pageinfo-category-files' => 'Dosya sayısı',
 
 # Skin names
-'skinname-standard' => 'Klasik',
-'skinname-nostalgia' => 'Nostaljik',
-'skinname-chick' => 'Şık',
-'skinname-simple' => 'Basit',
 'skinname-modern' => 'Modern',
 
 # Patrolling
@@ -3160,6 +3152,19 @@ Bunu çalıştırmak, sisteminizi tehlikeye atabilir.",
 'ago' => '$1 önce',
 'just-now' => 'Hemen şimdi',
 
+# Human-readable timestamps
+'hours-ago' => '$1 {{PLURAL:$1|saat|saat}} önce',
+'minutes-ago' => '$1 {{PLURAL:$1|dakika|dakika}} önce',
+'seconds-ago' => '$1 {{PLURAL:$1|saniye|saniye}} önce',
+'monday-at' => '$1 Pazartesi günü',
+'tuesday-at' => '$1 Salı günü',
+'wednesday-at' => '$1 Çarşamba günü',
+'thursday-at' => '$1 Perşembe günü',
+'friday-at' => '$1 Cuma günü',
+'saturday-at' => '$1 Cumartesi günü',
+'sunday-at' => '$1 Pazar günü',
+'yesterday-at' => '$1 dün itibariyle',
+
 # Bad image list
 'bad_image_list' => 'Biçim aşağıdaki gibidir:
 
@@ -3191,7 +3196,7 @@ Diğerleri varsayılan olarak gizlenecektir.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Genişlik',
 'exif-imagelength' => 'Yükseklik',
 'exif-bitspersample' => 'Bits per component',
@@ -3356,7 +3361,7 @@ Diğerleri varsayılan olarak gizlenecektir.
 'exif-originalimageheight' => 'Resmin kırpılmadan önceki yükseliği',
 'exif-originalimagewidth' => 'Resmin kırpılmadan önceki genişliği',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Sıkıştırılmamış',
 'exif-compression-6' => 'JPEG',
 
@@ -3789,13 +3794,6 @@ Bu programla birlikte [{{SERVER}}{{SCRIPTPATH}}/COPYING GNU Genel Kamu Lisansın
 'version-entrypoints' => "Giriş noktası URL'leri",
 'version-entrypoints-header-entrypoint' => 'Giriş noktası',
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Dosyanın konumu',
-'filepath-page' => 'Dosya adı:',
-'filepath-submit' => 'Git',
-'filepath-summary' => 'Bu özel sayfa bir dosya için tam yolu getirir.
-Resimler tam çözünürlükte görüntülenir, diğer dosya tipleri ilgili programlarıyla doğrudan başlatılır.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Benzer dosyaları ara',

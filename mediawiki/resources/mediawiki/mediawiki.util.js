@@ -104,6 +104,8 @@
 				return util.$content;
 			} )();
 
+			mw.hook( 'wikipage.content' ).fire( util.$content );
+
 			// Table of contents toggle
 			$tocTitle = $( '#toctitle' );
 			$tocToggleLink = $( '#togglelink' );
@@ -251,7 +253,7 @@
 		 * Returns null if not found.
 		 *
 		 * @param {string} param The parameter name.
-		 * @param {string} [url] URL to search through.
+		 * @param {string} [url=document.location.href] URL to search through, defaulting to the current document's URL.
 		 * @return {Mixed} Parameter value or null.
 		 */
 		getParamValue: function ( param, url ) {
@@ -279,8 +281,17 @@
 		/**
 		 * @property {RegExp}
 		 * Regex to match accesskey tooltips.
+		 *
+		 * Should match:
+		 *
+		 * - "ctrl-option-"
+		 * - "alt-shift-"
+		 * - "ctrl-alt-"
+		 * - "ctrl-"
+		 *
+		 * The accesskey is matched in group $6.
 		 */
-		tooltipAccessKeyRegexp: /\[(ctrl-)?(alt-)?(shift-)?(esc-)?(.)\]$/,
+		tooltipAccessKeyRegexp: /\[(ctrl-)?(option-)?(alt-)?(shift-)?(esc-)?(.)\]$/,
 
 		/**
 		 * Add the appropriate prefix to the accesskey shown in the tooltip.
@@ -301,9 +312,9 @@
 			}
 
 			$nodes.attr( 'title', function ( i, val ) {
-				if ( val && util.tooltipAccessKeyRegexp.exec( val ) ) {
+				if ( val && util.tooltipAccessKeyRegexp.test( val ) ) {
 					return val.replace( util.tooltipAccessKeyRegexp,
-						'[' + util.tooltipAccessKeyPrefix + '$5]' );
+						'[' + util.tooltipAccessKeyPrefix + '$6]' );
 				}
 				return val;
 			} );
@@ -364,87 +375,82 @@
 				$link.attr( 'title', tooltip );
 			}
 
-			// Some skins don't have any portlets
-			// just add it to the bottom of their 'sidebar' element as a fallback
-			switch ( mw.config.get( 'skin' ) ) {
-			case 'standard':
-				$( '#quickbar' ).append( $link.after( '<br/>' ) );
-				return $link[0];
-			case 'nostalgia':
-				$( '#searchform' ).before( $link ).before( ' &#124; ' );
-				return $link[0];
-			default: // Skins like chick, modern, monobook, myskin, simple, vector...
+			// Select the specified portlet
+			$portlet = $( '#' + portlet );
+			if ( $portlet.length === 0 ) {
+				return null;
+			}
+			// Select the first (most likely only) unordered list inside the portlet
+			$ul = $portlet.find( 'ul' ).eq( 0 );
 
-				// Select the specified portlet
-				$portlet = $( '#' + portlet );
-				if ( $portlet.length === 0 ) {
-					return null;
-				}
-				// Select the first (most likely only) unordered list inside the portlet
-				$ul = $portlet.find( 'ul' ).eq( 0 );
+			// If it didn't have an unordered list yet, create it
+			if ( $ul.length === 0 ) {
 
-				// If it didn't have an unordered list yet, create it
-				if ( $ul.length === 0 ) {
+				$ul = $( '<ul>' );
 
-					$ul = $( '<ul>' );
-
-					// If there's no <div> inside, append it to the portlet directly
-					if ( $portlet.find( 'div:first' ).length === 0 ) {
-						$portlet.append( $ul );
-					} else {
-						// otherwise if there's a div (such as div.body or div.pBody)
-						// append the <ul> to last (most likely only) div
-						$portlet.find( 'div' ).eq( -1 ).append( $ul );
-					}
-				}
-				// Just in case..
-				if ( $ul.length === 0 ) {
-					return null;
-				}
-
-				// Unhide portlet if it was hidden before
-				$portlet.removeClass( 'emptyPortlet' );
-
-				// Wrap the anchor tag in a list item (and a span if $portlet is a Vector tab)
-				// and back up the selector to the list item
-				if ( $portlet.hasClass( 'vectorTabs' ) ) {
-					$item = $link.wrap( '<li><span></span></li>' ).parent().parent();
+				// If there's no <div> inside, append it to the portlet directly
+				if ( $portlet.find( 'div:first' ).length === 0 ) {
+					$portlet.append( $ul );
 				} else {
-					$item = $link.wrap( '<li></li>' ).parent();
+					// otherwise if there's a div (such as div.body or div.pBody)
+					// append the <ul> to last (most likely only) div
+					$portlet.find( 'div' ).eq( -1 ).append( $ul );
 				}
+			}
+			// Just in case..
+			if ( $ul.length === 0 ) {
+				return null;
+			}
 
-				// Implement the properties passed to the function
-				if ( id ) {
-					$item.attr( 'id', id );
-				}
+			// Unhide portlet if it was hidden before
+			$portlet.removeClass( 'emptyPortlet' );
+
+			// Wrap the anchor tag in a list item (and a span if $portlet is a Vector tab)
+			// and back up the selector to the list item
+			if ( $portlet.hasClass( 'vectorTabs' ) ) {
+				$item = $link.wrap( '<li><span></span></li>' ).parent().parent();
+			} else {
+				$item = $link.wrap( '<li></li>' ).parent();
+			}
+
+			// Implement the properties passed to the function
+			if ( id ) {
+				$item.attr( 'id', id );
+			}
+
+			if ( tooltip ) {
+				// Trim any existing accesskey hint and the trailing space
+				tooltip = $.trim( tooltip.replace( util.tooltipAccessKeyRegexp, '' ) );
 				if ( accesskey ) {
-					$link.attr( 'accesskey', accesskey );
 					tooltip += ' [' + accesskey + ']';
-					$link.attr( 'title', tooltip );
 				}
-				if ( accesskey && tooltip ) {
+				$link.attr( 'title', tooltip );
+				if ( accesskey ) {
 					util.updateTooltipAccessKeys( $link );
 				}
-
-				// Where to put our node ?
-				// - nextnode is a DOM element (was the only option before MW 1.17, in wikibits.js)
-				if ( nextnode && nextnode.parentNode === $ul[0] ) {
-					$(nextnode).before( $item );
-
-				// - nextnode is a CSS selector for jQuery
-				} else if ( typeof nextnode === 'string' && $ul.find( nextnode ).length !== 0 ) {
-					$ul.find( nextnode ).eq( 0 ).before( $item );
-
-				// If the jQuery selector isn't found within the <ul>,
-				// or if nextnode was invalid or not passed at all,
-				// then just append it at the end of the <ul> (this is the default behaviour)
-				} else {
-					$ul.append( $item );
-				}
-
-
-				return $item[0];
 			}
+
+			if ( accesskey ) {
+				$link.attr( 'accesskey', accesskey );
+			}
+
+			// Where to put our node ?
+			// - nextnode is a DOM element (was the only option before MW 1.17, in wikibits.js)
+			if ( nextnode && nextnode.parentNode === $ul[0] ) {
+				$( nextnode ).before( $item );
+
+			// - nextnode is a CSS selector for jQuery
+			} else if ( typeof nextnode === 'string' && $ul.find( nextnode ).length !== 0 ) {
+				$ul.find( nextnode ).eq( 0 ).before( $item );
+
+			// If the jQuery selector isn't found within the <ul>,
+			// or if nextnode was invalid or not passed at all,
+			// then just append it at the end of the <ul> (this is the default behavior)
+			} else {
+				$ul.append( $item );
+			}
+
+			return $item[0];
 		},
 
 		/**

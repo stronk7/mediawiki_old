@@ -105,7 +105,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 
 	/**
 	 * Sets internal state to include the desired properties in the output.
-	 * @param $prop Array associative array of properties, only keys are used here
+	 * @param array $prop associative array of properties, only keys are used here
 	 */
 	public function initProperties( $prop ) {
 		$this->fld_comment = isset( $prop['comment'] );
@@ -149,6 +149,31 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->addTables( 'recentchanges' );
 		$index = array( 'recentchanges' => 'rc_timestamp' ); // May change
 		$this->addTimestampWhereRange( 'rc_timestamp', $params['dir'], $params['start'], $params['end'] );
+
+		if ( !is_null( $params['continue'] ) ) {
+			$cont = explode( '|', $params['continue'] );
+			if ( count( $cont ) != 2 ) {
+				$this->dieUsage( 'Invalid continue param. You should pass the ' .
+								'original value returned by the previous query', '_badcontinue' );
+			}
+
+			$timestamp = $this->getDB()->addQuotes( wfTimestamp( TS_MW, $cont[0] ) );
+			$id = intval( $cont[1] );
+			$op = $params['dir'] === 'older' ? '<' : '>';
+
+			$this->addWhere(
+				"rc_timestamp $op $timestamp OR " .
+				"(rc_timestamp = $timestamp AND " .
+				"rc_id $op= $id)"
+			);
+		}
+
+		$order = $params['dir'] === 'older' ? 'DESC' : 'ASC';
+		$this->addOption( 'ORDER BY', array(
+			"rc_timestamp $order",
+			"rc_id $order",
+		) );
+
 		$this->addWhereFld( 'rc_namespace', $params['namespace'] );
 		$this->addWhereFld( 'rc_deleted', 0 );
 
@@ -229,8 +254,9 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$this->dieUsage( 'You need the patrol right to request the patrolled flag', 'permissiondenied' );
 			}
 
+			$this->addFields( 'rc_id' );
 			/* Add fields to our query if they are specified as a needed parameter. */
-			$this->addFieldsIf( array( 'rc_id', 'rc_this_oldid', 'rc_last_oldid' ), $this->fld_ids );
+			$this->addFieldsIf( array( 'rc_this_oldid', 'rc_last_oldid' ), $this->fld_ids );
 			$this->addFieldsIf( 'rc_comment', $this->fld_comment || $this->fld_parsedcomment );
 			$this->addFieldsIf( 'rc_user', $this->fld_user );
 			$this->addFieldsIf( 'rc_user_text', $this->fld_user || $this->fld_userid );
@@ -281,7 +307,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		foreach ( $res as $row ) {
 			if ( ++ $count > $params['limit'] ) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) );
+				$this->setContinueEnumParameter( 'continue', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) . '|' . $row->rc_id );
 				break;
 			}
 
@@ -295,7 +321,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				}
 				$fit = $result->addValue( array( 'query', $this->getModuleName() ), null, $vals );
 				if ( !$fit ) {
-					$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) );
+					$this->setContinueEnumParameter( 'continue', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) . '|' . $row->rc_id );
 					break;
 				}
 			} else {
@@ -314,7 +340,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 	/**
 	 * Extracts from a single sql row the data needed to describe one recent change.
 	 *
-	 * @param $row The row from which to extract the data.
+	 * @param mixed $row The row from which to extract the data.
 	 * @return array An array mapping strings (descriptors) to their respective string values.
 	 * @access public
 	 */
@@ -473,7 +499,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			}
 			return $retval;
 		}
-		switch( $type ) {
+		switch ( $type ) {
 			case 'edit':
 				return RC_EDIT;
 			case 'new':
@@ -584,6 +610,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				)
 			),
 			'toponly' => false,
+			'continue' => null,
 		);
 	}
 
@@ -621,6 +648,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			'limit' => 'How many total changes to return',
 			'tag' => 'Only list changes tagged with this tag',
 			'toponly' => 'Only list changes which are the latest revision',
+			'continue' => 'When more results are available, use this to continue',
 		);
 	}
 

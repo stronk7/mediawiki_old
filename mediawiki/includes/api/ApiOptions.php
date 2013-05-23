@@ -25,9 +25,9 @@
  */
 
 /**
-* API module that facilitates the changing of user's preferences.
-* Requires API write mode to be enabled.
-*
+ * API module that facilitates the changing of user's preferences.
+ * Requires API write mode to be enabled.
+ *
  * @ingroup API
  */
 class ApiOptions extends ApiBase {
@@ -80,7 +80,8 @@ class ApiOptions extends ApiBase {
 					$validation = $field->validate( $value, $user->getOptions() );
 					break;
 				case 'registered-multiselect':
-					// A key for a multiselect option.
+				case 'registered-checkmatrix':
+					// A key for a multiselect or checkmatrix option.
 					$validation = true;
 					$value = $value !== null ? (bool) $value : null;
 					break;

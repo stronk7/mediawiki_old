@@ -25,7 +25,7 @@
  *
  * This maintains WikiPage functions for backwards compatibility.
  *
- * @todo move and rewrite code to an Action class
+ * @todo Move and rewrite code to an Action class
  *
  * See design.txt for an overview.
  * Note: edit user interface and cache support functions have been
@@ -134,7 +134,7 @@ class Article implements Page {
 
 	/**
 	 * Constructor from a page id
-	 * @param $id Int article ID to load
+	 * @param int $id article ID to load
 	 * @return Article|null
 	 */
 	public static function newFromID( $id ) {
@@ -160,7 +160,7 @@ class Article implements Page {
 		$page = null;
 		wfRunHooks( 'ArticleFromTitle', array( &$title, &$page ) );
 		if ( !$page ) {
-			switch( $title->getNamespace() ) {
+			switch ( $title->getNamespace() ) {
 				case NS_FILE:
 					$page = new ImagePage( $title );
 					break;
@@ -385,14 +385,14 @@ class Article implements Page {
 
 		$content = $this->fetchContentObject();
 
-		$this->mContent = ContentHandler::getContentText( $content ); #@todo: get rid of mContent everywhere!
+		// @todo Get rid of mContent everywhere!
+		$this->mContent = ContentHandler::getContentText( $content );
 		ContentHandler::runLegacyHooks( 'ArticleAfterFetchContent', array( &$this, &$this->mContent ) );
 
 		wfProfileOut( __METHOD__ );
 
 		return $this->mContent;
 	}
-
 
 	/**
 	 * Get text content object
@@ -610,7 +610,7 @@ class Article implements Page {
 		$this->mParserOutput = false;
 
 		while ( !$outputDone && ++$pass ) {
-			switch( $pass ) {
+			switch ( $pass ) {
 				case 1:
 					wfRunHooks( 'ArticleViewHeader', array( &$this, &$outputDone, &$useParserCache ) );
 					break;
@@ -674,12 +674,12 @@ class Article implements Page {
 						wfDebug( __METHOD__ . ": showing CSS/JS source\n" );
 						$this->showCssOrJsPage();
 						$outputDone = true;
-					} elseif( !wfRunHooks( 'ArticleContentViewCustom',
+					} elseif ( !wfRunHooks( 'ArticleContentViewCustom',
 							array( $this->fetchContentObject(), $this->getTitle(), $outputPage ) ) ) {
 
 						# Allow extensions do their own custom view for certain pages
 						$outputDone = true;
-					} elseif( !ContentHandler::runLegacyHooks( 'ArticleViewCustom',
+					} elseif ( !ContentHandler::runLegacyHooks( 'ArticleViewCustom',
 							array( $this->fetchContentObject(), $this->getTitle(), $outputPage ) ) ) {
 
 						# Allow extensions do their own custom view for certain pages
@@ -788,7 +788,7 @@ class Article implements Page {
 	 * Show a diff page according to current request variables. For use within
 	 * Article::view() only, other callers should use the DifferenceEngine class.
 	 *
-	 * @todo: make protected
+	 * @todo Make protected
 	 */
 	public function showDiffPage() {
 		$request = $this->getContext()->getRequest();
@@ -854,7 +854,7 @@ class Article implements Page {
 
 	/**
 	 * Get the robot policy to be used for the current view
-	 * @param $action String the action= GET parameter
+	 * @param string $action the action= GET parameter
 	 * @param $pOutput ParserOutput
 	 * @return Array the policy that should be set
 	 * TODO: actions other than 'view'
@@ -876,7 +876,7 @@ class Article implements Page {
 			}
 			if ( Block::newFromTarget( $specificTarget, $vagueTarget ) instanceof Block ) {
 				return array(
-					'index'  => 'noindex',
+					'index' => 'noindex',
 					'follow' => 'nofollow'
 				);
 			}
@@ -885,19 +885,19 @@ class Article implements Page {
 		if ( $this->mPage->getID() === 0 || $this->getOldID() ) {
 			# Non-articles (special pages etc), and old revisions
 			return array(
-				'index'  => 'noindex',
+				'index' => 'noindex',
 				'follow' => 'nofollow'
 			);
 		} elseif ( $this->getContext()->getOutput()->isPrintable() ) {
 			# Discourage indexing of printable versions, but encourage following
 			return array(
-				'index'  => 'noindex',
+				'index' => 'noindex',
 				'follow' => 'follow'
 			);
 		} elseif ( $this->getContext()->getRequest()->getInt( 'curid' ) ) {
 			# For ?curid=x urls, disallow indexing
 			return array(
-				'index'  => 'noindex',
+				'index' => 'noindex',
 				'follow' => 'follow'
 			);
 		}
@@ -989,8 +989,9 @@ class Article implements Page {
 
 				// Set the fragment if one was specified in the redirect
 				if ( strval( $this->getTitle()->getFragment() ) != '' ) {
-					$fragment = Xml::escapeJsString( $this->getTitle()->getFragmentForURL() );
-					$outputPage->addInlineScript( "redirectToFragment(\"$fragment\");" );
+					$outputPage->addInlineScript( Xml::encodeJsCall(
+						'redirectToFragment', array( $this->getTitle()->getFragmentForURL() )
+					) );
 				}
 
 				// Add a <link rel="canonical"> tag
@@ -1091,6 +1092,7 @@ class Article implements Page {
 	public function showMissingArticle() {
 		global $wgSend404Code;
 		$outputPage = $this->getContext()->getOutput();
+		// Whether the page is a root user page of an existing user (but not a subpage)
 		$validUserPage = false;
 
 		# Show info in user (talk) namespace. Does the user exist? Is he blocked?
@@ -1100,7 +1102,7 @@ class Article implements Page {
 			$user = User::newFromName( $rootPart, false /* allow IP users*/ );
 			$ip = User::isIP( $rootPart );
 
-			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
+			if ( !( $user && $user->isLoggedIn() ) && !$ip ) { # User does not exist
 				$outputPage->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n\$1\n</div>",
 					array( 'userpage-userdoesnotexist-view', wfEscapeWikiText( $rootPart ) ) );
 			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
@@ -1118,9 +1120,9 @@ class Article implements Page {
 						)
 					)
 				);
-				$validUserPage = true;
+				$validUserPage = !$this->getTitle()->isSubpage();
 			} else {
-				$validUserPage = true;
+				$validUserPage = !$this->getTitle()->isSubpage();
 			}
 		}
 
@@ -1189,7 +1191,7 @@ class Article implements Page {
 		} elseif ( $this->getContext()->getRequest()->getInt( 'unhide' ) != 1 ) {
 			# Give explanation and add a link to view the revision...
 			$oldid = intval( $this->getOldID() );
-			$link = $this->getTitle()->getFullUrl( "oldid={$oldid}&unhide=1" );
+			$link = $this->getTitle()->getFullURL( "oldid={$oldid}&unhide=1" );
 			$msg = $this->mRevision->isDeleted( Revision::DELETED_RESTRICTED ) ?
 				'rev-suppressed-text-unhide' : 'rev-deleted-text-unhide';
 			$outputPage->wrapWikiMsg( "<div class='mw-warning plainlinks'>\n$1\n</div>\n",
@@ -1212,7 +1214,7 @@ class Article implements Page {
 	 *   Revision as of \<date\>; view current revision
 	 *   \<- Previous version | Next Version -\>
 	 *
-	 * @param $oldid int: revision ID of this article revision
+	 * @param int $oldid revision ID of this article revision
 	 */
 	public function setOldSubtitle( $oldid = 0 ) {
 		if ( !wfRunHooks( 'DisplayOldSubtitle', array( &$this, &$oldid ) ) ) {
@@ -1520,7 +1522,7 @@ class Article implements Page {
 	/**
 	 * Output deletion confirmation dialog
 	 * @todo FIXME: Move to another file?
-	 * @param $reason String: prefilled reason
+	 * @param string $reason prefilled reason
 	 */
 	public function confirmDelete( $reason ) {
 		wfDebug( "Article::confirmDelete\n" );
@@ -1728,7 +1730,7 @@ class Article implements Page {
 	 *
 	 * @param $oldid mixed integer Revision ID or null
 	 * @param $user User The relevant user
-	 * @return ParserOutput or false if the given revsion ID is not found
+	 * @return ParserOutput or false if the given revision ID is not found
 	 */
 	public function getParserOutput( $oldid = null, User $user = null ) {
 		//XXX: bypasses mParserOptions and thus setParserOptions()
@@ -1888,8 +1890,8 @@ class Article implements Page {
 	 *
 	 * @deprecated in 1.18; call OutputPage::redirect() directly
 	 * @param $noRedir Boolean: add redirect=no
-	 * @param $sectionAnchor String: section to redirect to, including "#"
-	 * @param $extraQuery String: extra query params
+	 * @param string $sectionAnchor section to redirect to, including "#"
+	 * @param string $extraQuery extra query params
 	 */
 	public function doRedirect( $noRedir = false, $sectionAnchor = '', $extraQuery = '' ) {
 		wfDeprecated( __METHOD__, '1.18' );
@@ -1909,7 +1911,7 @@ class Article implements Page {
 	 * Use PHP's magic __get handler to handle accessing of
 	 * raw WikiPage fields for backwards compatibility.
 	 *
-	 * @param $fname String Field name
+	 * @param string $fname Field name
 	 */
 	public function __get( $fname ) {
 		if ( property_exists( $this->mPage, $fname ) ) {
@@ -1923,7 +1925,7 @@ class Article implements Page {
 	 * Use PHP's magic __set handler to handle setting of
 	 * raw WikiPage fields for backwards compatibility.
 	 *
-	 * @param $fname String Field name
+	 * @param string $fname Field name
 	 * @param $fvalue mixed New value
 	 */
 	public function __set( $fname, $fvalue ) {
@@ -1942,8 +1944,8 @@ class Article implements Page {
 	 * Use PHP's magic __call handler to transform instance calls to
 	 * WikiPage functions for backwards compatibility.
 	 *
-	 * @param $fname String Name of called method
-	 * @param $args Array Arguments to the method
+	 * @param string $fname Name of called method
+	 * @param array $args Arguments to the method
 	 * @return mixed
 	 */
 	public function __call( $fname, $args ) {

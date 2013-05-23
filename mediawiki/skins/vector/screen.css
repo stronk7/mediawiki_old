@@ -75,8 +75,8 @@ div.emptyPortlet {
 	position: absolute;
 	top: 0.33em;
 	right: 0.75em;
-	/* Display on top of page tabs - bug 37158 */
-	z-index: 1;
+	/* Display on top of page tabs - bugs 37158, 48078 */
+	z-index: 100;
 }
 #p-personal h3,
 #p-personal h5 {
@@ -709,7 +709,6 @@ pre, .mw-code {
 #firstHeading {
 	padding-top: 0;
 	margin-top: 0;
-	padding-top: 0;
 	font-size: 1.6em;
 }
 div#content a.external,
@@ -783,8 +782,13 @@ div#content a.external[href *=".pdf?"], div#content a.external[href *=".PDF?"],
 #pt-login {
 	/* @embed */
 	background: url(images/user-icon.png) left top no-repeat;
+	/* SVG support using a transparent gradient to guarantee cross-browser
+	 * compatibility (browsers able to understand gradient syntax support also SVG) */
+	/* @embed */
+	background-image: -webkit-linear-gradient(transparent, transparent), url(images/user-icon.svg);
+	/* @embed */
+	background-image: linear-gradient(transparent, transparent), url(images/user-icon.svg);
 	padding-left: 15px !important;
-	text-transform: none;
 }
 
 .redirectText {

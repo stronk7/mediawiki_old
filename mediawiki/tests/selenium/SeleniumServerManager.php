@@ -21,8 +21,6 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Testing
  */
 
 class SeleniumServerManager {
@@ -216,7 +214,7 @@ class SeleniumServerManager {
 					}
 				}
 				wfRestoreWarnings();
-				echo ( "Starting Selenium server timed out.\n" );
+				echo "Starting Selenium server timed out.\n";
 				return 'failed';
 			} else {
 				// server already running.

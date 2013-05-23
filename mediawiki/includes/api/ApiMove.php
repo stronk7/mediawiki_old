@@ -88,7 +88,7 @@ class ApiMove extends ApiBase {
 			$r['redirectcreated'] = '';
 		}
 
-		if( $toTitleExists ) {
+		if ( $toTitleExists ) {
 			$r['moveoverredirect'] = '';
 		}
 
@@ -99,7 +99,7 @@ class ApiMove extends ApiBase {
 			if ( $retval === true ) {
 				$r['talkfrom'] = $fromTalk->getPrefixedText();
 				$r['talkto'] = $toTalk->getPrefixedText();
-				if( $toTalkExists ) {
+				if ( $toTalkExists ) {
 					$r['talkmoveoverredirect'] = '';
 				}
 			} else {
@@ -291,7 +291,7 @@ class ApiMove extends ApiBase {
 
 	public function getExamples() {
 		return array(
-			'api.php?action=move&from=Exampel&to=Example&token=123ABC&reason=Misspelled%20title&movetalk=&noredirect='
+			'api.php?action=move&from=Badtitle&to=Goodtitle&token=123ABC&reason=Misspelled%20title&movetalk=&noredirect='
 		);
 	}
 

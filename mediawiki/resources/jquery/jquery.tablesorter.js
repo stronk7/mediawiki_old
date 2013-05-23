@@ -98,7 +98,9 @@
 			// like charAt, toLowerCase and split are expected.
 			return String( data );
 		} else {
-			if ( node.tagName.toLowerCase() === 'img' ) {
+			if ( !node ) {
+				return $node.text();
+			} else if ( node.tagName.toLowerCase() === 'img' ) {
 				return $node.attr( 'alt' ) || ''; // handle undefined alt
 			} else {
 				return $.map( $.makeArray( node.childNodes ), function( elem ) {
@@ -113,14 +115,6 @@
 		}
 	}
 
-	function getTextFromRowAndCellIndex( rows, rowIndex, cellIndex ) {
-		if ( rows[rowIndex] && rows[rowIndex].cells[cellIndex] ) {
-			return $.trim( getElementSortKey( rows[rowIndex].cells[cellIndex] ) );
-		} else {
-			return '';
-		}
-	}
-
 	function detectParserForColumn( table, rows, cellIndex ) {
 		var l = parsers.length,
 			nodeValue,
@@ -130,8 +124,13 @@
 			concurrent = 0,
 			needed = ( rows.length > 4 ) ? 5 : rows.length;
 
-		while( i < l ) {
-			nodeValue = getTextFromRowAndCellIndex( rows, rowIndex, cellIndex );
+		while ( i < l ) {
+			if ( rows[rowIndex] && rows[rowIndex].cells[cellIndex] ) {
+				nodeValue = $.trim( getElementSortKey( rows[rowIndex].cells[cellIndex] ) );
+			} else {
+				nodeValue = '';
+			}
+
 			if ( nodeValue !== '') {
 				if ( parsers[i].is( nodeValue, table ) ) {
 					concurrent++;
@@ -425,31 +424,93 @@
 		ts.dateRegex[0] = new RegExp( /^\s*(\d{1,2})[\,\.\-\/'\s]{1,2}(\d{1,2})[\,\.\-\/'\s]{1,2}(\d{2,4})\s*?/i);
 
 		// Written Month name, dmy
-		ts.dateRegex[1] = new RegExp( '^\\s*(\\d{1,2})[\\,\\.\\-\\/\'\\s]*(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]*(\\d{2,4})\\s*$', 'i' );
+		ts.dateRegex[1] = new RegExp( '^\\s*(\\d{1,2})[\\,\\.\\-\\/\'\\s]+(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]+(\\d{2,4})\\s*$', 'i' );
 
 		// Written Month name, mdy
-		ts.dateRegex[2] = new RegExp( '^\\s*(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]*(\\d{1,2})[\\,\\.\\-\\/\'\\s]*(\\d{2,4})\\s*$', 'i' );
+		ts.dateRegex[2] = new RegExp( '^\\s*(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]+(\\d{1,2})[\\,\\.\\-\\/\'\\s]+(\\d{2,4})\\s*$', 'i' );
 
 	}
 
+	/**
+	 * Replace all rowspanned cells in the body with clones in each row, so sorting
+	 * need not worry about them.
+	 *
+	 * @param $table jQuery object for a <table>
+	 */
 	function explodeRowspans( $table ) {
-		// Split multi row cells into multiple cells with the same content
-		$table.find( '> tbody > tr > [rowspan]' ).each(function () {
-			var rowSpan = this.rowSpan;
-			this.rowSpan = 1;
-			var cell = $( this );
-			var next = cell.parent().nextAll();
+		var rowspanCells = $table.find( '> tbody > tr > [rowspan]' ).get();
+
+		// Short circuit
+		if ( !rowspanCells.length ) {
+			return;
+		}
+
+		// First, we need to make a property like cellIndex but taking into
+		// account colspans. We also cache the rowIndex to avoid having to take
+		// cell.parentNode.rowIndex in the sorting function below.
+		$table.find( '> tbody > tr' ).each( function () {
+			var col = 0;
+			var l = this.cells.length;
+			for ( var i = 0; i < l; i++ ) {
+				this.cells[i].realCellIndex = col;
+				this.cells[i].realRowIndex = this.rowIndex;
+				col += this.cells[i].colSpan;
+			}
+		} );
+
+		// Split multi row cells into multiple cells with the same content.
+		// Sort by column then row index to avoid problems with odd table structures.
+		// Re-sort whenever a rowspanned cell's realCellIndex is changed, because it
+		// might change the sort order.
+		function resortCells() {
+			rowspanCells = rowspanCells.sort( function ( a, b ) {
+				var ret = a.realCellIndex - b.realCellIndex;
+				if ( !ret ) {
+					ret = a.realRowIndex - b.realRowIndex;
+				}
+				return ret;
+			} );
+			$.each( rowspanCells, function () {
+				this.needResort = false;
+			} );
+		}
+		resortCells();
+
+		var spanningRealCellIndex, rowSpan, colSpan;
+		function filterfunc() {
+			return this.realCellIndex >= spanningRealCellIndex;
+		}
+
+		function fixTdCellIndex() {
+			this.realCellIndex += colSpan;
+			if ( this.rowSpan > 1 ) {
+				this.needResort = true;
+			}
+		}
+
+		while ( rowspanCells.length ) {
+			if ( rowspanCells[0].needResort ) {
+				resortCells();
+			}
+
+			var cell = rowspanCells.shift();
+			rowSpan = cell.rowSpan;
+			colSpan = cell.colSpan;
+			spanningRealCellIndex = cell.realCellIndex;
+			cell.rowSpan = 1;
+			var $nextRows = $( cell ).parent().nextAll();
 			for ( var i = 0; i < rowSpan - 1; i++ ) {
-				var td = next.eq( i ).children( 'td' );
-				if ( !td.length ) {
-					next.eq( i ).append( cell.clone() );
-				} else if ( this.cellIndex === 0 ) {
-					td.eq( this.cellIndex ).before( cell.clone() );
+				var $tds = $( $nextRows[i].cells ).filter( filterfunc );
+				var $clone = $( cell ).clone();
+				$clone[0].realCellIndex = spanningRealCellIndex;
+				if ( $tds.length ) {
+					$tds.each( fixTdCellIndex );
+					$tds.first().before( $clone );
 				} else {
-					td.eq( this.cellIndex - 1 ).after( cell.clone() );
+					$nextRows.eq( i ).append( $clone );
 				}
 			}
-		});
+		}
 	}
 
 	function buildCollationTable() {

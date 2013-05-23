@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that picks a database that has pending jobs.
@@ -77,10 +77,9 @@ class nextJobDB extends Maintenance {
 				return; // no jobs for this type
 			}
 
-			list( $type, $db ) = $candidates[ mt_rand( 0, count( $candidates ) - 1 ) ];
-			if ( !$this->checkJob( $type, $db ) ) { // queue is actually empty?
-				$pendingDBs[$type] = array_diff( $pendingDBs[$type], $db );
-				JobQueueAggregator::singleton()->notifyQueueEmpty( $db, $type );
+			list( $type, $db ) = $candidates[mt_rand( 0, count( $candidates ) - 1 )];
+			if ( JobQueueGroup::singleton( $db )->isQueueDeprioritized( $type ) ) {
+				$pendingDBs[$type] = array_diff( $pendingDBs[$type], array( $db ) );
 				$again = true;
 			}
 		} while ( $again );
@@ -90,17 +89,6 @@ class nextJobDB extends Maintenance {
 		} else {
 			$this->output( $db . "\n" );
 		}
-	}
-
-	/**
-	 * Check if the specified database has a job of the specified type in it.
-	 * The type may be false to indicate "all".
-	 * @param $type string
-	 * @param $dbName string
-	 * @return bool
-	 */
-	private function checkJob( $type, $dbName ) {
-		return !JobQueueGroup::singleton( $dbName )->get( $type )->isEmpty();
 	}
 
 	/**
@@ -128,4 +116,4 @@ class nextJobDB extends Maintenance {
 }
 
 $maintClass = "nextJobDb";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

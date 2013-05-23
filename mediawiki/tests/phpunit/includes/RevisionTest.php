@@ -134,9 +134,7 @@ class RevisionTest extends MediaWikiTestCase {
 
 	function testCompressRevisionTextUtf8Gzip() {
 		$this->checkPHPExtension( 'zlib' );
-
-		global $wgCompressRevisions;
-		$wgCompressRevisions = true;
+		$this->setMwGlobals( 'wgCompressRevisions', true );
 
 		$row = new stdClass;
 		$row->old_text = "Wiki est l'\xc3\xa9cole superieur !";
@@ -405,7 +403,6 @@ class RevisionTest extends MediaWikiTestCase {
 		// for immutable content like wikitext, this should be the same object
 		$this->assertSame( $content, $content2 );
 	}
-
 }
 
 class RevisionTestModifyableContent extends TextContent {
@@ -424,7 +421,6 @@ class RevisionTestModifyableContent extends TextContent {
 	public function setText( $text ) {
 		$this->mText = $text;
 	}
-
 }
 
 class RevisionTestModifyableContentHandler extends TextContentHandler {

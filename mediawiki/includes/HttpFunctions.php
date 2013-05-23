@@ -35,9 +35,9 @@ class Http {
 	/**
 	 * Perform an HTTP request
 	 *
-	 * @param $method String: HTTP method. Usually GET/POST
-	 * @param $url String: full URL to act on. If protocol-relative, will be expanded to an http:// URL
-	 * @param $options Array: options to pass to MWHttpRequest object.
+	 * @param string $method HTTP method. Usually GET/POST
+	 * @param string $url full URL to act on. If protocol-relative, will be expanded to an http:// URL
+	 * @param array $options options to pass to MWHttpRequest object.
 	 *	Possible keys for the array:
 	 *    - timeout             Timeout length in seconds
 	 *    - postData            An array of key-value pairs or a url-encoded form data
@@ -58,6 +58,8 @@ class Http {
 	 */
 	public static function request( $method, $url, $options = array() ) {
 		wfDebug( "HTTP: $method: $url\n" );
+		wfProfileIn( __METHOD__ . "-$method" );
+
 		$options['method'] = strtoupper( $method );
 
 		if ( !isset( $options['timeout'] ) ) {
@@ -67,11 +69,12 @@ class Http {
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 
+		$content = false;
 		if ( $status->isOK() ) {
-			return $req->getContent();
-		} else {
-			return false;
+			$content = $req->getContent();
 		}
+		wfProfileOut( __METHOD__ . "-$method" );
+		return $content;
 	}
 
 	/**
@@ -103,7 +106,7 @@ class Http {
 	/**
 	 * Check if the URL can be served by localhost
 	 *
-	 * @param $url String: full url to check
+	 * @param string $url full url to check
 	 * @return Boolean
 	 */
 	public static function isLocalURL( $url ) {
@@ -209,8 +212,8 @@ class MWHttpRequest {
 	public $status;
 
 	/**
-	 * @param $url String: url to use. If protocol-relative, will be expanded to an http:// URL
-	 * @param $options Array: (optional) extra params to pass (see Http::request())
+	 * @param string $url url to use. If protocol-relative, will be expanded to an http:// URL
+	 * @param array $options (optional) extra params to pass (see Http::request())
 	 */
 	protected function __construct( $url, $options = array() ) {
 		global $wgHTTPTimeout;
@@ -229,7 +232,7 @@ class MWHttpRequest {
 		} else {
 			$this->timeout = $wgHTTPTimeout;
 		}
-		if( isset( $options['userAgent'] ) ) {
+		if ( isset( $options['userAgent'] ) ) {
 			$this->setUserAgent( $options['userAgent'] );
 		}
 
@@ -263,8 +266,8 @@ class MWHttpRequest {
 
 	/**
 	 * Generate a new request object
-	 * @param $url String: url to use
-	 * @param $options Array: (optional) extra params to pass (see Http::request())
+	 * @param string $url url to use
+	 * @param array $options (optional) extra params to pass (see Http::request())
 	 * @throws MWException
 	 * @return CurlHttpRequest|PhpHttpRequest
 	 * @see MWHttpRequest::__construct
@@ -277,7 +280,7 @@ class MWHttpRequest {
 				' Http::$httpEngine is set to "curl"' );
 		}
 
-		switch( Http::$httpEngine ) {
+		switch ( Http::$httpEngine ) {
 			case 'curl':
 				return new CurlHttpRequest( $url, $options );
 			case 'php':
@@ -302,7 +305,7 @@ class MWHttpRequest {
 
 	/**
 	 * Set the parameters of the request
-
+	 *
 	 * @param $args Array
 	 * @todo overload the args param
 	 */
@@ -335,7 +338,7 @@ class MWHttpRequest {
 	}
 
 	/**
-	 * Set the refererer header
+	 * Set the referrer header
 	 */
 	public function setReferer( $url ) {
 		$this->setHeader( 'Referer', $url );
@@ -427,6 +430,8 @@ class MWHttpRequest {
 	public function execute() {
 		global $wgTitle;
 
+		wfProfileIn( __METHOD__ );
+
 		$this->content = "";
 
 		if ( strtoupper( $this->method ) == "HEAD" ) {
@@ -446,14 +451,18 @@ class MWHttpRequest {
 		if ( !isset( $this->reqHeaders['User-Agent'] ) ) {
 			$this->setUserAgent( Http::userAgent() );
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Parses the headers, including the HTTP status code and any
-	 * Set-Cookie headers.  This function expectes the headers to be
+	 * Set-Cookie headers.  This function expects the headers to be
 	 * found in an array in the member variable headerList.
 	 */
 	protected function parseHeader() {
+		wfProfileIn( __METHOD__ );
+
 		$lastname = "";
 
 		foreach ( $this->headerList as $header ) {
@@ -470,6 +479,8 @@ class MWHttpRequest {
 		}
 
 		$this->parseCookies();
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -505,7 +516,6 @@ class MWHttpRequest {
 
 		return (int)$this->respStatus;
 	}
-
 
 	/**
 	 * Returns true if the last status code was a redirect.
@@ -553,8 +563,8 @@ class MWHttpRequest {
 			$this->parseHeader();
 		}
 
-		if ( isset( $this->respHeaders[strtolower ( $header ) ] ) ) {
-			$v = $this->respHeaders[strtolower ( $header ) ];
+		if ( isset( $this->respHeaders[strtolower( $header )] ) ) {
+			$v = $this->respHeaders[strtolower( $header )];
 			return $v[count( $v ) - 1];
 		}
 
@@ -604,6 +614,8 @@ class MWHttpRequest {
 	 * Parse the cookies in the response headers and store them in the cookie jar.
 	 */
 	protected function parseCookies() {
+		wfProfileIn( __METHOD__ );
+
 		if ( !$this->cookieJar ) {
 			$this->cookieJar = new CookieJar;
 		}
@@ -614,6 +626,8 @@ class MWHttpRequest {
 				$this->cookieJar->parseCookieResponseHeader( $cookie, $url['host'] );
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -632,18 +646,18 @@ class MWHttpRequest {
 		$headers = $this->getResponseHeaders();
 
 		//return full url (fix for incorrect but handled relative location)
-		if ( isset( $headers[ 'location' ] ) ) {
-			$locations = $headers[ 'location' ];
+		if ( isset( $headers['location'] ) ) {
+			$locations = $headers['location'];
 			$domain = '';
 			$foundRelativeURI = false;
 			$countLocations = count( $locations );
 
 			for ( $i = $countLocations - 1; $i >= 0; $i-- ) {
-				$url = parse_url( $locations[ $i ] );
+				$url = parse_url( $locations[$i] );
 
 				if ( isset( $url['host'] ) ) {
-					$domain = $url[ 'scheme' ] . '://' . $url[ 'host' ];
-					break;	//found correct URI (with host)
+					$domain = $url['scheme'] . '://' . $url['host'];
+					break; //found correct URI (with host)
 				} else {
 					$foundRelativeURI = true;
 				}
@@ -651,15 +665,15 @@ class MWHttpRequest {
 
 			if ( $foundRelativeURI ) {
 				if ( $domain ) {
-					return $domain . $locations[ $countLocations - 1 ];
+					return $domain . $locations[$countLocations - 1];
 				} else {
 					$url = parse_url( $this->url );
-					if ( isset($url[ 'host' ]) ) {
-						return $url[ 'scheme' ] . '://' . $url[ 'host' ] . $locations[ $countLocations - 1 ];
+					if ( isset( $url['host'] ) ) {
+						return $url['scheme'] . '://' . $url['host'] . $locations[$countLocations - 1];
 					}
 				}
 			} else {
-				return $locations[ $countLocations - 1 ];
+				return $locations[$countLocations - 1];
 			}
 		}
 
@@ -682,11 +696,6 @@ class MWHttpRequest {
 class CurlHttpRequest extends MWHttpRequest {
 	const SUPPORTS_FILE_POSTS = true;
 
-	static $curlMessageMap = array(
-		6 => 'http-host-unreachable',
-		28 => 'http-timed-out'
-	);
-
 	protected $curlOptions = array();
 	protected $headerText = "";
 
@@ -701,9 +710,12 @@ class CurlHttpRequest extends MWHttpRequest {
 	}
 
 	public function execute() {
+		wfProfileIn( __METHOD__ );
+
 		parent::execute();
 
 		if ( !$this->status->isOK() ) {
+			wfProfileOut( __METHOD__ );
 			return $this->status;
 		}
 
@@ -747,6 +759,7 @@ class CurlHttpRequest extends MWHttpRequest {
 		$curlHandle = curl_init( $this->url );
 
 		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new MWException( "Error setting curl options." );
 		}
 
@@ -761,14 +774,11 @@ class CurlHttpRequest extends MWHttpRequest {
 			wfRestoreWarnings();
 		}
 
-		if ( false === curl_exec( $curlHandle ) ) {
-			$code = curl_error( $curlHandle );
-
-			if ( isset( self::$curlMessageMap[$code] ) ) {
-				$this->status->fatal( self::$curlMessageMap[$code] );
-			} else {
-				$this->status->fatal( 'http-curl-error', curl_error( $curlHandle ) );
-			}
+		$curlRes = curl_exec( $curlHandle );
+		if ( curl_errno( $curlHandle ) == CURLE_OPERATION_TIMEOUTED ) {
+			$this->status->fatal( 'http-timed-out', $this->url );
+		} elseif ( $curlRes === false ) {
+			$this->status->fatal( 'http-curl-error', curl_error( $curlHandle ) );
 		} else {
 			$this->headerList = explode( "\r\n", $this->headerText );
 		}
@@ -777,6 +787,8 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		$this->parseHeader();
 		$this->setStatus();
+
+		wfProfileOut( __METHOD__ );
 
 		return $this->status;
 	}
@@ -812,6 +824,8 @@ class PhpHttpRequest extends MWHttpRequest {
 	}
 
 	public function execute() {
+		wfProfileIn( __METHOD__ );
+
 		parent::execute();
 
 		if ( is_array( $this->postData ) ) {
@@ -827,7 +841,7 @@ class PhpHttpRequest extends MWHttpRequest {
 		if ( $this->method == 'POST' ) {
 			// Required for HTTP 1.0 POSTs
 			$this->reqHeaders['Content-Length'] = strlen( $this->postData );
-			if( !isset( $this->reqHeaders['Content-Type'] ) ) {
+			if ( !isset( $this->reqHeaders['Content-Type'] ) ) {
 				$this->reqHeaders['Content-Type'] = "application/x-www-form-urlencoded";
 			}
 		}
@@ -904,18 +918,19 @@ class PhpHttpRequest extends MWHttpRequest {
 
 		if ( $fh === false ) {
 			$this->status->fatal( 'http-request-error' );
+			wfProfileOut( __METHOD__ );
 			return $this->status;
 		}
 
 		if ( $result['timed_out'] ) {
 			$this->status->fatal( 'http-timed-out', $this->url );
+			wfProfileOut( __METHOD__ );
 			return $this->status;
 		}
 
 		// If everything went OK, or we received some error code
 		// get the response body content.
-		if ( $this->status->isOK()
-				|| (int)$this->respStatus >= 300) {
+		if ( $this->status->isOK() || (int)$this->respStatus >= 300 ) {
 			while ( !feof( $fh ) ) {
 				$buf = fread( $fh, 8192 );
 
@@ -930,6 +945,8 @@ class PhpHttpRequest extends MWHttpRequest {
 			}
 		}
 		fclose( $fh );
+
+		wfProfileOut( __METHOD__ );
 
 		return $this->status;
 	}

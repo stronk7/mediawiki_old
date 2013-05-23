@@ -18,6 +18,7 @@
  * @author Froztbyte
  * @author Gorbi
  * @author H92
+ * @author HenrikKbh
  * @author Hylle
  * @author Jan Friberg
  * @author Jon Harald Søby
@@ -41,6 +42,7 @@
  * @author Sarrus
  * @author Sir48
  * @author Slomox
+ * @author Steenth
  * @author Svip
  * @author Søren Løvborg
  * @author Tjernobyl
@@ -218,8 +220,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Vis antal brugere, der overvåger',
 'tog-oldsig' => 'Nuværende signatur:',
 'tog-fancysig' => 'Behandl signatur som wikitekst uden automatisk henvisning',
-'tog-externaleditor' => 'Brug ekstern editor automatisk (kun for rutinerede brugere, da det kræver særlige indstillinger på din computer. [//www.mediawiki.org/wiki/Manual:External_editors Flere oplysninger.])',
-'tog-externaldiff' => 'Brug ekstern forskelsvisning automatisk (kun for rutinerede brugere, da det kræver særlige indstillinger på din computer. [//www.mediawiki.org/wiki/Manual:External_editors Flere oplysninger.])',
 'tog-showjumplinks' => 'Vis tilgængeligheds-henvisninger',
 'tog-uselivepreview' => 'Brug automatisk forhåndsvisning (kræver JavaScript og er på forsøgsstadiet)',
 'tog-forceeditsummary' => 'Advar mig hvis jeg ikke udfylder beskrivelsesfeltet',
@@ -234,6 +234,7 @@ $messages = array(
 'tog-showhiddencats' => 'Vis skjulte kategorier',
 'tog-noconvertlink' => 'Slå konvertering af sidetitler fra',
 'tog-norollbackdiff' => 'Vis ikke forskel efter tilbagerulning',
+'tog-useeditwarning' => 'Advar mig, hvis jeg forlader en redigeringsside med ændringer, der ikke er gemt.',
 
 'underline-always' => 'Altid',
 'underline-never' => 'Aldrig',
@@ -485,15 +486,15 @@ $1',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main' => 'Side',
-'nstab-user' => 'brugerside',
-'nstab-media' => 'medie',
-'nstab-special' => 'speciel',
+'nstab-user' => 'Brugerside',
+'nstab-media' => 'Medieside',
+'nstab-special' => 'Specialside',
 'nstab-project' => 'Projektside',
 'nstab-image' => 'Fil',
-'nstab-mediawiki' => 'besked',
-'nstab-template' => 'skabelon',
-'nstab-help' => 'hjælp',
-'nstab-category' => 'kategori',
+'nstab-mediawiki' => 'Besked',
+'nstab-template' => 'Skabelon',
+'nstab-help' => 'Hjælp',
+'nstab-category' => 'Kategori',
 
 # Main script and global functions
 'nosuchaction' => 'Funktionen findes ikke',
@@ -601,9 +602,18 @@ Bemærk, at nogle sider stadigvæk kan vises som om du var logget på, indtil du
 'welcomecreation-msg' => 'Din konto er blevet oprettet.
 Glem ikke at ændre dine [[Special:Preferences|{{SITENAME}} indstillinger]].',
 'yourname' => 'Dit brugernavn:',
+'userlogin-yourname' => 'Brugernavn',
+'userlogin-yourname-ph' => 'Indtast dit brugernavn',
 'yourpassword' => 'Din adgangskode:',
+'userlogin-yourpassword' => 'Adgangskode',
+'userlogin-yourpassword-ph' => 'Indtast din adgangskode',
+'createacct-yourpassword-ph' => 'Indtast kodeord',
 'yourpasswordagain' => 'Gentag adgangskode',
+'createacct-yourpasswordagain' => 'Bekræft kodeord',
+'createacct-yourpasswordagain-ph' => 'Indtast kodeord igen',
 'remembermypassword' => 'Husk mit brugernavn i denne browser (højst $1 {{PLURAL:$1|dag|dage}})',
+'userlogin-remembermypassword' => 'Husk mig',
+'userlogin-signwithsecure' => 'Log på med sikker server',
 'securelogin-stick-https' => 'Behold forbindelsen til HTTPS efter login',
 'yourdomainname' => 'Dit domænenavn:',
 'password-change-forbidden' => 'Du kan ikke ændre adgangskoder på denne wiki.',
@@ -616,18 +626,37 @@ Glem ikke at ændre dine [[Special:Preferences|{{SITENAME}} indstillinger]].',
 'logout' => 'Log af',
 'userlogout' => 'Log af',
 'notloggedin' => 'Ikke logget på',
+'userlogin-noaccount' => 'Har du ikke en konto?',
+'userlogin-joinproject' => 'Slut dig til {{SITENAME}}',
 'nologin' => 'Har du ingen konto? $1.',
 'nologinlink' => 'Opret en ny brugerkonto',
 'createaccount' => 'Opret en ny brugerkonto',
 'gotaccount' => 'Har du allerede en konto? $1.',
 'gotaccountlink' => 'Log på',
 'userlogin-resetlink' => 'Har du glemt dine login oplysninger?',
+'helplogin-url' => 'Help:Logge på',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Hjælp til at logge på]]',
+'createacct-join' => 'Indtast dine oplysninger nedenfor.',
+'createacct-emailrequired' => 'Mailadresse',
+'createacct-emailoptional' => 'Mailadresse (valgfri)',
+'createacct-email-ph' => 'Indtast din mailadresse',
 'createaccountmail' => 'Brug en midlertidig tilfældig adgangskode og send den til e-mailadressen angivet nedenfor',
+'createacct-realname' => 'Dit rigtige navn',
 'createaccountreason' => 'Begrundelse:',
+'createacct-reason' => 'Årsag',
+'createacct-reason-ph' => 'Hvorfor vil du oprette endnu en konto',
+'createacct-captcha' => 'Sikkerhedskontrol',
+'createacct-imgcaptcha-ph' => 'Indtast venligst ovenstående tekst',
+'createacct-submit' => 'Opret din konto',
+'createacct-benefit-heading' => '{{SITENAME}} laves af mennesker som dig.',
+'createacct-benefit-body1' => 'rettelser',
+'createacct-benefit-body2' => 'sider',
+'createacct-benefit-body3' => 'seneste bidragydere',
 'badretype' => 'De indtastede adgangskoder er ikke ens.',
 'userexists' => 'Det brugernavn, du har valgt, er allerede i brug.
 Vælg venligst et andet brugernavn.',
 'loginerror' => 'Logon mislykket',
+'createacct-error' => 'Fejl ved kontooprettelse',
 'createaccounterror' => 'Kunne ikke oprette brugerkonto: $1',
 'nocookiesnew' => 'Din brugerkonto er nu oprettet, men du er ikke logget på. {{SITENAME}} bruger cookies til at logge brugere på. Du har slået cookies fra. Vær venlig at slå cookies til, og derefter kan du logge på med dit nye brugernavn og kodeord.',
 'nocookieslogin' => '{{SITENAME}} bruger cookies til at logge brugere på. Du har slået cookies fra. Slå dem venligst til og prøv igen.',
@@ -666,7 +695,7 @@ Du bør logge på og ændre din adgangskode straks efter du har modtaget e-maile
 'eauthentsent' => 'En bekræftelsesmail er sendt til den angivne e-mail-adresse.
 
 Før en e-mail kan modtages af andre brugere af {{SITENAME}}-mailfunktionen, skal adressen og dens tilhørsforhold til denne bruger bekræftes. Følg venligst anvisningerne i denne mail.',
-'throttled-mailpassword' => 'Indenfor {{PLURAL:$1|den sidste time|de sidste $1 timer}} er der allerede sendt et nyt password. For at forhindre misbrug af funktionen, kan der kun bestilles et nyt password en gang for hver {{PLURAL:$1|time|$1 timer}}.',
+'throttled-mailpassword' => 'Indenfor {{PLURAL:$1|den sidste time|de sidste $1 timer}} er der allerede sendt en ny adgangskode. For at forhindre misbrug af funktionen, kan der kun bestilles en ny adgangskode én gang for hver {{PLURAL:$1|time|$1 timer}}.',
 'mailerror' => 'Fejl ved afsendelse af e-mail: $1',
 'acct_creation_throttle_hit' => 'Besøgende med samme IP-adresse som dig har oprettet {{PLURAL:$1|en konto|$1 kontoer}} det sidste døgn, og det er ikke tilladt at oprette flere.
 Derfor kan besøgende ikke oprette flere kontoer fra denne IP-adresse i øjeblikket.',
@@ -691,7 +720,7 @@ Vent venligst før du prøver igen.',
 'loginlanguagelabel' => 'Sprog: $1',
 'suspicious-userlogout' => 'Din anmodning om at logge ud blev nægtet, fordi det ser ud som den blev sendt af en ødelagt browser eller caching proxy.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => "Ukendt fejl i PHP's mail()-funtion",
 'user-mail-no-addy' => 'Forsøgte at sende email uden en email-adresse',
 'user-mail-no-body' => 'Forsøgte at sende en e-mail med tomt eller urimeligt kort indhold.',
@@ -713,12 +742,14 @@ Vent venligst før du prøver igen.',
 'resetpass-wrong-oldpass' => 'Ugyldig midlertidig eller gældende adgangskode.
 Du har muligvis allerede skiftet din adgangskode eller anmodet om en ny midlertidig kode.',
 'resetpass-temp-password' => 'Midlertidig adgangskode',
+'resetpass-abort-generic' => 'Ændring af kodeord er blevet afbrudt af udvidelse',
 
 # Special:PasswordReset
 'passwordreset' => 'Nulstil adgangskode',
-'passwordreset-text' => 'Udfyld denne formular for at modtage en påmindelse om dine kontooplysninger som e-mail.',
+'passwordreset-text' => 'Udfyld denne formular for at nulstille din adgangskode.',
 'passwordreset-legend' => 'Nulstil adgangskode',
 'passwordreset-disabled' => 'Nulstilling af kodeord er slået fra på denne wiki.',
+'passwordreset-emaildisabled' => 'E-mailfunktioner er slået fra på denne wiki.',
 'passwordreset-pretext' => '{{PLURAL:$1||Indtast en af de nedenstående oplysninger}}',
 'passwordreset-username' => 'Brugernavn:',
 'passwordreset-domain' => 'Domæne:',
@@ -726,23 +757,23 @@ Du har muligvis allerede skiftet din adgangskode eller anmodet om en ny midlerti
 'passwordreset-capture-help' => 'Hvis du krydser dette felt af, vil emailen (med den midlertidige adgangskode) blive vist til dig i tillæg til at blive sendt til brugeren.',
 'passwordreset-email' => 'E-mail adresse:',
 'passwordreset-emailtitle' => 'Kontooplysninger på {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Nogen (sandsynligvis dig, fra IP-adressen $1) har anmodet om en påmindelse om dine kontooplysninger for {{SITENAME}} ($4). Følgende {{PLURAL:$3|brugerkonto|brugerkonti}} er associerede med denne e-mail-adresse:
+'passwordreset-emailtext-ip' => 'Nogen (sandsynligvis dig, fra IP-adressen $1) har anmodet om at få nulstillet din adgangskode til {{SITENAME}} ($4). {{PLURAL:$3|Den følgende brugerkonto er associeret|De følgende brugerkonti er associerede}} med denne e-mail-adresse:
 
 $2
 
 {{PLURAL:$3|Denne midlertidige adgangskode|Disse midlertidige adgangskoder}} vil udløbe om {{PLURAL:$5|en dag|$5 dage}}.
-Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har anmodet om denne påmindelse, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
-'passwordreset-emailtext-user' => 'Brugeren $1 har anmodet om en påmindelse om dine kontooplysninger for {{SITENAME}} ($4). Følgende {{PLURAL:$3|brugerkonto|brugerkonti}} er associerede med denne e-mail-adresse:
+Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har gjort denne anmodning, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
+'passwordreset-emailtext-user' => 'Brugeren $1 på {{SITENAME}} har anmodet om at få nulstillet din adgangskode til {{SITENAME}} ($4). {{PLURAL:$3|Den følgende brugerkonto er associeret|De følgende brugerkonti er associerede}} med denne e-mail-adresse:
 
 $2
 
 {{PLURAL:$3|Denne midlertidige adgangskode|Disse midlertidige adgangskoder}} vil udløbe om {{PLURAL:$5|en dag|$5 dage}}.
-Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har anmodet om denne påmindelse, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
+Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har gjort denne anmodning, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
 'passwordreset-emailelement' => 'Brugernavn: $1
 Midlertidig adgangskode: $2',
-'passwordreset-emailsent' => 'En påmindelse er blevet sendt som e-mail.',
-'passwordreset-emailsent-capture' => 'En påmindelsesemail, som vist nedenfor, er blevet sendt.',
-'passwordreset-emailerror-capture' => 'En påmindelsesemail, som vist nedenfor, blev genereret, men det lykkedes ikke at sende den til brugeren: $1',
+'passwordreset-emailsent' => 'En e-mail om nulstilling af adgangskode er blevet sendt.',
+'passwordreset-emailsent-capture' => 'En e-mail om nulstilling af adgangskode, som vist nedenfor, er blevet sendt.',
+'passwordreset-emailerror-capture' => 'En mail om nulstilling af adgangskode, som vist nedenfor, blev genereret, men det lykkedes ikke at sende den til {{GENDER:$2|bruger}}: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Ændr email-adresse',
@@ -779,7 +810,7 @@ Midlertidig adgangskode: $2',
 # Edit pages
 'summary' => 'Beskrivelse:',
 'subject' => 'Emne/overskrift:',
-'minoredit' => 'Dette er en mindre ændring.',
+'minoredit' => 'Dette er en mindre ændring',
 'watchthis' => 'Overvåg denne side',
 'savearticle' => 'Gem side',
 'preview' => 'Forhåndsvisning',
@@ -959,6 +990,8 @@ Den ser du til at være slettet.',
 'content-failed-to-parse' => 'Kunne ikke fortolke $2-indholdet af $1-modellen: $3',
 'invalid-content-data' => 'Ugyldig indholdsdata',
 'content-not-allowed-here' => '"$1" indhold er ikke tilladt på siden [[$2]]',
+'editwarning-warning' => 'Hvis du forlader siden nu, risikerer du at miste alle ændringer, som du har lavet.
+Denne advarsel kan slås fra under "Redigering" i dine indstillinger.',
 
 # Content models
 'content-model-wikitext' => 'wikitekst',
@@ -1237,15 +1270,7 @@ Du kan prøve at bruge \"all:\" som præfiks for at søge i alt indhold (inkl. d
 'powersearch-togglenone' => 'Ingen',
 'search-external' => 'Brug anden søgemaskine',
 'searchdisabled' => '<p>Beklager! Fuldtekstsøgningen er midlertidigt afbrudt på grund af for stor belastning på serverne. I mellemtidem kan du anvende Google- eller Yahoo!-søgefelterne herunder. Bemærk at deres kopier af {{SITENAME}}s indhold kan være forældet.</p>',
-
-# Quickbar
-'qbsettings' => 'Hurtigmenu',
-'qbsettings-none' => 'Ingen',
-'qbsettings-fixedleft' => 'Fast venstre',
-'qbsettings-fixedright' => 'Fast højre',
-'qbsettings-floatingleft' => 'Flydende venstre',
-'qbsettings-floatingright' => 'Flydende højre',
-'qbsettings-directionality' => 'Fast, afhængigt af dit sprogs skriveretning',
+'search-error' => 'Der opstod en fejl under søgning: $1',
 
 # Preferences page
 'preferences' => 'Indstillinger',
@@ -1351,7 +1376,7 @@ Hvis du vælger at oplyse dit navn, vil det blive brugt til at tilskrive dig dit
 'prefs-info' => 'Grundlæggende information',
 'prefs-i18n' => 'Internationalisering:',
 'prefs-signature' => 'Signatur',
-'prefs-dateformat' => 'Dataformat',
+'prefs-dateformat' => 'Formatering af datoer',
 'prefs-timeoffset' => 'Tidsforskel',
 'prefs-advancedediting' => 'Avancerede indstillinger',
 'prefs-advancedrc' => 'Avancerede indstillinger',
@@ -1363,7 +1388,7 @@ Hvis du vælger at oplyse dit navn, vil det blive brugt til at tilskrive dig dit
 'prefs-displaywatchlist' => 'Visningsmuligheder',
 'prefs-diffs' => 'Forskelle',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'E-mailadressen ser ud til at være gyldig',
 'email-address-validity-invalid' => 'Indtast en gyldig e-mail adresse',
 
@@ -1388,6 +1413,7 @@ Hvis du vælger at oplyse dit navn, vil det blive brugt til at tilskrive dig dit
 'userrights-notallowed' => 'Din konto har ikke adgang til at tilføje eller fjerne brugerrettigheder.',
 'userrights-changeable-col' => 'Redigerbare grupper',
 'userrights-unchangeable-col' => 'Uredigerbare grupper',
+'userrights-conflict' => 'Brugerrettighedskonflikt. Tilføj venligst dine ændringer påny.',
 
 # Groups
 'group' => 'Gruppe:',
@@ -1797,7 +1823,6 @@ For optimal sikkerhed er img_auth.php deaktiveret.",
 'http-read-error' => 'HTTP-læsefejl.',
 'http-timed-out' => 'HTTP-forespørgslen tog for lang tid.',
 'http-curl-error' => 'Fejl under hentning af URL: $1',
-'http-host-unreachable' => 'Webadresse er ikke tilgængelig.',
 'http-bad-status' => 'Der opstod et problem under HTTP-forespørgslen: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1952,6 +1977,12 @@ Husk at kontrollere for andre henvisninger til skabelonerne før de slettes.',
 'disambiguations-text' => "De følgende sider henviser til mindst en side med en '''flertydig titel'''.
 De bør henvise direkte til et mere passende emne i stedet.<br />
 En side behandles som en side med en flertydig titel hvis den bruger en skabelon som der er henvist til fra [[MediaWiki:Disambiguationspage]].",
+
+'pageswithprop' => 'Sider med en sideegenskab',
+'pageswithprop-legend' => 'Sider med en sideegenskab',
+'pageswithprop-text' => 'Denne side viser en liste over sider, der har en bestemt sideegenskab.',
+'pageswithprop-prop' => 'Egenskabsnavn:',
+'pageswithprop-submit' => 'Vis',
 
 'doubleredirects' => 'Dobbelte omdirigeringer',
 'doubleredirectstext' => 'Dette er en liste over sider som omdirigerer til andre omdirigeringssider.
@@ -2144,7 +2175,7 @@ Der findes muligvis [[{{MediaWiki:Listgrouprights-helppage}}|yderligere informat
 'listgrouprights-addgroup-self-all' => 'Kan tilføje alle grupper til egen konto',
 'listgrouprights-removegroup-self-all' => 'Kan fjerne alle grupper fra egen konto',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Du er ikke logget på',
 'mailnologintext' => 'Du skal være [[Special:UserLogin|logget på]] og have en gyldig e-mailadresse sat i dine [[Special:Preferences|indstillinger]] for at sende e-mail til andre brugere.',
 'emailuser' => 'E-mail til denne bruger',
@@ -2202,13 +2233,13 @@ Fremtidige ændringer af denne side og dens tilknyttede diskussionsside vil bliv
 'notvisiblerev' => 'Versionen er blevet slettet',
 'watchnochange' => 'Ingen af siderne i din overvågningsliste er ændret i den valgte periode.',
 'watchlist-details' => 'Du har $1 {{PLURAL:$1|side|sider}} på din overvågningsliste (ekskl. diskussionssider).',
-'wlheader-enotif' => '* E-mail-underretning er slået til.',
-'wlheader-showupdated' => "* Sider der er ændret siden dit sidste besøg, er '''fremhævet'''",
+'wlheader-enotif' => 'E-mail-underretning er slået til.',
+'wlheader-showupdated' => "Sider der er ændret siden dit sidste besøg, er '''fremhævet'''",
 'watchmethod-recent' => 'Tjekker seneste ændringer for sider i din overvågningsliste',
 'watchmethod-list' => 'Tjekker seneste ændringer for sider i din overvågningsliste',
 'watchlistcontains' => 'Din overvågningsliste indeholder $1 {{PLURAL:$1|side|sider}}.',
 'iteminvalidname' => "Problem med '$1', ugyldigt navn...",
-'wlnote' => "Nedenfor ses {{PLURAL:$1|den seneste ændring|de seneste '''$1''' ændringer}} i {{PLURAL:$2|den sidste time|'''de sidste $2 timer}}''' fra den $3, kl. $4.",
+'wlnote' => "Nedenfor ses {{PLURAL:$1|den seneste ændring|de seneste '''$1''' ændringer}} i {{PLURAL:$2|den sidste time|'''de sidste $2 timer}}''' op til den $3 kl. $4.",
 'wlshowlast' => 'Vis de seneste $1 timer $2 dage $3',
 'watchlist-options' => 'Indstillinger for overvågningslisten',
 
@@ -2610,6 +2641,7 @@ Se [[Special:BlockList|blokeringslisten]] for den nuværende liste med aktuelle 
 'proxyblocksuccess' => 'Færdig.',
 'sorbsreason' => 'IP-adressen er opført i DNSBL på {{SITENAME}} som åben PROXY.',
 'sorbs_create_account_reason' => 'IP-adressen er opført i DNSBL på {{SITENAME}} som åben PROXY. Oprettelse af nye brugere er ikke mulig.',
+'xffblockreason' => 'En IP-adresse der er indeholdt i X-Fremsendt-Til hovedet, enten din egen eller en på en proxy-server, du bruger, er blevet blokeret. Den oprindelige grund til blokeringen var:$1',
 'cant-block-while-blocked' => 'Du kan ikke blokkere andre brugere mens du selv er blokkeret.',
 'cant-see-hidden-user' => 'Brugeren du prøver at blokerer er allerede blokeret og skjult. Siden du ikke har rettigheden til at skjule brugere, kan du ikke se eller ændre brugerens blokering.',
 'ipbblocked' => 'Du kan ikke ændre blokeringer, da du selv er blokeret',
@@ -2891,7 +2923,7 @@ Du kan se på kildeteksten.',
 'tooltip-ca-nstab-main' => 'Se indholdet',
 'tooltip-ca-nstab-user' => 'Se brugersiden',
 'tooltip-ca-nstab-media' => 'Se mediasiden',
-'tooltip-ca-nstab-special' => 'Dette er en speciel side; man kan ikke redigere sådanne sider',
+'tooltip-ca-nstab-special' => 'Dette er en specialside; man kan ikke redigere sådanne sider',
 'tooltip-ca-nstab-project' => 'Vis projektsiden',
 'tooltip-ca-nstab-image' => 'Se filsiden',
 'tooltip-ca-nstab-mediawiki' => 'Se systembeskeden',
@@ -2994,13 +3026,8 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 'pageinfo-category-files' => 'Antal filer',
 
 # Skin names
-'skinname-standard' => 'Klassik',
-'skinname-nostalgia' => 'Nostalgi',
 'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Eget udseende',
-'skinname-chick' => 'Chick',
-'skinname-simple' => 'Enkelt',
 'skinname-modern' => 'Moderne',
 
 # Patrolling
@@ -3079,10 +3106,24 @@ Du kan beskadige dit system hvis du udfører den.",
 'minutes' => '{{PLURAL: $1|$1 minut|$1 minutter}}',
 'hours' => '{{PLURAL: $1|$1 time|$1 timer}}',
 'days' => '{{PLURAL: $1|$1 dag|$1 dage}}',
+'weeks' => '{{PLURAL:$1|$1 uge|$1 uger}}',
 'months' => '{{PLURAL:$1|$1 måned|$1 måneder}}',
 'years' => '{{PLURAL:$1|$1 år}}',
 'ago' => '$1 siden',
 'just-now' => 'lige nu',
+
+# Human-readable timestamps
+'hours-ago' => '$1 {{PLURAL:$1|time|timer}} siden',
+'minutes-ago' => '$1 {{PLURAL:$1|minut|minutter}} siden',
+'seconds-ago' => '$1 {{PLURAL:$1|sekund|sekunder}} siden',
+'monday-at' => 'Mandag kl. $1',
+'tuesday-at' => 'Tirsdag kl. $1',
+'wednesday-at' => 'Onsdag  kl. $1',
+'thursday-at' => 'Torsdag kl. $1',
+'friday-at' => 'Fredag kl. $1',
+'saturday-at' => 'Lørdag kl. $1',
+'sunday-at' => 'Søndag kl. $1',
+'yesterday-at' => 'Igår kl. $1',
 
 # Bad image list
 'bad_image_list' => 'Formatet er:
@@ -3110,7 +3151,7 @@ Kun indholdet af lister (linjer startende med *) bliver brugt. Den første henvi
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Bredde',
 'exif-imagelength' => 'Længde',
 'exif-bitspersample' => 'Bits pr. farvekomponent',
@@ -3288,7 +3329,7 @@ Kun indholdet af lister (linjer startende med *) bliver brugt. Den første henvi
 'exif-originalimageheight' => 'Højden af billedet inden det blev beskåret',
 'exif-originalimagewidth' => 'Bredden af billedet inden det blev beskåret',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Ukomprimeret',
 'exif-compression-2' => 'CCITT Gruppe 3 1-dimensionel modificeret Huffman run length encoding',
 'exif-compression-3' => 'CCITT Gruppe 3 fax-kodning',
@@ -3510,7 +3551,7 @@ Kun indholdet af lister (linjer startende med *) bliver brugt. Den første henvi
 'monthsall' => 'alle',
 'limitall' => 'alle',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Bekræft e-mail-adressen',
 'confirmemail_noemail' => 'Du har ikke angivet en gyldig e-mail-adresse i din [[Special:Preferences|brugerprofil]].',
 'confirmemail_text' => '{{SITENAME}} kræver, at du bekræfter en e-mail-adresse (autentificering), før du kan bruge de udvidede e-mail-funktioner. Med et klik på kontrolfeltet forneden sendes en e-mail til dig. Denne e-mail indeholder et link med en bekræftelseskode. Med et klik på dette link bekræftes, at e-mail-adressen er gyldig.',
@@ -3695,12 +3736,17 @@ Du skulle have modtaget [{{SERVER}}{{SCRIPTPATH}}/COPYING en kopi af GNU General
 'version-entrypoints-header-entrypoint' => 'Indgangspunkt',
 'version-entrypoints-header-url' => 'URL',
 
-# Special:FilePath
-'filepath' => 'Filsti',
-'filepath-page' => 'Fil:',
-'filepath-submit' => 'Vis sti',
-'filepath-summary' => 'Denne specialside giver et direkte link til en fil.
-Billeder vises i fuld opløsning, og andre mediatyper vil blive aktiveret med deres tilhørende program.',
+# Special:Redirect
+'redirect' => 'Omdirigering pga. fil, bruger eller udgave ID',
+'redirect-legend' => 'Omstilling til en fil eller en side',
+'redirect-summary' => "Denne side omdirigerer en (hvis filnavnet er angivet), en side (hvis udgave ID'et er angivet) eller en brugerside (hvis et numerisk brugernummer er angivet).",
+'redirect-submit' => 'Kør',
+'redirect-lookup' => 'Slå op:',
+'redirect-value' => 'Værdi:',
+'redirect-user' => 'Bruger ID',
+'redirect-revision' => 'Sideversion',
+'redirect-file' => 'Filnavn',
+'redirect-not-exists' => 'Værdi ej fundet',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Find dubletfiler',
@@ -3747,7 +3793,7 @@ Billeder vises i fuld opløsning, og andre mediatyper vil blive aktiveret med de
 
 # Special:Tags
 'tags' => 'Tags til sideversioner',
-'tag-filter' => '[[Special:Tags|tag]]filter:',
+'tag-filter' => '[[Special:Tags|Tag]]filter:',
 'tag-filter-submit' => 'Filtrér',
 'tags-title' => 'Tags',
 'tags-intro' => 'Denne side oplister de tags som programmet kan mærke en redigering med, og deres betydning.',
@@ -3790,23 +3836,26 @@ Billeder vises i fuld opløsning, og andre mediatyper vil blive aktiveret med de
 'htmlform-submit' => 'Gem',
 'htmlform-reset' => 'Annuller ændringer',
 'htmlform-selectorother-other' => 'Anden',
+'htmlform-no' => 'Nej',
+'htmlform-yes' => 'Ja',
+'htmlform-chosen-placeholder' => 'Vælg en mulighed',
 
 # SQLite database support
 'sqlite-has-fts' => '$1 med fuld-tekst søgnings support',
 'sqlite-no-fts' => '$1 uden fuld-tekst søgnings support',
 
 # New logging system
-'logentry-delete-delete' => '$1 slettede siden $3',
-'logentry-delete-restore' => '$1 gendannede siden $3',
-'logentry-delete-event' => '$1 ændrede synligheden af {{PLURAL:$5|en loghændelse|$5 loghændelser}} for siden $3: $4',
-'logentry-delete-revision' => '$1 ændrede synligheden af {{PLURAL:$5|en version|$5 versioner}} af siden $3: $4',
-'logentry-delete-event-legacy' => '$1 ændrede synligheden af loghændelser for siden $3',
-'logentry-delete-revision-legacy' => '$1 ændrede synligheden af versioner af siden $3',
-'logentry-suppress-delete' => '$1 skjulte hændelser for siden $3',
-'logentry-suppress-event' => '$1 ændrede hemmeligt synligheden af {{PLURAL:$5|en loghændelse|$5 loghændelser}} for siden $3: $4',
-'logentry-suppress-revision' => '$1 ændrede hemmeligt synligheden af {{PLURAL:$5|en version|$5 versioner}} af siden $3: $4',
-'logentry-suppress-event-legacy' => '$1 ændrede hemmeligt synligheden af loghændelser for siden $3',
-'logentry-suppress-revision-legacy' => '$1 ændrede hemmeligt synligheden af versioner af siden $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|slettede}} siden $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|gendannede}} siden $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|ændrede}} synligheden af {{PLURAL:$5|en loghændelse|$5 loghændelser}} for siden $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|ændrede}} synligheden af {{PLURAL:$5|en version|$5 versioner}} af siden $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|ændrede}} synligheden af loghændelser for siden $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|ændrede}} synligheden af versioner af siden $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|skjulte}} hændelser for siden $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|ændrede}} hemmeligt synligheden af {{PLURAL:$5|en loghændelse|$5 loghændelser}} for siden $3: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|ændrede}} hemmeligt synligheden af {{PLURAL:$5|en version|$5 versioner}} af siden $3: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|ændrede}} hemmeligt synligheden af loghændelser for siden $3',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|ændrede}} hemmeligt synligheden af versioner af siden $3',
 'revdelete-content-hid' => 'indhold skjult',
 'revdelete-summary-hid' => 'redigeringsbeskrivelse skjult',
 'revdelete-uname-hid' => 'brugernavnet er skjult',
@@ -3815,20 +3864,20 @@ Billeder vises i fuld opløsning, og andre mediatyper vil blive aktiveret med de
 'revdelete-uname-unhid' => 'brugernavnet er ikke længere skjult',
 'revdelete-restricted' => 'tilføjede begrænsninger for administratorer',
 'revdelete-unrestricted' => 'fjernede begrænsninger for administratorer',
-'logentry-move-move' => '$1 flyttede siden $3 til $4',
-'logentry-move-move-noredirect' => '$1 flyttede siden $3 til $4 uden at efterlade en omdirigering',
-'logentry-move-move_redir' => '$1 flyttede siden $3 til $4 hen over en omdirigering',
-'logentry-move-move_redir-noredirect' => '$1 flyttede siden $3 til $4 hen over en omdirigering og uden at efterlade en omdirigering',
-'logentry-patrol-patrol' => '$1 markerede version $4 af siden $3 som patruljeret',
-'logentry-patrol-patrol-auto' => '$1 markerede automatisk version $4 af siden $3 som patruljeret',
-'logentry-newusers-newusers' => 'Brugerkontoen $1 blev oprettet',
-'logentry-newusers-create' => 'Brugerkontoen $1 blev oprettet',
-'logentry-newusers-create2' => 'Brugerkontoen $3 blev oprettet af $1',
-'logentry-newusers-byemail' => 'Brugerkonto  $3  blev oprettet af  $1  og adgangskode er sendt via e-mail',
-'logentry-newusers-autocreate' => 'Kontoen $1 blev automatisk oprettet',
-'logentry-rights-rights' => '$1 ændrede gruppemedlemskabet for $3 fra $4 til $5',
-'logentry-rights-rights-legacy' => '$1 ændrede gruppemedlemskabet for $3',
-'logentry-rights-autopromote' => '$1 blev automatisk forfremmet fra $4 til $5',
+'logentry-move-move' => '$1 {{GENDER:$2|flyttede}} siden $3 til $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|flyttede}} siden $3 til $4 uden at efterlade en omdirigering',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|flyttede}} siden $3 til $4 hen over en omdirigering',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|flyttede}} siden $3 til $4 hen over en omdirigering og uden at efterlade en omdirigering',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|markerede}} version $4 af siden $3 som patruljeret',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|markerede automatisk}} version $4 af siden $3 som patruljeret',
+'logentry-newusers-newusers' => 'Brugerkontoen $1 blev {{GENDER:$2|oprettet}}',
+'logentry-newusers-create' => 'Brugerkontoen $1 blev {{GENDER:$2|oprettet}}',
+'logentry-newusers-create2' => 'Brugerkontoen $3 blev {{GENDER:$2|oprettet}} af $1',
+'logentry-newusers-byemail' => 'Brugerkontoen $3 blev {{GENDER:$2|oprettet}} af $1, og adgangskoden er sendt via e-mail',
+'logentry-newusers-autocreate' => 'Brugerkontoen $1 blev automatisk {{GENDER:$2|oprettet}}',
+'logentry-rights-rights' => '$1 {{GENDER:$2|ændrede}} gruppemedlemskabet for $3 fra $4 til $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|ændrede}} gruppemedlemskabet for $3',
+'logentry-rights-autopromote' => '$1 blev automatisk {{GENDER:$2|forfremmet}} fra $4 til $5',
 'rightsnone' => '(-)',
 
 # Feedback
@@ -3903,5 +3952,8 @@ Ellers kan du bruge den enkle formular nedenfor. Din kommentar vil blive tilføj
 'duration-decades' => '$1 {{PLURAL:$1|årti|årtier}}',
 'duration-centuries' => '$1 {{PLURAL:$1|århundrede|århundreder}}',
 'duration-millennia' => '$1 {{PLURAL:$1|årtusind|årtusinder}}',
+
+# Image rotation
+'rotate-comment' => 'Billedet roteres med $1 {{PLURAL:$1| grad|grader}} med uret',
 
 );

@@ -22,19 +22,48 @@
 
 /**
  * Class for asserting that a callback happens when an dummy object leaves scope
+ *
+ * @since 1.21
  */
 class ScopedCallback {
-	/** @var Closure */
+	/** @var callable */
 	protected $callback;
 
 	/**
-	 * @param $callback Closure
+	 * @param callable $callback
 	 */
-	public function __construct( Closure $callback ) {
+	public function __construct( $callback ) {
 		$this->callback = $callback;
 	}
 
+	/**
+	 * Trigger a scoped callback and destroy it.
+	 * This is the same is just setting it to null.
+	 *
+	 * @param ScopedCallback $sc
+	 */
+	public static function consume( ScopedCallback &$sc = null ) {
+		$sc = null;
+	}
+
+	/**
+	 * Destroy a scoped callback without triggering it
+	 *
+	 * @param ScopedCallback $sc
+	 */
+	public static function cancel( ScopedCallback &$sc = null ) {
+		if ( $sc ) {
+			$sc->callback = null;
+		}
+		$sc = null;
+	}
+
+	/**
+	 * Trigger the callback when this leaves scope
+	 */
 	function __destruct() {
-		call_user_func( $this->callback );
+		if ( $this->callback !== null ) {
+			call_user_func( $this->callback );
+		}
 	}
 }

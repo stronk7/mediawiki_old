@@ -107,7 +107,7 @@ interface IORMTable {
 	 * @param string|null $functionName
 	 *
 	 * @return ORMResult The result set
-	 * @throw DBQueryError if the query failed (even if the database was in ignoreErrors mode)
+	 * @throws DBQueryError if the query failed (even if the database was in ignoreErrors mode)
 	 */
 	public function select( $fields = null, array $conditions = array(),
 							array $options = array(), $functionName = null );
@@ -139,7 +139,7 @@ interface IORMTable {
 	 * @param null|string $functionName
 	 *
 	 * @return ResultWrapper
-	 * @throw DBQueryError if the query failed (even if the database was in ignoreErrors mode)
+	 * @throws DBQueryError if the query failed (even if the database was in ignoreErrors mode)
 	 */
 	public function rawSelect( $fields = null, array $conditions = array(),
 							   array $options = array(), $functionName = null );
@@ -311,7 +311,6 @@ interface IORMTable {
 	 */
 	public function setReadDb( $db );
 
-
 	/**
 	 * Get the ID of the any foreign wiki to use as a target for database operations
 	 *
@@ -324,7 +323,7 @@ interface IORMTable {
 	/**
 	 * Set the ID of the any foreign wiki to use as a target for database operations
 	 *
-	 * @param String|bool $wiki The target wiki, in a form that  LBFactory understands (or false if the local wiki shall be used)
+	 * @param string|bool $wiki The target wiki, in a form that  LBFactory understands (or false if the local wiki shall be used)
 	 *
 	 * @since 1.20
 	 */

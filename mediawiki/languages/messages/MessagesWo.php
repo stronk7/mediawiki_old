@@ -110,8 +110,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Wone limu jëfandikukat yiy topp wii xët',
 'tog-oldsig' => 'Wonendig xaatim gi teew:',
 'tog-fancysig' => 'Soppi sa xaatim (du am lëkkalekaay bu boppu)',
-'tog-externaleditor' => 'Jëfandikoo soppikaay bu biti saa su ne',
-'tog-externaldiff' => 'Jëfandiku ab méngalekaay bu biti saa su ne (ngir jëfandikukat yu xarale yi rekk, dafa laaj yenn kocc-koccal yi ci sa nosukaay)',
 'tog-showjumplinks' => 'Doxalal lëkkalekaay yii di « joowin » ak « seet »',
 'tog-uselivepreview' => 'Jëfandikul wonendi gu gaaw gi (JavaScript)',
 'tog-forceeditsummary' => 'Wax ma ko suma mottaliwul koju coppite bi',
@@ -924,14 +922,6 @@ Jéemala bindaale ''all'' ngir seet ci biir ëmbit gépp (boolewaale ci xëti wa
 'search-external' => 'Ceet gu biti',
 'searchdisabled' => 'Ceet gi ci {{SITENAME}} doxul. Ci négandiku doxal gi, man nga seet ci Google. Jàppal ne, xéj-na ëmbiti {{SITENAME}} gi ci bii seetukaay yeesaluñ leen.',
 
-# Quickbar
-'qbsettings' => 'Banqaasu jumtukaay',
-'qbsettings-none' => 'Kenn',
-'qbsettings-fixedleft' => 'Cammooñ',
-'qbsettings-fixedright' => 'Ndijoor',
-'qbsettings-floatingleft' => 'Ci cammooñ',
-'qbsettings-floatingright' => 'Ci ndijoor',
-
 # Preferences page
 'preferences' => 'Tànneef',
 'mypreferences' => 'Samay tànneef',
@@ -1565,7 +1555,7 @@ Man ngaa fee gis itam [[{{MediaWiki:Listgrouprights-helppage}}|yeneen xibaar]] �
 'listgrouprights-addgroup-self-all' => 'Man ngaa yokk mbooloo yépp ci sa sàq',
 'listgrouprights-removegroup-self-all' => 'Man ngaa far mbooloo yépp ci sa sàq',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Amul benn mákkaan boo man a yónne bataaxal bi',
 'mailnologintext' => 'Ngir man a yónney bataaxal laaj na nga [[Special:UserLogin|dugg]] te it am ab màkkaanub m-bataaxal bu baax ci say [[Special:Preferences|tànneef]].',
 'emailuser' => 'Bind bii jëfandikukat',
@@ -1604,7 +1594,7 @@ Coppite yiy ñëw yu xët wi ak xëtu waxtaanuwaay wi mu àndal di nañu leen fa
 'unwatchthispage' => 'Bul toppati',
 'watchnochange' => 'Lenn ci xët yi ngay topp soppikuwul ci diir bii',
 'watchlist-details' => 'Topp nga $1 {{PLURAL:$1|xët|ciy xët}}, soo waññiwaalewul xëti waxtaanuwaay yi.',
-'wlheader-showupdated' => '* Xët yi ñu soppiwoon ca sa duggu bu mujj ñoom la ñu fesal ñu <b>xëm</b>',
+'wlheader-showupdated' => 'Xët yi ñu soppiwoon ca sa duggu bu mujj ñoom la ñu fesal ñu <b>xëm</b>',
 'watchmethod-recent' => 'saytug coppite yu mujj yu xët yi ngay topp',
 'watchmethod-list' => 'saytug xët yi ñuy topp ngir ay coppite yu mujj',
 'watchlistcontains' => "Sa limu toppte am na '''$1''' {{PLURAL:$1|xët|xët}}.",
@@ -2058,24 +2048,14 @@ Dafay tax nga man a bind ngirte li ci boyotu tënk bi.',
 
 # Stylesheets
 'common.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci col yépp  */',
-'standard.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Standard  */',
-'nostalgia.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Nostalgia  */',
 'cologneblue.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Cologne Blue */',
 'monobook.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Monobook. */',
-'myskin.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu MySkin */',
-'chick.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Chick */',
-'simple.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Simple */',
 'modern.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Modern */',
 
 # Scripts
 'common.js' => '/* Bépp JavaScript buñ fi duggal, xët yéppa koy yeb ak jëfandikukat bumu manti doon. */',
-'standard.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Standard keppa koy yeb  */',
-'nostalgia.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Nostalgia keppa koy yeb */',
 'cologneblue.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Cologne Blue keppa koy yeb */',
 'monobook.js' => '/*Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Monobook keppa koy yeb. */',
-'myskin.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu MySkin keppa koy yeb */',
-'chick.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Chick keppa koy yeb */',
-'simple.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Simple keppa koy yeb*/',
 'modern.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Modern keppa koy yeb */',
 
 # Metadata
@@ -2136,7 +2116,7 @@ Lëkkalekaay yiy toftal, ci wenn rëdd wi, dees leen di jàppee nikiy sette, maa
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Yaatuwaay',
 'exif-imagelength' => 'Kawewaay',
 'exif-usercomment' => 'Kadduy jëfëndikookat bi',
@@ -2152,7 +2132,7 @@ Lëkkalekaay yiy toftal, ci wenn rëdd wi, dees leen di jàppee nikiy sette, maa
 'namespacesall' => 'Yépp',
 'monthsall' => 'Yépp',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Dëggalal sa m-bataaxal',
 'confirmemail_noemail' => 'Jooxewoo ab m-bataaxal bu baax ci say [[Special:Preferences|tànneef]].',
 

@@ -40,7 +40,8 @@ class Category {
 	/** Counts of membership (cat_pages, cat_subcats, cat_files) */
 	private $mPages = null, $mSubcats = null, $mFiles = null;
 
-	private function __construct() { }
+	private function __construct() {
+	}
 
 	/**
 	 * Set up all member variables using a database query.
@@ -106,7 +107,7 @@ class Category {
 	/**
 	 * Factory function.
 	 *
-	 * @param $name Array: A category name (no "Category:" prefix).  It need
+	 * @param array $name A category name (no "Category:" prefix).  It need
 	 *   not be normalized, with spaces replaced by underscores.
 	 * @return mixed Category, or false on a totally invalid name
 	 */
@@ -167,7 +168,7 @@ class Category {
 
 		# NOTE: the row often results from a LEFT JOIN on categorylinks. This may result in
 		#       all the cat_xxx fields being null, if the category page exists, but nothing
-		#       was ever added to the category. This case should be treated linke an empty
+		#       was ever added to the category. This case should be treated link an empty
 		#       category, if possible.
 
 		if ( $row->cat_title === null ) {

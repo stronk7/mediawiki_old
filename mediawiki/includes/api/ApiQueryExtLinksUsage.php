@@ -55,7 +55,7 @@ class ApiQueryExtLinksUsage extends ApiQueryGeneratorBase {
 		$query = $params['query'];
 		$protocol = self::getProtocolPrefix( $params['protocol'] );
 
-		$this->addTables( array( 'page', 'externallinks' ) );	// must be in this order for 'USE INDEX'
+		$this->addTables( array( 'page', 'externallinks' ) ); // must be in this order for 'USE INDEX'
 		$this->addOption( 'USE INDEX', 'el_index' );
 		$this->addWhere( 'page_id=el_from' );
 
@@ -123,7 +123,7 @@ class ApiQueryExtLinksUsage extends ApiQueryGeneratorBase {
 				if ( $fld_url ) {
 					$to = $row->el_to;
 					// expand protocol-relative urls
-					if( $params['expandurl'] ) {
+					if ( $params['expandurl'] ) {
 						$to = wfExpandUrl( $to, PROTO_CANONICAL );
 					}
 					$vals['url'] = $to;

@@ -48,7 +48,7 @@ abstract class SqlDataUpdate extends DataUpdate {
 	public function __construct( $withTransaction = true ) {
 		global $wgAntiLockFlags;
 
-		parent::__construct( );
+		parent::__construct();
 
 		if ( $wgAntiLockFlags & ALF_NO_LINK_LOCK ) {
 			$this->mOptions = array();
@@ -56,7 +56,7 @@ abstract class SqlDataUpdate extends DataUpdate {
 			$this->mOptions = array( 'FOR UPDATE' );
 		}
 
-		// @todo: get connection only when it's needed? make sure that doesn't break anything, especially transactions!
+		// @todo get connection only when it's needed? make sure that doesn't break anything, especially transactions!
 		$this->mDb = wfGetDB( DB_MASTER );
 
 		$this->mWithTransaction = $withTransaction;

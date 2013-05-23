@@ -120,7 +120,7 @@ If the code is well enough isolated, it can even be excluded when not used --
 making for some slight savings in memory and load-up performance at runtime.
 Admins who want to have all the reversed titles can add:
 
-	require_once('extensions/ReverseTitle.php');
+	require_once 'extensions/ReverseTitle.php';
 
 ...to their LocalSettings.php file; those of us who don't want or need it can
 just leave it out.
@@ -270,6 +270,12 @@ $reason: the reason for the move (added in 1.13)
 $user: the User object about to be created (read-only, incomplete)
 &$msg: out parameter: HTML to display on abort
 
+'AbortChangePassword': Return false to cancel password change.
+$user: the User object to which the password change is occuring
+$mOldpass: the old password provided by the user
+$newpass: the new password provided by the user
+&$abortMsg: the message identifier for abort reason
+
 'ActionBeforeFormDisplay': Before executing the HTMLForm object.
 $name: name of the action
 &$form: HTMLForm object
@@ -370,6 +376,11 @@ descriptions.
 result.
 &$module: ApiBase Module object
 &$properties: Array of properties
+
+'APIGetPossibleErrors': Use this hook to modify the module's list of possible
+errors.
+$module: ApiBase Module object
+&$possibleErrors: Array of possible errors
 
 'APIQueryAfterExecute': After calling the execute() method of an
 action=query submodule. Use this to extend core API modules.
@@ -482,7 +493,8 @@ $logEntry: the ManualLogEntry used to record the deletion
 
 'ArticleEditUpdateNewTalk': Before updating user_newtalk when a user talk page
 was changed.
-$wikiPage: WikiPage (object) of the user talk page
+&$wikiPage: WikiPage (object) of the user talk page
+$recipient: User (object) who's talk page was edited
 
 'ArticleEditUpdates': When edit updates (mainly link tracking) are made when an
 article has been changed.
@@ -745,6 +757,14 @@ $output: OutputPage object in use
 the defaults.
 &$namespaces: Array of namespace numbers with corresponding canonical names
 
+'CategoryAfterPageAdded': After a page is added to a category.
+$category: Category that page was added to
+$wikiPage: WikiPage that was added
+
+'CategoryAfterPageRemoved': After a page is removed from a category.
+$category: Category that page was removed from
+$wikiPage: WikiPage that was removed
+
 'CategoryPageView': Before viewing a categorypage in CategoryPage::view.
 $catpage: CategoryPage instance
 
@@ -833,6 +853,11 @@ $title: the diff page title (nullable)
 &$newId: the actual new Id to use in the diff (0 means current)
 $old: the ?old= param value from the url
 $new: the ?new= param value from the url
+
+'DiffRevisionTools': Override or extend the revision tools available from the
+diff view, i.e. undo, etc.
+$rev: Revision object
+&$links: Array of HTML links
 
 'DiffViewHeader': Called before diff display
 $diff: DifferenceEngine object that's calling
@@ -1119,6 +1144,15 @@ $title: Title object of page
 $url: string value as output (out parameter, can modify)
 $query: query options passed to Title::getFullURL()
 
+'GetHumanTimestamp': Pre-emptively override the human-readable timestamp generated
+by MWTimestamp::getHumanTimestamp(). Return false in this hook to use the custom
+output.
+&$output: string for the output timestamp
+$timestamp: MWTimestamp object of the current (user-adjusted) timestamp
+$relativeTo: MWTimestamp object of the relative (user-adjusted) timestamp
+$user: User whose preferences are being used to make timestamp
+$lang: Language that will be used to render the timestamp
+
 'GetInternalURL': Modify fully-qualified URLs used for squid cache purging.
 $title: Title object of page
 $url: string value as output (out parameter, can modify)
@@ -1159,6 +1193,14 @@ to do this unless they broke backwards compatibility with a previous version of
 the media handler metadata output.
 &$version: Array of version strings
 
+'GetNewMessagesAlert': Disable or modify the new messages alert
+&$newMessagesAlert: An empty string by default. If the user has new talk page
+messages, this should be populated with an alert message to that effect
+$newtalks: An empty array if the user has no new messages or an array containing
+links and revisions if there are new messages (See User::getNewMessageLinks)
+$user: The user object of the user who is loading the page
+$out: OutputPage object (to check what type of page the user is on)
+
 'GetPreferences': Modify user preferences.
 $user: User whose preferences are being modified.
 &$preferences: Preferences description array, to be fed to an HTMLForm object
@@ -1191,6 +1233,11 @@ $result: User permissions error to add. If none, return true.
 'GitViewers': Called when generating the list of git viewers for
 Special:Version, use this to change the list.
 &$extTypes: associative array of repo URLS to viewer URLs.
+
+'HistoryRevisionTools': Override or extend the revision tools available from the
+page history view, i.e. undo, rollback, etc.
+$rev: Revision object
+&$links: Array of HTML links
 
 'ImageBeforeProduceHTML': Called before producing the HTML created by a wiki
 image insertion. You can skip the default logic entirely by returning false, or
@@ -1350,6 +1397,16 @@ $lang: language code (string)
 'LanguageGetTranslatedLanguageNames': Provide translated language names.
 &$names: array of language code => language name
 $code language of the preferred translations
+
+'LanguageLinks': Manipulate a page's language links. This is called
+in various places to allow extensions to define the effective language
+links for a page.
+$title: The page's Title.
+&$links: Associative array mapping language codes to prefixed links of the
+  form "language:title".
+&$linkFlags: Associative array mapping prefixed links to arrays of flags.
+  Currently unused, but planned to provide support for marking individual
+  language links in the UI, e.g. for featured articles.
 
 'LinkBegin': Used when generating internal and interwiki links in
 Linker::link(), before processing starts.  Return false to skip default
@@ -1660,6 +1717,7 @@ $baseRevId: the rev ID (or false) this edit was based on
 
 'PageHistoryBeforeList': When a history page list is about to be constructed.
 $article: the article that the history is loading for
+$context: RequestContext object
 
 'PageHistoryLineEnding' : Right before the end <li> is added to a history line.
 $row: the revision row for this line
@@ -2253,6 +2311,7 @@ $special: the special page object
 &$tables: array of tables to be queried
 &$join_conds: join conditions for the tables
 &$fields: array of query fields
+$values: array of variables with watchlist options
 
 'TestCanonicalRedirect': Called when about to force a redirect to a canonical
 URL for a title when we have no other parameters on the URL. Gives a chance for
@@ -2285,7 +2344,7 @@ $result: Boolean; whether MediaWiki currently thinks this is a CSS/JS page.
   Title::isCssOrJsPage().
 
 'TitleIsAlwaysKnown': Called when determining if a page exists. Allows
-overriding default behaviour for determining if a page exists. If $isKnown is
+overriding default behavior for determining if a page exists. If $isKnown is
 kept as null, regular checks happen. If it's a boolean, this value is returned
 by the isKnown method.
 $title: Title object that is being checked
@@ -2319,6 +2378,10 @@ a handler wants a title to *not* be whitelisted, it should also return false.
 $title: Title object being checked against
 $user: Current user object
 &$whitelisted: Boolean value of whether this title is whitelisted
+
+'TitleSquidURLs': Called to determine which URLs to purge from HTTP caches.
+$this: Title object to purge
+&$urls: An array of URLs to purge from the caches, to be manipulated.
 
 'UndeleteForm::showHistory': Called in UndeleteForm::showHistory, after a
 PageArchive object has been created but before any further processing is done.

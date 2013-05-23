@@ -56,7 +56,7 @@ class SvgHandler extends ImageHandler {
 		$metadata = $file->getMetadata();
 		if ( $metadata ) {
 			$metadata = $this->unpackMetadata( $metadata );
-			if( isset( $metadata['animated'] ) ) {
+			if ( isset( $metadata['animated'] ) ) {
 				return $metadata['animated'];
 			}
 		}
@@ -263,11 +263,11 @@ class SvgHandler extends ImageHandler {
 		$metadata = array( 'version' => self::SVG_METADATA_VERSION );
 		try {
 			$metadata += SVGMetadataExtractor::getMetadata( $filename );
-		} catch( MWException $e ) { // @TODO: SVG specific exceptions
+		} catch ( MWException $e ) { // @todo SVG specific exceptions
 			// File not found, broken, etc.
 			$metadata['error'] = array(
 				'message' => $e->getMessage(),
-				'code'    => $e->getCode()
+				'code' => $e->getCode()
 			);
 			wfDebug( __METHOD__ . ': ' . $e->getMessage() . "\n" );
 		}

@@ -15,11 +15,17 @@
 				'gender-plural-msg': '{{GENDER:$1|he|she|they}} {{PLURAL:$2|is|are}} awesome',
 				'grammar-msg': 'Przeszukaj {{GRAMMAR:grammar_case_foo|{{SITENAME}}}}',
 				'formatnum-msg': '{{formatnum:$1}}',
-				'int-msg': 'Some {{int:other-message}}'
+				'int-msg': 'Some {{int:other-message}}',
+				'mediawiki-test-version-entrypoints-index-php': '[https://www.mediawiki.org/wiki/Manual:index.php index.php]',
+				'external-link-replace': 'Foo [$1 bar]'
 			} );
 
-			// For formatnum tests
-			mw.config.set( 'wgUserLanguage', 'en' );
+			mw.config.set( {
+				wgArticlePath: '/wiki/$1',
+
+				// For formatnum tests
+				wgUserLanguage: 'en'
+			} );
 
 			specialCharactersPageName = '"Who" wants to be a millionaire & live on \'Exotic Island\'?';
 		}
@@ -124,7 +130,7 @@
 		assert.ok( mw.config instanceof mw.Map, 'mw.config instance of mw.Map' );
 	} );
 
-	QUnit.test( 'mw.message & mw.messages', 54, function ( assert ) {
+	QUnit.test( 'mw.message & mw.messages', 83, function ( assert ) {
 		var goodbye, hello;
 
 		// Convenience method for asserting the same result for multiple formats
@@ -158,11 +164,24 @@
 		assert.equal( hello.escaped(), 'Hello &lt;b&gt;awesome&lt;/b&gt; world', 'Message.escaped returns the escaped message' );
 		assert.equal( hello.format, 'escaped', 'Message.escaped correctly updated the "format" property' );
 
-		assert.ok( mw.messages.set( 'escaped-with-curly-brace', '"{{SITENAME}}" is the home of {{int:other-message}}' ) );
-		assert.equal( mw.message( 'escaped-with-curly-brace' ).escaped(), mw.html.escape( '"' + mw.config.get( 'wgSiteName' ) + '" is the home of Other Message' ), 'Escaped format works correctly for curly brace message' );
+		assert.ok( mw.messages.set( 'multiple-curly-brace', '"{{SITENAME}}" is the home of {{int:other-message}}' ), 'mw.messages.set: Register' );
+		assertMultipleFormats( ['multiple-curly-brace'], ['text', 'parse'], '"' + mw.config.get( 'wgSiteName') + '" is the home of Other Message', 'Curly brace format works correctly' );
+		assert.equal( mw.message( 'multiple-curly-brace' ).plain(), mw.messages.get( 'multiple-curly-brace' ), 'Plain format works correctly for curly brace message' );
+		assert.equal( mw.message( 'multiple-curly-brace' ).escaped(), mw.html.escape( '"' + mw.config.get( 'wgSiteName') + '" is the home of Other Message' ), 'Escaped format works correctly for curly brace message' );
 
-		assert.ok( mw.messages.set( 'escaped-with-square-brackets', 'Visit the [[Project:Community portal|community portal]] & [[Project:Help desk|help desk]]' ) );
-		assert.equal( mw.message( 'escaped-with-square-brackets' ).escaped(), 'Visit the [[Project:Community portal|community portal]] &amp; [[Project:Help desk|help desk]]', 'Escaped format works correctly for square bracket message' );
+		assert.ok( mw.messages.set( 'multiple-square-brackets-and-ampersand', 'Visit the [[Project:Community portal|community portal]] & [[Project:Help desk|help desk]]' ), 'mw.messages.set: Register' );
+		assertMultipleFormats( ['multiple-square-brackets-and-ampersand'], ['plain', 'text'], mw.messages.get( 'multiple-square-brackets-and-ampersand' ), 'Square bracket message is not processed' );
+		assert.equal( mw.message( 'multiple-square-brackets-and-ampersand' ).escaped(), 'Visit the [[Project:Community portal|community portal]] &amp; [[Project:Help desk|help desk]]', 'Escaped format works correctly for square bracket message' );
+		assert.htmlEqual( mw.message( 'multiple-square-brackets-and-ampersand' ).parse(), 'Visit the ' +
+			'<a title="Project:Community portal" href="/wiki/Project:Community_portal">community portal</a>' +
+			' &amp; <a title="Project:Help desk" href="/wiki/Project:Help_desk">help desk</a>', 'Internal links work with parse' );
+
+		assertMultipleFormats( ['mediawiki-test-version-entrypoints-index-php'], ['plain', 'text', 'escaped'], mw.messages.get( 'mediawiki-test-version-entrypoints-index-php' ), 'External link markup is unprocessed' );
+		assert.htmlEqual( mw.message( 'mediawiki-test-version-entrypoints-index-php' ).parse(), '<a href="https://www.mediawiki.org/wiki/Manual:index.php">index.php</a>', 'External link works correctly in parse mode' );
+
+		assertMultipleFormats( ['external-link-replace', 'http://example.org/?x=y&z'], ['plain', 'text'] , 'Foo [http://example.org/?x=y&z bar]', 'Parameters are substituted but external link is not processed' );
+		assert.equal( mw.message( 'external-link-replace', 'http://example.org/?x=y&z' ).escaped(), 'Foo [http://example.org/?x=y&amp;z bar]', 'In escaped mode, parameters are substituted and ampersand is escaped, but external link is not processed' );
+		assert.htmlEqual( mw.message( 'external-link-replace', 'http://example.org/?x=y&z' ).parse(), 'Foo <a href="http://example.org/?x=y&amp;z">bar</a>', 'External link with replacement works in parse mode without double-escaping' );
 
 		hello.parse();
 		assert.equal( hello.format, 'parse', 'Message.parse correctly updated the "format" property' );
@@ -196,7 +215,7 @@
 		assert.ok( mw.messages.set( 'mediawiki-test-categorytree-collapse-bullet', '[<b>−</b>]' ), 'mw.messages.set: Register' );
 		assert.equal( mw.message( 'mediawiki-test-categorytree-collapse-bullet' ).plain(), mw.messages.get( 'mediawiki-test-categorytree-collapse-bullet' ), 'Single square brackets unchanged in plain mode' );
 
-		assert.ok( mw.messages.set( 'mediawiki-test-wikieditor-toolbar-help-content-signature-result', '<a href=\'#\' title=\'{{#special:mypage}}\'>Username</a> (<a href=\'#\' title=\'{{#special:mytalk}}\'>talk</a>)' ) );
+		assert.ok( mw.messages.set( 'mediawiki-test-wikieditor-toolbar-help-content-signature-result', '<a href=\'#\' title=\'{{#special:mypage}}\'>Username</a> (<a href=\'#\' title=\'{{#special:mytalk}}\'>talk</a>)' ), 'mw.messages.set: Register' );
 		assert.equal( mw.message( 'mediawiki-test-wikieditor-toolbar-help-content-signature-result' ).plain(), mw.messages.get( 'mediawiki-test-wikieditor-toolbar-help-content-signature-result' ), 'HTML message with curly braces is not changed in plain mode' );
 
 		assertMultipleFormats( ['gender-plural-msg', 'male', 1], ['text', 'parse', 'escaped'], 'he is awesome', 'Gender and plural are resolved' );
@@ -211,6 +230,42 @@
 
 		assertMultipleFormats( ['int-msg'], ['text', 'parse', 'escaped'], 'Some Other Message', 'int is resolved' );
 		assert.equal( mw.message( 'int-msg' ).plain(), mw.messages.get( 'int-msg' ), 'int is not resolved in plain mode' );
+
+		assert.ok( mw.messages.set( 'mediawiki-italics-msg', '<i>Very</i> important' ),	'mw.messages.set: Register' );
+		assertMultipleFormats( ['mediawiki-italics-msg'], ['plain', 'text', 'parse'], mw.messages.get( 'mediawiki-italics-msg' ), 'Simple italics unchanged' );
+		assert.htmlEqual(
+			mw.message( 'mediawiki-italics-msg' ).escaped(),
+			'&lt;i&gt;Very&lt;/i&gt; important',
+			'Italics are escaped in	escaped mode'
+		);
+
+		assert.ok( mw.messages.set( 'mediawiki-italics-with-link', 'An <i>italicized [[link|wiki-link]]</i>' ), 'mw.messages.set: Register' );
+		assertMultipleFormats( ['mediawiki-italics-with-link'], ['plain', 'text'], mw.messages.get( 'mediawiki-italics-with-link' ), 'Italics with link unchanged' );
+		assert.htmlEqual(
+			mw.message( 'mediawiki-italics-with-link' ).escaped(),
+			'An &lt;i&gt;italicized [[link|wiki-link]]&lt;/i&gt;',
+			'Italics and link unchanged except for escaping in escaped mode'
+		);
+		assert.htmlEqual(
+			mw.message( 'mediawiki-italics-with-link' ).parse(),
+			'An <i>italicized <a title="link" href="' + mw.util.wikiGetlink( 'link' ) + '">wiki-link</i>',
+			'Italics with link inside in parse mode'
+		);
+
+		assert.ok( mw.messages.set( 'mediawiki-script-msg', '<script  >alert( "Who put this script here?" );</script>' ), 'mw.messages.set: Register' );
+		assertMultipleFormats( ['mediawiki-script-msg'], ['plain', 'text'], mw.messages.get( 'mediawiki-script-msg' ), 'Script unchanged' );
+		assert.htmlEqual(
+			mw.message( 'mediawiki-script-msg' ).escaped(),
+			'&lt;script  &gt;alert( "Who put this script here?" );&lt;/script&gt;',
+			'Script escaped when using escaped format'
+		);
+		assert.htmlEqual(
+			mw.message( 'mediawiki-script-msg' ).parse(),
+			'&lt;script  &gt;alert( "Who put this script here?" );&lt;/script&gt;',
+			'Script escaped when using parse format'
+		);
+
+
 	} );
 
 	QUnit.test( 'mw.msg', 14, function ( assert ) {
@@ -218,7 +273,7 @@
 		assert.equal( mw.msg( 'hello' ), 'Hello <b>awesome</b> world', 'Gets message with default options (existing message)' );
 		assert.equal( mw.msg( 'goodbye' ), '<goodbye>', 'Gets message with default options (nonexistent message)' );
 
-		assert.ok( mw.messages.set( 'plural-item', 'Found $1 {{PLURAL:$1|item|items}}' ) );
+		assert.ok( mw.messages.set( 'plural-item' , 'Found $1 {{PLURAL:$1|item|items}}' ), 'mw.messages.set: Register' );
 		assert.equal( mw.msg( 'plural-item', 5 ), 'Found 5 items', 'Apply plural for count 5' );
 		assert.equal( mw.msg( 'plural-item', 0 ), 'Found 0 items', 'Apply plural for count 0' );
 		assert.equal( mw.msg( 'plural-item', 1 ), 'Found 1 item', 'Apply plural for count 1' );
@@ -250,7 +305,7 @@
 	function assertStyleAsync( assert, $element, prop, val, fn ) {
 		var styleTestStart,
 			el = $element.get( 0 ),
-			styleTestTimeout = ( QUnit.config.testTimeout - 200 ) || 5000;
+			styleTestTimeout = ( QUnit.config.testTimeout || 5000 ) - 200;
 
 		function isCssImportApplied() {
 			// Trigger reflow, repaint, redraw, whatever (cross-browser)
@@ -321,7 +376,7 @@
 		} );
 	} );
 
-	QUnit.test( 'mw.loader.implement( styles={ "css": [text, ..] } )', 2, function ( assert ) {
+	QUnit.asyncTest( 'mw.loader.implement( styles={ "css": [text, ..] } )', 2, function ( assert ) {
 		var $element = $( '<div class="mw-test-implement-a"></div>' ).appendTo( '#qunit-fixture' );
 
 		assert.notEqual(
@@ -338,6 +393,7 @@
 					'right',
 					'style is applied'
 				);
+				QUnit.start();
 			},
 			{
 				'all': '.mw-test-implement-a { float: right; }'
@@ -413,8 +469,8 @@
 		] );
 	} );
 
-// Backwards compatibility
-	QUnit.test( 'mw.loader.implement( styles={ <media>: text } ) (back-compat)', 2, function ( assert ) {
+	// Backwards compatibility
+	QUnit.asyncTest( 'mw.loader.implement( styles={ <media>: text } ) (back-compat)', 2, function ( assert ) {
 		var $element = $( '<div class="mw-test-implement-c"></div>' ).appendTo( '#qunit-fixture' );
 
 		assert.notEqual(
@@ -431,6 +487,7 @@
 					'right',
 					'style is applied'
 				);
+				QUnit.start();
 			},
 			{
 				'all': '.mw-test-implement-c { float: right; }'
@@ -443,7 +500,7 @@
 		] );
 	} );
 
-// Backwards compatibility
+	// Backwards compatibility
 	QUnit.asyncTest( 'mw.loader.implement( styles={ <media>: [url, ..] } ) (back-compat)', 4, function ( assert ) {
 		var $element = $( '<div class="mw-test-implement-d"></div>' ).appendTo( '#qunit-fixture' ),
 			$element2 = $( '<div class="mw-test-implement-d2"></div>' ).appendTo( '#qunit-fixture' );
@@ -481,7 +538,7 @@
 		] );
 	} );
 
-// @import (bug 31676)
+	// @import (bug 31676)
 	QUnit.asyncTest( 'mw.loader.implement( styles has @import)', 5, function ( assert ) {
 		var isJsExecuted, $element;
 
@@ -758,6 +815,92 @@
 			'<a href="http://mediawiki.org/w/index.php?title=RL&amp;action=history">a</a>',
 			'html.element DIV (attribs + content)' );
 
+	} );
+
+	QUnit.test( 'mw.hook', 10, function ( assert ) {
+		var hook, add, fire, chars, callback;
+
+		mw.hook( 'test.hook.unfired' ).add( function () {
+			assert.ok( false, 'Unfired hook' );
+		} );
+
+		mw.hook( 'test.hook.basic' ).add( function () {
+			assert.ok( true, 'Basic callback' );
+		} );
+		mw.hook( 'test.hook.basic' ).fire();
+
+		mw.hook( 'test.hook.data' ).add( function ( data1, data2 ) {
+			assert.equal( data1, 'example', 'Fire with data (string param)' );
+			assert.deepEqual( data2, ['two'], 'Fire with data (array param)' );
+		} );
+		mw.hook( 'test.hook.data' ).fire( 'example', ['two'] );
+
+		mw.hook( 'test.hook.chainable' ).add( function () {
+			assert.ok( true, 'Chainable' );
+		} ).fire();
+
+		hook = mw.hook( 'test.hook.detach' );
+		add = hook.add;
+		fire = hook.fire;
+		add( function ( x, y ) {
+			assert.deepEqual( [x, y], ['x', 'y'], 'Detached (contextless) with data' );
+		} );
+		fire( 'x', 'y' );
+
+		mw.hook( 'test.hook.fireBefore' ).fire().add( function () {
+			assert.ok( true, 'Invoke handler right away if it was fired before' );
+		} );
+
+		mw.hook( 'test.hook.fireTwiceBefore' ).fire().fire().add( function () {
+			assert.ok( true, 'Invoke handler right away if it was fired before (only last one)' );
+		} );
+
+		chars = [];
+
+		mw.hook( 'test.hook.many' )
+			.add( function ( chr ) {
+				chars.push( chr );
+			} )
+			.fire( 'x' ).fire( 'y' ).fire( 'z' )
+			.add( function ( chr ) {
+				assert.equal( chr, 'z', 'Adding callback later invokes right away with last data' );
+			} );
+
+		assert.deepEqual( chars, ['x', 'y', 'z'], 'Multiple callbacks with multiple fires' );
+
+		chars = [];
+		callback = function ( chr ) {
+			chars.push( chr );
+		};
+
+		mw.hook( 'test.hook.variadic' )
+			.add(
+				callback,
+				callback,
+				function ( chr ) {
+					chars.push( chr );
+				},
+				callback
+			)
+			.fire( 'x' )
+			.remove(
+				function () {
+					'not-added';
+				},
+				callback
+			)
+			.fire( 'y' )
+			.remove( callback )
+			.fire( 'z' );
+
+		assert.deepEqual(
+			chars,
+			['x', 'x', 'x', 'x', 'y', 'z'],
+			'"add" and "remove" support variadic arguments. ' +
+				'"add" does not filter unique. ' +
+				'"remove" removes all equal by reference. ' +
+				'"remove" is silent if the function is not found'
+		);
 	} );
 
 }( mediaWiki, jQuery ) );

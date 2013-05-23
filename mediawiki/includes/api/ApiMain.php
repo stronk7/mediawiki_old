@@ -83,6 +83,7 @@ class ApiMain extends ApiBase {
 		'import' => 'ApiImport',
 		'userrights' => 'ApiUserrights',
 		'options' => 'ApiOptions',
+		'imagerotate' => 'ApiImageRotate',
 	);
 
 	/**
@@ -144,7 +145,7 @@ class ApiMain extends ApiBase {
 	 * Constructs an instance of ApiMain that utilizes the module and format specified by $request.
 	 *
 	 * @param $context IContextSource|WebRequest - if this is an instance of FauxRequest, errors are thrown and no printing occurs
-	 * @param $enableWrite bool should be set to true if the api may modify data
+	 * @param bool $enableWrite should be set to true if the api may modify data
 	 */
 	public function __construct( $context = null, $enableWrite = false ) {
 		if ( $context === null ) {
@@ -244,7 +245,7 @@ class ApiMain extends ApiBase {
 	/**
 	 * Set the type of caching headers which will be sent.
 	 *
-	 * @param $mode String One of:
+	 * @param string $mode One of:
 	 *    - 'public':     Cache this object in public caches, if the maxage or smaxage
 	 *         parameter is set, or if setCacheMaxAge() was called. If a maximum age is
 	 *         not provided by any of these means, the object will be private.
@@ -273,7 +274,7 @@ class ApiMain extends ApiBase {
 			return;
 		}
 
-		if ( !in_array( 'read', User::getGroupPermissions( array( '*' ) ), true ) ) {
+		if ( !User::groupHasPermission( '*', 'read' ) ) {
 			// Private wiki, only private headers
 			if ( $mode !== 'private' ) {
 				wfDebug( __METHOD__ . ": ignoring request for $mode cache mode, private wiki\n" );
@@ -417,7 +418,7 @@ class ApiMain extends ApiBase {
 		}
 
 		// Log the request whether or not there was an error
-		$this->logRequest( microtime( true ) - $t);
+		$this->logRequest( microtime( true ) - $t );
 
 		// Send cache headers after any code which might generate an error, to
 		// avoid sending public cache headers for errors.
@@ -479,9 +480,9 @@ class ApiMain extends ApiBase {
 
 	/**
 	 * Attempt to match an Origin header against a set of rules and a set of exceptions
-	 * @param $value string Origin header
-	 * @param $rules array Set of wildcard rules
-	 * @param $exceptions array Set of wildcard rules
+	 * @param string $value Origin header
+	 * @param array $rules Set of wildcard rules
+	 * @param array $exceptions Set of wildcard rules
 	 * @return bool True if $value matches a rule in $rules and doesn't match any rules in $exceptions, false otherwise
 	 */
 	protected static function matchOrigin( $value, $rules, $exceptions ) {
@@ -504,7 +505,7 @@ class ApiMain extends ApiBase {
 	 * '*' => '.*?'
 	 * '?' => '.'
 	 *
-	 * @param $wildcard string String with wildcards
+	 * @param string $wildcard String with wildcards
 	 * @return string Regular expression
 	 */
 	protected static function wildcardToRegex( $wildcard ) {
@@ -608,7 +609,7 @@ class ApiMain extends ApiBase {
 
 		$result = $this->getResult();
 		// Printer may not be initialized if the extractRequestParams() fails for the main module
-		if ( !isset ( $this->mPrinter ) ) {
+		if ( !isset( $this->mPrinter ) ) {
 			// The printer has not been created yet. Try to manually get formatter value.
 			$value = $this->getRequest()->getVal( 'format', self::API_DEFAULT_FORMAT );
 			if ( !$this->mModuleMgr->isDefined( $value, 'format' ) ) {
@@ -736,7 +737,7 @@ class ApiMain extends ApiBase {
 	/**
 	 * Check the max lag if necessary
 	 * @param $module ApiBase object: Api module being used
-	 * @param $params Array an array containing the request parameters.
+	 * @param array $params an array containing the request parameters.
 	 * @return boolean True on success, false should exit immediately
 	 */
 	protected function checkMaxLag( $module, $params ) {
@@ -768,7 +769,7 @@ class ApiMain extends ApiBase {
 	 */
 	protected function checkExecutePermissions( $module ) {
 		$user = $this->getUser();
-		if ( $module->isReadMode() && !in_array( 'read', User::getGroupPermissions( array( '*' ) ), true ) &&
+		if ( $module->isReadMode() && !User::groupHasPermission( '*', 'read' ) &&
 			!$user->isAllowed( 'read' ) )
 		{
 			$this->dieUsageMsg( 'readrequired' );
@@ -787,7 +788,7 @@ class ApiMain extends ApiBase {
 
 		// Allow extensions to stop execution for arbitrary reasons.
 		$message = false;
-		if( !wfRunHooks( 'ApiCheckCanExecute', array( $module, $user, &$message ) ) ) {
+		if ( !wfRunHooks( 'ApiCheckCanExecute', array( $module, $user, &$message ) ) ) {
 			$this->dieUsageMsg( $message );
 		}
 	}
@@ -795,7 +796,7 @@ class ApiMain extends ApiBase {
 	/**
 	 * Check POST for external response and setup result printer
 	 * @param $module ApiBase An Api module
-	 * @param $params Array an array with the request parameters
+	 * @param array $params an array with the request parameters
 	 */
 	protected function setupExternalResponse( $module, $params ) {
 		if ( !$this->getRequest()->wasPosted() && $module->mustBePosted() ) {
@@ -862,7 +863,7 @@ class ApiMain extends ApiBase {
 			' ' . $request->getMethod() .
 			' ' . wfUrlencode( str_replace( ' ', '_', $this->getUser()->getName() ) ) .
 			' ' . $request->getIP() .
-			' T=' . $milliseconds .'ms';
+			' T=' . $milliseconds . 'ms';
 		foreach ( $this->getParamsUsed() as $name ) {
 			$value = $request->getVal( $name );
 			if ( $value === null ) {
@@ -922,7 +923,7 @@ class ApiMain extends ApiBase {
 	 * Get a request upload, and register the fact that it was used, for logging.
 	 *
 	 * @since 1.21
-	 * @param $name string Parameter name
+	 * @param string $name Parameter name
 	 * @return WebRequestUpload
 	 */
 	public function getUpload( $name ) {
@@ -949,7 +950,7 @@ class ApiMain extends ApiBase {
 			$unusedParams = array_diff( $allParams, $paramsUsed );
 		}
 
-		if( count( $unusedParams ) ) {
+		if ( count( $unusedParams ) ) {
 			$s = count( $unusedParams ) > 1 ? 's' : '';
 			$this->setWarning( "Unrecognized parameter$s: '" . implode( $unusedParams, "', '" ) . "'" );
 		}
@@ -962,7 +963,7 @@ class ApiMain extends ApiBase {
 	 */
 	protected function printResult( $isError ) {
 		global $wgDebugAPI;
-		if( $wgDebugAPI !== false ) {
+		if ( $wgDebugAPI !== false ) {
 			$this->setWarning( 'SECURITY WARNING: $wgDebugAPI is enabled' );
 		}
 
@@ -1007,7 +1008,7 @@ class ApiMain extends ApiBase {
 				ApiBase::PARAM_DFLT => 'help',
 				ApiBase::PARAM_TYPE => $this->mModuleMgr->getNames( 'action' )
 			),
-			'maxlag'  => array(
+			'maxlag' => array(
 				ApiBase::PARAM_TYPE => 'integer'
 			),
 			'smaxage' => array(
@@ -1019,7 +1020,7 @@ class ApiMain extends ApiBase {
 				ApiBase::PARAM_DFLT => 0
 			),
 			'requestid' => null,
-			'servedby'  => false,
+			'servedby' => false,
 			'origin' => null,
 		);
 	}
@@ -1047,6 +1048,7 @@ class ApiMain extends ApiBase {
 			'servedby' => 'Include the hostname that served the request in the results. Unconditionally shown on error',
 			'origin' => array(
 				'When accessing the API using a cross-domain AJAX request (CORS), set this to the originating domain.',
+				'This must be included in any pre-flight request, and therefore must be part of the request URI (not the POST body).',
 				'This must match one of the origins in the Origin: header exactly, so it has to be set to something like http://en.wikipedia.org or https://meta.wikimedia.org .',
 				'If this parameter does not match the Origin: header, a 403 response will be returned.',
 				'If this parameter matches the Origin: header and the origin is whitelisted, an Access-Control-Allow-Origin header will be set.',
@@ -1118,11 +1120,11 @@ class ApiMain extends ApiBase {
 	protected function getCredits() {
 		return array(
 			'API developers:',
-			'    Roan Kattouw "<Firstname>.<Lastname>@gmail.com" (lead developer Sep 2007-present)',
-			'    Victor Vasiliev - vasilvv at gee mail dot com',
+			'    Roan Kattouw "<Firstname>.<Lastname>@gmail.com" (lead developer Sep 2007-2009)',
+			'    Victor Vasiliev - vasilvv @ gmail . com',
 			'    Bryan Tong Minh - bryan . tongminh @ gmail . com',
 			'    Sam Reed - sam @ reedyboy . net',
-			'    Yuri Astrakhan "<Firstname><Lastname>@gmail.com" (creator, lead developer Sep 2006-Sep 2007, 2012)',
+			'    Yuri Astrakhan "<Firstname><Lastname>@gmail.com" (creator, lead developer Sep 2006-Sep 2007, 2012-present)',
 			'',
 			'Please send your comments, suggestions and questions to mediawiki-api@lists.wikimedia.org',
 			'or file a bug report at https://bugzilla.wikimedia.org/'
@@ -1210,7 +1212,7 @@ class ApiMain extends ApiBase {
 
 	/**
 	 * @param $module ApiBase
-	 * @param $paramName String What type of request is this? e.g. action, query, list, prop, meta, format
+	 * @param string $paramName What type of request is this? e.g. action, query, list, prop, meta, format
 	 * @return string
 	 */
 	public static function makeHelpMsgHeader( $module, $paramName ) {
@@ -1260,7 +1262,7 @@ class ApiMain extends ApiBase {
 	 * behavior of inherent ones.
 	 *
 	 * @deprecated since 1.21, Use getModuleManager()->addModule() instead.
-	 * @param $name string The identifier for this module.
+	 * @param string $name The identifier for this module.
 	 * @param $class ApiBase The class where this module is implemented.
 	 */
 	protected function addModule( $name, $class ) {
@@ -1272,11 +1274,11 @@ class ApiMain extends ApiBase {
 	 * classes who wish to add to or modify current formatters.
 	 *
 	 * @deprecated since 1.21, Use getModuleManager()->addModule() instead.
-	 * @param $name string The identifier for this format.
+	 * @param string $name The identifier for this format.
 	 * @param $class ApiFormatBase The class implementing this format.
 	 */
 	protected function addFormat( $name, $class ) {
-		$this->getModuleManager->addModule( $name, 'format', $class );
+		$this->getModuleManager()->addModule( $name, 'format', $class );
 	}
 
 	/**

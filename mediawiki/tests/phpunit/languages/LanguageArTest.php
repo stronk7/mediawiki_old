@@ -6,7 +6,6 @@
 
 /** Tests for MediaWiki languages/LanguageAr.php */
 class LanguageArTest extends LanguageClassesTestCase {
-
 	function testFormatNum() {
 		$this->assertEquals( '١٬٢٣٤٬٥٦٧', $this->getLang()->formatNum( '1234567' ) );
 		$this->assertEquals( '-١٢٫٨٩', $this->getLang()->formatNum( -12.89 ) );
@@ -20,7 +19,7 @@ class LanguageArTest extends LanguageClassesTestCase {
 		$this->assertEquals( $expected, $this->getLang()->sprintfDate( $format, $date ) );
 	}
 
-	function providerSprintfDate() {
+	public static function providerSprintfDate() {
 		return array(
 			array(
 				'xg "vs" g',
@@ -51,7 +50,12 @@ class LanguageArTest extends LanguageClassesTestCase {
 		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
-	function providePlural() {
+	/** @dataProvider providePlural */
+	function testGetPluralRuleType( $result, $value ) {
+		$this->assertEquals( $result, $this->getLang()->getPluralRuleType( $value ) );
+	}
+
+	public static function providePlural() {
 		return array(
 			array( 'zero', 0 ),
 			array( 'one', 1 ),

@@ -25,9 +25,9 @@
  */
 
 /**
-* API module that facilitates the blocking of users. Requires API write mode
-* to be enabled.
-*
+ * API module that facilitates the blocking of users. Requires API write mode
+ * to be enabled.
+ *
  * @ingroup API
  */
 class ApiBlock extends ApiBase {
@@ -104,7 +104,7 @@ class ApiBlock extends ApiBase {
 		$res['userID'] = $target instanceof User ? $target->getId() : 0;
 
 		$block = Block::newFromTarget( $target );
-		if( $block instanceof Block ) {
+		if ( $block instanceof Block ) {
 			$res['expiry'] = $block->mExpiry == $this->getDB()->getInfinity()
 				? 'infinite'
 				: wfTimestamp( TS_ISO_8601, $block->mExpiry );

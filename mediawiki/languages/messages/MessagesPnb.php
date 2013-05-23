@@ -51,9 +51,6 @@ $messages = array(
 'tog-shownumberswatching' => 'ویکھن آلے لوکاں دی گنتی وکھاؤ۔',
 'tog-oldsig' => 'ہن والے دسخط:',
 'tog-fancysig' => 'دستخط نوں وکی ٹیکسڈ ونگوں؎ ورتو(without an automatic link)',
-'tog-externaleditor' => 'ہمیشہ بارلا لکھن والا ورتو (ماہر لوکاں واسطے، اس واسطے تواڑے کمپیوٹر تے خاص تبدیلیاں چائیدیاں نیں۔ [//www.mediawiki.org/wiki/Manual:External_editors مزید معلومات.])',
-'tog-externaldiff' => '
-ہمیشہ بارلا تبدیلی کرن والا ورتو (ماہر لوکاں واسطے، اس واسطے تواڑے کمپیوٹر تے خاص تبدیلیاں چائیدیاں نیں۔ [//www.mediawiki.org/wiki/Manual:External_editors مزید معلومات۔])',
 'tog-showjumplinks' => '"ایدر چلو" نوں رلن والے جوڑان نال جوڑو',
 'tog-uselivepreview' => 'لائیو پریویو ورتو',
 'tog-forceeditsummary' => 'مینون اوسے ویلے دسو جدوں خالی سمری تے آؤ۔',
@@ -67,6 +64,7 @@ $messages = array(
 'tog-diffonly' => 'تبدیلی توں علاوہ صفحہ نا وکھاؤ',
 'tog-showhiddencats' => 'لکیاں کیٹاگریاں وکھاؤ',
 'tog-norollbackdiff' => 'صفحے دی واپسی تے تبدیلی کڈ دو',
+'tog-useeditwarning' => 'جدوں میں کوئی صفحہ تبدیلی کر کے بچاۓ بغیر چھڈن لگاں تے منوں دس دیو',
 
 'underline-always' => 'ہمیشہ',
 'underline-never' => 'کدی وی نئیں',
@@ -503,7 +501,7 @@ Note that some pages may continue to be displayed as if you were still logged in
 'loginlanguagelabel' => 'بولی: $1',
 'suspicious-userlogout' => 'تھواڈی لاگ آؤٹ ہوں دی کوشش رک گئی اینج لگدا اے  جیویں اے ٹٹے براؤزر یا کیشنگ پراکسی توں پیجیا گیا سی۔',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHP میل دے کم چ کوئی انجانی غلطی۔',
 'user-mail-no-addy' => 'ای-میل پتے بنا ای-میل کلن دی کوشش۔',
 
@@ -757,6 +755,8 @@ Custom .css تے .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.cs
 'edit-no-change' => 'تواڈی تبدیلی ول کوئی توجہ نئیں، کیوں جے لکھت چ کوئی تبدیلی نئیں۔',
 'edit-already-exists' => 'نواں صفہ نئیں بن سکدا۔
 ایہ پہلے ای ہیگا اے۔',
+'editwarning-warning' => 'اے صفے توں جان تے ہو سکدا اوہ ساریاں تبدیلیاں مک جان جیہڑیاں تساں بناياں نیں۔
+اگر تسیں لاکان او، تسیں ایڈیٹنگ سیکشن چ  اپنی پسنداں چ ایس خبرداری نوں پعلے ناں۔',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''خبردار:''' ایس صفے تے چوکھیاں ساریاں پارسر کلز نیں۔
@@ -1021,15 +1021,6 @@ $1",
 تسیں گوگل تے کھوج کرو۔
 اے گل یاد رکھنا جے انڈیکس {{SITENAME}} دے پرانے ہون۔',
 
-# Quickbar
-'qbsettings' => 'کوئکبار',
-'qbsettings-none' => 'کوئی نئیں',
-'qbsettings-fixedleft' => 'فکسڈ کھبے',
-'qbsettings-fixedright' => 'فکسڈ سجے',
-'qbsettings-floatingleft' => 'ہلدا کھبے',
-'qbsettings-floatingright' => 'ہلدا سجے',
-'qbsettings-directionality' => '!!!!فکسڈ، تھاڈی بولی تے لپی نال',
-
 # Preferences page
 'preferences' => 'تانگاں',
 'mypreferences' => 'میریاں تانگاں',
@@ -1150,7 +1141,7 @@ $1",
 'prefs-displaywatchlist' => 'چنوتیاں دسو',
 'prefs-diffs' => 'ڈفز',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'ای_میل پتہ ٹھیک لگدا اے۔',
 'email-address-validity-invalid' => 'چلن والا ای-میل پتہ دسو',
 
@@ -1573,7 +1564,6 @@ $1",
 'http-read-error' => 'ایچ ٹی ٹی پی  غلطی پڑھدی اے۔',
 'http-timed-out' => 'ایچ ٹی ٹی پی  دی مانگ ویلیوں بار۔',
 'http-curl-error' => 'ایچ ٹی ٹی پی  : $1 لیان چ غلطی۔',
-'http-host-unreachable' => 'ایچ ٹی ٹی پی  تک ناں پونچ سکیا۔',
 'http-bad-status' => 'ایچ ٹی ٹی پی : $1 $2 دی مانگ ویلے رپھڑ',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1910,7 +1900,7 @@ $1",
 'listgrouprights-addgroup-self-all' => 'ساریاں ٹولیاں کٹھیاں کرو کھاتہ لئی',
 'listgrouprights-removegroup-self-all' => 'ایس کھاتے توں ساریاں ٹولیاں ہٹاؤ',
 
-# E-mail user
+# Email user
 'mailnologin' => 'ناں پیح پتہ',
 'mailnologintext' => 'تسیں لازمی [[Special:UserLogin|لاگان]] ہوو تے اک پکا ای-میل پتہ تواڈی [[Special:Preferences|تانگ]] چ ہووے تاں جے دوجے ورتن والے توانوں ای-میل کرسکن۔',
 'emailuser' => 'اس ورتن والے نو ای میل کرو',
@@ -1967,7 +1957,7 @@ $1",
 'watchnochange' => 'دسے گۓ ویلے چ تھواڈیاں ویکھیاںشیواں نئیں بدلیاں گیاں۔',
 'watchlist-details' => '{{PLURAL:$1|$1 صفحہ|$1 صفحہ}} تواڈی اکھ تھلے گلاں باتاں شامل نہیں۔',
 'wlheader-enotif' => 'ای-میل نوٹیفیکیشن قابل',
-'wlheader-showupdated' => '*  صفے جیہڑے بدلے کۓ تھواڈے آخری وار آن مکرون  اونان نوں موٹا کرکے دسیا گیا اے۔',
+'wlheader-showupdated' => ' صفے جیہڑے بدلے کۓ تھواڈے آخری وار آن مکرون  اونان نوں موٹا کرکے دسیا گیا اے۔',
 'watchmethod-recent' => 'نیڑے ہویاں تبدیلیاں چائیدے صفیاں دیاں ویکھے جان والے صفیاں لئی۔',
 'watchmethod-list' => 'ویکھے کے صفے نیڑے ہون والیاں تبدیلیاں دی پڑتال',
 'watchlistcontains' => 'تھواڈی اکھ تھلے رکھی لسٹ چ $1 {{PLURAL:$1|صفہ|صفے}}  نیں۔',
@@ -2812,7 +2802,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'چوڑائی',
 'exif-imagelength' => 'اچائی',
 'exif-bitspersample' => 'اک کمپوننٹ وچ بٹ',
@@ -2990,7 +2980,7 @@ $1',
 'exif-originalimageheight' => 'مورت دی اچائی کٹن توں پہلے',
 'exif-originalimagewidth' => 'مورت دی چوڑائی کٹن توں پہلے',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'کھولی گئی',
 'exif-compression-2' => 'سی سی آئی ٹی ٹی گروپ 3 1-ڈائمینشنل موڈیفائیڈ ہفمین رن فل لنتھ انکوڈنگ',
 'exif-compression-3' => 'سی سی آئی ٹی ٹی گروپ 3 فیکس اینکوڈنگ',
@@ -3211,7 +3201,7 @@ $1',
 'monthsall' => 'سارے',
 'limitall' => 'سارے',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'ای میل پتہ پکا کرو',
 'confirmemail_noemail' => 'تواڈے کول اک پکا ای-میل پتہ نئیں اے جیہڑا [[Special:Preferences|ورتن تانگاں]]',
 'confirmemail_text' => '{{سائیٹناں}}  دی ایہ لوڑ اے جے تسیں اپنا ای-میل پتہ پکا کرواؤ ای-میل فیچر ورتن توں پہلے۔ تھلے دتے گۓ بٹن تے پکی کرن چٹھی پیجو اپنے پتے تے منگوان لئی کلک کرو۔
@@ -3398,13 +3388,6 @@ the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
 'version-software' => 'سافٹوئر چڑھ گیا۔',
 'version-software-product' => 'پراڈکٹ',
 'version-software-version' => 'ورژن',
-
-# Special:FilePath
-'filepath' => 'فائل راہ',
-'filepath-page' => 'فائل:',
-'filepath-submit' => 'چلو',
-'filepath-summary' => 'اے خاص صفہاک فائل دا پورا راہ دسدا اے۔
-مورتاں پورے ریزولوشن چ دسیاں گیاں نئیں، دوجیاں فائل ٹائپ نوں نوں اوناں دے رلدے پروکراماں نال ٹوریا گیا اے۔',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'دوہری فائلاں دی کھوج کرو',

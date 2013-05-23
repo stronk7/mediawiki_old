@@ -65,15 +65,13 @@ $messages = array(
 'tog-previewontop' => 'Näütäq proovikaehust inne, mitte perän toimõnduskasti',
 'tog-previewonfirst' => 'Näütäq edimädse toimõndusõ aigo proovikaehust',
 'tog-nocache' => 'Pästku-i lehekülgi võrgokaeja vaihõmällo',
-'tog-enotifwatchlistpages' => 'Saadaq mullõ e-kiri, ku muq perräkaetavat lehte muudõtas',
+'tog-enotifwatchlistpages' => 'Saadaq mullõ e-kiri, ku muq perräkaetavat lehte vai teedüstüt muudõtas',
 'tog-enotifusertalkpages' => 'Saadaq mullõ e-kiri, ku mu arotuslehte muudõtas',
-'tog-enotifminoredits' => 'Saadaq mullõ e-kiri ka väikeisi muutmiisi kotsilõ',
+'tog-enotifminoredits' => 'Saadaq mullõ e-kiri ka lehti ja failõ väikeisi muutmiisi kotsilõ',
 'tog-enotifrevealaddr' => 'Näütäq mu e-postiaadrõssit tõisilõ saadõtuin teedüssin',
 'tog-shownumberswatching' => "Näütäq, ku pall'o pruukjit taa lehe perrä kaes",
-'tog-oldsig' => 'Parhilladsõ alakirotusõ proomikaehus:',
+'tog-oldsig' => 'Parhillanõ alakirotus:',
 'tog-fancysig' => 'Pruugiq vikiteksti moodulist alakirotust (ilma automaatsõ lingildä)',
-'tog-externaleditor' => "Pruugiq vaikimiisi välist tekstitoimõndajat (õnnõ as'atundjilõ, nõud suq puutri ümbresäädmist, kaeq [//www.mediawiki.org/wiki/Manual:External_editors More information.])",
-'tog-externaldiff' => "Pruugiq vaikimiisi välist võrrõlusprogrammi (õnnõ as'atundjilõ, nõud su puutri ümbresäädmist, kaeq [//www.mediawiki.org/wiki/Manual:External_editors More information.])",
 'tog-showjumplinks' => 'Panõq lehe algustõ kipõqlingiq',
 'tog-uselivepreview' => 'Pruugiq kipõkaehust (JavaScript) (proomi)',
 'tog-forceeditsummary' => 'Annaq teedäq, ku olõ-i kirotõt kokkovõtõt',
@@ -90,7 +88,7 @@ $messages = array(
 
 'underline-always' => 'Kõgõ',
 'underline-never' => 'Ei kunagi',
-'underline-default' => 'Võrgokaeja perrä',
+'underline-default' => 'Kujondusõ vai võrgokaeja perrä',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Toimõndamiskotusõ kirätüüp:',
@@ -168,6 +166,7 @@ $messages = array(
 'listingcontinuesabbrev' => 'lätt edesi',
 'index-category' => 'Indeksiga leheq',
 'noindex-category' => 'Indeksildä leheq',
+'broken-file-category' => 'Katskiidsi pildilinkega leheküleq',
 
 'about' => 'Pääteedüs',
 'article' => 'Sisu',
@@ -814,14 +813,6 @@ otsisõna iin edejakku ''all:''. Ütest kimmäst nimeruumist otsmisõs pruugiq e
 'search-external' => 'Väline otsminõ',
 'searchdisabled' => "{{SITENAME}} otsminõ parhillaq ei tüütäq. Niikavva, ku otsminõ jälq tüüle saa, võit pruukiq otsmisõs alanolõvat Google'i otsikasti, a näide teedüs {{SITENAME}} sisust pruugi-i ollaq alasi kõgõ värskimb.",
 
-# Quickbar
-'qbsettings' => 'Kipõriba säädmine',
-'qbsettings-none' => 'Olõ-i',
-'qbsettings-fixedleft' => 'Kõgõ kural puul',
-'qbsettings-fixedright' => 'Kõgõ hüäl puul',
-'qbsettings-floatingleft' => 'Ujovahe kural puul',
-'qbsettings-floatingright' => 'Ujovahe hüäl puul',
-
 # Preferences page
 'preferences' => 'Säädmine',
 'mypreferences' => 'Säädmiseq',
@@ -1292,7 +1283,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'listgrouprights' => 'Pruukjarühmi õigusõq',
 'listgrouprights-members' => '(liikmidõ nimekiri)',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Olõ-i saatja aadrõssit',
 'mailnologintext' => 'Sa piät olõma [[Special:UserLogin|nimega sisse lännüq]]
 ja sul piät umin [[Special:Preferences|säädmiisin]] olõma e-postiaadrõs, et sa saasiq tõisilõ pruukjilõ e-kirjo saataq.',
@@ -1330,8 +1321,8 @@ ja sul piät umin [[Special:Preferences|säädmiisin]] olõma e-postiaadrõs, et
 'notanarticle' => 'Olõ-i artikli',
 'watchnochange' => 'Taa ao seen olõ-i üttegi perräkaetavat lehte muudõt.',
 'watchlist-details' => 'Perräkaemisnimekirän om {{PLURAL:$1|$1 leht|$1 lehte}}, rehkendämäldä arotuslehti.',
-'wlheader-enotif' => '* E-postiga teedäqandmisõq ommaq käügin.',
-'wlheader-showupdated' => "* Leheq, midä om muudõt päält su viimäst käümist, ommaq '''paksun kirän'''",
+'wlheader-enotif' => 'E-postiga teedäqandmisõq ommaq käügin.',
+'wlheader-showupdated' => "Leheq, midä om muudõt päält su viimäst käümist, ommaq '''paksun kirän'''",
 'watchmethod-recent' => 'kontrollitas perräkaetavidõ lehti perämäidsi muutmiisi',
 'watchmethod-list' => 'perräkaetavidõ lehti perämädseq muutmisõq',
 'watchlistcontains' => 'Perräkaemisnimekirän om $1 {{PLURAL:$1|leht|lehte}}.',
@@ -1823,9 +1814,7 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 'spam_blanking' => "Kõigin kujõn oll' linke lehele $1. Leht tühäs tett.",
 
 # Skin names
-'skinname-standard' => 'Array',
 'skinname-cologneblue' => 'Array',
-'skinname-myskin' => 'Array',
 
 # Patrolling
 'markaspatrolleddiff' => 'Märgiq ülekaetus',
@@ -1893,7 +1882,7 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Lakjus',
 'exif-imagelength' => 'Korgus',
 'exif-bitspersample' => 'Bitti osa kotsilõ',
@@ -2007,7 +1996,7 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 'exif-gpsdatestamp' => 'GPS-kuupäiv',
 'exif-gpsdifferential' => 'GPS-differentsiaalparandus',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Kokkopakmalda',
 
 'exif-unknowndate' => 'Tundmalda kuupäiv',
@@ -2147,7 +2136,7 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 'namespacesall' => 'kõik',
 'monthsall' => 'kõik',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Kinnüdäq e-postiaadrõssit',
 'confirmemail_noemail' => 'Sul olõ-i [[Special:Preferences|ummi säädmiisihe]] pant kõlbolist e-postiaadrõssit.',
 'confirmemail_text' => 'Taa viki nõud e-postiaadrõsi kinnütämist, inne ku e-posti pruukiq võit. Saadaq alanolõva nupi pääle vaotõn uma aadrõsi pääle kinnütüse küsümise kiri. Säält lövvät lingi, mink vaotamisõga kinnütät uma e-postiaadrõsi.',
@@ -2235,11 +2224,6 @@ Prooviq harilikku kaehust.',
 'version' => 'Kujo',
 'version-version' => '(Kujo $1)',
 'version-software-version' => 'Kujo',
-
-# Special:FilePath
-'filepath' => 'Teedüstü aadrõs',
-'filepath-page' => 'Teedüstü:',
-'filepath-submit' => 'Aadrõs',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'Teedüstünimi:',

@@ -127,17 +127,17 @@ Wiki configuration for testing:
   $wgEnableWriteAPI = true;   // enable API.
 
   // Install & enable Parser Hook extensions to increase code coverage. E.g.:
-  require_once("extensions/ParserFunctions/ParserFunctions.php");
-  require_once("extensions/Cite/Cite.php");
-  require_once("extensions/inputbox/inputbox.php");
-  require_once("extensions/Sort/Sort.php");
-  require_once("extensions/wikihiero/wikihiero.php");
-  require_once("extensions/CharInsert/CharInsert.php");
-  require_once("extensions/FixedImage/FixedImage.php");
+  require_once "extensions/ParserFunctions/ParserFunctions.php";
+  require_once "extensions/Cite/Cite.php";
+  require_once "extensions/inputbox/inputbox.php";
+  require_once "extensions/Sort/Sort.php";
+  require_once "extensions/wikihiero/wikihiero.php";
+  require_once "extensions/CharInsert/CharInsert.php";
+  require_once "extensions/FixedImage/FixedImage.php";
 
   // Install & enable Special Page extensions to increase code coverage. E.g.:
-  require_once("extensions/Cite/SpecialCite.php");
-  require_once("extensions/Renameuser/SpecialRenameuser.php");
+  require_once "extensions/Cite/SpecialCite.php";
+  require_once "extensions/Renameuser/SpecialRenameuser.php";
   // --------- End ---------
 
   If you want to try E_STRICT error logging, add this to the above:
@@ -181,7 +181,7 @@ TODO:
 // ///////////////////////// COMMAND LINE HELP ////////////////////////////////////
 
 // This is a command line script, load MediaWiki env (gives command line options);
-require_once( __DIR__ . '/commandLine.inc' );
+require_once __DIR__ . '/commandLine.inc';
 
 // if the user asked for an explanation of command line options.
 if ( isset( $options["help"] ) ) {
@@ -657,6 +657,7 @@ class wikiFuzz {
 			"}}",
 			"{{INT:googlesearch|",
 			"}}",
+                        "{{ROOTPAGENAME}}",
 			"{{BASEPAGENAME}}",
 			"{{CONTENTLANGUAGE}}",
 			"{{PAGESINNAMESPACE:}}",
@@ -1490,7 +1491,7 @@ class specialBlockmeTest extends pageTest {
 	function __construct() {
 		$this->pagePath = "index.php?title=Special:Blockme";
 
-		$this->params = array ( );
+		$this->params = array ();
 
 		// sometimes we specify "ip", and sometimes we don't.
 		if ( wikiFuzz::randnum( 1 ) == 0 ) {
@@ -1972,7 +1973,7 @@ class specialChemicalsourcesTest extends pageTest {
  ** returns the help screen - so currently a lot of the tests aren't actually doing much
  ** because something wasn't right in the query.
  **
- ** @todo: Incomplete / unfinished; Runs too fast (suggests not much testing going on).
+ ** @todo Incomplete / unfinished; Runs too fast (suggests not much testing going on).
  */
 class api extends pageTest {
 
@@ -2542,7 +2543,7 @@ function runWikiTest( pageTest $test, &$testname, $can_overwrite = false ) {
 		if ( !$valid ) print "\nW3C web validation failed - view details with: html2text " . DIRECTORY . "/" . $testname . ".validator_output.html";
 	}
 
-	// Get tidy to check the page, unless we already know it produces non-XHTML output.
+	// Get tidy to check the page, unless we already know it produces non-(X)HTML output.
 	if ( $test->tidyValidate() ) {
 		$valid = tidyCheckFile( $testname . HTML_FILE ) && $valid;
 	}

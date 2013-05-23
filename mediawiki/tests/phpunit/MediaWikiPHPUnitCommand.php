@@ -18,7 +18,6 @@ class MediaWikiPHPUnitCommand extends PHPUnit_TextUI_Command {
 		foreach ( self::$additionalOptions as $option => $default ) {
 			$this->longOptions[$option] = $option . 'Handler';
 		}
-
 	}
 
 	public static function main( $exit = true ) {
@@ -86,7 +85,7 @@ class MediaWikiPHPUnitCommand extends PHPUnit_TextUI_Command {
 ParserTest-specific options:
 
   --regex="<regex>"        Only run parser tests that match the given regex
-  --file="<filename>"      Prints the version and exits.
+  --file="<filename>"      File describing parser tests
   --keep-uploads           Re-use the same upload directory for each test, don't delete it
 
 
@@ -97,5 +96,4 @@ Database options:
 
 EOT;
 	}
-
 }

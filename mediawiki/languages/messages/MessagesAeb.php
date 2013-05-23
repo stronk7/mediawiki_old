@@ -46,8 +46,6 @@ $messages = array(
 'tog-shownumberswatching' => 'اعرض عدد المستخدمين المراقبين',
 'tog-oldsig' => 'التوقيع الحالي:',
 'tog-fancysig' => 'عامل التوقيع كنص ويكي (بدون وصلة أوتوماتيكية)',
-'tog-externaleditor' => 'استخدم محررا خارجيا بشكل افتراضي (للخبراء فقط، يحتاج إعدادات خاصة على حاسوبك) ([//www.mediawiki.org/wiki/Manual:External_editors مزيد من المعلومات.])',
-'tog-externaldiff' => 'استخدم فرقا خارجيا بشكل افتراضي (للخبراء فقط، يحتاج إعدادات خاصة على حاسوبك) ([//www.mediawiki.org/wiki/Manual:External_editors للمزيد من المعلومات.])',
 'tog-showjumplinks' => 'مكن وصلات "اذهب إلى" المساعدة',
 'tog-uselivepreview' => 'استخدم الاستعراض السريع (جافاسكريبت) (تجريبي)',
 'tog-forceeditsummary' => 'نبهني عند إدخال ملخص تعديل فارغ',
@@ -519,7 +517,7 @@ $2',
 'loginlanguagelabel' => 'اللغة: $1',
 'suspicious-userlogout' => 'رفض طلب خروجك لأنه يبدو كأنه أرسل عن طريق متصفح معطوب أو وسيط تخزين.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => "خطأ غير معروف في وظيفة البريد PHP's mail()",
 'user-mail-no-addy' => 'لقد حاولت إرسال بريد إلكتروني دون عنوان بريد إلكتروني.',
 
@@ -1153,7 +1151,7 @@ $1",
 # Special:ListGroupRights
 'listgrouprights-members' => '(قائمة الأعضاء)',
 
-# E-mail user
+# Email user
 'emailuser' => 'إرسال رسالة لهذا المستخدم',
 
 # Watchlist

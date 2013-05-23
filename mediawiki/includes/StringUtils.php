@@ -49,7 +49,7 @@ class StringUtils {
 	static function isUtf8( $value, $disableMbstring = false ) {
 
 		if ( preg_match( '/[\x80-\xff]/', $value ) === 0 ) {
-			# no high bit set, this is pure ASCII which is defacto
+			# no high bit set, this is pure ASCII which is de facto
 			# valid UTF-8
 			return true;
 		}
@@ -65,7 +65,7 @@ class StringUtils {
 				| [\xf8-\xfb][\x80-\xbf]{4}
 				| \xfc[\x84-\xbf][\x80-\xbf]{4}
 			)+$/x', $value );
-			return ($hasUtf8 > 0 );
+			return ( $hasUtf8 > 0 );
 		}
 	}
 
@@ -110,16 +110,16 @@ class StringUtils {
 	 * memory. The delimiters are literal strings, not regular expressions.
 	 *
 	 * If the start delimiter ends with an initial substring of the end delimiter,
-	 * e.g. in the case of C-style comments, the behaviour differs from the model
+	 * e.g. in the case of C-style comments, the behavior differs from the model
 	 * regex. In this implementation, the end must share no characters with the
 	 * start, so e.g. /*\/ is not considered to be both the start and end of a
 	 * comment. /*\/xy/*\/ is considered to be a single comment with contents /xy/.
 	 *
-	 * @param $startDelim String: start delimiter
-	 * @param $endDelim String: end delimiter
+	 * @param string $startDelim start delimiter
+	 * @param string $endDelim end delimiter
 	 * @param $callback Callback: function to call on each match
 	 * @param $subject String
-	 * @param $flags String: regular expression flags
+	 * @param string $flags regular expression flags
 	 * @throws MWException
 	 * @return string
 	 */
@@ -200,12 +200,12 @@ class StringUtils {
 	 *
 	 *   preg_replace( "!$startDelim(.*)$endDelim!$flags", $replace, $subject )
 	 *
-	 * @param $startDelim String: start delimiter regular expression
-	 * @param $endDelim String: end delimiter regular expression
-	 * @param $replace String: replacement string. May contain $1, which will be
+	 * @param string $startDelim start delimiter regular expression
+	 * @param string $endDelim end delimiter regular expression
+	 * @param string $replace replacement string. May contain $1, which will be
 	 *                 replaced by the text between the delimiters
-	 * @param $subject String to search
-	 * @param $flags String: regular expression flags
+	 * @param string $subject to search
+	 * @param string $flags regular expression flags
 	 * @return String: The string with the matches replaced
 	 */
 	static function delimiterReplace( $startDelim, $endDelim, $replace, $subject, $flags = '' ) {
@@ -233,7 +233,7 @@ class StringUtils {
 
 		// Explode, then put the replaced separators back in
 		$items = explode( $separator, $cleaned );
-		foreach( $items as $i => $str ) {
+		foreach ( $items as $i => $str ) {
 			$items[$i] = str_replace( $placeholder, $separator, $str );
 		}
 
@@ -405,7 +405,7 @@ class ReplacementArray {
 	/**
 	 * Set an element of the replacement array
 	 * @param $from string
-	 * @param $to stromg
+	 * @param $to string
 	 */
 	function setPair( $from, $to ) {
 		$this->data[$from] = $to;
@@ -440,7 +440,7 @@ class ReplacementArray {
 	 * @param $data array
 	 */
 	function removeArray( $data ) {
-		foreach( $data as $from => $to ) {
+		foreach ( $data as $from => $to ) {
 			$this->removePair( $from );
 		}
 		$this->fss = false;
@@ -452,16 +452,16 @@ class ReplacementArray {
 	 */
 	function replace( $subject ) {
 		if ( function_exists( 'fss_prep_replace' ) ) {
-			wfProfileIn( __METHOD__.'-fss' );
+			wfProfileIn( __METHOD__ . '-fss' );
 			if ( $this->fss === false ) {
 				$this->fss = fss_prep_replace( $this->data );
 			}
 			$result = fss_exec_replace( $this->fss, $subject );
-			wfProfileOut( __METHOD__.'-fss' );
+			wfProfileOut( __METHOD__ . '-fss' );
 		} else {
-			wfProfileIn( __METHOD__.'-strtr' );
+			wfProfileIn( __METHOD__ . '-strtr' );
 			$result = strtr( $subject, $this->data );
-			wfProfileOut( __METHOD__.'-strtr' );
+			wfProfileOut( __METHOD__ . '-strtr' );
 		}
 		return $result;
 	}

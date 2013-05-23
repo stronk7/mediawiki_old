@@ -29,7 +29,7 @@
 class ProfilerSimple extends Profiler {
 	var $mMinimumTime = 0;
 
-	var $zeroEntry = array( 'cpu'=> 0.0, 'cpu_sq' => 0.0, 'real' => 0.0, 'real_sq' => 0.0, 'count' => 0 );
+	var $zeroEntry = array( 'cpu' => 0.0, 'cpu_sq' => 0.0, 'real' => 0.0, 'real_sq' => 0.0, 'count' => 0 );
 	var $errorEntry;
 
 	public function isPersistent() {
@@ -96,9 +96,9 @@ class ProfilerSimple extends Profiler {
 				$this->mCollated[$functionname] =& $entry;
 			}
 			$entry['cpu'] += $elapsedcpu;
-			$entry['cpu_sq'] += $elapsedcpu*$elapsedcpu;
+			$entry['cpu_sq'] += $elapsedcpu * $elapsedcpu;
 			$entry['real'] += $elapsedreal;
-			$entry['real_sq'] += $elapsedreal*$elapsedreal;
+			$entry['real_sq'] += $elapsedreal * $elapsedreal;
 			$entry['count']++;
 
 		}

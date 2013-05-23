@@ -37,7 +37,7 @@ interface LoadMonitor {
 	/**
 	 * Perform pre-connection load ratio adjustment.
 	 * @param $loads array
-	 * @param $group String: the selected query group
+	 * @param string $group the selected query group
 	 * @param $wiki String
 	 */
 	function scaleLoads( &$loads, $group = false, $wiki = false );
@@ -135,8 +135,9 @@ class LoadMonitor_MySQL implements LoadMonitor {
 		$requestRate = 10;
 
 		global $wgMemc;
-		if ( empty( $wgMemc ) )
+		if ( empty( $wgMemc ) ) {
 			$wgMemc = wfGetMainCache();
+		}
 
 		$masterName = $this->parent->getServerName( 0 );
 		$memcKey = wfMemcKey( 'lag_times', $masterName );

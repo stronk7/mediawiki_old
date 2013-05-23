@@ -32,7 +32,7 @@
  *
  * Actions generally fall into two groups: the show-a-form-then-do-something-with-the-input
  * format (protect, delete, move, etc), and the just-do-something format (watch, rollback,
- * patrol, etc). The FormAction and FormlessAction classes respresent these two groups.
+ * patrol, etc). The FormAction and FormlessAction classes represent these two groups.
  */
 abstract class Action {
 
@@ -147,7 +147,7 @@ abstract class Action {
 	/**
 	 * Check if a given action is recognised, even if it's disabled
 	 *
-	 * @param $name String: name of an action
+	 * @param string $name name of an action
 	 * @return Bool
 	 */
 	final public static function exists( $name ) {
@@ -213,7 +213,7 @@ abstract class Action {
 	/**
 	 * Shortcut to get the user Language being used for this instance
 	 *
-	 * @deprecated 1.19 Use getLanguage instead
+	 * @deprecated since 1.19 Use getLanguage instead
 	 * @return Language
 	 */
 	final public function getLang() {
@@ -374,21 +374,26 @@ abstract class FormAction extends Action {
 	 * Add pre- or post-text to the form
 	 * @return String HTML which will be sent to $form->addPreText()
 	 */
-	protected function preText() { return ''; }
+	protected function preText() {
+		return '';
+	}
 
 	/**
 	 * @return string
 	 */
-	protected function postText() { return ''; }
+	protected function postText() {
+		return '';
+	}
 
 	/**
 	 * Play with the HTMLForm if you need to more substantially
 	 * @param $form HTMLForm
 	 */
-	protected function alterForm( HTMLForm $form ) {}
+	protected function alterForm( HTMLForm $form ) {
+	}
 
 	/**
-	 * Get the HTMLForm to control behaviour
+	 * Get the HTMLForm to control behavior
 	 * @return HTMLForm|null
 	 */
 	protected function getForm() {
@@ -439,7 +444,7 @@ abstract class FormAction extends Action {
 	 * some stuff underneath (history etc); to do some processing on submission of that
 	 * form (delete, protect, etc) and to do something exciting on 'success', be that
 	 * display something new or redirect to somewhere.  Some actions have more exotic
-	 * behaviour, but that's what subclassing is for :D
+	 * behavior, but that's what subclassing is for :D
 	 */
 	public function show() {
 		$this->setHeaders();
@@ -545,8 +550,8 @@ abstract class FormlessAction extends Action {
 	/**
 	 * Execute the action silently, not giving any output.  Since these actions don't have
 	 * forms, they probably won't have any data, but some (eg rollback) may do
-	 * @param $data Array values that would normally be in the GET request
-	 * @param $captureErrors Bool whether to catch exceptions and just return false
+	 * @param array $data values that would normally be in the GET request
+	 * @param bool $captureErrors whether to catch exceptions and just return false
 	 * @throws ErrorPageError|Exception
 	 * @return Bool whether execution was successful
 	 */

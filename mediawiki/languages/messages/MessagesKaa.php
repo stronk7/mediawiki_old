@@ -180,8 +180,6 @@ $messages = array(
 'tog-enotifrevealaddr' => "Eskertiw xatlarında e-mail adresimdi ko'rset",
 'tog-shownumberswatching' => "Baqlag'an paydalanıwshılar sanın ko'rset",
 'tog-fancysig' => 'İmzalardı wikitext dep qabıl etiw (avtomat siltewsiz)',
-'tog-externaleditor' => "Defolt boyınsha sırtqı o'zgertiwshini qollan (tek g'ana ta'jiriybeli paydalanıwshılar ushın, kompyuterin'izde qosımsha sazlawlar qılınıwı kerek. [//www.mediawiki.org/wiki/Manual:External_editors More information.])",
-'tog-externaldiff' => "Defoltta sırtqı parqtı qollan (tek ekspert paydalanıwshılar ushın, kompyuterin'izde arnawlı sazlawlardı talap etedi. [//www.mediawiki.org/wiki/Manual:External_editors More information.])",
 'tog-showjumplinks' => "«O'tip ketiw» siltewlerin qos",
 'tog-uselivepreview' => "Janlı ko'rip shıg'ıwdı qollan (JavaScript) (Sınawda)",
 'tog-forceeditsummary' => "O'zgertiw juwmag'ı bos qalg'anda mag'an eskert",
@@ -863,14 +861,6 @@ Barlıq mag'lıwmat tu'rin (sonın' ishinde sa'wbet betlerdi, shablonlardı h.t.
 'powersearch-field' => "İzlenetug'ın so'z (yamasa so'z dizbegi):",
 'search-external' => 'Sırtqı izlewshi',
 
-# Quickbar
-'qbsettings' => 'Navigatsiya paneli',
-'qbsettings-none' => 'Hesh qanday',
-'qbsettings-fixedleft' => 'Shepke bekitilgen',
-'qbsettings-fixedright' => "On'g'a bekitilgen",
-'qbsettings-floatingleft' => 'Shepte jıljıwshı',
-'qbsettings-floatingright' => "On'da jıljıwshı",
-
 # Preferences page
 'preferences' => 'Sazlawlar',
 'mypreferences' => "Menin' sazlawlarım",
@@ -1378,7 +1368,7 @@ Ja'nede [[Special:WantedCategories|kerekli kategoriyalardı]] qarap ko'rin'.",
 'listgrouprights-addgroup-all' => "Barlıq toparlardı qosıwı mu'mkin",
 'listgrouprights-removegroup-all' => "Barlıq toparlardı o'shiriwi mu'mkin",
 
-# E-mail user
+# Email user
 'mailnologin' => 'Jiberiwge adres tabılmadı',
 'emailuser' => 'Xat jiberiw',
 'emailpage' => "Paydalanıwshıg'a e-mail jiberiw",
@@ -1412,7 +1402,7 @@ Eger siz bul betti baqlaw dizimin'izden o'shirmekshi bolsan'ız bettin' joqarg'�
 'notanarticle' => "Mag'lıwmat beti emes",
 'notvisiblerev' => "Nusqa o'shirildi",
 'watchlist-details' => "Baqlaw dizimin'izde (sa'wbet betlerin esapqa almag'anda) {{PLURAL:$1|1 bet|$1 bet}} bar.",
-'wlheader-enotif' => "* E-mail arqalı eskertiw qosılg'an.",
+'wlheader-enotif' => "E-mail arqalı eskertiw qosılg'an.",
 'watchlistcontains' => "Sizin' baqlaw dizimin'izde {{PLURAL:$1|1 bet|$1 bet}} bar.",
 'wlnote' => "To'mende aqırg'ı {{PLURAL:$2|saattag'ı|'''$2''' saattag'ı}} {{PLURAL:$1|aqırg'ı o'zgeris bar|aqırg'ı '''$1''' o'zgeris bar}}.",
 'wlshowlast' => "Aqırg'ı $1 saat, $2 ku'n, $3 ko'rset",
@@ -1829,7 +1819,7 @@ Eger fayl jaratılg'anınan keyin o'zgertilgen bolsa, geybir parametrleri o'zger
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Yeni:',
 'exif-imagelength' => "Uzunlıg'ı",
 'exif-imagedescription' => "Su'wret ataması",
@@ -1844,7 +1834,7 @@ Eger fayl jaratılg'anınan keyin o'zgertilgen bolsa, geybir parametrleri o'zger
 'namespacesall' => "ha'mmesi",
 'monthsall' => "ha'mme",
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'E-mail adresin tastıyıqlaw',
 'confirmemail_send' => 'Tastıyıqlaw kodın jiberiw',
 'confirmemail_sent' => 'Tastıyıqlaw xatı jiberildi.',
@@ -1931,9 +1921,6 @@ Bul tastıyıqlaw kodının' pitetug'ın waqtı: $4.",
 
 # Special:Version
 'version' => "MediaWikidin' nusqası",
-
-# Special:FilePath
-'filepath' => 'Fayl jolı',
 
 # Special:SpecialPages
 'specialpages' => 'Arnawlı betler',

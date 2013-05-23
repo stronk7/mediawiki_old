@@ -12,7 +12,7 @@
 define( 'MW_PHPUNIT_TEST', true );
 
 // Start up MediaWiki in command-line mode
-require_once( dirname( dirname( __DIR__ ) ) . "/maintenance/Maintenance.php" );
+require_once dirname( dirname( __DIR__ ) ) . "/maintenance/Maintenance.php";
 
 class PHPUnitMaintClass extends Maintenance {
 
@@ -50,8 +50,11 @@ class PHPUnitMaintClass extends Maintenance {
 
 		// Bug 44192 Do not attempt to send a real e-mail
 		Hooks::clear( 'AlternateUserMailer' );
-		Hooks::register( 'AlternateUserMailer',
-			function() { return false; }
+		Hooks::register(
+			'AlternateUserMailer',
+			function () {
+				return false;
+			}
 		);
 	}
 
@@ -86,7 +89,6 @@ class PHPUnitMaintClass extends Maintenance {
 			unset( $_SERVER['argv'][$key] ); // the option
 			unset( $_SERVER['argv'][$key + 1] ); // its value
 			$_SERVER['argv'] = array_values( $_SERVER['argv'] );
-
 		}
 	}
 
@@ -96,16 +98,16 @@ class PHPUnitMaintClass extends Maintenance {
 }
 
 $maintClass = 'PHPUnitMaintClass';
-require( RUN_MAINTENANCE_IF_MAIN );
+require RUN_MAINTENANCE_IF_MAIN;
 
-require_once( 'PHPUnit/Runner/Version.php' );
+require_once 'PHPUnit/Runner/Version.php';
 
 if ( PHPUnit_Runner_Version::id() !== '@package_version@'
 	&& version_compare( PHPUnit_Runner_Version::id(), '3.6.7', '<' )
 ) {
 	die( 'PHPUnit 3.6.7 or later required, you have ' . PHPUnit_Runner_Version::id() . ".\n" );
 }
-require_once( 'PHPUnit/Autoload.php' );
+require_once 'PHPUnit/Autoload.php';
 
-require_once( "$IP/tests/TestsAutoLoader.php" );
+require_once "$IP/tests/TestsAutoLoader.php";
 MediaWikiPHPUnitCommand::main();

@@ -88,7 +88,7 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 			$entry = array();
 			$to = $row->el_to;
 			// expand protocol-relative urls
-			if( $params['expandurl'] ) {
+			if ( $params['expandurl'] ) {
 				$to = wfExpandUrl( $to, PROTO_CANONICAL );
 			}
 			ApiResult::setContent( $entry, $to );
@@ -148,7 +148,7 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 	}
 
 	public function getDescription() {
-		return 'Returns all external urls (not interwikies) from the given page(s)';
+		return 'Returns all external urls (not interwikis) from the given page(s)';
 	}
 
 	public function getPossibleErrors() {

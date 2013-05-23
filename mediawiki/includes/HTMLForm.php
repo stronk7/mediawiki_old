@@ -83,9 +83,8 @@
  * $form = new HTMLForm( $someFields );
  * $form->setMethod( 'get' )
  *      ->setWrapperLegendMsg( 'message-key' )
- *      ->suppressReset()
  *      ->prepareForm()
- *      ->displayForm();
+ *      ->displayForm( '' );
  * @endcode
  * Note that you will have prepareForm and displayForm at the end. Other
  * methods call done after that would simply not be part of the form :(
@@ -95,7 +94,7 @@
 class HTMLForm extends ContextSource {
 
 	// A mapping of 'type' inputs onto standard HTMLFormField subclasses
-	static $typeMappings = array(
+	private static $typeMappings = array(
 		'api' => 'HTMLApiField',
 		'text' => 'HTMLTextField',
 		'textarea' => 'HTMLTextAreaField',
@@ -112,6 +111,7 @@ class HTMLForm extends ContextSource {
 		'submit' => 'HTMLSubmitField',
 		'hidden' => 'HTMLHiddenField',
 		'edittools' => 'HTMLEditTools',
+		'checkmatrix' => 'HTMLCheckMatrix',
 
 		// HTMLTextField will output the correct type="" attribute automagically.
 		// There are about four zillion other HTML5 input types, like url, but
@@ -127,6 +127,7 @@ class HTMLForm extends ContextSource {
 
 	protected $mFieldTree;
 	protected $mShowReset = false;
+	protected $mShowSubmit = true;
 	public $mFieldData;
 
 	protected $mSubmitCallback;
@@ -189,10 +190,10 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Build a new HTMLForm from an array of field attributes
-	 * @param $descriptor Array of Field constructs, as described above
+	 * @param array $descriptor of Field constructs, as described above
 	 * @param $context IContextSource available since 1.18, will become compulsory in 1.18.
 	 *     Obviates the need to call $form->setTitle()
-	 * @param $messagePrefix String a prefix to go in front of default messages
+	 * @param string $messagePrefix a prefix to go in front of default messages
 	 */
 	public function __construct( $descriptor, /*IContextSource*/ $context = null, $messagePrefix = '' ) {
 		if ( $context instanceof IContextSource ) {
@@ -247,7 +248,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Set format in which to display the form
-	 * @param $format String the name of the format to use, must be one of
+	 * @param string $format the name of the format to use, must be one of
 	 *        $this->availableDisplayFormats
 	 * @throws MWException
 	 * @since 1.20
@@ -255,7 +256,7 @@ class HTMLForm extends ContextSource {
 	 */
 	public function setDisplayFormat( $format ) {
 		if ( !in_array( $format, $this->availableDisplayFormats ) ) {
-			throw new MWException ( 'Display format must be one of ' . print_r( $this->availableDisplayFormats, true ) );
+			throw new MWException( 'Display format must be one of ' . print_r( $this->availableDisplayFormats, true ) );
 		}
 		$this->displayFormat = $format;
 		return $this;
@@ -275,12 +276,14 @@ class HTMLForm extends ContextSource {
 	 * done already.
 	 * @deprecated since 1.18 load modules with ResourceLoader instead
 	 */
-	static function addJS() { wfDeprecated( __METHOD__, '1.18' ); }
+	static function addJS() {
+		wfDeprecated( __METHOD__, '1.18' );
+	}
 
 	/**
 	 * Initialise a new Object for the field
 	 * @param $fieldname string
-	 * @param $descriptor string input Descriptor, as described above
+	 * @param string $descriptor input Descriptor, as described above
 	 * @throws MWException
 	 * @return HTMLFormField subclass
 	 */
@@ -377,7 +380,7 @@ class HTMLForm extends ContextSource {
 	}
 
 	/**
-	 * Validate all the fields, and call the submision callback
+	 * Validate all the fields, and call the submission callback
 	 * function if everything is kosher.
 	 * @throws MWException
 	 * @return Mixed Bool true == Successful submission, Bool false
@@ -416,7 +419,7 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Set a callback to a function to do something with the form
 	 * once it's been successfully validated.
-	 * @param $cb String function name.  The function will be passed
+	 * @param string $cb function name.  The function will be passed
 	 *	 the output from HTMLForm::filterDataForSubmit, and must
 	 *	 return Bool true on success, Bool false if no submission
 	 *	 was attempted, or String HTML output to display on error.
@@ -440,7 +443,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Set the introductory message, overwriting any existing message.
-	 * @param $msg String complete text of message to display
+	 * @param string $msg complete text of message to display
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function setIntro( $msg ) {
@@ -451,7 +454,7 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Set the introductory message, overwriting any existing message.
 	 * @since 1.19
-	 * @param $msg String complete text of message to display
+	 * @param string $msg complete text of message to display
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function setPreText( $msg ) {
@@ -461,7 +464,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Add introductory text.
-	 * @param $msg String complete text of message to display
+	 * @param string $msg complete text of message to display
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function addPreText( $msg ) {
@@ -471,8 +474,8 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Add header text, inside the form.
-	 * @param $msg String complete text of message to display
-	 * @param $section string The section to add the header to
+	 * @param string $msg complete text of message to display
+	 * @param string $section The section to add the header to
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function addHeaderText( $msg, $section = null ) {
@@ -490,7 +493,7 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Set header text, inside the form.
 	 * @since 1.19
-	 * @param $msg String complete text of message to display
+	 * @param string $msg complete text of message to display
 	 * @param $section The section to add the header to
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
@@ -505,8 +508,8 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Add footer text, inside the form.
-	 * @param $msg String complete text of message to display
-	 * @param $section string The section to add the footer text to
+	 * @param string $msg complete text of message to display
+	 * @param string $section The section to add the footer text to
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function addFooterText( $msg, $section = null ) {
@@ -524,8 +527,8 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Set footer text, inside the form.
 	 * @since 1.19
-	 * @param $msg String complete text of message to display
-	 * @param $section string The section to add the footer text to
+	 * @param string $msg complete text of message to display
+	 * @param string $section The section to add the footer text to
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function setFooterText( $msg, $section = null ) {
@@ -539,7 +542,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Add text to the end of the display.
-	 * @param $msg String complete text of message to display
+	 * @param string $msg complete text of message to display
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function addPostText( $msg ) {
@@ -549,7 +552,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Set text at the end of the display.
-	 * @param $msg String complete text of message to display
+	 * @param string $msg complete text of message to display
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function setPostText( $msg ) {
@@ -559,8 +562,8 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Add a hidden field to the output
-	 * @param $name String field name.  This will be used exactly as entered
-	 * @param $value String field value
+	 * @param string $name field name.  This will be used exactly as entered
+	 * @param string $value field value
 	 * @param $attribs Array
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
@@ -572,9 +575,9 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Add a button to the form
-	 * @param $name String field name.
-	 * @param $value String field value
-	 * @param $id String DOM id for the button (default: null)
+	 * @param string $name field name.
+	 * @param string $value field value
+	 * @param string $id DOM id for the button (default: null)
 	 * @param $attribs Array
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
@@ -624,7 +627,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Wrap the form innards in an actual "<form>" element
-	 * @param $html String HTML contents to wrap.
+	 * @param string $html HTML contents to wrap.
 	 * @return String wrapped HTML.
 	 */
 	function wrapForm( $html ) {
@@ -682,23 +685,26 @@ class HTMLForm extends ContextSource {
 	 */
 	function getButtons() {
 		$html = '';
-		$attribs = array();
 
-		if ( isset( $this->mSubmitID ) ) {
-			$attribs['id'] = $this->mSubmitID;
+		if ( $this->mShowSubmit ) {
+			$attribs = array();
+
+			if ( isset( $this->mSubmitID ) ) {
+				$attribs['id'] = $this->mSubmitID;
+			}
+
+			if ( isset( $this->mSubmitName ) ) {
+				$attribs['name'] = $this->mSubmitName;
+			}
+
+			if ( isset( $this->mSubmitTooltip ) ) {
+				$attribs += Linker::tooltipAndAccesskeyAttribs( $this->mSubmitTooltip );
+			}
+
+			$attribs['class'] = 'mw-htmlform-submit';
+
+			$html .= Xml::submitButton( $this->getSubmitText(), $attribs ) . "\n";
 		}
-
-		if ( isset( $this->mSubmitName ) ) {
-			$attribs['name'] = $this->mSubmitName;
-		}
-
-		if ( isset( $this->mSubmitTooltip ) ) {
-			$attribs += Linker::tooltipAndAccesskeyAttribs( $this->mSubmitTooltip );
-		}
-
-		$attribs['class'] = 'mw-htmlform-submit';
-
-		$html .= Xml::submitButton( $this->getSubmitText(), $attribs ) . "\n";
 
 		if ( $this->mShowReset ) {
 			$html .= Html::element(
@@ -764,7 +770,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Format a stack of error messages into a single HTML string
-	 * @param $errors Array of message keys/values
+	 * @param array $errors of message keys/values
 	 * @return String HTML, a "<ul>" list of errors
 	 */
 	public static function formatErrors( $errors ) {
@@ -792,7 +798,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Set the text for the submit button
-	 * @param $t String plaintext.
+	 * @param string $t plaintext.
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	function setSubmitText( $t ) {
@@ -803,7 +809,7 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Set the text for the submit button to a message
 	 * @since 1.19
-	 * @param $msg String message key
+	 * @param string $msg message key
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	public function setSubmitTextMsg( $msg ) {
@@ -822,7 +828,7 @@ class HTMLForm extends ContextSource {
 	}
 
 	/**
-	 * @param $name String Submit button name
+	 * @param string $name Submit button name
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	public function setSubmitName( $name ) {
@@ -831,7 +837,7 @@ class HTMLForm extends ContextSource {
 	}
 
 	/**
-	 * @param $name String Tooltip for the submit button
+	 * @param string $name Tooltip for the submit button
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	public function setSubmitTooltip( $name ) {
@@ -851,7 +857,22 @@ class HTMLForm extends ContextSource {
 	}
 
 	/**
-	 * @param $id String DOM id for the form
+	 * Stop a default submit button being shown for this form. This implies that an
+	 * alternate submit method must be provided manually.
+	 *
+	 * @since 1.22
+	 *
+	 * @param bool $suppressSubmit Set to false to re-enable the button again
+	 *
+	 * @return HTMLForm $this for chaining calls
+	 */
+	function suppressDefaultSubmit( $suppressSubmit = true ) {
+		$this->mShowSubmit = !$suppressSubmit;
+		return $this;
+	}
+
+	/**
+	 * @param string $id DOM id for the form
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	public function setId( $id ) {
@@ -861,7 +882,7 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Prompt the whole form to be wrapped in a "<fieldset>", with
 	 * this text as its "<legend>" element.
-	 * @param $legend String HTML to go inside the "<legend>" element.
+	 * @param string $legend HTML to go inside the "<legend>" element.
 	 *	 Will be escaped
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
@@ -874,7 +895,7 @@ class HTMLForm extends ContextSource {
 	 * Prompt the whole form to be wrapped in a "<fieldset>", with
 	 * this message as its "<legend>" element.
 	 * @since 1.19
-	 * @param $msg String message key
+	 * @param string $msg message key
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
 	public function setWrapperLegendMsg( $msg ) {
@@ -885,7 +906,7 @@ class HTMLForm extends ContextSource {
 	/**
 	 * Set the prefix for various default messages
 	 * @todo currently only used for the "<fieldset>" legend on forms
-	 * with multiple sections; should be used elsewhre?
+	 * with multiple sections; should be used elsewhere?
 	 * @param $p String
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
@@ -931,8 +952,8 @@ class HTMLForm extends ContextSource {
 	/**
 	 * @todo Document
 	 * @param $fields array[]|HTMLFormField[] array of fields (either arrays or objects)
-	 * @param $sectionName string ID attribute of the "<table>" tag for this section, ignored if empty
-	 * @param $fieldsetIDPrefix string ID prefix for the "<fieldset>" tag of each subsection, ignored if empty
+	 * @param string $sectionName ID attribute of the "<table>" tag for this section, ignored if empty
+	 * @param string $fieldsetIDPrefix ID prefix for the "<fieldset>" tag of each subsection, ignored if empty
 	 * @return String
 	 */
 	public function displaySection( $fields, $sectionName = '', $fieldsetIDPrefix = '' ) {
@@ -956,7 +977,7 @@ class HTMLForm extends ContextSource {
 					$hasLabel = true;
 				}
 			} elseif ( is_array( $value ) ) {
-				$section = $this->displaySection( $value, $key );
+				$section = $this->displaySection( $value, $key, "$fieldsetIDPrefix$key-" );
 				$legend = $this->getLegend( $key );
 				if ( isset( $this->mSectionHeaders[$key] ) ) {
 					$section = $this->mSectionHeaders[$key] . $section;
@@ -1029,7 +1050,7 @@ class HTMLForm extends ContextSource {
 
 	/**
 	 * Stop a reset button being shown for this form
-	 * @param $suppressReset Bool set to false to re-enable the
+	 * @param bool $suppressReset set to false to re-enable the
 	 *	 button again
 	 * @return HTMLForm $this for chaining calls (since 1.20)
 	 */
@@ -1072,7 +1093,6 @@ class HTMLForm extends ContextSource {
 		$this->mAction = $action;
 		return $this;
 	}
-
 }
 
 /**
@@ -1091,6 +1111,12 @@ abstract class HTMLFormField {
 	protected $mDefault;
 
 	/**
+	 * @var bool If true will generate an empty div element with no label
+	 * @since 1.22
+	 */
+	protected $mShowEmptyLabels = true;
+
+	/**
 	 * @var HTMLForm
 	 */
 	public $mParent;
@@ -1099,7 +1125,7 @@ abstract class HTMLFormField {
 	 * This function must be implemented to return the HTML to generate
 	 * the input object itself.  It should not implement the surrounding
 	 * table cells/rows, or labels/help messages.
-	 * @param $value String the value to set the input to; eg a default
+	 * @param string $value the value to set the input to; eg a default
 	 *	 text for a text input.
 	 * @return String valid HTML.
 	 */
@@ -1108,7 +1134,7 @@ abstract class HTMLFormField {
 	/**
 	 * Get a translated interface message
 	 *
-	 * This is a wrapper arround $this->mParent->msg() if $this->mParent is set
+	 * This is a wrapper around $this->mParent->msg() if $this->mParent is set
 	 * and wfMessage() otherwise.
 	 *
 	 * Parameters are the same as wfMessage().
@@ -1131,8 +1157,8 @@ abstract class HTMLFormField {
 	 * Override this function to add specific validation checks on the
 	 * field input.  Don't forget to call parent::validate() to ensure
 	 * that the user-defined callback mValidationCallback is still run
-	 * @param $value String the value the field was submitted with
-	 * @param $alldata Array the data collected from the form
+	 * @param string $value the value the field was submitted with
+	 * @param array $alldata the data collected from the form
 	 * @return Mixed Bool true on success, or String error to display.
 	 */
 	function validate( $value, $alldata ) {
@@ -1181,7 +1207,9 @@ abstract class HTMLFormField {
 
 	/**
 	 * Initialise the object
-	 * @param $params array Associative Array. See HTMLForm doc for syntax.
+	 * @param array $params Associative Array. See HTMLForm doc for syntax.
+	 *
+	 * @since 1.22 The 'label' attribute no longer accepts raw HTML, use 'label-raw' instead
 	 * @throws MWException
 	 */
 	function __construct( $params ) {
@@ -1200,7 +1228,14 @@ abstract class HTMLFormField {
 
 			$this->mLabel = wfMessage( $msg, $msgInfo )->parse();
 		} elseif ( isset( $params['label'] ) ) {
-			$this->mLabel = $params['label'];
+			if ( $params['label'] === '&#160;' ) {
+				// Apparently some things set &nbsp directly and in an odd format
+				$this->mLabel = '&#160;';
+			} else {
+				$this->mLabel = htmlspecialchars( $params['label'] );
+			}
+		} elseif ( isset( $params['label-raw'] ) ) {
+			$this->mLabel = $params['label-raw'];
 		}
 
 		$this->mName = "wp{$params['fieldname']}";
@@ -1245,12 +1280,16 @@ abstract class HTMLFormField {
 		if ( isset( $params['flatlist'] ) ) {
 			$this->mClass .= ' mw-htmlform-flatlist';
 		}
+
+		if ( isset( $params['hidelabel'] ) ) {
+			$this->mShowEmptyLabels = false;
+		}
 	}
 
 	/**
 	 * Get the complete table row for the input, including help text,
 	 * labels, and whatever.
-	 * @param $value String the value to set the input to.
+	 * @param string $value the value to set the input to.
 	 * @return String complete HTML table row.
 	 */
 	function getTableRow( $value ) {
@@ -1294,7 +1333,7 @@ abstract class HTMLFormField {
 	 * Get the complete div for the input, including help text,
 	 * labels, and whatever.
 	 * @since 1.20
-	 * @param $value String the value to set the input to.
+	 * @param string $value the value to set the input to.
 	 * @return String complete HTML table row.
 	 */
 	public function getDiv( $value ) {
@@ -1305,9 +1344,14 @@ abstract class HTMLFormField {
 		$cellAttributes = array();
 		$label = $this->getLabelHtml( $cellAttributes );
 
+		$outerDivClass = array(
+			'mw-input',
+			'mw-htmlform-nolabel' => ( $label === '' )
+		);
+
 		$field = Html::rawElement(
 			'div',
-			array( 'class' => 'mw-input' ) + $cellAttributes,
+			array( 'class' => $outerDivClass ) + $cellAttributes,
 			$inputHtml . "\n$errors"
 		);
 		$html = Html::rawElement( 'div',
@@ -1321,11 +1365,11 @@ abstract class HTMLFormField {
 	 * Get the complete raw fields for the input, including help text,
 	 * labels, and whatever.
 	 * @since 1.20
-	 * @param $value String the value to set the input to.
+	 * @param string $value the value to set the input to.
 	 * @return String complete HTML table row.
 	 */
 	public function getRaw( $value ) {
-		list( $errors, $errorClass ) = $this->getErrorsAndErrorClass( $value );
+		list( $errors, ) = $this->getErrorsAndErrorClass( $value );
 		$inputHtml = $this->getInputHTML( $value );
 		$helptext = $this->getHelpTextHtmlRaw( $this->getHelpText() );
 		$cellAttributes = array();
@@ -1419,7 +1463,7 @@ abstract class HTMLFormField {
 	/**
 	 * Determine form errors to display and their classes
 	 * @since 1.20
-	 * @param $value String the value of the input
+	 * @param string $value the value of the input
 	 * @return Array
 	 */
 	public function getErrorsAndErrorClass( $value ) {
@@ -1436,7 +1480,7 @@ abstract class HTMLFormField {
 	}
 
 	function getLabel() {
-		return $this->mLabel;
+		return is_null( $this->mLabel ) ? '' : $this->mLabel;
 	}
 
 	function getLabelHtml( $cellAttributes = array() ) {
@@ -1448,20 +1492,32 @@ abstract class HTMLFormField {
 			$for['for'] = $this->mID;
 		}
 
-		$displayFormat = $this->mParent->getDisplayFormat();
-		$labelElement = Html::rawElement( 'label', $for, $this->getLabel() );
-
-		if ( $displayFormat == 'table' ) {
-			return Html::rawElement( 'td', array( 'class' => 'mw-label' ) + $cellAttributes,
-				Html::rawElement( 'label', $for, $this->getLabel() )
-			);
-		} elseif ( $displayFormat == 'div' ) {
-			return Html::rawElement( 'div', array( 'class' => 'mw-label' ) + $cellAttributes,
-				Html::rawElement( 'label', $for, $this->getLabel() )
-			);
-		} else {
-			return $labelElement;
+		$labelValue = trim( $this->getLabel() );
+		$hasLabel = false;
+		if ( $labelValue !== '&#160;' && $labelValue !== '' ) {
+			$hasLabel = true;
 		}
+
+		$displayFormat = $this->mParent->getDisplayFormat();
+		$html = '';
+
+		if ( $displayFormat === 'table' ) {
+			$html = Html::rawElement( 'td', array( 'class' => 'mw-label' ) + $cellAttributes,
+				Html::rawElement( 'label', $for, $labelValue )
+			);
+		} elseif ( $hasLabel || $this->mShowEmptyLabels ) {
+			if ( $displayFormat === 'div' ) {
+				$html = Html::rawElement(
+					'div',
+					array( 'class' => 'mw-label' ) + $cellAttributes,
+					Html::rawElement( 'label', $for, $labelValue )
+				);
+			} else {
+				$html = Html::rawElement( 'label', $for, $labelValue );
+			}
+		}
+
+		return $html;
 	}
 
 	function getDefault() {
@@ -1487,7 +1543,7 @@ abstract class HTMLFormField {
 	/**
 	 * flatten an array of options to a single array, for instance,
 	 * a set of "<options>" inside "<optgroups>".
-	 * @param $options array Associative Array with values either Strings
+	 * @param array $options Associative Array with values either Strings
 	 *	 or Arrays
 	 * @return Array flattened input
 	 */
@@ -1601,16 +1657,19 @@ class HTMLTextField extends HTMLFormField {
 	}
 }
 class HTMLTextAreaField extends HTMLFormField {
+	const DEFAULT_COLS = 80;
+	const DEFAULT_ROWS = 25;
+
 	function getCols() {
 		return isset( $this->mParams['cols'] )
 			? $this->mParams['cols']
-			: 80;
+			: static::DEFAULT_COLS;
 	}
 
 	function getRows() {
 		return isset( $this->mParams['rows'] )
 			? $this->mParams['rows']
-			: 25;
+			: static::DEFAULT_ROWS;
 	}
 
 	function getInputHTML( $value ) {
@@ -1782,6 +1841,227 @@ class HTMLCheckField extends HTMLFormField {
 }
 
 /**
+ * A checkbox matrix
+ * Operates similarly to HTMLMultiSelectField, but instead of using an array of
+ * options, uses an array of rows and an array of columns to dynamically
+ * construct a matrix of options. The tags used to identify a particular cell
+ * are of the form "columnName-rowName"
+ *
+ * Options:
+ *   columns:           Required list of columns in the matrix.
+ *   rows:              Required list of rows in the matrix.
+ *   force-options-on:  Accepts array of column-row tags to be displayed as enabled
+ *                      but unavailable to change
+ *   force-options-off: Accepts array of column-row tags to be displayed as disabled
+ *                      but unavailable to change.
+ */
+class HTMLCheckMatrix extends HTMLFormField implements HTMLNestedFilterable {
+
+	static private $requiredParams = array(
+		// Required by underlying HTMLFormField
+		'fieldname',
+		// Required by HTMLCheckMatrix
+		'rows', 'columns'
+	);
+
+	public function __construct( $params ) {
+		$missing = array_diff( self::$requiredParams, array_keys( $params ) );
+		if ( $missing ) {
+			throw HTMLFormFieldRequiredOptionsException::create( $this, $missing );
+		}
+		parent::__construct( $params );
+	}
+
+	function validate( $value, $alldata ) {
+		$rows = $this->mParams['rows'];
+		$columns = $this->mParams['columns'];
+
+		// Make sure user-defined validation callback is run
+		$p = parent::validate( $value, $alldata );
+		if ( $p !== true ) {
+			return $p;
+		}
+
+		// Make sure submitted value is an array
+		if ( !is_array( $value ) ) {
+			return false;
+		}
+
+		// If all options are valid, array_intersect of the valid options
+		// and the provided options will return the provided options.
+		$validOptions = array();
+		foreach ( $rows as $rowTag ) {
+			foreach ( $columns as $columnTag ) {
+				$validOptions[] = $columnTag . '-' . $rowTag;
+			}
+		}
+		$validValues = array_intersect( $value, $validOptions );
+		if ( count( $validValues ) == count( $value ) ) {
+			return true;
+		} else {
+			return $this->msg( 'htmlform-select-badoption' )->parse();
+		}
+	}
+
+	/**
+	 * Build a table containing a matrix of checkbox options.
+	 * The value of each option is a combination of the row tag and column tag.
+	 * mParams['rows'] is an array with row labels as keys and row tags as values.
+	 * mParams['columns'] is an array with column labels as keys and column tags as values.
+	 * @param array $value of the options that should be checked
+	 * @return String
+	 */
+	function getInputHTML( $value ) {
+		$html = '';
+		$tableContents = '';
+		$attribs = array();
+		$rows = $this->mParams['rows'];
+		$columns = $this->mParams['columns'];
+
+		// If the disabled param is set, disable all the options
+		if ( !empty( $this->mParams['disabled'] ) ) {
+			$attribs['disabled'] = 'disabled';
+		}
+
+		// Build the column headers
+		$headerContents = Html::rawElement( 'td', array(), '&#160;' );
+		foreach ( $columns as $columnLabel => $columnTag ) {
+			$headerContents .= Html::rawElement( 'td', array(), $columnLabel );
+		}
+		$tableContents .= Html::rawElement( 'tr', array(), "\n$headerContents\n" );
+
+		// Build the options matrix
+		foreach ( $rows as $rowLabel => $rowTag ) {
+			$rowContents = Html::rawElement( 'td', array(), $rowLabel );
+			foreach ( $columns as $columnTag ) {
+				$thisTag = "$columnTag-$rowTag";
+				// Construct the checkbox
+				$thisAttribs = array(
+					'id' => "{$this->mID}-$thisTag",
+					'value' => $thisTag,
+				);
+				$checked = in_array( $thisTag, (array)$value, true );
+				if ( $this->isTagForcedOff( $thisTag ) ) {
+					$checked = false;
+					$thisAttribs['disabled'] = 1;
+				} elseif ( $this->isTagForcedOn( $thisTag ) ) {
+					$checked = true;
+					$thisAttribs['disabled'] = 1;
+				}
+				$rowContents .= Html::rawElement(
+					'td',
+					array(),
+					Xml::check( "{$this->mName}[]", $checked, $attribs + $thisAttribs )
+				);
+			}
+			$tableContents .= Html::rawElement( 'tr', array(), "\n$rowContents\n" );
+		}
+
+		// Put it all in a table
+		$html .= Html::rawElement( 'table', array( 'class' => 'mw-htmlform-matrix' ),
+			Html::rawElement( 'tbody', array(), "\n$tableContents\n" ) ) . "\n";
+
+		return $html;
+	}
+
+	protected function isTagForcedOff( $tag ) {
+		return isset( $this->mParams['force-options-off'] )
+			&& in_array( $tag, $this->mParams['force-options-off'] );
+	}
+
+	protected function isTagForcedOn( $tag ) {
+		return isset( $this->mParams['force-options-on'] )
+			&& in_array( $tag, $this->mParams['force-options-on'] );
+	}
+
+	/**
+	 * Get the complete table row for the input, including help text,
+	 * labels, and whatever.
+	 * We override this function since the label should always be on a separate
+	 * line above the options in the case of a checkbox matrix, i.e. it's always
+	 * a "vertical-label".
+	 * @param string $value the value to set the input to
+	 * @return String complete HTML table row
+	 */
+	function getTableRow( $value ) {
+		list( $errors, $errorClass ) = $this->getErrorsAndErrorClass( $value );
+		$inputHtml = $this->getInputHTML( $value );
+		$fieldType = get_class( $this );
+		$helptext = $this->getHelpTextHtmlTable( $this->getHelpText() );
+		$cellAttributes = array( 'colspan' => 2 );
+
+		$label = $this->getLabelHtml( $cellAttributes );
+
+		$field = Html::rawElement(
+			'td',
+			array( 'class' => 'mw-input' ) + $cellAttributes,
+			$inputHtml . "\n$errors"
+		);
+
+		$html = Html::rawElement( 'tr',
+			array( 'class' => 'mw-htmlform-vertical-label' ), $label );
+		$html .= Html::rawElement( 'tr',
+			array( 'class' => "mw-htmlform-field-$fieldType {$this->mClass} $errorClass" ),
+			$field );
+
+		return $html . $helptext;
+	}
+
+	/**
+	 * @param $request WebRequest
+	 * @return Array
+	 */
+	function loadDataFromRequest( $request ) {
+		if ( $this->mParent->getMethod() == 'post' ) {
+			if ( $request->wasPosted() ) {
+				// Checkboxes are not added to the request arrays if they're not checked,
+				// so it's perfectly possible for there not to be an entry at all
+				return $request->getArray( $this->mName, array() );
+			} else {
+				// That's ok, the user has not yet submitted the form, so show the defaults
+				return $this->getDefault();
+			}
+		} else {
+			// This is the impossible case: if we look at $_GET and see no data for our
+			// field, is it because the user has not yet submitted the form, or that they
+			// have submitted it with all the options unchecked. We will have to assume the
+			// latter, which basically means that you can't specify 'positive' defaults
+			// for GET forms.
+			return $request->getArray( $this->mName, array() );
+		}
+	}
+
+	function getDefault() {
+		if ( isset( $this->mDefault ) ) {
+			return $this->mDefault;
+		} else {
+			return array();
+		}
+	}
+
+	function filterDataForSubmit( $data ) {
+		$columns = HTMLFormField::flattenOptions( $this->mParams['columns'] );
+		$rows = HTMLFormField::flattenOptions( $this->mParams['rows'] );
+		$res = array();
+		foreach ( $columns as $column ) {
+			foreach ( $rows as $row ) {
+				// Make sure option hasn't been forced
+				$thisTag = "$column-$row";
+				if ( $this->isTagForcedOff( $thisTag ) ) {
+					$res[$thisTag] = false;
+				} elseif ( $this->isTagForcedOn( $thisTag ) ) {
+					$res[$thisTag] = true;
+				} else {
+					$res[$thisTag] = in_array( $thisTag, $data );
+				}
+			}
+		}
+
+		return $res;
+	}
+}
+
+/**
  * A select dropdown field.  Basically a wrapper for Xmlselect class
  */
 class HTMLSelectField extends HTMLFormField {
@@ -1794,10 +2074,11 @@ class HTMLSelectField extends HTMLFormField {
 
 		$validOptions = HTMLFormField::flattenOptions( $this->mParams['options'] );
 
-		if ( in_array( $value, $validOptions ) )
+		if ( in_array( $value, $validOptions ) ) {
 			return true;
-		else
+		} else {
 			return $this->msg( 'htmlform-select-badoption' )->parse();
+		}
 	}
 
 	function getInputHTML( $value ) {
@@ -1831,7 +2112,6 @@ class HTMLSelectField extends HTMLFormField {
  * Select dropdown field, with an additional "other" textbox.
  */
 class HTMLSelectOrOtherField extends HTMLTextField {
-	static $jsAdded = false;
 
 	function __construct( $params ) {
 		if ( !in_array( 'other', $params['options'], true ) ) {
@@ -1920,7 +2200,7 @@ class HTMLSelectOrOtherField extends HTMLTextField {
 /**
  * Multi-select field
  */
-class HTMLMultiSelectField extends HTMLFormField {
+class HTMLMultiSelectField extends HTMLFormField implements HTMLNestedFilterable {
 
 	function validate( $value, $alldata ) {
 		$p = parent::validate( $value, $alldata );
@@ -2013,6 +2293,17 @@ class HTMLMultiSelectField extends HTMLFormField {
 		}
 	}
 
+	function filterDataForSubmit( $data ) {
+		$options = HTMLFormField::flattenOptions( $this->mParams['options'] );
+
+		$res = array();
+		foreach ( $options as $opt ) {
+			$res["$opt"] = in_array( $opt, $data );
+		}
+
+		return $res;
+	}
+
 	protected function needsLabel() {
 		return false;
 	}
@@ -2057,8 +2348,8 @@ class HTMLSelectAndOtherField extends HTMLSelectField {
 
 	/**
 	 * Build a drop-down box from a textual list.
-	 * @param $string String message text
-	 * @param $otherName String name of "other reason" option
+	 * @param string $string message text
+	 * @param string $otherName name of "other reason" option
 	 * @return Array
 	 * TODO: this is copied from Xml::listDropDown(), deprecate/avoid duplication?
 	 */
@@ -2191,7 +2482,6 @@ class HTMLSelectAndOtherField extends HTMLSelectField {
  * Radio checkbox fields.
  */
 class HTMLRadioField extends HTMLFormField {
-
 
 	function validate( $value, $alldata ) {
 		$p = parent::validate( $value, $alldata );
@@ -2348,14 +2638,28 @@ class HTMLHiddenField extends HTMLFormField {
 		return $this->getTableRow( $value );
 	}
 
-	public function getInputHTML( $value ) { return ''; }
+	public function getInputHTML( $value ) {
+		return '';
+	}
 }
 
 /**
  * Add a submit button inline in the form (as opposed to
  * HTMLForm::addButton(), which will add it at the end).
  */
-class HTMLSubmitField extends HTMLFormField {
+class HTMLSubmitField extends HTMLButtonField {
+	protected $buttonType = 'submit';
+}
+
+/**
+ * Adds a generic button inline to the form. Does not do anything, you must add
+ * click handling code in JavaScript. Use a HTMLSubmitField if you merely
+ * wish to add a submit button to a form.
+ *
+ * @since 1.22
+ */
+class HTMLButtonField extends HTMLFormField {
+	protected $buttonType = 'button';
 
 	public function __construct( $info ) {
 		$info['nodata'] = true;
@@ -2363,13 +2667,20 @@ class HTMLSubmitField extends HTMLFormField {
 	}
 
 	public function getInputHTML( $value ) {
-		return Xml::submitButton(
+		$attr = array(
+			'class' => 'mw-htmlform-submit ' . $this->mClass,
+			'id' => $this->mID,
+		);
+
+		if ( !empty( $this->mParams['disabled'] ) ) {
+			$attr['disabled'] = 'disabled';
+		}
+
+		return Html::input(
+			$this->mName,
 			$value,
-			array(
-				'class' => 'mw-htmlform-submit ' . $this->mClass,
-				'name' => $this->mName,
-				'id' => $this->mID,
-			)
+			$this->buttonType,
+			$attr
 		);
 	}
 
@@ -2446,5 +2757,24 @@ class HTMLApiField extends HTMLFormField {
 
 	public function getInputHTML( $value ) {
 		return '';
+	}
+}
+
+interface HTMLNestedFilterable {
+	/**
+	 * Support for seperating multi-option preferences into multiple preferences
+	 * Due to lack of array support.
+	 * @param $data array
+	 */
+	function filterDataForSubmit( $data );
+}
+
+class HTMLFormFieldRequiredOptionsException extends MWException {
+	static public function create( HTMLFormField $field, array $missing ) {
+		return new self( sprintf(
+			"Form type `%s` expected the following parameters to be set: %s",
+			get_class( $field ),
+			implode( ', ', $missing )
+		) );
 	}
 }

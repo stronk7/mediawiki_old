@@ -162,8 +162,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Aazahl Benutzer aazeige, wo ne Syten am Aaluege sy (i den Artikelsyte, i de «letschten Änderigen» und i der Beobachtigslischte)',
 'tog-oldsig' => 'Vorschau vu dr Unterschrift:',
 'tog-fancysig' => 'Signatur as Wikitext behandle (ohni automatischi Vergleichig)',
-'tog-externaleditor' => 'Externe Editor als Standard bruche (nume fir Experte, doderzue brucht s speziälli Yystellige uf em Computer. [//www.mediawiki.org/wiki/Manual:External_editors Wyteri Informatione doderzue.])',
-'tog-externaldiff' => 'Extern Programm fir Versionsunterschid als Standard bruche (nume fir Experte, doderzue brucht s speziälli Yystellige uf em Computer. [//www.mediawiki.org/wiki/Manual:External_editors Wyteri Informatione doderzue.])',
 'tog-showjumplinks' => '«Wächsle-zu»-Links ermügleche',
 'tog-uselivepreview' => 'Live-Vorschau bruche (JavaScript) (experimentell)',
 'tog-forceeditsummary' => 'Sag mer s, wänn i s Zämmefassigsfeld läär loss',
@@ -178,6 +176,7 @@ $messages = array(
 'tog-showhiddencats' => 'Zeig di versteckte Kategorie',
 'tog-noconvertlink' => 'Konvertierig vum Titel deaktiviere',
 'tog-norollbackdiff' => 'Unterschid noch em Zrucksetze unterdrucke',
+'tog-useeditwarning' => 'Warn mi, wänn I ne Syte verloss mit Bearbeitige, wu nonig gspycheret sin',
 
 'underline-always' => 'immer',
 'underline-never' => 'nie',
@@ -630,7 +629,7 @@ Wänn s Benutzerkonto us Versäh aaglait woren isch, chasch die Nochricht ignori
 'loginlanguagelabel' => 'Sproch: $1',
 'suspicious-userlogout' => 'Dyy Versuech di abzmälde isch abbroche wore, wel s uusgsäh het, wie wänn s vun eme bschedigte Browser oder eme Cacheproxy uus gsändet woren isch.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Nit bekannte Fähler mit dr Funktion mail() vu PHP',
 'user-mail-no-addy' => 'Es isch versuecht worde e E-Mail ohni Angab vunere E-Mail-Adräss z verschigge.',
 
@@ -893,6 +892,8 @@ Si isch schyns glescht wore.',
 'content-failed-to-parse' => 'Parse vum Inhalt $2 fir Modell $1 fählgschlaa: $3',
 'invalid-content-data' => 'Uugiltigi Inhaltsdate',
 'content-not-allowed-here' => 'Dr Inhalt „$1“ isch uf dr Syte [[$2]] nit erlaubt',
+'editwarning-warning' => 'Wänn Du die Syte verlosch, cha s syy, ass Du alli Bearbeitige verliersch, wu Du do dra gmacht hesch.
+Wänn Du aagmäldet bisch, chasch s Anzeige vu däre Warnig im „{{int:prefs-editing}}“-Beryych vu Dyyne Yystelligen abstelle.',
 
 # Content models
 'content-model-wikitext' => 'Wikitext',
@@ -1170,15 +1171,6 @@ Einzelheite chasch im [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}
 'search-external' => 'Externi Suech',
 'searchdisabled' => 'D {{SITENAME}}-Suech isch deaktiviert. Du chasch mit Google sueche, s cha aber syy ass dr Suechindex vu Google fir {{SITENAME}} veraltet isch.',
 
-# Quickbar
-'qbsettings' => 'Syteleischte',
-'qbsettings-none' => 'Keini',
-'qbsettings-fixedleft' => 'Links, fescht',
-'qbsettings-fixedright' => 'Rächts, fescht',
-'qbsettings-floatingleft' => 'Links, in dr Schwebi',
-'qbsettings-floatingright' => 'Rächts, in dr Schwebi',
-'qbsettings-directionality' => 'Fescht, abhängig vu dr Schrybrichtig vu dr gwehlte Sproch',
-
 # Preferences page
 'preferences' => 'Yystellige',
 'mypreferences' => 'Yystellige',
@@ -1294,7 +1286,7 @@ Des cha nimmi ruckgängig gmacht wäre.',
 'prefs-displaywatchlist' => 'Aazeigoptione',
 'prefs-diffs' => 'Versionsverglych',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'Siht giltig uus',
 'email-address-validity-invalid' => 'S brucht e giltigi Adräss!',
 
@@ -1717,7 +1709,6 @@ Us Sicherheitsgrinde isch img_auth.php deaktiviert.',
 'http-read-error' => 'Fähler bim Läse vu HTTP.',
 'http-timed-out' => 'Uuszyt bim HTTP-Versuech.',
 'http-curl-error' => 'Fähler bim Ufsueche vu dr URL: $1',
-'http-host-unreachable' => 'URL isch nit z verwitsche',
 'http-bad-status' => 'Bi dr HTTP-Aafrog isch e Fähler ufdrätte: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2057,7 +2048,7 @@ Zuesätzligi Informatione iber einzelni Rächt git s [[{{MediaWiki:Listgrouprigh
 'listgrouprights-addgroup-self-all' => 'Cha alli Gruppe zum eigene Benutzerkonto zuefiege',
 'listgrouprights-removegroup-self-all' => 'Cha alli Gruppe us em eigene Benutzerkonto useneh',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Du bisch nid aagmäldet oder hesch keis Mail aaggä',
 'mailnologintext' => 'Du muesch [[Special:UserLogin|aagmäldet syy]] un e bstätigti E-Mail-Adräss in Dyyne [[Special:Preferences|Yystellige]] aagee ha, fir dass epper anderem es E-Mail chasch schicke.',
 'emailuser' => 'Es Mail schrybe',
@@ -2117,8 +2108,8 @@ Wänn Du d Syte speter wider vu dr Lischt witt stryyche, deno druck eifach uf �
 'notvisiblerev' => 'Version isch glescht wore',
 'watchnochange' => 'Vo den Artikle, wo du beobachtisch, isch im aazeigte Zytruum kene veränderet worde.',
 'watchlist-details' => '{{PLURAL:$1|1 Syte wird|$1 Sytene wärde}} beobachtet (Diskussionssyte nid zelt, aber ou beobachtet).',
-'wlheader-enotif' => '* Dr E-Mail-Benochrichtigungsdienscht isch aktiviert.',
-'wlheader-showupdated' => "* Syte mit Anderige, wu no nit aagluegt sin, sin '''fett''' dargstellt.",
+'wlheader-enotif' => 'Dr E-Mail-Benochrichtigungsdienscht isch aktiviert.',
+'wlheader-showupdated' => "Syte mit Anderige, wu no nit aagluegt sin, sin '''fett''' dargstellt.",
 'watchmethod-recent' => 'Iberpriefe vu dr letschte Bearbeitige fir d Beobachtigslischt',
 'watchmethod-list' => 'Iberpriefe vu dr Beobachtigslischt no letschte Bearbeitige',
 'watchlistcontains' => 'In Dyynere Beobachtigslischt het s $1 {{PLURAL:$1|Syte|Syte}}.',
@@ -2964,7 +2955,7 @@ Andri wäre standardmäßig nit aazeigt.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Breiti',
 'exif-imagelength' => 'Längi',
 'exif-bitspersample' => 'Bit pro Farbkomponente',
@@ -3142,7 +3133,7 @@ Andri wäre standardmäßig nit aazeigt.
 'exif-originalimageheight' => 'Bildhechi vor em Zueschnyde',
 'exif-originalimagewidth' => 'Bildbreiti vor em Zueschnyde',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Uukomprimiert',
 'exif-compression-2' => 'CCITT Gruppe 3 1-dimensionali modifizierti Huffman-Lauflengekodierig',
 'exif-compression-3' => 'CCITT Gruppe 3 Faxkodierig',
@@ -3363,7 +3354,7 @@ Andri wäre standardmäßig nit aazeigt.
 'monthsall' => 'alli',
 'limitall' => 'alli',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Bstätigung vo Ihre E-Poscht-Adräss',
 'confirmemail_noemail' => 'Du hesch in dyne [[Special:Preferences|persönliche Ystellige]] e kei E-Mail-Adress ygää.',
 'confirmemail_text' => 'Dermit du di erwyterete Mailfunktione chasch bruuche, muesch du die E-Mail-Adrässe, wo du hesch aaggä, la bestätige. Klick ufe Chnopf unte; das schickt dir es Mail. I däm Mail isch e Link; we du däm Link folgsch, de tuesch dadermit bestätige, das die E-Mail-Adrässe dyni isch.',
@@ -3550,13 +3541,6 @@ E [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopi vu dr GNU General Public-Lizänz] sott 
 'version-entrypoints' => 'Yygangspunkt-URL',
 'version-entrypoints-header-entrypoint' => 'Yygangspunkt',
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Dateipfad',
-'filepath-page' => 'Datei:',
-'filepath-submit' => 'Gang',
-'filepath-summary' => 'Mit däre Spezialsyte losst sich dr komplett Pfad vu dr aktuälle Version vun ere Datei ohni Umwäg abfroge.
-Di aagfrogt Datei wird diräkt dargstellt bzw. mit dr verchnipfte Aawändig gstartet.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Datei-Duplikat sueche',

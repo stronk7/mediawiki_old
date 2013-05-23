@@ -22,7 +22,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that sends SQL queries from the specified file to the database.
@@ -70,9 +70,9 @@ class MwSql extends Maintenance {
 
 		$wholeLine = '';
 		$newPrompt = '> ';
-		$prompt    = $newPrompt;
+		$prompt = $newPrompt;
 		while ( ( $line = Maintenance::readconsole( $prompt ) ) !== false ) {
-			if( !$line ) {
+			if ( !$line ) {
 				# User simply pressed return key
 				continue;
 			}
@@ -91,12 +91,12 @@ class MwSql extends Maintenance {
 				readline_add_history( $wholeLine . $dbw->getDelimiter() );
 				readline_write_history( $historyFile );
 			}
-			try{
+			try {
 				$res = $dbw->query( $wholeLine );
 				$this->sqlPrintResult( $res, $dbw );
-				$prompt    = $newPrompt;
+				$prompt = $newPrompt;
 				$wholeLine = '';
-			} catch (DBQueryError $e) {
+			} catch ( DBQueryError $e ) {
 				$doDie = ! Maintenance::posix_isatty( 0 );
 				$this->error( $e, $doDie );
 			}
@@ -132,4 +132,4 @@ class MwSql extends Maintenance {
 }
 
 $maintClass = "MwSql";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

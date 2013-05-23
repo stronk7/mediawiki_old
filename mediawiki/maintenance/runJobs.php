@@ -25,7 +25,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that runs pending jobs.
@@ -61,10 +61,11 @@ class RunJobs extends Maintenance {
 			$procs = intval( $this->getOption( 'procs' ) );
 			if ( $procs < 1 || $procs > 1000 ) {
 				$this->error( "Invalid argument to --procs", true );
-			}
-			$fc = new ForkController( $procs );
-			if ( $fc->start() != 'child' ) {
-				exit( 0 );
+			} elseif ( $procs != 1 ) {
+				$fc = new ForkController( $procs );
+				if ( $fc->start() != 'child' ) {
+					exit( 0 );
+				}
 			}
 		}
 		$maxJobs = $this->getOption( 'maxjobs', false );
@@ -73,7 +74,7 @@ class RunJobs extends Maintenance {
 		$type = $this->getOption( 'type', false );
 		$wgTitle = Title::newFromText( 'RunJobs.php' );
 		$dbw = wfGetDB( DB_MASTER );
-		$n = 0;
+		$jobsRun = 0; // counter
 
 		$group = JobQueueGroup::singleton();
 		// Handle any required periodic queue maintenance
@@ -82,22 +83,28 @@ class RunJobs extends Maintenance {
 			$this->runJobsLog( "Executed $count periodic queue task(s)." );
 		}
 
+		$flags = JobQueueGroup::USE_CACHE | JobQueueGroup::USE_PRIORITY;
+		$lastTime = time();
 		do {
 			$job = ( $type === false )
-				? $group->pop( JobQueueGroup::TYPE_DEFAULT, JobQueueGroup::USE_CACHE )
+				? $group->pop( JobQueueGroup::TYPE_DEFAULT, $flags )
 				: $group->pop( $type ); // job from a single queue
 			if ( $job ) { // found a job
+				++$jobsRun;
 				$this->runJobsLog( $job->toString() . " STARTING" );
 
 				// Run the job...
 				$t = microtime( true );
+				wfProfileIn( __METHOD__ . '-' . get_class( $job ) );
 				try {
 					$status = $job->run();
 					$error = $job->getLastError();
 				} catch ( MWException $e ) {
 					$status = false;
 					$error = get_class( $e ) . ': ' . $e->getMessage();
+					wfDebugLog( 'exception', $e->getLogMessage() );
 				}
+				wfProfileOut( __METHOD__ . '-' . get_class( $job ) );
 				$timeMs = intval( ( microtime( true ) - $t ) * 1000 );
 
 				// Mark the job as done on success or when the job cannot be retried
@@ -105,21 +112,28 @@ class RunJobs extends Maintenance {
 					$group->ack( $job ); // done
 				}
 
-				if ( !$status ) {
+				if ( $status === false ) {
 					$this->runJobsLog( $job->toString() . " t=$timeMs error={$error}" );
 				} else {
 					$this->runJobsLog( $job->toString() . " t=$timeMs good" );
 				}
 
 				// Break out if we hit the job count or wall time limits...
-				if ( $maxJobs && ++$n >= $maxJobs ) {
+				if ( $maxJobs && $jobsRun >= $maxJobs ) {
 					break;
 				} elseif ( $maxTime && ( time() - $startTime ) > $maxTime ) {
 					break;
 				}
 
-				// Don't let any slaves/backups fall behind...
-				$group->get( $job->getType() )->waitForBackups();
+				// Don't let any of the main DB slaves get backed up
+				$timePassed = time() - $lastTime;
+				if ( $timePassed >= 5 || $timePassed < 0 ) {
+					wfWaitForSlaves();
+				}
+				// Don't let any queue slaves/backups fall behind
+				if ( $jobsRun > 0 && ( $jobsRun % 100 ) == 0 ) {
+					$group->waitForBackups();
+				}
 			}
 		} while ( $job ); // stop when there are no jobs
 	}
@@ -135,4 +149,4 @@ class RunJobs extends Maintenance {
 }
 
 $maintClass = "RunJobs";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

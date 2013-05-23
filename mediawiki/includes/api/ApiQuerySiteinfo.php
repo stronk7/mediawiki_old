@@ -121,7 +121,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data = array();
 		$mainPage = Title::newMainPage();
 		$data['mainpage'] = $mainPage->getPrefixedText();
-		$data['base'] = wfExpandUrl( $mainPage->getFullUrl(), PROTO_CURRENT );
+		$data['base'] = wfExpandUrl( $mainPage->getFullURL(), PROTO_CURRENT );
 		$data['sitename'] = $GLOBALS['wgSitename'];
 		$data['generator'] = "MediaWiki {$GLOBALS['wgVersion']}";
 		$data['phpversion'] = phpversion();
@@ -139,11 +139,15 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 		if ( $wgContLang->linkPrefixExtension() ) {
 			$data['linkprefix'] = wfMessage( 'linkprefix' )->inContentLanguage()->text();
+		} else {
+			$data['linkprefix'] = '';
 		}
 
 		$linktrail = $wgContLang->linkTrail();
 		if ( $linktrail ) {
 			$data['linktrail'] = $linktrail;
+		} else {
+			$data['linktrail'] = '';
 		}
 
 		$git = SpecialVersion::getGitHeadSha1( $GLOBALS['IP'] );
@@ -166,15 +170,15 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data['lang'] = $GLOBALS['wgLanguageCode'];
 
 		$fallbacks = array();
-		foreach( $wgContLang->getFallbackLanguages() as $code ) {
+		foreach ( $wgContLang->getFallbackLanguages() as $code ) {
 			$fallbacks[] = array( 'code' => $code );
 		}
 		$data['fallback'] = $fallbacks;
 		$this->getResult()->setIndexedTagName( $data['fallback'], 'lang' );
 
-		if( $wgContLang->hasVariants() ) {
+		if ( $wgContLang->hasVariants() ) {
 			$variants = array();
-			foreach( $wgContLang->getVariants() as $code ) {
+			foreach ( $wgContLang->getVariants() as $code ) {
 				$variants[] = array( 'code' => $code );
 			}
 			$data['variants'] = $variants;
@@ -341,10 +345,10 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				$val['language'] = $langNames[$prefix];
 			}
 			$val['url'] = wfExpandUrl( $row['iw_url'], PROTO_CURRENT );
-			if( isset( $row['iw_wikiid'] ) ) {
+			if ( isset( $row['iw_wikiid'] ) ) {
 				$val['wikiid'] = $row['iw_wikiid'];
 			}
-			if( isset( $row['iw_api'] ) ) {
+			if ( isset( $row['iw_api'] ) ) {
 				$val['api'] = $row['iw_api'];
 			}
 
@@ -372,7 +376,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				);
 			}
 		} else {
-			list( $host, $lag, $index ) = $lb->getMaxLag();
+			list( , $lag, $index ) = $lb->getMaxLag();
 			$data[] = array(
 				'host' => $wgShowHostnames
 						? $lb->getServerName( $index )
@@ -516,7 +520,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 		$data = array(
 			'url' => $url ? $url : '',
-			'text' => $text ?  $text : ''
+			'text' => $text ? $text : ''
 		);
 
 		return $this->getResult()->addValue( 'query', $property, $data );
@@ -540,9 +544,17 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 	public function appendSkins( $property ) {
 		$data = array();
+		$usable = Skin::getUsableSkins();
+		$default = Skin::normalizeKey( 'default' );
 		foreach ( Skin::getSkinNames() as $name => $displayName ) {
 			$skin = array( 'code' => $name );
 			ApiResult::setContent( $skin, $displayName );
+			if ( !isset( $usable[$name] ) ) {
+				$skin['unusable'] = '';
+			}
+			if ( $name === $default ) {
+				$skin['default'] = '';
+			}
 			$data[] = $skin;
 		}
 		$this->getResult()->setIndexedTagName( $data, 'skin' );
@@ -671,7 +683,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				' variables             - Returns a list of variable IDs',
 				' protocols             - Returns a list of protocols that are allowed in external links.',
 			),
-			'filteriw' =>  'Return only local or only nonlocal entries of the interwiki map',
+			'filteriw' => 'Return only local or only nonlocal entries of the interwiki map',
 			'showalldb' => 'List all database servers, not just the one lagging the most',
 			'numberingroup' => 'Lists the number of users in user groups',
 			'inlanguagecode' => 'Language code for localised language names (best effort, use CLDR extension)',

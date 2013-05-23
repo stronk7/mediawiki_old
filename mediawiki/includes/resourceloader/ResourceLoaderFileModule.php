@@ -137,11 +137,11 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Constructs a new module from an options array.
 	 *
-	 * @param $options Array: List of options; if not given or empty, an empty module will be
+	 * @param array $options List of options; if not given or empty, an empty module will be
 	 *     constructed
-	 * @param $localBasePath String: Base path to prepend to all local paths in $options. Defaults
+	 * @param string $localBasePath Base path to prepend to all local paths in $options. Defaults
 	 *     to $IP
-	 * @param $remoteBasePath String: Base path to prepend to all remote paths in $options. Defaults
+	 * @param string $remoteBasePath Base path to prepend to all remote paths in $options. Defaults
 	 *     to $wgScriptPath
 	 *
 	 * Below is a description for the $options array:
@@ -187,8 +187,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @endcode
 	 */
 	public function __construct( $options = array(), $localBasePath = null,
-		$remoteBasePath = null )
-	{
+		$remoteBasePath = null
+	) {
 		global $IP, $wgScriptPath, $wgResourceBasePath;
 		$this->localBasePath = $localBasePath === null ? $IP : $localBasePath;
 		if ( $remoteBasePath !== null ) {
@@ -209,7 +209,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				case 'debugScripts':
 				case 'loaderScripts':
 				case 'styles':
-					$this->{$member} = (array) $option;
+					$this->{$member} = (array)$option;
 					break;
 				// Collated lists of file paths
 				case 'languageScripts':
@@ -228,26 +228,26 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 								"'$key' given, string expected."
 							);
 						}
-						$this->{$member}[$key] = (array) $value;
+						$this->{$member}[$key] = (array)$value;
 					}
 					break;
 				// Lists of strings
 				case 'dependencies':
 				case 'messages':
 				case 'targets':
-					$this->{$member} = (array) $option;
+					$this->{$member} = (array)$option;
 					break;
 				// Single strings
 				case 'group':
 				case 'position':
 				case 'localBasePath':
 				case 'remoteBasePath':
-					$this->{$member} = (string) $option;
+					$this->{$member} = (string)$option;
 					break;
 				// Single booleans
 				case 'debugRaw':
 				case 'raw':
-					$this->{$member} = (bool) $option;
+					$this->{$member} = (bool)$option;
 					break;
 			}
 		}
@@ -324,7 +324,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				);
 			}
 		} catch ( Exception $e ) {
-			wfDebug( __METHOD__ . " failed to update DB: $e\n" );
+			wfDebugLog( 'resourceloader', __METHOD__ . ": failed to update DB: $e" );
 		}
 		return $styles;
 	}
@@ -473,15 +473,15 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Collates file paths by option (where provided).
 	 *
-	 * @param $list Array: List of file paths in any combination of index/path
+	 * @param array $list List of file paths in any combination of index/path
 	 *     or path/options pairs
-	 * @param $option String: option name
+	 * @param string $option option name
 	 * @param $default Mixed: default value if the option isn't set
 	 * @return Array: List of file paths, collated by $option
 	 */
 	protected static function collateFilePathListByOption( array $list, $option, $default ) {
 		$collatedFiles = array();
-		foreach ( (array) $list as $key => $value ) {
+		foreach ( (array)$list as $key => $value ) {
 			if ( is_int( $key ) ) {
 				// File name as the value
 				if ( !isset( $collatedFiles[$default] ) ) {
@@ -503,9 +503,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets a list of element that match a key, optionally using a fallback key.
 	 *
-	 * @param $list Array: List of lists to select from
-	 * @param $key String: Key to look for in $map
-	 * @param $fallback String: Key to look for in $list if $key doesn't exist
+	 * @param array $list List of lists to select from
+	 * @param string $key Key to look for in $map
+	 * @param string $fallback Key to look for in $list if $key doesn't exist
 	 * @return Array: List of elements from $map which matched $key or $fallback,
 	 *     or an empty list in case of no match
 	 */
@@ -558,7 +558,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets the contents of a list of JavaScript files.
 	 *
-	 * @param $scripts Array: List of file paths to scripts to read, remap and concetenate
+	 * @param array $scripts List of file paths to scripts to read, remap and concetenate
 	 * @throws MWException
 	 * @return String: Concatenated and remapped JavaScript data from $scripts
 	 */
@@ -588,7 +588,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets the contents of a list of CSS files.
 	 *
-	 * @param $styles Array: List of media type/list of file paths pairs, to read, remap and
+	 * @param array $styles List of media type/list of file paths pairs, to read, remap and
 	 * concetenate
 	 *
 	 * @param $flip bool
@@ -619,7 +619,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 *
 	 * This method can be used as a callback for array_map()
 	 *
-	 * @param $path String: File path of style file to read
+	 * @param string $path File path of style file to read
 	 * @param $flip bool
 	 *
 	 * @return String: CSS data in script file

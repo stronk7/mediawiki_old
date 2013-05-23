@@ -65,68 +65,44 @@ class MagicVariableTest extends MediaWikiTestCase {
 
 	# day
 
-	/**
-	 * @dataProvider MediaWikiProvide::Days
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Days */
 	function testCurrentdayIsUnPadded( $day ) {
 		$this->assertUnPadded( 'currentday', $day );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Days
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Days */
 	function testCurrentdaytwoIsZeroPadded( $day ) {
 		$this->assertZeroPadded( 'currentday2', $day );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Days
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Days */
 	function testLocaldayIsUnPadded( $day ) {
 		$this->assertUnPadded( 'localday', $day );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Days
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Days */
 	function testLocaldaytwoIsZeroPadded( $day ) {
 		$this->assertZeroPadded( 'localday2', $day );
 	}
 
 	# month
 
-	/**
-	 * @dataProvider MediaWikiProvide::Months
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Months */
 	function testCurrentmonthIsZeroPadded( $month ) {
 		$this->assertZeroPadded( 'currentmonth', $month );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Months
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Months */
 	function testCurrentmonthoneIsUnPadded( $month ) {
 		$this->assertUnPadded( 'currentmonth1', $month );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Months
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Months */
 	function testLocalmonthIsZeroPadded( $month ) {
 		$this->assertZeroPadded( 'localmonth', $month );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Months
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Months */
 	function testLocalmonthoneIsUnPadded( $month ) {
 		$this->assertUnPadded( 'localmonth1', $month );
 	}
@@ -134,36 +110,24 @@ class MagicVariableTest extends MediaWikiTestCase {
 
 	# revision day
 
-	/**
-	 * @dataProvider MediaWikiProvide::Days
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Days */
 	function testRevisiondayIsUnPadded( $day ) {
 		$this->assertUnPadded( 'revisionday', $day );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Days
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Days */
 	function testRevisiondaytwoIsZeroPadded( $day ) {
 		$this->assertZeroPadded( 'revisionday2', $day );
 	}
 
 	# revision month
 
-	/**
-	 * @dataProvider MediaWikiProvide::Months
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Months */
 	function testRevisionmonthIsZeroPadded( $month ) {
 		$this->assertZeroPadded( 'revisionmonth', $month );
 	}
 
-	/**
-	 * @dataProvider MediaWikiProvide::Months
-	 * @group Database
-	 */
+	/** @dataProvider MediaWikiProvide::Months */
 	function testRevisionmonthoneIsUnPadded( $month ) {
 		$this->assertUnPadded( 'revisionmonth1', $month );
 	}
@@ -172,19 +136,20 @@ class MagicVariableTest extends MediaWikiTestCase {
 	 * Rough tests for {{SERVERNAME}} magic word
 	 * Bug 31176
 	 * @group Database
+	 * @dataProvider dataServernameFromDifferentProtocols
 	 */
-	function testServernameFromDifferentProtocols() {
-		global $wgServer;
-		$saved_wgServer = $wgServer;
+	function testServernameFromDifferentProtocols( $server ) {
+		$this->setMwGlobals( 'wgServer', $server );
 
-		$wgServer = 'http://localhost/';
 		$this->assertMagic( 'localhost', 'servername' );
-		$wgServer = 'https://localhost/';
-		$this->assertMagic( 'localhost', 'servername' );
-		$wgServer = '//localhost/'; # bug 31176
-		$this->assertMagic( 'localhost', 'servername' );
+	}
 
-		$wgServer = $saved_wgServer;
+	function dataServernameFromDifferentProtocols() {
+		return array(
+			array( 'http://localhost/' ),
+			array( 'https://localhost/' ),
+			array( '//localhost/' ), # bug 31176
+		);
 	}
 
 	############### HELPERS ############################################

@@ -25,6 +25,7 @@
  * Class to handle tracking information about all queues using PhpRedis
  *
  * @ingroup JobQueue
+ * @ingroup Redis
  * @since 1.21
  */
 class JobQueueAggregatorRedis extends JobQueueAggregator {
@@ -100,7 +101,17 @@ class JobQueueAggregatorRedis extends JobQueueAggregator {
 					$pendingDBs[$type][] = $wiki;
 				}
 			} else { // cache miss
+				// Avoid duplicated effort
+				$conn->multi( Redis::MULTI );
+				$conn->setnx( $this->getReadyQueueKey() . ":lock", 1 );
+				$conn->expire( $this->getReadyQueueKey() . ":lock", 3600 );
+				if ( $conn->exec() !== array( true, true ) ) { // lock
+					return array(); // already in progress
+				}
+
 				$pendingDBs = $this->findPendingWikiQueues(); // (type => list of wikis)
+
+				$conn->delete( $this->getReadyQueueKey() . ":lock" ); // unlock
 
 				$now = time();
 				$map = array();
@@ -117,6 +128,23 @@ class JobQueueAggregatorRedis extends JobQueueAggregator {
 			$this->handleException( $conn, $e );
 			return array();
 		}
+	}
+
+	/**
+	 * @see JobQueueAggregator::doPurge()
+	 */
+	protected function doPurge() {
+		$conn = $this->getConnection();
+		if ( !$conn ) {
+			return false;
+		}
+		try {
+			$conn->delete( $this->getReadyQueueKey() );
+		} catch ( RedisException $e ) {
+			$this->handleException( $conn, $e );
+			return false;
+		}
+		return true;
 	}
 
 	/**

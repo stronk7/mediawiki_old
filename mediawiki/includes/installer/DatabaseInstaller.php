@@ -173,7 +173,7 @@ abstract class DatabaseInstaller {
 		}
 		$this->db->selectDB( $this->getVar( 'wgDBname' ) );
 
-		if( $this->db->tableExists( 'archive', __METHOD__ ) ) {
+		if ( $this->db->tableExists( 'archive', __METHOD__ ) ) {
 			$status->warning( 'config-install-tables-exist' );
 			$this->enableLB();
 			return $status;
@@ -183,7 +183,7 @@ abstract class DatabaseInstaller {
 		$this->db->begin( __METHOD__ );
 
 		$error = $this->db->sourceFile( $this->db->getSchemaPath() );
-		if( $error !== true ) {
+		if ( $error !== true ) {
 			$this->db->reportQueryError( $error, 0, '', __METHOD__ );
 			$this->db->rollback( __METHOD__ );
 			$status->fatal( 'config-install-tables-failed', $error );
@@ -191,7 +191,7 @@ abstract class DatabaseInstaller {
 			$this->db->commit( __METHOD__ );
 		}
 		// Resume normal operations
-		if( $status->isOk() ) {
+		if ( $status->isOk() ) {
 			$this->enableLB();
 		}
 		return $status;
@@ -335,6 +335,8 @@ abstract class DatabaseInstaller {
 	 * @return String
 	 */
 	public function getReadableName() {
+		// Give grep a chance to find the usages:
+		// config-type-mysql, config-type-postgres, config-type-sqlite, config-type-oracle
 		return wfMessage( 'config-type-' . $this->getName() )->text();
 	}
 
@@ -508,8 +510,7 @@ abstract class DatabaseInstaller {
 	 * @return String
 	 */
 	public function getInstallUserBox() {
-		return
-			Html::openElement( 'fieldset' ) .
+		return Html::openElement( 'fieldset' ) .
 			Html::element( 'legend', array(), wfMessage( 'config-db-install-account' )->text() ) .
 			$this->getTextBox( '_InstallUser', 'config-db-username', array( 'dir' => 'ltr' ), $this->parent->getHelpBox( 'config-db-install-username' ) ) .
 			$this->getPasswordBox( '_InstallPassword', 'config-db-password', array( 'dir' => 'ltr' ), $this->parent->getHelpBox( 'config-db-install-password' ) ) .
@@ -527,7 +528,7 @@ abstract class DatabaseInstaller {
 
 	/**
 	 * Get a standard web-user fieldset
-	 * @param $noCreateMsg String: Message to display instead of the creation checkbox.
+	 * @param string $noCreateMsg Message to display instead of the creation checkbox.
 	 *   Set this to false to show a creation checkbox.
 	 *
 	 * @return String
@@ -568,7 +569,7 @@ abstract class DatabaseInstaller {
 			$this->setVar( 'wgDBpassword', $this->getVar( '_InstallPassword' ) );
 		}
 
-		if( $this->getVar( '_CreateDBAccount' ) && strval( $this->getVar( 'wgDBpassword' ) ) == '' ) {
+		if ( $this->getVar( '_CreateDBAccount' ) && strval( $this->getVar( 'wgDBpassword' ) ) == '' ) {
 			return Status::newFatal( 'config-db-password-empty', $this->getVar( 'wgDBuser' ) );
 		}
 
@@ -587,7 +588,7 @@ abstract class DatabaseInstaller {
 		}
 		$this->db->selectDB( $this->getVar( 'wgDBname' ) );
 
-		if( $this->db->selectRow( 'interwiki', '*', array(), __METHOD__ ) ) {
+		if ( $this->db->selectRow( 'interwiki', '*', array(), __METHOD__ ) ) {
 			$status->warning( 'config-install-interwiki-exists' );
 			return $status;
 		}
@@ -600,9 +601,11 @@ abstract class DatabaseInstaller {
 		if ( !$rows ) {
 			return Status::newFatal( 'config-install-interwiki-list' );
 		}
-		foreach( $rows as $row ) {
+		foreach ( $rows as $row ) {
 			$row = preg_replace( '/^\s*([^#]*?)\s*(#.*)?$/', '\\1', $row ); // strip comments - whee
-			if ( $row == "" ) continue;
+			if ( $row == "" ) {
+				continue;
+			}
 			$row .= "||";
 			$interwikis[] = array_combine(
 				array( 'iw_prefix', 'iw_url', 'iw_local', 'iw_api', 'iw_wikiid' ),

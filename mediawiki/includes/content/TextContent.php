@@ -72,8 +72,8 @@ class TextContent extends AbstractContent {
 	 *
 	 * @return int The size
 	 */
-	public function getSize( ) {
-		$text = $this->getNativeData( );
+	public function getSize() {
+		$text = $this->getNativeData();
 		return strlen( $text );
 	}
 
@@ -81,7 +81,7 @@ class TextContent extends AbstractContent {
 	 * Returns true if this content is not a redirect, and $wgArticleCountMethod
 	 * is "any".
 	 *
-	 * @param $hasLinks Bool: if it is known whether this content contains links,
+	 * @param bool $hasLinks if it is known whether this content contains links,
 	 * provide this information here, to avoid redundant parsing to find out.
 	 *
 	 * @return bool True if the content is countable
@@ -89,7 +89,7 @@ class TextContent extends AbstractContent {
 	public function isCountable( $hasLinks = null ) {
 		global $wgArticleCountMethod;
 
-		if ( $this->isRedirect( ) ) {
+		if ( $this->isRedirect() ) {
 			return false;
 		}
 
@@ -105,7 +105,7 @@ class TextContent extends AbstractContent {
 	 *
 	 * @return string: the raw text
 	 */
-	public function getNativeData( ) {
+	public function getNativeData() {
 		$text = $this->mText;
 		return $text;
 	}
@@ -115,7 +115,7 @@ class TextContent extends AbstractContent {
 	 *
 	 * @return string: the raw text
 	 */
-	public function getTextForSearchIndex( ) {
+	public function getTextForSearchIndex() {
 		return $this->getNativeData();
 	}
 
@@ -127,7 +127,7 @@ class TextContent extends AbstractContent {
 	 *
 	 * @return string|false: the raw text, or null if the conversion failed
 	 */
-	public function getWikitextForTransclusion( ) {
+	public function getWikitextForTransclusion() {
 		$wikitext = $this->convert( CONTENT_MODEL_WIKITEXT, 'lossy' );
 
 		if ( $wikitext ) {
@@ -171,30 +171,31 @@ class TextContent extends AbstractContent {
 
 		$this->checkModelID( $that->getModel() );
 
-		# @todo: could implement this in DifferenceEngine and just delegate here?
+		// @todo could implement this in DifferenceEngine and just delegate here?
 
-		if ( !$lang ) $lang = $wgContLang;
+		if ( !$lang ) {
+			$lang = $wgContLang;
+		}
 
 		$otext = $this->getNativeData();
 		$ntext = $this->getNativeData();
 
 		# Note: Use native PHP diff, external engines don't give us abstract output
-		$ota = explode( "\n", $wgContLang->segmentForDiff( $otext ) );
-		$nta = explode( "\n", $wgContLang->segmentForDiff( $ntext ) );
+		$ota = explode( "\n", $lang->segmentForDiff( $otext ) );
+		$nta = explode( "\n", $lang->segmentForDiff( $ntext ) );
 
 		$diff = new Diff( $ota, $nta );
 		return $diff;
 	}
-
 
 	/**
 	 * Returns a generic ParserOutput object, wrapping the HTML returned by
 	 * getHtml().
 	 *
 	 * @param $title Title Context title for parsing
-	 * @param $revId int|null Revision ID (for {{REVISIONID}})
+	 * @param int|null $revId Revision ID (for {{REVISIONID}})
 	 * @param $options ParserOptions|null Parser options
-	 * @param $generateHtml bool Whether or not to generate HTML
+	 * @param bool $generateHtml Whether or not to generate HTML
 	 *
 	 * @return ParserOutput representing the HTML form of the text
 	 */
@@ -247,7 +248,7 @@ class TextContent extends AbstractContent {
 	 *
 	 * @return string an HTML representation of the content's markup
 	 */
-	protected function getHighlightHtml( ) {
+	protected function getHighlightHtml() {
 		# TODO: make Highlighter interface, use highlighter here, if available
 		return htmlspecialchars( $this->getNativeData() );
 	}
@@ -258,8 +259,8 @@ class TextContent extends AbstractContent {
 	 * This implementation provides lossless conversion between content models based
 	 * on TextContent.
 	 *
-	 * @param String  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
-	 * @param String  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
+	 * @param string  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
+	 * @param string  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
 	 * not allowed, full round-trip conversion is expected to work without losing information.
 	 *
 	 * @return Content|bool A content object with the content model $toModel, or false if

@@ -77,8 +77,6 @@ $messages = array(
 'tog-shownumberswatching' => 'የሚከታተሉ ተጠቃሚዎችን ቁጥር አሳይ',
 'tog-oldsig' => 'የቀድሞው ፊርማ ቅደመ እይታ',
 'tog-fancysig' => 'ጥሬ ፊርማ (ያለራስገዝ ማያያዣ)',
-'tog-externaleditor' => 'በቀዳሚነት ውጪያዊ አራሚን ተጠቀም',
-'tog-externaldiff' => 'በቀዳሚነት የውጭ ልዩነት-ማሳያን ተጠቀም',
 'tog-showjumplinks' => 'የ"ዝለል" አቅላይ መያያዣዎችን አስችል',
 'tog-uselivepreview' => 'ቀጥታ ቅድመ-ዕይታን ይጠቀሙ (JavaScript) (የሙከራ)',
 'tog-forceeditsummary' => 'ማጠቃለያው ባዶ ከሆነ ማስታወሻ ይስጠኝ',
@@ -483,7 +481,7 @@ $2",
 'login-abort-generic' => 'መግባትዎ አልተከናወነም፤ ተሠርዟል።',
 'loginlanguagelabel' => 'ቋምቋ፦ $1',
 
-# E-mail sending
+# Email sending
 'user-mail-no-addy' => 'እሚደርስበት ኢ-ሜል አድራሻ ሳይታወቅ መላክ አይቻልም።',
 
 # Change password dialog
@@ -846,13 +844,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'search-external' => 'አፍአዊ ፍለጋ',
 'searchdisabled' => '{{SITENAME}} ፍለጋ አሁን እንዳይሠራ ተደርጓል። ለጊዜው ግን በGoogle ላይ መፈልግ ይችላሉ። የ{{SITENAME}} ይዞታ ማውጫ በዚያ እንዳልታደሰ ማቻሉ ያስታውሱ።',
 
-# Quickbar
-'qbsettings-none' => ' ምንም',
-'qbsettings-fixedleft' => 'በግራ የተለጠፈ',
-'qbsettings-fixedright' => 'በቀኝ የተለጠፈ',
-'qbsettings-floatingleft' => 'በግራ ተንሳፋፊ',
-'qbsettings-floatingright' => 'በቀኝ ተንሳፋፊ',
-
 # Preferences page
 'preferences' => 'ምርጫዎች፤',
 'mypreferences' => 'ምርጫዎች፤',
@@ -945,7 +936,7 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'prefs-displayrc' => 'የማሳያ አማራጮች',
 'prefs-diffs' => 'ልዩነቶች',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'ኢ-ሜል አድራሻ ትክክለኛ ይመስላል።',
 'email-address-validity-invalid' => 'ትክክለኛ ኢ-ሜል ማቅረብ ያስፈልጋል።',
 
@@ -1488,7 +1479,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'listgrouprights-rights' => 'መብቶች',
 'listgrouprights-members' => '(የአባላት ዝርዝር)',
 
-# E-mail user
+# Email user
 'mailnologin' => 'ምንም መነሻ አድራሻ የለም',
 'mailnologintext' => 'ኢ-ሜል ወደ ሌላ አባል ለመላክ [[Special:UserLogin|መግባት]]ና በ[[Special:Preferences|ምርጫዎችዎ]] ትክክለኛ የኢሜል አድራሻዎ መኖር ያስፈልጋል።',
 'emailuser' => 'ለዚህ/ች ሰው ኢሜል መላክ',
@@ -1539,8 +1530,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'notvisiblerev' => 'ዕትሙ ጠፍቷል',
 'watchnochange' => 'ከተካከሉት ገጾች አንዳችም በተወሰነው ጊዜ ውስጥ አልተለወጠም።',
 'watchlist-details' => 'አሁን {{PLURAL:$1|$1 ገፅ|$1 ገፆች}} በምትከታተላቸው ገፆች ላይ አሉ (የውይይት ገፅ ሳይጨመር)።',
-'wlheader-enotif' => '* የ-ኢሜል ማስታወቂያ እንዲሠራ ተደርጓል።',
-'wlheader-showupdated' => "* መጨረሻ ከጎበኟቸው ጀምሮ የተቀየሩት ገጾች በ'''ጉልህ ፊደላት''' ይታያሉ",
+'wlheader-enotif' => 'የ-ኢሜል ማስታወቂያ እንዲሠራ ተደርጓል።',
+'wlheader-showupdated' => "መጨረሻ ከጎበኟቸው ጀምሮ የተቀየሩት ገጾች በ'''ጉልህ ፊደላት''' ይታያሉ",
 'watchmethod-recent' => 'የቅርብ ለውጦችን ለሚከታተሉት ገጾች በመፈለግ',
 'watchmethod-list' => 'የሚከታተሉትን ገጾች ለቅርብ ለውጦች በመፈለግ',
 'watchlistcontains' => 'አሁን በሙሉ $1 ገጾች እየተከታተሉ ነው።',
@@ -2153,7 +2144,7 @@ $1',
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'ስፋት',
 'exif-imagelength' => 'ቁመት',
 'exif-compression' => 'የመጨመቅ ዘዴ',
@@ -2260,7 +2251,7 @@ $1',
 'exif-cameraownername' => 'ባለ ካሜራ',
 'exif-personinimage' => 'የታየው ሰው',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'ያልተጨመቀ',
 
 'exif-unknowndate' => 'ያልታወቀ ቀን',
@@ -2406,7 +2397,7 @@ $1',
 'monthsall' => 'ሁሉ',
 'limitall' => 'ሁሉ',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'ኢ-ሜልዎን ለማረጋገጥ',
 'confirmemail_noemail' => 'በ[[Special:Preferences|ምርጫዎችዎ]] ትክክለኛ ኢሜል አድራሻ አልሰጡም።',
 'confirmemail_text' => 'አሁን በ{{SITENAME}} በኩል «ኢ-ሜል» ለመላክም ሆነ ለመቀበል አድራሻዎን ማረጋገጥ ግዴታ ሆኗል። እታች ያለውን በተጫኑ ጊዜ አንድ የማረጋገጫ መልእክት ቀድሞ ወደ ሰጡት ኢሜል አድራሻ በቀጥታ ይላካል። በዚህ መልእክት ልዩ ኮድ ያለበት መያያዣ ይገኝበታል፣ ይህንን መያያዣ ከዚያ ቢጎብኙ ኢ-ሜል አድራሻዎ የዛኔ ይረጋግጣል።',
@@ -2527,13 +2518,6 @@ $3
 'version-software' => 'የተሳካ ሶፍትዌር',
 'version-software-product' => 'ሶፍትዌር',
 'version-software-version' => 'ዝርያ',
-
-# Special:FilePath
-'filepath' => 'የፋይል መንገድ',
-'filepath-page' => 'ፋይሉ፦',
-'filepath-submit' => 'መንገድ',
-'filepath-summary' => 'ይህ ልዩ ገጽ ለ1 ፋይል ሙሉ መንገድ ይሰጣል።<br />
-ስዕል በሙሉ ማጉላት ይታያል፤ ሌላ አይነት ፋይል በሚገባው ፕሮግራም በቀጥታ ይጀመራል።',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'ለቅጂ ፋይሎች መፈልግ',

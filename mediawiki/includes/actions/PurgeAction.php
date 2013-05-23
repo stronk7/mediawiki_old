@@ -1,8 +1,6 @@
 <?php
 /**
- * Formats credits for articles
- *
- * Copyright 2004, Evan Prodromou <evan@wikitravel.org>.
+ * User-requested page cache purging.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +18,16 @@
  *
  * @file
  * @ingroup Actions
- * @author <evan@wikitravel.org>
  */
 
+/**
+ * User-requested page cache purging.
+ *
+ * For users with 'purge', this will directly trigger the cache purging and
+ * for users without that right, it will show a confirmation form.
+ *
+ * @ingroup Actions
+ */
 class PurgeAction extends FormAction {
 
 	private $redirectParams;
@@ -66,7 +71,7 @@ class PurgeAction extends FormAction {
 				$this->getRequest()->getQueryValues(),
 				array( 'title' => null, 'action' => null )
 			) );
-			if( $this->onSubmit( array() ) ) {
+			if ( $this->onSubmit( array() ) ) {
 				$this->onSuccess();
 			}
 		} else {
@@ -91,6 +96,6 @@ class PurgeAction extends FormAction {
 	}
 
 	public function onSuccess() {
-		$this->getOutput()->redirect( $this->getTitle()->getFullUrl( $this->redirectParams ) );
+		$this->getOutput()->redirect( $this->getTitle()->getFullURL( $this->redirectParams ) );
 	}
 }

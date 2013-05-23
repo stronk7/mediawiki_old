@@ -75,6 +75,9 @@ class FileBackendMultiWrite extends FileBackend {
 	 *   - autoResync     : Automatically resync the clone backends to the master backend
 	 *                      when pre-operation sync checks fail. This should only be used
 	 *                      if the master backend is stable and not missing any files.
+	 *                      Use "conservative" to limit resyncing to copying newer master
+	 *                      backend files over older (or non-existing) clone backend files.
+	 *                      Cases that cannot be handled will result in operation abortion.
 	 *   - noPushQuickOps : (hack) Only apply doQuickOperations() to the master backend.
 	 *   - noPushDirConts : (hack) Only apply directory functions to the master backend.
 	 *
@@ -86,7 +89,9 @@ class FileBackendMultiWrite extends FileBackend {
 		$this->syncChecks = isset( $config['syncChecks'] )
 			? $config['syncChecks']
 			: self::CHECK_SIZE;
-		$this->autoResync = !empty( $config['autoResync'] );
+		$this->autoResync = isset( $config['autoResync'] )
+			? $config['autoResync']
+			: false;
 		$this->noPushQuickOps = isset( $config['noPushQuickOps'] )
 			? $config['noPushQuickOps']
 			: false;
@@ -204,7 +209,7 @@ class FileBackendMultiWrite extends FileBackend {
 	/**
 	 * Check that a set of files are consistent across all internal backends
 	 *
-	 * @param $paths Array List of storage paths
+	 * @param array $paths List of storage paths
 	 * @return Status
 	 */
 	public function consistencyCheck( array $paths ) {
@@ -270,7 +275,7 @@ class FileBackendMultiWrite extends FileBackend {
 	/**
 	 * Check that a set of file paths are usable across all internal backends
 	 *
-	 * @param $paths Array List of storage paths
+	 * @param array $paths List of storage paths
 	 * @return Status
 	 */
 	public function accessibilityCheck( array $paths ) {
@@ -295,7 +300,7 @@ class FileBackendMultiWrite extends FileBackend {
 	 * Check that a set of files are consistent across all internal backends
 	 * and re-synchronize those files againt the "multi master" if needed.
 	 *
-	 * @param $paths Array List of storage paths
+	 * @param array $paths List of storage paths
 	 * @return Status
 	 */
 	public function resyncFiles( array $paths ) {
@@ -303,12 +308,12 @@ class FileBackendMultiWrite extends FileBackend {
 
 		$mBackend = $this->backends[$this->masterIndex];
 		foreach ( $paths as $path ) {
-			$mPath  = $this->substPaths( $path, $mBackend );
-			$mSha1  = $mBackend->getFileSha1Base36( array( 'src' => $mPath ) );
-			$mExist = $mBackend->fileExists( array( 'src' => $mPath ) );
-			// Check if the master backend is available...
-			if ( $mExist === null ) {
+			$mPath = $this->substPaths( $path, $mBackend );
+			$mSha1 = $mBackend->getFileSha1Base36( array( 'src' => $mPath, 'latest' => true ) );
+			$mStat = $mBackend->getFileStat( array( 'src' => $mPath, 'latest' => true ) );
+			if ( $mStat === null || ( $mSha1 !== false && !$mStat ) ) { // sanity
 				$status->fatal( 'backend-fail-internal', $this->name );
+				continue; // file is not available on the master backend...
 			}
 			// Check of all clone backends agree with the master...
 			foreach ( $this->backends as $index => $cBackend ) {
@@ -316,15 +321,31 @@ class FileBackendMultiWrite extends FileBackend {
 					continue; // master
 				}
 				$cPath = $this->substPaths( $path, $cBackend );
-				$cSha1 = $cBackend->getFileSha1Base36( array( 'src' => $cPath ) );
+				$cSha1 = $cBackend->getFileSha1Base36( array( 'src' => $cPath, 'latest' => true ) );
+				$cStat = $cBackend->getFileStat( array( 'src' => $cPath, 'latest' => true ) );
+				if ( $cStat === null || ( $cSha1 !== false && !$cStat ) ) { // sanity
+					$status->fatal( 'backend-fail-internal', $cBackend->getName() );
+					continue; // file is not available on the clone backend...
+				}
 				if ( $mSha1 === $cSha1 ) {
 					// already synced; nothing to do
-				} elseif ( $mSha1 ) { // file is in master
-					$fsFile = $mBackend->getLocalReference( array( 'src' => $mPath ) );
+				} elseif ( $mSha1 !== false ) { // file is in master
+					if ( $this->autoResync === 'conservative'
+						&& $cStat && $cStat['mtime'] > $mStat['mtime'] )
+					{
+						$status->fatal( 'backend-fail-synced', $path );
+						continue; // don't rollback data
+					}
+					$fsFile = $mBackend->getLocalReference(
+						array( 'src' => $mPath, 'latest' => true ) );
 					$status->merge( $cBackend->quickStore(
 						array( 'src' => $fsFile->getPath(), 'dst' => $cPath )
 					) );
-				} elseif ( $mExist === false ) { // file is not in master
+				} elseif ( $mStat === false ) { // file is not in master
+					if ( $this->autoResync === 'conservative' ) {
+						$status->fatal( 'backend-fail-synced', $path );
+						continue; // don't delete data
+					}
 					$status->merge( $cBackend->quickDelete( array( 'src' => $cPath ) ) );
 				}
 			}
@@ -336,14 +357,20 @@ class FileBackendMultiWrite extends FileBackend {
 	/**
 	 * Get a list of file storage paths to read or write for a list of operations
 	 *
-	 * @param $ops Array Same format as doOperations()
+	 * @param array $ops Same format as doOperations()
 	 * @return Array List of storage paths to files (does not include directories)
 	 */
 	protected function fileStoragePathsForOps( array $ops ) {
 		$paths = array();
 		foreach ( $ops as $op ) {
 			if ( isset( $op['src'] ) ) {
-				$paths[] = $op['src'];
+				// For things like copy/move/delete with "ignoreMissingSource" and there
+				// is no source file, nothing should happen and there should be no errors.
+				if ( empty( $op['ignoreMissingSource'] )
+					|| $this->fileExists( array( 'src' => $op['src'] ) ) )
+				{
+					$paths[] = $op['src'];
+				}
 			}
 			if ( isset( $op['srcs'] ) ) {
 				$paths = array_merge( $paths, $op['srcs'] );
@@ -359,7 +386,7 @@ class FileBackendMultiWrite extends FileBackend {
 	 * Substitute the backend name in storage path parameters
 	 * for a set of operations with that of a given internal backend.
 	 *
-	 * @param $ops Array List of file operation arrays
+	 * @param array $ops List of file operation arrays
 	 * @param $backend FileBackendStore
 	 * @return Array
 	 */
@@ -380,7 +407,7 @@ class FileBackendMultiWrite extends FileBackend {
 	/**
 	 * Same as substOpBatchPaths() but for a single operation
 	 *
-	 * @param $ops array File operation array
+	 * @param array $ops File operation array
 	 * @param $backend FileBackendStore
 	 * @return Array
 	 */
@@ -392,7 +419,7 @@ class FileBackendMultiWrite extends FileBackend {
 	/**
 	 * Substitute the backend of storage paths with an internal backend's name
 	 *
-	 * @param $paths Array|string List of paths or single string path
+	 * @param array|string $paths List of paths or single string path
 	 * @param $backend FileBackendStore
 	 * @return Array|string
 	 */
@@ -407,7 +434,7 @@ class FileBackendMultiWrite extends FileBackend {
 	/**
 	 * Substitute the backend of internal storage paths with the proxy backend's name
 	 *
-	 * @param $paths Array|string List of paths or single string path
+	 * @param array|string $paths List of paths or single string path
 	 * @return Array|string
 	 */
 	protected function unsubstPaths( $paths ) {
@@ -447,11 +474,11 @@ class FileBackendMultiWrite extends FileBackend {
 	}
 
 	/**
-	 * @param $path string Storage path
+	 * @param string $path Storage path
 	 * @return bool Path container should have dir changes pushed to all backends
 	 */
 	protected function replicateContainerDirChanges( $path ) {
-		list( $b, $shortCont, $r ) = self::splitStoragePath( $path );
+		list( , $shortCont, ) = self::splitStoragePath( $path );
 		return !in_array( $shortCont, $this->noPushDirConts );
 	}
 

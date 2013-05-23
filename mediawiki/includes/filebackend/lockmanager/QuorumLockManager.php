@@ -46,8 +46,6 @@ abstract class QuorumLockManager extends LockManager {
 		foreach ( $paths as $path ) {
 			if ( isset( $this->locksHeld[$path][$type] ) ) {
 				++$this->locksHeld[$path][$type];
-			} elseif ( isset( $this->locksHeld[$path][self::LOCK_EX] ) ) {
-				$this->locksHeld[$path][$type] = 1;
 			} else {
 				$bucket = $this->getBucketFromPath( $path );
 				$pathsToLock[$bucket][] = $path;
@@ -118,7 +116,7 @@ abstract class QuorumLockManager extends LockManager {
 	 * This is all or nothing; if any key is locked then this totally fails.
 	 *
 	 * @param $bucket integer
-	 * @param $paths Array List of resource keys to lock
+	 * @param array $paths List of resource keys to lock
 	 * @param $type integer LockManager::LOCK_EX or LockManager::LOCK_SH
 	 * @return Status
 	 */
@@ -127,7 +125,7 @@ abstract class QuorumLockManager extends LockManager {
 
 		$yesVotes = 0; // locks made on trustable servers
 		$votesLeft = count( $this->srvsByBucket[$bucket] ); // remaining peers
-		$quorum = floor( $votesLeft/2 + 1 ); // simple majority
+		$quorum = floor( $votesLeft / 2 + 1 ); // simple majority
 		// Get votes for each peer, in order, until we have enough...
 		foreach ( $this->srvsByBucket[$bucket] as $lockSrv ) {
 			if ( !$this->isServerUp( $lockSrv ) ) {
@@ -160,7 +158,7 @@ abstract class QuorumLockManager extends LockManager {
 	 * Attempt to release locks with the peers for a bucket
 	 *
 	 * @param $bucket integer
-	 * @param $paths Array List of resource keys to lock
+	 * @param array $paths List of resource keys to lock
 	 * @param $type integer LockManager::LOCK_EX or LockManager::LOCK_SH
 	 * @return Status
 	 */

@@ -9,6 +9,7 @@ class MockDatabaseSqlite extends DatabaseSqliteStandalone {
 
 	function query( $sql, $fname = '', $tempIgnore = false ) {
 		$this->lastQuery = $sql;
+
 		return true;
 	}
 
@@ -232,7 +233,7 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 
 	/**
 	 * Runs upgrades of older databases and compares results with current schema
-	 * @todo: currently only checks list of tables
+	 * @todo Currently only checks list of tables
 	 */
 	public function testUpgrades() {
 		global $IP, $wgVersion, $wgProfileToDatabase;
@@ -311,7 +312,7 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 			$db->query( 'CREATE TABLE a ( a_1 )', __METHOD__ ), "Database creationg" );
 		$this->assertTrue( $db->insert( 'a', array( 'a_1' => 10 ), __METHOD__ ),
 			"Insertion worked" );
-		$this->assertEquals( "integer", gettype( $db->insertId() ), "Actual typecheck" );
+		$this->assertInternalType( 'integer', $db->insertId(), "Actual typecheck" );
 		$this->assertTrue( $db->close(), "closing database" );
 	}
 
@@ -327,12 +328,14 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 		$db->sourceFile( "$IP/tests/phpunit/data/db/sqlite/tables-$version.sql" );
 		$updater = DatabaseUpdater::newForDB( $db, false, $maint );
 		$updater->doUpdates( array( 'core' ) );
+
 		return $db;
 	}
 
 	private function getTables( $db ) {
 		$list = array_flip( $db->listTables() );
 		$excluded = array(
+			'external_user', // removed from core in 1.22
 			'math', // moved out of core in 1.18
 			'trackbacks', // removed from core in 1.19
 			'searchindex',
@@ -348,6 +351,7 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 		}
 		$list = array_flip( $list );
 		sort( $list );
+
 		return $list;
 	}
 
@@ -359,6 +363,7 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 			$cols[$col->name] = $col;
 		}
 		ksort( $cols );
+
 		return $cols;
 	}
 
@@ -376,6 +381,7 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 			$indexes[$index->name] = $index;
 		}
 		ksort( $indexes );
+
 		return $indexes;
 	}
 

@@ -5,6 +5,8 @@
 		wgMonthNames: ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 		wgMonthNamesShort: ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 		wgDefaultDateFormat: 'dmy',
+		wgSeparatorTransformTable: ['', ''],
+		wgDigitTransformTable: ['', ''],
 		wgContentLanguage: 'en'
 	};
 
@@ -78,6 +80,34 @@
 
 			// Give caller a chance to set up sorting and manipulate the table.
 			callback( $table );
+
+			// Table sorting is done synchronously; if it ever needs to change back
+			// to asynchronous, we'll need a timeout or a callback here.
+			var extracted = tableExtract( $table );
+			assert.deepEqual( extracted, expected, msg );
+		} );
+	}
+
+	/**
+	 * Run a table test by building a table with the given HTML,
+	 * running some callback on it, then checking the results.
+	 *
+	 * @param {String} msg text to pass on to qunit for the comparison
+	 * @param {String} HTML to make the table
+	 * @param {String[][]} expected rows/cols to compare against at end
+	 * @param {function($table)} callback something to do with the table before we compare
+	 */
+	function tableTestHTML( msg, html, expected, callback ) {
+		QUnit.test( msg, 1, function ( assert ) {
+			var $table = $( html );
+
+			// Give caller a chance to set up sorting and manipulate the table.
+			if ( callback ) {
+				callback( $table );
+			} else {
+				$table.tablesorter();
+				$table.find( '#sortme' ).click();
+			}
 
 			// Table sorting is done synchronously; if it ever needs to change back
 			// to asynchronous, we'll need a timeout or a callback here.
@@ -614,7 +644,7 @@
 		}
 	);
 
-	QUnit.test( 'Test detection routine', function ( assert ) {
+	QUnit.test( 'Test detection routine', 1, function ( assert ) {
 		var $table;
 		$table = $(
 			'<table class="sortable">' +
@@ -635,7 +665,7 @@
 	} );
 
 	/** FIXME: the diff output is not very readeable. */
-	QUnit.test( 'bug 32047 - caption must be before thead', function ( assert ) {
+	QUnit.test( 'bug 32047 - caption must be before thead', 1, function ( assert ) {
 		var $table;
 		$table = $(
 			'<table class="sortable">' +
@@ -655,7 +685,7 @@
 		);
 	} );
 
-	QUnit.test( 'data-sort-value attribute, when available, should override sorting position', function ( assert ) {
+	QUnit.test( 'data-sort-value attribute, when available, should override sorting position', 3, function ( assert ) {
 		var $table, data;
 
 		// Example 1: All cells except one cell without data-sort-value,
@@ -925,7 +955,7 @@
 		}
 	);
 
-	QUnit.test( 'Sorting images using alt text', function ( assert ) {
+	QUnit.test( 'Sorting images using alt text', 1, function ( assert ) {
 		var $table = $(
 			'<table class="sortable">' +
 				'<tr><th>THEAD</th></tr>' +
@@ -942,7 +972,7 @@
 		);
 	} );
 
-	QUnit.test( 'Sorting images using alt text (complex)', function ( assert ) {
+	QUnit.test( 'Sorting images using alt text (complex)', 1, function ( assert ) {
 		var $table = $(
 			'<table class="sortable">' +
 				'<tr><th>THEAD</th></tr>' +
@@ -963,7 +993,7 @@
 		);
 	} );
 
-	QUnit.test( 'Sorting images using alt text (with format autodetection)', function ( assert ) {
+	QUnit.test( 'Sorting images using alt text (with format autodetection)', 1, function ( assert ) {
 		var $table = $(
 			'<table class="sortable">' +
 				'<tr><th>THEAD</th></tr>' +
@@ -981,4 +1011,120 @@
 			'Applied correct sorting order'
 		);
 	} );
+
+	// bug 41889 - exploding rowspans in more complex cases
+	tableTestHTML(
+		'Rowspan exploding with row headers',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo</th><th>bar</th><th>baz</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><th rowspan="2">foo</th><td rowspan="2">bar</td><td>baz</td></tr>' +
+			'<tr><td>2</td><td>baz</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo', 'bar', 'baz' ],
+			[ '2', 'foo', 'bar', 'baz' ]
+		]
+	);
+
+	tableTestHTML(
+		'Rowspan exploding with colspanned cells',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo</th><th>bar</th><th>baz</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><td>foo</td><td>bar</td><td rowspan="2">baz</td></tr>' +
+			'<tr><td>2</td><td colspan="2">foobar</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo', 'bar', 'baz' ],
+			[ '2', 'foobar', 'baz' ]
+		]
+	);
+
+	tableTestHTML(
+		'Rowspan exploding with colspanned cells (2)',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo</th><th>bar</th><th>baz</th><th>quux</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><td>foo</td><td>bar</td><td rowspan="2">baz</td><td>quux</td></tr>' +
+			'<tr><td>2</td><td colspan="2">foobar</td><td>quux</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo', 'bar', 'baz', 'quux' ],
+			[ '2', 'foobar', 'baz', 'quux' ]
+		]
+	);
+
+	tableTestHTML(
+		'Rowspan exploding with rightmost rows spanning most',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo</th><th>bar</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><td rowspan="2">foo</td><td rowspan="4">bar</td></tr>' +
+			'<tr><td>2</td></tr>' +
+			'<tr><td>3</td><td rowspan="2">foo</td></tr>' +
+			'<tr><td>4</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo', 'bar' ],
+			[ '2', 'foo', 'bar' ],
+			[ '3', 'foo', 'bar' ],
+			[ '4', 'foo', 'bar' ]
+		]
+	);
+
+	tableTestHTML(
+		'Rowspan exploding with rightmost rows spanning most (2)',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo</th><th>bar</th><th>baz</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><td rowspan="2">foo</td><td rowspan="4">bar</td><td>baz</td></tr>' +
+			'<tr><td>2</td><td>baz</td></tr>' +
+			'<tr><td>3</td><td rowspan="2">foo</td><td>baz</td></tr>' +
+			'<tr><td>4</td><td>baz</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo', 'bar', 'baz' ],
+			[ '2', 'foo', 'bar', 'baz' ],
+			[ '3', 'foo', 'bar', 'baz' ],
+			[ '4', 'foo', 'bar', 'baz' ]
+		]
+	);
+
+	tableTestHTML(
+		'Rowspan exploding with row-and-colspanned cells',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo1</th><th>foo2</th><th>bar</th><th>baz</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><td rowspan="2">foo1</td><td rowspan="2">foo2</td><td rowspan="4">bar</td><td>baz</td></tr>' +
+			'<tr><td>2</td><td>baz</td></tr>' +
+			'<tr><td>3</td><td colspan="2" rowspan="2">foo</td><td>baz</td></tr>' +
+			'<tr><td>4</td><td>baz</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo1', 'foo2', 'bar', 'baz' ],
+			[ '2', 'foo1', 'foo2', 'bar', 'baz' ],
+			[ '3', 'foo', 'bar', 'baz' ],
+			[ '4', 'foo', 'bar', 'baz' ]
+		]
+	);
+
+	tableTestHTML(
+		'Rowspan exploding with uneven rowspan layout',
+		'<table class="sortable">' +
+			'<thead><tr><th id="sortme">n</th><th>foo1</th><th>foo2</th><th>foo3</th><th>bar</th><th>baz</th></tr></thead>' +
+			'<tbody>' +
+			'<tr><td>1</td><td rowspan="2">foo1</td><td rowspan="2">foo2</td><td rowspan="2">foo3</td><td>bar</td><td>baz</td></tr>' +
+			'<tr><td>2</td><td rowspan="3">bar</td><td>baz</td></tr>' +
+			'<tr><td>3</td><td rowspan="2">foo1</td><td rowspan="2">foo2</td><td rowspan="2">foo3</td><td>baz</td></tr>' +
+			'<tr><td>4</td><td>baz</td></tr>' +
+			'</tbody></table>',
+		[
+			[ '1', 'foo1', 'foo2', 'foo3', 'bar', 'baz' ],
+			[ '2', 'foo1', 'foo2', 'foo3', 'bar', 'baz' ],
+			[ '3', 'foo1', 'foo2', 'foo3', 'bar', 'baz' ],
+			[ '4', 'foo1', 'foo2', 'foo3', 'bar', 'baz' ]
+		]
+	);
+
 }( jQuery, mediaWiki ) );

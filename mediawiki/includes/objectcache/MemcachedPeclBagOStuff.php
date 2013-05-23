@@ -47,7 +47,7 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		if ( $params['persistent'] ) {
 			// The pool ID must be unique to the server/option combination.
 			// The Memcached object is essentially shared for each pool ID.
-			// We can only resuse a pool ID if we keep the config consistent.
+			// We can only reuse a pool ID if we keep the config consistent.
 			$this->client = new Memcached( md5( serialize( $params ) ) );
 			if ( count( $this->client->getServerList() ) ) {
 				wfDebug( __METHOD__ . ": persistent Memcached object already loaded.\n" );
@@ -87,13 +87,13 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 				break;
 			case 'igbinary':
 				if ( !Memcached::HAVE_IGBINARY ) {
-					throw new MWException( __CLASS__.': the igbinary extension is not available ' .
+					throw new MWException( __CLASS__ . ': the igbinary extension is not available ' .
 						'but igbinary serialization was requested.' );
 				}
 				$this->client->setOption( Memcached::OPT_SERIALIZER, Memcached::SERIALIZER_IGBINARY );
 				break;
 			default:
-				throw new MWException( __CLASS__.': invalid value for serializer parameter' );
+				throw new MWException( __CLASS__ . ': invalid value for serializer parameter' );
 		}
 		$servers = array();
 		foreach ( $params['servers'] as $host ) {
@@ -206,7 +206,7 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * the client, but some day we might find a case where it should be
 	 * different.
 	 *
-	 * @param $key string The key used by the caller, or false if there wasn't one.
+	 * @param string $key The key used by the caller, or false if there wasn't one.
 	 * @param $result Mixed The return value
 	 * @return Mixed
 	 */

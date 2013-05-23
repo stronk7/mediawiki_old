@@ -23,7 +23,7 @@
  * @author Antoine Musso
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Print serialized output of MediaWiki config vars
@@ -53,7 +53,7 @@ class GetConfiguration extends Maintenance {
 		}
 
 		$out = null;
-		switch( $this->getOption( 'format' ) ) {
+		switch ( $this->getOption( 'format' ) ) {
 			case 'PHP':
 				$out = serialize( $res );
 				break;
@@ -86,4 +86,4 @@ class GetConfiguration extends Maintenance {
 }
 
 $maintClass = "GetConfiguration";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

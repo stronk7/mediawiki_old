@@ -49,12 +49,12 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$this->fld_ids = isset( $prop['ids'] );
 		$this->fld_title = isset( $prop['title'] );
 		$this->fld_type = isset( $prop['type'] );
-		$this->fld_action = isset ( $prop['action'] );
+		$this->fld_action = isset( $prop['action'] );
 		$this->fld_user = isset( $prop['user'] );
 		$this->fld_userid = isset( $prop['userid'] );
 		$this->fld_timestamp = isset( $prop['timestamp'] );
 		$this->fld_comment = isset( $prop['comment'] );
-		$this->fld_parsedcomment = isset ( $prop['parsedcomment'] );
+		$this->fld_parsedcomment = isset( $prop['parsedcomment'] );
 		$this->fld_details = isset( $prop['details'] );
 		$this->fld_tags = isset( $prop['tags'] );
 
@@ -241,7 +241,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				break;
 			case 'rights':
 				$vals2 = array();
-				if( $legacy ) {
+				if ( $legacy ) {
 					list( $vals2['old'], $vals2['new'] ) = $params;
 				} else {
 					$vals2['new'] = implode( ', ', $params['5::newgroups'] );
@@ -264,6 +264,11 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				}
 				$vals[$type] = $vals2;
 				$params = null;
+				break;
+			case 'upload':
+				if ( isset( $params['img_timestamp'] ) ) {
+					$params['img_timestamp'] = wfTimestamp( TS_ISO_8601, $params['img_timestamp'] );
+				}
 				break;
 		}
 		if ( !is_null( $params ) ) {
@@ -451,7 +456,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				' timestamp      - Adds the timestamp for the event',
 				' comment        - Adds the comment of the event',
 				' parsedcomment  - Adds the parsed comment of the event',
-				' details        - Lists addtional details about the event',
+				' details        - Lists additional details about the event',
 				' tags           - Lists tags for the event',
 			),
 			'type' => 'Filter log entries to only this type',

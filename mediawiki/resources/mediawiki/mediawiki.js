@@ -32,8 +32,8 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * If called with no arguments, all values will be returned.
 		 *
-		 * @param selection mixed String key or array of keys to get values for.
-		 * @param fallback mixed Value to use in case key(s) do not exist (optional).
+		 * @param {string|Array} selection String key or array of keys to get values for.
+		 * @param {Mixed} [fallback] Value to use in case key(s) do not exist.
 		 * @return mixed If selection was a string returns the value or null,
 		 *  If selection was an array, returns an object of key/values (value is null if not found),
 		 *  If selection was not passed or invalid, will return the 'values' object member (be careful as
@@ -73,8 +73,8 @@ var mw = ( function ( $, undefined ) {
 		/**
 		 * Sets one or multiple key/value pairs.
 		 *
-		 * @param selection {mixed} String key or array of keys to set values for.
-		 * @param value {mixed} Value to set (optional, only in use when key is a string)
+		 * @param {string|Object} selection String key to set value for, or object mapping keys to values.
+		 * @param {Mixed} [value] Value to set (optional, only in use when key is a string)
 		 * @return {Boolean} This returns true on success, false on failure.
 		 */
 		set: function ( selection, value ) {
@@ -96,7 +96,7 @@ var mw = ( function ( $, undefined ) {
 		/**
 		 * Checks if one or multiple keys exist.
 		 *
-		 * @param selection {mixed} String key or array of keys to check
+		 * @param {Mixed} selection String key or array of keys to check
 		 * @return {boolean} Existence of key(s)
 		 */
 		exists: function ( selection ) {
@@ -134,8 +134,7 @@ var mw = ( function ( $, undefined ) {
 
 	Message.prototype = {
 		/**
-		 * Simple message parser, does $N replacement, HTML-escaping (only for
-		 * 'escaped' format), and nothing else.
+		 * Simple message parser, does $N replacement and nothing else.
 		 *
 		 * This may be overridden to provide a more complex message parser.
 		 *
@@ -268,10 +267,17 @@ var mw = ( function ( $, undefined ) {
 		/* Public Members */
 
 		/**
-		 * Dummy function which in debug mode can be replaced with a function that
-		 * emulates console.log in console-less environments.
+		 * Dummy placeholder for {@link mw.log}
+		 * @method
 		 */
-		log: function () { },
+		log: ( function () {
+			var log = function () {};
+			log.warn = function () {};
+			log.deprecate = function ( obj, key, val ) {
+				obj[key] = val;
+			};
+			return log;
+		}() ),
 
 		// Make the Map constructor publicly available.
 		Map: Map,
@@ -294,8 +300,6 @@ var mw = ( function ( $, undefined ) {
 		 * @property
 		 */
 		libs: {},
-
-		/* Extension points */
 
 		/**
 		 * @property
@@ -363,7 +367,7 @@ var mw = ( function ( $, undefined ) {
 			 *             'dependencies': ['required.foo', 'bar.also', ...], (or) function () {}
 			 *             'group': 'somegroup', (or) null,
 			 *             'source': 'local', 'someforeignwiki', (or) null
-			 *             'state': 'registered', 'loading', 'loaded', 'ready', 'error' or 'missing'
+			 *             'state': 'registered', 'loaded', 'loading', 'ready', 'error' or 'missing'
 			 *             'script': ...,
 			 *             'style': ...,
 			 *             'messages': { 'key': 'value' },
@@ -391,7 +395,11 @@ var mw = ( function ( $, undefined ) {
 				// List of callback functions waiting for modules to be ready to be called
 				jobs = [],
 				// Selector cache for the marker element. Use getMarker() to get/use the marker!
-				$marker = null;
+				$marker = null,
+				// Buffer for addEmbeddedCSS.
+				cssBuffer = '',
+				// Callbacks for addEmbeddedCSS.
+				cssCallbacks = $.Callbacks();
 
 			/* Private methods */
 
@@ -452,52 +460,96 @@ var mw = ( function ( $, undefined ) {
 			}
 
 			/**
-			 * Checks if certain cssText is safe to append to
-			 * a stylesheet.
+			 * Checks whether it is safe to add this css to a stylesheet.
 			 *
-			 * Right now it only makes sure that cssText containing `@import`
-			 * rules will end up in a new stylesheet (as those only work when
-			 * placed at the start of a stylesheet; bug 35562).
-			 * This could later be extended to take care of other bugs, such as
-			 * the IE cssRules limit - not the same as the IE styleSheets limit).
 			 * @private
-			 * @param {jQuery} $style
 			 * @param {string} cssText
-			 * @return {boolean}
+			 * @return {boolean} False if a new one must be created.
 			 */
-			function canExpandStylesheetWith( $style, cssText ) {
+			function canExpandStylesheetWith( cssText ) {
+				// Makes sure that cssText containing `@import`
+				// rules will end up in a new stylesheet (as those only work when
+				// placed at the start of a stylesheet; bug 35562).
 				return cssText.indexOf( '@import' ) === -1;
 			}
 
-			function addEmbeddedCSS( cssText ) {
+			/**
+			 * @param {string} [cssText=cssBuffer] If called without cssText,
+			 * the internal buffer will be inserted instead.
+			 * @param {Function} [callback]
+			 */
+			function addEmbeddedCSS( cssText, callback ) {
 				var $style, styleEl;
-				$style = getMarker().prev();
-				// Re-use `<style>` tags if possible, this to try to stay
-				// under the IE stylesheet limit (bug 31676).
-				// Also verify that the the element before Marker actually is one
-				// that came from ResourceLoader, and not a style tag that some
-				// other script inserted before our marker, or, more importantly,
-				// it may not be a style tag at all (could be `<meta>` or `<script>`).
-				if (
-					$style.data( 'ResourceLoaderDynamicStyleTag' ) === true &&
-					canExpandStylesheetWith( $style, cssText )
-				) {
-					// There's already a dynamic <style> tag present and
-					// canExpandStylesheetWith() gave a green light to append more to it.
-					styleEl = $style.get( 0 );
-					if ( styleEl.styleSheet ) {
-						try {
-							styleEl.styleSheet.cssText += cssText; // IE
-						} catch ( e ) {
-							log( 'addEmbeddedCSS fail\ne.message: ' + e.message, e );
-						}
-					} else {
-						styleEl.appendChild( document.createTextNode( String( cssText ) ) );
-					}
-				} else {
-					$( addStyleTag( cssText, getMarker() ) )
-						.data( 'ResourceLoaderDynamicStyleTag', true );
+
+				if ( callback ) {
+					cssCallbacks.add( callback );
 				}
+
+				// Yield once before inserting the <style> tag. There are likely
+				// more calls coming up which we can combine this way.
+				// Appending a stylesheet and waiting for the browser to repaint
+				// is fairly expensive, this reduces it (bug 45810)
+				if ( cssText ) {
+					// Be careful not to extend the buffer with css that needs a new stylesheet
+					if ( !cssBuffer || canExpandStylesheetWith( cssText ) ) {
+						// Linebreak for somewhat distinguishable sections
+						// (the rl-cachekey comment separating each)
+						cssBuffer += '\n' + cssText;
+						// TODO: Use requestAnimationFrame in the future which will
+						// perform even better by not injecting styles while the browser
+						// is paiting.
+						setTimeout( function () {
+							// Can't pass addEmbeddedCSS to setTimeout directly because Firefox
+							// (below version 13) has the non-standard behaviour of passing a
+							// numerical "lateness" value as first argument to this callback
+							// http://benalman.com/news/2009/07/the-mysterious-firefox-settime/
+							addEmbeddedCSS();
+						} );
+						return;
+					}
+
+				// This is a delayed call and we got a buffer still
+				} else if ( cssBuffer ) {
+					cssText = cssBuffer;
+					cssBuffer = '';
+				} else {
+					// This is a delayed call, but buffer is already cleared by
+					// another delayed call.
+					return;
+				}
+
+				// By default, always create a new <style>. Appending text
+				// to a <style> tag means the contents have to be re-parsed (bug 45810).
+				// Except, of course, in IE below 9, in there we default to
+				// re-using and appending to a <style> tag due to the
+				// IE stylesheet limit (bug 31676).
+				if ( 'documentMode' in document && document.documentMode <= 9 ) {
+
+					$style = getMarker().prev();
+					// Verify that the the element before Marker actually is a
+					// <style> tag and one that came from ResourceLoader
+					// (not some other style tag or even a `<meta>` or `<script>`).
+					if ( $style.data( 'ResourceLoaderDynamicStyleTag' ) === true ) {
+						// There's already a dynamic <style> tag present and
+						// canExpandStylesheetWith() gave a green light to append more to it.
+						styleEl = $style.get( 0 );
+						if ( styleEl.styleSheet ) {
+							try {
+								styleEl.styleSheet.cssText += cssText; // IE
+							} catch ( e ) {
+								log( 'addEmbeddedCSS fail\ne.message: ' + e.message, e );
+							}
+						} else {
+							styleEl.appendChild( document.createTextNode( String( cssText ) ) );
+						}
+						cssCallbacks.fire().empty();
+						return;
+					}
+				}
+
+				$( addStyleTag( cssText, getMarker() ) ).data( 'ResourceLoaderDynamicStyleTag', true );
+
+				cssCallbacks.fire().empty();
 			}
 
 			/**
@@ -611,7 +663,7 @@ var mw = ( function ( $, undefined ) {
 			 *
 			 * @private
 			 * @param {string|string[]} states Module states to filter by
-			 * @param {Array} modules List of module names to filter (optional, by default the entire
+			 * @param {Array} [modules] List of module names to filter (optional, by default the entire
 			 * registry is used)
 			 * @return {Array} List of filtered module names
 			 */
@@ -842,7 +894,8 @@ var mw = ( function ( $, undefined ) {
 			 * @param {string} module Module name to execute
 			 */
 			function execute( module ) {
-				var key, value, media, i, urls, script, markModuleReady, nestedAddScript;
+				var key, value, media, i, urls, cssHandle, checkCssHandles,
+					cssHandlesRegistered = false;
 
 				if ( registry[module] === undefined ) {
 					throw new Error( 'Module has not been registered yet: ' + module );
@@ -851,7 +904,7 @@ var mw = ( function ( $, undefined ) {
 				} else if ( registry[module].state === 'loading' ) {
 					throw new Error( 'Module has not completed loading yet: ' + module );
 				} else if ( registry[module].state === 'ready' ) {
-					throw new Error( 'Module has already been loaded: ' + module );
+					throw new Error( 'Module has already been executed: ' + module );
 				}
 
 				/**
@@ -868,6 +921,80 @@ var mw = ( function ( $, undefined ) {
 					}
 					el.href = url;
 				}
+
+				function runScript() {
+					var script, markModuleReady, nestedAddScript;
+					try {
+						script = registry[module].script;
+						markModuleReady = function () {
+							registry[module].state = 'ready';
+							handlePending( module );
+						};
+						nestedAddScript = function ( arr, callback, async, i ) {
+							// Recursively call addScript() in its own callback
+							// for each element of arr.
+							if ( i >= arr.length ) {
+								// We're at the end of the array
+								callback();
+								return;
+							}
+
+							addScript( arr[i], function () {
+								nestedAddScript( arr, callback, async, i + 1 );
+							}, async );
+						};
+
+						if ( $.isArray( script ) ) {
+							nestedAddScript( script, markModuleReady, registry[module].async, 0 );
+						} else if ( $.isFunction( script ) ) {
+							registry[module].state = 'ready';
+							script( $ );
+							handlePending( module );
+						}
+					} catch ( e ) {
+						// This needs to NOT use mw.log because these errors are common in production mode
+						// and not in debug mode, such as when a symbol that should be global isn't exported
+						log( 'Exception thrown by ' + module + ': ' + e.message, e );
+						registry[module].state = 'error';
+						handlePending( module );
+					}
+				}
+
+				// This used to be inside runScript, but since that is now fired asychronously
+				// (after CSS is loaded) we need to set it here right away. It is crucial that
+				// when execute() is called this is set synchronously, otherwise modules will get
+				// executed multiple times as the registry will state that it isn't loading yet.
+				registry[module].state = 'loading';
+
+				// Add localizations to message system
+				if ( $.isPlainObject( registry[module].messages ) ) {
+					mw.messages.set( registry[module].messages );
+				}
+
+				// Make sure we don't run the scripts until all (potentially asynchronous)
+				// stylesheet insertions have completed.
+				( function () {
+					var pending = 0;
+					checkCssHandles = function () {
+						// cssHandlesRegistered ensures we don't take off too soon, e.g. when
+						// one of the cssHandles is fired while we're still creating more handles.
+						if ( cssHandlesRegistered && pending === 0 && runScript ) {
+							runScript();
+							runScript = undefined; // Revoke
+						}
+					};
+					cssHandle = function () {
+						var check = checkCssHandles;
+						pending++;
+						return function () {
+							if (check) {
+								pending--;
+								check();
+								check = undefined; // Revoke
+							}
+						};
+					};
+				}() );
 
 				// Process styles (see also mw.loader.implement)
 				// * back-compat: { <media>: css }
@@ -887,7 +1014,7 @@ var mw = ( function ( $, undefined ) {
 								// Strings are pre-wrapped in "@media". The media-type was just ""
 								// (because it had to be set to something).
 								// This is one of the reasons why this format is no longer used.
-								addEmbeddedCSS( value );
+								addEmbeddedCSS( value, cssHandle() );
 							} else {
 								// back-compat: { <media>: [url, ..] }
 								media = key;
@@ -904,7 +1031,7 @@ var mw = ( function ( $, undefined ) {
 									addLink( media, value[i] );
 								} else if ( key === 'css' ) {
 									// { "css": [css, ..] }
-									addEmbeddedCSS( value[i] );
+									addEmbeddedCSS( value[i], cssHandle() );
 								}
 							}
 						// Not an array, but a regular object
@@ -921,47 +1048,9 @@ var mw = ( function ( $, undefined ) {
 					}
 				}
 
-				// Add localizations to message system
-				if ( $.isPlainObject( registry[module].messages ) ) {
-					mw.messages.set( registry[module].messages );
-				}
-
-				// Execute script
-				try {
-					script = registry[module].script;
-					markModuleReady = function () {
-						registry[module].state = 'ready';
-						handlePending( module );
-					};
-					nestedAddScript = function ( arr, callback, async, i ) {
-						// Recursively call addScript() in its own callback
-						// for each element of arr.
-						if ( i >= arr.length ) {
-							// We're at the end of the array
-							callback();
-							return;
-						}
-
-						addScript( arr[i], function () {
-							nestedAddScript( arr, callback, async, i + 1 );
-						}, async );
-					};
-
-					if ( $.isArray( script ) ) {
-						registry[module].state = 'loading';
-						nestedAddScript( script, markModuleReady, registry[module].async, 0 );
-					} else if ( $.isFunction( script ) ) {
-						registry[module].state = 'ready';
-						script( $ );
-						handlePending( module );
-					}
-				} catch ( e ) {
-					// This needs to NOT use mw.log because these errors are common in production mode
-					// and not in debug mode, such as when a symbol that should be global isn't exported
-					log( 'Exception thrown by ' + module + ': ' + e.message, e );
-					registry[module].state = 'error';
-					handlePending( module );
-				}
+				// Kick off.
+				cssHandlesRegistered = true;
+				checkCssHandles();
 			}
 
 			/**
@@ -1229,12 +1318,12 @@ var mw = ( function ( $, undefined ) {
 				 * Registers a module, letting the system know about it and its
 				 * properties. Startup modules contain calls to this function.
 				 *
-				 * @param module {String}: Module name
-				 * @param version {Number}: Module version number as a timestamp (falls backs to 0)
-				 * @param dependencies {String|Array|Function}: One string or array of strings of module
+				 * @param {string} module Module name
+				 * @param {number} version Module version number as a timestamp (falls backs to 0)
+				 * @param {string|Array|Function} dependencies One string or array of strings of module
 				 *  names on which this module depends, or a function that returns that array.
-				 * @param group {String}: Group which the module is in (optional, defaults to null)
-				 * @param source {String}: Name of the source. Defaults to local.
+				 * @param {string} [group=null] Group which the module is in
+				 * @param {string} [source='local'] Name of the source
 				 */
 				register: function ( module, version, dependencies, group, source ) {
 					var m;
@@ -1336,10 +1425,10 @@ var mw = ( function ( $, undefined ) {
 				/**
 				 * Executes a function as soon as one or more required modules are ready
 				 *
-				 * @param dependencies {String|Array} Module name or array of modules names the callback
+				 * @param {string|Array} dependencies Module name or array of modules names the callback
 				 *  dependends on to be ready before executing
-				 * @param ready {Function} callback to execute when all dependencies are ready (optional)
-				 * @param error {Function} callback to execute when if dependencies have a errors (optional)
+				 * @param {Function} [ready] callback to execute when all dependencies are ready
+				 * @param {Function} [error] callback to execute when if dependencies have a errors
 				 */
 				using: function ( dependencies, ready, error ) {
 					var tod = typeof dependencies;
@@ -1373,15 +1462,15 @@ var mw = ( function ( $, undefined ) {
 				/**
 				 * Loads an external script or one or more modules for future use
 				 *
-				 * @param modules {mixed} Either the name of a module, array of modules,
+				 * @param {string|Array} modules Either the name of a module, array of modules,
 				 *  or a URL of an external script or style
-				 * @param type {String} mime-type to use if calling with a URL of an
+				 * @param {string} [type='text/javascript'] mime-type to use if calling with a URL of an
 				 *  external script or style; acceptable values are "text/css" and
 				 *  "text/javascript"; if no type is provided, text/javascript is assumed.
-				 * @param async {Boolean} (optional) If true, load modules asynchronously
-				 *  even if document ready has not yet occurred. If false (default),
-				 *  block before document ready and load async after. If not set, true will
-				 *  be assumed if loading a URL, and false will be assumed otherwise.
+				 * @param {boolean} [async] If true, load modules asynchronously
+				 *  even if document ready has not yet occurred. If false, block before
+				 *  document ready and load async after. If not set, true will be
+				 *  assumed if loading a URL, and false will be assumed otherwise.
 				 */
 				load: function ( modules, type, async ) {
 					var filtered, m, module, l;
@@ -1453,8 +1542,8 @@ var mw = ( function ( $, undefined ) {
 				/**
 				 * Changes the state of a module
 				 *
-				 * @param module {String|Object} module name or object of module name/state pairs
-				 * @param state {String} state name
+				 * @param {string|Object} module module name or object of module name/state pairs
+				 * @param {string} state state name
 				 */
 				state: function ( module, state ) {
 					var m;
@@ -1482,7 +1571,7 @@ var mw = ( function ( $, undefined ) {
 				/**
 				 * Gets the version of a module
 				 *
-				 * @param module string name of module to get version for
+				 * @param {string} module name of module to get version for
 				 */
 				getVersion: function ( module ) {
 					if ( registry[module] !== undefined && registry[module].version !== undefined ) {
@@ -1501,7 +1590,7 @@ var mw = ( function ( $, undefined ) {
 				/**
 				 * Gets the state of a module
 				 *
-				 * @param module string name of module to get state for
+				 * @param {string} module name of module to get state for
 				 */
 				getState: function ( module ) {
 					if ( registry[module] !== undefined && registry[module].state !== undefined ) {
@@ -1579,9 +1668,9 @@ var mw = ( function ( $, undefined ) {
 				/**
 				 * Create an HTML element string, with safe escaping.
 				 *
-				 * @param name The tag name.
-				 * @param attrs An object with members mapping element names to values
-				 * @param contents The contents of the element. May be either:
+				 * @param {string} name The tag name.
+				 * @param {Object} attrs An object with members mapping element names to values
+				 * @param {Mixed} contents The contents of the element. May be either:
 				 *  - string: The string is escaped.
 				 *  - null or undefined: The short closing form is used, e.g. <br/>.
 				 *  - this.Raw: The value attribute is included without escaping.
@@ -1650,7 +1739,82 @@ var mw = ( function ( $, undefined ) {
 		user: {
 			options: new Map(),
 			tokens: new Map()
-		}
+		},
+
+		/**
+		 * Registry and firing of events.
+		 *
+		 * MediaWiki has various interface components that are extended, enhanced
+		 * or manipulated in some other way by extensions, gadgets and even
+		 * in core itself.
+		 *
+		 * This framework helps streamlining the timing of when these other
+		 * code paths fire their plugins (instead of using document-ready,
+		 * which can and should be limited to firing only once).
+		 *
+		 * Features like navigating to other wiki pages, previewing an edit
+		 * and editing itself – without a refresh – can then retrigger these
+		 * hooks accordingly to ensure everything still works as expected.
+		 *
+		 * Example usage:
+		 *
+		 *     mw.hook( 'wikipage.content' ).add( fn ).remove( fn );
+		 *     mw.hook( 'wikipage.content' ).fire( $content );
+		 *
+		 * Handlers can be added and fired for arbitrary event names at any time. The same
+		 * event can be fired multiple times. The last run of an event is memorized
+		 * (similar to `$(document).ready` and `$.Deferred().done`).
+		 * This means if an event is fired, and a handler added afterwards, the added
+		 * function will be fired right away with the last given event data.
+		 *
+		 * Like Deferreds and Promises, the mw.hook object is both detachable and chainable.
+		 * Thus allowing flexible use and optimal maintainability and authority control.
+		 * You can pass around the `add` and/or `fire` method to another piece of code
+		 * without it having to know the event name (or `mw.hook` for that matter).
+		 *
+		 *     var h = mw.hook( 'bar.ready' );
+		 *     new mw.Foo( .. ).fetch( { callback: h.fire } );
+		 *
+		 * @class mw.hook
+		 */
+		hook: ( function () {
+			var lists = {};
+
+			/**
+			 * @method hook
+			 * @member mw
+			 * @param {string} name Name of hook.
+			 * @return {mw.hook}
+			 */
+			return function ( name ) {
+				var list = lists[name] || ( lists[name] = $.Callbacks( 'memory' ) );
+
+				return {
+					/**
+					 * Register a hook handler
+					 * @param {Function...} handler Function to bind.
+					 * @chainable
+					 */
+					add: list.add,
+
+					/**
+					 * Unregister a hook handler
+					 * @param {Function...} handler Function to unbind.
+					 * @chainable
+					 */
+					remove: list.remove,
+
+					/**
+					 * Run a hook.
+					 * @param {Mixed...} data
+					 * @chainable
+					 */
+					fire: function () {
+						return list.fireWith( null, slice.call( arguments ) );
+					}
+				};
+			};
+		}() )
 	};
 
 }( jQuery ) );

@@ -100,7 +100,6 @@ class SideBarTest extends MediaWikiLangTestCase {
 ** http://valid.no.desc.org/
 '
 		);
-
 	}
 
 	/**
@@ -116,13 +115,13 @@ class SideBarTest extends MediaWikiLangTestCase {
 				# ** Baz|Fred
 				array(
 					'text' => 'Fred',
-					'href' => Title::newFromText( 'Baz' )->getLocalUrl(),
+					'href' => Title::newFromText( 'Baz' )->getLocalURL(),
 					'id' => 'n-Fred',
 					'active' => null,
 				),
 				array(
 					'text' => 'title-to-display',
-					'href' => Title::newFromText( 'page-to-go-to' )->getLocalUrl(),
+					'href' => Title::newFromText( 'page-to-go-to' )->getLocalURL(),
 					'id' => 'n-title-to-display',
 					'active' => null,
 				),
@@ -151,11 +150,12 @@ class SideBarTest extends MediaWikiLangTestCase {
 
 	/**
 	 * Simple test to verify our helper assertAttribs() is functional
-	 * Please note this assume MediaWiki default settings:
-	 *   $wgNoFollowLinks = true
-	 *   $wgExternalLinkTarget = false
 	 */
 	function testTestAttributesAssertionHelper() {
+		$this->setMwGlobals( array(
+			'wgNoFollowLinks' => true,
+			'wgExternalLinkTarget' => false,
+		) );
 		$attribs = $this->getAttribs();
 
 		$this->assertArrayHasKey( 'rel', $attribs );
@@ -168,38 +168,30 @@ class SideBarTest extends MediaWikiLangTestCase {
 	 * Test $wgNoFollowLinks in sidebar
 	 */
 	function testRespectWgnofollowlinks() {
-		global $wgNoFollowLinks;
-		$saved = $wgNoFollowLinks;
-		$wgNoFollowLinks = false;
+		$this->setMwGlobals( 'wgNoFollowLinks', false );
 
 		$attribs = $this->getAttribs();
 		$this->assertArrayNotHasKey( 'rel', $attribs,
 			'External URL in sidebar do not have rel=nofollow when $wgNoFollowLinks = false'
 		);
-
-		// Restore global
-		$wgNoFollowLinks = $saved;
 	}
 
 	/**
 	 * Test $wgExternaLinkTarget in sidebar
+	 * @dataProvider dataRespectExternallinktarget
 	 */
-	function testRespectExternallinktarget() {
-		global $wgExternalLinkTarget;
-		$saved = $wgExternalLinkTarget;
+	function testRespectExternallinktarget( $externalLinkTarget ) {
+		$this->setMwGlobals( 'wgExternalLinkTarget', $externalLinkTarget );
 
-		$wgExternalLinkTarget = '_blank';
 		$attribs = $this->getAttribs();
 		$this->assertArrayHasKey( 'target', $attribs );
-		$this->assertEquals( $attribs['target'], '_blank' );
-
-		$wgExternalLinkTarget = '_self';
-		$attribs = $this->getAttribs();
-		$this->assertArrayHasKey( 'target', $attribs );
-		$this->assertEquals( $attribs['target'], '_self' );
-
-		// Restore global
-		$wgExternalLinkTarget = $saved;
+		$this->assertEquals( $attribs['target'], $externalLinkTarget );
 	}
 
+	function dataRespectExternallinktarget() {
+		return array(
+			array( '_blank' ),
+			array( '_self' ),
+		);
+	}
 }

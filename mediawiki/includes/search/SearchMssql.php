@@ -38,7 +38,7 @@ class SearchMssql extends SearchEngine {
 	/**
 	 * Perform a full text search query and return a result set.
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return MssqlSearchResultSet
 	 * @access public
 	 */
@@ -50,7 +50,7 @@ class SearchMssql extends SearchEngine {
 	/**
 	 * Perform a title-only search query and return a result set.
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return MssqlSearchResultSet
 	 * @access public
 	 */
@@ -58,7 +58,6 @@ class SearchMssql extends SearchEngine {
 		$resultSet = $this->db->resultObject( $this->db->query( $this->getQuery( $this->filter( $term ), false ) ) );
 		return new MssqlSearchResultSet( $resultSet, $this->searchTerms );
 	}
-
 
 	/**
 	 * Return a partial WHERE clause to exclude redirects, if so set
@@ -144,7 +143,7 @@ class SearchMssql extends SearchEngine {
 	 */
 	function queryMain( $filteredTerm, $fulltext ) {
 		$match = $this->parseQuery( $filteredTerm, $fulltext );
-		$page        = $this->db->tableName( 'page' );
+		$page = $this->db->tableName( 'page' );
 		$searchindex = $this->db->tableName( 'searchindex' );
 
 		return 'SELECT page_id, page_namespace, page_title, ftindex.[RANK]' .
@@ -171,8 +170,9 @@ class SearchMssql extends SearchEngine {
 
 				if ( !empty( $terms[3] ) ) {
 					$regexp = preg_quote( $terms[3], '/' );
-					if ( $terms[4] )
+					if ( $terms[4] ) {
 						$regexp .= "[0-9A-Za-z_]+";
+					}
 				} else {
 					$regexp = preg_quote( str_replace( '"', '', $terms[2] ), '/' );
 				}
@@ -248,8 +248,9 @@ class MssqlSearchResultSet extends SearchResultSet {
 
 	function next() {
 		$row = $this->mResultSet->fetchObject();
-		if ( $row === false )
+		if ( $row === false ) {
 			return false;
+		}
 		return new SearchResult( $row );
 	}
 }

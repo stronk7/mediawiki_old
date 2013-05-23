@@ -7,14 +7,18 @@
 
 /** Tests for MediaWiki languages/classes/LanguageHr.php */
 class LanguageHrTest extends LanguageClassesTestCase {
-
-	/** @dataProvider providerPlural */
+	/** @dataProvider providePlural */
 	function testPlural( $result, $value ) {
 		$forms = array( 'one', 'few', 'many', 'other' );
 		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
-	function providerPlural() {
+	/** @dataProvider providePlural */
+	function testGetPluralRuleType( $result, $value ) {
+		$this->assertEquals( $result, $this->getLang()->getPluralRuleType( $value ) );
+	}
+
+	public static function providePlural() {
 		return array(
 			array( 'many', 0 ),
 			array( 'one', 1 ),
@@ -29,5 +33,4 @@ class LanguageHrTest extends LanguageClassesTestCase {
 			array( 'many', 200 ),
 		);
 	}
-
 }

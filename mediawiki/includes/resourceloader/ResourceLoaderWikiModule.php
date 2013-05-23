@@ -92,14 +92,14 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 		$content = $revision->getContent( Revision::RAW );
 
 		if ( !$content ) {
-			wfDebug( __METHOD__ . "failed to load content of JS/CSS page!\n" );
+			wfDebugLog( 'resourceloader', __METHOD__ . ': failed to load content of JS/CSS page!' );
 			return null;
 		}
 
 		$model = $content->getModel();
 
 		if ( $model !== CONTENT_MODEL_CSS && $model !== CONTENT_MODEL_JAVASCRIPT ) {
-			wfDebug( __METHOD__ . "bad content model $model for JS/CSS page!\n" );
+			wfDebugLog( 'resourceloader', __METHOD__ . ': bad content model $model for JS/CSS page!' );
 			return null;
 		}
 
@@ -126,7 +126,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			if ( strval( $script ) !== '' ) {
 				$script = $this->validateScriptFile( $titleText, $script );
 				if ( strpos( $titleText, '*/' ) === false ) {
-					$scripts .=  "/* $titleText */\n";
+					$scripts .= "/* $titleText */\n";
 				}
 				$scripts .= $script . "\n";
 			}
@@ -163,7 +163,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 				$styles[$media] = array();
 			}
 			if ( strpos( $titleText, '*/' ) === false ) {
-				$style =  "/* $titleText */\n" . $style;
+				$style = "/* $titleText */\n" . $style;
 			}
 			$styles[$media][] = $style;
 		}

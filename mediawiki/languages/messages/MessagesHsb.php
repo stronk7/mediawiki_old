@@ -184,8 +184,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ličbu wobkedźbowacych wužiwarjow pokazać',
 'tog-oldsig' => 'Eksistowaca signatura:',
 'tog-fancysig' => 'Ze signaturu kaž z wikitekstom wobchadźeć  (bjez awtomatiskeho wotkaza)',
-'tog-externaleditor' => 'Eksterny editor jako standard wužiwać (jenož za ekspertow, žada sej specialne nastajenja na wašim ličaku. [//www.mediawiki.org/wiki/Manual:External_editors Dalše informacije.])',
-'tog-externaldiff' => 'Eksterny diff-program jako standard wužiwać (jenož za ekspertow, žada sej specialne nastajenja na wašim ličaku. [//www.mediawiki.org/wiki/Manual:External_editors Dalše informacije.])',
 'tog-showjumplinks' => 'Wotkazy typa „dźi do” zmóžnić',
 'tog-uselivepreview' => 'Live-přehlad wužiwać (wužaduje sej JavaScript) (eksperimentalny)',
 'tog-forceeditsummary' => 'Mje skedźbnić, jeli zabudu zjeće',
@@ -199,6 +197,7 @@ $messages = array(
 'tog-diffonly' => 'Jenož rozdźěle pokazać (nic pak zbytny wobsah)',
 'tog-showhiddencats' => 'Schowane kategorije pokazać',
 'tog-norollbackdiff' => 'Rozdźěl po wróćostajenju zanjechać',
+'tog-useeditwarning' => 'Warnować, hdyž so wobdźěłowanska strona z njeskładowanymi změnami wopušća',
 
 'underline-always' => 'Přeco',
 'underline-never' => 'Ženje',
@@ -565,8 +564,14 @@ Wobkedźbuj, zo so někotre strony dale jewja, kaž by hišće přizjewjeny był
 'welcomecreation-msg' => 'Twoje konto bu wutworjene.
 Njezabudź swoje [[Special:Preferences|nastajenja za {{GRAMMAR:akuzatiw|{{SITENAME}}}}]] změnić.',
 'yourname' => 'Wužiwarske mjeno:',
+'userlogin-yourname' => 'Wužiwarske mjeno',
+'userlogin-yourname-ph' => 'Zapodaj swoje wužiwarske mjeno',
 'yourpassword' => 'Hesło:',
+'userlogin-yourpassword' => 'Hesło',
+'userlogin-yourpassword-ph' => 'Zapodaj swoje hesło',
+'createacct-yourpassword-ph' => 'Zapodaj hesło',
 'yourpasswordagain' => 'Hesło znowa zapodać:',
+'createacct-yourpasswordagain' => 'Hesło wobkrućić',
 'remembermypassword' => 'Na tutym ličaku přizjewjeny wostać (za maksimalnje $1 {{PLURAL:$1|dźeń|dnjej|dny|dnjow}})',
 'securelogin-stick-https' => 'Po přizjewjenju z HTTPS zwjazany wostać',
 'yourdomainname' => 'Twoja domejna:',
@@ -586,8 +591,13 @@ Njezabudź swoje [[Special:Preferences|nastajenja za {{GRAMMAR:akuzatiw|{{SITENA
 'gotaccount' => 'Maš hižo wužiwarske konto? $1.',
 'gotaccountlink' => 'Přizjewić',
 'userlogin-resetlink' => 'Přizjewjenske daty zabył?',
+'createacct-emailrequired' => 'E-mejlowa adresa',
 'createaccountmail' => 'Nachwilne přidatne hesło wužiwać a jo na slědowacu e-mejlowu adresu pósłać',
 'createaccountreason' => 'Přičina:',
+'createacct-reason' => 'Přičina',
+'createacct-imgcaptcha-ph' => 'Zapodaj tekst, kotryž deleka widźiš',
+'createacct-benefit-body1' => 'změny',
+'createacct-benefit-body2' => 'strony',
 'badretype' => 'Hesle, kotrejž sy zapodał, so njekryjetej.',
 'userexists' => 'Wužiwarske mjeno, kotrež sy zapodał, so hižo wužiwa.
 Prošu wubjer druhe mjeno.',
@@ -625,7 +635,7 @@ Prošu přizjew so znowa, po tym zo sy je přijał.',
 'blocked-mailpassword' => 'Twoja IP-adresa je přećiwo wobdźěłowanju zablokowana, a tohodla njeje dowolene, funkciju za wobnowjenje hesłow wužiwać, zo by znjewužiwanju zadźěwało.',
 'eauthentsent' => 'Wobkrućenska e-mejlka bu na naspomnjenu e-mejlowu adresu pósłana.
 Prjedy hač so druha e-mejlka na konto pósćele, dyrbiš so po instrukcijach w e-mejlce měć, zo by wobkrućił, zo konto je woprawdźe twoje.',
-'throttled-mailpassword' => 'Bu hižo nowe hesło za {{PLURAL:$1|poslednju hodźinu|poslednjej $1 hodźinje|poslednje $1 hodźiny|poslednich $1 hodźin}} pósłane. Zo by znjewužiwanju zadźěwało, so jenož jedne hesło na {{PLURAL:$1|hodźinu|$1 hodźinje|$1 hodźiny|$1 hodźin}} pósćele.',
+'throttled-mailpassword' => 'E-mejl za anulowanje hesło je so za {{PLURAL:$1|poslednju hodźinu|poslednjej $1 hodźinje|poslednje $1 hodźiny|poslednich $1 hodźin}} pósłała. Zo by znjewužiwanju zadźěwało, so jenož jedna e-mejl za anulowanje hesła na {{PLURAL:$1|hodźinu|$1 hodźinje|$1 hodźiny|$1 hodźin}} pósćele.',
 'mailerror' => 'Zmylk při słanju e-mejlki: $1',
 'acct_creation_throttle_hit' => 'Wopytowarjo tutoho wikija, kotřiž twoju IP-adresu wužiwaja, su {{PLURAL:$1|1 konto|$1 kontaj|$1 konty|$1 kontow}} posledni dźeń wutworił, štož je maksimalna ličba za tutu periodu. Wopytowarjo, kotřiž tutu IP-adresu wužiwaja, njemóža tuchwilu dalše konta wutworić.',
 'emailauthenticated' => 'Twoja e-mejlowa adresa bu $2 $3 hodź. wobkrućena.',
@@ -672,7 +682,7 @@ Snano sy swoje hesło hižo wuspěšnje změnił abo nowe nachwilne hesło poža
 
 # Special:PasswordReset
 'passwordreset' => 'Hesło wróćo stajić',
-'passwordreset-text' => 'Wupjelń tutón formular, zo by dopomnjensku e-mejl wo swojich kontowych podrobnosćach dóstał.',
+'passwordreset-text' => 'Wupjelń tutón formular, zo by swoje hesło anulował.',
 'passwordreset-legend' => 'Hesło wróćo stajić',
 'passwordreset-disabled' => 'Wróćostajenje hesłow je so na  tutym wikiju znjemóžniło.',
 'passwordreset-pretext' => '{{PLURAL:$1||Zapodaj deleka jedne ze slědowacych datowych podaćow}}',
@@ -682,23 +692,23 @@ Snano sy swoje hesło hižo wuspěšnje změnił abo nowe nachwilne hesło poža
 'passwordreset-capture-help' => 'Jeli nakřižuješ tutón kašćik, budźe so e-mejlka z nachwilnym hesło pokazować a tež wužiwarjej pósłać.',
 'passwordreset-email' => 'E-mejlowa adresa:',
 'passwordreset-emailtitle' => 'Kontowe podrobnosće na {{GRAMMAR:lokatiw|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Něchtó (najskerje ty, z IP-adresu $1) je dopomnjenku na twoje kontowe podrobnosće za {{SITENAME}} požadał ($4).  {{PLURAL:$3|Slědowace wužiwarske konto je|Slědowacej wužiwarskej konće stej|Slědowace wužiwarske konta su|Slědowace wužiwarske konta su}} z tutej e-mejlowej adresu {{PLURAL:$3|zwjazane|zwjazanej|zwjazane|zwjazane}}:
+'passwordreset-emailtext-ip' => 'Něchtó (najskerje ty, z IP-adresu $1) je anulowanje hesła za {{GRAMMAR:akuzatiw|{{SITENAME}}}} požadał ($4).  {{PLURAL:$3|Slědowace wužiwarske konto je|Slědowacej wužiwarskej konće stej|Slědowace wužiwarske konta su}} z tutej e-mejlowej adresu {{PLURAL:$3|zwjazane|zwjazanej|zwjazane}}:
 
 $2
 
-{{PLURAL:$3|Tute nachwilne hesło spadnje|Tutej nachwilnej hesle spadnjetej|Tute nachwilne hesła spadnu|Tute nachwilne hesła spadnu}} za {{PLURAL:$5|jedyn dźeń|$5 dnjej|$5 dny|$5 dnjow}}.
+{{PLURAL:$3|Tute nachwilne hesło spadnje|Tutej nachwilnej hesle spadnjetej|Tute nachwilne hesła spadnu}} za {{PLURAL:$5|jedyn dźeń|$5 dnjej|$5 dny|$5 dnjow}}.
 Ty měł so nětko přizjewić a nowe hesło wubrać. Jeli něchtó druhi je tute naprašowanje pósłał, abo jeli sy so zaso na prěnjotne hesło dopomnił a wjace nochceš jo změnić, móžeš tutu zdźělenku ignorować a swoje stare hesło dale wužiwać.',
-'passwordreset-emailtext-user' => 'Wužiwar $1 je dopomnjenku na twoje kontowe podrobnosće za {{SITENAME}} požadał ($4).  {{PLURAL:$3|Slědowace wužiwarske konto je|Slědowacej wužiwarskej konće stej|Slědowace wužiwarske konta su|Slědowace wužiwarske konta su}} z tutej e-mejlowej adresu {{PLURAL:$3|zwjazane|zwjazanej|zwjazane|zwjazane}}:
+'passwordreset-emailtext-user' => 'Wužiwar $1 na {{GRAMMAR:lokatiw|{{SITENAME}}}} je anulowanje twojeho hesła za {{GRAMMAR:akuzatiw|{{SITENAME}}}} požadał ($4).  {{PLURAL:$3|Slědowace wužiwarske konto je|Slědowacej wužiwarskej konće stej|Slědowace wužiwarske konta su}} z tutej e-mejlowej adresu {{PLURAL:$3|zwjazane|zwjazanej|zwjazane}}:
 
 $2
 
-{{PLURAL:$3|Tute nachwilne hesło spadnje|Tutej nachwilnej hesle spadnjetej|Tute nachwilne hesła spadnu|Tute nachwilne hesła spadnu}} za {{PLURAL:$5|jedyn dźeń|$5 dnjej|$5 dny|$5 dnjow}}.
+{{PLURAL:$3|Tute nachwilne hesło spadnje|Tutej nachwilnej hesle spadnjetej|Tute nachwilne hesła spadnu}} za {{PLURAL:$5|jedyn dźeń|$5 dnjej|$5 dny|$5 dnjow}}.
 Ty měł so nětko přizjewić a nowe hesło wubrać. Jeli něchtó druhi je tute naprašowanje pósłał, abo jeli sy so zaso na prěnjotne hesło dopomnił a wjace nochceš jo změnić, móžeš tutu zdźělenku ignorować a swoje stare hesło dale wužiwać.',
 'passwordreset-emailelement' => 'Wužiwarske mjeno: $1
 Nachwilne hesło: $2',
-'passwordreset-emailsent' => 'Wopomnjenska e-mejlka je so pósłała.',
-'passwordreset-emailsent-capture' => 'Deleka pokazana dopomnjenska e-mejl je so wotpósłała.',
-'passwordreset-emailerror-capture' => 'Deleka pokazana dopomnjenska e-mejl je so wutworiła, ale słanje wužiwarjej je so njeporadźiło: $1',
+'passwordreset-emailsent' => 'E-mejl za anulowanje hesło je so pósłała.',
+'passwordreset-emailsent-capture' => 'E-mejl za anulowanje hesła je so pósłała, kotraž so deleka pokazuje.',
+'passwordreset-emailerror-capture' => 'E-mejl za anulowanje hesła je so wutworiła, kotraž so deleka pokazuje, ale słanje {{GENDER:$2|wužiwarjej|wužiwarce}} je so njeporadźiło: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'E-mejlowu adresu změnić',
@@ -904,6 +914,7 @@ Eksistuje hižo.',
 'content-failed-to-parse' => 'Parsowanje wobsaha $2 za model $1 je so njeporadźiło: $3',
 'invalid-content-data' => 'Njepłaćiwe wobsahowe daty',
 'content-not-allowed-here' => 'Wobsah "$1" njeje na stronje [[$2]] dowoleny',
+'editwarning-warning' => 'Hdyž so strona wopušća, móžeja so změny zhubić, kotrež sy přewjedł. Jeli sy přizjewjeny, móžeš tute warnowanje we wotrězku {{int:prefs-editing}} swojich nastajenjow znjemóžnić.',
 
 # Content models
 'content-model-wikitext' => 'wikitekst',
@@ -1182,15 +1193,6 @@ Spytaj swoje naprašowanje z prefiksom ''all:'' wužiwać, zo by wšón wobsah (
 'powersearch-togglenone' => 'Žadyn',
 'search-external' => 'Eksterne pytanje',
 'searchdisabled' => 'Pytanje w {{GRAMMAR:lokatiw|{{SITENAME}}}} tuchwilu móžne njeje. Móžeš mjeztym z Google pytać. Wobkedźbuj, zo móža wuslědki z wobsaha {{GRAMMAR:genitiw|{{SITENAME}}}} zestarjene być.',
-
-# Quickbar
-'qbsettings' => 'Pobóčna lajsta',
-'qbsettings-none' => 'Žane',
-'qbsettings-fixedleft' => 'Leži nalěwo',
-'qbsettings-fixedright' => 'Leži naprawo',
-'qbsettings-floatingleft' => 'Wisa nalěwo',
-'qbsettings-floatingright' => 'Wisa naprawo',
-'qbsettings-directionality' => 'Kruty, wotwisny wot pisanskeho směra twojeje rěče',
 
 # Preferences page
 'preferences' => 'Nastajenja',
@@ -1503,9 +1505,9 @@ Smě mjenje hač $1 {{PLURAL:$1|znamješko|znamješce|znamješka|znamješkow}} d
 'rc-old-title' => 'prěnjotnje wutworjeny jako "$1"',
 
 # Recent changes linked
-'recentchangeslinked' => 'Změny w zwjazanych stronach',
+'recentchangeslinked' => 'Změny na zwjazanych stronach',
 'recentchangeslinked-feed' => 'Změny zwjazanych stron',
-'recentchangeslinked-toolbox' => 'Změny w zwjazanych stronach',
+'recentchangeslinked-toolbox' => 'Změny na zwjazanych stronach',
 'recentchangeslinked-title' => 'Změny na stronach, kotrež su z „$1“ wotkazane',
 'recentchangeslinked-noresult' => 'Njejsu změny zwajzanych stron we wubranej dobje.',
 'recentchangeslinked-summary' => "Tuta strona nalistuje poslednje změny na wotkazanych stronach (resp. pola kategorijow na čłonach kategorije).
@@ -1744,7 +1746,6 @@ Za optimalnu wěstotu je img_auth.php znjemóžnjeny.',
 'http-read-error' => 'Čitanski zmylk HTTP.',
 'http-timed-out' => 'Naprašowanje HTTP je čas překročiło.',
 'http-curl-error' => 'Zmylk při wołanju URL: $1',
-'http-host-unreachable' => 'URL njeda so docpěć.',
 'http-bad-status' => 'Problem je za HTTP-naprašowanje wustupił: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1895,8 +1896,10 @@ Snano chceš wopisanje na jeje [$2 stronje datajoweho wopisanja] wobdźěłać.'
 'disambiguations-text' => "Slědowace strony wobsahuja znajmjeńša jedyn wotkaz k stronje '''rozjasnjenja wjacezmyslnosće'''. Měli město toho na poprawnu stronu wotkazać.<br />Maja stronu za stronu rozjasnjenja wjacezmyslnosće, jeli předłohu wužiwa, na kotruž so wot [[MediaWiki:Disambiguationspage]] wotkazuje.",
 
 'pageswithprop' => 'Strony z kajkosću strony',
+'pageswithprop-legend' => 'Strony z kajkosću strony',
 'pageswithprop-text' => 'Tuta strona nalistuje strony, kotrež wěstu kajkosć strony wužiwaja.',
 'pageswithprop-prop' => 'Mjeno kajkosće:',
+'pageswithprop-submit' => 'Wotpósłać',
 
 'doubleredirects' => 'Dwójne daleposrědkowanja',
 'doubleredirectstext' => 'Tuta strona nalistuje strony, kotrež k druhim daleposrědkowanskim stronam dale posrědkuja.
@@ -2143,8 +2146,8 @@ Přichodne změny tuteje strony a přisłušneje diskusijneje strony budu so tam
 'notvisiblerev' => 'Wersija bu wušmórnjena',
 'watchnochange' => 'Žana z twojich wobkedźbowanych stron njebu w podatej dobje wobdźěłana.',
 'watchlist-details' => '{{PLURAL:$1|$1 wobkedźbowana strona|$1 wobkedźbowanej stronje|$1 wobkedźbowane strony|$1 wobkedźbowanych stronow}}, diskusijne strony wuwzate.',
-'wlheader-enotif' => '* E-mejlowe zdźělenje je zmóžnjene.',
-'wlheader-showupdated' => '* Strony, kotrež buchu po twojim poslednim wopyće změnjene so <b>tučne</b> pokazuja.',
+'wlheader-enotif' => 'E-mejlowe zdźělenje je zmóžnjene.',
+'wlheader-showupdated' => 'Strony, kotrež buchu po twojim poslednim wopyće změnjene so <b>tučne</b> pokazuja.',
 'watchmethod-recent' => 'Aktualne změny za wobkedźbowane strony přepruwować',
 'watchmethod-list' => 'Wobkedźbowanki za aktualnymi změnami přepruwować',
 'watchlistcontains' => 'Maš $1 {{PLURAL:$1|stronu|stronje|strony|stronow}} w swojich wobkedźbowankach.',
@@ -2542,6 +2545,7 @@ Hlej [[Special:BlockList|lisćinu blokowanjow]], zo by zablokowanjow pruwował.'
 'sorbs' => 'SORBS DNSbl',
 'sorbsreason' => 'Twoja IP-adresa je jako wotewrjeny proksy na DNSBL {{GRAMMAR:genitiw|{{SITENAME}}}} zapisana.',
 'sorbs_create_account_reason' => 'Twoja IP-adresa je jako wotewrjeny proksy na DNSBL {{GRAMMAR:genitiw|{{SITENAME}}}} zapisana. Njemóžeš konto wutworić.',
+'xffblockreason' => 'IP-adresa w header X-Forwarded-For, pak twoja pak ta proksy-serwera, kotryž wužiwaš, je so zablokowała. Prěnjotna přičina za blokowanje bě: $1',
 'cant-block-while-blocked' => 'Njemóžeš druhich wužiwarjow blokować, mjeztym zo ty sy zablokowany.',
 'cant-see-hidden-user' => 'Wužiwar, kotrehož pospytuješ blokować, bu hižo zablokowany a schowany. Dokelž nimaš prawo wužiwarja schować, njemóžeš blokowanje wužiwarja widźeć abo wobdźěłać.',
 'ipbblocked' => 'Njemóžeš druhich wužiwarjow blokować abo wotblokować, dokelž ty sam sy zablokowany',
@@ -2915,13 +2919,8 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 'pageinfo-category-files' => 'Ličba datajow',
 
 # Skin names
-'skinname-standard' => 'Klasiski',
-'skinname-nostalgia' => 'Nostalgija',
 'skinname-cologneblue' => 'Kölnjanska módrina',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Ćipka',
-'skinname-simple' => 'Jednory',
 'skinname-modern' => 'Moderny',
 
 # Patrolling
@@ -2999,10 +2998,24 @@ $1',
 'minutes' => '{{PLURAL:$1|$1 mjeńšinu|$1 mjeńšinomaj|$1 mjeńšinami|$1 mjeńšinami}}',
 'hours' => '{{PLURAL:$1|$1 hodźinu|$1 hodźinomaj|$1 hodźinami|$1 hodźinami}}',
 'days' => '{{PLURAL:$1|$1 dnjom|$1 dnjomaj|$1 dnjemi|$1 dnjemi}}',
+'weeks' => '{{PLURAL:$1|$1 tydźeń|$1 njedźeli|$1 njedźele|$1 njedźel}}',
 'months' => '{{PLURAL:$1|$1 měsacom|$1 měsacomaj|$1 měsacami}}',
 'years' => '{{PLURAL:$1|$1 lětom|$1 lětomaj|$1 lětami}}',
 'ago' => 'před $1',
 'just-now' => 'runje',
+
+# Human-readable timestamps
+'hours-ago' => 'před $1 {{PLURAL:$1|hodźinu|hodźinomaj|hodźinami|hodźinami}}',
+'minutes-ago' => 'před $1 {{PLURAL:$1|mjeńšinu|mjeńšinomaj|mjeńšinami|mjeńšinami}}',
+'seconds-ago' => 'před $1 {{PLURAL:$1|sekundu|sekundomaj|sekundami|sekundami}}',
+'monday-at' => 'Póndźela $1',
+'tuesday-at' => 'Wutora $1',
+'wednesday-at' => 'Srjeda $1',
+'thursday-at' => 'Štwórtk $1',
+'friday-at' => 'Pjatk $1',
+'saturday-at' => 'Sobota $1',
+'sunday-at' => 'Njedźela $1',
+'yesterday-at' => 'Wčera $1',
 
 # Bad image list
 'bad_image_list' => 'Format:
@@ -3030,7 +3043,7 @@ Nasledne wotkazy na samsnej lince definuja wuwzaća, hdźež so wobraz smě naje
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Šěrokosć',
 'exif-imagelength' => 'Wysokosć',
 'exif-bitspersample' => 'Bitow na barbowu komponentu',
@@ -3208,7 +3221,7 @@ Nasledne wotkazy na samsnej lince definuja wuwzaća, hdźež so wobraz smě naje
 'exif-originalimageheight' => 'Wysokosć wobraza před přitřihowanjom',
 'exif-originalimagewidth' => 'Šěrokosć wobraza před přitřihowanjom',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Njekomprimowany',
 'exif-compression-2' => 'CCITT skupina 3 jednodimensionalne modificěrowane kodowanje Huffman běhoweje dołhosće',
 'exif-compression-3' => 'CCITT skupina 3 faksowe kodowanje',
@@ -3616,13 +3629,6 @@ Ty měł [{{SERVER}}{{SCRIPTPATH}}/COPYING kopiju licency GNU General Public Lic
 'version-entrypoints-header-entrypoint' => 'Zastupny dypk',
 'version-entrypoints-header-url' => 'URL',
 
-# Special:FilePath
-'filepath' => 'Datajowy puć',
-'filepath-page' => 'Dataja:',
-'filepath-submit' => 'Pytać',
-'filepath-summary' => 'Tuta specialna strona wróća dospołny puć aktualneje datajoweje wersije.
-Wobrazy so połnym rozeznaću pokazuja, druhe datajowe typy so ze zwjazanym programom startuja.',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Dwójne dataje pytać',
 'fileduplicatesearch-summary' => 'Pytanje za duplikatnymi datajemi na zakładźe jich hašoweje hódnoty.',
@@ -3712,23 +3718,25 @@ Wobrazy so połnym rozeznaću pokazuja, druhe datajowe typy so ze zwjazanym prog
 'htmlform-submit' => 'Wotpósłać',
 'htmlform-reset' => 'Změny cofnyć',
 'htmlform-selectorother-other' => 'Druhe',
+'htmlform-no' => 'Ně',
+'htmlform-yes' => 'Haj',
 
 # SQLite database support
 'sqlite-has-fts' => '$1 połnotekstowe pytanje podpěruje.',
 'sqlite-no-fts' => '$1 połnotekstowe pytanje njepodpěruje',
 
 # New logging system
-'logentry-delete-delete' => '$1 je stronu $3 zhašał',
-'logentry-delete-restore' => '$1 je stronu $3 wobnowił',
-'logentry-delete-event' => '$1 změni widźomnosć {{PLURAL:$5|protokoloweho zapiska|$5 protokoloweju zapiskow|$5 protokolowych zapiskow|$5 protokolowych zapiskow}} na $3: $4',
-'logentry-delete-revision' => '$1 změni widźomnosć {{PLURAL:$5|jedneje wersije|$5 wersijow|$5 wersijow|$5 wersijow}} na $3: $4',
-'logentry-delete-event-legacy' => '$1 změni widźomnosć protokolowych zapiskow na $3',
-'logentry-delete-revision-legacy' => '$1 změni widźomnosć wersijow na stronje $3',
-'logentry-suppress-delete' => '$1 je stronu $3 potłóčił',
-'logentry-suppress-event' => '$1 změni skradźu widźomnosć {{PLURAL:$5|protokoloweho zapiska|$5 protokoloweju zapiskow|$5 protokolowych zapiskow|$5 protokolowych zapiskow}} na $3: $4',
-'logentry-suppress-revision' => '$1 změni skradźu widźomnosć {{PLURAL:$5|jedneje wersije|$5 wersijow|$5 wersijow|$5 wersijow}} na stronje $3: $4',
-'logentry-suppress-event-legacy' => '$1 změni skradźu widźomnosć protokolowych zapiskow na $3',
-'logentry-suppress-revision-legacy' => '$1 změni skradźu widźomnosć wersijow na stronje $3',
+'logentry-delete-delete' => '$1 je stronu $3 {{GENDER:$1|zhašał|zhašała}}',
+'logentry-delete-restore' => '$1 je stronu $3 {{GENDER:$1wobnowił|wobnowiła}}',
+'logentry-delete-event' => '$1 je widźomnosć {{PLURAL:$5|protokoloweho zapiska|$5 protokoloweju zapiskow|$5 protokolowych zapiskow}} na $3 {{GENDER:$2|změnił|změniła}}: $4',
+'logentry-delete-revision' => '$1 je widźomnosć {{PLURAL:$5|jedneje wersije|$5 wersijow}} na $3 {{GENDER:$2|změnił|změniła}}: $4',
+'logentry-delete-event-legacy' => '$1 je widźomnosć protokolowych zapiskow na $3 {{GENDER:$2|změnił|změniła}}',
+'logentry-delete-revision-legacy' => '$1 je widźomnosć wersijow na stronje $3 {{GENDER:$2|změnił|změniła}}',
+'logentry-suppress-delete' => '$1 je stronu $3 {{GENDER:$2|potłóčił|potłóčiła}}',
+'logentry-suppress-event' => '$1 je skradźu widźomnosć {{PLURAL:$5|protokoloweho zapiska|$5 protokoloweju zapiskow|$5 protokolowych zapiskow}} na $3 {{GENDER:$2|změnił|změniła}}: $4',
+'logentry-suppress-revision' => '$1 je skradźu widźomnosć {{PLURAL:$5|jedneje wersije|$5 wersijow}} na stronje $3 {{GENDER:$2|změnił|změniła}}: $4',
+'logentry-suppress-event-legacy' => '$1 je skradźu widźomnosć protokolowych zapiskow na $3 {{GENDER:$2|změnił|změniła}}',
+'logentry-suppress-revision-legacy' => '$1 je skradźu widźomnosć wersijow na stronje $3 {{GENDER:$2|změnił|změniła}}',
 'revdelete-content-hid' => 'wobsah schowany',
 'revdelete-summary-hid' => 'Zjeće schowane',
 'revdelete-uname-hid' => 'wužiwarske mjeno schowane',
@@ -3737,20 +3745,20 @@ Wobrazy so połnym rozeznaću pokazuja, druhe datajowe typy so ze zwjazanym prog
 'revdelete-uname-unhid' => 'wužiwarske mjeno widźomne',
 'revdelete-restricted' => 'na administratorow nałožene wobmjezowanja',
 'revdelete-unrestricted' => 'Wobmjezowanja za administratorow wotstronjene',
-'logentry-move-move' => '$1 je stronu $3 do $4 přesunył',
-'logentry-move-move-noredirect' => '$1 přesuny stronu $3 do $4, bjeztoho zo by dalesposrědkowanje wutworił',
-'logentry-move-move_redir' => '$1 přesuny stronu $3 do $4 přepisujo dalesposrědkowanje',
-'logentry-move-move_redir-noredirect' => '$1 přesuny stronu $3 do $4 přepisujo dalesposrědkowanje, bjeztoho zo by dalesposrědkowanje wutworił',
-'logentry-patrol-patrol' => '$1 markěrowaše wersiju $4 strony $3 jako skontrolowanu',
-'logentry-patrol-patrol-auto' => '$1 awtomatisce markěrowaše wersiju $4 strony $3 jako skontrolowanu',
-'logentry-newusers-newusers' => 'Wužiwarske konto $1 je so załožiło',
-'logentry-newusers-create' => 'Wužiwarske konto $1 je so załožiło',
-'logentry-newusers-create2' => '$1 załoži wužiwarske konto $3',
-'logentry-newusers-byemail' => 'Wužiwarske konto $3 je so wot $1 załožiło a hesło je so přez e-mejl pósłało.',
-'logentry-newusers-autocreate' => 'Konto $1 je so awtomatisce załožiło',
-'logentry-rights-rights' => '$1 změni skupinske čłonstwo za $3 z $4 do $5',
-'logentry-rights-rights-legacy' => '$1 změni skupinske čłonstwo za $3',
-'logentry-rights-autopromote' => '$1 powyši so awtomatisce wot $4 do $5',
+'logentry-move-move' => '$1 je stronu $3 do $4 {{GENDER:$2|přesunył|přesunyła}}',
+'logentry-move-move-noredirect' => '$1 je stronu $3 do $4 {{GENDER:$2|přesunył|přesunyła}}, bjeztoho zo by dalesposrědkowanje {{GENDER:$2|wutworił|wutworiła}}',
+'logentry-move-move_redir' => '$1 je stronu $3 do $4 {{GENDER:$2|přesunył|přesunyła}} přepisujo dalesposrědkowanje',
+'logentry-move-move_redir-noredirect' => '$1 je stronu $3 do $4 {{GENDER:$2|přesunył|přesunyła}} přepisujo dalesposrědkowanje, bjeztoho zo by dalesposrědkowanje {{GENDER:$2|wutworił|wutworiła}}',
+'logentry-patrol-patrol' => '$1 je wersiju $4 strony $3 jako dohladowanu {{GENDER:$2|markěrował|markěrowała}}',
+'logentry-patrol-patrol-auto' => '$1 je wersiju $4 strony $3 awtomatisce jako dohladowanu {{GENDER:$2|markěrował|markěrowała}}',
+'logentry-newusers-newusers' => 'Wužiwarske konto $1 je so {{GENDER:$2|załožiło}}',
+'logentry-newusers-create' => 'Wužiwarske konto $1 je so {{GENDER:$2|załožiło}}',
+'logentry-newusers-create2' => '$1 je wužiwarske konto $3 {{GENDER:$2|załožił|załožiła}}',
+'logentry-newusers-byemail' => '$1 je wužiwarske konto $3 {{GENDER:$2|załožił|załožiła}} a hesło je so přez e-mejl pósłało.',
+'logentry-newusers-autocreate' => 'Wužiwarske konto $1 je so awtomatisce {{GENDER:$2|załožiło}}',
+'logentry-rights-rights' => '$1 je skupinske čłonstwo za $3 z $4 do $5 {{GENDER:$2|změnił|změniła}}',
+'logentry-rights-rights-legacy' => '$1 je skupinske čłonstwo za $3 {{GENDER:$2|změnił|změniła}}',
+'logentry-rights-autopromote' => '$1 je so awtomatisce wot $4 do $5 {{GENDER:$2|přirjadował|přirjadowała}}',
 'rightsnone' => '(ničo)',
 
 # Feedback
@@ -3826,7 +3834,7 @@ Hewak móžeš slědowacy jednory formular wužiwać. Twój komentar přida so s
 'duration-centuries' => '$1 {{PLURAL:$1|lětstotk|lětstotkaj|lětstotki|lětstotkow}}',
 'duration-millennia' => '$1 {{PLURAL:$1|lěttysac|lěttysacaj|lěttysacy|lěttysacow}}',
 
-# Unknown messages
-'pageswithprop-legend' => 'Strony z kajkosću strony',
-'pageswithprop-submit' => 'Wotpósłać',
+# Image rotation
+'rotate-comment' => 'Wobraz wo $1 {{PLURAL:$1|stopjeń|stopnjej|stopnje|stopnjow}} w směrje časnika wjerćany',
+
 );

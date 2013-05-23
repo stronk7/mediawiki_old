@@ -80,7 +80,7 @@ class DifferenceEngine extends ContextSource {
 	 * Constructor
 	 * @param $context IContextSource context to use, anything else will be ignored
 	 * @param $old Integer old ID we want to show and diff with.
-	 * @param $new String either 'prev' or 'next'.
+	 * @param string $new either 'prev' or 'next'.
 	 * @param $rcid Integer ??? FIXME (default 0)
 	 * @param $refreshCache boolean If set, refreshes the diff cache
 	 * @param $unhide boolean If set, allow viewing deleted revs
@@ -223,33 +223,6 @@ class DifferenceEngine extends ContextSource {
 			throw new PermissionsError( 'read', $permErrors );
 		}
 
-		# If external diffs are enabled both globally and for the user,
-		# we'll use the application/x-external-editor interface to call
-		# an external diff tool like kompare, kdiff3, etc.
-		if ( ExternalEdit::useExternalEngine( $this->getContext(), 'diff' ) ) {
-			//TODO: come up with a good solution for non-text content here.
-			//      at least, the content format needs to be passed to the client somehow.
-			//      Currently, action=raw will just fail for non-text content.
-
-			$urls = array(
-				'File' => array( 'Extension' => 'wiki', 'URL' =>
-					# This should be mOldPage, but it may not be set, see below.
-					$this->mNewPage->getCanonicalURL( array(
-						'action' => 'raw', 'oldid' => $this->mOldid ) )
-				),
-				'File2' => array( 'Extension' => 'wiki', 'URL' =>
-					$this->mNewPage->getCanonicalURL( array(
-						'action' => 'raw', 'oldid' => $this->mNewid ) )
-				),
-			);
-
-			$externalEditor = new ExternalEdit( $this->getContext(), $urls );
-			$externalEditor->execute();
-
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
 		$rollback = '';
 		$undoLink = '';
 
@@ -267,6 +240,8 @@ class DifferenceEngine extends ContextSource {
 		$deleted = $suppressed = false;
 		$allowed = $this->mNewRev->userCan( Revision::DELETED_TEXT, $user );
 
+		$revisionTools = array();
+
 		# mOldRev is false if the difference engine is called with a "vague" query for
 		# a diff between a version V and its previous version V' AND the version V
 		# is the first version of that article. In that case, V' does not exist.
@@ -276,11 +251,6 @@ class DifferenceEngine extends ContextSource {
 			$oldHeader = '';
 		} else {
 			wfRunHooks( 'DiffViewHeader', array( $this, $this->mOldRev, $this->mNewRev ) );
-
-			$sk = $this->getSkin();
-			if ( method_exists( $sk, 'suppressQuickbar' ) ) {
-				$sk->suppressQuickbar();
-			}
 
 			if ( $this->mNewPage->equals( $this->mOldPage ) ) {
 				$out->setPageTitle( $this->msg( 'difference-title', $this->mNewPage->getPrefixedText() ) );
@@ -301,16 +271,16 @@ class DifferenceEngine extends ContextSource {
 					}
 				}
 				if ( !$this->mOldRev->isDeleted( Revision::DELETED_TEXT ) && !$this->mNewRev->isDeleted( Revision::DELETED_TEXT ) ) {
-					$undoLink = ' ' . $this->msg( 'parentheses' )->rawParams(
-						Html::element( 'a', array(
-							'href' => $this->mNewPage->getLocalUrl( array(
+					$undoLink = Html::element( 'a', array(
+							'href' => $this->mNewPage->getLocalURL( array(
 								'action' => 'edit',
 								'undoafter' => $this->mOldid,
 								'undo' => $this->mNewid ) ),
 							'title' => Linker::titleAttrib( 'undo' )
 						),
 						$this->msg( 'editundo' )->text()
-					) )->escaped();
+					);
+					$revisionTools[] = $undoLink;
 				}
 			}
 
@@ -376,7 +346,15 @@ class DifferenceEngine extends ContextSource {
 
 		# Handle RevisionDelete links...
 		$rdel = $this->revisionDeleteLink( $this->mNewRev );
-		$newRevisionHeader = $this->getRevisionHeader( $this->mNewRev, 'complete' ) . $undoLink;
+
+		# Allow extensions to define their own revision tools
+		wfRunHooks( 'DiffRevisionTools', array( $this->mNewRev, &$revisionTools ) );
+		$formattedRevisionTools = array();
+		// Put each one in parentheses (poor man's button)
+		foreach ( $revisionTools as $tool ) {
+			$formattedRevisionTools[] = $this->msg( 'parentheses' )->rawParams( $tool )->escaped();
+		}
+		$newRevisionHeader = $this->getRevisionHeader( $this->mNewRev, 'complete' ) . ' ' . implode( ' ', $formattedRevisionTools );
 
 		$newHeader = '<div id="mw-diff-ntitle1"><strong>' . $newRevisionHeader . '</strong></div>' .
 			'<div id="mw-diff-ntitle2">' . Linker::revUserTools( $this->mNewRev, !$this->unhide ) .
@@ -387,8 +365,9 @@ class DifferenceEngine extends ContextSource {
 
 		if ( $this->mNewRev->isDeleted( Revision::DELETED_TEXT ) ) {
 			$deleted = true; // new revisions text is hidden
-			if ( $this->mNewRev->isDeleted( Revision::DELETED_RESTRICTED ) )
+			if ( $this->mNewRev->isDeleted( Revision::DELETED_RESTRICTED ) ) {
 				$suppressed = true; // also suppressed
+			}
 		}
 
 		# If the diff cannot be shown due to a deleted revision, then output
@@ -404,7 +383,7 @@ class DifferenceEngine extends ContextSource {
 					array( $msg ) );
 			} else {
 				# Give explanation and add a link to view the diff...
-				$link = $this->getTitle()->getFullUrl( $this->getRequest()->appendQueryValue( 'unhide', '1', true ) );
+				$link = $this->getTitle()->getFullURL( $this->getRequest()->appendQueryValue( 'unhide', '1', true ) );
 				$msg = $suppressed ? 'rev-suppressed-unhide-diff' : 'rev-deleted-unhide-diff';
 				$out->wrapWikiMsg( "<div id='mw-$msg' class='mw-warning plainlinks'>\n$1\n</div>\n", array( $msg, $link ) );
 			}
@@ -450,11 +429,11 @@ class DifferenceEngine extends ContextSource {
 					$change = RecentChange::newFromConds(
 						array(
 						// Redundant user,timestamp condition so we can use the existing index
-							'rc_user_text'  => $this->mNewRev->getRawUserText(),
-							'rc_timestamp'  => $db->timestamp( $this->mNewRev->getTimestamp() ),
+							'rc_user_text' => $this->mNewRev->getRawUserText(),
+							'rc_timestamp' => $db->timestamp( $this->mNewRev->getTimestamp() ),
 							'rc_this_oldid' => $this->mNewid,
 							'rc_last_oldid' => $this->mOldid,
-							'rc_patrolled'  => 0
+							'rc_patrolled' => 0
 						),
 						__METHOD__
 					);
@@ -526,7 +505,7 @@ class DifferenceEngine extends ContextSource {
 			if ( $this->mNewPage->isCssJsSubpage() || $this->mNewPage->isCssOrJsPage() ) {
 				// Stolen from Article::view --AG 2007-10-11
 				// Give hooks a chance to customise the output
-				// @TODO: standardize this crap into one function
+				// @todo standardize this crap into one function
 				if ( ContentHandler::runLegacyHooks( 'ShowRawCssJs', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
 					// NOTE: deprecated hook, B/C only
 					// use the content object's own rendering
@@ -535,9 +514,9 @@ class DifferenceEngine extends ContextSource {
 					$txt = $po ? $po->getText() : '';
 					$out->addHTML( $txt );
 				}
-			} elseif( !wfRunHooks( 'ArticleContentViewCustom', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
+			} elseif ( !wfRunHooks( 'ArticleContentViewCustom', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
 				// Handled by extension
-			} elseif( !ContentHandler::runLegacyHooks( 'ArticleViewCustom', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
+			} elseif ( !ContentHandler::runLegacyHooks( 'ArticleViewCustom', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
 				// NOTE: deprecated hook, B/C only
 				// Handled by extension
 			} else {
@@ -566,7 +545,7 @@ class DifferenceEngine extends ContextSource {
 						# Show categories etc.
 						$out->addParserOutputNoText( $parserOutput );
 					}
-				} else if ( $parserOutput ) {
+				} elseif ( $parserOutput ) {
 					$out->addParserOutput( $parserOutput );
 				}
 			}
@@ -618,7 +597,7 @@ class DifferenceEngine extends ContextSource {
 	 *
 	 * @param string|bool $otitle Header for old text or false
 	 * @param string|bool $ntitle Header for new text or false
-	 * @param $notice String: HTML between diff header and body
+	 * @param string $notice HTML between diff header and body
 	 * @return mixed
 	 */
 	function getDiff( $otitle, $ntitle, $notice = '' ) {
@@ -759,8 +738,8 @@ class DifferenceEngine extends ContextSource {
 	/**
 	 * Generate a diff, no caching
 	 *
-	 * @param $otext String: old text, must be already segmented
-	 * @param $ntext String: new text, must be already segmented
+	 * @param string $otext old text, must be already segmented
+	 * @param string $ntext new text, must be already segmented
 	 * @return bool|string
 	 * @deprecated since 1.21, use generateContentDiffBody() instead!
 	 */
@@ -775,8 +754,8 @@ class DifferenceEngine extends ContextSource {
 	 *
 	 * @todo move this to TextDifferenceEngine, make DifferenceEngine abstract. At some point.
 	 *
-	 * @param $otext String: old text, must be already segmented
-	 * @param $ntext String: new text, must be already segmented
+	 * @param string $otext old text, must be already segmented
+	 * @param string $ntext new text, must be already segmented
 	 * @return bool|string
 	 */
 	function generateTextDiffBody( $otext, $ntext ) {
@@ -883,10 +862,11 @@ class DifferenceEngine extends ContextSource {
 	}
 
 	function localiseLineNumbersCb( $matches ) {
-		if ( $matches[1] === '1' && $this->mReducedLineNumbers ) return '';
+		if ( $matches[1] === '1' && $this->mReducedLineNumbers ) {
+			return '';
+		}
 		return $this->msg( 'lineno' )->numParams( $matches[1] )->escaped();
 	}
-
 
 	/**
 	 * If there are revisions between the ones being compared, return a note saying so.
@@ -938,7 +918,7 @@ class DifferenceEngine extends ContextSource {
 	 * Get a header for a specified revision.
 	 *
 	 * @param $rev Revision
-	 * @param $complete String: 'complete' to get the header wrapped depending
+	 * @param string $complete 'complete' to get the header wrapped depending
 	 *        the visibility of the revision and a link to edit the page.
 	 * @return String HTML fragment
 	 */

@@ -25,7 +25,7 @@
  * @todo document
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that rebuilds search index table from scratch.
@@ -147,7 +147,7 @@ class RebuildTextIndex extends Maintenance {
 		$searchindex = $this->db->tableName( 'searchindex' );
 		$this->output( "\nRebuild the index...\n" );
 		$sql = "ALTER TABLE $searchindex ADD FULLTEXT si_title (si_title), " .
-		  "ADD FULLTEXT si_text (si_text)";
+			"ADD FULLTEXT si_text (si_text)";
 		$this->db->query( $sql, __METHOD__ );
 	}
 
@@ -162,4 +162,4 @@ class RebuildTextIndex extends Maintenance {
 }
 
 $maintClass = "RebuildTextIndex";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

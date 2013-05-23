@@ -54,8 +54,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Oazoahl derr beobachtenden Nutzer oazäan',
 'tog-oldsig' => 'Vorschau der aktuella Signatur:',
 'tog-fancysig' => 'Signatur ols Wikitext behandeln (ohne automatische Verlinkung)',
-'tog-externaleditor' => "Extern'n Editor als Standard benutza (nur fier Experta, is missa spezielle Einstellungen uff dam eegenen Rechner vurgenumma warn)",
-'tog-externaldiff' => 'Externes Diff-Programm als Standard benutza (nur fier Experta, is missa spezielle Einstellungen uff dam eegenen Rechner vurgenumma warn)',
 'tog-showjumplinks' => '„Wechseln zu“-Verknipfunga aktiviern',
 'tog-uselivepreview' => 'Direkte Vurschau notza (beneetigt JavaScript) (vrsuchsweise)',
 'tog-forceeditsummary' => 'Warnen, wenn bem Speichern de Zsoammafassung fahln tutt',
@@ -807,10 +805,6 @@ Stelle sicher, doaß de Versionsgeschichte anner Seite historisch korrekt ies.',
 'powersearch-togglenone' => 'Kenne',
 'searchdisabled' => 'De {{SITENAME}}-Suche ies deaktiviert. Du koast underdessa miet Google sucha. Bitte bedenke, doaß der Suchindex fier {{SITENAME}} veraltet sei koan.',
 
-# Quickbar
-'qbsettings' => 'Seytaleiste',
-'qbsettings-none' => 'Keene',
-
 # Preferences page
 'preferences' => 'Eenstellunga',
 'mypreferences' => 'Meene Eistellunga',
@@ -1373,7 +1367,7 @@ Zusätzliche Informationen ieber einzelne Rechte kinna [[{{MediaWiki:Listgroupri
 'listgrouprights-addgroup-all' => 'Nutzer zu olla Gruppa hinzufiega',
 'listgrouprights-removegroup-all' => 'Nutzer aus olla Gruppa entferna',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Fahler beim E-Mail-Versand',
 'mailnologintext' => 'Du mußt [[Special:UserLogin|oagemeldet sei]] und anne bestätigte E-Mail-Atresse ei denn [[Special:Preferences|Einstellunga]] eingetraga hoan, im andern Nutzern E-Mails schicka zu kinna.',
 'emailuser' => 'E-Mail oa diesa Benutzer',
@@ -1416,8 +1410,8 @@ Wenn du de Seite wieder vu denner Beobachtungsliste entferna mechtest, klicke uf
 'notanarticle' => 'Keene Seite',
 'watchnochange' => 'Kenne dar vu dir beobachteta Seyta wurde während des oagezeigta Zeitraums beoarbeetet.',
 'watchlist-details' => 'Du beobachtest {{PLURAL:$1|1 Seite|$1 Seita}}.',
-'wlheader-enotif' => '* Dar E-Mail-Benoachrichtigungsdienst ies aktiviert.',
-'wlheader-showupdated' => "* Seyta miet noo ne gesehenen Änderunga waan '''fett''' dargestellt.",
+'wlheader-enotif' => 'Dar E-Mail-Benoachrichtigungsdienst ies aktiviert.',
+'wlheader-showupdated' => "Seyta miet noo ne gesehenen Änderunga waan '''fett''' dargestellt.",
 'watchmethod-recent' => 'Ieberprifa dar letzta Beoarbeetunga fier de Beobachtungsliste',
 'watchmethod-list' => 'Ieberpriefa dar Beobachtungsliste noach letzta Beoarbeetunga',
 'watchlistcontains' => 'Denne Beobachtungsliste enthält $1 {{PLURAL:$1|Seite|Seita}}.',
@@ -2046,7 +2040,7 @@ Weitere werden standardmäßig nicht angezeigt.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagelength' => 'Länge',
 'exif-bitspersample' => 'Bits pro Forbkomponente',
 'exif-compression' => 'Oart dar Kompression',
@@ -2176,7 +2170,7 @@ Weitere werden standardmäßig nicht angezeigt.
 'monthsall' => 'olle',
 'limitall' => 'olle',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'E-Mail-Atresse bestätiga (Authentifizierung)',
 'confirmemail_noemail' => 'Du host kenne giltige E-Mail-Atresse ei denn [[Special:Preferences|persenlicha Eenstallunga]] eengetraga.',
 'confirmemail_text' => "{{SITENAME}} erfordert, doß du denne E-Mail-Atresse bestätigst (authentifizieren), bevor du de erweiterten E-Mail-Funksjonna benutza koast. Klicke bitte uff de unda stehende, miet „Bestätigungscode zuschicka“ beschriftete Schaltfläche, damit anne automatisch erstellte E-Mail oa de oagegahne Atresse geschickt werd. Diese E-Mail enthält anne Web-Adresse miet a'm Bestätigungscode. Indem du diese Webseyte ei demm Webbrowser effnest, bestätigst du, doß de oagegahne E-Mail-Atresse korrekt und giltig ies.",
@@ -2297,12 +2291,6 @@ Du koast au de [[Special:EditWatchlist|Standard-Beoarbeetungsseyte]] benutza.',
 'version-parser-function-hooks' => 'Parser-Funksjonna',
 'version-hook-name' => 'Schnittstallanoame',
 'version-hook-subscribedby' => 'Uffruff vu',
-
-# Special:FilePath
-'filepath-submit' => 'Pfad sucha',
-'filepath-summary' => 'Miet dieser Spezialseyte lässt siech dar komplette Pfad dar aktuella Version einer Datei ohne Umweg obfroaga. De oagefroagte Datei werd direkt dargestallt bzw. miet der verkniepfta Oawendung gestartet.
-
-De Eengabe muuß ohne dann Zusatz „{{ns:file}}:“ erfolga.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-summary' => 'Suche noach Dateiduplikaten uff Basis ihres Hashwertes.',

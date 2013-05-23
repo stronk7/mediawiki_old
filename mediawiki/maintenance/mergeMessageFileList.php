@@ -25,7 +25,7 @@
 # Start from scratch
 define( 'MW_NO_EXTENSION_MESSAGES', 1 );
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 $maintClass = 'MergeMessageFileList';
 $mmfl = false;
 
@@ -61,7 +61,7 @@ class MergeMessageFileList extends Maintenance {
 		if ( $this->hasOption( 'extensions-dir' ) ) {
 			$extdir = $this->getOption( 'extensions-dir' );
 			$entries = scandir( $extdir );
-			foreach( $entries as $extname ) {
+			foreach ( $entries as $extname ) {
 				if ( $extname == '.' || $extname == '..' || !is_dir( "$extdir/$extname" ) ) {
 					continue;
 				}
@@ -88,7 +88,7 @@ class MergeMessageFileList extends Maintenance {
 	}
 }
 
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;
 
 foreach ( $mmfl['setupFiles'] as $fileName ) {
 	if ( strval( $fileName ) === '' ) {
@@ -98,7 +98,10 @@ foreach ( $mmfl['setupFiles'] as $fileName ) {
 	if ( empty( $mmfl['quiet'] ) ) {
 		fwrite( STDERR, "Loading data from $fileName\n" );
 	}
-	include_once( $fileName );
+	if ( !( include_once $fileName ) ) {
+		fwrite( STDERR, "Unable to read $fileName\n" );
+		exit( 1 );
+	}
 }
 fwrite( STDERR, "\n" );
 $s =

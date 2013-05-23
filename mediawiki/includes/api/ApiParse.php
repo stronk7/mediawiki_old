@@ -68,7 +68,7 @@ class ApiParse extends ApiBase {
 		// TODO: Does this still need $wgTitle?
 		global $wgParser, $wgTitle;
 
-		// Currently unnecessary, code to act as a safeguard against any change in current behaviour of uselang
+		// Currently unnecessary, code to act as a safeguard against any change in current behavior of uselang
 		$oldLang = null;
 		if ( isset( $params['uselang'] ) && $params['uselang'] != $this->getContext()->getLanguage()->getCode() ) {
 			$oldLang = $this->getContext()->getLanguage(); // Backup language
@@ -194,10 +194,10 @@ class ApiParse extends ApiBase {
 				// Build a result and bail out
 				$result_array = array();
 				$result_array['text'] = array();
-				$result->setContent( $result_array['text'], $this->pstContent->serialize( $format ) );
+				ApiResult::setContent( $result_array['text'], $this->pstContent->serialize( $format ) );
 				if ( isset( $prop['wikitext'] ) ) {
 					$result_array['wikitext'] = array();
-					$result->setContent( $result_array['wikitext'], $this->content->serialize( $format ) );
+					ApiResult::setContent( $result_array['wikitext'], $this->content->serialize( $format ) );
 				}
 				$result->addValue( null, $this->getModuleName(), $result_array );
 				return;
@@ -225,21 +225,35 @@ class ApiParse extends ApiBase {
 
 		if ( isset( $prop['text'] ) ) {
 			$result_array['text'] = array();
-			$result->setContent( $result_array['text'], $p_result->getText() );
+			ApiResult::setContent( $result_array['text'], $p_result->getText() );
 		}
 
 		if ( !is_null( $params['summary'] ) ) {
 			$result_array['parsedsummary'] = array();
-			$result->setContent( $result_array['parsedsummary'], Linker::formatComment( $params['summary'], $titleObj ) );
+			ApiResult::setContent( $result_array['parsedsummary'], Linker::formatComment( $params['summary'], $titleObj ) );
+		}
+
+		if ( isset( $prop['langlinks'] ) || isset( $prop['languageshtml'] ) ) {
+			$langlinks = $p_result->getLanguageLinks();
+
+			if ( $params['effectivelanglinks'] ) {
+				// Link flags are ignored for now, but may in the future be
+				// included in the result.
+				$linkFlags = array();
+				wfRunHooks( 'LanguageLinks', array( $titleObj, &$langlinks, &$linkFlags ) );
+			}
+		} else {
+			$langlinks = false;
 		}
 
 		if ( isset( $prop['langlinks'] ) ) {
-			$result_array['langlinks'] = $this->formatLangLinks( $p_result->getLanguageLinks() );
+			$result_array['langlinks'] = $this->formatLangLinks( $langlinks );
 		}
 		if ( isset( $prop['languageshtml'] ) ) {
-			$languagesHtml = $this->languagesHtml( $p_result->getLanguageLinks() );
+			$languagesHtml = $this->languagesHtml( $langlinks );
+
 			$result_array['languageshtml'] = array();
-			$result->setContent( $result_array['languageshtml'], $languagesHtml );
+			ApiResult::setContent( $result_array['languageshtml'], $languagesHtml );
 		}
 		if ( isset( $prop['categories'] ) ) {
 			$result_array['categories'] = $this->formatCategoryLinks( $p_result->getCategories() );
@@ -247,7 +261,7 @@ class ApiParse extends ApiBase {
 		if ( isset( $prop['categorieshtml'] ) ) {
 			$categoriesHtml = $this->categoriesHtml( $p_result->getCategories() );
 			$result_array['categorieshtml'] = array();
-			$result->setContent( $result_array['categorieshtml'], $categoriesHtml );
+			ApiResult::setContent( $result_array['categorieshtml'], $categoriesHtml );
 		}
 		if ( isset( $prop['links'] ) ) {
 			$result_array['links'] = $this->formatLinks( $p_result->getLinks() );
@@ -288,7 +302,7 @@ class ApiParse extends ApiBase {
 
 			if ( isset( $prop['headhtml'] ) ) {
 				$result_array['headhtml'] = array();
-				$result->setContent( $result_array['headhtml'], $context->getOutput()->headElement( $context->getSkin() ) );
+				ApiResult::setContent( $result_array['headhtml'], $context->getOutput()->headElement( $context->getSkin() ) );
 			}
 		}
 
@@ -298,10 +312,10 @@ class ApiParse extends ApiBase {
 
 		if ( isset( $prop['wikitext'] ) ) {
 			$result_array['wikitext'] = array();
-			$result->setContent( $result_array['wikitext'], $this->content->serialize( $format ) );
+			ApiResult::setContent( $result_array['wikitext'], $this->content->serialize( $format ) );
 			if ( !is_null( $this->pstContent ) ) {
 				$result_array['psttext'] = array();
-				$result->setContent( $result_array['psttext'], $this->pstContent->serialize( $format ) );
+				ApiResult::setContent( $result_array['psttext'], $this->pstContent->serialize( $format ) );
 			}
 		}
 		if ( isset( $prop['properties'] ) ) {
@@ -321,7 +335,7 @@ class ApiParse extends ApiBase {
 				$xml = $dom->__toString();
 			}
 			$result_array['parsetree'] = array();
-			$result->setContent( $result_array['parsetree'], $xml );
+			ApiResult::setContent( $result_array['parsetree'], $xml );
 		}
 
 		$result_mapping = array(
@@ -400,7 +414,7 @@ class ApiParse extends ApiBase {
 			if ( $title ) {
 				$entry['url'] = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
 			}
-			$this->getResult()->setContent( $entry, $bits[1] );
+			ApiResult::setContent( $entry, $bits[1] );
 			$result[] = $entry;
 		}
 		return $result;
@@ -411,7 +425,7 @@ class ApiParse extends ApiBase {
 		foreach ( $links as $link => $sortkey ) {
 			$entry = array();
 			$entry['sortkey'] = $sortkey;
-			$this->getResult()->setContent( $entry, $link );
+			ApiResult::setContent( $entry, $link );
 			$result[] = $entry;
 		}
 		return $result;
@@ -465,7 +479,7 @@ class ApiParse extends ApiBase {
 			foreach ( $nslinks as $title => $id ) {
 				$entry = array();
 				$entry['ns'] = $ns;
-				$this->getResult()->setContent( $entry, Title::makeTitle( $ns, $title )->getFullText() );
+				ApiResult::setContent( $entry, Title::makeTitle( $ns, $title )->getFullText() );
 				if ( $id != 0 ) {
 					$entry['exists'] = '';
 				}
@@ -487,7 +501,7 @@ class ApiParse extends ApiBase {
 					$entry['url'] = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
 				}
 
-				$this->getResult()->setContent( $entry, $title->getFullText() );
+				ApiResult::setContent( $entry, $title->getFullText() );
 				$result[] = $entry;
 			}
 		}
@@ -499,7 +513,7 @@ class ApiParse extends ApiBase {
 		foreach ( $headItems as $tag => $content ) {
 			$entry = array();
 			$entry['tag'] = $tag;
-			$this->getResult()->setContent( $entry, $content );
+			ApiResult::setContent( $entry, $content );
 			$result[] = $entry;
 		}
 		return $result;
@@ -510,7 +524,7 @@ class ApiParse extends ApiBase {
 		foreach ( $properties as $name => $value ) {
 			$entry = array();
 			$entry['name'] = $name;
-			$this->getResult()->setContent( $entry, $value );
+			ApiResult::setContent( $entry, $value );
 			$result[] = $entry;
 		}
 		return $result;
@@ -521,7 +535,7 @@ class ApiParse extends ApiBase {
 		foreach ( $css as $file => $link ) {
 			$entry = array();
 			$entry['file'] = $file;
-			$this->getResult()->setContent( $entry, $link );
+			ApiResult::setContent( $entry, $link );
 			$result[] = $entry;
 		}
 		return $result;
@@ -575,6 +589,7 @@ class ApiParse extends ApiBase {
 			),
 			'pst' => false,
 			'onlypst' => false,
+			'effectivelanglinks' => false,
 			'uselang' => null,
 			'section' => null,
 			'disablepp' => false,
@@ -617,6 +632,10 @@ class ApiParse extends ApiBase {
 				' iwlinks        - Gives interwiki links in the parsed wikitext',
 				' wikitext       - Gives the original wikitext that was parsed',
 				' properties     - Gives various properties defined in the parsed wikitext',
+			),
+			'effectivelanglinks' => array(
+				'Includes language links supplied by extensions',
+				'(for use with prop=langlinks|languageshtml)',
 			),
 			'pst' => array(
 				'Do a pre-save transform on the input before parsing it',

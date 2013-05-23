@@ -36,8 +36,8 @@
  *
  * There are two important configuration options this class uses:
  *
- * $wgHtml5: If this is set to false, then all output should be valid XHTML 1.0
- *     Transitional.
+ * $wgMimeType: If this is set to an xml mimetype then output should be
+ *     valid XHTML5.
  * $wgWellFormedXml: If this is set to true, then all output should be
  *     well-formed XML (quotes on attributes, self-closing tags, etc.).
  *
@@ -101,19 +101,6 @@ class Html {
 		'itemscope',
 	);
 
-	private static $HTMLFiveOnlyAttribs = array(
-		'autocomplete',
-		'autofocus',
-		'max',
-		'min',
-		'multiple',
-		'pattern',
-		'placeholder',
-		'required',
-		'step',
-		'spellcheck',
-	);
-
 	/**
 	 * Returns an HTML element in a string.  The major advantage here over
 	 * manually typing out the HTML is that it will escape all attribute
@@ -126,11 +113,11 @@ class Html {
 	 * content model.  If $wgWellFormedXml is false, then a few bytes will be
 	 * shaved off the HTML output as well.
 	 *
-	 * @param $element string The element's name, e.g., 'a'
-	 * @param $attribs array  Associative array of attributes, e.g., array(
+	 * @param string $element The element's name, e.g., 'a'
+	 * @param array $attribs  Associative array of attributes, e.g., array(
 	 *   'href' => 'http://www.mediawiki.org/' ). See expandAttributes() for
 	 *   further documentation.
-	 * @param $contents string The raw HTML contents of the element: *not*
+	 * @param string $contents The raw HTML contents of the element: *not*
 	 *   escaped!
 	 * @return string Raw HTML
 	 */
@@ -177,7 +164,7 @@ class Html {
 	 * @return string
 	 */
 	public static function openElement( $element, $attribs = array() ) {
-		global $wgHtml5, $wgWellFormedXml;
+		global $wgWellFormedXml;
 		$attribs = (array)$attribs;
 		// This is not required in HTML5, but let's do it anyway, for
 		// consistency and better compression.
@@ -204,34 +191,26 @@ class Html {
 				'image',
 				'reset',
 				'button',
-			);
 
-			// Allow more input types in HTML5 mode
-			if( $wgHtml5 ) {
-				$validTypes = array_merge( $validTypes, array(
-					'datetime',
-					'datetime-local',
-					'date',
-					'month',
-					'time',
-					'week',
-					'number',
-					'range',
-					'email',
-					'url',
-					'search',
-					'tel',
-					'color',
-				) );
-			}
+				// HTML input types
+				'datetime',
+				'datetime-local',
+				'date',
+				'month',
+				'time',
+				'week',
+				'number',
+				'range',
+				'email',
+				'url',
+				'search',
+				'tel',
+				'color',
+			);
 			if ( isset( $attribs['type'] )
 			&& !in_array( $attribs['type'], $validTypes ) ) {
 				unset( $attribs['type'] );
 			}
-		}
-
-		if ( !$wgHtml5 && $element == 'textarea' && isset( $attribs['maxlength'] ) ) {
-			unset( $attribs['maxlength'] );
 		}
 
 		// According to standard the default type for <button> elements is "submit".
@@ -250,7 +229,7 @@ class Html {
 	 * it returns the empty string when that's guaranteed to be safe.
 	 *
 	 * @since 1.17
-	 * @param $element string Name of the element, e.g., 'a'
+	 * @param string $element Name of the element, e.g., 'a'
 	 * @return string A closing tag, if required
 	 */
 	public static function closeElement( $element ) {
@@ -287,19 +266,13 @@ class Html {
 	 * only guarantees that the output array should be functionally identical
 	 * to the input array (currently per the HTML 5 draft as of 2009-09-06).
 	 *
-	 * @param $element string Name of the element, e.g., 'a'
-	 * @param $attribs array  Associative array of attributes, e.g., array(
+	 * @param string $element Name of the element, e.g., 'a'
+	 * @param array $attribs  Associative array of attributes, e.g., array(
 	 *   'href' => 'http://www.mediawiki.org/' ).  See expandAttributes() for
 	 *   further documentation.
 	 * @return array An array of attributes functionally identical to $attribs
 	 */
 	private static function dropDefaults( $element, $attribs ) {
-		// Don't bother doing anything if we aren't outputting HTML5; it's too
-		// much of a pain to maintain two sets of defaults.
-		global $wgHtml5;
-		if ( !$wgHtml5 ) {
-			return $attribs;
-		}
 
 		// Whenever altering this array, please provide a covering test case
 		// in HtmlTest::provideElementsWithAttributesHavingDefaultValues
@@ -340,7 +313,7 @@ class Html {
 
 		foreach ( $attribs as $attrib => $value ) {
 			$lcattrib = strtolower( $attrib );
-			if( is_array( $value ) ) {
+			if ( is_array( $value ) ) {
 				$value = implode( ' ', $value );
 			} else {
 				$value = strval( $value );
@@ -435,7 +408,7 @@ class Html {
 	 *     // gives '<em class="bar quux"></em>'
 	 * @endcode
 	 *
-	 * @param $attribs array Associative array of attributes, e.g., array(
+	 * @param array $attribs Associative array of attributes, e.g., array(
 	 *   'href' => 'http://www.mediawiki.org/' ).  Values will be HTML-escaped.
 	 *   A value of false means to omit the attribute.  For boolean attributes,
 	 *   you can omit the key, e.g., array( 'checked' ) instead of
@@ -444,7 +417,7 @@ class Html {
 	 *   (starting with a space if at least one attribute is output)
 	 */
 	public static function expandAttributes( $attribs ) {
-		global $wgHtml5, $wgWellFormedXml;
+		global $wgWellFormedXml;
 
 		$ret = '';
 		$attribs = (array)$attribs;
@@ -460,14 +433,9 @@ class Html {
 				$key = $value;
 			}
 
-			// Not technically required in HTML5, but required in XHTML 1.0,
-			// and we'd like consistency and better compression anyway.
+			// Not technically required in HTML5 but we'd like consistency
+			// and better compression anyway.
 			$key = strtolower( $key );
-
-			// Here we're blacklisting some HTML5-only attributes...
-			if ( !$wgHtml5 && in_array( $key, self::$HTMLFiveOnlyAttribs ) ) {
-				continue;
-			}
 
 			// Bug 23769: Blacklist all form validation attributes for now.  Current
 			// (June 2010) WebKit has no UI, so the form just refuses to submit
@@ -500,7 +468,7 @@ class Html {
 			if ( in_array( $key, $spaceSeparatedListAttributes ) ) {
 				// Apply some normalization and remove duplicates
 
-				// Convert into correct array. Array can contain space-seperated
+				// Convert into correct array. Array can contain space-separated
 				// values. Implode/explode to get those into the main array as well.
 				if ( is_array( $value ) ) {
 					// If input wasn't an array, we can skip this step
@@ -512,7 +480,7 @@ class Html {
 							if ( !isset( $value[$v] ) ) {
 								// As a special case don't set 'foo' if a
 								// separate 'foo' => true/false exists in the array
-								// keys should be authoritive
+								// keys should be authoritative
 								$newValue[] = $v;
 							}
 						} elseif ( $v ) {
@@ -552,15 +520,12 @@ class Html {
 			}
 
 			if ( in_array( $key, self::$boolAttribs ) ) {
-				// In XHTML 1.0 Transitional, the value needs to be equal to the
-				// key.  In HTML5, we can leave the value empty instead.  If we
-				// don't need well-formed XML, we can omit the = entirely.
+				// In HTML5, we can leave the value empty. If we don't need
+				// well-formed XML, we can omit the = entirely.
 				if ( !$wgWellFormedXml ) {
 					$ret .= " $key";
-				} elseif ( $wgHtml5 ) {
-					$ret .= " $key=\"\"";
 				} else {
-					$ret .= " $key=\"$key\"";
+					$ret .= " $key=\"\"";
 				}
 			} else {
 				// Apparently we need to entity-encode \n, \r, \t, although the
@@ -598,17 +563,13 @@ class Html {
 	 * @todo do some useful escaping as well, like if $contents contains
 	 * literal "</script>" or (for XML) literal "]]>".
 	 *
-	 * @param $contents string JavaScript
+	 * @param string $contents JavaScript
 	 * @return string Raw HTML
 	 */
 	public static function inlineScript( $contents ) {
-		global $wgHtml5, $wgJsMimeType, $wgWellFormedXml;
+		global $wgWellFormedXml;
 
 		$attrs = array();
-
-		if ( !$wgHtml5 ) {
-			$attrs['type'] = $wgJsMimeType;
-		}
 
 		if ( $wgWellFormedXml && preg_match( '/[<&]/', $contents ) ) {
 			$contents = "/*<![CDATA[*/$contents/*]]>*/";
@@ -625,13 +586,7 @@ class Html {
 	 * @return string Raw HTML
 	 */
 	public static function linkedScript( $url ) {
-		global $wgHtml5, $wgJsMimeType;
-
 		$attrs = array( 'src' => $url );
-
-		if ( !$wgHtml5 ) {
-			$attrs['type'] = $wgJsMimeType;
-		}
 
 		return self::element( 'script', $attrs );
 	}
@@ -641,7 +596,7 @@ class Html {
 	 * (if any).  TODO: do some useful escaping as well, like if $contents
 	 * contains literal "</style>" (admittedly unlikely).
 	 *
-	 * @param $contents string CSS
+	 * @param string $contents CSS
 	 * @param $media mixed A media type string, like 'screen'
 	 * @return string Raw HTML
 	 */
@@ -677,13 +632,12 @@ class Html {
 
 	/**
 	 * Convenience function to produce an "<input>" element.  This supports the
-	 * new HTML5 input types and attributes, and will silently strip them if
-	 * $wgHtml5 is false.
+	 * new HTML5 input types and attributes.
 	 *
 	 * @param $name    string name attribute
 	 * @param $value   mixed  value attribute
 	 * @param $type    string type attribute
-	 * @param $attribs array  Associative array of miscellaneous extra
+	 * @param array $attribs  Associative array of miscellaneous extra
 	 *   attributes, passed to Html::element()
 	 * @return string Raw HTML
 	 */
@@ -700,7 +654,7 @@ class Html {
 	 *
 	 * @param $name    string name attribute
 	 * @param $value   string value attribute
-	 * @param $attribs array  Associative array of miscellaneous extra
+	 * @param array $attribs  Associative array of miscellaneous extra
 	 *   attributes, passed to Html::element()
 	 * @return string Raw HTML
 	 */
@@ -712,30 +666,16 @@ class Html {
 	 * Convenience function to produce an "<input>" element.
 	 *
 	 * This supports leaving out the cols= and rows= which Xml requires and are
-	 * required by HTML4/XHTML but not required by HTML5 and will silently set
-	 * cols="" and rows="" if $wgHtml5 is false and cols and rows are omitted
-	 * (HTML4 validates present but empty cols="" and rows="" as valid).
+	 * required by HTML4/XHTML but not required by HTML5.
 	 *
 	 * @param $name    string name attribute
 	 * @param $value   string value attribute
-	 * @param $attribs array  Associative array of miscellaneous extra
+	 * @param array $attribs  Associative array of miscellaneous extra
 	 *   attributes, passed to Html::element()
 	 * @return string Raw HTML
 	 */
 	public static function textarea( $name, $value = '', $attribs = array() ) {
-		global $wgHtml5;
-
 		$attribs['name'] = $name;
-
-		if ( !$wgHtml5 ) {
-			if ( !isset( $attribs['cols'] ) ) {
-				$attribs['cols'] = "";
-			}
-
-			if ( !isset( $attribs['rows'] ) ) {
-				$attribs['rows'] = "";
-			}
-		}
 
 		if ( substr( $value, 0, 1 ) == "\n" ) {
 			// Workaround for bug 12130: browsers eat the initial newline
@@ -757,7 +697,7 @@ class Html {
 	 * - label: text for label to add before the field
 	 * - exclude: [optional] Array of namespace ids to exclude
 	 * - disable: [optional] Array of namespace ids for which the option should be disabled in the selector
-	 * @param $selectAttribs array HTML attributes for the generated select element.
+	 * @param array $selectAttribs HTML attributes for the generated select element.
 	 * - id:   [optional], default: 'namespace'
 	 * - name: [optional], default: 'namespace'
 	 * @return string HTML code to select a namespace.
@@ -796,7 +736,7 @@ class Html {
 			// Value is provided by user, the name shown is localized for the user.
 			$options[$params['all']] = wfMessage( 'namespacesall' )->text();
 		}
-		// Add all namespaces as options (in the content langauge)
+		// Add all namespaces as options (in the content language)
 		$options += $wgContLang->getFormattedNamespaces();
 
 		// Convert $options to HTML and filter out namespaces below 0
@@ -807,7 +747,7 @@ class Html {
 			}
 			if ( $nsId === NS_MAIN ) {
 				// For other namespaces use use the namespace prefix as label, but for
-				// main we don't use "" but the user message descripting it (e.g. "(Main)" or "(Article)")
+				// main we don't use "" but the user message describing it (e.g. "(Main)" or "(Article)")
 				$nsName = wfMessage( 'blanknamespace' )->text();
 			} elseif ( is_int( $nsId ) ) {
 				$nsName = $wgContLang->convertNamespace( $nsId );
@@ -852,35 +792,36 @@ class Html {
 	 * Constructs the opening html-tag with necessary doctypes depending on
 	 * global variables.
 	 *
-	 * @param $attribs array  Associative array of miscellaneous extra
+	 * @param array $attribs  Associative array of miscellaneous extra
 	 *   attributes, passed to Html::element() of html tag.
 	 * @return string  Raw HTML
 	 */
 	public static function htmlHeader( $attribs = array() ) {
 		$ret = '';
 
-		global $wgMimeType;
+		global $wgHtml5Version, $wgMimeType, $wgXhtmlNamespaces;
 
-		if ( self::isXmlMimeType( $wgMimeType ) ) {
+		$isXHTML = self::isXmlMimeType( $wgMimeType );
+
+		if ( $isXHTML ) { // XHTML5
+			// XML mimetyped markup should have an xml header.
+			// However a DOCTYPE is not needed.
 			$ret .= "<?xml version=\"1.0\" encoding=\"UTF-8\" ?" . ">\n";
-		}
 
-		global $wgHtml5, $wgHtml5Version, $wgDocType, $wgDTD;
-		global $wgXhtmlNamespaces, $wgXhtmlDefaultNamespace;
+			// Add the standard xmlns
+			$attribs['xmlns'] = 'http://www.w3.org/1999/xhtml';
 
-		if ( $wgHtml5 ) {
-			$ret .= "<!DOCTYPE html>\n";
-
-			if ( $wgHtml5Version ) {
-				$attribs['version'] = $wgHtml5Version;
-			}
-		} else {
-			$ret .= "<!DOCTYPE html PUBLIC \"$wgDocType\" \"$wgDTD\">\n";
-			$attribs['xmlns'] = $wgXhtmlDefaultNamespace;
-
+			// And support custom namespaces
 			foreach ( $wgXhtmlNamespaces as $tag => $ns ) {
 				$attribs["xmlns:$tag"] = $ns;
 			}
+		} else { // HTML5
+			// DOCTYPE
+			$ret .= "<!DOCTYPE html>\n";
+		}
+
+		if ( $wgHtml5Version ) {
+			$attribs['version'] = $wgHtml5Version;
 		}
 
 		$html = Html::openElement( 'html', $attribs );
@@ -901,23 +842,20 @@ class Html {
 	 * @return Boolean
 	 */
 	public static function isXmlMimeType( $mimetype ) {
-		switch ( $mimetype ) {
-			case 'text/xml':
-			case 'application/xhtml+xml':
-			case 'application/xml':
-				return true;
-			default:
-				return false;
-		}
+		# http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#xml-mime-type
+		# * text/xml
+		# * application/xml
+		# * Any mimetype with a subtype ending in +xml (this implicitly includes application/xhtml+xml)
+		return (bool) preg_match( '!^(text|application)/xml$|^.+/.+\+xml$!', $mimetype );
 	}
 
 	/**
 	 * Get HTML for an info box with an icon.
 	 *
-	 * @param $text String: wikitext, get this with wfMessage()->plain()
-	 * @param $icon String: icon name, file in skins/common/images
-	 * @param $alt String: alternate text for the icon
-	 * @param $class String: additional class name to add to the wrapper div
+	 * @param string $text wikitext, get this with wfMessage()->plain()
+	 * @param string $icon icon name, file in skins/common/images
+	 * @param string $alt alternate text for the icon
+	 * @param string $class additional class name to add to the wrapper div
 	 * @param $useStylePath
 	 *
 	 * @return string
@@ -926,22 +864,22 @@ class Html {
 		global $wgStylePath;
 
 		if ( $useStylePath ) {
-			$icon = $wgStylePath.'/common/images/'.$icon;
+			$icon = $wgStylePath . '/common/images/' . $icon;
 		}
 
 		$s = Html::openElement( 'div', array( 'class' => "mw-infobox $class" ) );
 
-		$s .= Html::openElement( 'div', array( 'class' => 'mw-infobox-left' ) ).
+		$s .= Html::openElement( 'div', array( 'class' => 'mw-infobox-left' ) ) .
 				Html::element( 'img',
 					array(
 						'src' => $icon,
 						'alt' => $alt,
 					)
-				).
+				) .
 				Html::closeElement( 'div' );
 
-		$s .= Html::openElement( 'div', array( 'class' => 'mw-infobox-right' ) ).
-				$text.
+		$s .= Html::openElement( 'div', array( 'class' => 'mw-infobox-right' ) ) .
+				$text .
 				Html::closeElement( 'div' );
 		$s .= Html::element( 'div', array( 'style' => 'clear: left;' ), ' ' );
 
@@ -962,7 +900,7 @@ class Html {
 	 */
 	static function srcSet( $urls ) {
 		$candidates = array();
-		foreach( $urls as $density => $url ) {
+		foreach ( $urls as $density => $url ) {
 			// Image candidate syntax per current whatwg live spec, 2012-09-23:
 			// http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#attr-img-srcset
 			$candidates[] = "{$url} {$density}x";

@@ -205,7 +205,7 @@ class WatchedItem {
 			$success = true;
 		}
 
-		# the following code compensates the new behaviour, introduced by the
+		# the following code compensates the new behavior, introduced by the
 		# enotif patch, that every single watched page needs now to be listed
 		# in watchlist namespace:page and namespace_talk:page had separate
 		# entries: clear them
@@ -268,7 +268,7 @@ class WatchedItem {
 			);
 		}
 
-		if( empty( $values ) ) {
+		if ( empty( $values ) ) {
 			// Nothing to do
 			return true;
 		}

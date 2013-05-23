@@ -110,7 +110,7 @@ class RecentChange {
 	/**
 	 * Obtain the recent change with a given rc_id value
 	 *
-	 * @param $rcid Int rc_id value to retrieve
+	 * @param int $rcid rc_id value to retrieve
 	 * @return RecentChange
 	 */
 	public static function newFromId( $rcid ) {
@@ -120,7 +120,7 @@ class RecentChange {
 	/**
 	 * Find the first recent change matching some specific conditions
 	 *
-	 * @param $conds Array of conditions
+	 * @param array $conds of conditions
 	 * @param $fname Mixed: override the method name in profiling/logs
 	 * @return RecentChange
 	 */
@@ -284,7 +284,9 @@ class RecentChange {
 	public function notifyRC2UDP() {
 		global $wgRC2UDPAddress, $wgRC2UDPOmitBots;
 		# Notify external application via UDP
-		if ( $wgRC2UDPAddress && ( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
+		# Omit RC_EXTERNAL changes: bots and tools can get these edits from the feed of the external wiki
+		if ( $wgRC2UDPAddress && $this->mAttribs['rc_type'] != RC_EXTERNAL &&
+			( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
 			self::sendToUDP( $this->getIRCLine() );
 		}
 	}
@@ -292,10 +294,10 @@ class RecentChange {
 	/**
 	 * Send some text to UDP.
 	 * @see RecentChange::cleanupForIRC
-	 * @param $line String: text to send
-	 * @param $address String: defaults to $wgRC2UDPAddress.
-	 * @param $prefix String: defaults to $wgRC2UDPPrefix.
-	 * @param $port Int: defaults to $wgRC2UDPPort. (Since 1.17)
+	 * @param string $line text to send
+	 * @param string $address defaults to $wgRC2UDPAddress.
+	 * @param string $prefix defaults to $wgRC2UDPPrefix.
+	 * @param int $port defaults to $wgRC2UDPPort. (Since 1.17)
 	 * @return Boolean: success
 	 */
 	public static function sendToUDP( $line, $address = '', $prefix = '', $port = '' ) {
@@ -321,7 +323,7 @@ class RecentChange {
 	}
 
 	/**
-	 * Remove newlines, carriage returns and decode html entites
+	 * Remove newlines, carriage returns and decode html entities
 	 * @param $text String
 	 * @return String
 	 */
@@ -459,7 +461,7 @@ class RecentChange {
 			'rc_params'     => ''
 		);
 
-		$rc->mExtra =  array(
+		$rc->mExtra = array(
 			'prefixedDBkey' => $title->getPrefixedDBkey(),
 			'lastTimestamp' => $lastTimestamp,
 			'oldSize'       => $oldSize,
@@ -518,7 +520,7 @@ class RecentChange {
 			'rc_params'         => ''
 		);
 
-		$rc->mExtra =  array(
+		$rc->mExtra = array(
 			'prefixedDBkey' => $title->getPrefixedDBkey(),
 			'lastTimestamp' => 0,
 			'oldSize' => 0,
@@ -627,7 +629,7 @@ class RecentChange {
 			'rc_params'     => $params
 		);
 
-		$rc->mExtra =  array(
+		$rc->mExtra = array(
 			'prefixedDBkey' => $title->getPrefixedDBkey(),
 			'lastTimestamp' => 0,
 			'actionComment' => $actionComment, // the comment appended to the action, passed from LogPage
@@ -685,7 +687,7 @@ class RecentChange {
 	/**
 	 * Get an attribute value
 	 *
-	 * @param $name String Attribute name
+	 * @param string $name Attribute name
 	 * @return mixed
 	 */
 	public function getAttribute( $name ) {
@@ -821,6 +823,29 @@ class RecentChange {
 			return '';
 		}
 		return ChangesList::showCharacterDifference( $old, $new );
+	}
+
+	/**
+	 * Purge expired changes from the recentchanges table
+	 * @since 1.22
+	 */
+	public static function purgeExpiredChanges() {
+		if ( wfReadOnly() ) {
+			return;
+		}
+
+		$method = __METHOD__;
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->onTransactionIdle( function() use ( $dbw, $method ) {
+			global $wgRCMaxAge;
+
+			$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
+			$dbw->delete(
+				'recentchanges',
+				array( 'rc_timestamp < ' . $dbw->addQuotes( $cutoff ) ),
+				$method
+			);
+		} );
 	}
 
 	private static function checkIPAddress( $ip ) {

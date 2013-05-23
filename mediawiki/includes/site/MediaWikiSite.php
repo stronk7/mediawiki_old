@@ -67,7 +67,7 @@ class MediaWikiSite extends Site {
 	 *
 	 * @since 1.21
 	 *
-	 * @param String $title the target page's title, in normalized form.
+	 * @param string $title the target page's title, in normalized form.
 	 *
 	 * @return String
 	 */
@@ -123,17 +123,17 @@ class MediaWikiSite extends Site {
 				'converttitles' => true,
 				'format' => 'json',
 				'titles' => $pageName,
-				//@todo: options for maxlag and maxage
+				// @todo options for maxlag and maxage
 				// Note that maxlag will lead to a long delay before a reply is made,
 				// but that maxage can avoid the extreme delay. On the other hand
 				// maxage could be nice to use anyhow as it stops unnecessary requests.
 				// Also consider smaxage if maxage is used.
 			);
 
-			$url = $this->getFileUrl( 'api.php' ) . '?' . wfArrayToCgi( $args );
+			$url = wfAppendQuery( $this->getFileUrl( 'api.php' ), $args );
 
 			// Go on call the external site
-			//@todo: we need a good way to specify a timeout here.
+			// @todo we need a good way to specify a timeout here.
 			$ret = Http::get( $url );
 		}
 
@@ -169,7 +169,6 @@ class MediaWikiSite extends Site {
 		return $page['title'];
 	}
 
-
 	/**
 	 * Get normalization record for a given page title from an API response.
 	 *
@@ -186,7 +185,7 @@ class MediaWikiSite extends Site {
 		// the single page in the "pages" substructure.
 		if ( isset( $externalData['query']['pages'] ) ) {
 			$pages = array_values( $externalData['query']['pages'] );
-			if ( count( $pages) === 1 ) {
+			if ( count( $pages ) === 1 ) {
 				return $pages[0];
 			}
 		}
@@ -304,7 +303,7 @@ class MediaWikiSite extends Site {
 	 * @see Site::getPageUrl
 	 *
 	 * This implementation returns a URL constructed using the path returned by getLinkPath().
-	 * In addition to the default behaviour implemented by Site::getPageUrl(), this
+	 * In addition to the default behavior implemented by Site::getPageUrl(), this
 	 * method converts the $pageName to DBKey-format by replacing spaces with underscores
 	 * before using it in the URL.
 	 *

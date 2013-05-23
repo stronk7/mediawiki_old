@@ -22,11 +22,11 @@
  */
 
 /**
- * The Message class provides methods which fullfil two basic services:
+ * The Message class provides methods which fulfil two basic services:
  *  - fetching interface messages
  *  - processing messages into a variety of formats
  *
- * First implemented with MediaWiki 1.17, the Message class is intented to
+ * First implemented with MediaWiki 1.17, the Message class is intended to
  * replace the old wfMsg* functions that over time grew unusable.
  * @see https://www.mediawiki.org/wiki/Manual:Messages_API for equivalences
  * between old and new functions.
@@ -216,7 +216,7 @@ class Message {
 	 * Constructor.
 	 * @since 1.17
 	 * @param $key: message key, or array of message keys to try and use the first non-empty message for
-	 * @param $params Array message parameters
+	 * @param array $params message parameters
 	 * @return Message: $this
 	 */
 	public function __construct( $key, $params = array() ) {
@@ -261,10 +261,10 @@ class Message {
 
 	/**
 	 * Factory function that is just wrapper for the real constructor. It is
-	 * intented to be used instead of the real constructor, because it allows
+	 * intended to be used instead of the real constructor, because it allows
 	 * chaining method calls, while new objects don't.
 	 * @since 1.17
-	 * @param $key String: message key
+	 * @param string $key message key
 	 * @param Varargs: parameters as Strings
 	 * @return Message: $this
 	 */
@@ -326,7 +326,7 @@ class Message {
 		if ( isset( $params[0] ) && is_array( $params[0] ) ) {
 			$params = $params[0];
 		}
-		foreach( $params as $param ) {
+		foreach ( $params as $param ) {
 			$this->parameters[] = self::rawParam( $param );
 		}
 		return $this;
@@ -344,7 +344,7 @@ class Message {
 		if ( isset( $params[0] ) && is_array( $params[0] ) ) {
 			$params = $params[0];
 		}
-		foreach( $params as $param ) {
+		foreach ( $params as $param ) {
 			$this->parameters[] = self::numParam( $param );
 		}
 		return $this;
@@ -377,7 +377,7 @@ class Message {
 		if ( $lang instanceof Language || $lang instanceof StubUserLang ) {
 			$this->language = $lang;
 		} elseif ( is_string( $lang ) ) {
-			if( $this->language->getCode() != $lang ) {
+			if ( $this->language->getCode() != $lang ) {
 				$this->language = Language::factory( $lang );
 			}
 		} else {
@@ -484,17 +484,17 @@ class Message {
 		$string = $this->replaceParameters( $string, 'before' );
 
 		# Maybe transform using the full parser
-		if( $this->format === 'parse' ) {
+		if ( $this->format === 'parse' ) {
 			$string = $this->parseText( $string );
 			$m = array();
-			if( preg_match( '/^<p>(.*)\n?<\/p>\n?$/sU', $string, $m ) ) {
+			if ( preg_match( '/^<p>(.*)\n?<\/p>\n?$/sU', $string, $m ) ) {
 				$string = $m[1];
 			}
-		} elseif( $this->format === 'block-parse' ) {
+		} elseif ( $this->format === 'block-parse' ) {
 			$string = $this->parseText( $string );
-		} elseif( $this->format === 'text' ) {
+		} elseif ( $this->format === 'text' ) {
 			$string = $this->transformText( $string );
-		} elseif( $this->format === 'escaped' ) {
+		} elseif ( $this->format === 'escaped' ) {
 			$string = $this->transformText( $string );
 			$string = htmlspecialchars( $string, ENT_QUOTES, 'UTF-8', false );
 		}
@@ -554,7 +554,7 @@ class Message {
 	}
 
 	/**
-	 * Returns the message text as-is, only parameters are subsituted.
+	 * Returns the message text as-is, only parameters are substituted.
 	 * @since 1.17
 	 * @return String: Unescaped untransformed message text.
 	 */
@@ -633,18 +633,18 @@ class Message {
 	}
 
 	/**
-	 * Substitutes any paramaters into the message text.
+	 * Substitutes any parameters into the message text.
 	 * @since 1.17
-	 * @param $message String: the message text
-	 * @param $type String: either before or after
+	 * @param string $message the message text
+	 * @param string $type either before or after
 	 * @return String
 	 */
 	protected function replaceParameters( $message, $type = 'before' ) {
 		$replacementKeys = array();
-		foreach( $this->parameters as $n => $param ) {
+		foreach ( $this->parameters as $n => $param ) {
 			list( $paramType, $value ) = $this->extractParam( $param );
 			if ( $type === $paramType ) {
-				$replacementKeys['$' . ($n + 1)] = $value;
+				$replacementKeys['$' . ( $n + 1 )] = $value;
 			}
 		}
 		$message = strtr( $message, $replacementKeys );
@@ -654,7 +654,7 @@ class Message {
 	/**
 	 * Extracts the parameter type and preprocessed the value if needed.
 	 * @since 1.18
-	 * @param $param String|Array: Parameter as defined in this class.
+	 * @param string|array $param Parameter as defined in this class.
 	 * @return Tuple(type, value)
 	 */
 	protected function extractParam( $param ) {
@@ -678,7 +678,7 @@ class Message {
 	/**
 	 * Wrapper for what ever method we use to parse wikitext.
 	 * @since 1.17
-	 * @param $string String: Wikitext message contents
+	 * @param string $string Wikitext message contents
 	 * @return string Wikitext parsed into HTML
 	 */
 	protected function parseText( $string ) {
@@ -689,7 +689,7 @@ class Message {
 	/**
 	 * Wrapper for what ever method we use to {{-transform wikitext.
 	 * @since 1.17
-	 * @param $string String: Wikitext message contents
+	 * @param string $string Wikitext message contents
 	 * @return string Wikitext with {{-constructs replaced with their values.
 	 */
 	protected function transformText( $string ) {
@@ -743,8 +743,8 @@ class RawMessage extends Message {
 	 * Call the parent constructor, then store the key as
 	 * the message.
 	 *
-	 * @param $key Message to use
-	 * @param $params Parameters for the message
+	 * @param string $key Message to use
+	 * @param array $params Parameters for the message
 	 * @see Message::__construct
 	 */
 	public function __construct( $key, $params = array() ) {
@@ -760,7 +760,7 @@ class RawMessage extends Message {
 	 */
 	public function fetchMessage() {
 		// Just in case the message is unset somewhere.
-		if( !isset( $this->message ) ) {
+		if ( !isset( $this->message ) ) {
 			$this->message = $this->key;
 		}
 		return $this->message;

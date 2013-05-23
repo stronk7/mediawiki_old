@@ -61,7 +61,9 @@ $doxygenTemplate = $mwPath . 'maintenance/Doxyfile';
 $doxygenInputFilter = "php {$mwPath}maintenance/mwdoc-filter.php";
 
 /** where Phpdoc should output documentation */
-$doxyOutput = $mwPath . 'docs' . DIRECTORY_SEPARATOR ;
+$doxyOutput = $mwPath . 'docs' . DIRECTORY_SEPARATOR;
+
+$doxyVersion = 'master';
 
 /** MediaWiki subpaths */
 $mwPathI = $mwPath . 'includes/';
@@ -86,7 +88,7 @@ $doxyGenerateMan = false;
 #
 
 define( 'MEDIAWIKI', true );
-require_once( "$mwPath/includes/GlobalFunctions.php" );
+require_once "$mwPath/includes/GlobalFunctions.php";
 
 /**
  * Read a line from the shell
@@ -120,14 +122,14 @@ function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath,
 	// Replace template placeholders by correct values.
 	$replacements = array(
 		'{{OUTPUT_DIRECTORY}}' => $outputDirectory,
-		'{{STRIP_FROM_PATH}}'  => $stripFromPath,
-		'{{CURRENT_VERSION}}'  => $currentVersion,
-		'{{INPUT}}'            => $input,
-		'{{EXCLUDE}}'          => $exclude,
+		'{{STRIP_FROM_PATH}}' => $stripFromPath,
+		'{{CURRENT_VERSION}}' => $currentVersion,
+		'{{INPUT}}' => $input,
+		'{{EXCLUDE}}' => $exclude,
 		'{{EXCLUDE_PATTERNS}}' => $excludePatterns,
-		'{{HAVE_DOT}}'         => `which dot` ? 'YES' : 'NO',
-		'{{GENERATE_MAN}}'     => $doxyGenerateMan ? 'YES' : 'NO',
-		'{{INPUT_FILTER}}'     => $doxygenInputFilter,
+		'{{HAVE_DOT}}' => `which dot` ? 'YES' : 'NO',
+		'{{GENERATE_MAN}}' => $doxyGenerateMan ? 'YES' : 'NO',
+		'{{INPUT_FILTER}}' => $doxygenInputFilter,
 	);
 	$tmpCfg = str_replace( array_keys( $replacements ), array_values( $replacements ), $template );
 	$tmpFileName = tempnam( wfTempDir(), 'mwdocgen-' );
@@ -143,13 +145,23 @@ function generateConfigFile( $doxygenTemplate, $outputDirectory, $stripFromPath,
 unset( $file );
 
 if ( is_array( $argv ) ) {
-	for ($i = 0; $i < count($argv); $i++ ) {
-		switch( $argv[$i] ) {
-		case '--all':         $input = 0; break;
-		case '--includes':    $input = 1; break;
-		case '--languages':   $input = 2; break;
-		case '--maintenance': $input = 3; break;
-		case '--skins':       $input = 4; break;
+	for ( $i = 0; $i < count( $argv ); $i++ ) {
+		switch ( $argv[$i] ) {
+		case '--all':
+			$input = 0;
+			break;
+		case '--includes':
+			$input = 1;
+			break;
+		case '--languages':
+			$input = 2;
+			break;
+		case '--maintenance':
+			$input = 3;
+			break;
+		case '--skins':
+			$input = 4;
+			break;
 		case '--file':
 			$input = 5;
 			$i++;
@@ -157,11 +169,19 @@ if ( is_array( $argv ) ) {
 				$file = $argv[$i];
 			}
 			break;
-		case '--no-extensions': $input = 6; break;
+		case '--no-extensions':
+			$input = 6;
+			break;
 		case '--output':
 			$i++;
 			if ( isset( $argv[$i] ) ) {
 				$doxyOutput = realpath( $argv[$i] );
+			}
+			break;
+		case '--version':
+			$i++;
+			if ( isset( $argv[$i] ) ) {
+				$doxyVersion = $argv[$i];
 			}
 			break;
 		case '--generate-man':
@@ -183,13 +203,14 @@ Commands:
 If no command is given, you will be prompted.
 
 Other options:
-    --output <dir>  Set output directory (default $doxyOutput)
+    --output <dir>  Set output directory (default: $doxyOutput)
     --generate-man  Generates man page documentation
+    --version       Project version to display in the outut (default: $doxyVersion)
     --help          Show this help and exit.
 
 
 END;
-			exit(0);
+			exit( 0 );
 			break;
 		}
 	}
@@ -208,8 +229,7 @@ Several documentation possibilities:
  5 : only a given file
  6 : all but the extensions directory
 OPTIONS;
-	while ( !is_numeric( $input ) )
-	{
+	while ( !is_numeric( $input ) ) {
 		$input = readaline( "\nEnter your choice [0]:" );
 		if ( $input == '' ) {
 			$input = 0;
@@ -218,11 +238,21 @@ OPTIONS;
 }
 
 switch ( $input ) {
-case 0: $input = $mwPath;  break;
-case 1: $input = $mwPathI; break;
-case 2: $input = $mwPathL; break;
-case 3: $input = $mwPathM; break;
-case 4: $input = $mwPathS; break;
+case 0:
+	$input = $mwPath;
+	break;
+case 1:
+	$input = $mwPathI;
+	break;
+case 2:
+	$input = $mwPathL;
+	break;
+case 3:
+	$input = $mwPathM;
+	break;
+case 4:
+	$input = $mwPathS;
+	break;
 case 5:
 	if ( !isset( $file ) ) {
 		$file = readaline( "Enter file name $mwPath" );
@@ -234,14 +264,11 @@ case 6:
 	$excludePatterns = 'extensions';
 }
 
-// @todo FIXME to work on git
-$version = 'master';
-
 // Generate path exclusions
 $excludedPaths = $mwPath . join( " $mwPath", $mwExcludePaths );
 print "EXCLUDE: $excludedPaths\n\n";
 
-$generatedConf = generateConfigFile( $doxygenTemplate, $doxyOutput, $mwPath, $version, $input, $excludedPaths, $excludePatterns, $doxyGenerateMan, $doxygenInputFilter );
+$generatedConf = generateConfigFile( $doxygenTemplate, $doxyOutput, $mwPath, $doxyVersion, $input, $excludedPaths, $excludePatterns, $doxyGenerateMan, $doxygenInputFilter );
 $command = $doxygenBin . ' ' . $generatedConf;
 
 echo <<<TEXT
@@ -254,7 +281,8 @@ $command
 
 TEXT;
 
-passthru( $command );
+$exitcode = 1;
+passthru( $command, $exitcode );
 
 echo <<<TEXT
 ---------------------------------------------------
@@ -264,3 +292,5 @@ Check above for possible errors.
 You might want to delete the temporary file $generatedConf
 
 TEXT;
+
+exit( $exitcode );

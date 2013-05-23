@@ -9,6 +9,7 @@
  *
  * @author Amahoney
  * @author Andrew Dalby
+ * @author Autokrator
  * @author Dferg
  * @author Esteban97
  * @author Kaganer
@@ -188,8 +189,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Numerum usorum custodientium monstrare',
 'tog-oldsig' => 'Subscriptio ad tempus adhibita:',
 'tog-fancysig' => 'Subscriptio vicitext (sine nexu automatico)',
-'tog-externaleditor' => 'Utere editore externo semper (pro peritus solo, requirat speciales optiones in calculone. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
-'tog-externaldiff' => 'Utere editore dissimilitudine externa semper (pro peritus solo, requirat speciales optiones in calculone. [//www.mediawiki.org/wiki/Manial:External_editors More information.])',
 'tog-showjumplinks' => 'Sinere nexus ostendi forma "salire ad" monstrata',
 'tog-uselivepreview' => 'Praevisum viventem adhibere (JavaScript)',
 'tog-forceeditsummary' => 'Si recensionem non summatim descripsero, me roga si continuare velim',
@@ -198,6 +197,7 @@ $messages = array(
 'tog-watchlisthideminor' => 'Celare recensiones minores in paginarum custoditarum indice',
 'tog-watchlisthideliu' => 'Celare recensiones usorum notorum in paginarum custoditarum indice',
 'tog-watchlisthideanons' => 'Celare recensiones usorum ignotorum in paginarum custoditarum indice',
+'tog-watchlisthidepatrolled' => 'Recensiones vigilatae paginas custoditas celare',
 'tog-ccmeonemails' => 'Mitte mihi transcriptiones litterarum quas ad alios usores mitto',
 'tog-diffonly' => 'Noli monstrare contenta paginae infra dissimilitudinem',
 'tog-showhiddencats' => 'Categorias celatas monstrare',
@@ -274,6 +274,9 @@ $messages = array(
 'category-file-count' => '{{PLURAL:$2|Huic categoriae est solum unus fasciculus.|Huic categoriae {{PLURAL:$1|est hic fasciculus|sunt hi $1 fasciculi}} ex omnino $2 fasciculis.}}',
 'category-file-count-limited' => 'Huic categoriae {{PLURAL:$1|est hic fasciculus|sunt hi $1 fasciculi}}.',
 'listingcontinuesabbrev' => 'cont.',
+'index-category' => 'Paginae quae in indice sunt',
+'noindex-category' => 'Paginae quae non in indice sunt',
+'broken-file-category' => 'Paginae cum nexibus ad fasciculos ruptis',
 
 'about' => 'De hoc',
 'article' => 'Pagina contenta continens',
@@ -500,8 +503,15 @@ Nota bene paginas fortasse videantur quasi tuum conventum esset apertum, priusqu
 'welcomecreation-msg' => 'Ratio tua creata est.
 Noli oblivisci [[Special:Preferences|praeferentias]] tuas apud {{grammar:accusative|{{SITENAME}}}} mutare.',
 'yourname' => 'Nomen usoris:',
+'userlogin-yourname' => 'Nomen usoris',
+'userlogin-yourname-ph' => 'Nomen usoris tuum inscribe',
 'yourpassword' => 'Tessera:',
+'userlogin-yourpassword' => 'Tessera',
+'userlogin-yourpassword-ph' => 'Tesseram tuam inscribe',
+'createacct-yourpassword-ph' => 'Tesseram inscribe',
 'yourpasswordagain' => 'Tesseram adfirmare:',
+'createacct-yourpasswordagain' => 'Tesseram confirmare',
+'createacct-yourpasswordagain-ph' => 'Tesseram iterum inscribe',
 'remembermypassword' => 'Tesseram meam hoc in navigatro inter conventa memento ({{PLURAL:$1|die|diebus}} $1 tenus)',
 'yourdomainname' => 'Regnum tuum:',
 'login' => 'Conventum aperire',
@@ -512,14 +522,23 @@ Noli oblivisci [[Special:Preferences|praeferentias]] tuas apud {{grammar:accusat
 'logout' => 'Conventum concludere',
 'userlogout' => 'Conventum concludere',
 'notloggedin' => 'Conventum non est apertum',
+'userlogin-noaccount' => 'Num rationem non habes?',
 'nologin' => "Num rationem non habes? '''$1'''.",
 'nologinlink' => 'Eam crea',
 'createaccount' => 'Rationem novam creare',
 'gotaccount' => "Habesne iam rationem? '''$1'''.",
 'gotaccountlink' => 'Conventum aperi',
 'userlogin-resetlink' => 'Num tesserae tuae oblitus es?',
-'createaccountmail' => 'ab inscriptione electronica',
+'helplogin-url' => 'Help:Conventum aperire',
+'createacct-emailrequired' => 'Inscriptio electronica',
+'createacct-emailoptional' => 'Inscriptio electronica (non necesse)',
+'createacct-email-ph' => 'Inscriptionem electronicam tuam inscribe',
+'createaccountmail' => 'Use a temporary random password and send it to the email address specified below',
 'createaccountreason' => 'Causa:',
+'createacct-reason' => 'Causa',
+'createacct-imgcaptcha-ph' => 'Textum quem supra vidis inscribe',
+'createacct-benefit-body1' => '{{PLURAL:$1|recensio|recensiones}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|pagina|paginae}}',
 'badretype' => 'Tesserae quas scripsisti inter se non congruunt.',
 'userexists' => 'Nomen usoris quod selegisti iam est.
 Nomen usoris alium selige.',
@@ -752,6 +771,7 @@ Ille hanc causam dedit: ''$2''",
 Titulus: '''({{int:cur}})''' = dissimilis ab emendatione novissima,
 '''({{int:last}})''' = dissimilis ab emendatione proxima, '''{{int:minoreditletter}}''' = recensio minor.",
 'history-fieldset-title' => 'Quaerere in paginae historia',
+'history-show-deleted' => 'Solum recensiones deletas monstrare',
 'histfirst' => 'Veterrimus',
 'histlast' => 'Novissimus',
 'historysize' => '({{PLURAL:$1|1 octetus|$1 octeti}})',
@@ -781,6 +801,8 @@ Titulus: '''({{int:cur}})''' = dissimilis ab emendatione novissima,
 'revdelete-radio-unset' => 'Minime',
 'revdelete-log' => 'Causa:',
 'revdel-restore' => 'visibilitatem mutare',
+'revdel-restore-deleted' => 'Recensiones deletae',
+'revdel-restore-visible' => 'Recensiones visibiles',
 'pagehist' => 'Historia paginae',
 'deletedhist' => 'Historia deleta',
 'revdelete-edit-reasonlist' => 'Causas deletionum recensere',
@@ -840,6 +862,7 @@ Titulus: '''({{int:cur}})''' = dissimilis ab emendatione novissima,
 'searchprofile-articles-tooltip' => 'Quaerere in $1',
 'searchprofile-project-tooltip' => 'Quaerere in $1',
 'searchprofile-images-tooltip' => 'Fasciculos quaerere',
+'searchprofile-advanced-tooltip' => 'In spatiis nominalibus accommotis quaerere',
 'search-result-size' => '$1 ({{PLURAL:$2|1 verbum|$2 verba}})',
 'search-result-score' => 'Gravitas: $1%',
 'search-redirect' => '(redirectio $1)',
@@ -857,6 +880,7 @@ Titulus: '''({{int:cur}})''' = dissimilis ab emendatione novissima,
 'showingresultsnum' => "Subter monstrans {{PLURAL:$3|'''1''' eventum|'''$3''' eventus}} incipiens ab #'''$2'''.",
 'nonefound' => "'''Adnotatio''': Solum aliquae spatia nominalia quaesita sunt semper.
 Conare praefixare tua inquisitionem cum ''all:'' ut quaeras contenta omnia (paginas, formulas et cetera) vel utere spatio nominali desiderato quasi praefixo.",
+'search-nonefound' => 'Nullae paginae quaesitionem tuam adaequant.',
 'powersearch' => 'Quaerere callidissime',
 'powersearch-legend' => 'Quaerere callidissime',
 'powersearch-ns' => 'Quaerere in spatiis nominalibus:',
@@ -867,14 +891,6 @@ Conare praefixare tua inquisitionem cum ''all:'' ut quaeras contenta omnia (pagi
 'powersearch-togglenone' => 'Nullum',
 'search-external' => 'Inquisitio externalis',
 'searchdisabled' => 'Per {{grammar:accusative|{{SITENAME}}}} ad tempus non potes quaerere. Interea per [http://www.google.com Googlem] quaeras. Nota indices {{grammar:genitive|{{SITENAME}}}} contentorum apud Googlem fortasse antiquiores esse.',
-
-# Quickbar
-'qbsettings' => 'Figuratio claustri celeris',
-'qbsettings-none' => 'Nullus',
-'qbsettings-fixedleft' => 'Constituere a sinistra',
-'qbsettings-fixedright' => 'Constituere a dextra',
-'qbsettings-floatingleft' => 'Innens a sinistra',
-'qbsettings-floatingright' => 'Innens a dextra',
 
 # Preferences page
 'preferences' => 'Praeferentiae',
@@ -943,6 +959,7 @@ Conare praefixare tua inquisitionem cum ''all:'' ut quaeras contenta omnia (pagi
 'yourlanguage' => 'Lingua:',
 'yourvariant' => 'Differentia linguae contentorum:',
 'yournick' => 'Subscriptio nova:',
+'prefs-help-signature' => 'Cum in paginis disputationum scribas, "<nowiki>~~~~</nowiki>" conscribe, quod in subscriptionem tuam et indicationem temporis convertetur.',
 'badsig' => 'Subscriptio cruda non est valida; scrutina affixa HTML.',
 'badsiglength' => 'Subscriptio tua nimis longa est.
 {{PLURAL:$1|Una littera est|$1 litterae sunt}} longitudo maxima.',
@@ -1665,6 +1682,7 @@ Si pagina nova cum ipso nomine post deletionem creata est, emendationes restitut
 'sp-contributions-newbies-title' => 'Conlationes rationum novarum',
 'sp-contributions-blocklog' => 'acta obstructionum',
 'sp-contributions-deleted' => 'conlationes usoris deletae',
+'sp-contributions-uploads' => 'Fasciculi impositi',
 'sp-contributions-logs' => 'acta',
 'sp-contributions-talk' => 'disputatio',
 'sp-contributions-userrights' => 'usorum potestates',
@@ -1960,6 +1978,7 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 'tooltip-upload' => 'Incipere imponere',
 'tooltip-rollback' => '"Revertere" omnes ultimi editoris in hac pagina recensiones statim revertit',
 'tooltip-undo' => '"Abrogare" fenestram recensionis aperit (hac recensione reversa). Summarium addere licet.',
+'tooltip-summary' => 'Summarium breve addere',
 
 # Attribution
 'anonymous' => '{{PLURAL:$1|Usor ignotus|Usores ignoti}} {{grammar:genitive|{{SITENAME}}}}',
@@ -1984,7 +2003,6 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 'pageinfo-toolboxlink' => 'De hac pagina',
 
 # Skin names
-'skinname-standard' => 'Norma',
 'skinname-cologneblue' => 'Caerulus Colonia',
 
 # Patrolling
@@ -2032,7 +2050,7 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 'metadata-expand' => 'Plura ostende',
 'metadata-collapse' => 'Partim celare',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Amplitudo',
 'exif-imagelength' => 'Altitudo',
 'exif-bitspersample' => 'Biti per componentem',
@@ -2105,7 +2123,7 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 'exif-gpsdatestamp' => 'Dies GPS',
 'exif-gpsdifferential' => 'Correctio differentialis GPS',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Incompressus',
 
 'exif-unknowndate' => 'Dies ignota',
@@ -2335,11 +2353,6 @@ Quaesumus, adfirma ut iterum hanc paginam crees.",
 'version-software-product' => 'Productum',
 'version-software-version' => 'Versio',
 
-# Special:FilePath
-'filepath' => 'Fasciculorum inscriptio',
-'filepath-page' => 'Fasciculus:',
-'filepath-submit' => 'Ire',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch-legend' => 'Duplicatum quaerere',
 'fileduplicatesearch-filename' => 'Fasciculi nomen:',
@@ -2388,7 +2401,7 @@ Quaesumus, adfirma ut iterum hanc paginam crees.",
 'logentry-newusers-newusers' => 'Ratio usoris $1 creata est',
 'logentry-newusers-create' => 'Ratio usoris $1 creata est',
 'logentry-newusers-create2' => 'Ratio usoris $3 creata est ab usore $1',
-'logentry-newusers-autocreate' => 'Ratio $1 automatice creata est',
+'logentry-newusers-autocreate' => 'Ratio usoris $1 automatice creata est',
 'rightsnone' => '(nullus)',
 
 # Search suggestions

@@ -113,8 +113,6 @@ $messages = array(
 'tog-shownumberswatching' => "Mostrer l' nombe d' uzeus ki shuvèt l' pådje",
 'tog-oldsig' => 'Siné pol moumint:',
 'tog-fancysig' => 'Sinateure avou do tecse wiki (sins loyén otomatike)',
-'tog-externaleditor' => "Eployî on dfoûtrin aspougneu d' tecse come prémetowe dujhance (po les spepieus uzeus seulmint, ca i vs fåt fé des apontiaedjes sol sopiutrece da vosse, [//www.mediawiki.org/wiki/Manual:External_editors loukîz chal po pus di racsegnes]).",
-'tog-externaldiff' => 'Eployî on dfoûtrin programe di diferinces come prémetowe dujhance (po les spepieus uzeus seulmint, ca i vs fåt fé des apontiaedjes sol sopiutrece da vosse, [//www.mediawiki.org/wiki/Manual:External_editors loukîz chal po pus di racsegnes]).',
 'tog-showjumplinks' => 'Mete en alaedje les loyéns di naiviaedje «potchî a» å dzeu del pådje (pol pea «Myskin» et ds ôtes)',
 'tog-uselivepreview' => "Eployî l' prévoeyaedje abeye (JavaScript) (Esperimintå)",
 'tog-forceeditsummary' => "M' advierti cwand dji lai vude on rascourti",
@@ -127,6 +125,7 @@ $messages = array(
 'tog-ccmeonemails' => "M' evoyî ene copeye des emiles ki dj' evoye ås ôtes",
 'tog-diffonly' => "Èn nén håyner l' contnou del pådje pa dzo l' pådje des diferinces",
 'tog-showhiddencats' => 'Mostrer les categoreyes mucheyes',
+'tog-useeditwarning' => "M' advierti cwand dji cwite ene pådje k' a des candjmints nén schapés",
 
 'underline-always' => 'Tofer',
 'underline-never' => 'Måy',
@@ -711,6 +710,8 @@ Motoit k' elle a stî tapêye evoye.",
 'edit-conflict' => 'Ecramiaedje di candjmints.',
 'edit-no-change' => "Vosse sicrijhaedje n' a nén passé, paski rén n' a stî candjî al modêye di dvant.",
 'edit-already-exists' => "Li novele pâdje n' a savou esse ahivêye, ca cisse pâdje la egzistêye dedja.",
+'editwarning-warning' => "Cwiter cisse pådje ci vos frè piede tos les candjmints ki vos avoz fwait.
+Si vos estoz elodjî, vos ploz dismete cist adviertixhmint ci dins l' linwete «Boesse di tecse» di vos preferinces.",
 
 # Parser/template warnings
 'post-expand-template-inclusion-warning' => "'''Asteme:''' I gn a trop di modeles dins cisse pådje ci.
@@ -855,15 +856,6 @@ Vos ploz sayî di mete «all:» pa dvant l' tecse a cweri po cweri dins tot l' c
 'search-external' => 'Difoûtrin cweraedje',
 'searchdisabled' => "Mande escuzes! Li cweraedje å dvins des årtikes a stî dismetou pol moumint, cåze ki l' sierveu est fortcherdjî. Tot ratindant, vos ploz eployî Google po fé les rcweraedjes so {{SITENAME}}, mins çoula pout esse ene miete vî.",
 
-# Quickbar
-'qbsettings' => 'Apontiaedjes pol bår di menu',
-'qbsettings-none' => 'Nole bår',
-'qbsettings-fixedleft' => 'Aclawêye a hintche',
-'qbsettings-fixedright' => 'Aclawêye a droete',
-'qbsettings-floatingleft' => 'Flotante a hintche',
-'qbsettings-floatingright' => 'Flotante a droete',
-'qbsettings-directionality' => "Aclawêye, sorlon l' sinse di scrijhaedje di vosse lingaedje",
-
 # Preferences page
 'preferences' => 'Preferinces',
 'mypreferences' => 'Mes preferinces',
@@ -971,7 +963,7 @@ Ciste infôrmacion serè publike po tertos.",
 'prefs-displaywatchlist' => 'Tchuzes di håynaedje',
 'prefs-diffs' => 'Diferinces',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => "L' adresse emile a l' air d' esse valide",
 'email-address-validity-invalid' => 'Dinez ene adresse emile valide',
 
@@ -1427,7 +1419,7 @@ Protocoles ricnoxhous: <code>$1</code> (nelzès metoz nén dins vosse tchinne di
 # Special:ListGroupRights
 'listgrouprights-members' => '(djivêye des mimbes)',
 
-# E-mail user
+# Email user
 'mailnologin' => "Nole adresse d' evoyeu",
 'mailnologintext' => "Po-z evoyî èn emile a èn ôte uzeu i vs fåt esse [[Special:UserLogin|elodjî]] eyet aveur ene adresse emile d' evoyeu ki soeye valide dins vos [[Special:Preferences|preferinces]].",
 'emailuser' => "Emiler a l' uzeu",
@@ -1472,8 +1464,8 @@ Si vos vloz bodjî l' pådje foû di vosse djivêye des shuvous, clitchîz so «
 'notanarticle' => 'Nén èn årtike',
 'watchnochange' => "Nole des pådjes di vosse djivêye di pådjes a shuve n' a stî candjeye dins l' termene di tins dmandêye.",
 'watchlist-details' => 'Vos avoz {{PLURAL:$1|$1 pådje shuvowe|$1 pådjes shuvowes}} (sins conter les pådjes di copene).',
-'wlheader-enotif' => '* Li notifiaedje pa emile est en alaedje.',
-'wlheader-showupdated' => "* Les pådjes k' ont candjî dispoy vosse dierinne vizite sont metowes e '''cråssès letes'''",
+'wlheader-enotif' => 'Li notifiaedje pa emile est en alaedje.',
+'wlheader-showupdated' => "Les pådjes k' ont candjî dispoy vosse dierinne vizite sont metowes e '''cråssès letes'''",
 'watchmethod-recent' => "Cwerant après les pådjes k' ont stî candjeyes dierinnmint ki sont eto des pådjes shuvowes",
 'watchmethod-list' => "Cwerant après les pådjes shuvowes k' ont stî candjeyes dierinnmint",
 'watchlistcontains' => 'I gn a {{PLURAL:$1|$1 pådje|$1 pådjes}} e vosse djivêye des pådjes a shuve.',
@@ -2051,7 +2043,7 @@ est raptiti. Les ôtes seront catchîs.
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Lårdjeur',
 'exif-imagelength' => 'Hôteur',
 'exif-bitspersample' => 'Bits pa compôzant',
@@ -2168,7 +2160,7 @@ est raptiti. Les ôtes seront catchîs.
 'namespacesall' => 'tos',
 'monthsall' => 'tos',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => "Acertinaedje di l' adresse emile",
 'confirmemail_text' => "Ci wiki chal a mezåjhe ki vos acertinîz voste adresse emile
 divant d' poleur eployî les fonccions d' emilaedje. Clitchîz sol boton
@@ -2267,9 +2259,6 @@ Acertinez s' i vs plait ki vos vloz vormint rifé cisse pådje ci.",
 'version-software' => 'Programes astalés',
 'version-software-product' => 'Prodût',
 'version-software-version' => 'Modêye',
-
-# Special:FilePath
-'filepath-page' => 'Fitchî:',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Cweraedje après les dobes fitchîs',

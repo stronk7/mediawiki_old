@@ -346,8 +346,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Vis antall brukere som overvåker',
 'tog-oldsig' => 'Nåværende signatur:',
 'tog-fancysig' => 'Behandle signaturen som wikitekst (uten automatisk lenke)',
-'tog-externaleditor' => 'Bruk ekstern behandler som standard (kun for viderekomne brukere, krever spesielle innstillinger på din datamaskin. [//www.mediawiki.org/wiki/Manual:External_editors Mer informasjon.])',
-'tog-externaldiff' => 'Bruk ekstern differanse som standard (kun for viderekomne brukere, krever spesielle innstillinger på din datamaskin. [//www.mediawiki.org/wiki/Manual:External_editors Mer informasjon.])',
 'tog-showjumplinks' => 'Slå på «gå til»-lenker',
 'tog-uselivepreview' => 'Bruk levende forhåndsvisning (eksperimentell JavaScript)',
 'tog-forceeditsummary' => 'Advar meg når jeg ikke gir noen redigeringsforklaring',
@@ -361,6 +359,7 @@ $messages = array(
 'tog-diffonly' => 'Ikke vis sideinnhold under differ',
 'tog-showhiddencats' => 'Vis skjulte kategorier',
 'tog-norollbackdiff' => 'Ikke vis diff etter tilbakestilling',
+'tog-useeditwarning' => 'Si ifra dersom jeg forlater en side jeg har gjort redigeringer på men ikke har lagret siden.',
 
 'underline-always' => 'Alltid',
 'underline-never' => 'Aldri',
@@ -730,9 +729,15 @@ Merk at noen sider kan vise at du fortsatt er logget inn fram til du tømmer mel
 'welcomecreation-msg' => 'Kontoen din har blitt opprettet.
 Ikke glem å endre [[Special:Preferences|innstillingene dine]] på {{SITENAME}}.',
 'yourname' => 'Brukernavn:',
+'userlogin-yourname' => 'Brukernan',
+'userlogin-yourname-ph' => 'Skriv inn brukernavnet ditt',
 'yourpassword' => 'Passord:',
+'userlogin-yourpassword' => 'Passord',
+'userlogin-yourpassword-ph' => 'Skriv inn passordet ditt',
 'yourpasswordagain' => 'Gjenta passord',
 'remembermypassword' => 'Husk meg på denne datamaskinen (i maks $1 {{PLURAL:$1|dag|dager}})',
+'userlogin-remembermypassword' => 'Husk brukernavn og passord',
+'userlogin-signwithsecure' => 'Logg inn med sikker tjener',
 'securelogin-stick-https' => 'Vær fortsatt koblet til HTTPS etter innlogging',
 'yourdomainname' => 'Ditt domene',
 'password-change-forbidden' => 'Du kan ikke endre passord på denne wikien.',
@@ -745,12 +750,16 @@ Ikke glem å endre [[Special:Preferences|innstillingene dine]] på {{SITENAME}}.
 'logout' => 'Logg ut',
 'userlogout' => 'Logg ut',
 'notloggedin' => 'Ikke logget inn',
+'userlogin-noaccount' => 'Ingen konto?',
+'userlogin-joinproject' => 'Bli med på {{SITENAME}}',
 'nologin' => 'Har du ingen konto? $1.',
 'nologinlink' => 'Opprett en konto',
 'createaccount' => 'Opprett konto',
 'gotaccount' => 'Har du allerede en konto? $1.',
 'gotaccountlink' => 'Logg inn',
 'userlogin-resetlink' => 'Har du glemt påloggingsdetaljene dine?',
+'helplogin-url' => 'Help:Innlogging',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Hjelp med innlogging]]',
 'createaccountmail' => 'Bruk et midlertidig tilfeldig passord, og send det til e-postadressen nedenfor',
 'createaccountreason' => 'Årsak:',
 'badretype' => 'Passordene samsvarte ikke.',
@@ -792,8 +801,8 @@ og fortsette å bruke det gamle passordet.',
 Logg inn når du har mottatt det nye passordet.',
 'blocked-mailpassword' => 'IP-adressen din er blokkert fra å redigere, og for å forhindre misbruk kan du heller ikke bruke funksjonen som gir deg nytt passord.',
 'eauthentsent' => 'En bekreftelsesmelding ble sendt til gitte e-postadresse. Før andre e-poster kan sendes til kontoen må du følge instruksjonene i e-posten for å bekrefte at kontoen faktisk er din.',
-'throttled-mailpassword' => 'En passordpåminnelse ble sendt for mindre enn {{PLURAL:$1|en time|$1 timer}} siden.
-For å forhindre misbruk kan kun én passordpåminnelse sendes per {{PLURAL:$1|time|$1 timer}}.',
+'throttled-mailpassword' => 'En passordtilbakestillingsepost har allerede blitt sendt for mindre enn {{PLURAL:$1|en time|$1 timer}} siden.
+For å forhindre misbruk kan kun én passordtilbakestillingsepost sendes per {{PLURAL:$1|time|$1 timer}}.',
 'mailerror' => 'Feil under sending av e-post: $1',
 'acct_creation_throttle_hit' => 'Gjester med samme IP-adresse som deg har opprettet {{PLURAL:$1|én konto|$1 kontoer}} det siste døgnet, og det er ikke tillatt å opprette flere.
 Som et resultat kan det ikke opprettes flere kontoer fra denne IP-adressen.',
@@ -842,9 +851,10 @@ Du kan ha allerede byttet passordet, eller bedt om et nytt midlertidig passord.'
 
 # Special:PasswordReset
 'passwordreset' => 'Passordresetting',
-'passwordreset-text' => 'Fyll ut dette skjemaet for å motta en påminnelse om kontoopplysningene dine i en e-post.',
+'passwordreset-text' => 'Fyll ut dette skjemaet for å tilbakestille passordet ditt.',
 'passwordreset-legend' => 'Nullstill passord',
 'passwordreset-disabled' => 'Nullstilling av passord er deaktivert på denne wikien.',
+'passwordreset-emaildisabled' => 'E-posttjenester er slått av på denne wikien.',
 'passwordreset-pretext' => '{{PLURAL:$1||Skriv inn en av datadelene nedenfor}}',
 'passwordreset-username' => 'Brukernavn:',
 'passwordreset-domain' => 'Domene:',
@@ -852,8 +862,7 @@ Du kan ha allerede byttet passordet, eller bedt om et nytt midlertidig passord.'
 'passwordreset-capture-help' => 'Hvis du krysser av her, vil du se e-posten (med foreløpig passord) i tillegg til at den blir sendt til brukeren.',
 'passwordreset-email' => 'E-postadresse:',
 'passwordreset-emailtitle' => 'Kontodetaljer på {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Noen (sannsynligvis deg fra IP-adressen $1) ba om en påminnelse om dine
-kontodetaljer for {{SITENAME}} ($4). {{PLURAL:$3|Den følgende brukerkontoen|De følgende brukerkontoene}} er
+'passwordreset-emailtext-ip' => 'Noen (sannsynligvis deg fra IP-adressen $1) ba om en tilbakestilling av ditt passord for {{SITENAME}} ($4). {{PLURAL:$3|Den følgende brukerkontoen|De følgende brukerkontoene}} er
 tilknyttet denne e-postadressen:
 
 $2
@@ -863,7 +872,7 @@ Du bør logge på og velge et nytt passord nå. Dersom noen andre kom med denne
 forespørselen, eller du har kommet på ditt opprinnelige passord, og ikke lenger
 ønsker å endre det, kan du ignorere denne meldingen og fortsette å bruke ditt gamle
 passord.',
-'passwordreset-emailtext-user' => 'Brukeren $1 på {{SITENAME}} ba om en påminnelse om kontodetaljene dine for {{SITENAME}}
+'passwordreset-emailtext-user' => 'Brukeren $1 på {{SITENAME}} ba om en tilbakestilling av passordet ditt for {{SITENAME}}
 ($4). {{PLURAL:$3|Den følgende brukerkontoen|De følgende brukerkontoene}} er tilknyttet denne e-postadressen:
 
 $2
@@ -875,9 +884,9 @@ forespørselen, eller du har kommet på ditt opprinnelige passord, og ikke lenge
 passord.',
 'passwordreset-emailelement' => 'Brukernavn: $1
 Midlertidig passord: $2',
-'passwordreset-emailsent' => 'En påminnelse har blitt sendt på e-post.',
-'passwordreset-emailsent-capture' => 'E-posten under er sendt ut som en påminnelse.',
-'passwordreset-emailerror-capture' => 'E-posten, som du ser under, ble forsøkt sendt til brukeren, men dette mislyktes: $1',
+'passwordreset-emailsent' => 'En passordtilbakestillingslenke har blitt sendt per e-post.',
+'passwordreset-emailsent-capture' => 'Passordtilbakestillingseposten vist under har blitt sendt ut.',
+'passwordreset-emailerror-capture' => 'En passordtilbakestillingsepost ble laget, men det lyktes ikke å sende denne til {{GENDER:$2|brukeren}}: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Endre e-postadresse',
@@ -1085,7 +1094,7 @@ Du bør vurdere om det er passende å fortsette å redigere denne siden.
 Slette- og flytteloggen for denne siden gjengis her:",
 'moveddeleted-notice' => 'Denne siden har blitt slettet.
 Slette- og flytteloggen vises nedenfor.',
-'log-fulllog' => 'Vil hele loggen',
+'log-fulllog' => 'Vis hele loggen',
 'edit-hook-aborted' => 'Redigering avbrutt av en funksjon, uten forklaring.',
 'edit-gone-missing' => 'Kunne ikke oppdatere siden fordi den har blitt slettet.',
 'edit-conflict' => 'Redigeringskonflikt.',
@@ -1095,6 +1104,7 @@ Slette- og flytteloggen vises nedenfor.',
 'content-failed-to-parse' => 'Klarte ikke å tolke innholdet $2 for innholdsmodellen $1: $3',
 'invalid-content-data' => 'Ugyldig innhold',
 'content-not-allowed-here' => 'Innholdsmodellen «$1» er ikke tillatt på siden [[$2]]',
+'editwarning-warning' => 'Ved å forlate siden kan du miste alle endringer du har utført. Om du er logget inn kan du slå av denne advarselen under «Redigering»-seksjonen i innstillingene.',
 
 # Content models
 'content-model-wikitext' => 'WikiTekst',
@@ -1376,15 +1386,7 @@ For å søke i alle, bruk prefikset ''all:'' (inkluderer diskusjonssider, maler,
 'powersearch-togglenone' => 'Ingen',
 'search-external' => 'Eksternt søk',
 'searchdisabled' => 'Søkefunksjonen er slått av. Du kan søke via Google i mellomtiden. Merk at Googles indeksering av {{SITENAME}} muligens er utdatert.',
-
-# Quickbar
-'qbsettings' => 'Brukerinnstillinger for hurtigmeny.',
-'qbsettings-none' => 'Ingen',
-'qbsettings-fixedleft' => 'Fast venstre',
-'qbsettings-fixedright' => 'Fast høyre',
-'qbsettings-floatingleft' => 'Flytende venstre',
-'qbsettings-floatingright' => 'Flytende til høyre',
-'qbsettings-directionality' => '"Låst", f. eks. i posisjon "låst til venstre eller til høyre". For venstre-mot-høyre-språk vil hurtigvelgeren være satt til venstre, for høyre-mot-venstre-språk til høyre.',
+'search-error' => 'En feil oppsto under søk: $1',
 
 # Preferences page
 'preferences' => 'Innstillinger',
@@ -1938,7 +1940,6 @@ For best mulig sikkerhet er img_auth.php slått av.',
 'http-read-error' => 'HTTP-lesefeil.',
 'http-timed-out' => 'Tidsavbrudd på HTTP-forespørsel.',
 'http-curl-error' => 'Feil under henting av adresse: $1',
-'http-host-unreachable' => 'Kunne ikke nå adressen.',
 'http-bad-status' => 'Det var et problem under HTTP-forespørselen: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2093,6 +2094,10 @@ De burde i stedet lenke til en passende innholdsside.<br />
 En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[MediaWiki:Disambiguationspage]].",
 
 'pageswithprop' => 'Sider med sideverdi',
+'pageswithprop-legend' => 'Sider med en sideverdi',
+'pageswithprop-text' => 'Denne siden lister opp sider som bruker en viss sideverdi.',
+'pageswithprop-prop' => 'Verdinavn:',
+'pageswithprop-submit' => 'Gå',
 
 'doubleredirects' => 'Doble omdirigeringer',
 'doubleredirectstext' => 'Denne siden lister opp de sidene som er omdirigeringer til andre omdirigeringssider.
@@ -2342,8 +2347,8 @@ Fremtidige endringer til denne siden og den tilhørende diskusjonssiden blir lis
 'notvisiblerev' => 'Revisjonen er slettet',
 'watchnochange' => 'Ingen av sidene i overvåkningslisten er endret i den valgte perioden.',
 'watchlist-details' => '{{PLURAL:$1|Én side|$1 sider}} på din overvåkningsliste, teller ikke diskusjonssider.',
-'wlheader-enotif' => '* E-postnotifikasjon er slått på.',
-'wlheader-showupdated' => "* Sider som har blitt forandret siden du sist besøkte dem vises i '''fet tekst'''",
+'wlheader-enotif' => 'E-postnotifikasjon er slått på.',
+'wlheader-showupdated' => "Sider som har blitt forandret siden du sist besøkte dem vises i '''fet tekst'''",
 'watchmethod-recent' => 'sjekker siste endringer for sider i overvåkningslisten',
 'watchmethod-list' => 'sjekker siste endringer for sider i overvåkningslisten',
 'watchlistcontains' => 'Overvåkningslisten inneholder $1 {{PLURAL:$1|side|sider}}.',
@@ -2742,6 +2747,7 @@ Skjulingsloggen vises nedenfor.',
 'proxyblocksuccess' => 'Utført.',
 'sorbsreason' => 'Din IP-adresse angis som en åpen proxy i DNSBL-en brukt av {{SITENAME}}.',
 'sorbs_create_account_reason' => 'Din IP-adresse angis som en åpen proxy i DNSBL-en brukt av {{SITENAME}}. Du kan ikke opprette en konto',
+'xffblockreason' => 'En IP-adresse som er tilstede i X-Forwarded-For-headeren, enten din eller en som tilhører en proxyserver du bruker, har blitt blokkert. Den opprinnelige blokkeringsgrunnen var: $1',
 'cant-block-while-blocked' => 'Du kan ikke blokkere andre mens du selv er blokkert.',
 'cant-see-hidden-user' => 'Brukeren du prøver å blokkere har allerede blitt blokkert og skjult. Ettersom du ikke har rett til å skjule brukere (hideuser), kan du ikke se eller endre brukerens blokkering.',
 'ipbblocked' => 'Du kan ikke blokkere eller avblokkere andre brukere, siden du selv er blokkert',
@@ -3055,24 +3061,14 @@ Du kan se på kildeteksten',
 
 # Stylesheets
 'common.css' => '/* CSS plassert i denne fila vil gjelde for alle utseender. */',
-'standard.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Standard */',
-'nostalgia.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Nostalgia */',
 'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Kølnerblå */',
 'monobook.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Monobook */',
-'myskin.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta MySkin */',
-'chick.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Chick */',
-'simple.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Simple */',
 'modern.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Modern */',
 
 # Scripts
 'common.js' => '/* Javascript i denne fila vil gjelde for alle drakter. */',
-'standard.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Standard */',
-'nostalgia.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Nostalgia */',
 'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Kølnerblå */',
 'monobook.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Monobook */',
-'myskin.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta MySkin */',
-'chick.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Chick */',
-'simple.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Simple */',
 'modern.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Modern */',
 
 # Metadata
@@ -3117,6 +3113,7 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-robot-noindex' => 'Ikke indekserbar',
 'pageinfo-views' => 'Antall visninger',
 'pageinfo-watchers' => 'Antall overvåkere av siden',
+'pageinfo-few-watchers' => 'Færre enn $1 {{PLURAL:$1|overvåker|overvåkere}}',
 'pageinfo-redirects-name' => 'Omdirigeringer til siden',
 'pageinfo-subpages-name' => 'Undersider av siden',
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|omdirigering|omdirigeringer}}; $3 {{PLURAL:$3|ikke-omdirigering|ikke-omdirigeringer}})',
@@ -3146,12 +3143,8 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-category-files' => 'Antall filer',
 
 # Skin names
-'skinname-standard' => 'Standard',
-'skinname-nostalgia' => 'Nostalgi',
 'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook' => 'Monobook',
-'skinname-myskin' => 'Eget utseende',
-'skinname-simple' => 'Enkel',
 'skinname-modern' => 'Moderne',
 
 # Patrolling
@@ -3264,7 +3257,7 @@ Andre vil skjules som standard.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Bredde',
 'exif-imagelength' => 'Høyde',
 'exif-bitspersample' => 'Bits per komponent',
@@ -3442,7 +3435,7 @@ Andre vil skjules som standard.
 'exif-originalimageheight' => 'Høyde på bildet før det ble beskåret',
 'exif-originalimagewidth' => 'Bredde på bildet før det ble beskåret',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Ukomprimert',
 'exif-compression-2' => 'CCITT Gruppe 3 1-dimensjonal modifisert Huffman-kjørelengdekoding',
 'exif-compression-3' => 'CCITT Gruppe 3 faks-koding',
@@ -3876,13 +3869,6 @@ Du skal ha mottatt [{{SERVER}}{{SCRIPTPATH}}/COPYING en kopi av GNU General Publ
 'version-entrypoints-header-entrypoint' => 'Inngangspunkt',
 'version-entrypoints-header-url' => 'URL',
 
-# Special:FilePath
-'filepath' => 'Filsti',
-'filepath-page' => 'Fil:',
-'filepath-submit' => 'Gå',
-'filepath-summary' => 'Denne spesialsiden returnerer den fullstendige stien for en fil.
-Bilder vises med full oppløsning, mens andre filtyper startes direkte gjennom sine tilknyttede programmer.',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Søk etter duplikatfiler',
 'fileduplicatesearch-summary' => 'Søk etter duplikatfiler basert på dets hash-verdi.',
@@ -3972,23 +3958,25 @@ Bilder vises med full oppløsning, mens andre filtyper startes direkte gjennom s
 'htmlform-submit' => 'Lagre',
 'htmlform-reset' => 'Omgjør endringer',
 'htmlform-selectorother-other' => 'Andre',
+'htmlform-no' => 'Nei',
+'htmlform-yes' => 'Ja',
 
 # SQLite database support
 'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 'sqlite-no-fts' => '$1 uten støtte for fulltekstsøk',
 
 # New logging system
-'logentry-delete-delete' => '$1 slettet siden $3',
-'logentry-delete-restore' => '$1 gjenopprettet siden $3',
-'logentry-delete-event' => '$1 endret skjult synligheten av {{PLURAL:$5|en logget hendelse|$5 loggede hendelser}} på $3: $4',
-'logentry-delete-revision' => '$1 endret synlighet av {{PLURAL:$5|en revisjon|$5 revisjoner}} på side $3: $4',
-'logentry-delete-event-legacy' => '$1 endret synlighet av loggede hendelser på $3',
-'logentry-delete-revision-legacy' => '$1 endret synlighet av revisjoner på side $3',
-'logentry-suppress-delete' => '$1 skjult side $3',
-'logentry-suppress-event' => '$1 endret skjult synligheten av {{PLURAL:$5|en logget hendelse|$5 loggede hendelser}} på $3: $4',
-'logentry-suppress-revision' => '$1 endret skjult synligheten av {{PLURAL:$5|en logget hendelse|$5 loggede hendelser}} på $3: $4',
-'logentry-suppress-event-legacy' => '$1 endret skjult synligheten av loggede hendelser på $3',
-'logentry-suppress-revision-legacy' => '$1 endret skjult synligheten av revisjoner på side $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|slettet}} siden $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|gjenopprettet}} siden $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|endret}} synligheten av {{PLURAL:$5|en logghendelse|$5 logghendelser}} på $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|endret}} synligheten av {{PLURAL:$5|en revisjon|$5 revisjoner}} på side $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|endret}} synligheten av logghendelser på $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|endret}} synligheten av revisjoner på siden $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|skjulte}} siden $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|endret}} diskré synligheten av {{PLURAL:$5|en logghendelse|$5 logghendelser}} på $3: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|endret}} diskré synligheten av {{PLURAL:$5|en logghendelse|$5 logghendelser}} på $3: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|endret}} diskré synligheten av logghendelser på $3',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|endret}} diskré synligheten av revisjoner på siden $3',
 'revdelete-content-hid' => 'innhold skjult',
 'revdelete-summary-hid' => 'redigeringsbeskrivelse skjult',
 'revdelete-uname-hid' => 'brukernavn skjult',
@@ -3997,20 +3985,20 @@ Bilder vises med full oppløsning, mens andre filtyper startes direkte gjennom s
 'revdelete-uname-unhid' => 'brukernavn synlig',
 'revdelete-restricted' => 'begrensninger gjelder også administratorer',
 'revdelete-unrestricted' => 'fjernet begrensninger for administratorer',
-'logentry-move-move' => '$1 flyttet siden $3 til $4',
-'logentry-move-move-noredirect' => '$1 flyttet siden $3 til $4 uten å etterlate en omdirigering',
-'logentry-move-move_redir' => '$1 flyttet siden $3 til $4 over en omdirigering',
-'logentry-move-move_redir-noredirect' => '$1 flyttet siden $3 til $4 over en omdirigering uten å etterlate en omdirigering',
-'logentry-patrol-patrol' => '$1 markerte revisjon $4 av siden $3 som patruljert',
-'logentry-patrol-patrol-auto' => '$1 markerte automatisk revisjon $4 av siden $3 som patruljert',
-'logentry-newusers-newusers' => 'Kontoen $1 ble opprettet',
-'logentry-newusers-create' => 'Kontoen $1 ble opprettet',
-'logentry-newusers-create2' => 'Kontoen $3 ble opprettet av $1',
-'logentry-newusers-byemail' => 'Kontoen $3 ble opprettet av $1 og passordet sendt med e-post',
-'logentry-newusers-autocreate' => 'Konto $1 ble opprettet automatisk',
-'logentry-rights-rights' => '$1 endret gruppemedlemskap for $3 fra $4 til $5',
-'logentry-rights-rights-legacy' => '$1 endret gruppemedlemskap for $3',
-'logentry-rights-autopromote' => '$1 ble automatisk forfremmet fra $4 til $5',
+'logentry-move-move' => '$1 {{GENDER:$2|flyttet}} siden $3 til $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|flyttet}} siden $3 til $4 uten å etterlate en omdirigering',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|flyttet}} siden $3 til $4 over en omdirigering',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|flyttet}} siden $3 til $4 over en omdirigering uten å etterlate en omdirigering',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|markerte}} revisjon $4 av siden $3 som patruljert',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|markerte}} automatisk revisjon $4 av siden $3 som patruljert',
+'logentry-newusers-newusers' => 'Brukerkontoen $1 ble {{GENDER:$2|opprettet}}',
+'logentry-newusers-create' => 'Brukerkontoen $1 ble {{GENDER:$2|opprettet}}',
+'logentry-newusers-create2' => 'Brukerkontoen $3 ble {{GENDER:$2|opprettet}} av $1',
+'logentry-newusers-byemail' => 'Brukerkontoen $3 ble {{GENDER:$2|opprettet}} av $1 og passordet ble sendt per e-post',
+'logentry-newusers-autocreate' => 'Brukerkontoen $1 ble automatisk {{GENDER:$2|opprettet}}',
+'logentry-rights-rights' => '$1 {{GENDER:$2|endret}} gruppemedlemskap for $3 fra $4 til $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|endret}} gruppemedlemskap for $3',
+'logentry-rights-autopromote' => '$1 ble automatisk {{GENDER:$2|forfremmet}} fra $4 til $5',
 'rightsnone' => '(ingen)',
 
 # Feedback
@@ -4086,6 +4074,7 @@ Om det ikke er tilfellet, kan du bruke det enkle skjemaet som du finner under. K
 'duration-centuries' => '$1 {{PLURAL:$1|århundre|århundrer}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennium|millennier}}',
 
-# Unknown messages
-'pageswithprop-legend' => 'Sider med en sideverdi',
+# Image rotation
+'rotate-comment' => 'Bildet snudd $1{{PLURAL:°}} med klokka',
+
 );

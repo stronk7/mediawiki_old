@@ -24,7 +24,6 @@
  * @author Luke Welling lwelling@wikimedia.org
  */
 
-
 /**
  * Stores a single person's name and email address.
  * These are passed in via the constructor, and will be returned in SMTP
@@ -32,9 +31,9 @@
  */
 class MailAddress {
 	/**
-	 * @param $address string|User string with an email address, or a User object
-	 * @param $name String: human-readable name if a string address is given
-	 * @param $realName String: human-readable real name if a string address is given
+	 * @param string|User $address string with an email address, or a User object
+	 * @param string $name human-readable name if a string address is given
+	 * @param string $realName human-readable real name if a string address is given
 	 */
 	function __construct( $address, $name = null, $realName = null ) {
 		if ( is_object( $address ) && $address instanceof User ) {
@@ -78,7 +77,6 @@ class MailAddress {
 	}
 }
 
-
 /**
  * Collection of static functions for sending mail
  */
@@ -110,9 +108,9 @@ class UserMailer {
 	/**
 	 * Creates a single string from an associative array
 	 *
-	 * @param $headers array Associative Array: keys are header field names,
+	 * @param array $headers Associative Array: keys are header field names,
 	 *                 values are ... values.
-	 * @param $endl String: The end of line character.  Defaults to "\n"
+	 * @param string $endl The end of line character.  Defaults to "\n"
 	 *
 	 * Note RFC2822 says newlines must be CRLF (\r\n)
 	 * but php mail naively "corrects" it and requires \n for the "correction" to work
@@ -121,7 +119,7 @@ class UserMailer {
 	 */
 	static function arrayToHeaderString( $headers, $endl = "\n" ) {
 		$strings = array();
-		foreach( $headers as $name => $value ) {
+		foreach ( $headers as $name => $value ) {
 			$strings[] = "$name: $value";
 		}
 		return implode( $endl, $strings );
@@ -153,10 +151,10 @@ class UserMailer {
 	 *
 	 * @param $to MailAddress: recipient's email (or an array of them)
 	 * @param $from MailAddress: sender's email
-	 * @param $subject String: email's subject.
-	 * @param $body String: email's text or Array of two strings to be the text and html bodies
+	 * @param string $subject email's subject.
+	 * @param string $body email's text or Array of two strings to be the text and html bodies
 	 * @param $replyto MailAddress: optional reply-to email (default: null).
-	 * @param $contentType String: optional custom Content-Type (default: text/plain; charset=UTF-8)
+	 * @param string $contentType optional custom Content-Type (default: text/plain; charset=UTF-8)
 	 * @throws MWException
 	 * @return Status object
 	 */
@@ -257,12 +255,12 @@ class UserMailer {
 
 		if ( is_array( $body ) ) {
 			// we are sending a multipart message
-			wfDebug( "Assembling mulitpart mime email\n" );
+			wfDebug( "Assembling multipart mime email\n" );
 			if ( !stream_resolve_include_path( 'Mail/mime.php' ) ) {
 				wfDebug( "PEAR Mail_Mime package is not installed. Falling back to text email.\n" );
 			}
 			else {
-				require_once( 'Mail/mime.php' );
+				require_once 'Mail/mime.php';
 				if ( wfIsWindows() ) {
 					$body['text'] = str_replace( "\n", "\r\n", $body['text'] );
 					$body['html'] = str_replace( "\n", "\r\n", $body['html'] );
@@ -270,7 +268,7 @@ class UserMailer {
 				$mime = new Mail_mime( array( 'eol' => $endl ) );
 				$mime->setTXTBody( $body['text'] );
 				$mime->setHTMLBody( $body['html'] );
-				$body = $mime->get();  // must call get() before headers()
+				$body = $mime->get(); // must call get() before headers()
 				$headers = $mime->headers( $headers );
 			}
 		}
@@ -302,7 +300,7 @@ class UserMailer {
 			if ( !stream_resolve_include_path( 'Mail.php' ) ) {
 				throw new MWException( 'PEAR mail package is not installed' );
 			}
-			require_once( 'Mail.php' );
+			require_once 'Mail.php';
 
 			wfSuppressWarnings();
 
@@ -340,7 +338,7 @@ class UserMailer {
 			#
 			# PHP mail()
 			#
-			if( count( $to ) > 1 ) {
+			if ( count( $to ) > 1 ) {
 				$headers['To'] = 'undisclosed-recipients:;';
 			}
 			$headers = self::arrayToHeaderString( $headers, $endl );
@@ -382,7 +380,7 @@ class UserMailer {
 	 * Set the mail error message in self::$mErrorString
 	 *
 	 * @param $code Integer: error number
-	 * @param $string String: error message
+	 * @param string $string error message
 	 */
 	static function errorHandler( $code, $string ) {
 		self::$mErrorString = preg_replace( '/^mail\(\)(\s*\[.*?\])?: /', '', $string );
@@ -411,7 +409,7 @@ class UserMailer {
 	 */
 	public static function quotedPrintable( $string, $charset = '' ) {
 		# Probably incomplete; see RFC 2045
-		if( empty( $charset ) ) {
+		if ( empty( $charset ) ) {
 			$charset = 'UTF-8';
 		}
 		$charset = strtoupper( $charset );
@@ -419,7 +417,7 @@ class UserMailer {
 
 		$illegal = '\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\xff=';
 		$replace = $illegal . '\t ?_';
-		if( !preg_match( "/[$illegal]/", $string ) ) {
+		if ( !preg_match( "/[$illegal]/", $string ) ) {
 			return $string;
 		}
 		$out = "=?$charset?Q?";
@@ -491,7 +489,7 @@ class EmailNotification {
 			return;
 		}
 
-		// Build a list of users to notfiy
+		// Build a list of users to notify
 		$watchers = array();
 		if ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) {
 			$dbw = wfGetDB( DB_MASTER );
@@ -572,11 +570,11 @@ class EmailNotification {
 	 *
 	 * @param $editor User object
 	 * @param $title Title object
-	 * @param $timestamp string Edit timestamp
-	 * @param $summary string Edit summary
+	 * @param string $timestamp Edit timestamp
+	 * @param string $summary Edit summary
 	 * @param $minorEdit bool
-	 * @param $oldid int Revision ID
-	 * @param $watchers array of user IDs
+	 * @param int $oldid Revision ID
+	 * @param array $watchers of user IDs
 	 * @param string $pageStatus
 	 * @throws MWException
 	 */
@@ -607,6 +605,7 @@ class EmailNotification {
 
 		wfRunHooks( 'UpdateUserMailerFormattedPageStatus', array( &$formattedPageStatus ) );
 		if ( !in_array( $this->pageStatus, $formattedPageStatus ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new MWException( 'Not a valid page status!' );
 		}
 
@@ -698,20 +697,20 @@ class EmailNotification {
 
 		$keys = array();
 		$postTransformKeys = array();
-		$pageTitleUrl = $this->title->getCanonicalUrl();
+		$pageTitleUrl = $this->title->getCanonicalURL();
 		$pageTitle = $this->title->getPrefixedText();
 
 		if ( $this->oldid ) {
 			// Always show a link to the diff which triggered the mail. See bug 32210.
 			$keys['$NEWPAGE'] = "\n\n" . wfMessage( 'enotif_lastdiff',
-				$this->title->getCanonicalUrl( 'diff=next&oldid=' . $this->oldid ) )
+				$this->title->getCanonicalURL( array( 'diff' => 'next', 'oldid' => $this->oldid ) ) )
 				->inContentLanguage()->text();
 
 			if ( !$wgEnotifImpersonal ) {
 				// For personal mail, also show a link to the diff of all changes
 				// since last visited.
 				$keys['$NEWPAGE'] .= "\n\n" . wfMessage( 'enotif_lastvisited',
-					$this->title->getCanonicalUrl( 'diff=0&oldid=' . $this->oldid ) )
+					$this->title->getCanonicalURL( array( 'diff' => '0', 'oldid' => $this->oldid ) ) )
 					->inContentLanguage()->text();
 			}
 			$keys['$OLDID'] = $this->oldid;
@@ -726,10 +725,10 @@ class EmailNotification {
 		}
 
 		$keys['$PAGETITLE'] = $this->title->getPrefixedText();
-		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalUrl();
+		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalURL();
 		$keys['$PAGEMINOREDIT'] = $this->minorEdit ?
 			wfMessage( 'minoredit' )->inContentLanguage()->text() : '';
-		$keys['$UNWATCHURL'] = $this->title->getCanonicalUrl( 'action=unwatch' );
+		$keys['$UNWATCHURL'] = $this->title->getCanonicalURL( 'action=unwatch' );
 
 		if ( $this->editor->isAnon() ) {
 			# real anon (user:xxx.xxx.xxx.xxx)
@@ -740,10 +739,10 @@ class EmailNotification {
 		} else {
 			$keys['$PAGEEDITOR'] = $wgEnotifUseRealName ? $this->editor->getRealName() : $this->editor->getName();
 			$emailPage = SpecialPage::getSafeTitleFor( 'Emailuser', $this->editor->getName() );
-			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getCanonicalUrl();
+			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getCanonicalURL();
 		}
 
-		$keys['$PAGEEDITOR_WIKI'] = $this->editor->getUserPage()->getCanonicalUrl();
+		$keys['$PAGEEDITOR_WIKI'] = $this->editor->getUserPage()->getCanonicalURL();
 
 		# Replace this after transforming the message, bug 35019
 		$postTransformKeys['$PAGESUMMARY'] = $this->summary == '' ? ' - ' : $this->summary;
@@ -792,8 +791,9 @@ class EmailNotification {
 	function compose( $user ) {
 		global $wgEnotifImpersonal;
 
-		if ( !$this->composed_common )
+		if ( !$this->composed_common ) {
 			$this->composeCommonMailtext();
+		}
 
 		if ( $wgEnotifImpersonal ) {
 			$this->mailTargets[] = new MailAddress( $user );

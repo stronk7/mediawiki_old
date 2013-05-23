@@ -66,6 +66,7 @@ $messages = array(
 'tog-watchlisthidepatrolled' => 'Follee arraghyn er nyn scrutaghey er my rolley arrey',
 'tog-ccmeonemails' => 'Cur coip dou jeh dagh post-l verrym da ymmydeyr elley',
 'tog-showhiddencats' => 'Taishbyn ny ronnaghyn follit',
+'tog-useeditwarning' => 'Cur raaue dou my ta mee faagail duillag reaghey gyn sauail yn obbyr jeant aym',
 
 'underline-always' => 'Dagh keayrt',
 'underline-never' => 'Ny jean eh arragh',
@@ -500,6 +501,8 @@ Foddee shiu goll er ash as reaghey duillag t'ayn nish, ny [[Special:UserLogin|lo
 
 By chair dhyt smooinagh vel eh kiart goll er oai lesh reaghey yn duillag shoh.<br />
 Ta lioar ny scryssaghyn magh kiarit ayns shoh rere dty chaays hene:",
+'editwarning-warning' => "My faagys oo y duillag, hed caghlaaghyn erbee er coayl, foddee.
+My t'ou uss loggalt stiagh, foddee oo lhiettal y raaue shoh 'sy tosheeaghtyn ayd, 'sy rheynn \"Reaghey\".",
 
 # Account creation failure
 'cantcreateaccounttitle' => 'Cha nod coontys y chroo',
@@ -593,9 +596,6 @@ My t'ou uss son ronsaghey dagh cooid (as shen goaill stiagh duillagyn resooney, 
 'powersearch-redir' => 'Cur aa-enmyssyn er y rolley',
 'powersearch-field' => 'Ronsee er son',
 'search-external' => 'Ronsaghey mooie',
-
-# Quickbar
-'qbsettings-none' => 'Veg',
 
 # Preferences page
 'preferences' => 'Tosheeaghtyn',
@@ -961,7 +961,7 @@ Ta duillagyn er [[Special:Watchlist|dty rolley arrey]] ayns '''clou trome'''.",
 'listgrouprights-helppage' => 'Help:Kiartyn y phossan',
 'listgrouprights-members' => '(rolley olteynyn)',
 
-# E-mail user
+# Email user
 'emailuser' => "Cur post-L da'n ymmydeyr shoh",
 'emailfrom' => 'Veih:',
 'emailto' => 'Da:',
@@ -1154,7 +1154,7 @@ Shoh ny reaghaghyn roie da'n duillag '''$1''':",
 ** Removing content from pages
 ** Spamming links to external sites
 ** Inserting nonsense/gibberish into pages
-** Intimidating behaviour/harassment
+** Intimidating behavior/harassment
 ** Abusing multiple accounts
 * Oyr elley
 ** Ennym ymmydeyryn neuchooie
@@ -1353,7 +1353,7 @@ Bee adsyn elley follit dy seyr-obbragh.<br />
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Lheead',
 'exif-imagelength' => 'Yrjid',
 'exif-ycbcrpositioning' => 'Soie Y as C',
@@ -1450,9 +1450,6 @@ Bee adsyn elley follit dy seyr-obbragh.<br />
 'version-version' => '(Lhieggan $1)',
 'version-license' => 'Kiedoonys',
 'version-software-version' => 'Lhieggan',
-
-# Special:FilePath
-'filepath-page' => 'Coadan:',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'Ennym y choadan:',

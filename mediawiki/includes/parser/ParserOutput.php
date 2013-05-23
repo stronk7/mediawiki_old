@@ -67,8 +67,22 @@ class ParserOutput extends CacheTime {
 
 	function getText() {
 		if ( $this->mEditSectionTokens ) {
+			$text = $this->mText;
+
+			// If there's old output with misplaced editsections links cached, mangle it to put them in
+			// the right position. We can assume that there is no '</hN>' inside header tags, making this
+			// possible to do with a regex.
+			$text = preg_replace(
+				//            [ this part is like EDITSECTION_REGEX, but with non-capturing groups                           ]
+				//                                                                                  note the space here ------v
+				'#(<[hH](\d)>)(<(?:mw:)?editsection page="(?:.*?)" section="(?:.*?)"(?:/>|>(?:.*?)(?:</(?:mw:)?editsection>))) ([\s\S]*?)(</[hH]\2>)#',
+				// swap the order of content and editsection link - $2 is ignored since it's the number in hN's tag name
+				'$1$4 $3$5',
+				$text
+			);
+
 			return preg_replace_callback( ParserOutput::EDITSECTION_REGEX,
-				array( &$this, 'replaceEditSectionLinksCallback' ), $this->mText );
+				array( &$this, 'replaceEditSectionLinksCallback' ), $text );
 		}
 		return preg_replace( ParserOutput::EDITSECTION_REGEX, '', $this->mText );
 	}
@@ -143,10 +157,10 @@ class ParserOutput extends CacheTime {
 	function setNewSection( $value ) {
 		$this->mNewSection = (bool)$value;
 	}
-	function hideNewSection ( $value ) {
+	function hideNewSection( $value ) {
 		$this->mHideNewSection = (bool)$value;
 	}
-	function getHideNewSection () {
+	function getHideNewSection() {
 		return (bool)$this->mHideNewSection;
 	}
 	function getNewSection() {
@@ -156,8 +170,8 @@ class ParserOutput extends CacheTime {
 	/**
 	 * Checks, if a url is pointing to the own server
 	 *
-	 * @param $internal String the server to check against
-	 * @param $url String the url to check
+	 * @param string $internal the server to check against
+	 * @param string $url the url to check
 	 * @return bool
 	 */
 	static function isLinkInternal( $internal, $url ) {
@@ -176,10 +190,10 @@ class ParserOutput extends CacheTime {
 		global $wgServer, $wgRegisterInternalExternals;
 
 		$registerExternalLink = true;
-		if( !$wgRegisterInternalExternals ) {
+		if ( !$wgRegisterInternalExternals ) {
 			$registerExternalLink = !self::isLinkInternal( $wgServer, $url );
 		}
-		if( $registerExternalLink ) {
+		if ( $registerExternalLink ) {
 			$this->mExternalLinks[$url] = 1;
 		}
 	}
@@ -201,11 +215,11 @@ class ParserOutput extends CacheTime {
 		if ( $ns == NS_MEDIA ) {
 			// Normalize this pseudo-alias if it makes it down here...
 			$ns = NS_FILE;
-		} elseif( $ns == NS_SPECIAL ) {
+		} elseif ( $ns == NS_SPECIAL ) {
 			// We don't record Special: links currently
 			// It might actually be wise to, but we'd need to do some normalization.
 			return;
-		} elseif( $dbk === '' ) {
+		} elseif ( $dbk === '' ) {
 			// Don't record self links -  [[#Foo]]
 			return;
 		}
@@ -220,9 +234,9 @@ class ParserOutput extends CacheTime {
 
 	/**
 	 * Register a file dependency for this output
-	 * @param $name string Title dbKey
-	 * @param $timestamp string MW timestamp of file creation (or false if non-existing)
-	 * @param $sha1 string base 36 SHA-1 of file (or false if non-existing)
+	 * @param string $name Title dbKey
+	 * @param string $timestamp MW timestamp of file creation (or false if non-existing)
+	 * @param string $sha1 base 36 SHA-1 of file (or false if non-existing)
 	 * @return void
 	 */
 	function addImage( $name, $timestamp = null, $sha1 = null ) {
@@ -258,7 +272,7 @@ class ParserOutput extends CacheTime {
 	 */
 	function addInterwikiLink( $title ) {
 		$prefix = $title->getInterwiki();
-		if( $prefix == '' ) {
+		if ( $prefix == '' ) {
 			throw new MWException( 'Non-interwiki link passed, internal parser error.' );
 		}
 		if ( !isset( $this->mInterwikiLinks[$prefix] ) ) {
@@ -315,7 +329,7 @@ class ParserOutput extends CacheTime {
 	 * -- this is assumed to have been validated
 	 * (check equal normalisation, etc.)
 	 *
-	 * @param $text String: desired title text
+	 * @param string $text desired title text
 	 */
 	public function setDisplayTitle( $text ) {
 		$this->setTitleText( $text );
@@ -329,7 +343,7 @@ class ParserOutput extends CacheTime {
 	 */
 	public function getDisplayTitle() {
 		$t = $this->getTitleText();
-		if( $t === '' ) {
+		if ( $t === '' ) {
 			return false;
 		}
 		return $t;
@@ -417,7 +431,6 @@ class ParserOutput extends CacheTime {
 		}
 		return $this->mProperties;
 	}
-
 
 	/**
 	 * Returns the options from its ParserOptions which have been taken

@@ -91,9 +91,9 @@ class JobQueueAggregatorMemc extends JobQueueAggregator {
 			if ( $this->cache->add( "$key:rebuild", 1, 1800 ) ) { // lock
 				$pendingDbInfo = array(
 					'pendingDBs' => $this->findPendingWikiQueues(),
-					'timestamp'  => time()
+					'timestamp' => time()
 				);
-				for ( $attempts=1; $attempts <= 25; ++$attempts ) {
+				for ( $attempts = 1; $attempts <= 25; ++$attempts ) {
 					if ( $this->cache->add( "$key:lock", 1, 60 ) ) { // lock
 						$this->cache->set( $key, $pendingDbInfo );
 						$this->cache->delete( "$key:lock" ); // unlock
@@ -106,6 +106,13 @@ class JobQueueAggregatorMemc extends JobQueueAggregator {
 		return is_array( $pendingDbInfo )
 			? $pendingDbInfo['pendingDBs']
 			: array(); // cache is both empty and locked
+	}
+
+	/**
+	 * @see JobQueueAggregator::doPurge()
+	 */
+	protected function doPurge() {
+		return $this->cache->delete( $this->getReadyQueueCacheKey() );
 	}
 
 	/**

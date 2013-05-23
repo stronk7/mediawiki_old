@@ -182,8 +182,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ammustra lu nùmmiru di utenti ca sèquinu la pàggina',
 'tog-oldsig' => 'Firma attuali:',
 'tog-fancysig' => 'Interpitra li cumanna wiki nâ firma (senza liami automaticu)',
-'tog-externaleditor' => 'Usa di default nu editor esternu (sulu pi li esperti, abbisognanu mpustazzioni particulari pô tò computer. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
-'tog-externaldiff' => "Usa di default un prugramma di diff sternu (sulu pi utilizzatura sperti, addumanna l'usu di mpustazzioni particulari supra lu sò computer. [//www.mediawiki.org/wiki/Manual:External_editors Pi cchiossai nfurmazzioni.])",
 'tog-showjumplinks' => "Attiva li culligamenti accissìbbili 'và a'",
 'tog-uselivepreview' => "Attiva la funzioni ''Live preview'' (richiedi JavaScript; spirimintali)",
 'tog-forceeditsummary' => "Chiedi cunferma siddu l'uggettu dû canciamentu è vacanti",
@@ -1033,14 +1031,6 @@ S'havi accirtari ca la cuntinuità storica di la pàggina nun veni altirata.",
 'search-external' => 'Ricerca sterna',
 'searchdisabled' => 'La circata nterna di {{SITENAME}} hà statu disabbilitata. Nta stu mentri, poi usari la circata supra Google o supra àutri muturi di circata. Accura ca li sò ìnnici dê cuntinuti di {{SITENAME}} ponnu nun èssiri aggiurnati.',
 
-# Quickbar
-'qbsettings' => 'Pusizzioni QuickBar',
-'qbsettings-none' => 'Nuddu',
-'qbsettings-fixedleft' => 'Fissu a manu manca',
-'qbsettings-fixedright' => 'Fissu a manu dritta',
-'qbsettings-floatingleft' => 'Fluttuanti a manu manca',
-'qbsettings-floatingright' => 'Fluttuanti a manu dritta',
-
 # Preferences page
 'preferences' => 'prifirenzi',
 'mypreferences' => 'Li mè prifirenzi',
@@ -1795,8 +1785,8 @@ Protucolli suppurtati: <code>$1</code>',
 'notvisiblerev' => 'La revisioni fu cancillata',
 'watchnochange' => 'Nudda dî pàggini ossirvati hà statu canciata ntô pirìudu cunzidiratu.',
 'watchlist-details' => 'La lista dê pàggini taliati cunteni {{PLURAL:$1|na pàggina (cu la rispittiva pàggina di discussioni)|$1 pàggini (cu li rispittivi pàggini di discussioni)}}.',
-'wlheader-enotif' => '* La nutìfica via e-mail è attivata.',
-'wlheader-showupdated' => "* Li pàggini ca hannu statu canciati dâ tò ùrtima vìsita sunnu evidinziati 'n '''grassettu'''",
+'wlheader-enotif' => 'La nutìfica via e-mail è attivata.',
+'wlheader-showupdated' => "Li pàggini ca hannu statu canciati dâ tò ùrtima vìsita sunnu evidinziati 'n '''grassettu'''",
 'watchmethod-recent' => "cuntrollu dî canciamenti ricenti pi l'ossirvati spiciali",
 'watchmethod-list' => "cuntrollu di l'ossirvati spiciali pi canciamenti ricenti",
 'watchlistcontains' => 'La tò lista di ossirvati spiciali cunteni {{PLURAL:$1|na pàggina|$1 pàggini}}.',
@@ -2016,7 +2006,7 @@ $1',
 'sp-contributions-userrights' => 'gistioni dî dritti utenti',
 'sp-contributions-search' => 'Ricerca cuntribbuti',
 'sp-contributions-username' => 'Nnirizzu IP o nomu utenti:',
-'sp-contributions-toponly' => "Ammuscia sulu li cuntribbuti ca sunnu l'ùrtimi rivisioni pâ pàggina",
+'sp-contributions-toponly' => "Ammuccia sulu li cuntribbuta ca sunnu l'ùrtimi rivisioni pâ pàggina",
 'sp-contributions-submit' => 'Risciduta',
 
 # What links here
@@ -2411,13 +2401,8 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 'pageinfo-toolboxlink' => 'Nfurmazzioni ncapu la pàggina',
 
 # Skin names
-'skinname-standard' => 'Classicu',
-'skinname-nostalgia' => 'Nustargìa',
 'skinname-cologneblue' => 'Cologne Blu',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Chick',
-'skinname-simple' => 'Sìmprici',
 'skinname-modern' => 'Mudernu',
 
 # Patrolling
@@ -2502,7 +2487,7 @@ Li lijami succissivi, supra la stissa riga, sunnu cunzidirati comu eccizzioni (p
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Larghizza',
 'exif-imagelength' => 'Autizza',
 'exif-bitspersample' => 'Bit pi campiuni',
@@ -2616,7 +2601,7 @@ Li lijami succissivi, supra la stissa riga, sunnu cunzidirati comu eccizzioni (p
 'exif-gpsdatestamp' => 'Data GPS',
 'exif-gpsdifferential' => 'Currezzioni diffirinziali GPS',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Nuddu',
 
 'exif-unknowndate' => 'Data scanusciuta',
@@ -2908,14 +2893,6 @@ Stu còdici di cunferma scadi automaticamenti a li $4.',
 'version-software' => 'Software nstallatu',
 'version-software-product' => 'Prodottu',
 'version-software-version' => 'Virsioni',
-
-# Special:FilePath
-'filepath' => 'Pircorsu di nu file',
-'filepath-page' => 'Nnomu dô file:',
-'filepath-submit' => 'Pircorsu',
-'filepath-summary' => 'Sta pàggina spiciali rimanna arredi lu traggittu cumpretu di nu file. Li mmàggini sù ammustrati cu la cchiù àuta risoluzzioni dispunìbbili, pi l\'àutri tipi di file parti direttamenti lu prugramma assuciatu.
-
-Mèttiri lu nomu dû file senza lu prifissu "{{ns:file}}:"',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Circata dê file duppiuni',

@@ -133,8 +133,6 @@ $messages = array(
 'tog-enotifrevealaddr' => "Rivera lu me' indirizzu di postha erettrònica i' l'imbasciaddi d'avvisu",
 'tog-shownumberswatching' => "Musthra lu nùmaru d'utenti ch'àni la pàgina abbaidadda",
 'tog-fancysig' => "Interpreta i cumandi wiki i' la fimma (chena cullegaumentu otomatiggu)",
-'tog-externaleditor' => 'Impustha cumenti pridifiniddu un cumponidori di testhi esthernu',
-'tog-externaldiff' => 'Impustha cumenti pridifiniddu un prugramma di diff esthernu',
 'tog-showjumplinks' => "Attiba li cullegamenti atzessibili 'vai a'",
 'tog-uselivepreview' => "Attiba la funzioni ''Live preview'' (dumanda JavaScript; ippirimintari)",
 'tog-forceeditsummary' => "Dumanda cunfèimma si l'oggettu di la mudìfigga è bioddu",
@@ -800,14 +798,6 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 'powersearch-togglenone' => 'Nisciunu',
 'searchdisabled' => 'Abà no pói zirchà in {{SITENAME}}; proba cun Google o sìmiri, ma ammèntaddi chi li cuntinuddi di {{SITENAME}} poni assé no aggiornaddi.',
 
-# Quickbar
-'qbsettings' => 'Prifirenzi di lu menù',
-'qbsettings-none' => 'Nisciunu',
-'qbsettings-fixedleft' => 'Fissu a manca',
-'qbsettings-fixedright' => 'Fissu a drestha',
-'qbsettings-floatingleft' => 'Galliggianti a manca',
-'qbsettings-floatingright' => 'Galliggianti a drestha',
-
 # Preferences page
 'preferences' => 'Prifirenzi',
 'mypreferences' => "Li me' prifirenzi",
@@ -1245,7 +1235,7 @@ Also see [[Special:WantedCategories|wanted categories]].",
 # Special:ListGroupRights
 'listgrouprights-members' => '(erencu di li membri)',
 
-# E-mail user
+# Email user
 'mailnologin' => "Nisciun indirizzu a lu quari invià l'imbasciadda.",
 'mailnologintext' => "Pa invià imbasciaddi di postha erettrònica è nezzessàriu [[Special:UserLogin|intrà]] e abé registhraddu un'indirizzu variddu i' li propri [[Special:Preferences|prifirenzi]].",
 'emailuser' => "Ischribì a l'utenti",
@@ -1285,8 +1275,8 @@ Si daboi s'à gana d'eliminà la pàgina da la listha di l'abbaidaddi ippiziarii
 'notvisiblerev' => 'La ribisioni è isthadda canzilladda',
 'watchnochange' => "Nisciuna di li pàgini abbaidaddi è isthadda mudìfiggadda i' lu perìodu cunsidaraddu.",
 'watchlist-details' => "La listha di l'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pagina (e la rippettiba pagina di dischussioni)|$1 pagini (e li rippettibi pagini di dischussioni)}}.",
-'wlheader-enotif' => '* La nutìfica via postha erettrònica è attiba.',
-'wlheader-showupdated' => "* Li pàgini chi so isthaddi mudìfiggaddi daboi l'ulthima vìsita so evidenziaddi in '''grasseddu'''",
+'wlheader-enotif' => 'La nutìfica via postha erettrònica è attiba.',
+'wlheader-showupdated' => "Li pàgini chi so isthaddi mudìfiggaddi daboi l'ulthima vìsita so evidenziaddi in '''grasseddu'''",
 'watchmethod-recent' => "cuntrollu di li mudìfigghi rizzenti pa l'abbaidaddi ippiziari",
 'watchmethod-list' => "cuntrollu di l'abbaidaddi ippiziari pa mudìfigghi rizzenti",
 'watchlistcontains' => "La listha di l'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pàgina|$1 pàgini}}.",
@@ -1841,7 +1831,7 @@ So cunsidaraddi soru l'erenchi puntaddi (righi ch'ischumenzani cu' lu caràtteri
 * gpslongitude
 * gpsaltitude",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Larghèzia',
 'exif-imagelength' => 'Althèzia',
 'exif-bitspersample' => 'Bit pa campioni',
@@ -1912,7 +1902,7 @@ So cunsidaraddi soru l'erenchi puntaddi (righi ch'ischumenzani cu' lu caràtteri
 'namespacesall' => 'Tutti',
 'monthsall' => 'tutti',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Cunfèimma indirizzu di postha erettrònica',
 'confirmemail_noemail' => "Nò è isthaddu indicaddu un'indirizzu postha erettrònica vàriddu i' li pròpri [[Special:Preferences|prifirenzi]].",
 'confirmemail_text' => "{{SITENAME}} dumanda la verifigga di l'indirizzu di postha erettrònica primma di pudé l'usà. Incalchà lu buttoni in giossu pa invià una prigonta di cunfèimma a lu propriu indirizzu; i' l'imbasciadda è prisenti un cullegamentu chi cunteni un còdizi. Visità lu cullegamentu cu' lu proprio nabiggadori pa cunfèimmà chi l'indirizzu è vàriddu.",
@@ -2016,11 +2006,6 @@ Pa piazeri, cunfèimma chi vòi ricrià avveru chistha pàgina.",
 'version' => 'Versioni',
 'version-other' => 'Althru',
 'version-software-version' => 'Versioni',
-
-# Special:FilePath
-'filepath' => "Parchossu d'un file",
-'filepath-page' => 'Innommu di lu file:',
-'filepath-submit' => 'Parchossu',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-legend' => "Zercha d'un dupricaddu",

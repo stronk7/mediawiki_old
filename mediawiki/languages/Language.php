@@ -32,7 +32,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 # Read language names
 global $wgLanguageNames;
-require_once( __DIR__ . '/Names.php' );
+require_once __DIR__ . '/Names.php';
 
 if ( function_exists( 'mb_strtoupper' ) ) {
 	mb_internal_encoding( 'UTF-8' );
@@ -44,7 +44,6 @@ if ( function_exists( 'mb_strtoupper' ) ) {
  * @ingroup Language
  */
 class FakeConverter {
-
 	/**
 	 * @var Language
 	 */
@@ -276,7 +275,7 @@ class Language {
 		$alpha = '[a-z]';
 		$digit = '[0-9]';
 		$alphanum = '[a-z0-9]';
-		$x = 'x' ; # private use singleton
+		$x = 'x'; # private use singleton
 		$singleton = '[a-wy-z]'; # other singleton
 		$s = $lenient ? '[-_]' : '-';
 
@@ -327,13 +326,19 @@ class Language {
 	 * @return bool
 	 */
 	public static function isValidCode( $code ) {
-		return
-			// People think language codes are html safe, so enforce it.
-			// Ideally we should only allow a-zA-Z0-9-
-			// but, .+ and other chars are often used for {{int:}} hacks
-			// see bugs 37564, 37587, 36938
+		static $cache = array();
+		if ( isset( $cache[$code] ) ) {
+			return $cache[$code];
+		}
+		// People think language codes are html safe, so enforce it.
+		// Ideally we should only allow a-zA-Z0-9-
+		// but, .+ and other chars are often used for {{int:}} hacks
+		// see bugs 37564, 37587, 36938
+		$cache[$code] =
 			strcspn( $code, ":/\\\000&<>'\"" ) === strlen( $code )
 			&& !preg_match( Title::getTitleInvalidRegex(), $code );
+
+		return $cache[$code];
 	}
 
 	/**
@@ -349,16 +354,16 @@ class Language {
 	public static function isValidBuiltInCode( $code ) {
 
 		if ( !is_string( $code ) ) {
-			$type = gettype( $code );
-			if ( $type === 'object' ) {
+			if ( is_object( $code ) ) {
 				$addmsg = " of class " . get_class( $code );
 			} else {
 				$addmsg = '';
 			}
+			$type = gettype( $code );
 			throw new MWException( __METHOD__ . " must be passed a string, $type given$addmsg" );
 		}
 
-		return (bool)preg_match( '/^[a-z0-9-]+$/i', $code );
+		return (bool)preg_match( '/^[a-z0-9-]{2,}$/i', $code );
 	}
 
 	/**
@@ -373,7 +378,7 @@ class Language {
 		static $coreLanguageNames;
 
 		if ( $coreLanguageNames === null ) {
-			include( MWInit::compiledPath( 'languages/Names.php' ) );
+			include MWInit::compiledPath( 'languages/Names.php' );
 		}
 
 		if ( isset( $coreLanguageNames[$tag] )
@@ -409,10 +414,8 @@ class Language {
 			return;
 		}
 
-		if ( !defined( 'MW_COMPILED' ) ) {
-			if ( file_exists( "$IP/languages/classes/$class.php" ) ) {
-				include_once( "$IP/languages/classes/$class.php" );
-			}
+		if ( file_exists( "$IP/languages/classes/$class.php" ) ) {
+			include_once "$IP/languages/classes/$class.php";
 		}
 	}
 
@@ -483,6 +486,9 @@ class Language {
 	}
 
 	/**
+	 * Returns an array of localised namespaces indexed by their numbers. If the namespace is not
+	 * available in localised form, it will be included in English.
+	 *
 	 * @return array
 	 */
 	public function getNamespaces() {
@@ -531,7 +537,7 @@ class Language {
 	/**
 	 * Resets all of the namespace caches. Mainly used for testing
 	 */
-	public function resetNamespaces( ) {
+	public function resetNamespaces() {
 		$this->namespaceNames = null;
 		$this->mNamespaceIds = null;
 		$this->namespaceAliases = null;
@@ -746,20 +752,6 @@ class Language {
 	/**
 	 * @return array
 	 */
-	function getQuickbarSettings() {
-		return array(
-			$this->getMessage( 'qbsettings-none' ),
-			$this->getMessage( 'qbsettings-fixedleft' ),
-			$this->getMessage( 'qbsettings-fixedright' ),
-			$this->getMessage( 'qbsettings-floatingleft' ),
-			$this->getMessage( 'qbsettings-floatingright' ),
-			$this->getMessage( 'qbsettings-directionality' )
-		);
-	}
-
-	/**
-	 * @return array
-	 */
 	function getDatePreferences() {
 		return self::$dataCache->getItem( $this->mCode, 'datePreferences' );
 	}
@@ -857,7 +849,7 @@ class Language {
 		static $coreLanguageNames;
 
 		if ( $coreLanguageNames === null ) {
-			include( MWInit::compiledPath( 'languages/Names.php' ) );
+			include MWInit::compiledPath( 'languages/Names.php' );
 		}
 
 		$names = array();
@@ -1033,8 +1025,8 @@ class Language {
 	 * internationalisation, a reduced set of format characters, and a better
 	 * escaping format.
 	 *
-	 * Supported format characters are dDjlNwzWFmMntLoYyaAgGhHiscrU. See the
-	 * PHP manual for definitions. There are a number of extensions, which
+	 * Supported format characters are dDjlNwzWFmMntLoYyaAgGhHiscrUeIOPTZ. See
+	 * the PHP manual for definitions. There are a number of extensions, which
 	 * start with "x":
 	 *
 	 *    xn   Do not translate digits of the next numeric format character
@@ -1080,22 +1072,25 @@ class Language {
 	 * Backslash escaping is also supported.
 	 *
 	 * Input timestamp is assumed to be pre-normalized to the desired local
-	 * time zone, if any.
+	 * time zone, if any. Note that the format characters crUeIOPTZ will assume
+	 * $ts is UTC if $zone is not given.
 	 *
 	 * @param $format String
 	 * @param $ts String: 14-character timestamp
 	 *      YYYYMMDDHHMMSS
 	 *      01234567890123
+	 * @param $zone DateTimeZone: Timezone of $ts
 	 * @todo handling of "o" format character for Iranian, Hebrew, Hijri & Thai?
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
-	function sprintfDate( $format, $ts ) {
+	function sprintfDate( $format, $ts, DateTimeZone $zone = null ) {
 		$s = '';
 		$raw = false;
 		$roman = false;
 		$hebrewNum = false;
-		$unix = false;
+		$dateTimeObj = false;
 		$rawToggle = false;
 		$iranian = false;
 		$hebrew = false;
@@ -1103,6 +1098,15 @@ class Language {
 		$thai = false;
 		$minguo = false;
 		$tenno = false;
+
+		if ( strlen( $ts ) !== 14 ) {
+			throw new MWException( __METHOD__ . ": The timestamp $ts should have 14 characters" );
+		}
+
+		if ( !ctype_digit( $ts ) ) {
+			throw new MWException( __METHOD__ . ": The timestamp $ts should be a number" );
+		}
+
 		for ( $p = 0; $p < strlen( $format ); $p++ ) {
 			$num = false;
 			$code = $format[$p];
@@ -1134,15 +1138,21 @@ class Language {
 					$s .= $this->getMonthNameGen( substr( $ts, 4, 2 ) );
 					break;
 				case 'xjx':
-					if ( !$hebrew ) $hebrew = self::tsToHebrew( $ts );
+					if ( !$hebrew ) {
+						$hebrew = self::tsToHebrew( $ts );
+					}
 					$s .= $this->getHebrewCalendarMonthNameGen( $hebrew[1] );
 					break;
 				case 'd':
 					$num = substr( $ts, 6, 2 );
 					break;
 				case 'D':
-					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
-					$s .= $this->getWeekdayAbbreviation( gmdate( 'w', $unix ) + 1 );
+					if ( !$dateTimeObj ) {
+						$dateTimeObj = DateTime::createFromFormat(
+							'YmdHis', $ts, $zone ?: new DateTimeZone( 'UTC' )
+						);
+					}
+					$s .= $this->getWeekdayAbbreviation( $dateTimeObj->format( 'w' ) + 1 );
 					break;
 				case 'j':
 					$num = intval( substr( $ts, 6, 2 ) );
@@ -1166,35 +1176,12 @@ class Language {
 					$num = $hebrew[2];
 					break;
 				case 'l':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
+					if ( !$dateTimeObj ) {
+						$dateTimeObj = DateTime::createFromFormat(
+							'YmdHis', $ts, $zone ?: new DateTimeZone( 'UTC' )
+						);
 					}
-					$s .= $this->getWeekdayName( gmdate( 'w', $unix ) + 1 );
-					break;
-				case 'N':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$w = gmdate( 'w', $unix );
-					$num = $w ? $w : 7;
-					break;
-				case 'w':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$num = gmdate( 'w', $unix );
-					break;
-				case 'z':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$num = gmdate( 'z', $unix );
-					break;
-				case 'W':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$num = gmdate( 'W', $unix );
+					$s .= $this->getWeekdayName( $dateTimeObj->format( 'w' ) + 1 );
 					break;
 				case 'F':
 					$s .= $this->getMonthName( substr( $ts, 4, 2 ) );
@@ -1244,29 +1231,11 @@ class Language {
 					}
 					$num = $hebrew[1];
 					break;
-				case 't':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$num = gmdate( 't', $unix );
-					break;
 				case 'xjt':
 					if ( !$hebrew ) {
 						$hebrew = self::tsToHebrew( $ts );
 					}
 					$num = $hebrew[3];
-					break;
-				case 'L':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$num = gmdate( 'L', $unix );
-					break;
-				case 'o':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$num = gmdate( 'o', $unix );
 					break;
 				case 'Y':
 					$num = substr( $ts, 0, 4 );
@@ -1343,22 +1312,36 @@ class Language {
 					$num = substr( $ts, 12, 2 );
 					break;
 				case 'c':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
-					}
-					$s .= gmdate( 'c', $unix );
-					break;
 				case 'r':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
+				case 'e':
+				case 'O':
+				case 'P':
+				case 'T':
+					// Pass through string from $dateTimeObj->format()
+					if ( !$dateTimeObj ) {
+						$dateTimeObj = DateTime::createFromFormat(
+							'YmdHis', $ts, $zone ?: new DateTimeZone( 'UTC' )
+						);
 					}
-					$s .= gmdate( 'r', $unix );
+					$s .= $dateTimeObj->format( $code );
 					break;
+				case 'w':
+				case 'N':
+				case 'z':
+				case 'W':
+				case 't':
+				case 'L':
+				case 'o':
 				case 'U':
-					if ( !$unix ) {
-						$unix = wfTimestamp( TS_UNIX, $ts );
+				case 'I':
+				case 'Z':
+					// Pass through number from $dateTimeObj->format()
+					if ( !$dateTimeObj ) {
+						$dateTimeObj = DateTime::createFromFormat(
+							'YmdHis', $ts, $zone ?: new DateTimeZone( 'UTC' )
+						);
 					}
-					$num = $unix;
+					$num = $dateTimeObj->format( $code );
 					break;
 				case '\\':
 					# Backslash escaping
@@ -1673,7 +1656,7 @@ class Language {
 	private static function hebrewYearStart( $year ) {
 		$a = intval( ( 12 * ( $year - 1 ) + 17 ) % 19 );
 		$b = intval( ( $year - 1 ) % 4 );
-		$m = 32.044093161144 + 1.5542417966212 * $a +  $b / 4.0 - 0.0031777940220923 * ( $year - 1 );
+		$m = 32.044093161144 + 1.5542417966212 * $a + $b / 4.0 - 0.0031777940220923 * ( $year - 1 );
 		if ( $m < 0 ) {
 			$m--;
 		}
@@ -1847,13 +1830,13 @@ class Language {
 		}
 		if ( strlen( $s ) == 2 ) {
 			$str = $s . "'";
-		} else  {
+		} else {
 			$str = substr( $s, 0, strlen( $s ) - 2 ) . '"';
 			$str .= substr( $s, strlen( $s ) - 2, 2 );
 		}
 		$start = substr( $str, 0, strlen( $str ) - 2 );
 		$end = substr( $str, strlen( $str ) - 2 );
-		switch( $end ) {
+		switch ( $end ) {
 			case 'כ':
 				$str = $start . 'ך';
 				break;
@@ -1936,12 +1919,12 @@ class Language {
 		# will normalize out-of-range values so we don't have to split $minDiff
 		# into hours and minutes.
 		$t = mktime( (
-		  (int)substr( $ts, 8, 2 ) ), # Hours
-		  (int)substr( $ts, 10, 2 ) + $minDiff, # Minutes
-		  (int)substr( $ts, 12, 2 ), # Seconds
-		  (int)substr( $ts, 4, 2 ), # Month
-		  (int)substr( $ts, 6, 2 ), # Day
-		  (int)substr( $ts, 0, 4 ) ); # Year
+			(int)substr( $ts, 8, 2 ) ), # Hours
+			(int)substr( $ts, 10, 2 ) + $minDiff, # Minutes
+			(int)substr( $ts, 12, 2 ), # Seconds
+			(int)substr( $ts, 4, 2 ), # Month
+			(int)substr( $ts, 6, 2 ), # Day
+			(int)substr( $ts, 0, 4 ) ); # Year
 
 		$date = date( 'YmdHis', $t );
 		wfRestoreWarnings();
@@ -1992,6 +1975,8 @@ class Language {
 	 * @param $type string May be date, time or both
 	 * @param $pref string The format name as it appears in Messages*.php
 	 *
+	 * @since 1.22 New type 'pretty' that provides a more readable timestamp format
+	 *
 	 * @return string
 	 */
 	function getDateFormatString( $type, $pref ) {
@@ -2001,7 +1986,12 @@ class Language {
 				$df = self::$dataCache->getSubitem( $this->mCode, 'dateFormats', "$pref $type" );
 			} else {
 				$df = self::$dataCache->getSubitem( $this->mCode, 'dateFormats', "$pref $type" );
-				if ( is_null( $df ) ) {
+
+				if ( $type === 'pretty' && $df === null ) {
+					$df = $this->getDateFormatString( 'date', $pref );
+				}
+
+				if ( $df === null ) {
 					$pref = $this->getDefaultDateFormat();
 					$df = self::$dataCache->getSubitem( $this->mCode, 'dateFormats', "$pref $type" );
 				}
@@ -2232,6 +2222,79 @@ class Language {
 	 */
 	public function userTimeAndDate( $ts, User $user, array $options = array() ) {
 		return $this->internalUserTimeAndDate( 'both', $ts, $user, $options );
+	}
+
+	/**
+	 * Convert an MWTimestamp into a pretty human-readable timestamp using
+	 * the given user preferences and relative base time.
+	 *
+	 * DO NOT USE THIS FUNCTION DIRECTLY. Instead, call MWTimestamp::getHumanTimestamp
+	 * on your timestamp object, which will then call this function. Calling
+	 * this function directly will cause hooks to be skipped over.
+	 *
+	 * @see MWTimestamp::getHumanTimestamp
+	 * @param MWTimestamp $ts Timestamp to prettify
+	 * @param MWTimestamp $relativeTo Base timestamp
+	 * @param User $user User preferences to use
+	 * @return string Human timestamp
+	 * @since 1.21
+	 */
+	public function getHumanTimestamp( MWTimestamp $ts, MWTimestamp $relativeTo, User $user ) {
+		$diff = $ts->diff( $relativeTo );
+		$diffDay = (bool)( (int)$ts->timestamp->format( 'w' ) - (int)$relativeTo->timestamp->format( 'w' ) );
+		$days = $diff->days ?: (int)$diffDay;
+		if ( $diff->invert || $days > 5 && $ts->timestamp->format( 'Y' ) !== $relativeTo->timestamp->format( 'Y' ) ) {
+			// Timestamps are in different years: use full timestamp
+			// Also do full timestamp for future dates
+			/**
+			 * @FIXME Add better handling of future timestamps.
+			 */
+			$format = $this->getDateFormatString( 'both', $user->getDatePreference() ?: 'default' );
+			$ts = $this->sprintfDate( $format, $ts->getTimestamp( TS_MW ) );
+		} elseif ( $days > 5 ) {
+			// Timestamps are in same year,  but more than 5 days ago: show day and month only.
+			$format = $this->getDateFormatString( 'pretty', $user->getDatePreference() ?: 'default' );
+			$ts = $this->sprintfDate( $format, $ts->getTimestamp( TS_MW ) );
+		} elseif ( $days > 1 ) {
+			// Timestamp within the past week: show the day of the week and time
+			$format = $this->getDateFormatString( 'time', $user->getDatePreference() ?: 'default' );
+			$weekday = self::$mWeekdayMsgs[$ts->timestamp->format( 'w' )];
+			$ts = wfMessage( "$weekday-at" )
+				->inLanguage( $this )
+				->params( $this->sprintfDate( $format, $ts->getTimestamp( TS_MW ) ) )
+				->text();
+		} elseif ( $days == 1 ) {
+			// Timestamp was yesterday: say 'yesterday' and the time.
+			$format = $this->getDateFormatString( 'time', $user->getDatePreference() ?: 'default' );
+			$ts = wfMessage( 'yesterday-at' )
+				->inLanguage( $this )
+				->params( $this->sprintfDate( $format, $ts->getTimestamp( TS_MW ) ) )
+				->text();
+		} elseif ( $diff->h > 1 || $diff->h == 1 && $diff->i > 30 ) {
+			// Timestamp was today, but more than 90 minutes ago: say 'today' and the time.
+			$format = $this->getDateFormatString( 'time', $user->getDatePreference() ?: 'default' );
+			$ts = wfMessage( 'today-at' )
+				->inLanguage( $this )
+				->params( $this->sprintfDate( $format, $ts->getTimestamp( TS_MW ) ) )
+				->text();
+
+		// From here on in, the timestamp was soon enough ago so that we can simply say
+		// XX units ago, e.g., "2 hours ago" or "5 minutes ago"
+		} elseif ( $diff->h == 1 ) {
+			// Less than 90 minutes, but more than an hour ago.
+			$ts = wfMessage( 'hours-ago' )->inLanguage( $this )->numParams( 1 )->text();
+		} elseif ( $diff->i >= 1 ) {
+			// A few minutes ago.
+			$ts = wfMessage( 'minutes-ago' )->inLanguage( $this )->numParams( $diff->i )->text();
+		} elseif ( $diff->s >= 30 ) {
+			// Less than a minute, but more than 30 sec ago.
+			$ts = wfMessage( 'seconds-ago' )->inLanguage( $this )->numParams( $diff->s )->text();
+		} else {
+			// Less than 30 seconds ago.
+			$ts = wfMessage( 'just-now' )->text();
+		}
+
+		return $ts;
 	}
 
 	/**
@@ -2817,7 +2880,9 @@ class Language {
 	 * @since 1.20
 	 */
 	function getDirMarkEntity( $opposite = false ) {
-		if ( $opposite ) { return $this->isRTL() ? '&lrm;' : '&rlm;'; }
+		if ( $opposite ) {
+			return $this->isRTL() ? '&lrm;' : '&rlm;';
+		}
 		return $this->isRTL() ? '&rlm;' : '&lrm;';
 	}
 
@@ -2834,7 +2899,9 @@ class Language {
 	function getDirMark( $opposite = false ) {
 		$lrm = "\xE2\x80\x8E"; # LEFT-TO-RIGHT MARK, commonly abbreviated LRM
 		$rlm = "\xE2\x80\x8F"; # RIGHT-TO-LEFT MARK, commonly abbreviated RLM
-		if ( $opposite ) { return $this->isRTL() ? $lrm : $rlm; }
+		if ( $opposite ) {
+			return $this->isRTL() ? $lrm : $rlm;
+		}
 		return $this->isRTL() ? $rlm : $lrm;
 	}
 
@@ -3058,7 +3125,7 @@ class Language {
 			$sign = "";
 			if ( intval( $number ) < 0 ) {
 				// For negative numbers apply the algorithm like positive number and add sign.
-				$sign =  "-";
+				$sign = "-";
 				$number = substr( $number, 1 );
 			}
 			$integerPart = array();
@@ -3066,20 +3133,20 @@ class Language {
 			$numMatches = preg_match_all( "/(#+)/", $digitGroupingPattern, $matches );
 			preg_match( "/\d+/", $number, $integerPart );
 			preg_match( "/\.\d*/", $number, $decimalPart );
-			$groupedNumber = ( count( $decimalPart ) > 0 ) ? $decimalPart[0]:"";
-			if ( $groupedNumber  === $number ) {
+			$groupedNumber = ( count( $decimalPart ) > 0 ) ? $decimalPart[0] : "";
+			if ( $groupedNumber === $number ) {
 				// the string does not have any number part. Eg: .12345
 				return $sign . $groupedNumber;
 			}
 			$start = $end = strlen( $integerPart[0] );
 			while ( $start > 0 ) {
-				$match = $matches[0][$numMatches -1] ;
+				$match = $matches[0][$numMatches - 1];
 				$matchLen = strlen( $match );
 				$start = $end - $matchLen;
 				if ( $start < 0 ) {
 					$start = 0;
 				}
-				$groupedNumber = substr( $number, $start, $end -$start ) . $groupedNumber ;
+				$groupedNumber = substr( $number, $start, $end -$start ) . $groupedNumber;
 				$end = $start;
 				if ( $numMatches > 1 ) {
 					// use the last pattern for the rest of the number
@@ -3256,9 +3323,9 @@ class Language {
 				# We got the first byte only of a multibyte char; remove it.
 				$string = substr( $string, 0, -1 );
 			} elseif ( $char >= 0x80 &&
-				  preg_match( '/^(.*)(?:[\xe0-\xef][\x80-\xbf]|' .
-							  '[\xf0-\xf7][\x80-\xbf]{1,2})$/', $string, $m ) )
-			{
+				preg_match( '/^(.*)(?:[\xe0-\xef][\x80-\xbf]|' .
+					'[\xf0-\xf7][\x80-\xbf]{1,2})$/', $string, $m )
+			) {
 				# We chopped in the middle of a character; remove it
 				$string = $m[1];
 			}
@@ -3342,7 +3409,9 @@ class Language {
 					break;
 				}
 			}
-			if ( $pos >= $textLen ) break; // extra iteration just for above checks
+			if ( $pos >= $textLen ) {
+				break; // extra iteration just for above checks
+			}
 
 			# Read the next char...
 			$ch = $text[$pos];
@@ -3475,7 +3544,7 @@ class Language {
 	function getGrammarForms() {
 		global $wgGrammarForms;
 		if ( isset( $wgGrammarForms[$this->getCode()] ) && is_array( $wgGrammarForms[$this->getCode()] ) ) {
-			 return $wgGrammarForms[$this->getCode()];
+			return $wgGrammarForms[$this->getCode()];
 		}
 		return array();
 	}
@@ -3544,7 +3613,7 @@ class Language {
 		}
 		$forms = array_values( $forms );
 
-		$pluralForm = $this->getPluralForm( $count );
+		$pluralForm = $this->getPluralRuleIndexNumber( $count );
 		$pluralForm = min( $pluralForm, count( $forms ) - 1 );
 		return $forms[$pluralForm];
 	}
@@ -4084,15 +4153,14 @@ class Language {
 	 * @since 1.18
 	 */
 	public function formatExpiry( $expiry, $format = true ) {
-		static $infinity, $infinityMsg;
+		static $infinity;
 		if ( $infinity === null ) {
-			$infinityMsg = wfMessage( 'infiniteblock' );
 			$infinity = wfGetDB( DB_SLAVE )->getInfinity();
 		}
 
 		if ( $expiry == '' || $expiry == $infinity ) {
 			return $format === true
-				? $infinityMsg
+				? $this->getMessageFromDB( 'infiniteblock' )
 				: $infinity;
 		} else {
 			return $format === true
@@ -4371,7 +4439,7 @@ class Language {
 	/**
 	 * Get the plural rules for the language
 	 * @since 1.20
-	 * @return array Associative array with plural form, and plural rule as key-value pairs
+	 * @return array Associative array with plural form number and plural rule as key-value pairs
 	 */
 	public function getPluralRules() {
 		$pluralRules = self::$dataCache->getItem( strtolower( $this->mCode ), 'pluralRules' );
@@ -4388,13 +4456,48 @@ class Language {
 	}
 
 	/**
-	 * Find the plural form matching to the given number
-	 * It return the form index.
-	 * @return int The index of the plural form
+	 * Get the plural rule types for the language
+	 * @since 1.21
+	 * @return array Associative array with plural form number and plural rule type as key-value pairs
 	 */
-	private function getPluralForm( $number ) {
+	public function getPluralRuleTypes() {
+		$pluralRuleTypes = self::$dataCache->getItem( strtolower( $this->mCode ), 'pluralRuleTypes' );
+		$fallbacks = Language::getFallbacksFor( $this->mCode );
+		if ( !$pluralRuleTypes ) {
+			foreach ( $fallbacks as $fallbackCode ) {
+				$pluralRuleTypes = self::$dataCache->getItem( strtolower( $fallbackCode ), 'pluralRuleTypes' );
+				if ( $pluralRuleTypes ) {
+					break;
+				}
+			}
+		}
+		return $pluralRuleTypes;
+	}
+
+	/**
+	 * Find the index number of the plural rule appropriate for the given number
+	 * @return int The index number of the plural rule
+	 */
+	public function getPluralRuleIndexNumber( $number ) {
 		$pluralRules = $this->getCompiledPluralRules();
 		$form = CLDRPluralRuleEvaluator::evaluateCompiled( $number, $pluralRules );
 		return $form;
+	}
+
+	/**
+	 * Find the plural rule type appropriate for the given number
+	 * For example, if the language is set to Arabic, getPluralType(5) should
+	 * return 'few'.
+	 * @since 1.21
+	 * @return string The name of the plural rule type, e.g. one, two, few, many
+	 */
+	public function getPluralRuleType( $number ) {
+		$index = $this->getPluralRuleIndexNumber( $number );
+		$pluralRuleTypes = $this->getPluralRuleTypes();
+		if ( isset( $pluralRuleTypes[$index] ) ) {
+			return $pluralRuleTypes[$index];
+		} else {
+			return 'other';
+		}
 	}
 }

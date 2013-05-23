@@ -117,7 +117,7 @@ class ApiQueryAllPages extends ApiQueryGeneratorBase {
 		if ( count( $params['prtype'] ) || $params['prexpiry'] != 'all' ) {
 			$this->addTables( 'page_restrictions' );
 			$this->addWhere( 'page_id=pr_page' );
-			$this->addWhere( 'pr_expiry>' . $db->addQuotes( $db->timestamp() ) );
+			$this->addWhere( "pr_expiry > {$db->addQuotes( $db->timestamp() )} OR pr_expiry IS NULL" );
 
 			if ( count( $params['prtype'] ) ) {
 				$this->addWhereFld( 'pr_type', $params['prtype'] );
@@ -135,8 +135,6 @@ class ApiQueryAllPages extends ApiQueryGeneratorBase {
 				} elseif ( $params['prfiltercascade'] == 'noncascading' ) {
 					$this->addWhereFld( 'pr_cascade', 0 );
 				}
-
-				$this->addOption( 'DISTINCT' );
 			}
 			$forceNameTitleIndex = false;
 
@@ -145,6 +143,8 @@ class ApiQueryAllPages extends ApiQueryGeneratorBase {
 			} elseif ( $params['prexpiry'] == 'definite' ) {
 				$this->addWhere( "pr_expiry != {$db->addQuotes( $db->getInfinity() )}" );
 			}
+
+			$this->addOption( 'DISTINCT' );
 
 		} elseif ( isset( $params['prlevel'] ) ) {
 			$this->dieUsage( 'prlevel may not be used without prtype', 'params' );
@@ -174,7 +174,7 @@ class ApiQueryAllPages extends ApiQueryGeneratorBase {
 		$res = $this->select( __METHOD__ );
 
 		//Get gender information
-		if( MWNamespace::hasGenderDistinction( $params['namespace'] ) ) {
+		if ( MWNamespace::hasGenderDistinction( $params['namespace'] ) ) {
 			$users = array();
 			foreach ( $res as $row ) {
 				$users[] = $row->page_title;
@@ -304,7 +304,10 @@ class ApiQueryAllPages extends ApiQueryGeneratorBase {
 			'prtype' => 'Limit to protected pages only',
 			'prlevel' => "The protection level (must be used with {$p}prtype= parameter)",
 			'prfiltercascade' => "Filter protections based on cascadingness (ignored when {$p}prtype isn't set)",
-			'filterlanglinks' => 'Filter based on whether a page has langlinks',
+			'filterlanglinks' => array(
+				'Filter based on whether a page has langlinks',
+				'Note that this may not consider langlinks added by extensions.',
+			),
 			'limit' => 'How many total pages to return.',
 			'prexpiry' => array(
 				'Which protection expiry to filter the page on',
@@ -347,7 +350,7 @@ class ApiQueryAllPages extends ApiQueryGeneratorBase {
 				'Show info about 4 pages starting at the letter "T"',
 			),
 			'api.php?action=query&generator=allpages&gaplimit=2&gapfilterredir=nonredirects&gapfrom=Re&prop=revisions&rvprop=content' => array(
-				'Show content of first 2 non-redirect pages begining at "Re"',
+				'Show content of first 2 non-redirect pages beginning at "Re"',
 			)
 		);
 	}

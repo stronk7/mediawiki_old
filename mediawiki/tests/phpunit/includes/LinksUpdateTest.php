@@ -7,7 +7,7 @@
  */
 class LinksUpdateTest extends MediaWikiTestCase {
 
-	function  __construct( $name = null, array $data = array(), $dataName = '' ) {
+	function __construct( $name = null, array $data = array(), $dataName = '' ) {
 		parent::__construct( $name, $data, $dataName );
 
 		$this->tablesUsed = array_merge( $this->tablesUsed,
@@ -85,6 +85,8 @@ class LinksUpdateTest extends MediaWikiTestCase {
 	}
 
 	public function testUpdate_categorylinks() {
+		$this->setMwGlobals( 'wgCategoryCollation', 'uppercase' );
+
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addCategory( "Foo", "FOO" );
@@ -120,7 +122,6 @@ class LinksUpdateTest extends MediaWikiTestCase {
 
 		$po->addImage( "Foo.png" );
 
-
 		$this->assertLinksUpdate( $t, $po, 'imagelinks', 'il_to', 'il_from = 111', array(
 			array( 'Foo.png' ),
 		) );
@@ -130,7 +131,6 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addLanguageLink( Title::newFromText( "en:Foo" )->getFullText() );
-
 
 		$this->assertLinksUpdate( $t, $po, 'langlinks', 'll_lang, ll_title', 'll_from = 111', array(
 			array( 'En', 'Foo' ),
@@ -147,7 +147,7 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		) );
 	}
 
-	#@todo: test recursive, too!
+	// @todo test recursive, too!
 
 	protected function assertLinksUpdate( Title $title, ParserOutput $parserOutput, $table, $fields, $condition, array $expectedRows ) {
 		$update = new LinksUpdate( $title, $parserOutput );

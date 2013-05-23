@@ -10,7 +10,7 @@
  */
 class TitleMethodsTest extends MediaWikiTestCase {
 
-	public function setup() {
+	public function setUp() {
 		global $wgContLang;
 
 		parent::setUp();
@@ -34,7 +34,7 @@ class TitleMethodsTest extends MediaWikiTestCase {
 		$wgContLang->resetNamespaces(); # reset namespace cache
 	}
 
-	public function teardown() {
+	public function tearDown() {
 		global $wgContLang;
 
 		parent::tearDown();
@@ -286,5 +286,4 @@ class TitleMethodsTest extends MediaWikiTestCase {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expectedBool, $title->isWikitextPage() );
 	}
-
 }

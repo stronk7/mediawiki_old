@@ -65,8 +65,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ketna sadasya dekhe hai ke number dekhao',
 'tog-oldsig' => 'Abhi ke signature:',
 'tog-fancysig' => 'Signature ke wikitext ke rakam dekho (binaa automatic jorr se)',
-'tog-externaleditor' => 'Apne se bahaari editor ke kaam me lao (khaali chalaak logan khatir, computer me special settings ke jaruri hai. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
-'tog-externaldiff' => ' Apne se bahaari editor ke kaam me lao (khaali chalaak logan khatir, computer me special settings ke jaruri hai. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
 'tog-showjumplinks' => '"jump to" accessibility jorr ke laabu karo',
 'tog-uselivepreview' => 'Jinda jhalak ke kaam me lao (JavaScript) (Experimental)',
 'tog-forceeditsummary' => 'Ek khali badlao waala summary ke likhe ke time hamse puchho',
@@ -468,7 +466,7 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 'gotaccount' => "Aap ke pas pahile se account hai ki nai? '''$1'''.",
 'gotaccountlink' => 'Log in',
 'userlogin-resetlink' => 'Ka aap aapan login kare waala jaankari ke bhulae gaya hae?',
-'createaccountmail' => 'e-mail se',
+'createaccountmail' => 'Ek temporary password ke kaam me laao aur iske niche dekhawa gais Email pe bhej do',
 'createaccountreason' => 'Kaaran:',
 'badretype' => 'Jon duuno password aap likha hai uu ek rakam nai hae.',
 'userexists' => 'Ii sadasya ke naam aur koi ke hae.
@@ -513,8 +511,8 @@ Agar jo aur koi ii request karis hai, nai to aap aapan password yaad kar liya ha
 'passwordsent' => 'Ek nawaa password ke "$1" ke registered e-mail pe bheja gais hai. Meharbaani kar ke aap password mile ke baad login karna.',
 'blocked-mailpassword' => 'Aap ke IP address ke block kar dewa gais hai, aur iske kaaran aap ke password recovery function kaam me lae ke ijajat nai hai,',
 'eauthentsent' => 'Ek confirmation e-mail aap ke dewa gae e-mail address be bhej dewa gais hai. Aur mail ii account pe bheje se pahile e-mail me likha instructions ke follow karo, ii confirm kare ke khatir ki account aap ke hai.',
-'throttled-mailpassword' => 'Ek password reminder ke pichhle {{PLURAL:$1|hour|$1 hours}} me bhej dewa gais hai.
-Abuse ke roke ke khatir, khali ek password reminer har {{PLURAL:$1|hour|$1 hours}} me bheja jaai.',
+'throttled-mailpassword' => 'Ek password reset Email ke pahile bheja gais hae, pichhle  {{PLURAL:$1|ghanta|$1 ghanta}} me bhej me.
+Abuse ke roke ke khatir, khali ek password reminer har {{PLURAL:$1|ghanta|$1 ghanta}} me bheja jaai.',
 'mailerror' => 'Mail bheje me galti hoe gais hai: $1',
 'acct_creation_throttle_hit' => 'Ii wiki me visitors log aap ke IP address ke use kar ke {{PLURAL:$1|1 account|$1 accounts}}, pichhle kuch din me, banae liin hai, jis se jaada ii time nai banawa jaae sake hai.
 Ii kaaran se visitors log jon ki ii IP address use kare hai, ke aur account banae ke ijajat nai hai.',
@@ -540,9 +538,10 @@ Thora deri baad fir se kosis karna.',
 'loginlanguagelabel' => 'Bhasa: $1',
 'suspicious-userlogout' => 'Aap ke log out kare ke maang ke na kar dewa gais hae kaahe ki ii janaawe hae ki ii maang ke ek tuuta browser nai to caching proxy bhejis hae.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHP ke mail() function me koi anjaan kharaabi hae',
 'user-mail-no-addy' => 'Bina e-mail address rahe pe bhi e-mail bheje ke kosis karaa gais hae.',
+'user-mail-no-body' => 'Ek khaali, nai to kaafi chhota email bheje ke kosis kara rahaa.',
 
 # Change password dialog
 'resetpass' => 'Password ke badlo',
@@ -565,7 +564,7 @@ Sait aap password ke safalta se badal sia hoga nai to nawaa temporary password k
 
 # Special:PasswordReset
 'passwordreset' => 'Password ke badlo',
-'passwordreset-text' => 'Aapan account ke baare me jaankari ke receive kare ke khatir ii fom ke bharo.',
+'passwordreset-text' => 'Password ke reset kare ke khatir ii form ke bharo.',
 'passwordreset-legend' => 'Password ke badlo',
 'passwordreset-disabled' => 'II wiki me password ke badle ke ijaajat nai hae.',
 'passwordreset-pretext' => '{{PLURAL:$1||Niche ke ek data ke likho}}',
@@ -1101,15 +1100,6 @@ Aapan query ke ''all:'' se suruu kar ke visay suchi me khojo (including talk pag
 Aap tab tak Google se khoje sakta hai.
 Yaad rakhna ki uu log ke {{SITENAME}} ke index saait purana hoi.',
 
-# Quickbar
-'qbsettings' => 'Quickbar',
-'qbsettings-none' => 'Koi nai',
-'qbsettings-fixedleft' => 'Left me fixed hai',
-'qbsettings-fixedright' => 'Right me fixed hai',
-'qbsettings-floatingleft' => 'Baaen or baho',
-'qbsettings-floatingright' => 'Daaen or baho',
-'qbsettings-directionality' => 'Banae dewa gais hae, lekin ii aap ke bhasa ke script directionality ke uppar nibhar hae',
-
 # Preferences page
 'preferences' => 'Pasand',
 'mypreferences' => 'Pasand',
@@ -1226,7 +1216,7 @@ Iske $1 {{PLURAL:$1|character|characters}} se kamti rahe ke chaahi.',
 'prefs-displaywatchlist' => 'Choice dekhao',
 'prefs-diffs' => 'Farka',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'E-mail address kanuni hae',
 'email-address-validity-invalid' => 'Ek kanuni e-mail ke likho',
 
@@ -1654,7 +1644,6 @@ Puura surakchha ke khatir, img_auth.php ke band kar dewa gais hae.',
 'http-read-error' => 'HTTP ke parrhe me galti hae',
 'http-timed-out' => 'HTTP ke khatir time nai hae.',
 'http-curl-error' => 'URL ke laawe me galti hoe gais hae: $1',
-'http-host-unreachable' => 'URL pahunche nai sakaa hae',
 'http-bad-status' => 'HTTP ke maange ke time kuch garrbarr hoe gais hae: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2005,7 +1994,7 @@ Support karaa gais protocol: <code>$1</code> (defaults to http:// if no protocol
 'listgrouprights-addgroup-self-all' => 'Sab group ke aapan account me jorre saktaa hai',
 'listgrouprights-removegroup-self-all' => 'Sab group ke aapan account se hatae saktaa hai',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Koi bheje waala address nai hai',
 'mailnologintext' => 'Duusra logan ke lage e-mail bheje ke khatir aap ke [[Special:UserLogin|logged in]] aur [[Special:Preferences|preferences]]  me thik e-mail hoew ke chaahi.',
 'emailuser' => 'Ii user ke E-mail karo',
@@ -2063,8 +2052,8 @@ Ii panna ke aage ke badlao aur usse jurra baat waala panna ki suchi hian pe hae.
 'notvisiblerev' => 'Badlao ke mitae dewa gais hai',
 'watchnochange' => 'Aap ke koi bhi dhyan me rakkhaa gae chij ke ii time me badla nai gais hai.',
 'watchlist-details' => '{{PLURAL:$1|$1 panna|$1 panna}} pe dhyan dewa jae hai, baat waala panna ke chhorr ke.',
-'wlheader-enotif' => '* E-mail notification ke enable kar dewa gais hai.',
-'wlheader-showupdated' => "* Panna jiske aap ke pichhla visit ke ke baad badal dewa gais hia ke '''bold''' me dekhawa gais hai",
+'wlheader-enotif' => 'E-mail notification ke enable kar dewa gais hai.',
+'wlheader-showupdated' => "Panna jiske aap ke pichhla visit ke ke baad badal dewa gais hia ke '''bold''' me dekhawa gais hai",
 'watchmethod-recent' => 'Dhyan me rakkhaa gais panna ke nawaa badlao ke check karaa jaawe hai',
 'watchmethod-list' => 'dhyan me rakkha gais panna ke nawaa badlao ke khatir check karaa jaawe hai',
 'watchlistcontains' => 'Aap ke dhyan suchi me  $1 {{PLURAL:$1|panna|panna}} hai.',
@@ -2850,6 +2839,7 @@ Ii saait ii kaaran se hoi ki panna ke ek jorr koi blacklisted external site se h
 'pageinfo-robot-noindex' => 'Indexable nai hae',
 'pageinfo-views' => 'Ketna dafe dekha gais hae',
 'pageinfo-watchers' => 'Ketnaa jane panna ke dekhe hae',
+'pageinfo-few-watchers' => '$1 {{PLURAL:$1|watcher|watchers}} se kamtii log hae',
 'pageinfo-redirects-name' => 'Ii panna pe redirect karo',
 'pageinfo-subpages-name' => 'Ii panna ke subpage',
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|redirect|redirects}}; $3 {{PLURAL:$3|non-redirect|non-redirects}})',
@@ -2977,7 +2967,7 @@ Wahii line pe aur koi jorr exception consider karaa jai i.e. jahaan pe panna sak
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Chaurrai',
 'exif-imagelength' => 'Unchai',
 'exif-bitspersample' => 'Bits per component',
@@ -3138,7 +3128,7 @@ Wahii line pe aur koi jorr exception consider karaa jai i.e. jahaan pe panna sak
 'monthsall' => 'sab',
 'limitall' => 'sab',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'E-mail address ke pakka karo',
 
 # Delete conflict
@@ -3183,9 +3173,6 @@ Wahii line pe aur koi jorr exception consider karaa jai i.e. jahaan pe panna sak
 'version-specialpages' => 'Khaas panna',
 'version-other' => 'Duusra',
 'version-poweredby-others' => 'duusra waala',
-
-# Special:FilePath
-'filepath-submit' => 'Jaao',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'File ke naam:',

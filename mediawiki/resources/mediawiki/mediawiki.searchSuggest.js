@@ -130,8 +130,6 @@
 		searchboxesSelectors = [
 			// Primary searchbox on every page in standard skins
 			'#searchInput',
-			// Secondary searchbox in legacy skins (LegacyTemplate::searchForm uses id "searchInput + unique id")
-			'#searchInput2',
 			// Special:Search
 			'#powerSearchText',
 			'#searchText',
@@ -195,11 +193,6 @@
 			// not actually enabled (anymore).
 			return;
 		}
-
-		// Placeholder text for search box
-		$searchInput
-			.attr( 'placeholder', mw.msg( 'searchsuggest-search' ) )
-			.placeholder();
 
 		// Special suggestions functionality for skin-provided search box
 		$searchInput.suggestions( {

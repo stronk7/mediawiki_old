@@ -58,6 +58,8 @@ class ApiEditPage extends ApiBase {
 				// array_shift( $titles );
 
 				$redirValues = array();
+
+				/** @var $newTitle Title */
 				foreach ( $titles as $id => $newTitle ) {
 
 					if ( !isset( $titles[$id - 1] ) ) {
@@ -98,7 +100,7 @@ class ApiEditPage extends ApiBase {
 			$name = $titleObj->getPrefixedDBkey();
 			$model = $contentHandler->getModelID();
 
-			$this->dieUsage( "The requested format $contentFormat is not supported for content model ".
+			$this->dieUsage( "The requested format $contentFormat is not supported for content model " .
 							" $model used by $name", 'badformat' );
 		}
 
@@ -144,7 +146,7 @@ class ApiEditPage extends ApiBase {
 				}
 			}
 
-			// @todo: Add support for appending/prepending to the Content interface
+			// @todo Add support for appending/prepending to the Content interface
 
 			if ( !( $content instanceof TextContent ) ) {
 				$mode = $contentHandler->getModelID();
@@ -257,10 +259,10 @@ class ApiEditPage extends ApiBase {
 		if ( !is_null( $params['starttimestamp'] ) && $params['starttimestamp'] != '' ) {
 			$requestArray['wpStarttime'] = wfTimestamp( TS_MW, $params['starttimestamp'] );
 		} else {
-			$requestArray['wpStarttime'] = wfTimestampNow();	// Fake wpStartime
+			$requestArray['wpStarttime'] = wfTimestampNow(); // Fake wpStartime
 		}
 
-		if ( $params['minor'] || ( !$params['notminor'] && $user->getOption( 'minordefault' ) ) )	{
+		if ( $params['minor'] || ( !$params['notminor'] && $user->getOption( 'minordefault' ) ) ) {
 			$requestArray['wpMinoredit'] = '';
 		}
 
@@ -304,6 +306,7 @@ class ApiEditPage extends ApiBase {
 		$articleContext->setWikiPage( $pageObj );
 		$articleContext->setUser( $this->getUser() );
 
+		/** @var $articleObject Article */
 		$articleObject = Article::newFromWikiPage( $pageObj, $articleContext );
 
 		$ep = new EditPage( $articleObject );
@@ -339,7 +342,7 @@ class ApiEditPage extends ApiBase {
 		$wgRequest = $oldRequest;
 		global $wgMaxArticleSize;
 
-		switch( $status->value ) {
+		switch ( $status->value ) {
 			case EditPage::AS_HOOK_ERROR:
 			case EditPage::AS_HOOK_ERROR_EXPECTED:
 				$this->dieUsageMsg( 'hookaborted' );
@@ -393,6 +396,7 @@ class ApiEditPage extends ApiBase {
 
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$r['new'] = '';
+				// fall-through
 
 			case EditPage::AS_SUCCESS_UPDATE:
 				$r['result'] = 'Success';
@@ -492,7 +496,6 @@ class ApiEditPage extends ApiBase {
 			'section' => null,
 			'sectiontitle' => array(
 				ApiBase::PARAM_TYPE => 'string',
-				ApiBase::PARAM_REQUIRED => false,
 			),
 			'text' => null,
 			'token' => array(
@@ -632,10 +635,8 @@ class ApiEditPage extends ApiBase {
 
 	public function getExamples() {
 		return array(
-
 			'api.php?action=edit&title=Test&summary=test%20summary&text=article%20content&basetimestamp=20070824123454&token=%2B\\'
 				=> 'Edit a page (anonymous user)',
-
 			'api.php?action=edit&title=Test&summary=NOTOC&minor=&prependtext=__NOTOC__%0A&basetimestamp=20070824123454&token=%2B\\'
 				=> 'Prepend __NOTOC__ to a page (anonymous user)',
 			'api.php?action=edit&title=Test&undo=13585&undoafter=13579&basetimestamp=20070824123454&token=%2B\\'

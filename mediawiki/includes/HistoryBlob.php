@@ -143,7 +143,7 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 	 * Compress the bulk data in the object
 	 */
 	public function compress() {
-		if ( !$this->mCompressed  ) {
+		if ( !$this->mCompressed ) {
 			$this->mItems = gzdeflate( serialize( $this->mItems ) );
 			$this->mCompressed = true;
 		}
@@ -183,7 +183,6 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 	}
 }
 
-
 /**
  * Pointer object for an item within a CGZ blob stored in the text table.
  */
@@ -199,7 +198,7 @@ class HistoryBlobStub {
 	var $mOldId, $mHash, $mRef;
 
 	/**
-	 * @param $hash string the content hash of the text
+	 * @param string $hash the content hash of the text
 	 * @param $oldid Integer the old_id for the CGZ object
 	 */
 	function __construct( $hash = '', $oldid = 0 ) {
@@ -232,16 +231,16 @@ class HistoryBlobStub {
 	 * @return string
 	 */
 	function getText() {
-		if( isset( self::$blobCache[$this->mOldId] ) ) {
+		if ( isset( self::$blobCache[$this->mOldId] ) ) {
 			$obj = self::$blobCache[$this->mOldId];
 		} else {
 			$dbr = wfGetDB( DB_SLAVE );
 			$row = $dbr->selectRow( 'text', array( 'old_flags', 'old_text' ), array( 'old_id' => $this->mOldId ) );
-			if( !$row ) {
+			if ( !$row ) {
 				return false;
 			}
 			$flags = explode( ',', $row->old_flags );
-			if( in_array( 'external', $flags ) ) {
+			if ( in_array( 'external', $flags ) ) {
 				$url = $row->old_text;
 				$parts = explode( '://', $url, 2 );
 				if ( !isset( $parts[1] ) || $parts[1] == '' ) {
@@ -250,11 +249,11 @@ class HistoryBlobStub {
 				$row->old_text = ExternalStore::fetchFromUrl( $url );
 
 			}
-			if( !in_array( 'object', $flags ) ) {
+			if ( !in_array( 'object', $flags ) ) {
 				return false;
 			}
 
-			if( in_array( 'gzip', $flags ) ) {
+			if ( in_array( 'gzip', $flags ) ) {
 				// This shouldn't happen, but a bug in the compress script
 				// may at times gzip-compress a HistoryBlob object row.
 				$obj = unserialize( gzinflate( $row->old_text ) );
@@ -262,7 +261,7 @@ class HistoryBlobStub {
 				$obj = unserialize( $row->old_text );
 			}
 
-			if( !is_object( $obj ) ) {
+			if ( !is_object( $obj ) ) {
 				// Correct for old double-serialization bug.
 				$obj = unserialize( $obj );
 			}
@@ -284,7 +283,6 @@ class HistoryBlobStub {
 		return $this->mHash;
 	}
 }
-
 
 /**
  * To speed up conversion from 1.4 to 1.5 schema, text rows can refer to the
@@ -320,7 +318,7 @@ class HistoryBlobCurStub {
 	function getText() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'cur', array( 'cur_text' ), array( 'cur_id' => $this->mCurId ) );
-		if( !$row ) {
+		if ( !$row ) {
 			return false;
 		}
 		return $row->cur_text;

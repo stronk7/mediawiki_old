@@ -73,8 +73,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Ssken geddac yellan n yimseqdacen iɛessasen',
 'tog-oldsig' => 'Azmul yellan :',
 'tog-fancysig' => 'ǧǧ azmul am yettili (war azday awurman)',
-'tog-externaleditor' => 'Sseqdec ambeddel n berra d ameslugen',
-'tog-externaldiff' => 'Sseqdec ambeddel n berra iwakken ad ẓreɣ imgerraden',
 'tog-showjumplinks' => 'Eǧǧ izdayen "neggez ar"',
 'tog-uselivepreview' => 'Sseqdec pre-timeẓriwt taǧiḥbuṭ (JavaScript) (Experimental)',
 'tog-forceeditsummary' => 'Ini-iyi-d mi sskecmeɣ agzul amecluc',
@@ -529,7 +527,7 @@ Ilaq ad rǧuḍ ciṭaḥ uqbel ad ɛerdeḍ tikkelt nniḍen.',
 'loginlanguagelabel' => 'Tutlayt: $1',
 'suspicious-userlogout' => 'Asuter n usenser yugwi acku yella ugur s iminig naɣ s tazarkatut n uqeddac proxy.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'anezri warisem deg tawuri mail() n PHP',
 'user-mail-no-addy' => 'Ɛred ad icegaɛ e-mail war tansa e-mail',
 
@@ -1060,15 +1058,6 @@ Tzemreḍ ad affeḍ tilɣa deg [{{fullurl:{{#Special:Log}}/delete|page={{FULLPA
 'search-external' => 'Anadi yeffɣen',
 'searchdisabled' => 'Anadi deg {{SITENAME}} yettwakkes. Tzemreḍ ad tnadiḍ s Google. Meɛna ur tettuḍ ara, tasmult n google taqdimt.',
 
-# Quickbar
-'qbsettings' => 'Tanuga taǧiḥbuṭ',
-'qbsettings-none' => 'Ulac',
-'qbsettings-fixedleft' => 'Aẓelmaḍ',
-'qbsettings-fixedright' => 'Ayeffus',
-'qbsettings-floatingleft' => 'Tufeg aẓelmaḍ',
-'qbsettings-floatingright' => 'Tufeg ayeffus',
-'qbsettings-directionality' => 'Usbiḍ, ɣef wayen n unamud n tira n tutlayt ik/im',
-
 # Preferences page
 'preferences' => 'Isemyifiyen',
 'mypreferences' => 'Isemyifiyen inu',
@@ -1185,7 +1174,7 @@ Ur ilaq ara ad i sɛu ugar n $1 {{PLURAL:$1|asekkil|isekkilen}}.',
 'prefs-displaywatchlist' => 'Tixtiṛiyin n ubeqqeḍ',
 'prefs-diffs' => 'Timeẓliwin',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'E-mail agi teɣbel',
 'email-address-validity-invalid' => 'Telaq tansa e-mail i ɣbelen !',
 
@@ -1607,7 +1596,6 @@ I taɣellist tameqqṛant, img_auth.php yensa.',
 'http-read-error' => 'Anezri n taɣuri HTTP.',
 'http-timed-out' => 'Tuttra HTTP teneffeṛ.',
 'http-curl-error' => 'Anezri deg tiririt n URL : $1',
-'http-host-unreachable' => 'Ulamek an siḍes URL',
 'http-bad-status' => 'Yella ugur deg tuttra HTTP : $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1950,7 +1938,7 @@ Zemrent ad ilint [[{{MediaWiki:Listgrouprights-helppage}}|tilɣa nniḍen]] ɣef
 'listgrouprights-addgroup-self-all' => 'Yezmer ad yernu akkw igrawen ar umiḍan-is',
 'listgrouprights-removegroup-self-all' => 'Yezmer ad yekkes akkw igrawen ar umiḍan-is',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Ur yufi ḥedd (tansa)',
 'mailnologintext' => 'Yessefk ad [[Special:UserLogin|tkecmeḍ]] u tesɛiḍ tansa e-mail ṭaṣhiḥt deg [[Special:Preferences|isemyifiyen]] inek
 iwakken ad tazneḍ email i imseqdacen wiyaḍ.',
@@ -2012,8 +2000,8 @@ Ma tebɣiḍ ad tekkseḍ asebter seg wumuɣ n uɛessi inek, wekki ɣef \"Fakk a
 'notvisiblerev' => 'Lqem tetwemḥa',
 'watchnochange' => 'Ulaḥedd n yiferdas n wumuɣ n uɛessi inek ma yettubeddel deg tawala i textareḍ.',
 'watchlist-details' => 'ttɛassaɣ {{PLURAL:$1|$1 usebter|$1 n isebtaren}} mebla isebtaren "amyannan".',
-'wlheader-enotif' => '* Yeǧǧa Email n talɣut.',
-'wlheader-showupdated' => "* Isebtar ttubeddlen segwasmi tkecmeḍ tikelt taneggarut ttbanen-d s '''uḍris aberbuz'''",
+'wlheader-enotif' => 'Yeǧǧa Email n talɣut.',
+'wlheader-showupdated' => "Isebtar ttubeddlen segwasmi tkecmeḍ tikelt taneggarut ttbanen-d s '''uḍris aberbuz'''",
 'watchmethod-recent' => 'yessenqed ibeddlen imaynuten n isebtar i ttɛasseɣ',
 'watchmethod-list' => 'yessenqed isebtar i ttɛassaɣ i ibeddlen imaynuten',
 'watchlistcontains' => 'Umuɣ n uɛessi inek ɣur-s $1 n {{PLURAL:$1|usebter|isebtar}}.',
@@ -2541,6 +2529,19 @@ Lukan a t-tesseqdceḍ yezmer ad yexsser aselkim inek/inem.",
 'ago' => '$1 aya',
 'just-now' => 'Tura kan',
 
+# Human-readable timestamps
+'hours-ago' => '$1 {{PLURAL:$1|asrag|isragen}} aya',
+'minutes-ago' => '$1 {{PLURAL:$1|tamrect|timercin}} aya',
+'seconds-ago' => '$1 {{PLURAL:$1|tasint|tisinin}} aya',
+'monday-at' => 'Arim af $1',
+'tuesday-at' => 'Aram af $1',
+'wednesday-at' => 'Ahad af $1',
+'thursday-at' => 'Amhad af $1',
+'friday-at' => 'Sem af $1',
+'saturday-at' => 'Sed af $1',
+'sunday-at' => 'Acer af $1',
+'yesterday-at' => 'Iḍelli af $1',
+
 # Bad image list
 'bad_image_list' => 'Amasal d-wagi :
 
@@ -2567,7 +2568,7 @@ Izdayen nniḍen ɣef yiwen ajerriḍ llan d tisuraf, am isebtar ɣef anta tugna
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Tehri',
 'exif-imagelength' => 'Taɣwzi',
 'exif-bitspersample' => 'Ibitten s isger',
@@ -2849,7 +2850,7 @@ Izdayen nniḍen ɣef yiwen ajerriḍ llan d tisuraf, am isebtar ɣef anta tugna
 'monthsall' => 'akk',
 'limitall' => 'Akkw',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Sentem tansa n e-mail',
 'confirmemail_noemail' => 'Ur tesɛiḍ ara tansa n email ṣaḥiḥ deg [[Special:Preferences|isemyifiyen n wemseqdac]] inek.',
 'confirmemail_text' => '{{SITENAME}} yeḥweǧ aseɣbel n tansa e-mail inek/inem uqbel ad sexdemeḍ tanfa n tirawt.
@@ -2981,11 +2982,6 @@ G leɛnaya-k sentem belli ṣaḥḥ tebɣiḍ ad tɛiwedeḍ axlaq n usebter-ag
 'version-entrypoints' => 'Tansa URL n irden n wekcam',
 'version-entrypoints-header-entrypoint' => 'Ired n wekcam',
 'version-entrypoints-header-url' => 'Tansa URL',
-
-# Special:FilePath
-'filepath' => 'Abrid n wadduf ufaylu',
-'filepath-page' => 'Afaylu :',
-'filepath-submit' => 'Ruḥ',
 
 # Special:SpecialPages
 'specialpages' => 'isebtar usligen',

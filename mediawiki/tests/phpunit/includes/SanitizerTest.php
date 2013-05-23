@@ -63,7 +63,7 @@ class SanitizerTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @cover Sanitizer::removeHTMLtags
+	 * @covers Sanitizer::removeHTMLtags
 	 * @dataProvider provideHtml5Tags
 	 *
 	 * @param String $tag Name of an HTML5 element (ie: 'video')
@@ -71,8 +71,6 @@ class SanitizerTest extends MediaWikiTestCase {
 	 */
 	function testRemovehtmltagsOnHtml5Tags( $tag, $escaped ) {
 		$this->setMwGlobals( array(
-			# Enable HTML5 mode
-			'wgHtml5' => true,
 			'wgUseTidy' => false
 		) );
 
@@ -90,7 +88,7 @@ class SanitizerTest extends MediaWikiTestCase {
 	/**
 	 * Provide HTML5 tags
 	 */
-	function provideHtml5Tags() {
+	public static function provideHtml5Tags() {
 		$ESCAPED = true; # We want tag to be escaped
 		$VERBATIM = false; # We want to keep the tag
 		return array(
@@ -101,22 +99,47 @@ class SanitizerTest extends MediaWikiTestCase {
 		);
 	}
 
-	function testSelfClosingTag() {
-		$this->setMwGlobals( array(
-			'wgUseTidy' => false
-		) );
-
-		$this->assertEquals(
-			'<div>Hello world</div>',
-			Sanitizer::removeHTMLtags( '<div>Hello world</div />' ),
-			'Self-closing closing div'
+	function dataRemoveHTMLtags() {
+		return array(
+			// former testSelfClosingTag
+			array(
+				'<div>Hello world</div />',
+				'<div>Hello world</div>',
+				'Self-closing closing div'
+			),
+			// Make sure special nested HTML5 semantics are not broken
+			// http://www.whatwg.org/html/text-level-semantics.html#the-kbd-element
+			array(
+				'<kbd><kbd>Shift</kbd>+<kbd>F3</kbd></kbd>',
+				'<kbd><kbd>Shift</kbd>+<kbd>F3</kbd></kbd>',
+				'Nested <kbd>.'
+			),
+			// http://www.whatwg.org/html/text-level-semantics.html#the-sub-and-sup-elements
+			array(
+				'<var>x<sub><var>i</var></sub></var>, <var>y<sub><var>i</var></sub></var>',
+				'<var>x<sub><var>i</var></sub></var>, <var>y<sub><var>i</var></sub></var>',
+				'Nested <var>.'
+			),
+			// http://www.whatwg.org/html/text-level-semantics.html#the-dfn-element
+			array(
+				'<dfn><abbr title="Garage Door Opener">GDO</abbr></dfn>',
+				'<dfn><abbr title="Garage Door Opener">GDO</abbr></dfn>',
+				'<abbr> inside <dfn>',
+			),
 		);
 	}
 
+	/**
+	 * @dataProvider dataRemoveHTMLtags
+	 */
+	function testRemoveHTMLtags( $input, $output, $msg = null ) {
+		$GLOBALS['wgUseTidy'] = false;
+		$this->assertEquals( $output, Sanitizer::removeHTMLtags( $input ), $msg );
+	}
 
 	/**
 	 * @dataProvider provideTagAttributesToDecode
-	 * @cover Sanitizer::decodeTagAttributes
+	 * @covers Sanitizer::decodeTagAttributes
 	 */
 	function testDecodeTagAttributes( $expected, $attributes, $message = '' ) {
 		$this->assertEquals( $expected,
@@ -125,7 +148,7 @@ class SanitizerTest extends MediaWikiTestCase {
 		);
 	}
 
-	function provideTagAttributesToDecode() {
+	public static function provideTagAttributesToDecode() {
 		return array(
 			array( array( 'foo' => 'bar' ), 'foo=bar', 'Unquoted attribute' ),
 			array( array( 'foo' => 'bar' ), '    foo   =   bar    ', 'Spaced attribute' ),
@@ -148,7 +171,6 @@ class SanitizerTest extends MediaWikiTestCase {
 			array( array( 'foo.' => 'baz' ), 'foo.=baz', 'A . is allowed as last character' ),
 			array( array( 'foo6' => 'baz' ), 'foo6=baz', 'Numbers are allowed' ),
 
-
 			# This bit is more relaxed than XML rules, but some extensions use
 			# it, like ProofreadPage (see bug 27539)
 			array( array( '1foo' => 'baz' ), '1foo=baz', 'Leading numbers are allowed' ),
@@ -165,7 +187,7 @@ class SanitizerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideDeprecatedAttributes
-	 * @cover Sanitizer::fixTagAttributes
+	 * @covers Sanitizer::fixTagAttributes
 	 */
 	function testDeprecatedAttributesUnaltered( $inputAttr, $inputEl, $message = '' ) {
 		$this->assertEquals( " $inputAttr",
@@ -193,7 +215,7 @@ class SanitizerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideCssCommentsFixtures
-	 * @cover Sanitizer::checkCss
+	 * @covers Sanitizer::checkCss
 	 */
 	function testCssCommentsChecking( $expected, $css, $message = '' ) {
 		$this->assertEquals( $expected,
@@ -229,7 +251,7 @@ class SanitizerTest extends MediaWikiTestCase {
 	/**
 	 * Test for support or lack of support for specific attributes in the attribute whitelist.
 	 */
-	function provideAttributeSupport() {
+	public static function provideAttributeSupport() {
 		/** array( <attributes>, <expected>, <message> ) */
 		return array(
 			array( 'div', ' role="presentation"', ' role="presentation"', 'Support for WAI-ARIA\'s role="presentation".' ),
@@ -246,5 +268,4 @@ class SanitizerTest extends MediaWikiTestCase {
 			$message
 		);
 	}
-
 }

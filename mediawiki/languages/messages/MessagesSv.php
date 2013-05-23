@@ -30,6 +30,7 @@
  * @author M.M.S.
  * @author MagnusA
  * @author Micke
+ * @author Mikez
  * @author NH
  * @author Najami
  * @author Nghtwlkr
@@ -349,9 +350,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Visa antalet användare som bevakar',
 'tog-oldsig' => 'Nuvarande signatur:',
 'tog-fancysig' => 'Rå signatur som wikitext (utan en automatisk länk)',
-'tog-externaleditor' => 'Använd extern editor som standard (endast för avancerade användare, speciella inställningar på din dator krävs. [//www.mediawiki.org/wiki/Manual:External_editors Mer information.])',
-'tog-externaldiff' => 'Använd externt diff-verktyg som förval (endast för avancerade användare, kräver speciella inställningar i din dator.
-[//www.mediawiki.org/wiki/Manual:External_editors Mer information.])',
 'tog-showjumplinks' => 'Aktivera "hoppa till"-tillgänglighetslänkar',
 'tog-uselivepreview' => 'Använd direktuppdaterad förhandsgranskning (Javascript, på försöksstadiet)',
 'tog-forceeditsummary' => 'Påminn mig om jag inte fyller i en redigeringskommentar',
@@ -366,6 +364,7 @@ $messages = array(
 'tog-showhiddencats' => 'Visa dolda kategorier',
 'tog-noconvertlink' => 'Stäng av konvertering av sidtitlar',
 'tog-norollbackdiff' => 'Visa inte diff efter tillbakarullning',
+'tog-useeditwarning' => 'Varna mig om jag lämnar en redigeringssida där jag gjort ändringar men inte sparat.',
 
 'underline-always' => 'Alltid',
 'underline-never' => 'Aldrig',
@@ -734,9 +733,18 @@ Observera att det, tills du tömmer din webbläsares cache, på vissa sidor kan 
 'welcomecreation-msg' => 'Ditt konto har skapats.
 Glöm inte att justera dina [[Special:Preferences|{{SITENAME}}-inställningar]].',
 'yourname' => 'Användarnamn:',
+'userlogin-yourname' => 'Användarnamn',
+'userlogin-yourname-ph' => 'Ange ditt användarnamn',
 'yourpassword' => 'Lösenord:',
+'userlogin-yourpassword' => 'Lösenord',
+'userlogin-yourpassword-ph' => 'Ange ditt lösenord',
+'createacct-yourpassword-ph' => 'Ange ett lösenord',
 'yourpasswordagain' => 'Upprepa lösenord',
+'createacct-yourpasswordagain' => 'Bekräfta lösenordet',
+'createacct-yourpasswordagain-ph' => 'Ange lösenordet igen',
 'remembermypassword' => 'Spara min inloggning på den här datorn (i max $1 {{PLURAL:$1|dygn|dygn}})',
+'userlogin-remembermypassword' => 'Håll mig inloggad',
+'userlogin-signwithsecure' => 'Använd säker anslutning',
 'securelogin-stick-https' => 'Fortsätt vara ansluten till HTTPS efter inloggning',
 'yourdomainname' => 'Din domän',
 'password-change-forbidden' => 'Du kan inte ändra lösenord på denna wiki.',
@@ -749,18 +757,38 @@ Glöm inte att justera dina [[Special:Preferences|{{SITENAME}}-inställningar]].
 'logout' => 'Logga ut',
 'userlogout' => 'Logga ut',
 'notloggedin' => 'Inte inloggad',
+'userlogin-noaccount' => 'Har du inget konto?',
+'userlogin-joinproject' => 'Gå med i {{SITENAME}}',
 'nologin' => "Har du inget användarkonto? '''$1'''.",
 'nologinlink' => 'Skapa ett användarkonto',
 'createaccount' => 'Skapa ett konto',
 'gotaccount' => "Har du redan ett användarkonto? '''$1'''.",
 'gotaccountlink' => 'Logga in',
 'userlogin-resetlink' => 'Har du glömt dina inloggningsuppgifter?',
+'userlogin-resetpassword-link' => 'Återställ ditt lösenord',
+'helplogin-url' => 'Help:Logging in',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Hjälp med inloggning]]',
+'createacct-join' => 'Ange din information nedan.',
+'createacct-emailrequired' => 'E-postadress',
+'createacct-emailoptional' => 'E-postadress (valfritt)',
+'createacct-email-ph' => 'Bekräfta din e-postadress',
 'createaccountmail' => 'Använd ett tillfällig slumpartat lösenord och skicka den till e-postadressen som anges nedan',
+'createacct-realname' => 'Riktigt namn (valfritt)',
 'createaccountreason' => 'Orsak:',
+'createacct-reason' => 'Anledning',
+'createacct-reason-ph' => 'Varför du skapar ett annat konto',
+'createacct-captcha' => 'Säkerhetskontroll',
+'createacct-imgcaptcha-ph' => 'Fyll i texten du ser ovan',
+'createacct-submit' => 'Skapa ditt konto',
+'createacct-benefit-heading' => '{{SITENAME}} är skapad av människor som dig.',
+'createacct-benefit-body1' => '{{PLURAL:$1|redigering|redigeringar}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|sida|sidor}}',
+'createacct-benefit-body3' => 'senaste {{PLURAL:$1|bidragsgivare}}',
 'badretype' => 'De lösenord du uppgett överensstämmer inte med varandra.',
 'userexists' => 'Det valda användarnamnet används redan.
 Var god välj ett annat namn.',
 'loginerror' => 'Inloggningsproblem',
+'createacct-error' => 'Fel när konto skulle skapas',
 'createaccounterror' => 'Kunde inte skapa konto: $1',
 'nocookiesnew' => 'Användarkontot skapades, men du är inte inloggad.
 {{SITENAME}} använder cookies för att logga in användare.
@@ -796,8 +824,8 @@ fortsätta använda ditt gamla lösenord.',
 'blocked-mailpassword' => 'Din IP-adress är blockerad, därför kan den inte användas för att få ett nytt lösenord.',
 'eauthentsent' => 'Ett e-brev för bekräftelse har skickats till den e-postadress som angivits.
 Innan någon annan e-post kan skickas härifrån till kontot, måste du följa instruktionerna i e-brevet för att bekräfta att kontot verkligen är ditt.',
-'throttled-mailpassword' => 'Ett nytt lösenord har redan skickats för mindre än {{PLURAL:$1|en timme|$1 timmar}} sedan.
-För att förhindra missbruk skickas bara ett nytt lösenord per {{PLURAL:$1|timme|$1-timmarsperiod}}.',
+'throttled-mailpassword' => 'En lösenordsåterställning har redan skickats för mindre än {{PLURAL:$1|en timme|$1 timmar}} sedan.
+För att förhindra missbruk skickas bara en lösenordsåterställning per {{PLURAL:$1|timme|$1-timmarsperiod}}.',
 'mailerror' => 'Fel vid skickande av e-post: $1',
 'acct_creation_throttle_hit' => 'Besökare till den här wikin som har använt din IP-adress har skapat {{PLURAL:$1|1 användarkonto|$1 användarkonton}} under det senaste dygnet, vilket är det maximalt tillåtna inom den tidsperioden.
 Som ett resultat kan besökare som använder den här IP-adressen inte skapa några fler användarkonton just nu.',
@@ -844,12 +872,14 @@ Vänta innan du försöker igen.',
 'resetpass-wrong-oldpass' => 'Ogiltigt tillfälligt eller nuvarande lösenord.
 Du kanske redan har lyckats ändra ditt lösenord eller begärt ett nytt tillfälligt lösenord.',
 'resetpass-temp-password' => 'Tillfälligt lösenord:',
+'resetpass-abort-generic' => 'Lösenordsändring av har avbrutits av ett tillägg.',
 
 # Special:PasswordReset
 'passwordreset' => 'Lösenordsåterställning',
-'passwordreset-text' => 'Fyll i detta formulär för att få en påminnelse om dina kontouppgifter via e-post.',
+'passwordreset-text' => 'Fyll i detta formulär för att återställa ditt lösenord.',
 'passwordreset-legend' => 'Återställ lösenord',
 'passwordreset-disabled' => 'Lösenordsåterställning har inaktiverats på denna wiki.',
+'passwordreset-emaildisabled' => 'E-postfunktioner har inaktiverats på denna wiki.',
 'passwordreset-pretext' => '{{PLURAL:$1||Ange en av datadelarna nedan}}',
 'passwordreset-username' => 'Användarnamn:',
 'passwordreset-domain' => 'Domän:',
@@ -857,13 +887,13 @@ Du kanske redan har lyckats ändra ditt lösenord eller begärt ett nytt tillfä
 'passwordreset-capture-help' => 'Om du markerar den här rutan kommer e-postmeddelandet (med det tillfälliga lösenordet) visas för dig och skickas till användaren.',
 'passwordreset-email' => 'E-postadress:',
 'passwordreset-emailtitle' => 'Kontouppgifter på {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Någon (förmodligen du, från IP-adressen $1) begärde en påminnelse av dina kontodetaljer för {{SITENAME}} ($4). Följande användar{{PLURAL:$3|konto är förknippad|konton är förknippade}} med denna e-postadress:
+'passwordreset-emailtext-ip' => 'Någon (förmodligen du, från IP-adressen $1) begärde en återställning av ditt lösenord för {{SITENAME}} ($4). Följande användar{{PLURAL:$3|konto är förknippad|konton är förknippade}} med denna e-postadress:
 
 $2
 
 {{PLURAL:$3|Detta|Dessa}} tillfälliga lösenord kommer att gå ut om {{PLURAL:$5|en dag|$5 dagar}}.
 Du bör logga in och välja ett nytt lösenord nu. Om någon annan gjorde denna begäran, eller om du kommer ihåg ditt ursprungliga lösenord, och du önskar inte att ändra det, kan du ignorera detta meddelande och fortsätta använda ditt gamla lösenord.',
-'passwordreset-emailtext-user' => 'Användaren $1 på {{SITENAME}} begärde en påminnelse om dina kontodetaljer för {{SITENAME}} ($4). Följande användar{{PLURAL:$3|konto är förknippad|konton är förknippade}} med denna e-postadress:
+'passwordreset-emailtext-user' => 'Användaren $1 på {{SITENAME}} begärde en återställning av ditt lösenord för {{SITENAME}} ($4). Följande användar{{PLURAL:$3|konto är förknippad|konton är förknippade}} med denna e-postadress:
 
 $2
 
@@ -871,9 +901,9 @@ $2
 Du bör logga in och välja ett nytt lösenord nu. Om någon annan gjorde denna begäran, eller om du kommer ihåg ditt ursprungliga lösenord, och du önskar inte att ändra det, kan du ignorera detta meddelande och fortsätta använda ditt gamla lösenord.',
 'passwordreset-emailelement' => 'Användarnamn: $1
 Tillfälligt lösenord: $2',
-'passwordreset-emailsent' => 'En påminnelse via e-post har skickats.',
-'passwordreset-emailsent-capture' => 'En påminnelse via e-post har skickats, som visas nedan.',
-'passwordreset-emailerror-capture' => 'En påminnelse via e-post har skapats, som visas nedan, men det gick inte att skicka den till användaren: $1',
+'passwordreset-emailsent' => 'En lösenordsåterställning via e-post har skickats.',
+'passwordreset-emailsent-capture' => 'En lösenordsåterställning via e-post har skickats, som visas nedan.',
+'passwordreset-emailerror-capture' => 'En lösenordsåterställning via e-post har skapats, som visas nedan, men det gick inte att skicka den till {{GENDER:$2|användaren}}: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Ändra e-postadress',
@@ -1091,6 +1121,8 @@ Den finns redan.',
 'content-failed-to-parse' => 'Det gick inte att parsa $2 innehåll för $1 modell: $3',
 'invalid-content-data' => 'Ogiltig innehållsdata',
 'content-not-allowed-here' => 'innehåll av "$1" är inte tillåtet på sidan [[$2]]',
+'editwarning-warning' => 'Om du lämnar den här sidan kommer du att förlora alla ändringar du har gjort.
+Om du är inloggad kan du slå av den här varningen under "{{int:prefs-editing}}" i dina inställningar.',
 
 # Content models
 'content-model-wikitext' => 'wikitext',
@@ -1376,15 +1408,7 @@ Detaljer kan hittas i [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}
 'searchdisabled' => 'Sökfunktionen på {{SITENAME}} är avstängd.
 Du kan istället göra sökningar med hjälp av Google.
 Notera dock att deras indexering av {{SITENAME}} kan vara något föråldrad.',
-
-# Quickbar
-'qbsettings' => 'Snabbmeny',
-'qbsettings-none' => 'Ingen',
-'qbsettings-fixedleft' => 'Fast vänster',
-'qbsettings-fixedright' => 'Fast höger',
-'qbsettings-floatingleft' => 'Flytande vänster',
-'qbsettings-floatingright' => 'Flytande höger',
-'qbsettings-directionality' => 'Fast, beroende på riktningen av ditt skript och språk',
+'search-error' => 'Ett fel uppstod under sökningen: $1',
 
 # Preferences page
 'preferences' => 'Inställningar',
@@ -1528,6 +1552,7 @@ Om du väljer att ange ditt riktiga namn, kommer det att användas för att till
 'userrights-notallowed' => 'Ditt konto har inte behörighet till att lägga till eller ta bort användarrättigheter.',
 'userrights-changeable-col' => 'Grupper du kan ändra',
 'userrights-unchangeable-col' => 'Grupper du inte kan ändra',
+'userrights-conflict' => 'Användarrättighetskonflikt! Var god tillämpa dina ändringar igen.',
 
 # Groups
 'group' => 'Grupp:',
@@ -1941,7 +1966,6 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 'http-read-error' => 'HTTP-läsfel.',
 'http-timed-out' => 'Time out för HTTP-begäran.',
 'http-curl-error' => 'Fel vid hämtning av URL: $1',
-'http-host-unreachable' => 'URL:en kunde inte nås.',
 'http-bad-status' => 'Det uppstod ett problem under HTTP-begäran: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2098,8 +2122,10 @@ De bör troligtvis ändras så att de länkar till en mer passande sida iställe
 En sida anses vara en förgreningssida om den inkluderar en mall som länkas till från [[MediaWiki:Disambiguationspage]].",
 
 'pageswithprop' => 'Sidor med en sidegenskap',
+'pageswithprop-legend' => 'Sidor med en sidegenskap',
 'pageswithprop-text' => 'Denna sida listar sidor som använder en speciell sidegenskap.',
 'pageswithprop-prop' => 'Egenskapsnamn:',
+'pageswithprop-submit' => 'Gå',
 
 'doubleredirects' => 'Dubbla omdirigeringar',
 'doubleredirectstext' => 'Det här är en lista över sidor som dirigerar om till andra omdirigeringssidor. Varje rad innehåller länkar till den första och andra omdirigeringsidan, samt till målet för den andra omdirigeringen. Målet för den andra omdirigeringen är ofta den "riktiga" sidan, som den första omdirigeringen egentligen ska leda till.
@@ -2348,8 +2374,8 @@ Framtida ändringar av den här sidan och dess diskussionssida kommer att listas
 'notvisiblerev' => 'Sidversionen har raderats',
 'watchnochange' => 'Inga av dina bevakade sidor har ändrats inom den visade tidsperioden.',
 'watchlist-details' => 'Du har $1 {{PLURAL:$1|sida|sidor}} på din bevakningslista (diskussionssidor är inte medräknade).',
-'wlheader-enotif' => '* Bekräftelse per e-post är aktiverad.',
-'wlheader-showupdated' => "* Sidor som har ändrats sedan ditt senaste besök visas i '''fetstil.'''",
+'wlheader-enotif' => 'E-postmeddelanden är aktiverade.',
+'wlheader-showupdated' => "Sidor som har ändrats sedan ditt senaste besök visas i '''fetstil.'''",
 'watchmethod-recent' => 'letar efter bevakade sidor bland senaste ändringar',
 'watchmethod-list' => 'letar efter nyligen gjorda ändringar bland bevakade sidor',
 'watchlistcontains' => 'Din bevakningslista innehåller $1 {{PLURAL:$1|sida|sidor}}.',
@@ -2389,7 +2415,7 @@ Kontakta användaren:
 e-post: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Såvida du inte besöker sidan, kommer du inte att få flera meddelanden om ändringar av sidan.
+Såvida du inte besöker sidan, kommer du inte att få flera meddelanden om aktivitet på sidan.
 Du kan också ta bort flaggan för meddelanden om ändringar på alla sidor i din bevakningslista.
 
 Hälsningar från {{SITENAME}}s meddelandesystem
@@ -2759,6 +2785,7 @@ Se [[Special:BlockList|blockeringslistan]] för en översikt av gällande blocke
 'sorbsreason' => 'Din IP-adress är listad som öppen proxy i den DNSBL {{SITENAME}} använder.',
 'sorbs_create_account_reason' => 'Din IP-adress är listad som en öppen proxy i den DNSBL som används av {{SITENAME}}.
 Du får inte skapa ett användarkonto',
+'xffblockreason' => 'En IP-adress i sidhuvudet X-Forwarded-For, antingen din adress eller en proxyserver som du använder, har blockerats. Den ursprungliga anledningen till blockeringen var: $1',
 'cant-block-while-blocked' => 'Du kan inte blockera andra användare medan du är blockerad.',
 'cant-see-hidden-user' => 'Användaren du försöker blockera är redan blockerad och gömd. Eftersom du inte har hideuser-rättigheter, kan du inte se eller redigera användarens blockering.',
 'ipbblocked' => 'Du kan inte blockera eller avblockera andra användare, eftersom du själv är blockerad',
@@ -2890,7 +2917,7 @@ I det senare fallet kan du även använda en länk, exempel [[{{#Special:Export}
 'exportcuronly' => 'Inkludera endast den nuvarande versionen, inte hela historiken',
 'exportnohistory' => "----
 '''OBS:''' export av fullständig sidhistorik med hjälp av detta formulär har stängts av på grund av prestandaskäl.",
-'exportlistauthors' => 'Innehålla en fullständig lista över bidragsgivare för varje sida',
+'exportlistauthors' => 'Inkludera en fullständig lista över bidragsgivare för varje sida',
 'export-submit' => 'Exportera',
 'export-addcattext' => 'Lägg till sidor från kategori:',
 'export-addcat' => 'Lägg till',
@@ -2921,6 +2948,8 @@ Besök [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] eller [//t
 'thumbnail-more' => 'Förstora',
 'filemissing' => 'Fil saknas',
 'thumbnail_error' => 'Fel vid skapande av miniatyrbild: $1',
+'thumbnail_error_remote' => 'Felmeddelande från $1:
+$2',
 'djvu_page_error' => 'DjVu-sida utanför gränserna',
 'djvu_no_xml' => 'Kan inte hämta DjVu-filens XML',
 'thumbnail-temp-create' => 'Kunde inte skapa temporär miniatyrfil',
@@ -3071,17 +3100,11 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 
 # Stylesheets
 'common.css' => '/* CSS som skrivs här påverkar alla skal */',
-'standard.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Standard */',
-'nostalgia.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Nostalgi */',
 'cologneblue.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Cologne blå */',
 'monobook.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Monobook */',
-'myskin.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Mitt utseende */',
-'chick.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Chick */',
-'simple.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Enkel */',
 'modern.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Modern */',
 'vector.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Vector */',
 'print.css' => '/* CSS som skrivs här kommer att påverka utskriftsversionen */',
-'handheld.css' => '/* CSS som placeras här kommer att påverka handhållna enheter som baseras på skalet som konfigurerats i $wgHandheldStyle */',
 'noscript.css' => '/* CSS som placeras här kommer att påverka användare med JavaScript inaktiverat */',
 'group-autoconfirmed.css' => '/* CSS som placeras här kommer bara att påverka bekräftade användare */',
 'group-bot.css' => '/* CSS som placeras här kommer bara att påverka robotar */',
@@ -3090,13 +3113,8 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 
 # Scripts
 'common.js' => '/* JavaScript som skrivs här körs varje gång en användare laddar en sida. */',
-'standard.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Standard */',
-'nostalgia.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Nostalgi */',
 'cologneblue.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Cologne blå */',
 'monobook.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Monobook */',
-'myskin.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Mitt utseende */',
-'chick.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Chick */',
-'simple.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Enkel */',
 'modern.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Modern */',
 'vector.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Vector */',
 'group-autoconfirmed.js' => '/* JavaScript här kommer att laddas för bekräftade användare */',
@@ -3176,13 +3194,8 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 'pageinfo-category-files' => 'Antal filer',
 
 # Skin names
-'skinname-standard' => 'Standard',
-'skinname-nostalgia' => 'Nostalgi',
 'skinname-cologneblue' => 'Cologne blå',
 'skinname-monobook' => 'Monobook',
-'skinname-myskin' => 'Mitt utseende',
-'skinname-chick' => 'Chick',
-'skinname-simple' => 'Enkel',
 'skinname-modern' => 'Modern',
 'skinname-vector' => 'Vector',
 
@@ -3262,10 +3275,24 @@ Om du kör den kan din dator skadas.",
 'minutes' => '{{PLURAL:$1|$1 minut|$1 minuter}}',
 'hours' => '{{PLURAL:$1|$1 timme|$1 timmar}}',
 'days' => '{{PLURAL:$1|$1 dag|$1 dagar}}',
+'weeks' => '{{PLURAL:$1|$1 vecka|$1 veckor}}',
 'months' => '{{PLURAL:$1|$1 månad|$1 månader}}',
 'years' => '{{PLURAL:$1|$1 år}}',
 'ago' => '$1 sedan',
 'just-now' => 'precis nu',
+
+# Human-readable timestamps
+'hours-ago' => '$1 {{PLURAL:$1|timme|timmar}} sedan',
+'minutes-ago' => '$1 {{PLURAL:$1|minut|minuter}} sedan',
+'seconds-ago' => '$1 {{PLURAL:$1|sekund|sekunder}} sedan',
+'monday-at' => 'Måndag kl. $1',
+'tuesday-at' => 'Tisdag kl. $1',
+'wednesday-at' => 'Onsdag kl. $1',
+'thursday-at' => 'Torsdag kl. $1',
+'friday-at' => 'Fredag kl. $1',
+'saturday-at' => 'Lördag kl. $1',
+'sunday-at' => 'Söndag kl. $1',
+'yesterday-at' => 'Igår kl. $1',
 
 # Bad image list
 'bad_image_list' => 'Listan fungerar enligt följande:
@@ -3295,7 +3322,7 @@ Andra kommer att gömmas som standard
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Bredd',
 'exif-imagelength' => 'Höjd',
 'exif-bitspersample' => 'Bitar per komponent',
@@ -3473,7 +3500,7 @@ Andra kommer att gömmas som standard
 'exif-originalimageheight' => 'Bildens höjd innan den beskärdes',
 'exif-originalimagewidth' => 'Bildens bredd innan den beskärdes',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Inte komprimerad',
 'exif-compression-2' => 'CCITT Grupp 3 1-dimensionell modifierad Huffman-skurlängdskodning',
 'exif-compression-3' => 'CCITT Grupp 3 fax-kodning',
@@ -3886,16 +3913,21 @@ Du bör ha fått [{{SERVER}}{{SCRIPTPATH}}/COPYING en kopia av GNU General Publi
 'version-software' => 'Installerad programvara',
 'version-software-product' => 'Produkt',
 'version-software-version' => 'Version',
-'version-entrypoints' => 'StartpunktsURLer',
-'version-entrypoints-header-entrypoint' => 'Ingångspunkt',
+'version-entrypoints' => 'Startpunkts-URL:er',
+'version-entrypoints-header-entrypoint' => 'Startpunkt',
 'version-entrypoints-header-url' => 'URL',
 
-# Special:FilePath
-'filepath' => 'Sökväg till fil',
-'filepath-page' => 'Fil:',
-'filepath-submit' => 'Sökväg',
-'filepath-summary' => 'Den här specialsidan ger den fullständiga sökvägen till en fil.
-Bilder visas i full upplösning, andra filtyper öppnas direkt i de program som är associerade till dem.',
+# Special:Redirect
+'redirect' => 'Omdirigering efter filnamn, användar-ID eller versions-ID',
+'redirect-legend' => 'Omdirigera till en fil eller sida',
+'redirect-summary' => 'Den här specialsidan omdirigerar till en fil (efter filnamn), en sida (efter versions-id) eller en användarsida (efter användar-id).',
+'redirect-submit' => 'Kör',
+'redirect-lookup' => 'Slå upp:',
+'redirect-value' => 'Värde:',
+'redirect-user' => 'Användar-ID',
+'redirect-revision' => 'Sidversion',
+'redirect-file' => 'Filnamn',
+'redirect-not-exists' => 'Värdet hittades inte',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Sök efter dubblettfiler',
@@ -3986,23 +4018,26 @@ Bilder visas i full upplösning, andra filtyper öppnas direkt i de program som 
 'htmlform-submit' => 'Spara',
 'htmlform-reset' => 'Ogör ändringar',
 'htmlform-selectorother-other' => 'Andra',
+'htmlform-no' => 'Nej',
+'htmlform-yes' => 'Ja',
+'htmlform-chosen-placeholder' => 'Välj ett alternativ',
 
 # SQLite database support
 'sqlite-has-fts' => '$1 med stöd för fulltextsökning',
 'sqlite-no-fts' => '$1 utan stöd för fulltextsökning',
 
 # New logging system
-'logentry-delete-delete' => '$1 raderade sidan $3',
-'logentry-delete-restore' => '$1 återställde sidan $3',
-'logentry-delete-event' => '$1 ändrade synligheten för {{PLURAL:$5|en logghändelse|$5 logghändelser}} på $3: $4',
-'logentry-delete-revision' => '$1 ändrade synligheten för {{PLURAL:$5|en version|$5 versioner}} på sidan $3: $4',
-'logentry-delete-event-legacy' => '$1 ändrade synligheten för logghändelser på $3',
-'logentry-delete-revision-legacy' => '$1 ändrade synligheten för versioner på sidan $3',
-'logentry-suppress-delete' => '$1 gömde sidan $3',
-'logentry-suppress-event' => '$1 ändrade i hemlighet synligheten för {{PLURAL:$5|en logghändelse|$5 logghändelser}} på $3: $4',
-'logentry-suppress-revision' => '$1 ändrade synligheten i hemlighet för {{PLURAL:$5|en version|$5 versioner}} på sidan $3: $4',
-'logentry-suppress-event-legacy' => '$1 ändrade synligheten i hemlighet för logghändelser på $3',
-'logentry-suppress-revision-legacy' => '$1 ändrade synligheten i hemlighet för versioner på sidan $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|raderade}} sidan $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|återställde}} sidan $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|ändrade}} synligheten för {{PLURAL:$5|en logghändelse|$5 logghändelser}} på $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|ändrade}} synligheten för {{PLURAL:$5|en version|$5 versioner}} på sidan $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|ändrade}} synligheten för logghändelser på $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|ändrade}} synligheten för versioner på sidan $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|gömde}} sidan $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|ändrade}} i hemlighet synligheten för {{PLURAL:$5|en logghändelse|$5 logghändelser}} på $3: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|ändrade}} synligheten i hemlighet för {{PLURAL:$5|en version|$5 versioner}} på sidan $3: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|ändrade}} synligheten i hemlighet för logghändelser på $3',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|ändrade}} synligheten i hemlighet för versioner på sidan $3',
 'revdelete-content-hid' => 'innehåll dolt',
 'revdelete-summary-hid' => 'redigeringssammanfattning dold',
 'revdelete-uname-hid' => 'användarnamn dolt',
@@ -4011,20 +4046,20 @@ Bilder visas i full upplösning, andra filtyper öppnas direkt i de program som 
 'revdelete-uname-unhid' => 'användarnamn synligt',
 'revdelete-restricted' => 'satte begränsningar för administratörer',
 'revdelete-unrestricted' => 'tog bort begränsningar för administratörer',
-'logentry-move-move' => '$1 flyttade sidan $3 till $4',
-'logentry-move-move-noredirect' => '$1 flyttade sidan $3 till $4 utan att lämna en omdirigering',
-'logentry-move-move_redir' => '$1 flyttade sidan $3 till $4 över en omdirigering',
-'logentry-move-move_redir-noredirect' => '$1 flyttade sidan $3 till $4 över en omdirigering utan att lämna en omdirigering',
-'logentry-patrol-patrol' => '$1 markerade versionen $4 av sidan $3 som patrullerad',
-'logentry-patrol-patrol-auto' => '$1 markerade automatiskt versionen $4 av sidan $3 som patrullerad',
-'logentry-newusers-newusers' => 'Användarkonto $1 skapades',
-'logentry-newusers-create' => 'Användarkonto $1 skapades',
-'logentry-newusers-create2' => 'Användarkonto $3 skapades av $1',
-'logentry-newusers-byemail' => 'Användarkontot $3 skapades av $1 och lösenordet skickades via e-post',
-'logentry-newusers-autocreate' => 'Kontot $1 skapades automatiskt',
-'logentry-rights-rights' => '$1 ändrade gruppmedlemskap för $3 från $4 till $5',
-'logentry-rights-rights-legacy' => '$1 ändrade gruppmedlemskap för $3',
-'logentry-rights-autopromote' => '$1 befordrades automatiskt från $4 till $5',
+'logentry-move-move' => '$1 {{GENDER:$2|flyttade}} sidan $3 till $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|flyttade}} sidan $3 till $4 utan att lämna en omdirigering',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|flyttade}} sidan $3 till $4 över en omdirigering',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|flyttade}} sidan $3 till $4 över en omdirigering utan att lämna en omdirigering',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|markerade}} versionen $4 av sidan $3 som patrullerad',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|markerade}} automatiskt versionen $4 av sidan $3 som patrullerad',
+'logentry-newusers-newusers' => 'Användarkonto $1 har {{GENDER:$2|skapats}}',
+'logentry-newusers-create' => 'Användarkonto $1 har {{GENDER:$2|skapats}}',
+'logentry-newusers-create2' => 'Användarkonto $3 har {{GENDER:$2|skapats}} av $1',
+'logentry-newusers-byemail' => 'Användarkontot $3 har {{GENDER:$2|skapats}} av $1 och lösenordet skickades via e-post',
+'logentry-newusers-autocreate' => 'Användarkontot $1 {{GENDER:$2|skapades}} automatiskt',
+'logentry-rights-rights' => '$1 {{GENDER:$2|ändrade}} gruppmedlemskapet för $3 från $4 till $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|ändrade}} gruppmedlemskapet för $3',
+'logentry-rights-autopromote' => '$1 {{GENDER:$2|befordrades}} automatiskt från $4 till $5',
 'rightsnone' => '(inga)',
 
 # Feedback
@@ -4100,7 +4135,7 @@ Annars kan du använda det enkla formuläret nedan. Din kommentar kommer att lä
 'duration-centuries' => '$1 {{PLURAL:$1|sekel|sekel}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennium|millennier}}',
 
-# Unknown messages
-'pageswithprop-legend' => 'Sidor med en sidegenskap',
-'pageswithprop-submit' => 'Gå',
+# Image rotation
+'rotate-comment' => 'Bilden roteras $1 {{PLURAL:$1|grad|grader}} medurs',
+
 );

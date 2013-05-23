@@ -30,6 +30,7 @@
  * @author Daniyar
  * @author Dim Grits
  * @author Don Alessandro
+ * @author Ekulikovdo
  * @author Eleferen
  * @author Erdemaslancan
  * @author EugeneZelenko
@@ -43,8 +44,10 @@
  * @author Haffman
  * @author HalanTul
  * @author Huuchin
+ * @author Ignatus
  * @author Illusion
  * @author Iltever
+ * @author Iluvatar
  * @author Incnis Mrsi
  * @author Iniquity
  * @author Innv
@@ -78,6 +81,7 @@
  * @author Александр Сигачёв
  * @author Гусейн
  * @author ОйЛ
+ * @author Умар
  * @author לערי ריינהארט
  * @author გიორგიმელა
  */
@@ -115,16 +119,17 @@ $specialPageAliases = array(
 	'Activeusers'               => array( 'Активные_участники' ),
 	'Allmessages'               => array( 'Системные_сообщения' ),
 	'Allpages'                  => array( 'Все_страницы' ),
+	'Badtitle'                  => array( 'Недопустимое_название' ),
 	'Blankpage'                 => array( 'Пустая_страница' ),
 	'Block'                     => array( 'Заблокировать' ),
 	'Blockme'                   => array( 'Заблокируй_меня' ),
 	'Booksources'               => array( 'Источники_книг' ),
 	'BrokenRedirects'           => array( 'Разорванные_перенаправления' ),
 	'Categories'                => array( 'Категории' ),
-	'ChangeEmail'               => array( 'Сменить_e-mail' ),
+	'ChangeEmail'               => array( 'Сменить_e-mail', 'Сменить_почту' ),
 	'ChangePassword'            => array( 'Сменить_пароль' ),
 	'ComparePages'              => array( 'Сравнение_страниц' ),
-	'Confirmemail'              => array( 'Подтвердить_e-mail' ),
+	'Confirmemail'              => array( 'Подтвердить_e-mail', 'Подтвердить_почту' ),
 	'Contributions'             => array( 'Вклад' ),
 	'CreateAccount'             => array( 'Создать_учётную_запись', 'Создать_пользователя', 'Зарегистрироваться' ),
 	'Deadendpages'              => array( 'Тупиковые_страницы' ),
@@ -134,9 +139,12 @@ $specialPageAliases = array(
 	'EditWatchlist'             => array( 'Править_список_наблюдения' ),
 	'Emailuser'                 => array( 'Письмо_участнику', 'Отправить_письмо' ),
 	'Export'                    => array( 'Экспорт', 'Выгрузка' ),
+	'Fewestrevisions'           => array( 'Редко_редактируемые' ),
 	'FileDuplicateSearch'       => array( 'Поиск_дубликатов_файлов' ),
 	'Filepath'                  => array( 'Путь_к_файлу' ),
 	'Import'                    => array( 'Импорт' ),
+	'Invalidateemail'           => array( 'Отменить_подтверждение_адреса' ),
+	'JavaScriptTest'            => array( 'Тестирование_JavaScript' ),
 	'BlockList'                 => array( 'Список_блокировок', 'Блокировки' ),
 	'LinkSearch'                => array( 'Поиск_ссылок' ),
 	'Listadmins'                => array( 'Список_администраторов' ),
@@ -151,7 +159,13 @@ $specialPageAliases = array(
 	'Longpages'                 => array( 'Длинные_страницы' ),
 	'MergeHistory'              => array( 'Объединение_историй' ),
 	'MIMEsearch'                => array( 'Поиск_по_MIME' ),
+	'Mostcategories'            => array( 'Самые_категоризованные' ),
 	'Mostimages'                => array( 'Самые_используемые_файлы' ),
+	'Mostinterwikis'            => array( 'Наибольшее_количество_интервики-ссылок' ),
+	'Mostlinked'                => array( 'Самые_используемые_страницы' ),
+	'Mostlinkedcategories'      => array( 'Самые_используемые_категории' ),
+	'Mostlinkedtemplates'       => array( 'Самые_используемые_шаблоны' ),
+	'Mostrevisions'             => array( 'Наибольшее_количество_версий' ),
 	'Movepage'                  => array( 'Переименовать_страницу', 'Переименование', 'Переименовать' ),
 	'Mycontributions'           => array( 'Мой_вклад' ),
 	'Mypage'                    => array( 'Моя_страница' ),
@@ -163,9 +177,11 @@ $specialPageAliases = array(
 	'PermanentLink'             => array( 'Постоянная_ссылка' ),
 	'Popularpages'              => array( 'Популярные_страницы' ),
 	'Preferences'               => array( 'Настройки' ),
+	'Prefixindex'               => array( 'Указатель_по_началу_названия' ),
 	'Protectedpages'            => array( 'Защищённые_страницы' ),
 	'Protectedtitles'           => array( 'Защищённые_названия' ),
 	'Randompage'                => array( 'Случайная_страница', 'Случайная' ),
+	'Randomredirect'            => array( 'Случайное_перенаправление' ),
 	'Recentchanges'             => array( 'Свежие_правки' ),
 	'Recentchangeslinked'       => array( 'Связанные_правки' ),
 	'Revisiondelete'            => array( 'Удаление_правки' ),
@@ -180,6 +196,7 @@ $specialPageAliases = array(
 	'Uncategorizedpages'        => array( 'Некатегоризованные_страницы' ),
 	'Uncategorizedtemplates'    => array( 'Некатегоризованные_шаблоны' ),
 	'Undelete'                  => array( 'Восстановить', 'Восстановление' ),
+	'Unlockdb'                  => array( 'Разблокировка_БД' ),
 	'Unusedcategories'          => array( 'Неиспользуемые_категории' ),
 	'Unusedimages'              => array( 'Неиспользуемые_файлы' ),
 	'Unusedtemplates'           => array( 'Неиспользуемые_шаблоны' ),
@@ -238,6 +255,7 @@ $magicWords = array(
 	'pagenamee'                 => array( '1', 'НАЗВАНИЕ_СТРАНИЦЫ_2', 'PAGENAMEE' ),
 	'namespace'                 => array( '1', 'ПРОСТРАНСТВО_ИМЁН', 'NAMESPACE' ),
 	'namespacee'                => array( '1', 'ПРОСТРАНСТВО_ИМЁН_2', 'NAMESPACEE' ),
+	'namespacenumber'           => array( '1', 'НОМЕР_ПРОСТРАНСТВА_ИМЁН', 'NAMESPACENUMBER' ),
 	'talkspace'                 => array( '1', 'ПРОСТРАНСТВО_ОБСУЖДЕНИЙ', 'TALKSPACE' ),
 	'talkspacee'                => array( '1', 'ПРОСТРАНСТВО_ОБСУЖДЕНИЙ_2', 'TALKSPACEE' ),
 	'subjectspace'              => array( '1', 'ПРОСТРАНСТВО_СТАТЕЙ', 'SUBJECTSPACE', 'ARTICLESPACE' ),
@@ -285,6 +303,7 @@ $magicWords = array(
 	'localurl'                  => array( '0', 'ЛОКАЛЬНЫЙ_АДРЕС:', 'LOCALURL:' ),
 	'localurle'                 => array( '0', 'ЛОКАЛЬНЫЙ_АДРЕС_2:', 'LOCALURLE:' ),
 	'articlepath'               => array( '0', 'ПУТЬ_К_СТАТЬЕ', 'ARTICLEPATH' ),
+	'pageid'                    => array( '0', 'ИДЕНТИФИКАТОР_СТРАНИЦЫ', 'PAGEID' ),
 	'server'                    => array( '0', 'СЕРВЕР', 'SERVER' ),
 	'servername'                => array( '0', 'НАЗВАНИЕ_СЕРВЕРА', 'SERVERNAME' ),
 	'scriptpath'                => array( '0', 'ПУТЬ_К_СКРИПТУ', 'SCRIPTPATH' ),
@@ -346,6 +365,10 @@ $magicWords = array(
 	'url_path'                  => array( '0', 'ПУТЬ', 'PATH' ),
 	'url_wiki'                  => array( '0', 'ВИКИ', 'WIKI' ),
 	'url_query'                 => array( '0', 'ЗАПРОС', 'QUERY' ),
+	'pagesincategory_all'       => array( '0', 'все', 'all' ),
+	'pagesincategory_pages'     => array( '0', 'страницы', 'pages' ),
+	'pagesincategory_subcats'   => array( '0', 'подкатегории', 'subcats' ),
+	'pagesincategory_files'     => array( '0', 'файлы', 'files' ),
 );
 
 
@@ -432,8 +455,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Показывать число участников, включивших страницу в свой список наблюдения',
 'tog-oldsig' => 'Текущая подпись:',
 'tog-fancysig' => 'Собственная вики-разметка подписи (без автоматической ссылки)',
-'tog-externaleditor' => 'Использовать по умолчанию внешний редактор (только для специалистов, необходима особая настройка компьютера; [//www.mediawiki.org/wiki/Manual:External_editors подробнее])',
-'tog-externaldiff' => 'Использовать по умолчанию внешнюю программу сравнения (только для специалистов, необходима особая настройка компьютера; [//www.mediawiki.org/wiki/Manual:External_editors подробнее])',
 'tog-showjumplinks' => 'Включить вспомогательные ссылки «перейти к»',
 'tog-uselivepreview' => 'Использовать быстрый предварительный просмотр (JavaScript, экспериментально)',
 'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
@@ -448,6 +469,7 @@ $messages = array(
 'tog-showhiddencats' => 'Показывать скрытые категории',
 'tog-noconvertlink' => 'Отключить ссылку на преобразование заголовка',
 'tog-norollbackdiff' => 'Не показывать разницу версий после выполнения отката',
+'tog-useeditwarning' => 'Предупреждать, когда я покидаю страницу с несохранёнными изменениями',
 
 'underline-always' => 'Всегда',
 'underline-never' => 'Никогда',
@@ -503,7 +525,7 @@ $messages = array(
 'feb' => 'фев',
 'mar' => 'мар',
 'apr' => 'апр',
-'may' => 'мая',
+'may' => 'май',
 'jun' => 'июн',
 'jul' => 'июл',
 'aug' => 'авг',
@@ -522,9 +544,9 @@ $messages = array(
 'hidden-category-category' => 'Скрытые категории',
 'category-subcat-count' => '{{PLURAL:$2|Эта категория содержит только следующую подкатегорию.|Эта категория содержит $1 {{PLURAL:$1|подкатегорию|подкатегории}} из $2 всего.}}',
 'category-subcat-count-limited' => 'В этой категории {{PLURAL:$1|$1 подкатегория|$1 подкатегории|$1 подкатегорий}}.',
-'category-article-count' => '{{PLURAL:$2|Эта категория содержит только одну страницу.|{{PLURAL:$1|Показана $1 страница|Показано $1 страницы|Показано $1 страниц}} из $2.}}',
+'category-article-count' => '{{#ifeq:$2|1|Эта категория содержит только следующую страницу.|Эта категория содержит следующ{{PLURAL:$1|ую $1 страницу|ие $1 страницы|ие $1 страниц}} из $2.}}',
 'category-article-count-limited' => 'В этой категории {{PLURAL:$1|$1 страница|$1 страницы|$1 страниц}}.',
-'category-file-count' => '{{PLURAL:$2|Эта категория содержит только один файл.|В этой категории {{PLURAL:$1|показан $1 файл|показано $1 файла|показано $1 файлов}} из $2 {{PLURAL:$2|имеющейся|имеющихся}}.}}',
+'category-file-count' => '{{#ifeq:$2|1|Эта категория содержит только один файл.|Следующ{{PLURAL:$1|ий $1 файл|ие $1 файла|ие $1 файлов}} из $2 имеющ{{PLURAL:$2|его|их}}ся принадлеж{{PLURAL: ит|ат}} к этой категории.}}',
 'category-file-count-limited' => 'В этой категории {{PLURAL:$1|$1 файл|$1 файла|$1 файлов}}.',
 'listingcontinuesabbrev' => '(продолжение)',
 'index-category' => 'Индексируемые страницы',
@@ -562,7 +584,7 @@ $messages = array(
 'vector-action-unprotect' => 'Изменить защиту',
 'vector-simplesearch-preference' => 'Включить упрощённую строку поиска (только для оформления «Векторное»)',
 'vector-view-create' => 'Создание',
-'vector-view-edit' => 'Правка',
+'vector-view-edit' => 'Править',
 'vector-view-history' => 'История',
 'vector-view-view' => 'Читать',
 'vector-view-viewsource' => 'Просмотр разметки',
@@ -818,9 +840,18 @@ $2',
 'welcomecreation-msg' => 'Ваша учётная запись создана.
 Не забудьте провести [[Special:Preferences|персональную настройку]] сайта {{SITENAME}}.',
 'yourname' => 'Имя учётной записи:',
+'userlogin-yourname' => 'Имя учётной записи',
+'userlogin-yourname-ph' => 'Введите имя вашей учётной записи',
 'yourpassword' => 'Пароль:',
+'userlogin-yourpassword' => 'Пароль',
+'userlogin-yourpassword-ph' => 'Введите ваш пароль',
+'createacct-yourpassword-ph' => 'Введите пароль',
 'yourpasswordagain' => 'Повторный набор пароля:',
+'createacct-yourpasswordagain' => 'Подтвердите пароль',
+'createacct-yourpasswordagain-ph' => 'Введите пароль еще раз',
 'remembermypassword' => 'Помнить мою учётную запись на этом компьютере (не более $1 {{PLURAL:$1|дня|дней|дней}})',
+'userlogin-remembermypassword' => 'Запомнить меня',
+'userlogin-signwithsecure' => 'Выполните вход, используя безопасный сервер',
 'securelogin-stick-https' => 'Продолжить подключение по HTTPS после входа',
 'yourdomainname' => 'Ваш домен:',
 'password-change-forbidden' => 'Вы не можете изменить пароль в этой вики.',
@@ -833,18 +864,36 @@ $2',
 'logout' => 'Завершение сеанса',
 'userlogout' => 'Завершение сеанса',
 'notloggedin' => 'Вы не представились системе',
+'userlogin-noaccount' => 'Нет аккаунта?',
+'userlogin-joinproject' => 'Присоединиться к {{grammar:genitive|{{SITENAME}}}}',
 'nologin' => 'Нет учётной записи? $1.',
 'nologinlink' => 'Создать учётную запись',
 'createaccount' => 'Создать учётную запись',
 'gotaccount' => "Вы уже зарегистрированы? '''$1'''.",
 'gotaccountlink' => 'Представьтесь',
 'userlogin-resetlink' => 'Забыли данные для входа?',
+'userlogin-resetpassword-link' => 'Сброс пароля',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Помощь со входом в систему]]',
+'createacct-join' => 'Введите свои данные ниже.',
+'createacct-emailrequired' => 'Адрес электронной почты',
+'createacct-emailoptional' => 'Адрес электронной почты (необязательно)',
+'createacct-email-ph' => 'Введите свой адрес электронной почты',
 'createaccountmail' => 'Использовать сгенерированный случайным образом временный пароль и выслать мне его на указанный ниже адрес электронной почты:',
+'createacct-realname' => 'Настоящее имя (необязательно)',
 'createaccountreason' => 'Причина:',
+'createacct-reason' => 'Причина',
+'createacct-captcha' => 'Проверка безопасности',
+'createacct-imgcaptcha-ph' => 'Введите текст, который вы видите выше',
+'createacct-submit' => 'Зарегистрировать учётную запись',
+'createacct-benefit-heading' => '{{SITENAME}} сделана такими же людьми, как вы.',
+'createacct-benefit-body1' => '{{PLURAL:$1|правка|правки|правок}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|страница|страницы|страниц}}',
+'createacct-benefit-body3' => '{{PLURAL:$1|участник|участников|участника}} в последнее время',
 'badretype' => 'Введённые вами пароли не совпадают.',
 'userexists' => 'Введённое имя участника уже используется.
 Пожалуйста, выберите другое имя.',
 'loginerror' => 'Ошибка опознавания участника',
+'createacct-error' => 'Ошибка создания учетной записи',
 'createaccounterror' => 'Невозможно создать учётную запись: $1',
 'nocookiesnew' => 'Участник зарегистрирован, но не представлен. {{SITENAME}} использует «cookies» для представления участников. У вас «cookies» запрещены. Пожалуйста, разрешите их, а затем представьтесь со своиим новым именем участника и паролем.',
 'nocookieslogin' => '{{SITENAME}} использует «cookies» для представления участников. Вы их отключили. Пожалуйста, включите их и попробуйте снова.',
@@ -883,7 +932,7 @@ $2',
 'blocked-mailpassword' => 'Редактирование с вашего IP-адреса запрещено, поэтому заблокирована и функция восстановления пароля.',
 'eauthentsent' => 'На указанный адрес электронной почты отправлено письмо. 
 Следуйте изложенным там инструкциям для подтверждения того, что этот адрес действительно принадлежит вам.',
-'throttled-mailpassword' => 'Функция напоминания пароля уже использовалась в течение {{PLURAL:$1|последнего $1 часа|последних $1 часов|последних $1 часов}} .
+'throttled-mailpassword' => 'Функция напоминания пароля уже использовалась в течение {{PLURAL:$1|последнего часа|последних $1 часов}}.
 Для предотвращения злоупотреблений, разрешено запрашивать не более одного напоминания за $1 {{PLURAL:$1|час|часа|часов}}.',
 'mailerror' => 'Ошибка при отправке почты: $1',
 'acct_creation_throttle_hit' => 'За сутки с вашего IP-адреса {{PLURAL:$1|была создана $1 учётная запись участника|было создано $1 учётных записей участников|было создано $1 учётных записей участников}}, что является пределом для данного отрезка времени.
@@ -936,9 +985,10 @@ $2',
 
 # Special:PasswordReset
 'passwordreset' => 'Сброс пароля',
-'passwordreset-text' => 'Заполните эту форму, чтобы получить в письме напоминание о параметрах Вашей учётной записи.',
+'passwordreset-text' => 'Чтобы сбросить свой пароль, заполните эту форму.',
 'passwordreset-legend' => 'Сбросить пароль',
 'passwordreset-disabled' => 'Сбросы пароля отключены на этой вики.',
+'passwordreset-emaildisabled' => 'Функции электронной почты отключены в этой вики.',
 'passwordreset-pretext' => '{{PLURAL:$1||Введите одну из частей данных, показанных ниже}}',
 'passwordreset-username' => 'Имя участника:',
 'passwordreset-domain' => 'Домен:',
@@ -946,33 +996,29 @@ $2',
 'passwordreset-capture-help' => 'Если вы установите данную отметку, то вам будет показано письмо с временным паролем, отправляемое участнику.',
 'passwordreset-email' => 'Адрес электронной почты:',
 'passwordreset-emailtitle' => 'Сведения об учётной записи {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Кто-то (возможно, вы, с IP-адреса $1) запросил напоминание о вашей
-учётной записи в проекте {{SITENAME}} ($4).
-{{PLURAL:$3|Следующая учётная запись связана|Следующие учётные записи связаны}} с этим адресом электронной почты:
+'passwordreset-emailtext-ip' => 'Кто-то (возможно, вы, с IP-адреса $1) запросил сброс пароля к вашей учётной записи в проекте {{SITENAME}} ($4).
+С этим адресом электронной почты {{PLURAL:$3|связана следующая учётная запись|связаны следующие учётные записи}}:
+
+$2
+
+{{PLURAL:$3|Этот временный пароль будет|Эти временные пароли будут}} действовать {{PLURAL:$5|$5 день|$5 дня|$5 дней}}.
+Вы должны представиться системе и выбрать новый пароль. 
+Если вы не делали этого запроса, или вспомнили свой исходный пароль и не желаете его менять, 
+то можете проигнорировать это сообщение и продолжить использовать свой старый пароль.',
+'passwordreset-emailtext-user' => 'Участник $1 из проекта {{SITENAME}} запросил сброс пароля для вашей учётной записи в проекте {{SITENAME}} ($4).
+С этим адресом электронной почты {{PLURAL:$3|связана следующая учётная запись|связаны следующие учётные записи}}:
 
 $2
 
 {{PLURAL:$3|Этот временный пароль будет|Эти временные пароли будут}} действовать {{PLURAL:$5|$5 день|$5 дня|$5 дней}}.
 Вы должны представиться системе и выбрать новый пароль.
-Если вы не делали этого запроса или вспомнили свой исходный пароль
-и не желаете его менять, то можете проигнорировать это сообщение
-и продолжить использовать свой старый пароль.',
-'passwordreset-emailtext-user' => 'Участник $1 из проекта {{SITENAME}} запросил напоминание о вашей
-учётной записи в проекте {{SITENAME}} ($4).
-{{PLURAL:$3|Следующая учётная запись связана|Следующие учётные записи связаны}} с этим адресом электронной почты:
-
-$2
-
-{{PLURAL:$3|Этот временный пароль будет|Эти временные пароли будут}} действовать {{PLURAL:$5|$5 день|$5 дня|$5 дней}}.
-Вы должны представиться системе и выбрать новый пароль.
-Если вы не делали этого запроса или вспомнили свой исходный пароль
-и не желаете его менять, то можете проигнорировать это сообщение
-и продолжить использовать свой старый пароль.',
+Если вы не делали этого запроса или вспомнили свой исходный пароль и не желаете его менять, 
+то можете проигнорировать это сообщение и продолжить использовать свой старый пароль.',
 'passwordreset-emailelement' => 'Имя участника: $1
 Временный пароль: $2',
-'passwordreset-emailsent' => 'По электронной почте было отправлено напоминание.',
-'passwordreset-emailsent-capture' => 'Ниже приведено отправленное письмо-напоминание.',
-'passwordreset-emailerror-capture' => 'Ниже приведено созданное письмо-напоминание, его отправка не удалась по причине: $1',
+'passwordreset-emailsent' => 'Отправлено электронное письмо с информацией о сбросе пароля.',
+'passwordreset-emailsent-capture' => 'Отправлено электронное письмо с информацией о сбросе пароля, текст которого можно увидеть ниже.',
+'passwordreset-emailerror-capture' => 'Было создано электронное письмо с информацией о сбросе пароля, текст которого можно увидеть ниже. Однако его не удалось отправить по следующей причине: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Изменить адрес электронной почты',
@@ -1193,6 +1239,8 @@ $2
 'content-failed-to-parse' => 'Содержимое $2 не соответствует типу $1: $3.',
 'invalid-content-data' => 'Недопустимые данные',
 'content-not-allowed-here' => 'Содержимое "$1" недопустимо на странице [[$2]]',
+'editwarning-warning' => 'Переход на другую страницу может привести к потере сделанных вами изменений.
+Если вы зарегистрированы в системе, то вы можете отключить это предупреждение в разделе «{{int:prefs-editing}}» ваших настроек.',
 
 # Content models
 'content-model-wikitext' => 'вики-текст',
@@ -1473,15 +1521,7 @@ $1",
 'powersearch-togglenone' => 'Ничего',
 'search-external' => 'Внешний поиск',
 'searchdisabled' => 'Извините, но встроенный полнотекстовый поиск выключен. Вы можете воспользоваться поиском по сайту через поисковые системы общего назначения, однако имейте в виду, что копия сайта в их кэше может быть несколько устаревшей.',
-
-# Quickbar
-'qbsettings' => 'Панель навигации',
-'qbsettings-none' => 'Не показывать',
-'qbsettings-fixedleft' => 'Неподвижная слева',
-'qbsettings-fixedright' => 'Неподвижная справа',
-'qbsettings-floatingleft' => 'Плавающая слева',
-'qbsettings-floatingright' => 'Плавающая справа',
-'qbsettings-directionality' => 'Закреплённая, в зависимости от направления письменности вашего языка',
+'search-error' => 'Произошла ошибка при поиске: $1',
 
 # Preferences page
 'preferences' => 'Настройки',
@@ -2038,7 +2078,6 @@ $1',
 'http-read-error' => 'Ошибка чтения HTTP.',
 'http-timed-out' => 'Истекло время ожидания HTTP-запроса.',
 'http-curl-error' => 'Ошибка обращения к URL: $1',
-'http-host-unreachable' => 'Невозможно обратиться по указанному URL.',
 'http-bad-status' => 'Во время обработки HTTP-запроса обнаружена проблема: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2195,8 +2234,10 @@ $1',
 Страница считается многозначной, если на ней размещён шаблон, имя которого указано на странице [[MediaWiki:Disambiguationspage]].",
 
 'pageswithprop' => 'Страницы с переопределёнными свойствами',
+'pageswithprop-legend' => 'Страницы с переопределёнными свойствами',
 'pageswithprop-text' => 'Здесь перечислены страницы, у которых были вручную переопределены отдельные свойства.',
 'pageswithprop-prop' => 'Название свойства:',
+'pageswithprop-submit' => 'Найти',
 
 'doubleredirects' => 'Двойные перенаправления',
 'doubleredirectstext' => 'На этой странице представлен список перенаправлений на другие перенаправления.
@@ -2283,8 +2324,8 @@ $1',
 'notargettext' => 'Вы не указали целевую страницу или участника для этого действия.',
 'nopagetitle' => 'Нет такой целевой страницы',
 'nopagetext' => 'Указанной целевой страницы не существует.',
-'pager-newer-n' => '{{PLURAL:$1|более новая|более новые|более новых}} $1',
-'pager-older-n' => '{{PLURAL:$1|более старая|более старые|более старых}} $1',
+'pager-newer-n' => '$1 {{PLURAL:$1|более новая|более новые|более новых}}',
+'pager-older-n' => '$1 {{PLURAL:$1|более старая|более старые|более старых}}',
 'suppress' => 'Сокрытие',
 'querypage-disabled' => 'Эта спецстраница отключена для повышения производительности.',
 
@@ -2449,8 +2490,8 @@ $1',
 'notvisiblerev' => 'Версия была удалена',
 'watchnochange' => 'За этот период ни одна страница из списка наблюдения не менялась.',
 'watchlist-details' => 'В вашем списке наблюдения $1 {{PLURAL:$1|страница|страницы|страниц}}, не считая страниц обсуждения.',
-'wlheader-enotif' => '* Уведомление по эл. почте включено.',
-'wlheader-showupdated' => "* Страницы, изменившиеся с вашего последнего их посещения, выделены '''жирным''' шрифтом.",
+'wlheader-enotif' => 'Уведомление по эл. почте включено.',
+'wlheader-showupdated' => "Страницы, изменившиеся с вашего последнего их посещения, выделены '''жирным''' шрифтом.",
 'watchmethod-recent' => 'просмотр последних изменений для наблюдаемых страниц',
 'watchmethod-list' => 'просмотр наблюдаемых страниц для последних изменений',
 'watchlistcontains' => 'Ваш список наблюдения содержит $1 {{PLURAL:$1|страница|страницы|страниц}}.',
@@ -2856,6 +2897,7 @@ $1',
 'proxyblocksuccess' => 'Выполнено.',
 'sorbsreason' => 'Ваш IP-адрес числится как открытый прокси в DNSBL.',
 'sorbs_create_account_reason' => 'Ваш IP-адрес числится как открытый прокси в DNSBL. Вы не можете создать учётную запись.',
+'xffblockreason' => 'Был заблокирован IP-адрес, присутствующий в заголовке X-Forwarded-For и принадлежащий либо вам, либо используемому вами прокси-серверу. Первоначальная причина блокировки была следующей: $1',
 'cant-block-while-blocked' => 'Вы не можете блокировать других участников, пока вы сами заблокированы.',
 'cant-see-hidden-user' => 'Участник, которого вы пытаетесь заблокировать, уже заблокирован и скрыт. Поскольку у вас нет разрешения на работу по сокрытию участников, вы не можете просмотреть или изменить данную блокировку.',
 'ipbblocked' => 'Вы не можете блокировать или разблокировать других участников, так как вы сами заблокированы',
@@ -3170,17 +3212,11 @@ $1',
 
 # Stylesheets
 'common.css' => '/* Размещённый здесь CSS будет применяться ко всем темам оформления */',
-'standard.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Standard */',
-'nostalgia.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Nostalgia */',
 'cologneblue.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Cologne Blue */',
 'monobook.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Monobook */',
-'myskin.css' => '/* Размещённый здесь CSS будет применяться к теме оформления MySkin */',
-'chick.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Chick */',
-'simple.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Simple */',
 'modern.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Modern */',
 'vector.css' => '/* Размещённый здесь CSS будет применяться к векторной теме оформления  */',
 'print.css' => '/* Размещённый здесь CSS будет применяться к версии для печати */',
-'handheld.css' => '/* Размещённый здесь CSS-код будет применяться для мобильных устройств, использующих тему оформления, указанную в $wgHandheldStyle */',
 'noscript.css' => '/* Размещённый здесь CSS будет применяться для участников с отключенным JavaScript  */',
 'group-autoconfirmed.css' => '/* Размещённый здесь CSS будет применяться для автоподтверждённых участников */',
 'group-bot.css' => '/* Размещённый здесь CSS будет применяться только для ботов */',
@@ -3189,13 +3225,8 @@ $1',
 
 # Scripts
 'common.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям при обращении к каждой странице */',
-'standard.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Standard */',
-'nostalgia.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Nostalgia */',
 'cologneblue.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Cologne Blue */',
 'monobook.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления MonoBook */',
-'myskin.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления MySkin  */',
-'chick.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Chick */',
-'simple.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Simple */',
 'modern.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Modern */',
 'vector.js' => '/* Размещённый здесь код JavaScript будет загружаться пользователям, использующим тему оформления Vector */',
 'group-autoconfirmed.js' => '/* Размещённый здесь код JavaScript будет загружаться только участникам, имеющим статус автоподтверждённых (autoconfirmed) */',
@@ -3277,12 +3308,7 @@ The wiki server can't provide data in a format your client can read.",
 'pageinfo-category-files' => 'Количество файлов',
 
 # Skin names
-'skinname-standard' => 'Классическое',
-'skinname-nostalgia' => 'Ностальгия',
 'skinname-cologneblue' => 'Кёльнская тоска',
-'skinname-myskin' => 'Своё',
-'skinname-chick' => 'Цыпа',
-'skinname-simple' => 'Простое',
 'skinname-modern' => 'Современное',
 'skinname-vector' => 'Векторное',
 
@@ -3399,7 +3425,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Ширина',
 'exif-imagelength' => 'Высота',
 'exif-bitspersample' => 'Глубина цвета',
@@ -3578,7 +3604,7 @@ $1',
 'exif-originalimageheight' => 'Высота изображения до кадрирования',
 'exif-originalimagewidth' => 'Ширина изображения до кадрирования',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Несжатый',
 'exif-compression-2' => 'CCITT Group 3, 1-мерная модификация кодирования длин серий Хаффмана',
 'exif-compression-3' => 'CCITT Group 3, факсовое кодирование',
@@ -4076,13 +4102,6 @@ MediaWiki распространяется в надежде, что она бу
 'version-entrypoints-articlepath' => '[https://www.mediawiki.org/wiki/Manual:$wgArticlePath Путь к статье]',
 'version-entrypoints-scriptpath' => '[https://www.mediawiki.org/wiki/Manual:$wgScriptPath Путь к скрипту]',
 
-# Special:FilePath
-'filepath' => 'Путь к файлу',
-'filepath-page' => 'Файл:',
-'filepath-submit' => 'Перейти',
-'filepath-summary' => 'Данная служебная страница возвращает полный путь к файлу.
-Изображения показываются в полном разрешении, другие типы файлов открываются напрямую в связанных с ними программах.',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Поиск одинаковых файлов',
 'fileduplicatesearch-summary' => 'Поиск одинаковых файлов по хэш-коду.',
@@ -4172,6 +4191,8 @@ MediaWiki распространяется в надежде, что она бу
 'htmlform-submit' => 'Отправить',
 'htmlform-reset' => 'Отменить изменения',
 'htmlform-selectorother-other' => 'Иное',
+'htmlform-no' => 'Нет',
+'htmlform-yes' => 'Да',
 
 # SQLite database support
 'sqlite-has-fts' => '$1 с поддержкой полнотекстового поиска',
@@ -4179,16 +4200,16 @@ MediaWiki распространяется в надежде, что она бу
 
 # New logging system
 'logentry-delete-delete' => '$1 {{GENDER:$2|удалил|удалила}} страницу $3',
-'logentry-delete-restore' => '$1 {{GENDER:$1|восстановил|восстановила}} страницу $3',
-'logentry-delete-event' => '$1 {{GENDER:$1|изменил|изменила}} видимость {{PLURAL:$5|$5 записи|$5 записей}} журнала на $3: $4',
-'logentry-delete-revision' => '$1 {{GENDER:$1|изменил|изменила}} видимость {{PLURAL:$5|$5 версии|$5 версий}} на странице $3: $4',
-'logentry-delete-event-legacy' => '$1 {{GENDER:$1|изменил|изменила}} видимость записей журнала $3',
-'logentry-delete-revision-legacy' => '$1 {{GENDER:$1|изменил|изменила}} видимость версий на странице $3',
-'logentry-suppress-delete' => '$1 {{GENDER:$1|подавил|подавила}} страницу $3',
-'logentry-suppress-event' => '$1 скрытно {{GENDER:$1|изменил|изменила}} видимость {{PLURAL:$5|$5 записи|$5 записей}} журнала на $3: $4',
-'logentry-suppress-revision' => '$1 скрытно {{GENDER:$1|изменил|изменила}} видимость {{PLURAL:$5|$5 версии|$5 версий}} на странице $3: $4',
-'logentry-suppress-event-legacy' => '$1 скрытно {{GENDER:$1|изменил|изменила}} видимость записей журнала $3',
-'logentry-suppress-revision-legacy' => '$1 скрытно {{GENDER:$1|изменил|изменила}} видимость версий на странице $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|восстановил|восстановила}} страницу $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|изменил|изменила}} видимость {{PLURAL:$5|$5 записи|$5 записей}} журнала на $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|изменил|изменила}} видимость {{PLURAL:$5|$5 версии|$5 версий}} на странице $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|изменил|изменила}} видимость записей журнала $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|изменил|изменила}} видимость версий на странице $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|подавил|подавила}} страницу $3',
+'logentry-suppress-event' => '$1 скрытно {{GENDER:$2|изменил|изменила}} видимость {{PLURAL:$5|$5 записи|$5 записей}} журнала на $3: $4',
+'logentry-suppress-revision' => '$1 скрытно {{GENDER:$2|изменил|изменила}} видимость {{PLURAL:$5|$5 версии|$5 версий}} на странице $3: $4',
+'logentry-suppress-event-legacy' => '$1 скрытно {{GENDER:$2|изменил|изменила}} видимость записей журнала $3',
+'logentry-suppress-revision-legacy' => '$1 скрытно {{GENDER:$2|изменил|изменила}} видимость версий на странице $3',
 'revdelete-content-hid' => 'содержание скрыто',
 'revdelete-summary-hid' => 'описание правки скрыто',
 'revdelete-uname-hid' => 'имя участника скрыто',
@@ -4197,20 +4218,20 @@ MediaWiki распространяется в надежде, что она бу
 'revdelete-uname-unhid' => 'имя участника раскрыто',
 'revdelete-restricted' => 'ограничения применяются к администраторам',
 'revdelete-unrestricted' => 'ограничения сняты для администраторов',
-'logentry-move-move' => '$1 {{GENDER:$1|переименовал|переименовала}} страницу $3 в $4',
-'logentry-move-move-noredirect' => '$1 {{GENDER:$1|переименовал|переименовала}} страницу $3 в $4 без оставления перенаправления',
-'logentry-move-move_redir' => '$1 {{GENDER:$1|переименовал|переименовала}} страницу $3 в $4 поверх перенаправления',
-'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$1|переименовал|переименовала}} страницу $3 в $4 поверх перенаправления и без оставления перенаправления',
-'logentry-patrol-patrol' => '$1 {{GENDER:$1|отпатрулировал|отпатрулировала}} версию $4 страницы $3',
-'logentry-patrol-patrol-auto' => '$1 автоматически {{GENDER:$1|отпатрулировал|отпатрулировала}} версию $4 страницы $3',
-'logentry-newusers-newusers' => 'Создана учётная запись $1',
-'logentry-newusers-create' => 'Создана учётная запись $1',
-'logentry-newusers-create2' => '$1 {{GENDER:$2|создал|создала}} учётную запись для $3',
-'logentry-newusers-byemail' => 'Учетная запись пользователя $3 была создана $1 и пароль был отправлен по электронной почте',
-'logentry-newusers-autocreate' => 'Автоматически создана учётная запись $1',
-'logentry-rights-rights' => '$1 {{GENDER:$1|изменил|изменила}} членство в группах для $3 с $4 на $5',
-'logentry-rights-rights-legacy' => '$1 {{GENDER:$1|изменил|изменила}} членство в группах для $3',
-'logentry-rights-autopromote' => 'Учётная запись «$1» была автоматически переведена из $4 в $5',
+'logentry-move-move' => '$1 {{GENDER:$2|переименовал|переименовала}} страницу $3 в $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|переименовал|переименовала}} страницу $3 в $4 без оставления перенаправления',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|переименовал|переименовала}} страницу $3 в $4 поверх перенаправления',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|переименовал|переименовала}} страницу $3 в $4 поверх перенаправления и без оставления перенаправления',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|отпатрулировал|отпатрулировала}} версию $4 страницы $3',
+'logentry-patrol-patrol-auto' => '$1 автоматически {{GENDER:$2|отпатрулировал|отпатрулировала}} версию $4 страницы $3',
+'logentry-newusers-newusers' => '{{GENDER:$2|Участник создал|Участница создала}} учётную запись $1',
+'logentry-newusers-create' => '{{GENDER:$2|Участник создал|Участница создала}} учётную запись $1',
+'logentry-newusers-create2' => '$1 {{GENDER:$2|создал|создала}} учётную запись $3',
+'logentry-newusers-byemail' => '$1 {{GENDER:$2|создал|создала}} учётную запись $3 и пароль был отправлен по электронной почте',
+'logentry-newusers-autocreate' => 'Автоматически создана учётная запись {{GENDER:$2|участника|участницы}} $1',
+'logentry-rights-rights' => '$1 {{GENDER:$2|изменил|изменила}} членство в группах для $3 с $4 на $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|изменил|изменила}} членство в группах для $3',
+'logentry-rights-autopromote' => '$1 был{{GENDER:$2||а}} автоматически переведен{{GENDER:$2||а}} из $4 в $5',
 'rightsnone' => '(нет)',
 
 # Feedback
@@ -4286,7 +4307,7 @@ MediaWiki распространяется в надежде, что она бу
 'duration-centuries' => '$1 {{PLURAL:$1|век|века|веков}}',
 'duration-millennia' => '$1 {{PLURAL:$1|тысячелетие|тысячелетия|тысячелетий}}',
 
-# Unknown messages
-'pageswithprop-legend' => 'Страницы с переопределёнными свойствами',
-'pageswithprop-submit' => 'Найти',
+# Image rotation
+'rotate-comment' => 'Изображение повёрнуто на $1 градус{{PLURAL:$1||а|ов}} по часовой стрелке',
+
 );

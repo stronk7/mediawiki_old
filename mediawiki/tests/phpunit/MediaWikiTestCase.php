@@ -64,7 +64,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		'oracle'
 	);
 
-	function  __construct( $name = null, array $data = array(), $dataName = '' ) {
+	function __construct( $name = null, array $data = array(), $dataName = '' ) {
 		parent::__construct( $name, $data, $dataName );
 
 		$this->backupGlobals = false;
@@ -123,16 +123,21 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	function usesTemporaryTables() {
+		return self::$useTemporaryTables;
+	}
+
 	/**
 	 * obtains a new temporary file name
 	 *
 	 * The obtained filename is enlisted to be removed upon tearDown
 	 *
-	 * @returns string: absolute name of the temporary file
+	 * @return string: absolute name of the temporary file
 	 */
 	protected function getNewTempFile() {
 		$fname = tempnam( wfTempDir(), 'MW_PHPUnit_' . get_class( $this ) . '_' );
 		$this->tmpfiles[] = $fname;
+
 		return $fname;
 	}
 
@@ -142,7 +147,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 * The obtained directory is enlisted to be removed (recursively with all its contained
 	 * files) upon tearDown.
 	 *
-	 * @returns string: absolute name of the temporary directory
+	 * @return string: absolute name of the temporary directory
 	 */
 	protected function getNewTempDirectory() {
 		// Starting of with a temporary /file/.
@@ -154,6 +159,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		// where temporary directory creation is bundled and can be improved
 		unlink( $fname );
 		$this->assertTrue( wfMkdirParents( $fname ) );
+
 		return $fname;
 	}
 
@@ -167,7 +173,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		$this->called['setUp'] = 1;
 
 		/*
-		//@todo: global variables to restore for *every* test
+		// @todo global variables to restore for *every* test
 		array(
 			'wgLang',
 			'wgContLang',
@@ -344,7 +350,8 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 * Stub. If a test needs to add additional data to the database, it should
 	 * implement this method and do so
 	 */
-	function addDBData() {}
+	function addDBData() {
+	}
 
 	private function addCoreDBData() {
 		# disabled for performance
@@ -373,7 +380,6 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 				'page_touched' => $this->db->timestamp(),
 				'page_latest' => 0,
 				'page_len' => 0 ), __METHOD__, array( 'IGNORE' ) );
-
 		}
 
 		User::resetIdByNameCache();
@@ -389,7 +395,6 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			$user->addGroup( 'bureaucrat' );
 			$user->saveSettings();
 		}
-
 
 		//Make 1 page with 1 revision
 		$page = WikiPage::factory( Title::newFromText( 'UTPage' ) );
@@ -434,7 +439,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 * even if using different parameters.
 	 *
 	 * @param DatabaseBase $db The database connection
-	 * @param String  $prefix The prefix to use for the new table set (aka schema).
+	 * @param String $prefix The prefix to use for the new table set (aka schema).
 	 *
 	 * @throws MWException if the database table prefix is already $prefix
 	 */
@@ -457,6 +462,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 		if ( ( $db->getType() == 'oracle' || !self::$useTemporaryTables ) && self::$reuseDB ) {
 			CloneDatabase::changePrefix( $prefix );
+
 			return;
 		} else {
 			$dbClone->cloneTableStructure();
@@ -519,6 +525,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 	private static function unprefixTable( $tableName ) {
 		global $wgDBprefix;
+
 		return substr( $tableName, strlen( $wgDBprefix ) );
 	}
 
@@ -543,6 +550,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			unset( $tables['searchindex_segments'] );
 			$tables = array_flip( $tables );
 		}
+
 		return $tables;
 	}
 
@@ -557,13 +565,11 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		if ( isset( MediaWikiPHPUnitCommand::$additionalOptions[$offset] ) ) {
 			return MediaWikiPHPUnitCommand::$additionalOptions[$offset];
 		}
-
 	}
 
 	public function setCliArg( $offset, $value ) {
 
 		MediaWikiPHPUnitCommand::$additionalOptions[$offset] = $value;
-
 	}
 
 	/**
@@ -835,12 +841,13 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			) {
 
 				$wikitextNS = $ns;
+
 				return $wikitextNS;
 			}
 		}
 
 		// give up
-		// @todo: Inside a test, we could skip the test as incomplete.
+		// @todo Inside a test, we could skip the test as incomplete.
 		//        But frequently, this is used in fixture setup.
 		throw new MWException( "No namespace defaults to wikitext!" );
 	}
@@ -902,6 +909,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		if ( !$loaded ) {
 			$this->markTestSkipped( "PHP extension '$extName' is not loaded, skipping." );
 		}
+
 		return $loaded;
 	}
 
@@ -930,5 +938,4 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf( $expected, $pokemons, $message );
 	}
-
 }

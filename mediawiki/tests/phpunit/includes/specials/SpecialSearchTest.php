@@ -53,10 +53,9 @@ class SpecialSearchTest extends MediaWikiTestCase {
 			)
 			, $message
 		);
-
 	}
 
-	function provideSearchOptionsTests() {
+	public static function provideSearchOptionsTests() {
 		$defaultNS = SearchEngine::defaultNamespaces();
 		$EMPTY_REQUEST = array();
 		$NO_USER_PREF = null;
@@ -105,6 +104,7 @@ class SpecialSearchTest extends MediaWikiTestCase {
 		foreach ( $opt as $name => $value ) {
 			$u->setOption( $name, $value );
 		}
+
 		return $u;
 	}
 
@@ -135,6 +135,5 @@ class SpecialSearchTest extends MediaWikiTestCase {
 			$pageTitle,
 			"Search term '{$term}' should not be expanded in Special:Search <title>"
 		);
-
 	}
 }

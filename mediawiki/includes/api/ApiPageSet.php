@@ -69,18 +69,24 @@ class ApiPageSet extends ApiBase {
 	private $mFakePageId = -1;
 	private $mCacheMode = 'public';
 	private $mRequestedPageFields = array();
+	/**
+	 * @var int
+	 */
+	private $mDefaultNamespace = NS_MAIN;
 
 	/**
 	 * Constructor
 	 * @param $dbSource ApiBase Module implementing getDB().
 	 *        Allows PageSet to reuse existing db connection from the shared state like ApiQuery.
-	 * @param $flags int Zero or more flags like DISABLE_GENERATORS
+	 * @param int $flags Zero or more flags like DISABLE_GENERATORS
+	 * @param int $defaultNamespace the namespace to use if none is specified by a prefix.
 	 * @since 1.21 accepts $flags instead of two boolean values
 	 */
-	public function __construct( ApiBase $dbSource, $flags = 0 ) {
+	public function __construct( ApiBase $dbSource, $flags = 0, $defaultNamespace = NS_MAIN ) {
 		parent::__construct( $dbSource->getMain(), $dbSource->getModuleName() );
 		$this->mDbSource = $dbSource;
 		$this->mAllowGenerator = ( $flags & ApiPageSet::DISABLE_GENERATORS ) == 0;
+		$this->mDefaultNamespace = $defaultNamespace;
 
 		$this->profileIn();
 		$this->mParams = $this->extractRequestParams();
@@ -182,7 +188,7 @@ class ApiPageSet extends ApiBase {
 
 			if ( !$isDryRun ) {
 				// Populate page information with the original user input
-				switch( $dataSource ) {
+				switch ( $dataSource ) {
 					case 'titles':
 						$this->initFromTitles( $this->mParams['titles'] );
 						break;
@@ -215,9 +221,33 @@ class ApiPageSet extends ApiBase {
 	}
 
 	/**
+	 * Return the parameter name that is the source of data for this PageSet
+	 *
+	 * If multiple source parameters are specified (e.g. titles and pageids),
+	 * one will be named arbitrarily.
+	 *
+	 * @return string|null
+	 */
+	public function getDataSource() {
+		if ( $this->mAllowGenerator && isset( $this->mParams['generator'] ) ) {
+			return 'generator';
+		}
+		if ( isset( $this->mParams['titles'] ) ) {
+			return 'titles';
+		}
+		if ( isset( $this->mParams['pageids'] ) ) {
+			return 'pageids';
+		}
+		if ( isset( $this->mParams['revids'] ) ) {
+			return 'revids';
+		}
+		return null;
+	}
+
+	/**
 	 * Request an additional field from the page table.
 	 * Must be called before execute()
-	 * @param $fieldName string Field name
+	 * @param string $fieldName Field name
 	 */
 	public function requestField( $fieldName ) {
 		$this->mRequestedPageFields[$fieldName] = null;
@@ -226,7 +256,7 @@ class ApiPageSet extends ApiBase {
 	/**
 	 * Get the value of a custom field previously requested through
 	 * requestField()
-	 * @param $fieldName string Field name
+	 * @param string $fieldName Field name
 	 * @return mixed Field value
 	 */
 	public function getCustomField( $fieldName ) {
@@ -377,7 +407,7 @@ class ApiPageSet extends ApiBase {
 	 * @return array of raw_prefixed_title (string) => prefixed_title (string)
 	 * @since 1.21
 	 */
-	public function getNormalizedTitlesAsResult( $result = null  ) {
+	public function getNormalizedTitlesAsResult( $result = null ) {
 		$values = array();
 		foreach ( $this->getNormalizedTitles() as $rawTitleStr => $titleStr ) {
 			$values[] = array(
@@ -510,7 +540,7 @@ class ApiPageSet extends ApiBase {
 
 	/**
 	 * Populate this PageSet from a list of Titles
-	 * @param $titles array of Title objects
+	 * @param array $titles of Title objects
 	 */
 	public function populateFromTitles( $titles ) {
 		$this->profileIn();
@@ -520,7 +550,7 @@ class ApiPageSet extends ApiBase {
 
 	/**
 	 * Populate this PageSet from a list of page IDs
-	 * @param $pageIDs array of page IDs
+	 * @param array $pageIDs of page IDs
 	 */
 	public function populateFromPageIDs( $pageIDs ) {
 		$this->profileIn();
@@ -541,7 +571,7 @@ class ApiPageSet extends ApiBase {
 
 	/**
 	 * Populate this PageSet from a list of revision IDs
-	 * @param $revIDs array of revision IDs
+	 * @param array $revIDs of revision IDs
 	 */
 	public function populateFromRevisionIDs( $revIDs ) {
 		$this->profileIn();
@@ -568,13 +598,13 @@ class ApiPageSet extends ApiBase {
 		}
 
 		foreach ( $this->mRequestedPageFields as $fieldName => &$fieldValues ) {
-			$fieldValues[$pageId] = $row-> $fieldName;
+			$fieldValues[$pageId] = $row->$fieldName;
 		}
 	}
 
 	/**
 	 * Do not use, does nothing, will be removed
-	 * @deprecated 1.21
+	 * @deprecated since 1.21
 	 */
 	public function finishPageSetGeneration() {
 		wfDeprecated( __METHOD__, '1.21' );
@@ -594,7 +624,7 @@ class ApiPageSet extends ApiBase {
 	 * #5 Substitute the original LinkBatch object with the new list
 	 * #6 Repeat from step #1
 	 *
-	 * @param $titles array of Title objects or strings
+	 * @param array $titles of Title objects or strings
 	 */
 	private function initFromTitles( $titles ) {
 		// Get validated and normalized title objects
@@ -621,7 +651,7 @@ class ApiPageSet extends ApiBase {
 
 	/**
 	 * Does the same as initFromTitles(), but is based on page IDs instead
-	 * @param $pageids array of page IDs
+	 * @param array $pageids of page IDs
 	 */
 	private function initFromPageIds( $pageids ) {
 		if ( !$pageids ) {
@@ -647,7 +677,7 @@ class ApiPageSet extends ApiBase {
 			$this->profileDBOut();
 		}
 
-		$this->initFromQueryResult( $res, $remaining, false );	// process PageIDs
+		$this->initFromQueryResult( $res, $remaining, false ); // process PageIDs
 
 		// Resolve any found redirects
 		$this->resolvePendingRedirects();
@@ -657,9 +687,9 @@ class ApiPageSet extends ApiBase {
 	 * Iterate through the result of the query on 'page' table,
 	 * and for each row create and store title object and save any extra fields requested.
 	 * @param $res ResultWrapper DB Query result
-	 * @param $remaining array of either pageID or ns/title elements (optional).
+	 * @param array $remaining of either pageID or ns/title elements (optional).
 	 *        If given, any missing items will go to $mMissingPageIDs and $mMissingTitles
-	 * @param $processTitles bool Must be provided together with $remaining.
+	 * @param bool $processTitles Must be provided together with $remaining.
 	 *        If true, treat $remaining as an array of [ns][title]
 	 *        If false, treat it as an array of [pageIDs]
 	 */
@@ -728,7 +758,7 @@ class ApiPageSet extends ApiBase {
 	/**
 	 * Does the same as initFromTitles(), but is based on revision IDs
 	 * instead
-	 * @param $revids array of revision IDs
+	 * @param array $revids of revision IDs
 	 */
 	private function initFromRevIDs( $revids ) {
 		if ( !$revids ) {
@@ -832,7 +862,7 @@ class ApiPageSet extends ApiBase {
 			$from = $this->mPendingRedirectIDs[$rdfrom]->getPrefixedText();
 			$to = Title::makeTitle( $row->rd_namespace, $row->rd_title, $row->rd_fragment, $row->rd_interwiki );
 			unset( $this->mPendingRedirectIDs[$rdfrom] );
-			if ( !isset( $this->mAllPages[$row->rd_namespace][$row->rd_title] ) ) {
+			if ( !$to->isExternal() && !isset( $this->mAllPages[$row->rd_namespace][$row->rd_title] ) ) {
 				$lb->add( $row->rd_namespace, $row->rd_title );
 			}
 			$this->mRedirectTitles[$from] = $to;
@@ -879,35 +909,36 @@ class ApiPageSet extends ApiBase {
 	 * This method validates access rights for the title,
 	 * and appends normalization values to the output.
 	 *
-	 * @param $titles array of Title objects or strings
+	 * @param array $titles of Title objects or strings
 	 * @return LinkBatch
 	 */
 	private function processTitlesArray( $titles ) {
-		$genderCache = GenderCache::singleton();
-		$genderCache->doTitlesArray( $titles, __METHOD__ );
-
+		$usernames = array();
 		$linkBatch = new LinkBatch();
 
 		foreach ( $titles as $title ) {
-			$titleObj = is_string( $title ) ? Title::newFromText( $title ) : $title;
+			if ( is_string( $title ) ) {
+				$titleObj = Title::newFromText( $title, $this->mDefaultNamespace );
+			} else {
+				$titleObj = $title;
+			}
 			if ( !$titleObj ) {
 				// Handle invalid titles gracefully
-				$this->mAllpages[0][$title] = $this->mFakePageId;
+				$this->mAllPages[0][$title] = $this->mFakePageId;
 				$this->mInvalidTitles[$this->mFakePageId] = $title;
 				$this->mFakePageId--;
 				continue; // There's nothing else we can do
 			}
 			$unconvertedTitle = $titleObj->getPrefixedText();
 			$titleWasConverted = false;
-			$iw = $titleObj->getInterwiki();
-			if ( strval( $iw ) !== '' ) {
+			if ( $titleObj->isExternal() ) {
 				// This title is an interwiki link.
-				$this->mInterwikiTitles[$titleObj->getPrefixedText()] = $iw;
+				$this->mInterwikiTitles[$unconvertedTitle] = $titleObj->getInterwiki();
 			} else {
 				// Variants checking
 				global $wgContLang;
 				if ( $this->mConvertTitles &&
-						count( $wgContLang->getVariants() ) > 1  &&
+						count( $wgContLang->getVariants() ) > 1 &&
 						!$titleObj->exists() ) {
 					// Language::findVariantLink will modify titleText and titleObj into
 					// the canonical variant if possible
@@ -941,7 +972,15 @@ class ApiPageSet extends ApiBase {
 			} elseif ( is_string( $title ) && $title !== $titleObj->getPrefixedText() ) {
 				$this->mNormalizedTitles[$title] = $titleObj->getPrefixedText();
 			}
+
+			// Need gender information
+			if ( MWNamespace::hasGenderDistinction( $titleObj->getNamespace() ) ) {
+				$usernames[] = $titleObj->getText();
+			}
 		}
+		// Get gender information
+		$genderCache = GenderCache::singleton();
+		$genderCache->doQuery( $usernames, __METHOD__ );
 
 		return $linkBatch;
 	}

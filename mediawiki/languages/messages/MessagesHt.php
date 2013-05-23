@@ -171,8 +171,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Montre kantite itlizatè k’ap swiv',
 'tog-oldsig' => 'Gade pou wè siyati ki egziste deja:',
 'tog-fancysig' => 'Konsidere siyati sa tankou yon wikitèks (san lyen ki ta otomatik)',
-'tog-externaleditor' => 'Itilize editè ki pa nan sistèm wikimedya pa defo',
-'tog-externaldiff' => 'Itilize yon konparatè ki pa nan sitsèm wikimedya pa defo',
 'tog-showjumplinks' => 'Pèmèt lyen aksesibilite « ale nan »',
 'tog-uselivepreview' => 'Itilize kout je an dirèk (sa mande JavaScrip) (Esperimantal)',
 'tog-forceeditsummary' => 'Notifye m lè m ap antre yon somè modifikasyon vid',
@@ -600,7 +598,7 @@ Pa pòte atansyon pou mesaj sa si kont sa kreye pa erè.',
 'loginlanguagelabel' => 'Lang : $1',
 'suspicious-userlogout' => 'Demand ou te fè pou dekonekte w te refize paske sanble li te voye pa yon navigatè ki fè erè oubyen li soti nan yon proksi pou kach.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Erè nou pa konnen nan fonksyon mail() PHP a.',
 
 # Change password dialog
@@ -1100,7 +1098,7 @@ Gade tou [[Special:WantedCategories|kategori moun mande]].',
 # Special:ListGroupRights
 'listgrouprights-members' => '(lis manm yo)',
 
-# E-mail user
+# Email user
 'emailuser' => 'Voye yon mesaj (imèl) pou itilizatè sa a',
 
 # Watchlist

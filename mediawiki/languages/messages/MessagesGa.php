@@ -124,8 +124,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Taispeán an méid úsáideoirí atá ag faire',
 'tog-oldsig' => 'Réamhamharc ar an síniú atá ann:',
 'tog-fancysig' => 'Sínithe bunúsacha mar vicítéacs (gan nasc uathoibríoch)',
-'tog-externaleditor' => 'Bain úsáid as eagarthóir seachtrach mar réamhshocrú (saineolaithe amháin, tá socrú speisialta de dhíth ort. [//www.mediawiki.org/wiki/Manual:External_editors Tuilleadh eolais.])',
-'tog-externaldiff' => 'Bain úsáid as difríocht sheachtrach mar réamhshocrú (saineolaithe amháin, tá socrú speisialta de dhíth ort. [//www.mediawiki.org/wiki/Manual:External_editors Tuilleadh eolais.])',
 'tog-showjumplinks' => 'Cumasaigh naisc insroichteachta “léim go dtí”',
 'tog-uselivepreview' => 'Bain úsáid as réamhamharc beo (JavaScript) (Turgnamhach)',
 'tog-forceeditsummary' => 'Cuir in iúl dom nuair a chuirim isteach achoimre eagair folamh',
@@ -557,7 +555,7 @@ Iontráil seoladh dea-fhormáidte le do thoil, nó glan an réimse sin.',
 'usernamehasherror' => 'Ní cheadaítear hais a úsáid in ainm úsáideora',
 'loginlanguagelabel' => 'Teanga: $1',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Earráid anaithnid i bhfeidhm mail() de chuid PHP',
 
 # Change password dialog
@@ -822,14 +820,6 @@ Bain triail as ''all:'' a chur roimh d'iarratas chun an t-inneachar ar fad (leat
 'powersearch-toggleall' => 'Uile',
 'powersearch-togglenone' => 'Tada',
 'searchdisabled' => "Tá brón orainn! Mhíchumasaíodh an cuardach téacs iomlán go sealadach chun luas an tsuímh a chosaint. Idir an dá linn, is féidir leat an cuardach Google anseo thíos a úsáid - b'fhéidir go bhfuil sé as dáta.",
-
-# Quickbar
-'qbsettings' => 'Sainroghanna an bosca uirlisí',
-'qbsettings-none' => 'Faic',
-'qbsettings-fixedleft' => 'Greamaithe ar chlé',
-'qbsettings-fixedright' => 'Greamaithe ar dheis',
-'qbsettings-floatingleft' => 'Ag faoileáil ar chlé',
-'qbsettings-floatingright' => 'Ag faoileáil ar dheis',
 
 # Preferences page
 'preferences' => 'Sainroghanna',
@@ -1254,7 +1244,7 @@ Féach freisin ar [[Special:WantedCategories|catagóirí faoi iarraidh]].',
 'listgrouprights-rights' => 'Cearta',
 'listgrouprights-members' => '(liostaigh baill)',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Níl aon seoladh maith ann',
 'mailnologintext' => 'Ní mór duit bheith  [[Special:UserLogin|logáilte isteach]]
 agus bheith le seoladh ríomhphoist bhailí i do chuid [[Special:Preferences|sainroghanna]]
@@ -1297,8 +1287,8 @@ agus beidh '''cló trom''' ar a theideal san [[Special:RecentChanges|liosta de n
 'watchnochange' => 'Níor athraíodh ceann ar bith de na leathanaigh atá ar do liosta faire,
 taobh istigh den tréimhse atá roghnaithe agat.',
 'watchlist-details' => 'Tá tú ag faire ar {{PLURAL:$1|leathanach amháin|$1 leathanaigh}}, gan leathanaigh phlé a chur san áireamh.',
-'wlheader-enotif' => '* Cumasaíodh fógraí riomhphoist.',
-'wlheader-showupdated' => "* Tá '''cló trom''' ar leathanaigh a athraíodh ón uair is deireanaí a d'fhéach tú orthu.",
+'wlheader-enotif' => 'Cumasaíodh fógraí riomhphoist.',
+'wlheader-showupdated' => "Tá '''cló trom''' ar leathanaigh a athraíodh ón uair is deireanaí a d'fhéach tú orthu.",
 'watchmethod-recent' => 'ag seiceáil na athruithe deireanacha ar do chuid leathanaigh faire',
 'watchmethod-list' => 'ag seiceáil na leathanaigh faire ar do chuid athruithe deireanacha',
 'watchlistcontains' => 'Tá {{PLURAL:$1|leathanach amháin|$1 leathanaigh}} ar do liosta faire.',
@@ -1780,13 +1770,8 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 'spambot_username' => 'MediaWiki turscar glanadh',
 
 # Skin names
-'skinname-standard' => 'Clasaiceach',
-'skinname-nostalgia' => 'Sean-nós',
 'skinname-cologneblue' => 'Gorm Köln',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MoChraiceann',
-'skinname-chick' => 'Sicín',
-'skinname-simple' => 'Simplí',
 'skinname-modern' => 'Nua-aimseartha',
 'skinname-vector' => 'Veicteoir',
 
@@ -1860,7 +1845,7 @@ Beidh na cinn eile ceilte de réir réamhshocraithe.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Leithead',
 'exif-imagelength' => 'Airde',
 'exif-bitspersample' => 'Gíotáin sa chomhpháirt',
@@ -1977,7 +1962,7 @@ Beidh na cinn eile ceilte de réir réamhshocraithe.
 'exif-languagecode' => 'Teanga',
 'exif-iimcategory' => 'Catagóir',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Neamh-chomhbhrúite',
 
 'exif-unknowndate' => 'Dáta anaithnid',
@@ -2120,7 +2105,7 @@ cúlra i bhfócas)',
 'monthsall' => 'gach mí',
 'limitall' => 'iad uile',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Deimhnigh do ríomhsheoladh',
 'confirmemail_text' => 'Tá sé de dhíth an an vicí seo do ríomhsheoladh a bhailíochtú sula n-úsáideann tú na gnéithe ríomhphoist. Brúigh an cnaipe seo thíos chun teachtaireacht deimhnithe a sheoladh chuig do chuntas ríomhphoist. Beidh nasc ann sa chomhad ina mbeidh cód áirithe; lódáil an nasc i do bhrabhsálaí chun deimhniú go bhfuil do ríomhsheoladh bailí.',
 'confirmemail_send' => 'Seol cód deimhnithe',
@@ -2208,11 +2193,6 @@ Rachaidh an cód deimhnithe seo as feidhm ag $4.',
 'version-software' => 'Bogearraí suiteáilte',
 'version-software-version' => 'Leagan',
 'version-entrypoints-header-url' => 'URL',
-
-# Special:FilePath
-'filepath' => 'Cosán comhaid',
-'filepath-page' => 'Comhad:',
-'filepath-submit' => 'Gabh',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'Ainm comhaid:',

@@ -38,14 +38,14 @@ class LockManagerGroup {
 	protected $managers = array();
 
 	/**
-	 * @param $domain string Domain (usually wiki ID)
+	 * @param string $domain Domain (usually wiki ID)
 	 */
 	protected function __construct( $domain ) {
 		$this->domain = $domain;
 	}
 
 	/**
-	 * @param $domain string Domain (usually wiki ID)
+	 * @param string $domain Domain (usually wiki ID)
 	 * @return LockManagerGroup
 	 */
 	public static function singleton( $domain = false ) {
@@ -97,8 +97,8 @@ class LockManagerGroup {
 			$class = $config['class'];
 			unset( $config['class'] ); // lock manager won't need this
 			$this->managers[$name] = array(
-				'class'    => $class,
-				'config'   => $config,
+				'class' => $class,
+				'config' => $config,
 				'instance' => null
 			);
 		}

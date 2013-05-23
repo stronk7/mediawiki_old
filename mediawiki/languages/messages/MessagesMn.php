@@ -72,8 +72,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Харж буй хэрэглэгчдийн тоог үзүүлэх',
 'tog-oldsig' => 'Одоогийн гарын үсэг:',
 'tog-fancysig' => 'Түүхий гарын үсэг （автомат холбоосгүй）',
-'tog-externaleditor' => 'Үндсэн горимд нэмэлт засварлах багаж хэрэглэх（экспертүүдэд зориулагдсан, таны компьютерт тусгай тохиргоо шаардлагатай）',
-'tog-externaldiff' => 'Үндсэн горим гадаад харьцуулагч программ ашиглах （экспертүүдэд зориулав, таны компьютерт тусгай тохиргоо шаардлагатай）',
 'tog-showjumplinks' => '"Шууд очих" хялбар линкүүдийг ажиллагаатай болгох',
 'tog-uselivepreview' => 'Шууд байдлаар урьдчилж харах （ЖаваСкрипт） （Туршилт）',
 'tog-forceeditsummary' => 'Товч агуулгын талбарыг хоосон үлдээхэд надад мэдэгдэх',
@@ -550,7 +548,7 @@ $2',
 'loginlanguagelabel' => 'Хэл: $1',
 'suspicious-userlogout' => 'Таны гарах хүсэлт нь эвдэрхий хөтөч буюу кэшлэгч проксигоор явуулсан мэт харагдаж байгаа тул зөвшөөрсөнгүй.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => "PHP's mail() функцэд үл танигдах алдаа гарлаа.",
 'user-mail-no-addy' => 'Цахин шуудангийн хаягийг оруулалгүйгээр шуудан явуулахыг оролдлоо.',
 
@@ -1097,15 +1095,6 @@ $1",
 Та одоохондоо Google-г ашиглан хайх боломжтой.
 Анхааруулж хэлэхэд, тэдний {{SITENAME}}-н агуулгын индексүүд хоцрогдсон байж магадгүй.',
 
-# Quickbar
-'qbsettings' => 'Шуурхай тавцан',
-'qbsettings-none' => 'Байхгүй',
-'qbsettings-fixedleft' => 'Зүүн талд бэхжүүлсэн',
-'qbsettings-fixedright' => 'Баруун талд бэхжүүлсэн',
-'qbsettings-floatingleft' => 'Зүүн талд хөвсөн',
-'qbsettings-floatingright' => 'Баруун талд хөвсөн',
-'qbsettings-directionality' => 'Тухай хэлний барилаас хамаарч хэлбэрийг бий болгох',
-
 # Preferences page
 'preferences' => 'Хэрэглэгчийн тохиргоо',
 'mypreferences' => 'Миний тохиргоо',
@@ -1224,7 +1213,7 @@ $1 тэмдэгтээс богино байх ёстой.',
 'prefs-displaywatchlist' => 'Харагдацийн тохиргоо',
 'prefs-diffs' => 'Ялгаанууд',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'Цахим шуудан хүчинтэй байна',
 'email-address-validity-invalid' => 'и-майл хаягаа зөв оруулна уу.',
 
@@ -1659,7 +1648,6 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization -г харна уу.',
 'http-read-error' => 'HTTP-г унших алдаа.',
 'http-timed-out' => 'HTTP хүсэлтийн хугацаа дуусав.',
 'http-curl-error' => 'Дараах URL-г авчрахад алдаа гарав: $1',
-'http-host-unreachable' => 'URL-д хүрч чадсангүй.',
 'http-bad-status' => 'HTTP хандалтын үед асуудал үүсэв: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1989,7 +1977,7 @@ URL нь зөв болон сайт ажиллагаатай байгаа эсэ
 'listgrouprights-addgroup-self-all' => 'Бүх бүлгийг өөрийн бүртгэлд нэмэх',
 'listgrouprights-removegroup-self-all' => 'Өөрийн бүртгэлээс бүх бүлгийг хасах',
 
-# E-mail user
+# Email user
 'mailnologin' => 'илгээх хаяг байхгүй',
 'mailnologintext' => 'Та бусад хэрэглэгчдэд мэйл явуулахын тулд өөрийн [[Special:Preferences|хувийн тохируулгадаа]] мэйлээ оруулсан, мөн [[Special:UserLogin|нэвтэрсэн]] байх шаардлагатай.',
 'emailuser' => 'Энэ хэрэглэгчид мэйл илгээх',
@@ -2047,8 +2035,8 @@ URL нь зөв болон сайт ажиллагаатай байгаа эсэ
 'notvisiblerev' => 'Засвар устгагдлаа',
 'watchnochange' => 'Дурьдагдсан хугацаанд таны хянаж буй хуудсуудад өөрчлөлт ороогүй байна.',
 'watchlist-details' => 'Хяналтын жагсаалтад {{PLURAL:$1|$1 хуудас|$1 хуудаснууд}} байна.',
-'wlheader-enotif' => '* И-мэйл мэдэгдэл хүчинтэй боллоо.',
-'wlheader-showupdated' => "* Таны хамгийн сүүлд айлчилснаас хойш өөрчлөгдсөн хуудсууд '''тодоор''' бичигдсэн байгаа",
+'wlheader-enotif' => 'И-мэйл мэдэгдэл хүчинтэй боллоо.',
+'wlheader-showupdated' => "Таны хамгийн сүүлд айлчилснаас хойш өөрчлөгдсөн хуудсууд '''тодоор''' бичигдсэн байгаа",
 'watchmethod-recent' => 'хяналтад буй хуудсуудад шинэ өөрчлөлт орсон эсэхийг шалгаж байна',
 'watchmethod-list' => 'хяналтад буй хуудсуудад саяхан өөрчлөлт орсон эсэхийг шалгаж байна',
 'watchlistcontains' => 'Таны хянах жагсаалтанд $1 хуудас байна.',
@@ -2886,7 +2874,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Өргөн',
 'exif-imagelength' => 'Өндөр',
 'exif-bitspersample' => 'Бүрэлдэхүүн хэсэг бүр дэх бит',
@@ -3040,7 +3028,7 @@ $1',
 'exif-giffilecomment' => 'GIF файлын тэмдэглэгээ',
 'exif-intellectualgenre' => 'Зүйлийн төрөл',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Шахагдаагүй',
 
 'exif-unknowndate' => 'Мэдэгдэхгүй огноо',
@@ -3212,7 +3200,7 @@ $1',
 'monthsall' => 'бүгдийг',
 'limitall' => 'бүгдийг',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Мэйл хаягийг баталгаажуулах',
 'confirmemail_noemail' => 'Та өөрийн [[Special:Preferences|хэрэглэгчийн тохиргоондоо]] хүчинтэй мэйл хаяг оруулаагүй байна.',
 'confirmemail_text' => '{{SITENAME}} нь мэйлийн функцуудыг ашиглахын тулд мэйл хаягаа баталгаажуулахыг хэрэглэгчдээс шаарддаг болно.
@@ -3378,13 +3366,6 @@ $5
 'version-software' => 'Суулгасан программ',
 'version-software-product' => 'Бүтээгдэхүүн',
 'version-software-version' => 'Хувилбар',
-
-# Special:FilePath
-'filepath' => 'Файлын зам',
-'filepath-page' => 'Файл:',
-'filepath-submit' => 'Явах',
-'filepath-summary' => 'Энэхүү тусгай хуудас нь файлын бүтэн замыг дуудна.
-Зургууд нь бүтэн хэмжээгээрээ гарах ба бусад файлын төрлүүд нь тохирох програмаараа шууд нээгдэнэ.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Давхардсан файлуудыг хайх',

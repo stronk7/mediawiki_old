@@ -40,8 +40,8 @@ interface Content {
 	 *   building a full text search index. If no useful representation exists,
 	 *   this method returns an empty string.
 	 *
-	 * @todo: test that this actually works
-	 * @todo: make sure this also works with LuceneSearch / WikiSearch
+	 * @todo Test that this actually works
+	 * @todo Make sure this also works with LuceneSearch / WikiSearch
 	 */
 	public function getTextForSearchIndex();
 
@@ -51,11 +51,11 @@ interface Content {
 	 * @return string|false The wikitext to include when another page includes this
 	 * content, or false if the content is not includable in a wikitext page.
 	 *
-	 * @todo allow native handling, bypassing wikitext representation, like
-	 *    for includable special pages.
-	 * @todo allow transclusion into other content models than Wikitext!
-	 * @todo used in WikiPage and MessageCache to get message text. Not so
-	 *    nice. What should we use instead?!
+	 * @todo Allow native handling, bypassing wikitext representation, like
+	 *  for includable special pages.
+	 * @todo Allow transclusion into other content models than Wikitext!
+	 * @todo Used in WikiPage and MessageCache to get message text. Not so
+	 *  nice. What should we use instead?!
 	 */
 	public function getWikitextForTransclusion();
 
@@ -65,7 +65,7 @@ interface Content {
 	 *
 	 * @since 1.21
 	 *
-	 * @param $maxLength int Maximum length of the summary text
+	 * @param int $maxLength Maximum length of the summary text
 	 * @return string The summary text
 	 */
 	public function getTextForSummary( $maxLength = 250 );
@@ -148,7 +148,7 @@ interface Content {
 	 *
 	 * @since 1.21
 	 *
-	 * @param $format string The format to check
+	 * @param string $format The format to check
 	 * @return bool Whether the format is supported
 	 */
 	public function isSupportedFormat( $format );
@@ -231,7 +231,7 @@ interface Content {
 	 *
 	 * @return Content. A copy of this object
 	 */
-	public function copy( );
+	public function copy();
 
 	/**
 	 * Returns true if this content is countable as a "real" wiki page, provided
@@ -240,7 +240,7 @@ interface Content {
 	 *
 	 * @since 1.21
 	 *
-	 * @param $hasLinks Bool: If it is known whether this content contains
+	 * @param bool $hasLinks If it is known whether this content contains
 	 *    links, provide this information here, to avoid redundant parsing to
 	 *    find out.
 	 * @return boolean
@@ -335,7 +335,7 @@ interface Content {
 	 * target is hit in order to provide (hopefully) the Title of the final
 	 * destination instead of another redirect.
 	 *
-	 * There is usually no need to override the default behaviour, subclasses that
+	 * There is usually no need to override the default behavior, subclasses that
 	 * want to implement redirects should override getRedirectTarget().
 	 *
 	 * @since 1.21
@@ -371,7 +371,7 @@ interface Content {
 	 *
 	 * @since 1.21
 	 *
-	 * @param $sectionId string The section's ID, given as a numeric string.
+	 * @param string $sectionId The section's ID, given as a numeric string.
 	 *    The ID "0" retrieves the section before the first heading, "1" the
 	 *    text between the first heading (included) and the second heading
 	 *    (excluded), etc.
@@ -388,7 +388,7 @@ interface Content {
 	 *
 	 * @param $section null/false or a section number (0, 1, 2, T1, T2...), or "new"
 	 * @param $with Content: new content of the section
-	 * @param $sectionTitle String: new section's subject, only if $section is 'new'
+	 * @param string $sectionTitle new section's subject, only if $section is 'new'
 	 * @return string Complete article text, or null if error
 	 */
 	public function replaceSection( $section, Content $with, $sectionTitle = '' );
@@ -491,8 +491,8 @@ interface Content {
 	 * Converts this content object into another content object with the given content model,
 	 * if that is possible.
 	 *
-	 * @param String  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
-	 * @param String  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
+	 * @param string  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
+	 * @param string  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
 	 * not allowed, full round-trip conversion is expected to work without losing information.
 	 *
 	 * @return Content|bool A content object with the content model $toModel, or false if

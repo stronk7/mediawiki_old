@@ -23,7 +23,7 @@
  */
 
 $optionsWithArgs = RecompressTracked::getOptionsWithArgs();
-require( __DIR__ . '/../commandLine.inc' );
+require __DIR__ . '/../commandLine.inc';
 
 if ( count( $args ) < 1 ) {
 	echo "Usage: php recompressTracked.php [options] <cluster> [... <cluster>...]
@@ -279,7 +279,7 @@ class RecompressTracked {
 	 */
 	function dispatchToSlave( $slaveId, $args ) {
 		$args = (array)$args;
-		$cmd = implode( ' ',  $args );
+		$cmd = implode( ' ', $args );
 		fwrite( $this->slavePipes[$slaveId], "$cmd\n" );
 	}
 
@@ -523,7 +523,7 @@ class RecompressTracked {
 	 *
 	 * Write the new URL to the text table and set the bt_moved flag.
 	 *
-	 * This is done in a single transaction to provide restartable behaviour
+	 * This is done in a single transaction to provide restartable behavior
 	 * without data loss.
 	 *
 	 * The transaction is kept short to reduce locking.

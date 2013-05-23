@@ -46,7 +46,7 @@ class JavaScriptContent extends TextContent {
 	 */
 	public function preSaveTransform( Title $title, User $user, ParserOptions $popts ) {
 		global $wgParser;
-		// @todo: make pre-save transformation optional for script pages
+		// @todo Make pre-save transformation optional for script pages
 		// See bug #32858
 
 		$text = $this->getNativeData();
@@ -55,11 +55,10 @@ class JavaScriptContent extends TextContent {
 		return new JavaScriptContent( $pst );
 	}
 
-
-	protected function getHtml( ) {
+	protected function getHtml() {
 		$html = "";
 		$html .= "<pre class=\"mw-code mw-js\" dir=\"ltr\">\n";
-		$html .= $this->getHighlightHtml( );
+		$html .= $this->getHighlightHtml();
 		$html .= "\n</pre>\n";
 
 		return $html;

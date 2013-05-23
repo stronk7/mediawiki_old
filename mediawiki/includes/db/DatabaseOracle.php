@@ -206,7 +206,7 @@ class DatabaseOracle extends DatabaseBase {
 	}
 
 	function __destruct() {
-		if ($this->mOpened) {
+		if ( $this->mOpened ) {
 			wfSuppressWarnings();
 			$this->close();
 			wfRestoreWarnings();
@@ -324,7 +324,7 @@ class DatabaseOracle extends DatabaseBase {
 
 		// handle some oracle specifics
 		// remove AS column/table/subquery namings
-		if( !$this->getFlag( DBO_DDLMODE ) ) {
+		if ( !$this->getFlag( DBO_DDLMODE ) ) {
 			$sql = preg_replace( '/ as /i', ' ', $sql );
 		}
 
@@ -456,15 +456,15 @@ class DatabaseOracle extends DatabaseBase {
 	 * If errors are explicitly ignored, returns NULL on failure
 	 * @return bool
 	 */
-	function indexInfo( $table, $index, $fname = 'DatabaseOracle::indexExists' ) {
+	function indexInfo( $table, $index, $fname = __METHOD__ ) {
 		return false;
 	}
 
-	function indexUnique( $table, $index, $fname = 'DatabaseOracle::indexUnique' ) {
+	function indexUnique( $table, $index, $fname = __METHOD__ ) {
 		return false;
 	}
 
-	function insert( $table, $a, $fname = 'DatabaseOracle::insert', $options = array() ) {
+	function insert( $table, $a, $fname = __METHOD__, $options = array() ) {
 		if ( !count( $a ) ) {
 			return true;
 		}
@@ -493,7 +493,7 @@ class DatabaseOracle extends DatabaseBase {
 		return $retVal;
 	}
 
-	private function fieldBindStatement ( $table, $col, &$val, $includeCol = false ) {
+	private function fieldBindStatement( $table, $col, &$val, $includeCol = false ) {
 		$col_info = $this->fieldInfoMulti( $table, $col );
 		$col_type = $col_info != false ? $col_info->type() : 'CONSTANT';
 
@@ -624,7 +624,7 @@ class DatabaseOracle extends DatabaseBase {
 		oci_free_statement( $stmt );
 	}
 
-	function insertSelect( $destTable, $srcTable, $varMap, $conds, $fname = 'DatabaseOracle::insertSelect',
+	function insertSelect( $destTable, $srcTable, $varMap, $conds, $fname = __METHOD__,
 		$insertOptions = array(), $selectOptions = array() )
 	{
 		$destTable = $this->tableName( $destTable );
@@ -677,7 +677,7 @@ class DatabaseOracle extends DatabaseBase {
 		Using uppercase because that's the only way Oracle can handle
 		quoted tablenames
 		*/
-		switch( $name ) {
+		switch ( $name ) {
 			case 'user':
 				$name = 'MWUSER';
 				break;
@@ -691,7 +691,7 @@ class DatabaseOracle extends DatabaseBase {
 
 	function tableNameInternal( $name ) {
 		$name = $this->tableName( $name );
-		return preg_replace( '/.*\.(.*)/', '$1', $name);
+		return preg_replace( '/.*\.(.*)/', '$1', $name );
 	}
 	/**
 	 * Return the next in a sequence, save the value for retrieval via insertId()
@@ -756,14 +756,14 @@ class DatabaseOracle extends DatabaseBase {
 
 	function unionQueries( $sqls, $all ) {
 		$glue = ' UNION ALL ';
-		return 'SELECT * ' . ( $all ? '':'/* UNION_UNIQUE */ ' ) . 'FROM (' . implode( $glue, $sqls ) . ')';
+		return 'SELECT * ' . ( $all ? '' : '/* UNION_UNIQUE */ ' ) . 'FROM (' . implode( $glue, $sqls ) . ')';
 	}
 
 	function wasDeadlock() {
 		return $this->lastErrno() == 'OCI-00060';
 	}
 
-	function duplicateTableStructure( $oldName, $newName, $temporary = false, $fname = 'DatabaseOracle::duplicateTableStructure' ) {
+	function duplicateTableStructure( $oldName, $newName, $temporary = false, $fname = __METHOD__ ) {
 		$temporary = $temporary ? 'TRUE' : 'FALSE';
 
 		$newName = strtoupper( $newName );
@@ -776,7 +776,7 @@ class DatabaseOracle extends DatabaseBase {
 		return $this->doQuery( "BEGIN DUPLICATE_TABLE( '$tabName', '$oldPrefix', '$newPrefix', $temporary ); END;" );
 	}
 
-	function listTables( $prefix = null, $fname = 'DatabaseOracle::listTables' ) {
+	function listTables( $prefix = null, $fname = __METHOD__ ) {
 		$listWhere = '';
 		if ( !empty( $prefix ) ) {
 			$listWhere = ' AND table_name LIKE \'' . strtoupper( $prefix ) . '%\'';
@@ -791,17 +791,18 @@ class DatabaseOracle extends DatabaseBase {
 		$endArray[] = strtoupper( $prefix . 'PAGE' );
 		$endArray[] = strtoupper( $prefix . 'IMAGE' );
 		$fixedOrderTabs = $endArray;
-		while ( ($row = $result->fetchRow()) !== false ) {
-			if ( !in_array( $row['table_name'], $fixedOrderTabs ) )
+		while ( ( $row = $result->fetchRow() ) !== false ) {
+			if ( !in_array( $row['table_name'], $fixedOrderTabs ) ) {
 				$endArray[] = $row['table_name'];
+			}
 		}
 
 		return $endArray;
 	}
 
-	public function dropTable( $tableName, $fName = 'DatabaseOracle::dropTable' ) {
+	public function dropTable( $tableName, $fName = __METHOD__ ) {
 		$tableName = $this->tableName( $tableName );
-		if( !$this->tableExists( $tableName ) ) {
+		if ( !$this->tableExists( $tableName ) ) {
 			return false;
 		}
 
@@ -836,7 +837,7 @@ class DatabaseOracle extends DatabaseBase {
 	/**
 	 * @return string wikitext of a link to the server software's web site
 	 */
-	public static function getSoftwareLink() {
+	public function getSoftwareLink() {
 		return '[http://www.oracle.com/ Oracle]';
 	}
 
@@ -856,7 +857,7 @@ class DatabaseOracle extends DatabaseBase {
 	 * Query whether a given index exists
 	 * @return bool
 	 */
-	function indexExists( $table, $index, $fname = 'DatabaseOracle::indexExists' ) {
+	function indexExists( $table, $index, $fname = __METHOD__ ) {
 		$table = $this->tableName( $table );
 		$table = strtoupper( $this->removeIdentifierQuotes( $table ) );
 		$index = strtoupper( $index );
@@ -906,7 +907,7 @@ class DatabaseOracle extends DatabaseBase {
 		if ( is_array( $table ) ) {
 			$table = array_map( array( &$this, 'tableNameInternal' ), $table );
 			$tableWhere = 'IN (';
-			foreach( $table as &$singleTable ) {
+			foreach ( $table as &$singleTable ) {
 				$singleTable = $this->removeIdentifierQuotes( $singleTable );
 				if ( isset( $this->mFieldInfoCache["$singleTable.$field"] ) ) {
 					return $this->mFieldInfoCache["$singleTable.$field"];
@@ -919,7 +920,7 @@ class DatabaseOracle extends DatabaseBase {
 			if ( isset( $this->mFieldInfoCache["$table.$field"] ) ) {
 				return $this->mFieldInfoCache["$table.$field"];
 			}
-			$tableWhere = '= \''.$table.'\'';
+			$tableWhere = '= \'' . $table . '\'';
 		}
 
 		$fieldInfoStmt = oci_parse( $this->mConn, 'SELECT * FROM wiki_field_info_full WHERE table_name ' . $tableWhere . ' and column_name = \'' . $field . '\'' );
@@ -931,7 +932,7 @@ class DatabaseOracle extends DatabaseBase {
 		$res = new ORAResult( $this, $fieldInfoStmt );
 		if ( $res->numRows() == 0 ) {
 			if ( is_array( $table ) ) {
-				foreach( $table as &$singleTable ) {
+				foreach ( $table as &$singleTable ) {
 					$this->mFieldInfoCache["$singleTable.$field"] = false;
 				}
 			} else {
@@ -960,12 +961,12 @@ class DatabaseOracle extends DatabaseBase {
 		return $this->fieldInfoMulti( $table, $field );
 	}
 
-	protected function doBegin( $fname = 'DatabaseOracle::begin' ) {
+	protected function doBegin( $fname = __METHOD__ ) {
 		$this->mTrxLevel = 1;
 		$this->doQuery( 'SET CONSTRAINTS ALL DEFERRED' );
 	}
 
-	protected function doCommit( $fname = 'DatabaseOracle::commit' ) {
+	protected function doCommit( $fname = __METHOD__ ) {
 		if ( $this->mTrxLevel ) {
 			$ret = oci_commit( $this->mConn );
 			if ( !$ret ) {
@@ -976,7 +977,7 @@ class DatabaseOracle extends DatabaseBase {
 		}
 	}
 
-	protected function doRollback( $fname = 'DatabaseOracle::rollback' ) {
+	protected function doRollback( $fname = __METHOD__ ) {
 		if ( $this->mTrxLevel ) {
 			oci_rollback( $this->mConn );
 			$this->mTrxLevel = 0;
@@ -986,7 +987,7 @@ class DatabaseOracle extends DatabaseBase {
 
 	/* defines must comply with ^define\s*([^\s=]*)\s*=\s?'\{\$([^\}]*)\}'; */
 	function sourceStream( $fp, $lineCallback = false, $resultCallback = false,
-		$fname = 'DatabaseOracle::sourceStream', $inputCallback = false ) {
+		$fname = __METHOD__, $inputCallback = false ) {
 		$cmd = '';
 		$done = false;
 		$dollarquote = false;
@@ -1121,16 +1122,16 @@ class DatabaseOracle extends DatabaseBase {
 		}
 	}
 
-	private function wrapConditionsForWhere ( $table, $conds, $parentCol = null ) {
+	private function wrapConditionsForWhere( $table, $conds, $parentCol = null ) {
 		$conds2 = array();
 		foreach ( $conds as $col => $val ) {
 			if ( is_array( $val ) ) {
-				$conds2[$col] = $this->wrapConditionsForWhere ( $table, $val, $col );
+				$conds2[$col] = $this->wrapConditionsForWhere( $table, $val, $col );
 			} else {
 				if ( is_numeric( $col ) && $parentCol != null ) {
-					$this->wrapFieldForWhere ( $table, $parentCol, $val );
+					$this->wrapFieldForWhere( $table, $parentCol, $val );
 				} else {
-					$this->wrapFieldForWhere ( $table, $col, $val );
+					$this->wrapFieldForWhere( $table, $col, $val );
 				}
 				$conds2[$col] = $val;
 			}
@@ -1138,7 +1139,7 @@ class DatabaseOracle extends DatabaseBase {
 		return $conds2;
 	}
 
-	function selectRow( $table, $vars, $conds, $fname = 'DatabaseOracle::selectRow', $options = array(), $join_conds = array() ) {
+	function selectRow( $table, $vars, $conds, $fname = __METHOD__, $options = array(), $join_conds = array() ) {
 		if ( is_array( $conds ) ) {
 			$conds = $this->wrapConditionsForWhere( $table, $conds );
 		}
@@ -1151,7 +1152,7 @@ class DatabaseOracle extends DatabaseBase {
 	 *
 	 * @private
 	 *
-	 * @param $options Array: an associative array of options to be turned into
+	 * @param array $options an associative array of options to be turned into
 	 *              an SQL query, valid keys are listed in the function.
 	 * @return array
 	 */
@@ -1187,7 +1188,7 @@ class DatabaseOracle extends DatabaseBase {
 		return array( $startOpts, $useIndex, $preLimitTail, $postLimitTail );
 	}
 
-	public function delete( $table, $conds, $fname = 'DatabaseOracle::delete' ) {
+	public function delete( $table, $conds, $fname = __METHOD__ ) {
 		if ( is_array( $conds ) ) {
 			$conds = $this->wrapConditionsForWhere( $table, $conds );
 		}
@@ -1210,7 +1211,7 @@ class DatabaseOracle extends DatabaseBase {
 		return parent::delete( $table, $conds, $fname );
 	}
 
-	function update( $table, $values, $conds, $fname = 'DatabaseOracle::update', $options = array() ) {
+	function update( $table, $values, $conds, $fname = __METHOD__, $options = array() ) {
 		global $wgContLang;
 
 		$table = $this->tableName( $table );

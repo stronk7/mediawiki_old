@@ -35,22 +35,22 @@ class ApiPurge extends ApiBase {
 
 	/**
 	 * Add all items from $values into the result
-	 * @param $result array output
-	 * @param $values array values to add
-	 * @param $flag string the name of the boolean flag to mark this element
-	 * @param $name string if given, name of the value
+	 * @param array $result output
+	 * @param array $values values to add
+	 * @param string $flag the name of the boolean flag to mark this element
+	 * @param string $name if given, name of the value
 	 */
 	private static function addValues( array &$result, $values, $flag = null, $name = null ) {
 		foreach ( $values as $val ) {
-			if( $val instanceof Title ) {
+			if ( $val instanceof Title ) {
 				$v = array();
 				ApiQueryBase::addTitleInfo( $v, $val );
-			} elseif( $name !== null ) {
+			} elseif ( $name !== null ) {
 				$v = array( $name => $val );
 			} else {
 				$v = $val;
 			}
-			if( $flag !== null ) {
+			if ( $flag !== null ) {
 				$v[$flag] = '';
 			}
 			$result[] = $v;
@@ -158,7 +158,7 @@ class ApiPurge extends ApiBase {
 	}
 
 	public function getParamDescription() {
-		return $this->getPageSet()->getParamDescription()
+		return $this->getPageSet()->getFinalParamDescription()
 			+ array( 'forcelinkupdate' => 'Update the links tables' );
 	}
 
@@ -204,7 +204,7 @@ class ApiPurge extends ApiBase {
 	public function getPossibleErrors() {
 		return array_merge(
 			parent::getPossibleErrors(),
-			$this->getPageSet()->getPossibleErrors()
+			$this->getPageSet()->getFinalPossibleErrors()
 		);
 	}
 

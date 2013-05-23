@@ -22,7 +22,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that rebuilds link tracking tables from scratch.
@@ -58,4 +58,4 @@ class RebuildAll extends Maintenance {
 }
 
 $maintClass = "RebuildAll";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

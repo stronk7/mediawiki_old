@@ -61,7 +61,6 @@ define( 'DB_READ', -1 );
 define( 'DB_WRITE', -2 );
 define( 'DB_LAST', -3 ); # deprecated since 2008, usage throws exception
 
-
 /**@{
  * Virtual namespaces; don't appear in the page database
  */
@@ -138,7 +137,7 @@ define( 'MEDIATYPE_ARCHIVE',    'ARCHIVE' );     // archive file (zip, tar, etc)
  */
 define( 'AV_NO_VIRUS', 0 );  #scan ok, no virus found
 define( 'AV_VIRUS_FOUND', 1 );  #virus found!
-define( 'AV_SCAN_ABORTED', -1 );  #scan aborted, the file is probably imune
+define( 'AV_SCAN_ABORTED', -1 );  #scan aborted, the file is probably immune
 define( 'AV_SCAN_FAILED', false );  #scan failed (scanner not found or error in scanner)
 /**@}*/
 
@@ -198,14 +197,14 @@ define( 'EDIT_AUTOSUMMARY', 64 );
 define( 'LIST_COMMA', 0 );
 define( 'LIST_AND', 1 );
 define( 'LIST_SET', 2 );
-define( 'LIST_NAMES', 3);
-define( 'LIST_OR', 4);
+define( 'LIST_NAMES', 3 );
+define( 'LIST_OR', 4 );
 /**@}*/
 
 /**
  * Unicode and normalisation related
  */
-require_once __DIR__.'/normal/UtfNormalDefines.php';
+require_once __DIR__ . '/normal/UtfNormalDefines.php';
 
 /**@{
  * Hook support constants
@@ -236,11 +235,6 @@ define( 'OT_PLAIN', 4 );
 define( 'SFH_NO_HASH', 1 );
 define( 'SFH_OBJECT_ARGS', 2 );
 /**@}*/
-
-/**
- * Flags for Parser::setLinkHook
- */
-define( 'SLH_PATTERN', 1 );
 
 /**
  * Flags for Parser::replaceLinkHolders

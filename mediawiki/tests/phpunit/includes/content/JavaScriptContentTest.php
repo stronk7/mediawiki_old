@@ -137,7 +137,7 @@ class JavaScriptContentTest extends TextContentTest {
 	}
 
 	/**
-	 * @todo: test needs database!
+	 * @todo Test needs database!
 	 */
 	/*
 	public function getRedirectChain() {
@@ -147,7 +147,7 @@ class JavaScriptContentTest extends TextContentTest {
 	*/
 
 	/**
-	 * @todo: test needs database!
+	 * @todo Test needs database!
 	 */
 	/*
 	public function getUltimateRedirectTarget() {
@@ -269,5 +269,4 @@ class JavaScriptContentTest extends TextContentTest {
 			array( new JavaScriptContent( "hallo" ), new JavaScriptContent( "HALLO" ), false ),
 		);
 	}
-
 }

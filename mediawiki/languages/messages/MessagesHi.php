@@ -217,8 +217,6 @@ $messages = array(
 'tog-shownumberswatching' => 'ध्यान रखने वाले सदस्यों की संख्या दिखाएँ',
 'tog-oldsig' => 'वर्तमान हस्ताक्षर:',
 'tog-fancysig' => 'हस्ताक्षर का विकिपाठ के समान उपयोग करें (बिना स्वचालित कड़ी के)',
-'tog-externaleditor' => 'डिफ़ॉल्ट रूप से बाह्य सम्पादक का उपयोग करें (केवल विशेषज्ञों के लिए, इसके लिए संगणक पर विशेष जमाव चाहिए होंगे। [//www.mediawiki.org/wiki/Manual:External_editors अधिक जानकारी।])',
-'tog-externaldiff' => 'डिफ़ॉल्ट रूप से बाह्य अन्तर का उपयोग करें (केवल विशेषज्ञों के लिए, इसके लिए संगणक पर विशेष जमाव चाहिए होंगे। [//www.mediawiki.org/wiki/Manual:External_editors अधिक जानकारी।])',
 'tog-showjumplinks' => '"की ओर जाएं" कड़ियाँ उपलब्ध कराएँ',
 'tog-uselivepreview' => 'सजीवन झलक का उपयोग करें (जावास्क्रिप्ट चाहिए) (प्रयोगक्षम)',
 'tog-forceeditsummary' => 'यदि बदलाव सारांश ना दिया गया हो तो मुझे सूचित करें',
@@ -693,7 +691,7 @@ $2',
 'loginlanguagelabel' => 'भाषा: $1',
 'suspicious-userlogout' => 'अपका लॉग आउट करने का अनुरोध अस्वीकृत कर दिया गया है क्योंकि ऐसा प्रतीत होता है कि यह किसी खराब ब्राउज़र या कैश करने वाली प्रॉक्सी द्वारा भेजा गया था।',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHP के mail() फ़ंक्शन में अज्ञात त्रुटि हुई।',
 'user-mail-no-addy' => 'ई-मेल पते के बिना ई-मेल भेजने की कोशिश की।',
 
@@ -1237,15 +1235,6 @@ $1",
 आप गूगल से खोज कर सकते हैं।
 ध्यान रखें कि उनकी {{SITENAME}} सामग्री की सूची पुरानी हो सकती है।',
 
-# Quickbar
-'qbsettings' => 'शीघ्रपट',
-'qbsettings-none' => 'बिल्कुल नहीं',
-'qbsettings-fixedleft' => 'स्थिर बाईं ओर',
-'qbsettings-fixedright' => 'स्थिर दाहिनी ओर',
-'qbsettings-floatingleft' => 'अस्थिर बाईं ओर',
-'qbsettings-floatingright' => 'अस्थिर दाहिनी ओर',
-'qbsettings-directionality' => 'निश्चित, आपकी भाषा की लिपि की दिशात्मकता पर निर्भर',
-
 # Preferences page
 'preferences' => 'मेरी वरीयताएँ',
 'mypreferences' => 'पसंद',
@@ -1365,7 +1354,7 @@ HTML टैग की जाँच करें।',
 'prefs-displaywatchlist' => 'प्रदर्शन विकल्प',
 'prefs-diffs' => 'अंतर',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'ई-मेल पता वैध प्रतीत होता है',
 'email-address-validity-invalid' => 'एक वैध ई-मेल पता प्रविष्ट करें',
 
@@ -1805,7 +1794,6 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 'http-read-error' => 'एच॰टी॰टी॰पी पढ़ने में त्रुटि।',
 'http-timed-out' => 'एच॰टी॰टी॰पी अनुरोध का समय समाप्त (टाइम आउट)',
 'http-curl-error' => 'यू॰आर॰एल $1 पाने में त्रुटि',
-'http-host-unreachable' => 'यू॰आर॰एल तक पहुँचा नहीं जा सका।',
 'http-bad-status' => 'एच॰टी॰टी॰पी अनुरोध के दौरान समस्या थी: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2153,7 +2141,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 'listgrouprights-addgroup-self-all' => 'अपने खाते में सभी समूह शामिल करें',
 'listgrouprights-removegroup-self-all' => 'अपने खाते से सभी समूह हटाएँ',
 
-# E-mail user
+# Email user
 'mailnologin' => 'पाने वाले का एड्रेस दिया नहीं',
 'mailnologintext' => 'अन्य सदस्यों को इ-मेल भेजने के लिये [[Special:UserLogin|लॉग इन]] करना आवश्यक है और आपकी [[Special:Preferences|वरीयताओं]] में वैध ई-मेल पता होना आवश्यक है।',
 'emailuser' => 'इस सदस्य को ई-मेल भेजें',
@@ -2211,8 +2199,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization देखें।',
 'notvisiblerev' => 'किसी अन्य सदस्य द्वारा किया अन्तिम अवतरण हटाया गया है',
 'watchnochange' => 'दिये गये समय में आपके ध्यानसूची में मौजूद पृष्ठों में कोई भी बदलाव नहीं हुए हैं।',
 'watchlist-details' => 'वार्ता पृष्ठों के अलावा {{PLURAL:$1|$1 पृष्ठ}} आपकी ध्यानसूची में हैं।',
-'wlheader-enotif' => '* ई-मेल नोटिफिकेशन सक्षम हैं।',
-'wlheader-showupdated' => "* पृष्ठ जो आपके द्वारा देखे जाने के बाद बदले गये हैं, '''बोल्ड''' दिखेंगे।",
+'wlheader-enotif' => 'ई-मेल नोटिफिकेशन सक्षम हैं।',
+'wlheader-showupdated' => "पृष्ठ जो आपके द्वारा देखे जाने के बाद बदले गये हैं, '''बोल्ड''' दिखेंगे।",
 'watchmethod-recent' => 'ध्यानसूची में दिये गये पृष्ठों में हाल में हुए बदलाव देख रहे हैं',
 'watchmethod-list' => 'ध्यानसूची में दिये गये पृष्ठों में हाल में हुए बदलाव देख रहे हैं',
 'watchlistcontains' => 'आपकी ध्यानसूची में $1 {{PLURAL:$1|पृष्ठ}} हैं।',
@@ -3105,7 +3093,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'चौडाई',
 'exif-imagelength' => 'ऊँचाई',
 'exif-bitspersample' => 'प्रति घटक बीट्स',
@@ -3282,7 +3270,7 @@ $1',
 'exif-originalimageheight' => 'छवि की ऊँचाई उभरा होने से पहले',
 'exif-originalimagewidth' => 'छवि की चौड़ाई उभरा होने से पहले',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'अनकॉम्प्रेस्स्ड',
 'exif-compression-3' => 'CCITT ग्रुप 3 फ़ैक्स एनकोडिंग',
 'exif-compression-4' => 'CCITT ग्रुप 4 फ़ैक्स एनकोडिंग',
@@ -3500,7 +3488,7 @@ $1',
 'monthsall' => 'सभी',
 'limitall' => 'सभी',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'ई-मेल प्रमाणित करे',
 'confirmemail_noemail' => 'आपके [[Special:Preferences|सदस्य वरीयतायें]]में वैध इ-मेल एड्रेस नहीं दिया हुआ हैं।',
 'confirmemail_text' => '{{SITENAME}} पर उपलब्ध इ-मेल सुविधाओंका लाभ उठाने के लिये प्रमाणित एड्रेस होना जरूरी हैं।
@@ -3723,13 +3711,6 @@ $5
 'version-software-product' => 'प्रोडक्ट',
 'version-software-version' => 'अवतरण',
 'version-entrypoints-header-url' => 'यू॰आर॰एल',
-
-# Special:FilePath
-'filepath' => 'सञ्चिका पथ',
-'filepath-page' => 'सञ्चिका:',
-'filepath-submit' => 'जाइए',
-'filepath-summary' => 'यह विशेष पृष्ठ सञ्चिका का पूरा पथ देता है।
-चित्र पूरे रिज़ोल्यूशन के साथ दिखता हैं, अन्य सञ्चिका प्रकार उनके सम्बन्धित प्रोग्रेम डाइरेक्टरी से आरम्भ होते हैं।',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'फ़ाईल द्विरावृत्ति खोजें',

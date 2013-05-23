@@ -151,7 +151,7 @@ class DatabaseLogEntry extends LogEntryBase {
 		return array(
 			'tables' => $tables,
 			'fields' => $fields,
-			'conds'  => array(),
+			'conds' => array(),
 			'options' => array(),
 			'join_conds' => $joins,
 		);
@@ -233,7 +233,7 @@ class DatabaseLogEntry extends LogEntryBase {
 	}
 
 	public function getPerformer() {
-		if( !$this->performer ) {
+		if ( !$this->performer ) {
 			$userId = (int) $this->row->log_user;
 			if ( $userId !== 0 ) { // logged-in users
 				if ( isset( $this->row->user_name ) ) {
@@ -291,7 +291,7 @@ class RCDatabaseLogEntry extends DatabaseLogEntry {
 	}
 
 	public function getPerformer() {
-		if( !$this->performer ) {
+		if ( !$this->performer ) {
 			$userId = (int) $this->row->rc_user;
 			if ( $userId !== 0 ) {
 				$this->performer = User::newFromId( $userId );
@@ -367,7 +367,7 @@ class ManualLogEntry extends LogEntryBase {
 	 *
 	 * @since 1.19
 	 *
-	 * @param $parameters array Associative array
+	 * @param array $parameters Associative array
 	 */
 	public function setParameters( $parameters ) {
 		$this->parameters = $parameters;
@@ -468,8 +468,8 @@ class ManualLogEntry extends LogEntryBase {
 
 	/**
 	 * Publishes the log entry.
-	 * @param $newId int id of the log entry.
-	 * @param $to string: rcandudp (default), rc, udp
+	 * @param int $newId id of the log entry.
+	 * @param string $to rcandudp (default), rc, udp
 	 */
 	public function publish( $newId, $to = 'rcandudp' ) {
 		$log = new LogPage( $this->getType() );

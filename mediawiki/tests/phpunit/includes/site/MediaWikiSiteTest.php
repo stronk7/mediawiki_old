@@ -62,7 +62,7 @@ class MediaWikiSiteTest extends SiteTest {
 		$this->assertEquals( $expected, $site->getFileUrl( $pathArgument ) );
 	}
 
-	public function provideGetPageUrl() {
+	public static function provideGetPageUrl() {
 		return array(
 			// path, page, expected substring
 			array( 'http://acme.test/wiki/$1', 'Berlin', '/wiki/Berlin' ),
@@ -85,5 +85,4 @@ class MediaWikiSiteTest extends SiteTest {
 		$this->assertContains( $path, $site->getPageUrl() );
 		$this->assertContains( $expected, $site->getPageUrl( $page ) );
 	}
-
 }

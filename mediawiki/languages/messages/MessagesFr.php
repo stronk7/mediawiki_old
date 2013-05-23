@@ -30,6 +30,7 @@
  * @author Erkethan
  * @author Esbardu
  * @author Fabrice Ferrer
+ * @author François Melchior
  * @author Fryed-peach
  * @author Geoleplubo
  * @author Giro720
@@ -59,6 +60,7 @@
  * @author Lucyin
  * @author McDutchie
  * @author Meithal
+ * @author Metroitendo
  * @author Moyg
  * @author Nicolas NALLET
  * @author Nicolas Raoul
@@ -388,9 +390,9 @@ $messages = array(
 # User preference toggles
 'tog-underline' => 'Souligner les liens :',
 'tog-justify' => 'Justifier les paragraphes',
-'tog-hideminor' => 'Masquer les modifications mineures dans les modifications récentes',
+'tog-hideminor' => 'Masquer les modifications mineures dans les changements récents',
 'tog-hidepatrolled' => 'Masquer les modifications surveillées dans les modifications récentes',
-'tog-newpageshidepatrolled' => 'Masquer les pages surveillées parmi les nouvelles pages',
+'tog-newpageshidepatrolled' => 'Masquer les pages surveillées parmi la liste des nouvelles pages',
 'tog-extendwatchlist' => 'Étendre la liste de suivi pour afficher toutes les modifications et pas uniquement les plus récentes',
 'tog-usenewrc' => 'Grouper les changements dans les modifications récentes et la liste de suivi (nécessite JavaScript)',
 'tog-numberheadings' => 'Numéroter automatiquement les titres de section',
@@ -415,8 +417,6 @@ $messages = array(
 'tog-shownumberswatching' => "Afficher le nombre d'utilisateurs qui suivent cette page",
 'tog-oldsig' => 'Signature existante :',
 'tog-fancysig' => 'Traiter la signature comme du wikitexte (sans lien automatique)',
-'tog-externaleditor' => "Utiliser par défaut un éditeur de texte externe (pour les utilisateurs avancés, nécessite des réglages spécifiques sur votre ordinateur, [//www.mediawiki.org/wiki/Manual:External_editors/fr plus d'informations]).",
-'tog-externaldiff' => "Utiliser un comparateur externe par défaut (pour les utilisateurs avancés, nécessite des réglages sur votre ordinateur, [//www.mediawiki.org/wiki/Manual:External_editors/fr plus d'informations]).",
 'tog-showjumplinks' => 'Activer les liens « navigation » et « recherche » en haut de page',
 'tog-uselivepreview' => "Utiliser l'aperçu rapide (nécessite JavaScript) (expérimental)",
 'tog-forceeditsummary' => "M'avertir lorsque je n'ai pas spécifié de résumé de modification",
@@ -431,6 +431,7 @@ $messages = array(
 'tog-showhiddencats' => 'Afficher les catégories cachées',
 'tog-noconvertlink' => 'Désactiver la conversion des titres',
 'tog-norollbackdiff' => "Ne pas afficher le diff lors d'une révocation",
+'tog-useeditwarning' => "M'avertir quand je quitte une page de modification sans publier les changements",
 
 'underline-always' => 'Toujours',
 'underline-never' => 'Jamais',
@@ -780,7 +781,7 @@ $2",
 Le motif avancé est « ''$2'' ».",
 'filereadonlyerror' => "Impossible de modifier le fichier « $1 » parce que le répertoire de fichiers « $2 » est en lecture seule.
 
-L'administrateur qui l'a verrouillé a fourni ce motif: « $3 ».",
+L'administrateur qui l'a verrouillé a fourni ce motif : « $3 ».",
 'invalidtitle-knownnamespace' => "Titre invalide avec l'espace de noms « $2 » et l'intitulé « $3 »",
 'invalidtitle-unknownnamespace' => "Titre invalide avec le numéro d'espace de noms $1 et l'intitulé « $2 » inconnus",
 'exception-nologin' => 'Non connecté',
@@ -800,9 +801,18 @@ Notez que certaines pages peuvent être encore affichées comme si vous étiez t
 'welcomecreation-msg' => "Votre compte a été créé.
 N'oubliez pas de modifier [[Special:Preferences|vos préférences pour {{SITENAME}}]].",
 'yourname' => "Nom d'utilisateur :",
+'userlogin-yourname' => "Nom d'utilisateur",
+'userlogin-yourname-ph' => "Entrez votre nom d'utilisateur",
 'yourpassword' => 'Mot de passe&nbsp;:',
+'userlogin-yourpassword' => 'Mot de passe',
+'userlogin-yourpassword-ph' => 'Entrez votre mot de passe',
+'createacct-yourpassword-ph' => 'Entrez un mot de passe',
 'yourpasswordagain' => 'Confirmez le mot de passe :',
-'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites avec ce navigateur (au maximum $1&nbsp;{{PLURAL:$1|jour|jours}})',
+'createacct-yourpasswordagain' => 'Confirmez le mot de passe',
+'createacct-yourpasswordagain-ph' => 'Entrez à nouveau le mot de passe',
+'remembermypassword' => 'Me reconnecter automatiquement lors des prochaines visites avec ce navigateur (au maximum $1&nbsp;{{PLURAL:$1|jour|jours}})',
+'userlogin-remembermypassword' => 'Garder ma session active',
+'userlogin-signwithsecure' => 'Utiliser une connexion sécurisée',
 'securelogin-stick-https' => 'Rester connecté en HTTPS après la connexion',
 'yourdomainname' => 'Votre domaine :',
 'password-change-forbidden' => 'Vous ne pouvez pas modifier les mots de passe sur ce wiki.',
@@ -815,18 +825,38 @@ N'oubliez pas de modifier [[Special:Preferences|vos préférences pour {{SITENAM
 'logout' => 'Se déconnecter',
 'userlogout' => 'Déconnexion',
 'notloggedin' => 'Non connecté',
+'userlogin-noaccount' => "Vous n'avez pas de compte ?",
+'userlogin-joinproject' => 'Rejoignez {{SITENAME}}',
 'nologin' => "Vous n'êtes pas encore inscrit ? $1.",
 'nologinlink' => 'Créer un compte',
 'createaccount' => 'Créer un compte',
 'gotaccount' => "Vous avez déjà un compte ? '''$1'''.",
 'gotaccountlink' => 'Connectez-vous',
 'userlogin-resetlink' => 'Vous avez oublié vos détails de connexion ?',
-'createaccountmail' => 'Utiliser un mot de passe aléatoire temporaire et l’envoyer à l’adresse de courriel spécifiée ci-dessous',
+'userlogin-resetpassword-link' => 'Réinitialiser le mot de passe',
+'helplogin-url' => 'Help:Connexion',
+'userlogin-helplink' => '[[{{MediaWiki:helplogin-url}}|Aide à la connexion]]',
+'createacct-join' => 'Entrez vos informations ci-dessous.',
+'createacct-emailrequired' => 'Adresse de courriel',
+'createacct-emailoptional' => 'Adresse de courriel (facultative)',
+'createacct-email-ph' => 'Entrez votre adresse de courriel',
+'createaccountmail' => "Utiliser un mot de passe aléatoire temporaire et l'envoyer à l'adresse de courriel spécifiée ci-dessous",
+'createacct-realname' => 'Nom réel (facultatif)',
 'createaccountreason' => 'Motif :',
+'createacct-reason' => 'Motif',
+'createacct-reason-ph' => 'Pourquoi créez-vous un autre compte',
+'createacct-captcha' => 'Contrôle de sécurité',
+'createacct-imgcaptcha-ph' => 'Entrez le texte que vous voyez ci-dessus',
+'createacct-submit' => 'Créez votre compte',
+'createacct-benefit-heading' => '{{SITENAME}} est écrit par des gens comme vous.',
+'createacct-benefit-body1' => '{{PLURAL:$1|modification|modifications}}',
+'createacct-benefit-body2' => '{{PLURAL:$1|article|articles}}',
+'createacct-benefit-body3' => '{{PLURAL:$1|contributeur récent|contributeurs récents}}',
 'badretype' => 'Les mots de passe que vous avez saisis ne correspondent pas.',
 'userexists' => "Nom d'utilisateur entré déjà utilisé.
 Veuillez choisir un nom différent.",
 'loginerror' => 'Erreur de connexion',
+'createacct-error' => 'Erreur lors de la création du compte',
 'createaccounterror' => 'Impossible de créer le compte : $1',
 'nocookiesnew' => "Le compte utilisateur a été créé, mais vous n'êtes pas connecté{{GENDER:||e|(e)}}. {{SITENAME}} utilise des cookies pour la connexion mais vous les avez désactivés. Veuillez les activer et vous reconnecter avec le même nom et le même mot de passe.",
 'nocookieslogin' => '{{SITENAME}} utilise des cookies pour la connexion mais vous les avez désactivés. Veuillez les activer et vous reconnecter.',
@@ -863,7 +893,7 @@ pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.",
 'blocked-mailpassword' => 'Votre adresse IP est bloquée en écriture, la fonction de rappel du mot de passe est donc désactivée pour éviter les abus.',
 'eauthentsent' => "Un courriel de confirmation a été envoyé à l'adresse indiquée.
 Avant qu'un autre courriel ne soit envoyé à ce compte, vous devrez suivre les instructions du courriel et confirmer que le compte est bien le vôtre.",
-'throttled-mailpassword' => "Un courriel de rappel de votre mot de passe a déjà été envoyé durant {{PLURAL:$1|la dernière heure|les $1 dernières heures}}. Afin d'éviter les abus, un seul courriel de rappel sera envoyé par {{PLURAL:$1|heure|intervalle de $1 heures}}.",
+'throttled-mailpassword' => "Un courriel de réinitialisation de votre mot de passe a déjà été envoyé durant {{PLURAL:$1|la dernière heure|les $1 dernières heures}}. Afin d'éviter les abus, un seul courriel de réinitialisation de votre mot de passe sera envoyé par {{PLURAL:$1|heure|intervalle de $1 heures}}.",
 'mailerror' => "Erreur lors de l'envoi du courriel : $1",
 'acct_creation_throttle_hit' => "Quelqu'un utilisant votre adresse IP a créé {{PLURAL:$1|un compte|$1 comptes}} au cours des dernières 24 heures, ce qui constitue la limite autorisée dans cet intervalle de temps.
 Par conséquent, la création de compte a été temporairement désactivée pour cette adresse IP.",
@@ -911,12 +941,14 @@ Veuillez attendre avant d'essayer à nouveau.",
 'resetpass-wrong-oldpass' => 'Mot de passe actuel ou temporaire invalide.
 Vous avez peut-être déjà changé votre mot de passe ou demandé un nouveau mot de passe temporaire.',
 'resetpass-temp-password' => 'Mot de passe temporaire :',
+'resetpass-abort-generic' => 'La modification du mot de passe a été annulée par une extension.',
 
 # Special:PasswordReset
 'passwordreset' => 'Remise à zéro du mot de passe',
-'passwordreset-text' => 'Remplissez ce formulaire pour recevoir un courriel de rappel des détails de votre compte.',
+'passwordreset-text' => 'Remplissez ce formulaire pour réinitialiser votre mot de passe.',
 'passwordreset-legend' => 'Remise à zéro du mot de passe',
 'passwordreset-disabled' => 'La réinitialisation des mots de passe a été désactivée sur ce wiki.',
+'passwordreset-emaildisabled' => 'Les fonctionnalités e-mail ont été désactivées sur ce wiki.',
 'passwordreset-pretext' => '{{PLURAL:$1||Entrez un élément de données ci-dessous}}',
 'passwordreset-username' => "Nom d'utilisateur :",
 'passwordreset-domain' => 'Domaine :',
@@ -924,21 +956,21 @@ Vous avez peut-être déjà changé votre mot de passe ou demandé un nouveau mo
 'passwordreset-capture-help' => "Si vous cochez cette case, le courriel (avec le mot de passe temporaire) vous sera affiché en même temps qu'il sera envoyé à l'utilisateur.",
 'passwordreset-email' => 'Adresse de courriel :',
 'passwordreset-emailtitle' => 'Détails du compte sur {{SITENAME}}',
-'passwordreset-emailtext-ip' => "Quelqu'un (probablement vous, depuis l'adresse IP $1) a demandé un rappel des informations de votre compte pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
+'passwordreset-emailtext-ip' => "Quelqu'un (probablement vous, depuis l'adresse IP $1) a demandé un réinitialisation de votre mot de passe pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
 
 $2
 
 {{PLURAL:$3|Ce mot de passe temporaire expirera|Ces mots de passe temporaires expireront}} dans {{PLURAL:$5|un jour|$5 jours}}. Vous devez maintenant vous connecter et choisir un nouveau mot de passe. Si cette demande ne provient pas de vous, ou que vous vous êtes souvenu de votre mot de passe initial, et ne souhaitez plus le modifier, vous pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.",
-'passwordreset-emailtext-user' => "L'utilisateur $1 sur {{SITENAME}} a demandé un rappel des informations de votre compte pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
+'passwordreset-emailtext-user' => "L'utilisateur $1 sur {{SITENAME}} a demandé un réinitialisation de votre mot de passe pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
 
 $2
 
 {{PLURAL:$3|Ce mot de passe temporaire expirera|Ces mots de passe temporaires expireront}} dans {{PLURAL:$5|un jour|$5 jours}}. Vous devez maintenant vous connecter et choisir un nouveau mot de passe. Si cette demande ne provient pas de vous, ou que vous vous êtes souvenu de votre mot de passe initial, et ne souhaitez plus le modifier, vous pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.",
 'passwordreset-emailelement' => "Nom d'utilisateur : $1
 Mot de passe temporaire : $2",
-'passwordreset-emailsent' => 'Un courriel de rappel a été envoyé.',
-'passwordreset-emailsent-capture' => 'Un courriel de rappel a été envoyé, qui est affiché ci-dessous.',
-'passwordreset-emailerror-capture' => "Un courriel de rappel a été généré, qui est affiché ci-dessous, mais l'envoi à l'utilisateur a échoué : $1",
+'passwordreset-emailsent' => 'Un courriel de réinitialisation de mot de passe a été envoyé.',
+'passwordreset-emailsent-capture' => 'Un courriel de réinitialisation de mot de passe a été envoyé, qui est affiché ci-dessous.',
+'passwordreset-emailerror-capture' => "Un courriel de réinitialisation de mot de passe a été généré, qui est affiché ci-dessous, mais l'envoi à l'{{GENDER:$2|utilisateur}} a échoué : $1",
 
 # Special:ChangeEmail
 'changeemail' => "Changer l'adresse de courriel",
@@ -948,7 +980,7 @@ Mot de passe temporaire : $2",
 'changeemail-oldemail' => 'Adresse de courriel actuelle :',
 'changeemail-newemail' => 'Nouvelle adresse de courriel :',
 'changeemail-none' => '(aucune)',
-'changeemail-password' => 'Votre mot de passe sur {{SITENAME}}:',
+'changeemail-password' => 'Votre mot de passe sur {{SITENAME}} :',
 'changeemail-submit' => "Changer l'adresse de courriel",
 'changeemail-cancel' => 'Annuler',
 
@@ -1053,7 +1085,7 @@ Vous pouvez trouver plus de détails dans le [{{fullurl:{{#Special:Log}}/delete|
 'userpage-userdoesnotexist-view' => "Le compte utilisateur « $1 » n'est pas enregistré.",
 'blocked-notice-logextract' => "Cet utilisateur est actuellement bloqué.
 La dernière entrée du journal des blocages est indiquée ci-dessous à titre d'information :",
-'clearyourcache' => "'''Note :''' après avoir enregistré vos préférences, vous devrez forcer le rechargement complet du cache de votre navigateur pour voir les changements.
+'clearyourcache' => "'''Note :''' après avoir enregistré vos modifications, il se peut que vous deviez forcer le rechargement complet du cache de votre navigateur pour voir les changements.
 * '''Firefox / Safari :''' Maintenez la touche ''Maj'' (''Shift'') en cliquant sur le bouton ''Actualiser'' ou pressez ''Ctrl-F5'' ou ''Ctrl-R'' (''⌘-R'' sur un Mac) ;
 * '''Google Chrome :''' Appuyez sur ''Ctrl-Maj-R'' (''⌘-Shift-R'' sur un Mac) ;
 * '''Internet Explorer :''' Maintenez la touche ''Ctrl'' en cliquant sur le bouton ''Actualiser'' ou pressez ''Ctrl-F5'' ;
@@ -1112,7 +1144,7 @@ Vous nous promettez aussi que vous avez écrit ceci vous-même, ou que vous l'av
 'longpageerror' => "'''Erreur: Le texte que vous avez soumis fait {{PLURAL:$1|un Kio|$1 Kio}}, ce qui dépasse la limite fixée à {{PLURAL:$2|un Kio|$2 Kio}}.'''
 Il ne peut pas être sauvegardé.",
 'readonlywarning' => "'''AVERTISSEMENT : la base de données a été verrouillée pour des opérations de maintenance. Vous ne pouvez donc pas publier vos modifications pour l'instant.'''
-Vous pouvez copier et coller votre texte dans un fichier texte et l’enregistrer pour plus tard.
+Vous pouvez copier et coller votre texte dans un fichier texte et l'enregistrer pour plus tard.
 
 L'administrateur ayant verrouillé la base de données a donné l'explication suivante: $1",
 'protectedpagewarning' => "'''AVERTISSEMENT : cette page est protégée. Seuls les utilisateurs ayant le statut d'administrateur peuvent la modifier.'''<br />
@@ -1152,6 +1184,8 @@ Elle existe déjà.",
 'content-failed-to-parse' => "Échec de l'analyse du contenu de $2 pour le modèle $1: $3",
 'invalid-content-data' => 'Données du contenu non valides',
 'content-not-allowed-here' => 'Le contenu "$1" n\'est pas autorisé sur la page [[$2]]',
+'editwarning-warning' => 'Quitter cette page vous fera perdre toutes les modifications que vous avez faites.
+Si vous êtes connecté avec votre compte, vous pouvez retirer cet avertissement dans la section « {{int:prefs-editing}} » de vos préférences.',
 
 # Content models
 'content-model-wikitext' => 'wikitexte',
@@ -1224,9 +1258,9 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 
 # Revision deletion
 'rev-deleted-comment' => '(résumé de modification retiré)',
-'rev-deleted-user' => '(nom d’utilisateur retiré)',
+'rev-deleted-user' => "(nom d'utilisateur retiré)",
 'rev-deleted-event' => '(entrée retirée)',
-'rev-deleted-user-contribs' => '[nom d’utilisateur ou adresse IP retiré - modification masquée sur les contributions]',
+'rev-deleted-user-contribs' => "[nom d'utilisateur ou adresse IP retiré - modification masquée sur les contributions]",
 'rev-deleted-text-permission' => "Cette version de la page a été '''effacée'''.
 Des détails sont disponibles dans le [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} journal des effacements].",
 'rev-deleted-text-unhide' => "Cette version de la page a été '''effacée'''.
@@ -1429,15 +1463,7 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 'powersearch-togglenone' => 'Aucune',
 'search-external' => 'Recherche externe',
 'searchdisabled' => 'La recherche sur {{SITENAME}} est désactivée. En attendant la réactivation, vous pouvez effectuer une recherche via Google. Attention, leur indexation du contenu de {{SITENAME}} peut ne pas être à jour.',
-
-# Quickbar
-'qbsettings' => "Barre d'outils",
-'qbsettings-none' => 'Aucune',
-'qbsettings-fixedleft' => 'Gauche',
-'qbsettings-fixedright' => 'Droite',
-'qbsettings-floatingleft' => 'Flottante à gauche',
-'qbsettings-floatingright' => 'Flottante à droite',
-'qbsettings-directionality' => "Fixe, en fonction de la directivité d'écriture de votre langue",
+'search-error' => "Une erreur s'est produite en recherchant : $1",
 
 # Preferences page
 'preferences' => 'Préférences',
@@ -1516,7 +1542,7 @@ Voici une valeur générée aléatoirement que vous pouvez utiliser : $1',
 'prefs-emailconfirm-label' => 'Confirmation du courriel :',
 'prefs-textboxsize' => 'Taille de la fenêtre de modification',
 'youremail' => 'Courriel :',
-'username' => "{{GENDER:$1|Nom d'utilisateur|Nom d'utilisatrice}}:",
+'username' => "{{GENDER:$1|Nom d'utilisateur|Nom d'utilisatrice}} :",
 'uid' => "Numéro d'{{GENDER:$1|utilisateur|utilisatrice}}:",
 'prefs-memberingroups' => '{{GENDER:$2|Membre}} {{PLURAL:$1|du groupe|des groupes}}:',
 'prefs-registration' => "Date d'inscription :",
@@ -1569,10 +1595,10 @@ Elle ne doit pas dépasser $1 caractère{{PLURAL:$1||s}}.',
 'saveusergroups' => "Enregistrer les groupes de l'utilisateur",
 'userrights-groupsmember' => 'Membre de :',
 'userrights-groupsmember-auto' => 'Membre implicite de :',
-'userrights-groups-help' => "Vous pouvez modifier les groupes auxquels appartient cet utilisateur:
-* Une case cochée signifie que l'utilisateur se trouve dans ce groupe.
-* Une case non cochée signifie qu'{{GENDER:$1|il|elle}} ne s'y trouve pas.
-* Un astérisque (*) indique que vous ne pouvez pas retirer ce groupe une fois que vous l'avez ajouté, ou vice-versa.",
+'userrights-groups-help' => 'Vous pouvez modifier les groupes auxquels appartient {{GENDER:$1|cet utilisateur|cette utilisatrice}} :
+* Une case cochée signifie que l’utilisat{{GENDER:$1|eur|rice}} se trouve dans ce groupe.
+* Une case non cochée signifie qu’{{GENDER:$1|il|elle}} ne s’y trouve pas.
+* Un astérisque (*) indique que vous ne pouvez pas retirer ce groupe une fois que vous l’avez ajouté, ou vice-versa.',
 'userrights-reason' => 'Motif :',
 'userrights-no-interwiki' => "Vous n'avez pas la permission de modifier des droits d'utilisateurs sur d'autres wikis.",
 'userrights-nodatabase' => "La base de donnée « $1 » n'existe pas ou n'est pas locale.",
@@ -1580,6 +1606,7 @@ Elle ne doit pas dépasser $1 caractère{{PLURAL:$1||s}}.',
 'userrights-notallowed' => "Votre compte n'a pas la permission de modifier des droits d'utilisateur.",
 'userrights-changeable-col' => 'Les groupes que vous pouvez modifier',
 'userrights-unchangeable-col' => 'Les groupes que vous ne pouvez pas modifier',
+'userrights-conflict' => 'Conflit de droits utilisateur ! Veuillez appliquer de nouveau vos modifications.',
 
 # Groups
 'group' => 'Groupe :',
@@ -1989,12 +2016,11 @@ Pour une sécurité optimale, img_auth.php est désactivé.",
 
 # HTTP errors
 'http-invalid-url' => 'URL incorrecte : $1',
-'http-invalid-scheme' => 'Les URL avec le schéma « $1 » ne sont pas supportées.',
+'http-invalid-scheme' => 'Les URL avec le schéma « $1 » ne sont pas prises en charge.',
 'http-request-error' => "Erreur inconnue lors de l'envoi de la requête.",
 'http-read-error' => 'Erreur de lecture HTTP.',
 'http-timed-out' => 'La requête HTTP a expiré.',
 'http-curl-error' => "Erreur lors de la récupération de l'URL : $1",
-'http-host-unreachable' => "Impossible d'atteindre l'URL.",
 'http-bad-status' => 'Il y a eu un problème lors de la requête HTTP : $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -2153,8 +2179,10 @@ Elles devraient plutôt pointer vers le bon article.<br />
 Une page est considérée comme une page d'homonymie si elle utilise un modèle lié à [[MediaWiki:Disambiguationspage]]",
 
 'pageswithprop' => 'Pages avec une propriété de page',
+'pageswithprop-legend' => 'Pages avec une propriété de page',
 'pageswithprop-text' => 'Cette page liste les pages qui utilisent une propriété de page particulière.',
 'pageswithprop-prop' => 'Nom de la propriété:',
+'pageswithprop-submit' => 'Aller',
 
 'doubleredirects' => 'Doubles redirections',
 'doubleredirectstext' => 'Voici une liste des pages qui redirigent vers des pages qui sont elles-mêmes des pages de redirection.
@@ -2405,8 +2433,8 @@ Les prochaines modifications de cette page et de la page de discussion associée
 'notvisiblerev' => 'La version a été supprimée',
 'watchnochange' => "Aucun des éléments que vous suivez n'a été modifié durant la période affichée.",
 'watchlist-details' => 'Votre liste de suivi référence $1 page{{PLURAL:$1||s}}, sans compter les pages de discussion.',
-'wlheader-enotif' => '* La notification par courriel est activée.',
-'wlheader-showupdated' => "* Les pages qui ont été modifiées depuis votre dernière visite sont affichées en '''gras'''.",
+'wlheader-enotif' => 'La notification par courriel est activée.',
+'wlheader-showupdated' => "Les pages qui ont été modifiées depuis votre dernière visite sont affichées en '''gras'''.",
 'watchmethod-recent' => 'vérification des modifications récentes pour y trouver des pages suivies',
 'watchmethod-list' => 'vérification des pages suivies pour y trouver des modifications récentes',
 'watchlistcontains' => 'Votre liste de suivi référence $1 page{{PLURAL:$1||s}}.',
@@ -2733,7 +2761,7 @@ Donnez ci-dessous un motif précis (par exemple en citant les pages qui ont ét�
 'ipbotherreason' => 'Motif différent ou supplémentaire :',
 'ipbhidename' => "Masquer le nom d'utilisateur des modifications et des listes",
 'ipbwatchuser' => 'Suivre les pages utilisateur et de discussion de cet utilisateur',
-'ipb-disableusertalk' => 'Empêcher l’utilisateur de modifier sa page de discussion pendant le blocage',
+'ipb-disableusertalk' => "Empêcher l'utilisateur de modifier sa page de discussion pendant le blocage",
 'ipb-change-block' => 'Bloquer à nouveau cet utilisateur avec ces paramètres',
 'ipb-confirm' => 'Confirmer le blocage',
 'badipaddress' => 'Adresse IP incorrecte',
@@ -2824,6 +2852,7 @@ Veuillez contacter votre fournisseur d'accès Internet ou votre support techniqu
 'sorbsreason' => 'Votre adresse IP est listée comme mandataire ouvert dans le DNSBL utilisé par {{SITENAME}}.',
 'sorbs_create_account_reason' => 'Votre adresse IP est listée comme mandataire ouvert dans le DNSBL utilisé par {{SITENAME}}.
 Vous ne pouvez pas créer un compte.',
+'xffblockreason' => "Une adresse IP dans l'en-tête X-Forwarded-For, soit la vôtre ou celle d'un serveur proxy que vous utilisez, a été bloquée. La raison du blocage initial est : $1",
 'cant-block-while-blocked' => "Vous ne pouvez pas bloquer d'autres utilisateurs tant que vous êtes bloqué{{GENDER:||e|(e)}}.",
 'cant-see-hidden-user' => "L'utilisateur que vous tentez de bloquer a déjà été bloqué et masqué. N'ayant pas le droit ''hideuser'', vous ne pouvez pas voir ou modifier le blocage de cet utilisateur.",
 'ipbblocked' => "Vous ne pouvez pas bloquer ou débloquer d'autres utilisateurs, parce que vous êtes vous-même bloqué",
@@ -3000,7 +3029,7 @@ Toutes les actions d'importation inter-wiki sont consignées dans l'[[Special:Lo
 'import-interwiki-templates' => 'Inclure tous les modèles',
 'import-interwiki-submit' => 'Importer',
 'import-interwiki-namespace' => 'Espace de noms de destination :',
-'import-interwiki-rootpage' => 'Page racine de destination (optionnelle):',
+'import-interwiki-rootpage' => 'Page racine de destination (optionnelle) :',
 'import-upload-filename' => 'Nom du fichier :',
 'import-comment' => 'Commentaire :',
 'importtext' => "Veuillez exporter le fichier depuis le wiki d'origine en utilisant son [[Special:Export|outil d'exportation]].
@@ -3034,12 +3063,12 @@ Un dossier temporaire est manquant.",
 'import-error-edit' => "La page « $1 » n'a pas été importée parce que vous n'êtes pas autorisés à la modifier.",
 'import-error-create' => "La page « $1 » n'a pas été importée parce que vous n'êtes pas autorisés à la créer.",
 'import-error-interwiki' => "La page « $1 » n'est pas importée parce que son nom est réservé pour un lien externe (interwiki).",
-'import-error-special' => 'La page " $1 " n\'est pas importée parce qu\'elle appartient à un espace de noms special qui n\'en autorise aucune.',
+'import-error-special' => "La page « $1 » n'est pas importée parce qu'elle appartient à un espace de noms spécial qui n'en autorise aucune.",
 'import-error-invalid' => "Page « $1 » n'est pas importée parce que son nom n'est pas valide.",
-'import-error-unserialize' => 'La révision $2 de la page "$1" ne peut pas être désérialisée. La révision est indiquée comme utilisant le modèle de contenu $3 sérialisé en $4.',
-'import-options-wrong' => '{{PLURAL:$2|Mauvaise option|Mauvaises options}}: <nowiki>$1</nowiki>',
+'import-error-unserialize' => 'La révision $2 de la page « $1 » ne peut pas être désérialisée. La révision est indiquée comme utilisant le modèle de contenu $3 sérialisé en $4.',
+'import-options-wrong' => '{{PLURAL:$2|Mauvaise option|Mauvaises options}} : <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'La page racine fournie est un titre non valide.',
-'import-rootpage-nosubpage' => 'L\'espace de noms "$1" de la page racine n\'autorise pas les sous-pages.',
+'import-rootpage-nosubpage' => "L'espace de noms « $1 » de la page racine n'autorise pas les sous-pages.",
 
 # Import log
 'importlogpage' => 'Journal des importations',
@@ -3053,7 +3082,7 @@ Un dossier temporaire est manquant.",
 'javascripttest' => 'Test de JavaScript',
 'javascripttest-title' => 'Exécution des tests $1',
 'javascripttest-pagetext-noframework' => "Cette page est réservée pour l'exécution des tests JavaScript.",
-'javascripttest-pagetext-unknownframework' => 'Structure "$1" inconnue.',
+'javascripttest-pagetext-unknownframework' => 'Structure « $1 » inconnue.',
 'javascripttest-pagetext-frameworks' => "Veuillez choisir l'une des structures de test suivantes : $1",
 'javascripttest-pagetext-skins' => 'Choisissez un habillage avec lequel lancer les tests :',
 'javascripttest-qunit-intro' => 'Voir [$1 la documentation de test] sur mediawiki.org.',
@@ -3133,17 +3162,11 @@ Permet de rétablir la version précédente et d'ajouter un motif dans la boîte
 
 # Stylesheets
 'common.css' => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
-'standard.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Standard. */',
-'nostalgia.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Nostalgia. */',
 'cologneblue.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Cologne Blue. */',
 'monobook.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
-'myskin.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage MySkin. */',
-'chick.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Chick. */',
-'simple.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Simple. */',
 'modern.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Modern. */',
 'vector.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Vector. */',
 'print.css' => '/* Le CSS placé ici affectera les impressions */',
-'handheld.css' => '/* Le CSS placé ici affectera les appareils mobiles en fonction de l\'habillage configuré $wgHandheldStyle */',
 'noscript.css' => '/* Le CSS placé ici affectera les utilisateurs ayant désactivé Javascript. */',
 'group-autoconfirmed.css' => '/* Le CSS placé ici affectera les utilisateurs auto-confirmés seulement. */',
 'group-bot.css' => '/* Le CSS placé ici affectera les robots seulement. */',
@@ -3152,13 +3175,8 @@ Permet de rétablir la version précédente et d'ajouter un motif dans la boîte
 
 # Scripts
 'common.js' => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
-'standard.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Standard uniquement */',
-'nostalgia.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Nostalgie uniquement */',
 'cologneblue.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Bleu de cologne uniquement */',
 'monobook.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
-'myskin.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Mon habillage uniquement */',
-'chick.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Poussin uniquement */',
-'simple.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Simple uniquement */',
 'modern.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Moderne uniquement */',
 'vector.js' => '/* Tout code JavaScript placé ici sera chargé pour les utilisateurs de l’habillage Vector */',
 'group-autoconfirmed.js' => '/* Le JavaScript inclus ici n’affectera que les utilisateurs auto-confirmés */',
@@ -3237,13 +3255,8 @@ Permet de rétablir la version précédente et d'ajouter un motif dans la boîte
 'pageinfo-category-files' => 'Nombre de fichiers',
 
 # Skin names
-'skinname-standard' => 'Standard',
-'skinname-nostalgia' => 'Nostalgie',
 'skinname-cologneblue' => 'Bleu de Cologne',
 'skinname-monobook' => 'Monobook',
-'skinname-myskin' => 'Mon Interface',
-'skinname-chick' => 'Poussin',
-'skinname-simple' => 'Simple',
 'skinname-modern' => 'Moderne',
 'skinname-vector' => 'Vector',
 
@@ -3288,7 +3301,7 @@ Si vous l'exécutez, votre système peut être compromis.",
 'widthheightpage' => '$1 × $2, $3 page{{PLURAL:$3||s}}',
 'file-info' => 'Taille du fichier : $1, type MIME : $2',
 'file-info-size' => '$1 × $2 pixels, taille du fichier : $3, type MIME : $4',
-'file-info-size-pages' => '$1 × $2 pixels, taille de fichier: $3, type MIME: $4, $5 {{PLURAL:$5|page|pages}}',
+'file-info-size-pages' => '$1 × $2 pixels, taille de fichier : $3, type MIME : $4, $5 page{{PLURAL:$5||s}}',
 'file-nohires' => 'Pas de plus haute résolution disponible.',
 'svg-long-desc' => 'Fichier SVG, résolution de $1 × $2 pixels, taille : $3',
 'svg-long-desc-animated' => 'Fichier SVG animé, taille $1 x $2 pixels, taille du fichier: $3',
@@ -3300,10 +3313,10 @@ Si vous l'exécutez, votre système peut être compromis.",
 'file-info-gif-looped' => 'en boucle',
 'file-info-gif-frames' => '$1 {{PLURAL:$1|image|images}}',
 'file-info-png-looped' => 'en boucle',
-'file-info-png-repeat' => 'joué $1 {{PLURAL:$1|fois|fois}}',
+'file-info-png-repeat' => 'joué $1 {{PLURAL:$1|fois}}',
 'file-info-png-frames' => '$1 {{PLURAL:$1|image|images}}',
-'file-no-thumb-animation' => "'''Remarque: En raison de limitations techniques, les vignettes de ce fichier ne seront pas animées.'''",
-'file-no-thumb-animation-gif' => "'''Remarque: En raison de limitations techniques, les vignettes d'images GIF en haute résolution telles que celle-ci ne seront pas animées.'''",
+'file-no-thumb-animation' => "'''Remarque : En raison de limitations techniques, les vignettes de ce fichier ne seront pas animées.'''",
+'file-no-thumb-animation-gif' => "'''Remarque : En raison de limitations techniques, les vignettes d'images GIF en haute résolution telles que celle-ci ne seront pas animées.'''",
 
 # Special:NewFiles
 'newimages' => 'Galerie des nouveaux fichiers',
@@ -3323,10 +3336,24 @@ Si vous l'exécutez, votre système peut être compromis.",
 'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
 'hours' => '{{PLURAL:$1|$1 heure|$1 heures}}',
 'days' => '{{PLURAL:$1|$1 jour|$1 jours}}',
+'weeks' => '{{PLURAL:$1|$1 semaine|$1 semaines}}',
 'months' => '{{PLURAL:$1|$1 mois}}',
 'years' => '{{PLURAL:$1|$1 an|$1 ans}}',
 'ago' => 'Il y a $1',
 'just-now' => "à l'instant",
+
+# Human-readable timestamps
+'hours-ago' => 'il y a $1 {{PLURAL:$1|heure|heures}}',
+'minutes-ago' => 'il y a $1 {{PLURAL:$1|minute|minutes}}',
+'seconds-ago' => 'il y a $1 {{PLURAL:$1|seconde|secondes}}',
+'monday-at' => 'Lundi à $1',
+'tuesday-at' => 'Mardi à $1',
+'wednesday-at' => 'Mercredi à $1',
+'thursday-at' => 'Jeudi à $1',
+'friday-at' => 'Vendredi à $1',
+'saturday-at' => 'Samedi à $1',
+'sunday-at' => 'Dimanche à $1',
+'yesterday-at' => 'Hier à $1',
 
 # Bad image list
 'bad_image_list' => "Le format est le suivant :
@@ -3355,7 +3382,7 @@ Les autres liens sur la même ligne sont considérés comme des exceptions, par 
 * gpsaltitude",
 'metadata-langitem' => "'''$2&nbsp;:''' $1",
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Largeur',
 'exif-imagelength' => 'Hauteur',
 'exif-bitspersample' => 'Bits par composante',
@@ -3533,7 +3560,7 @@ Les autres liens sur la même ligne sont considérés comme des exceptions, par 
 'exif-originalimageheight' => "Hauteur de l'image avant qu'elle ait été recadrée",
 'exif-originalimagewidth' => "Largeur de l'image avant qu'elle ait été recadrée",
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Non compressé',
 'exif-compression-2' => 'CCITT Groupe 3 Longueur du codage Huffman modifié de dimension 1',
 'exif-compression-3' => 'CCITT Groupe 3 codage du fax',
@@ -4029,12 +4056,17 @@ Vous devriez avoir reçu [{{SERVER}}{{SCRIPTPATH}}/COPYING une copie de la Licen
 'version-entrypoints-articlepath' => '[https://www.mediawiki.org/wiki/Manual:$wgArticlePath Chemin d’article]',
 'version-entrypoints-scriptpath' => '[https://www.mediawiki.org/wiki/Manual:$wgScriptPath Chemin de script]',
 
-# Special:FilePath
-'filepath' => "Chemin d'accès du fichier",
-'filepath-page' => 'Fichier :',
-'filepath-submit' => 'Aller',
-'filepath-summary' => "Cette page spéciale retourne le chemin d'accès complet d'un fichier.
-Les images sont montrées dans leur pleine résolution, les autres fichiers sont chargés et démarrés directement avec leur programme associé.",
+# Special:Redirect
+'redirect' => 'Redirigé par fichier, utilisateur, ou ID de révision',
+'redirect-legend' => 'Rediriger vers une page ou un fichier',
+'redirect-summary' => "Cette page spéciale redirige vers un fichier (nom donné au fichier), une page (ID attribuée à la révision) ou une page d'utilisateur (identifiant numérique attribué à l'utilisateur).",
+'redirect-submit' => 'Valider',
+'redirect-lookup' => 'Recherche :',
+'redirect-value' => 'Valeur :',
+'redirect-user' => "ID de l'utilisateur",
+'redirect-revision' => 'Révision de la page',
+'redirect-file' => 'Nom du fichier',
+'redirect-not-exists' => 'Valeur non trouvée',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Recherche de doublons',
@@ -4068,7 +4100,7 @@ Les images sont montrées dans leur pleine résolution, les autres fichiers sont
 
 # Special:BlankPage
 'blankpage' => 'Page vide',
-'intentionallyblankpage' => 'Cette page est laissée intentionellement vide.',
+'intentionallyblankpage' => 'Cette page est laissée intentionnellement (presque) vide.',
 
 # External image whitelist
 'external_image_whitelist' => " #Laisser cette ligne exactement telle quelle.<pre>
@@ -4125,45 +4157,48 @@ Les images sont montrées dans leur pleine résolution, les autres fichiers sont
 'htmlform-submit' => 'Soumettre',
 'htmlform-reset' => 'Défaire les modifications',
 'htmlform-selectorother-other' => 'Autre',
+'htmlform-no' => 'Non',
+'htmlform-yes' => 'Oui',
+'htmlform-chosen-placeholder' => 'Choisir une option',
 
 # SQLite database support
 'sqlite-has-fts' => '$1 avec recherche en texte intégral supportée',
 'sqlite-no-fts' => '$1 sans recherche en texte intégral supportée',
 
 # New logging system
-'logentry-delete-delete' => '$1 a supprimé la page $3',
-'logentry-delete-restore' => '$1 a restauré la page $3',
-'logentry-delete-event' => "$1 a modifié la visibilité {{PLURAL:$5|d'un événement du journal|de $5 événements du journal}} sur $3: $4",
-'logentry-delete-revision' => '$1 a modifié la visibilité {{PLURAL:$5|d’une révision|de $5 révisions}} sur la page $3&nbsp;: $4',
-'logentry-delete-event-legacy' => '$1 a modifié la visibilité des événements du journal sur $3',
-'logentry-delete-revision-legacy' => '$1 a modifié la visibilité des révisions sur la page $3',
-'logentry-suppress-delete' => '$1 a supprimé la page $3',
-'logentry-suppress-event' => "$1 a secrètement modifié la visibilité {{PLURAL:$5|d'un événement du journal|de $5 événements du journal}} sur $3: $4",
-'logentry-suppress-revision' => "$1 a secrètement modifié la visibilité {{PLURAL:$5|d'une révision|de $5 révisions}} sur la page $3: $4",
-'logentry-suppress-event-legacy' => '$1 a secrètement modifié la visibilité des événements du journal sur $3',
-'logentry-suppress-revision-legacy' => '$1 a secrètement modifié la visibilité des révisions sur la page $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|a supprimé}} la page $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|a restauré}} la page $3',
+'logentry-delete-event' => "$1 {{GENDER:$2|a modifié}} la visibilité {{PLURAL:$5|d'un événement du journal|de $5 événements du journal}} sur $3: $4",
+'logentry-delete-revision' => "$1 {{GENDER:$2|a modifié}} la visibilité {{PLURAL:$5|d'une révision|de $5 révisions}} sur la page $3: $4",
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|a modifié}} la visibilité des événements du journal sur $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|a modifié}} la visibilité des révisions sur la page $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|a supprimé}} la page $3',
+'logentry-suppress-event' => "$1 {{GENDER:$2|a secrètement modifié}} la visibilité {{PLURAL:$5|d'un événement du journal|de $5 événements du journal}} sur $3: $4",
+'logentry-suppress-revision' => "$1 {{GENDER:$2|a secrètement modifié}} la visibilité {{PLURAL:$5|d'une révision|de $5 révisions}} sur la page $3: $4",
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|a secrètement modifié}} la visibilité des événements du journal sur $3',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|a secrètement modifié}} la visibilité des révisions sur la page $3',
 'revdelete-content-hid' => 'contenu masqué',
 'revdelete-summary-hid' => 'résumé de modification masqué',
-'revdelete-uname-hid' => 'nom d’utilisateur masqué',
+'revdelete-uname-hid' => "nom d'utilisateur masqué",
 'revdelete-content-unhid' => 'contenu affiché',
 'revdelete-summary-unhid' => 'résumé de modification affiché',
-'revdelete-uname-unhid' => 'nom d’utilisateur affiché',
+'revdelete-uname-unhid' => "nom d'utilisateur affiché",
 'revdelete-restricted' => 'restrictions appliquées aux administrateurs',
 'revdelete-unrestricted' => 'restrictions retirées pour les administrateurs',
-'logentry-move-move' => '$1 a déplacé la page $3 vers $4',
-'logentry-move-move-noredirect' => '$1 a déplacé la page $3 vers $4 sans laisser de redirection',
-'logentry-move-move_redir' => '$1 a déplacé la page $3 vers $4 par-dessus une redirection',
-'logentry-move-move_redir-noredirect' => '$1 a déplacé la page $3 vers $4 par-dessus une redirection sans laisser de redirection',
-'logentry-patrol-patrol' => '$1 a marqué la révision $4 de la page $3 comme relue',
-'logentry-patrol-patrol-auto' => '$1 a automatiquement marqué la révision $4 de la page $3 comme relue',
-'logentry-newusers-newusers' => 'Le compte utilisateur $1 a été créé',
-'logentry-newusers-create' => 'Le compte utilisateur $1 a été créé',
-'logentry-newusers-create2' => 'Le compte utilisateur $3 a été créé par $1',
-'logentry-newusers-byemail' => 'Le compte utilisateur $3 a été créé par $1 et le mot de passe a été envoyé par courriel',
-'logentry-newusers-autocreate' => 'Le compte $1 a été créé automatiquement',
-'logentry-rights-rights' => "$1 a modifié l'appartenance au groupe pour $3 de $4 à $5",
-'logentry-rights-rights-legacy' => "$1 a modifié l'appartenance au groupe pour $3",
-'logentry-rights-autopromote' => '$1 a été promu automatiquement de $4 à $5',
+'logentry-move-move' => '$1 {{GENDER:$2|a déplacé}} la page $3 vers $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|a déplacé}} la page $3 vers $4 sans laisser de redirection',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|a déplacé}} la page $3 vers $4 par-dessus une redirection',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|a déplacé}} la page $3 vers $4 par-dessus une redirection sans laisser de redirection',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|a marqué}} la révision $4 de la page $3 comme relue',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|a automatiquement marqué}} la révision $4 de la page $3 comme relue',
+'logentry-newusers-newusers' => 'Le compte utilisateur $1 {{GENDER:$2|a été créé}}',
+'logentry-newusers-create' => 'Le compte utilisateur $1 {{GENDER:$2|a été créé}}',
+'logentry-newusers-create2' => 'Le compte utilisateur $3 {{GENDER:$2|a été créé}} par $1',
+'logentry-newusers-byemail' => 'Le compte utilisateur $3 {{GENDER:$2|a été créé}} par $1 et le mot de passe a été envoyé par courriel',
+'logentry-newusers-autocreate' => 'Le compte $1 {{GENDER:$2|a été créé}} automatiquement',
+'logentry-rights-rights' => "$1 {{GENDER:$2|a modifié}} l'appartenance au groupe pour $3 de $4 à $5",
+'logentry-rights-rights-legacy' => "$1 {{GENDER:$2|a modifié}} l'appartenance au groupe pour $3",
+'logentry-rights-autopromote' => '$1 {{GENDER:$2|a été promu}} automatiquement de $4 à $5',
 'rightsnone' => '(aucun)',
 
 # Feedback
@@ -4174,7 +4209,7 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 'feedback-cancel' => 'Annuler',
 'feedback-submit' => 'Envoyer vos commentaires',
 'feedback-adding' => 'Ajout de vos commentaires à la page...',
-'feedback-error1' => "Erreur : Résultat de l'API non reconnu",
+'feedback-error1' => "Erreur : Résultat de l'IPA non reconnu",
 'feedback-error2' => 'Erreur : la modification a échoué',
 'feedback-error3' => "Erreur : aucune réponse de l'API",
 'feedback-thanks' => 'Merci ! Votre commentaire a été publié sur la page "[$2 $1]".',
@@ -4218,7 +4253,7 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 'api-error-ok-but-empty' => "Erreur interne : Le serveur n'a pas répondu.",
 'api-error-overwrite' => "Écraser un fichier existant n'est pas autorisé.",
 'api-error-stashfailed' => "Erreur interne : le serveur n'a pas pu enregistrer le fichier temporaire.",
-'api-error-publishfailed' => 'Erreur interne: Le serveur n’a pas pu publier le fichier temporaire.',
+'api-error-publishfailed' => "Erreur interne: Le serveur n'a pas pu publier le fichier temporaire.",
 'api-error-timeout' => "Le serveur n'a pas répondu dans le délai imparti.",
 'api-error-unclassified' => "Une erreur inconnue s'est produite",
 'api-error-unknown-code' => 'Erreur inconnue : « $1 »',
@@ -4239,7 +4274,7 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 'duration-centuries' => '$1 siècle{{PLURAL:$1||s}}',
 'duration-millennia' => '$1 millénaire{{PLURAL:$1||s}}',
 
-# Unknown messages
-'pageswithprop-legend' => 'Pages avec une propriété de page',
-'pageswithprop-submit' => 'Aller',
+# Image rotation
+'rotate-comment' => "Image pivotée de $1 {{PLURAL:$1|degré|degrés}} dans le sens des aiguilles d'une montre",
+
 );

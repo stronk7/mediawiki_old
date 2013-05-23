@@ -21,15 +21,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Maintenance
- *
  */
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-require_once ( __DIR__ . '/MediaWikiInstallationConfig.php' );
-require_once ( __DIR__ . '/MediaWikiInstallationMessage.php' );
-require_once ( __DIR__ . '/MediaWikiInstallationVariables.php' );
+require_once __DIR__ . '/MediaWikiInstallationConfig.php';
+require_once __DIR__ . '/MediaWikiInstallationMessage.php';
+require_once __DIR__ . '/MediaWikiInstallationVariables.php';
 
 class MediaWikiInstallationCommonFunction extends PHPUnit_Extensions_SeleniumTestCase {
 	function setUp() {

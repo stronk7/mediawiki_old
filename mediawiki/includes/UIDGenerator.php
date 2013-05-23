@@ -39,7 +39,7 @@ class UIDGenerator {
 	/** @var Array */
 	protected $fileHandles = array(); // cache file handles
 
-	const QUICK_RAND = 1; // get randomness from fast and unsecure sources
+	const QUICK_RAND = 1; // get randomness from fast and insecure sources
 
 	protected function __construct() {
 		$idFile = wfTempDir() . '/mw-' . __CLASS__ . '-UID-nodeid';
@@ -110,7 +110,7 @@ class UIDGenerator {
 	}
 
 	/**
-	 * @param $time array (UIDGenerator::millitime(), clock sequence)
+	 * @param array $time (UIDGenerator::millitime(), clock sequence)
 	 * @return string 88 bits
 	 */
 	protected function getTimestampedID88( array $info ) {
@@ -152,7 +152,7 @@ class UIDGenerator {
 	}
 
 	/**
-	 * @param $info array (UIDGenerator::milltime(), counter, clock sequence)
+	 * @param array $info (UIDGenerator::millitime(), counter, clock sequence)
 	 * @return string 128 bits
 	 */
 	protected function getTimestampedID128( array $info ) {
@@ -214,7 +214,7 @@ class UIDGenerator {
 	 * than any previous (time,counter) value for the given clock sequence.
 	 * This is useful for making UIDs sequential on a per-node bases.
 	 *
-	 * @param $lockFile string Name of a local lock file
+	 * @param string $lockFile Name of a local lock file
 	 * @param $clockSeqSize integer The number of possible clock sequence values
 	 * @param $counterSize integer The number of possible counter values
 	 * @return Array (result of UIDGenerator::millitime(), counter, clock sequence)
@@ -295,7 +295,7 @@ class UIDGenerator {
 	 * Wait till the current timestamp reaches $time and return the current
 	 * timestamp. This returns false if it would have to wait more than 10ms.
 	 *
-	 * @param $time array Result of UIDGenerator::millitime()
+	 * @param array $time Result of UIDGenerator::millitime()
 	 * @return Array|bool UIDGenerator::millitime() result or false
 	 */
 	protected function timeWaitUntil( array $time ) {
@@ -304,36 +304,23 @@ class UIDGenerator {
 			if ( $ct >= $time ) { // http://php.net/manual/en/language.operators.comparison.php
 				return $ct; // current timestamp is higher than $time
 			}
-		} while ( ( ( $time[0] - $ct[0] )*1000 + ( $time[1] - $ct[1] ) ) <= 10 );
+		} while ( ( ( $time[0] - $ct[0] ) * 1000 + ( $time[1] - $ct[1] ) ) <= 10 );
 
 		return false;
 	}
 
 	/**
-	 * @param $time array Result of UIDGenerator::millitime()
+	 * @param array $time Result of UIDGenerator::millitime()
 	 * @return string 46 MSBs of "milliseconds since epoch" in binary (rolls over in 4201)
 	 */
 	protected function millisecondsSinceEpochBinary( array $time ) {
 		list( $sec, $msec ) = $time;
-		if ( PHP_INT_SIZE >= 8 ) { // 64 bit integers
-			$ts = ( 1000 * $sec + $msec );
-			$id_bin = str_pad( decbin( $ts % pow( 2, 46 ) ), 46, '0', STR_PAD_LEFT );
-		} elseif ( extension_loaded( 'gmp' ) ) {
-			$ts = gmp_mod( // wrap around
-				gmp_add( gmp_mul( (string) $sec, (string) 1000 ), (string) $msec ),
-				gmp_pow( '2', '46' )
-			);
-			$id_bin = str_pad( gmp_strval( $ts, 2 ), 46, '0', STR_PAD_LEFT );
-		} elseif ( extension_loaded( 'bcmath' ) ) {
-			$ts = bcmod( // wrap around
-				bcadd( bcmul( $sec, 1000 ), $msec ),
-				bcpow( 2, 46 )
-			);
-			$id_bin = wfBaseConvert( $ts, 10, 2, 46 );
-		} else {
-			throw new MWException( 'bcmath or gmp extension required for 32 bit machines.' );
+		$ts = 1000 * $sec + $msec;
+		if ( $ts > pow( 2, 52 ) ) {
+			throw new MWException( __METHOD__ .
+				': sorry, this function doesn\'t work after the year 144680' );
 		}
-		return $id_bin;
+		return substr( wfBaseConvert( $ts, 10, 2, 46 ), -46 );
 	}
 
 	/**

@@ -37,27 +37,45 @@ $namespaceNames = array(
 );
 
 $specialPageAliases = array(
-	'Allpages'                  => array( 'ހުރިހާ ސަފްޙާއެއް' ),
+	'Activeusers'               => array( 'ހަރަކާތްތެރި_މެމްބަރުން' ),
+	'Allmessages'               => array( 'ހުރިހާ_މެސެޖެއް' ),
+	'Allpages'                  => array( 'ހުރިހާ_ޞަފްޙާއެއް' ),
+	'Ancientpages'              => array( 'ބާ_ޞަފްޙާތައް' ),
+	'Blankpage'                 => array( 'ހުސް_ޞަފްޙާ' ),
 	'Contributions'             => array( 'ޙިއްސާ' ),
-	'CreateAccount'             => array( 'މެމްބަރުކަން ހާސިލްކުރައްވާ' ),
-	'Emailuser'                 => array( 'މެމްބަރަށް އީ-މެއިލް ފޮނުވާ' ),
-	'BlockList'                 => array( 'ބްލޮކް ކުރެވިފައިވާ ލިސްޓް' ),
-	'Listfiles'                 => array( 'ފައިލް ލިސްޓް' ),
-	'Longpages'                 => array( 'ދިގު ސަފްޙާތައް' ),
-	'Newimages'                 => array( 'އާ ފައިލް' ),
-	'Newpages'                  => array( 'އާ ސަފްހާތައް' ),
+	'CreateAccount'             => array( 'މެމްބަރުކަން_ހާސިލްކުރައްވާ' ),
+	'Emailuser'                 => array( 'މެމްބަރަށް_އީ-މެއިލް_ފޮނުވާ' ),
+	'BlockList'                 => array( 'ބްލޮކް_ކުރެވިފައިވާ_ލިސްޓް' ),
+	'Listfiles'                 => array( 'ފައިލް_ލިސްޓް' ),
+	'Log'                       => array( 'ލޮގު' ),
+	'Longpages'                 => array( 'ދިގު_ސަފްޙާތައް' ),
+	'Mypage'                    => array( 'މަގޭ_ޞަފްޙާ' ),
+	'Mytalk'                    => array( 'މަގޭ_ވާހަކަ' ),
+	'Myuploads'                 => array( 'މަގޭ_ފައިލުތައް' ),
+	'Newimages'                 => array( 'އާ_ފައިލް' ),
+	'Newpages'                  => array( 'އާ_ސަފްހާތައް' ),
 	'Preferences'               => array( 'ތަރުޖީހުތައް' ),
-	'Protectedpages'            => array( 'ދިފާޢުކުރެވިފައިވާ ސަފްޙާތައް' ),
-	'Randompage'                => array( 'ކޮންމެވެސް ސަފްޙާއެއް' ),
-	'Recentchanges'             => array( 'އެންމެ ފަހުގެ ބަދަލްތައް' ),
-	'Shortpages'                => array( 'ކުރު ސަފްޙާތައް' ),
-	'Specialpages'              => array( 'ޙާއްސަ ސަފްޙާތައް' ),
-	'Uncategorizedtemplates'    => array( 'ޤިސްމުކުރެވިފައި ނުވާ ފަންވަތް' ),
-	'Unusedcategories'          => array( 'ބޭނުން ނުކުރާ ޤިސްމުތައް' ),
-	'Unusedimages'              => array( 'ބޭނުން ނުކުރާ ފައިލް' ),
+	'Protectedpages'            => array( 'ދިފާޢުކުރެވިފައިވާ_ސަފްޙާތައް' ),
+	'Protectedtitles'           => array( 'ދިފާޢުކުރެވިފައިވާ_ނަންތައް' ),
+	'Randompage'                => array( 'ކޮންމެވެސް_ސަފްޙާއެއް' ),
+	'Recentchanges'             => array( 'އެންމެ_ފަހުގެ_ބަދަލުތައް' ),
+	'Search'                    => array( 'ހޯއްދަވާ' ),
+	'Shortpages'                => array( 'ކުރު_ސަފްޙާތައް' ),
+	'Specialpages'              => array( 'ޙާއްސަ_ސަފްޙާތައް' ),
+	'Statistics'                => array( 'ތަފާސްހިސާބު' ),
+	'Uncategorizedpages'        => array( 'ޤިސްމުކުރެވިފައިނުވާ_ޞަފްޙާތައް' ),
+	'Uncategorizedtemplates'    => array( 'ޤިސްމުކުރެވިފައިނުވާ_ފަންވަތް' ),
+	'Unusedcategories'          => array( 'ބޭނުން_ނުކުރާ_ޤިސްމުތައް' ),
+	'Unusedimages'              => array( 'ބޭނުން_ނުކުރާ_ފައިލް' ),
+	'Unusedtemplates'           => array( 'ބޭނުންނުކުރާ_ފަންވަތްތައް' ),
 	'Upload'                    => array( 'ފޮނުއްވާ' ),
 	'Userlogin'                 => array( 'ވަދެވަޑައިގަންނަވާ' ),
-	'Userlogout'                => array( 'ބޭރަށް ވަޑައިގަންނަވާ' ),
+	'Userlogout'                => array( 'ބޭރަށް_ވަޑައިގަންނަވާ' ),
+	'Wantedcategories'          => array( 'ބޭނުންވާ_ޤިސްމުތައް' ),
+	'Wantedfiles'               => array( 'ބޭނުންވާ_ފައިލުތައް' ),
+	'Wantedpages'               => array( 'ބޭނުންވާ_ޞަފްޙާތައް' ),
+	'Wantedtemplates'           => array( 'ބޭނުންވާ_ފަންވަތްތައް' ),
+	'Watchlist'                 => array( 'މަގޭ_ނަޒަރު' ),
 );
 
 $messages = array(
@@ -444,7 +462,9 @@ $1',
 'revisionasof' => '$1ގެ ނުސްހާ',
 'previousrevision' => '→ ކުރީގެ ނުސްހާ',
 'nextrevision' => 'ފަހުގެ ނުސްހާ ←',
+'cur' => 'އެންމެ ފަހުގެ',
 'next' => 'ކުރިޔަށް',
+'last' => 'ފަރަޤު',
 'histfirst' => 'އެންމެ ކުރީގެ',
 'histlast' => 'އެންމެ ފަހުގެ',
 
@@ -453,8 +473,10 @@ $1',
 'revdel-restore-visible' => 'ފާޅު ނުސްހާތައް',
 
 # Diffs
+'history-title' => '"$1"ގެ ތާރީޚް',
 'lineno' => 'ފޮޅުވަތް $1:',
 'compareselectedversions' => 'އިހުތިޔާރު ކުރެވިފައިވާ ނުސްހާތައް އަޅައިކިޔުއްވާ',
+'editundo' => 'ކުރީގެ ނުސްހާއަށް ބަދަލުކުރައްވާ',
 
 # Search results
 'searchresults' => 'ހޯދުމުގެ ނަތީޖާ',
@@ -638,7 +660,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Special:ListGroupRights
 'listgrouprights-members' => '(މެމްބަރުންގެ ލިސްޓު)',
 
-# E-mail user
+# Email user
 'emailuser' => 'މި މެންބަރަށް އީމޭލު ފޮނުއްވާ',
 
 # Watchlist
@@ -780,6 +802,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'tooltip-preview' => 'ބަދަލުތައް ދައްކަވާ، ރައްކާކުރެއްވުމުގެ ކުރިން މި ބޭނުންކުރައްވާ!',
 'tooltip-watch' => 'މިޞަފްޙާއަށް ނަޒަރުބަހައްޓަވާ',
 'tooltip-rollback' => '"ކުރީގެ ނުސްހާ އަކަށް ބަދަލުކުރައްވާ" އިން މި ޞަފްޙާއަށް އެންމެ ފަހުން އުނިއިތުރު ގެންނެވި މެމްބަރުގެ އުނިއިތުރު(އުނިއިތުރުތައް) ފޮހެލެވޭނެއެވެ.',
+'tooltip-undo' => '"ކުރީގެ ނުސްހާއަށް ބަދަލުކުރައްވާ" އިން މި ނުސްހާގެ ކުރީގައި އިން ނުސްހާއަށް ބަދަލުކޮށްދޭނެއެވެ. އަދި އުނިއިތުރުގެ ޚުލާސާ ލިޔުމުގެ ފުރުސަތު ދޭނެއެވެ.',
 'tooltip-summary' => 'ކުރު ޚުލާސާއެއް ލިޔުއްވާ',
 
 # Info page
@@ -796,7 +819,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Metadata
 'metadata' => 'މެޓަޑޭޓާ',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'ފުޅާމިން',
 'exif-imagelength' => 'އުސްމިން',
 'exif-imagedescription' => 'ތަސްވީރުގެ ސުރުހީ',
@@ -824,7 +847,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'watchlistall2' => 'ހުރިހާ',
 'namespacesall' => 'ހުރިހާ',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'އީމޭލު އެޑްރެސް ޔަގީންކުރައްވާ',
 
 # action=purge

@@ -23,6 +23,14 @@
  * @author Timo Tijhof
  */
 
+/**
+ * Page edition handler
+ *
+ * This is a wrapper that will call the EditPage class, or ExternalEdit
+ * if $wgUseExternalEditor is set to true and requested by the user.
+ *
+ * @ingroup Actions
+ */
 class EditAction extends FormlessAction {
 
 	public function getName() {
@@ -35,27 +43,24 @@ class EditAction extends FormlessAction {
 
 	public function show() {
 		$page = $this->page;
-		$request = $this->getRequest();
 		$user = $this->getUser();
-		$context = $this->getContext();
 
 		if ( wfRunHooks( 'CustomEditor', array( $page, $user ) ) ) {
-			if ( ExternalEdit::useExternalEngine( $context, 'edit' )
-				&& $this->getName() == 'edit' && !$request->getVal( 'section' )
-				&& !$request->getVal( 'oldid' ) )
-			{
-				$extedit = new ExternalEdit( $context );
-				$extedit->execute();
-			} else {
-				$editor = new EditPage( $page );
-				$editor->edit();
-			}
+			$editor = new EditPage( $page );
+			$editor->edit();
 		}
 
 	}
 
 }
 
+/**
+ * Edit submission handler
+ *
+ * This is the same as EditAction; except that it sets the session cookie.
+ *
+ * @ingroup Actions
+ */
 class SubmitAction extends EditAction {
 
 	public function getName() {

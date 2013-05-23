@@ -27,7 +27,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-require_once( "$IP/includes/GlobalFunctions.php" );
+require_once "$IP/includes/GlobalFunctions.php";
 
 $fname = 'SeleniumWebSettings.php';
 wfProfileIn( $fname );
@@ -64,10 +64,10 @@ if ( isset( $_GET['setupTestSuite'] ) ) {
 	}
 
 	$testIncludes = array(); // array containing all the includes needed for this test
-	$testGlobalConfigs = array(); // an array containg all the global configs needed for this test
+	$testGlobalConfigs = array(); // an array containing all the global configs needed for this test
 	$testResourceFiles = array(); // an array containing all the resource files needed for this test
 	$callback = $wgSeleniumTestConfigs[$setupTestSuiteName];
-	call_user_func_array( $callback, array( &$testIncludes, &$testGlobalConfigs, &$testResourceFiles));
+	call_user_func_array( $callback, array( &$testIncludes, &$testGlobalConfigs, &$testResourceFiles ) );
 
 	if ( isset( $testResourceFiles['images'] ) ) {
 		$testImageZip = $testResourceFiles['images'];
@@ -109,10 +109,10 @@ if ( isset( $_COOKIE[$cookieName] ) ) {
 	}
 
 	$testIncludes = array(); // array containing all the includes needed for this test
-	$testGlobalConfigs = array(); // an array containg all the global configs needed for this test
+	$testGlobalConfigs = array(); // an array containing all the global configs needed for this test
 	$testResourceFiles = array(); // an array containing all the resource files needed for this test
 	$callback = $wgSeleniumTestConfigs[$testSuiteName];
-	call_user_func_array( $callback, array( &$testIncludes, &$testGlobalConfigs, &$testResourceFiles));
+	call_user_func_array( $callback, array( &$testIncludes, &$testGlobalConfigs, &$testResourceFiles ) );
 
 	if ( isset( $testResourceFiles['db'] ) ) {
 		$testResourceName = getTestResourceNameFromTestSuiteName( $testSuiteName );
@@ -120,7 +120,7 @@ if ( isset( $_COOKIE[$cookieName] ) ) {
 	}
 	foreach ( $testIncludes as $includeFile ) {
 		$file = $IP . '/' . $includeFile;
-		require_once( $file );
+		require_once $file;
 	}
 	foreach ( $testGlobalConfigs as $key => $value ) {
 		if ( is_array( $value ) ) {

@@ -74,9 +74,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Antaal fon do beooboachtjende Benutsere anwiese',
 'tog-oldsig' => 'Aktuälle Signatuur:',
 'tog-fancysig' => 'Unnerskrift as Wikitext behonnelje (sunner automatiske Ferlinkenge)',
-'tog-externaleditor' => 'Externen Editor as Standoard benutsje (bloot foar Experte, der mouten spezielle Ienstaalengen ap dän oaine Computer moaked wäide. [//www.mediawiki.org/wiki/Manual:External_editors Moor Information hiertou.])',
-'tog-externaldiff' => 'Extern Diff-Program as Standoard benutsje (bloot foar Experte, der mouten spezielle Ienstaalengen ap dän oaine Computer moaked wäide.
- [//www.mediawiki.org/wiki/Manual:External_editors Wiedere Informatione hiertou.])',
 'tog-showjumplinks' => '"Wikselje tou"-Links muugelk moakje',
 'tog-uselivepreview' => 'Live-Foarbekiek nutsje (JavaScript) (experimentell)',
 'tog-forceeditsummary' => 'Woarskauje, wan bie dät Spiekerjen ju Touhoopefoatenge failt',
@@ -528,7 +525,7 @@ Täif, eer du fon näien fersäkst.',
 'loginlanguagelabel' => 'Sproake: $1',
 'suspicious-userlogout' => 'Dien Oumälde-Anfroage wuud ferwäigerd, deer ju fermoudelk fon n defekten Browser of n Cache-Proxy soand wuud.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Uunbekoanden Failer mäd ju Funktion mail() fon PHP',
 'user-mail-no-addy' => 'Fersoachte ne E-Mail sunner Angoawe fon ne E-Mail-Adresse tou ferseenden',
 
@@ -1022,15 +1019,6 @@ Staal deertruch sicher, dät ju Versionsgeskichte fon n Artikkel historisk akroa
 'search-external' => 'Externe Säike',
 'searchdisabled' => 'Ju {{SITENAME}} Fultextsäike is weegen Uurläästenge apstuuns deaktivierd. Du koast insteede deerfon ne Google- of Yahoo-Säike startje. Do Resultoate foar {{SITENAME}} speegelje oawers nit uunbedingd dän aktuällen Stand wier.',
 
-# Quickbar
-'qbsettings' => 'Siedenlieste',
-'qbsettings-none' => 'Naan',
-'qbsettings-fixedleft' => 'Links, fääst',
-'qbsettings-fixedright' => 'Gjuchts, fääst',
-'qbsettings-floatingleft' => 'Links, swieuwjend',
-'qbsettings-floatingright' => 'Gjuchts, swieuwjend',
-'qbsettings-directionality' => 'Fääst, ouhongich fon de Skrieuwgjuchte fon ju wäälde Sproake',
-
 # Preferences page
 'preferences' => 'Ienstaalengen',
 'mypreferences' => 'Ienstaalengen',
@@ -1144,7 +1132,7 @@ Ju duur maximoal $1 {{PLURAL:$1|Teeken|Teekene}} loang weese.',
 'prefs-displaywatchlist' => 'Anwies-Optione',
 'prefs-diffs' => 'Versionsfergliek',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'Gultige E-Mail-Adrässe',
 'email-address-validity-invalid' => 'Ne gultige E-Mail-Adrässe is nöödich.',
 
@@ -1525,7 +1513,6 @@ Uut Sicherhaidsgruunde is img_auth.php deaktivierd.',
 'http-read-error' => 'HTTP-Leesefailer.',
 'http-timed-out' => 'Tied is ferron bie ju HTTP-Anfroage.',
 'http-curl-error' => 'Failer bier dän Ouroup fon ju URL: $1',
-'http-host-unreachable' => 'URL is nit tou beloangjen',
 'http-bad-status' => 'Unner ju HTTP-Anfroage is n Failer aptreeden: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1848,7 +1835,7 @@ Informatione uurhäär uur eenpelde Gjuchte konnen [[{{MediaWiki:Listgrouprights
 'listgrouprights-addgroup-self-all' => 'Kon aal Gruppen tou dät oaine Konto bietouföigje',
 'listgrouprights-removegroup-self-all' => 'Kon aal Gruppen fon dät oaine Konto wächhoalje',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Du bäst nit anmälded.',
 'mailnologintext' => 'Du moast [[Special:UserLogin|anmälded weese]] un sälwen ne [[Special:Preferences|gultige E-Mail-Adrässe]] anroat hääbe, uum uur Benutsere ne E-Mail tou seenden.',
 'emailuser' => 'Seende E-Mail an dissen Benutser',
@@ -1907,8 +1894,8 @@ Wan du die Artikkel wier fon ju Foulgelieste ou hoalje moatest, klik ap ju Siede
 'notvisiblerev' => 'Version wuude läsked',
 'watchnochange' => 'Neen fon do Sieden, do du beooboachtest, wuude in dän läästen Tiedruum beoarbaided.',
 'watchlist-details' => 'Jie beooboachtje {{PLURAL:$1|1 Siede|$1 Sieden}} (Diskussionssieden wuuden hier nit meetäld).',
-'wlheader-enotif' => '* E-Mail-Beskeed is aktivierd.',
-'wlheader-showupdated' => "* Sieden, do ätter dien lääste Besäik annerd wuuden sunt, wäide '''fat''' deerstoald.",
+'wlheader-enotif' => 'E-Mail-Beskeed is aktivierd.',
+'wlheader-showupdated' => "Sieden, do ätter dien lääste Besäik annerd wuuden sunt, wäide '''fat''' deerstoald.",
 'watchmethod-recent' => 'Uurpröiwjen fon do lääste Beoarbaidengen foar ju Beooboachtengslieste',
 'watchmethod-list' => 'Uurpröiwjen fon ju Beooboachtengslieste ätter lääste Beoarbaidengen',
 'watchlistcontains' => 'Jou Beooboachtengslieste änthaalt $1 {{PLURAL:$1|Siede|Sieden}}.',
@@ -2696,7 +2683,7 @@ Wiedere wäide standoardmäitich nit anwiesd.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Bratte',
 'exif-imagelength' => 'Laangte',
 'exif-bitspersample' => 'Bits pro Faawenkomponente',
@@ -2854,7 +2841,7 @@ Wiedere wäide standoardmäitich nit anwiesd.
 'exif-copyrighted' => 'Uurhieuwergjuchtstoatus',
 'exif-copyrightowner' => 'Uurhieuwergjuchtsienhääber',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Uunkomprimierd',
 
 'exif-unknowndate' => 'Uunbekoand Doatum',
@@ -3009,7 +2996,7 @@ Wiedere wäide standoardmäitich nit anwiesd.
 'monthsall' => 'aal',
 'limitall' => 'aal',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Email-Adrässe bestäätigje',
 'confirmemail_noemail' => 'Du hääst neen gultige E-Mail-Adresse in dien [[Special:Preferences|persöönelke Ienstaalengen]] iendrain.',
 'confirmemail_text' => '{{SITENAME}} ärfoardert, dät du dien E-Mail-Adresse bestäätigest (authentifizierje), eer du do fergratterde E-Mail-Funktione benutsje koast. Truch n Klik ap ju Skaltfläche unner wäd ne E-Mail an die fersoand. Disse E-Mail änthaalt ne Ferbiendenge mäd n Bestäätigengs-Code. Truch Klikken ap disse Ferbiendenge wäd bestäätiged, dät dien E-Mail-Adresse gultich is.',
@@ -3185,12 +3172,6 @@ Ne [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie fon ju ''GNU General Public License''
 'version-software' => 'Installierde Software',
 'version-software-product' => 'Produkt',
 'version-software-version' => 'Version',
-
-# Special:FilePath
-'filepath' => 'Doatäipaad',
-'filepath-page' => 'Doatäi:',
-'filepath-submit' => 'Gung',
-'filepath-summary' => 'Mäd disse Spezialsiede lät sik die komplette Paad fon ju aktuelle Version fon ne Doatäi sunner Uumwai oufräigje. Ju anfräigede Doatäi wäd fluks deerstoald blw. mäd ju ferknätte Anweendenge started.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Doatäi-Duplikoat-Säike',

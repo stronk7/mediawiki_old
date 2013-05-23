@@ -126,7 +126,7 @@ class MediaWiki {
 	 * @return Title
 	 */
 	public function getTitle() {
-		if( $this->context->getTitle() === null ) {
+		if ( $this->context->getTitle() === null ) {
 			$this->context->setTitle( $this->parseTitle() );
 		}
 		return $this->context->getTitle();
@@ -227,7 +227,7 @@ class MediaWiki {
 		if ( $title->getInterwiki() != '' ) {
 			$rdfrom = $request->getVal( 'rdfrom' );
 			if ( $rdfrom ) {
-				$url = $title->getFullURL( 'rdfrom=' . urlencode( $rdfrom ) );
+				$url = $title->getFullURL( array( 'rdfrom' => $rdfrom ) );
 			} else {
 				$query = $request->getValues();
 				unset( $query['title'] );
@@ -247,7 +247,7 @@ class MediaWiki {
 		// Redirect loops, no title in URL, $wgUsePathInfo URLs, and URLs with a variant
 		} elseif ( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
 			&& ( $request->getVal( 'title' ) === null ||
-				$title->getPrefixedDBKey() != $request->getVal( 'title' ) )
+				$title->getPrefixedDBkey() != $request->getVal( 'title' ) )
 			&& !count( $request->getValueNames( array( 'action', 'title' ) ) )
 			&& wfRunHooks( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
@@ -356,10 +356,10 @@ class MediaWiki {
 		// Check for redirects ...
 		$action = $request->getVal( 'action', 'view' );
 		$file = ( $title->getNamespace() == NS_FILE ) ? $article->getFile() : null;
-		if ( ( $action == 'view' || $action == 'render' ) 	// ... for actions that show content
-			&& !$request->getVal( 'oldid' ) &&    // ... and are not old revisions
-			!$request->getVal( 'diff' ) &&    // ... and not when showing diff
-			$request->getVal( 'redirect' ) != 'no' &&	// ... unless explicitly told not to
+		if ( ( $action == 'view' || $action == 'render' ) // ... for actions that show content
+			&& !$request->getVal( 'oldid' ) && // ... and are not old revisions
+			!$request->getVal( 'diff' ) && // ... and not when showing diff
+			$request->getVal( 'redirect' ) != 'no' && // ... unless explicitly told not to
 			// ... and the article is not a non-redirect image page with associated file
 			!( is_object( $file ) && $file->exists() && !$file->getRedirected() ) )
 		{
@@ -480,7 +480,7 @@ class MediaWiki {
 				$resp->header( 'Retry-After: ' . max( intval( $maxLag ), 5 ) );
 				$resp->header( 'X-Database-Lag: ' . intval( $lag ) );
 				$resp->header( 'Content-Type: text/plain' );
-				if( $wgShowHostnames ) {
+				if ( $wgShowHostnames ) {
 					echo "Waiting for $host: $lag seconds lagged\n";
 				} else {
 					echo "Waiting for a database server: $lag seconds lagged\n";
@@ -599,7 +599,7 @@ class MediaWiki {
 	 * Do a job from the job queue
 	 */
 	private function doJobs() {
-		global $wgJobRunRate;
+		global $wgJobRunRate, $wgPhpCli, $IP;
 
 		if ( $wgJobRunRate <= 0 || wfReadOnly() ) {
 			return;
@@ -615,23 +615,36 @@ class MediaWiki {
 			$n = intval( $wgJobRunRate );
 		}
 
-		$group = JobQueueGroup::singleton();
-		do {
-			$job = $group->pop( JobQueueGroup::USE_CACHE ); // job from any queue
-			if ( $job ) {
-				$output = $job->toString() . "\n";
-				$t = - microtime( true );
-				$success = $job->run();
-				$group->ack( $job ); // done
-				$t += microtime( true );
-				$t = round( $t * 1000 );
-				if ( !$success ) {
-					$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
-				} else {
-					$output .= "Success, Time: $t ms\n";
+		if ( !wfShellExecDisabled() && is_executable( $wgPhpCli ) ) {
+			// Start a background process to run some of the jobs.
+			// This will be asynchronous on *nix though not on Windows.
+			wfProfileIn( __METHOD__ . '-exec' );
+			$retVal = 1;
+			$cmd = wfShellWikiCmd( "$IP/maintenance/runJobs.php", array( '--maxjobs', $n ) );
+			wfShellExec( "$cmd &", $retVal );
+			wfProfileOut( __METHOD__ . '-exec' );
+		} else {
+			// Fallback to running the jobs here while the user waits
+			$group = JobQueueGroup::singleton();
+			do {
+				$job = $group->pop( JobQueueGroup::USE_CACHE ); // job from any queue
+				if ( $job ) {
+					$output = $job->toString() . "\n";
+					$t = - microtime( true );
+					wfProfileIn( __METHOD__ . '-' . get_class( $job ) );
+					$success = $job->run();
+					wfProfileOut( __METHOD__ . '-' . get_class( $job ) );
+					$group->ack( $job ); // done
+					$t += microtime( true );
+					$t = round( $t * 1000 );
+					if ( $success === false ) {
+						$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
+					} else {
+						$output .= "Success, Time: $t ms\n";
+					}
+					wfDebugLog( 'jobqueue', $output );
 				}
-				wfDebugLog( 'jobqueue', $output );
-			}
-		} while ( --$n && $job );
+			} while ( --$n && $job );
+		}
 	}
 }

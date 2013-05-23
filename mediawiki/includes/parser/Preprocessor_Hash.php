@@ -89,7 +89,7 @@ class Preprocessor_Hash implements Preprocessor {
 	 * Preprocess some wikitext and return the document tree.
 	 * This is the ghost of Parser::replace_variables().
 	 *
-	 * @param $text String: the text to parse
+	 * @param string $text the text to parse
 	 * @param $flags Integer: bitwise combination of:
 	 *          Parser::PTD_FOR_INCLUSION    Handle "<noinclude>" and "<includeonly>" as if the text is being
 	 *                                     included. Default is to assume a direct page view.
@@ -332,7 +332,7 @@ class Preprocessor_Hash implements Preprocessor {
 
 						if ( $stack->top ) {
 							$part = $stack->top->getCurrentPart();
-							if ( !(isset( $part->commentEnd ) && $part->commentEnd == $wsStart - 1 )) {
+							if ( !( isset( $part->commentEnd ) && $part->commentEnd == $wsStart - 1 ) ) {
 								$part->visualEnd = $wsStart;
 							}
 							// Else comments abutting, no change in visual end
@@ -367,7 +367,7 @@ class Preprocessor_Hash implements Preprocessor {
 				}
 
 				$tagStartPos = $i;
-				if ( $text[$tagEndPos-1] == '/' ) {
+				if ( $text[$tagEndPos - 1] == '/' ) {
 					// Short end tag
 					$attrEnd = $tagEndPos - 1;
 					$inner = null;
@@ -462,7 +462,7 @@ class Preprocessor_Hash implements Preprocessor {
 				if ( $equalsLength > 0 ) {
 					if ( $searchStart - $equalsLength == $piece->startPos ) {
 						// This is just a single string of equals signs on its own line
-						// Replicate the doHeadings behaviour /={count}(.+)={count}/
+						// Replicate the doHeadings behavior /={count}(.+)={count}/
 						// First find out how many equals signs there really are (don't stop at 6)
 						$count = $equalsLength;
 						if ( $count < 3 ) {
@@ -515,7 +515,7 @@ class Preprocessor_Hash implements Preprocessor {
 						'open' => $curChar,
 						'close' => $rule['end'],
 						'count' => $count,
-						'lineStart' => ($i > 0 && $text[$i-1] == "\n"),
+						'lineStart' => ( $i > 0 && $text[$i - 1] == "\n" ),
 					);
 
 					$stack->push( $piece );
@@ -591,9 +591,19 @@ class Preprocessor_Hash implements Preprocessor {
 								$lastNode = $node;
 							}
 							if ( !$node ) {
+								if ( $cacheable ) {
+									wfProfileOut( __METHOD__ . '-cache-miss' );
+									wfProfileOut( __METHOD__ . '-cacheable' );
+								}
+								wfProfileOut( __METHOD__ );
 								throw new MWException( __METHOD__ . ': eqpos not found' );
 							}
 							if ( $node->name !== 'equals' ) {
+								if ( $cacheable ) {
+									wfProfileOut( __METHOD__ . '-cache-miss' );
+									wfProfileOut( __METHOD__ . '-cacheable' );
+								}
+								wfProfileOut( __METHOD__ );
 								throw new MWException( __METHOD__ . ': eqpos is not equals' );
 							}
 							$equalsNode = $node;
@@ -861,7 +871,6 @@ class PPFrame_Hash implements PPFrame {
 	 */
 	var $depth;
 
-
 	/**
 	 * Construct a new preprocessor frame.
 	 * @param $preprocessor Preprocessor: the parent preprocessor
@@ -953,7 +962,7 @@ class PPFrame_Hash implements PPFrame {
 
 		while ( count( $iteratorStack ) > 1 ) {
 			$level = count( $outStack ) - 1;
-			$iteratorNode =& $iteratorStack[ $level ];
+			$iteratorNode =& $iteratorStack[$level];
 			$out =& $outStack[$level];
 			$index =& $indexStack[$level];
 

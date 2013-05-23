@@ -73,8 +73,6 @@ abstract class DumpTestCase extends MediaWikiLangTestCase {
 	 * Clears $wgUser, and reports errors from addDBData to PHPUnit
 	 */
 	protected function setUp() {
-		global $wgUser;
-
 		parent::setUp();
 
 		// Check if any Exception is stored for rethrowing from addDBData
@@ -83,7 +81,7 @@ abstract class DumpTestCase extends MediaWikiLangTestCase {
 			throw $this->exceptionFromAddDBData;
 		}
 
-		$wgUser = new User();
+		$this->setMwGlobals( 'wgUser', new User() );
 	}
 
 	/**
@@ -126,6 +124,7 @@ abstract class DumpTestCase extends MediaWikiLangTestCase {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -147,6 +146,7 @@ abstract class DumpTestCase extends MediaWikiLangTestCase {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -273,7 +273,6 @@ abstract class DumpTestCase extends MediaWikiLangTestCase {
 		$this->assertTextNode( "title", $name );
 		$this->assertTextNode( "ns", $ns );
 		$this->assertTextNode( "id", $id );
-
 	}
 
 	/**
@@ -301,8 +300,8 @@ abstract class DumpTestCase extends MediaWikiLangTestCase {
 	 * @param $parentid int|false: (optional) id of the parent revision
 	 */
 	protected function assertRevision( $id, $summary, $text_id, $text_bytes, $text_sha1, $text = false, $parentid = false,
-									   $model = CONTENT_MODEL_WIKITEXT, $format = CONTENT_FORMAT_WIKITEXT ) {
-
+		$model = CONTENT_MODEL_WIKITEXT, $format = CONTENT_FORMAT_WIKITEXT
+	) {
 		$this->assertNodeStart( "revision" );
 		$this->skipWhitespace();
 

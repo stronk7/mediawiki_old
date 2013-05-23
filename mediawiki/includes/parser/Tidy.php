@@ -118,7 +118,7 @@ class MWTidy {
 	 * If tidy isn't able to correct the markup, the original will be
 	 * returned in all its glory with a warning comment appended.
 	 *
-	 * @param $text String: hideous HTML input
+	 * @param string $text hideous HTML input
 	 * @return String: corrected HTML output
 	 */
 	public static function tidy( $text ) {
@@ -158,7 +158,7 @@ class MWTidy {
 		global $wgTidyInternal;
 
 		$retval = 0;
-		if( $wgTidyInternal ) {
+		if ( $wgTidyInternal ) {
 			$errorStr = self::execInternalTidy( $text, true, $retval );
 		} else {
 			$errorStr = self::execExternalTidy( $text, true, $retval );
@@ -171,7 +171,7 @@ class MWTidy {
 	 * Spawn an external HTML tidy process and get corrected markup back from it.
 	 * Also called in OutputHandler.php for full page validation
 	 *
-	 * @param $text String: HTML to check
+	 * @param string $text HTML to check
 	 * @param $stderr Boolean: Whether to read result from STDERR rather than STDOUT
 	 * @param &$retval int Exit code (-1 on internal error)
 	 * @return mixed String or null
@@ -235,7 +235,7 @@ class MWTidy {
 	 * Use the HTML tidy extension to use the tidy library in-process,
 	 * saving the overhead of spawning a new process.
 	 *
-	 * @param $text String: HTML to check
+	 * @param string $text HTML to check
 	 * @param $stderr Boolean: Whether to read result from error status instead of output
 	 * @param &$retval int Exit code (-1 on internal error)
 	 * @return mixed String or null
@@ -244,7 +244,7 @@ class MWTidy {
 		global $wgTidyConf, $wgDebugTidy;
 		wfProfileIn( __METHOD__ );
 
-		if ( !MWInit::classExists( 'tidy' ) ) {
+		if ( !class_exists( 'tidy' ) ) {
 			wfWarn( "Unable to load internal tidy class." );
 			$retval = -1;
 

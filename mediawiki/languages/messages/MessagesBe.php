@@ -119,8 +119,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Паказваць колькасць назіральнікаў',
 'tog-oldsig' => 'Існуючы подпіс:',
 'tog-fancysig' => 'Апрацоўваць подпіс як вікі-тэкст (без аўтаматычнай спасылкі)',
-'tog-externaleditor' => "Карыстацца вонкавай праграмай для праўкі (edit); рэкамендуецца толькі для спецыялістаў, бо патрабуе адмысловых настаўленняў на камп'ютары; [//www.mediawiki.org/wiki/Manual:External_editors гл. падрабязна.]",
-'tog-externaldiff' => "Карыстацца вонкавай праграмай для параўнання (diff); рэкамендуецца толькі для спецыялістаў, бо патрабуе адмысловых настаўленняў на камп'ютары; [//www.mediawiki.org/wiki/Manual:External_editors гл. падрабязна.]",
 'tog-showjumplinks' => 'Дазволіць дапаможныя спасылкі "jump to"',
 'tog-uselivepreview' => 'Жывы перадпаказ (Яваскрыпт, эксперыментальн.)',
 'tog-forceeditsummary' => 'Папярэджваць пра пустое поле тлумачэння праўкі',
@@ -134,6 +132,7 @@ $messages = array(
 'tog-diffonly' => 'Не паказваць рэшты старонкі пад розніцай',
 'tog-showhiddencats' => 'Паказаць схаваныя катэгорыі',
 'tog-norollbackdiff' => 'Не паказваць розніцу ў выніку адкату',
+'tog-useeditwarning' => 'Папярэдзіць мяне, калі я пакідаю старонку з незахаванымі праўкамі',
 
 'underline-always' => 'Заўсёды',
 'underline-never' => 'Ніколі',
@@ -565,7 +564,7 @@ $2',
 'loginlanguagelabel' => 'Мова: $1',
 'suspicious-userlogout' => 'Ваш запыт на выхад быў адмоўлены, паколькі ён выглядае як накіраваны са зламанага браўзера або кэшаванне проксі-сервераў.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Невядомая памылка ў функцыі PHP-пошты',
 'user-mail-no-addy' => 'Паспрабаваў адправіць электронны ліст без адрасу электроннай пошты',
 
@@ -815,6 +814,8 @@ $2
 'edit-no-change' => 'Вашая праўка была праігнараваная, таму што не мяняўся тэкст.',
 'edit-already-exists' => 'Не ўдалося стварыць новую старонку.
 Такая ўжо існуе.',
+'editwarning-warning' => 'Выхад з гэтай старонкі прывядзе да страты правак, якія вы зрабілі. 
+Калі Вы зарэгістраваныя ў сістэме, Вы можаце адключыць гэта папярэджанне ў закладцы "Праца" Вашых настаўленняў.',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "Увага: На старонцы занадта шмат працаёмістых зваротаў да парсера.
@@ -1075,15 +1076,6 @@ $1",
 'search-external' => 'Вонкавы пошук',
 'searchdisabled' => 'Функцыя пошуку {{SITENAME}} не працуе. Тымчасова можна шукаць з дапамогай Google. Заўважце, што тамтэйшыя індэксы зместу {{SITENAME}} могуць не быць актуальнымі.',
 
-# Quickbar
-'qbsettings' => 'Хуткая стужка',
-'qbsettings-none' => 'Няма',
-'qbsettings-fixedleft' => 'Прымацавана злева',
-'qbsettings-fixedright' => 'Прымацавана справа',
-'qbsettings-floatingleft' => 'Плавае злева',
-'qbsettings-floatingright' => 'Плавае справа',
-'qbsettings-directionality' => 'Фіксаваная, у залежнасці ад накіравання вашай мовы',
-
 # Preferences page
 'preferences' => 'Настаўленні',
 'mypreferences' => 'Настáўленні',
@@ -1198,7 +1190,7 @@ $1",
 'prefs-displaywatchlist' => 'Паказ',
 'prefs-diffs' => 'Розніцы',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => "Адрас электроннай пошты з'яўляецца сапраўдным",
 'email-address-validity-invalid' => 'Увядзіце слушны адрас электроннай пошты',
 
@@ -1355,7 +1347,7 @@ $1",
 'action-sendemail' => 'адпраўка электронных пісем',
 
 # Recent changes
-'nchanges' => '$1 {{PLURAL:$1|мена|менаў}}',
+'nchanges' => '$1 {{PLURAL:$1|змена|змены|зменаў}}',
 'recentchanges' => 'Нядаўнія змяненні',
 'recentchanges-legend' => 'Магчымасці паказу',
 'recentchanges-summary' => 'Гэта апошнія мены на пляцоўцы {{SITENAME}}.',
@@ -1600,7 +1592,6 @@ $1',
 'http-read-error' => 'Памылка чытання HTTP',
 'http-timed-out' => 'Мінуў час чакання HTTP-запыту.',
 'http-curl-error' => 'Памылка звароту да URL: $1',
-'http-host-unreachable' => 'Не ўдалося адкрыць URL',
 'http-bad-status' => 'Пад час апрацоўкі HTTP-запыту выяўлена праблема: $1 $2',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
@@ -1929,7 +1920,7 @@ $1',
 'listgrouprights-addgroup-self-all' => 'Дадаць усе групы да свайго акаунта',
 'listgrouprights-removegroup-self-all' => 'Выдаліць усе групы са свайго акаунта',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Няма эл.адрасу',
 'mailnologintext' => 'Трэба [[Special:UserLogin|ўвайсці ў сістэму]] і мець пацверджаны адрас эл.пошты ў сваіх [[Special:Preferences|настáўленнях]], каб слаць эл.пошту іншым удзельнікам.',
 'emailuser' => 'Эл.пошта ўдзельніка',
@@ -1987,8 +1978,8 @@ $1',
 'notvisiblerev' => 'Версія сцёртая',
 'watchnochange' => 'Ніводзін з назіраных складнікаў не быў зменены за паказаны перыяд.',
 'watchlist-details' => 'Назіраю {{PLURAL:$1|$1 старонку|$1 старонак}} без уліку размоўных.',
-'wlheader-enotif' => '* Працуе апавяшчанне праз эл.пошту.',
-'wlheader-showupdated' => "* Старонкі, якія былі зменены пасля вашага апошняга іх наведвання, паказаны '''абрысам шрыфту'''.",
+'wlheader-enotif' => 'Працуе апавяшчанне праз эл.пошту.',
+'wlheader-showupdated' => "Старонкі, якія былі зменены пасля вашага апошняга іх наведвання, паказаны '''абрысам шрыфту'''.",
 'watchmethod-recent' => 'правяраем нядаўнія праўкі ў назіраных старонках',
 'watchmethod-list' => 'правяраем наяўнасць нядаўніх правак ў назіраных старонках',
 'watchlistcontains' => 'У вашым спісе назіранага $1 {{PLURAL:$1|старонка|старонак}}.',
@@ -2216,7 +2207,7 @@ $1',
 'contributions-title' => 'Уклад удзельніка $1',
 'mycontris' => 'Уклад',
 'contribsub2' => 'Для $1 ($2)',
-'nocontribs' => 'Не знойдзена менаў, адпаведных зададзеным параметрам.',
+'nocontribs' => 'Не знойдзена зменаў, адпаведных зададзеным параметрам.',
 'uctop' => '(апошн.)',
 'month' => 'Ад месяцу (і раней):',
 'year' => 'Ад году (і раней):',
@@ -2717,13 +2708,8 @@ $1',
 'pageinfo-authors' => 'Колькасць розных аўтараў',
 
 # Skin names
-'skinname-standard' => 'Класіка',
-'skinname-nostalgia' => 'Настальгія',
 'skinname-cologneblue' => 'Сіні Кёльн',
 'skinname-monobook' => 'Манабук',
-'skinname-myskin' => 'Майскін',
-'skinname-chick' => 'Чык',
-'skinname-simple' => 'Проста',
 'skinname-modern' => 'Сучаснасць',
 
 # Patrolling
@@ -2823,7 +2809,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Шырыня',
 'exif-imagelength' => 'Вышыня',
 'exif-bitspersample' => 'Бітаў на кампанент',
@@ -3002,7 +2988,7 @@ $1',
 'exif-originalimageheight' => 'Вышыня малюнка да кадравання',
 'exif-originalimagewidth' => 'Шырыня малюнка да кадравання',
 
-# EXIF attributes
+# Exif attributes
 'exif-compression-1' => 'Нясціснута',
 'exif-compression-2' => 'CCITT Group 3, 1-мерная мадыфікацыя кадзіравання даўжынь серый Хафмана',
 'exif-compression-3' => 'CCITT Group 3, факсавае кадзіраванне',
@@ -3223,7 +3209,7 @@ $1',
 'monthsall' => 'усе',
 'limitall' => 'усе',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Пацвердзіць адрас эл.пошты',
 'confirmemail_noemail' => 'У [[Special:Preferences|вашых настаўленнях]] няма дапушчальнага адрасу эл.пошты.',
 'confirmemail_text' => 'На пляцоўцы {{SITENAME}} патрабуецца праверка адрасу эл.пошты перад тым, як карыстацца магчымасцямі эл.пошты. Націсніце кнопку, што ніжэй, каб адаслаць сабе пацвярджальны ліст. У лісце будзе спасылка на спецыяльную пацвярджальную старонку, якую трэба будзе адкрыць у браўзеры, каб пацвердзіць правільнасць свайго адрасу эл.пошты.',
@@ -3396,13 +3382,6 @@ MediaWiki распаўсюджваецца, спадзеючыся на прыд
 'version-software-product' => 'Прадукт',
 'version-software-version' => 'Версія',
 
-# Special:FilePath
-'filepath' => 'Шлях да файла',
-'filepath-page' => 'Файл:',
-'filepath-submit' => 'Пуск',
-'filepath-summary' => 'Гэтая адмысловая старонка вяртае поўны шлях да файла.
-Выявы паказваюцца ў поўным памеры, іншыя тыпы файлаў адкрываюцца ў прыпісаных да іх праграмах.',
-
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Пошук дублікатных файлаў',
 'fileduplicatesearch-summary' => 'Пошук дублікатных файлах на падставе іх хэшаў.',
@@ -3458,7 +3437,7 @@ MediaWiki распаўсюджваецца, спадзеючыся на прыд
 'tags-description-header' => 'Поўнае апісанне значэння',
 'tags-hitcount-header' => 'Пазначаных правак',
 'tags-edit' => 'правіць',
-'tags-hitcount' => '$1 {{PLURAL:$1|мена|менаў}}',
+'tags-hitcount' => '$1 {{PLURAL:$1|змена|змены|зменаў}}',
 
 # Special:ComparePages
 'comparepages' => 'Параўнанне старонак',

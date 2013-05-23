@@ -159,8 +159,6 @@ $messages = array(
 'tog-shownumberswatching' => 'Témbongkeun jumlah nu ngawaskeun',
 'tog-oldsig' => 'Paraf nu geus aya:',
 'tog-fancysig' => 'Témbongkeun paraf salaku wikitext (tanpa tumbu otomatis)',
-'tog-externaleditor' => 'Paké éditor éxternal dumasar asalna (ukur pikeun nu ahli, perlu sétingan husus dina komputer anjeun. [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
-'tog-externaldiff' => 'Paké diff éxternal dumasar asalna (ukur pikeun nu ahli, perlu sétingan husus dina komputer anjeun. [//www.mediawiki.org/wiki/Manual:External_editors Émbaran lengkep.])',
 'tog-showjumplinks' => 'Aktifkeun tumbu panyambung "luncat ka"',
 'tog-uselivepreview' => 'Paké pramidang saharita (JavaScript) (ujicoba)',
 'tog-forceeditsummary' => 'Mun kotak ringkesan éditan masih kosong, béjaan!',
@@ -175,6 +173,7 @@ $messages = array(
 'tog-showhiddencats' => 'Témbongkeun kategori nyumput',
 'tog-noconvertlink' => 'Non-aktifkeun konvérsi judul tumbu',
 'tog-norollbackdiff' => 'Liwat béda sanggeus malikkeun révisi',
+'tog-useeditwarning' => 'Béjaan kuring lamun ninggalkeun kaca édit anu parobahanana can disimpen',
 
 'underline-always' => 'Salawasna',
 'underline-never' => 'Ulah',
@@ -601,7 +600,7 @@ Tungguan heula sakeudeung, laju cobaan deui.',
 'loginlanguagelabel' => 'Basa: $1',
 'suspicious-userlogout' => "Pamundut anjeun pikeun kaluar log ditolak ku sabab sigana dikirim ku pangaprak buntu atawa ''cache'' proxi.",
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'Kasalahan nu teu kanyahoan dina fungsi PHP surélék().',
 'user-mail-no-addy' => 'Nyobaan ngirim surélék tanpa alamat.',
 
@@ -1089,14 +1088,6 @@ Coba susud dimimitian ku ''all:'' pikeun nyusud sakabéh kandunganana (kaasup ka
 'search-external' => 'Panéangan luar',
 'searchdisabled' => 'Punten! Néangan téks lengkep di {{SITENAME}} kanggo samentawis ditumpurkeun pikeun alesan kinerja. Jalaran kitu, saheulaanan anjeun bisa nyungsi di Google di handap ieu. Catet yén indéxna ngeunaan eusi {{SITENAME}} bisa jadi teu mutahir.',
 
-# Quickbar
-'qbsettings' => 'Bar gancang',
-'qbsettings-none' => 'Henteu aya',
-'qbsettings-fixedleft' => 'Angger beulah kenca',
-'qbsettings-fixedright' => 'Angger beulah katuhu',
-'qbsettings-floatingleft' => 'Ngambang ka kenca',
-'qbsettings-floatingright' => 'Ngambang ka katuhu',
-
 # Preferences page
 'preferences' => 'Préferénsi',
 'mypreferences' => 'Préferéns',
@@ -1205,7 +1196,7 @@ Mun geus anggeus teu bisa dibolaykeun.',
 'prefs-displaywatchlist' => 'Pilihan pidangan',
 'prefs-diffs' => 'Béda',
 
-# User preference: e-mail validation using jQuery
+# User preference: email validation using jQuery
 'email-address-validity-valid' => 'Alamat surélék sigana bener',
 'email-address-validity-invalid' => 'Asupkeun alamat ratron nu bener',
 
@@ -1533,7 +1524,6 @@ Pariksa heula jujutan hapusanana saméméh neruskeun ngamuat deui éta berkas.',
 # HTTP errors
 'http-invalid-url' => 'URL teu bener: $1',
 'http-invalid-scheme' => 'URL anu skémana "$1" teu karojong',
-'http-host-unreachable' => 'URL teu kahontal.',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
 'upload-curl-error6' => 'URL teu kahontal',
@@ -1835,7 +1825,7 @@ Baca ogé [[Special:WantedCategories|kategori nu dipikabutuh]].',
 'listgrouprights-addgroup-self-all' => 'Tambahkeun sakabéh grup ka akun sorangan',
 'listgrouprights-removegroup-self-all' => 'Piceun sakabéh grup ti akun sorangan',
 
-# E-mail user
+# Email user
 'mailnologin' => 'Euweuh alamat ngirim',
 'mailnologintext' => "Anjeun kudu '''[[Special:UserLogin|asup log]]''' sarta boga alamat surélék nu sah na [[Special:Preferences|préferénsi]] anjeun sangkan bisa nyurélékan pamaké séjén.",
 'emailuser' => 'Surélékan pamaké ieu',
@@ -1883,8 +1873,8 @@ Jaga, parobahan na kaca ieu katut kaca obrolanana bakal dibéréndélkeun di din
 'notvisiblerev' => 'Révisi geus dihapus',
 'watchnochange' => 'Sadaya awaseun anjeun taya nu diédit dina jangka wanci nu ditémbongkeun.',
 'watchlist-details' => 'Aya {{PLURAL:$1|$1 kaca|$1 kaca}} nu ku anjeun diawaskeun, teu kaasup kaca obrolan/sawala.',
-'wlheader-enotif' => '* Pangémbar surélék difungsikeun.',
-'wlheader-showupdated' => "* Kaca nu robah ti panungtungan anjeun sindang ditémbongkeun kalawan '''kandel'''",
+'wlheader-enotif' => 'Pangémbar surélék difungsikeun.',
+'wlheader-showupdated' => "Kaca nu robah ti panungtungan anjeun sindang ditémbongkeun kalawan '''kandel'''",
 'watchmethod-recent' => 'mariksa nu anyar robah na kaca nu diawaskeun',
 'watchmethod-list' => 'mariksa nu anyar robah na kaca nu diawaskeun',
 'watchlistcontains' => 'Anjeun ngawaskeun $1 {{PLURAL:$1|kaca|kaca}}.',
@@ -2551,7 +2541,7 @@ Nu séjénna bakal disumputkeun sakumaha asalna.
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Lega',
 'exif-imagelength' => 'Luhur',
 'exif-compression' => 'Skéma komprési',
@@ -2841,7 +2831,7 @@ Nu séjénna bakal disumputkeun sakumaha asalna.
 'monthsall' => 'kabéh',
 'limitall' => 'kabéh',
 
-# E-mail address confirmation
+# Email address confirmation
 'confirmemail' => 'Konfirmasi alamat surélék',
 'confirmemail_noemail' => 'Alamat surélék anu didaptarkeun dina [[Special:Preferences|préferénsi pamaké]] anjeun teu sah.',
 'confirmemail_text' => 'Wiki ieu merlukeun anjeun sangkan méré konfirmasi alamat surélék saméméh migunakeun fitur surélék. Aktifkeun tombol di handap pikeun ngirimkeun surat konfirmasi ka alamat anjeun. Suratna ngandung tumbu nu ngandung sandina; muatkeun tumbuna kana panyungsi anjeun pikeun ngonfirmasi yén alamat surélék anjeun sah.',
@@ -2962,11 +2952,6 @@ Coba ku sawangan normal.',
 'version-software' => 'Sopwér nu geus diinstal',
 'version-software-product' => 'Produk',
 'version-software-version' => 'Vérsi',
-
-# Special:FilePath
-'filepath' => 'Jalur koropak',
-'filepath-page' => 'Koropak:',
-'filepath-submit' => 'Jalur',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Sungsi gambar duplikat',

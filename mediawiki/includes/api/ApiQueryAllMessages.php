@@ -39,8 +39,9 @@ class ApiQueryAllMessages extends ApiQueryBase {
 		$params = $this->extractRequestParams();
 
 		if ( is_null( $params['lang'] ) ) {
-			global $wgLang;
-			$langObj = $wgLang;
+			$langObj = $this->getLanguage();
+		} elseif ( !Language::isValidCode( $params['lang'] ) ) {
+			$this->dieUsage( 'Invalid language code for parameter lang', 'invalidlang' );
 		} else {
 			$langObj = Language::factory( $params['lang'] );
 		}
@@ -86,7 +87,7 @@ class ApiQueryAllMessages extends ApiQueryBase {
 			foreach ( $messages_target as $message ) {
 				// === 0: must be at beginning of string (position 0)
 				if ( strpos( $message, $params['prefix'] ) === 0 ) {
-					if( !$skip ) {
+					if ( !$skip ) {
 						$skip = true;
 					}
 					$messages_filtered[] = $message;
@@ -254,6 +255,12 @@ class ApiQueryAllMessages extends ApiQueryBase {
 			'from' => 'Return messages starting at this message',
 			'to' => 'Return messages ending at this message',
 		);
+	}
+
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'code' => 'invalidlang', 'info' => 'Invalid language code for parameter lang' ),
+		) );
 	}
 
 	public function getResultProperties() {

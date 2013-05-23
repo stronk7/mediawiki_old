@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains database-related utiliy classes.
+ * This file contains database-related utility classes.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -219,9 +219,9 @@ class ResultWrapper implements Iterator {
  * doesn't go anywhere near an actual database.
  */
 class FakeResultWrapper extends ResultWrapper {
-	var $result     = array();
-	var $db         = null;	// And it's going to stay that way :D
-	var $pos        = 0;
+	var $result = array();
+	var $db = null; // And it's going to stay that way :D
+	var $pos = 0;
 	var $currentRow = null;
 
 	function __construct( $array ) {
@@ -253,7 +253,8 @@ class FakeResultWrapper extends ResultWrapper {
 		$this->pos = $row;
 	}
 
-	function free() {}
+	function free() {
+	}
 
 	// Callers want to be able to access fields with $this->fieldName
 	function fetchObject() {
@@ -285,7 +286,7 @@ class LikeMatch {
 	/**
 	 * Store a string into a LikeMatch marker object.
 	 *
-	 * @param String $s
+	 * @param string $s
 	 */
 	public function __construct( $s ) {
 		$this->str = $s;

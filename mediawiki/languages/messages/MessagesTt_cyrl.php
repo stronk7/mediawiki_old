@@ -13,6 +13,7 @@
  * @author Haqmar
  * @author Himiq Dzyu
  * @author KhayR
+ * @author MF-Warburg
  * @author Marat Vildanov
  * @author Reedy
  * @author Rinatus
@@ -224,23 +225,21 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Бүлек исеменә тычканның уң чирттермәсе белән төрткәч үзгәртү бите ачылсын (JavaScript кирәк)',
 'tog-showtoc' => 'Эчтәлек күрсәтелсен (3 тән күбрәк башламлы битләрдә)',
 'tog-rememberpassword' => 'Хисап язмамны бу браузерда саклансын (иң күп $1 {{PLURAL:$1|көн|көн|көн}}гә кадәр)',
-'tog-watchcreations' => 'Төзегән битләрем күзәтү исемлегемә өстәлсен',
-'tog-watchdefault' => 'Үзгәрткән битләрем күзәтү исемлегемә өстәлсен',
-'tog-watchmoves' => 'Күчергән битләрем күзәтү исемлегемә өстәлсен',
-'tog-watchdeletion' => 'Бетерелгән битләремне күзәтү исемлегемгә өстәү',
+'tog-watchcreations' => 'Мин төзегән битләр һәм йөкләгән файллар күзәтү исемлегемә өстәлсен',
+'tog-watchdefault' => 'Мин үзгәрткән битләр һәм файллар күзәтү исемлегемә өстәлсен',
+'tog-watchmoves' => 'Мин күчергән битләр һәм файллар күзәтү исемлегемә өстәлсен',
+'tog-watchdeletion' => 'Мин бетергән битләр һәм файлларны күзәтү исемлегемгә өстәлсен',
 'tog-minordefault' => 'Барлык үзгәртүләрне килешү буенча кече дип билгеләнсен',
 'tog-previewontop' => 'Үзгәртү тәрәзәсеннән өстәрәк битне алдан карау өлкәсен күрсәтелсен',
 'tog-previewonfirst' => 'Үзгәртү битенә күчкәндә башта алдан карау бите күрсәтелсен',
 'tog-nocache' => 'Битләр кэшлауны тыелсын',
-'tog-enotifwatchlistpages' => 'Күзәтү исемлегемдәге бит үзгәртелү турында электрон почтага хәбәр җибәрелсен',
+'tog-enotifwatchlistpages' => 'Күзәтү исемлегемдәге бит яки файл үзгәртелү турында электрон почтага хәбәр җибәрелсен',
 'tog-enotifusertalkpages' => 'Бәхәс битем үзгәртелү турында электрон почтага хәбәр җибәрелсен',
 'tog-enotifminoredits' => 'Кече үзгәртүләр турында да электрон почтага хәбәр җибәрелсен',
 'tog-enotifrevealaddr' => 'Хәбәрләрдә e-mail адресым күрсәтелсен',
 'tog-shownumberswatching' => 'Битне күзәтү исемлекләренә өстәгән кулланучылар санын күрсәтелсен',
 'tog-oldsig' => 'Хәзерге имза:',
 'tog-fancysig' => 'Имзаның шәхси вики-билгеләмәсе (автоматик сылтамасыз)',
-'tog-externaleditor' => 'Тышкы редактор куллану (бары тик белгечләргә генә һәм санак махсус көйләнгән булу зарур; [//www.mediawiki.org/wiki/Manual:External_editors тулырак...])',
-'tog-externaldiff' => 'Тышкы версия чагыштыру программасын куллану (бары тик белгечләр өчен һшм санак махсус көйләнгән булу зарур; [//www.mediawiki.org/wiki/Manual:External_editors тулырак...])',
 'tog-showjumplinks' => '«Күчү» ярдәмче сылтамалары ялгансын',
 'tog-uselivepreview' => 'Тиз карап алу кулланылсын (JavaScript, эксперименталь)',
 'tog-forceeditsummary' => 'Үзгәртүләрне тасвирлау юлы тутырылмаган булса, кисәтү',
@@ -254,6 +253,7 @@ $messages = array(
 'tog-diffonly' => 'Юрама чагыштыру астында бит эчтәлеге күрсәтелмәсен',
 'tog-showhiddencats' => 'Яшерен төркемнәр күрсәтелсен',
 'tog-norollbackdiff' => 'Кире кайтару ясагач юрамалар аермасы күрсәтелмәсен',
+'tog-useeditwarning' => 'Битне сакламыйча китү вакытында мине кисәтергә',
 
 'underline-always' => 'Һәрвакыт',
 'underline-never' => 'Бервакытта да',
@@ -607,6 +607,7 @@ $2',
 
 Сез {{SITENAME}} проектында аноним рәвештә кала яисә шул ук яки башка исем белән яңадан <span class='plainlinks'>[$1 керә]</span> аласыз.
 Кайбер битләр Сез кергән кебек күрсәтелергә мөмкин. Моны бетерү өчен браузер кэшын чистартыгыз.",
+'welcomeuser' => 'Хуш килдегез, $1!',
 'yourname' => 'Кулланучы исеме:',
 'yourpassword' => 'Серсүз:',
 'yourpasswordagain' => 'Серсүзне кабат кертү:',
@@ -686,7 +687,7 @@ $2',
 'loginlanguagelabel' => 'Тел: $1',
 'suspicious-userlogout' => 'Сезнең эшчәнлекне бетерү соравыгыз кире кагылды, чөнки ул ялгыш браузер яисә кэшлаучы прокси аша җибәрелергэ мөмкин.',
 
-# E-mail sending
+# Email sending
 'php-mail-error-unknown' => 'PHP mail() функциясендә билгесез хата',
 'user-mail-no-addy' => 'Электрон почта адресыннан башка электрон хат җибәрмәкче булды',
 
@@ -754,6 +755,7 @@ $2
 'changeemail-oldemail' => 'Хәзерге электрон әрҗә адресы:',
 'changeemail-newemail' => 'Яңа электрон почта адресы:',
 'changeemail-none' => '(юк)',
+'changeemail-password' => '«{{SITENAME}}» проекты өчен серсүзегез:',
 'changeemail-submit' => 'E-mail адресын үзгәртү',
 'changeemail-cancel' => 'Баш тарту',
 
@@ -885,6 +887,7 @@ $2
 Мондый хаталар аноним web-проксилар кулланганда килеп чыгарга мөмкин.",
 'edit_form_incomplete' => "'''Төзәтү кырларының кайбер өлешләре серверга барып ирешмәде. Сезнең үзгәртүләр бозылмаганмы - игътибар белән тикшерегез һәм яңадан җибәреп карагыз.'''",
 'editing' => '«$1» битен үзгәртү',
+'creating' => '«$1» битен ясау',
 'editingsection' => '«$1» битендә бүлек үзгәртүе',
 'editingcomment' => '«$1» битен үзгәртү (яңа бүлек)',
 'editconflict' => 'Үзгәртү конфликты: $1',
@@ -949,6 +952,8 @@ $2
 'edit-no-change' => 'Текстта үзгәешләр ясалмау сәбәпле, сезнең үзгәртү кире кагыла.',
 'edit-already-exists' => 'Яңа бит төзеп булмый.
 Ул инде бар.',
+'editwarning-warning' => 'Башка биткә күчү вакытында бу мәкаләгә керткән үзгәрешләр югалырга мөмкин.
+Әгәрдә сез теркәлгән булсагыз, бу искәрмәне сез «Көйләнмәләрем» өлешендә үзгәртә аласыз.',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''Игътибар:''' бу биттә хәтерне еш кулланучы функцияләр артык күп.
@@ -1165,14 +1170,6 @@ $1",
 'powersearch-toggleall' => 'Барысы',
 'powersearch-togglenone' => 'Бирни дә юк',
 'search-external' => 'Тышкы эзләү',
-
-# Quickbar
-'qbsettings' => 'Күчешләр аслыгы',
-'qbsettings-none' => 'Күрсәтмәү',
-'qbsettings-fixedleft' => 'Сулда күчерелмәс',
-'qbsettings-fixedright' => 'Уңда күчерелмәс',
-'qbsettings-floatingleft' => 'Сулда йөзмә',
-'qbsettings-floatingright' => 'Уңда йөзмә',
 
 # Preferences page
 'preferences' => 'Көйләнмәләр',
@@ -1675,6 +1672,7 @@ PICT # төрле
 'allpagesnext' => 'Киләсе',
 'allpagessubmit' => 'Башкару',
 'allpagesprefix' => 'Алкушымчалы битләрне күрсәтү:',
+'allpages-hide-redirects' => 'Юнәлтүләрне яшер',
 
 # Special:Categories
 'categories' => 'Төркемнәр',
@@ -1712,7 +1710,7 @@ PICT # төрле
 'listgrouprights-helppage' => 'Help:Төркемнәрнең хокуклары',
 'listgrouprights-members' => '(төркем исемлеге)',
 
-# E-mail user
+# Email user
 'emailuser' => 'Бу кулланучыга хат',
 'emailuser-title-target' => '{{GENDER:$1|Кулланучыга}} электрон хат язу',
 'emailuser-title-notarget' => 'Кулланучыга хат җибәрү',
@@ -1738,7 +1736,7 @@ PICT # төрле
 'emailsenttext' => 'E-mail хатыгыз җиберелде.',
 
 # Watchlist
-'watchlist' => 'Күзәтү исемлегем',
+'watchlist' => 'Күзәтү исемлеге',
 'mywatchlist' => 'Күзәтү исемлеге',
 'watchlistfor2' => '$1 $2 өчен',
 'nowatchlist' => 'Күзәтү исемлегегездә битләр юк.',
@@ -1907,7 +1905,7 @@ $1',
 'blanknamespace' => '(Төп)',
 
 # Contributions
-'contributions' => 'Кулланучының кертеме',
+'contributions' => '{{GENDER:$1|Кулланучының}} кертеме',
 'contributions-title' => '$1 исемле кулланучының кертеме',
 'mycontris' => 'Кертем',
 'contribsub2' => '$1 ($2) өчен',
@@ -2157,14 +2155,12 @@ $1',
 # Spam protection
 'spamprotectiontitle' => 'Спам фильтры',
 
+# Info page
+'pageinfo-toolboxlink' => 'Бит турында мәгълүмат',
+
 # Skin names
-'skinname-standard' => 'Классик',
-'skinname-nostalgia' => 'Искә алу',
 'skinname-cologneblue' => 'Зәңгәр сагыш',
 'skinname-monobook' => 'Китап',
-'skinname-myskin' => 'Үзем',
-'skinname-chick' => 'Чеби',
-'skinname-simple' => 'Гади',
 'skinname-modern' => 'Замана',
 'skinname-vector' => 'Сызымлы',
 
@@ -2234,7 +2230,7 @@ $1',
 * gpslongitude
 * gpsaltitude',
 
-# EXIF tags
+# Exif tags
 'exif-imagewidth' => 'Киңлек',
 'exif-imagelength' => 'Биеклек',
 'exif-imagedescription' => 'Рәсемнең исеме',
@@ -2427,6 +2423,9 @@ $1',
 'hijri-calendar-m7' => 'Раҗәб',
 'hijri-calendar-m9' => 'Рамазан',
 
+# Signatures
+'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|бәхәс]])',
+
 # Core parser functions
 'duplicate-defaultsort' => 'Игътибар. Уйланма куелган "$2" бүлгәләү ачкычы элеккеге уйланма куелган "$1" бүлгәләү ачкычын үзгәртә.',
 
@@ -2440,11 +2439,6 @@ $1',
 'version-software' => 'Урнаштырылган программа белән тәэмин ителешне',
 'version-software-product' => 'Продукт',
 'version-software-version' => 'Версия',
-
-# Special:FilePath
-'filepath' => 'Файлга юл',
-'filepath-page' => 'Файл:',
-'filepath-submit' => 'Күчү',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Бер үк файлларны эзләү',
