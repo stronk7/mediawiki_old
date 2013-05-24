@@ -391,6 +391,18 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'English';
             $wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
+
+            // Disable old english wikis to repuce spam MDLSITE-2284.
+            switch ($mdocsver) {
+                case '19':
+                case '20':
+                case '21':
+                case '22':
+                case '23':
+                    $wgReadOnly = "This wiki has temporarily been set to read-only mode. Please contribute to the [[:en:Main page|Moodle Docs 2.5]] wiki instead.";
+                    break;
+            }
+
         break;
 
         default:  // any unexpected input
