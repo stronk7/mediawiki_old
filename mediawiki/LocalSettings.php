@@ -66,7 +66,7 @@ $wgEnableUserEmail  = false;
 // Talk to Jordan if your confused by any of this, but dont mess with it (grrrrr!)
 
 // set default versions:
-$mdocsver = '24';
+$mdocsver = '25';
 $callpath = 'en';
 
 // Begin wizardy!

@@ -30,7 +30,7 @@ RewriteRule ^(.*) /%1/ [R=301,L]
 # Default lang and version is 24 english
 # e.g. http://docs/-> http://docs/24/en
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*) /24/en/ [R=301,L]
+RewriteRule ^(.*) /25/en/ [R=301,L]
 
 # Add trailing / if missing, causing mediawiki to serve the native langs Main_Page
 RewriteRule ^(test|dev)$ /$1/
@@ -40,7 +40,7 @@ RewriteRule ^(all|2x|19|20|21|22|23|24|25)/([a-z]{2}|pt_br)$ /$1/$2/
 # Redirect versionless langs to 24 version
 # e.g. http://docs/en/mod/forum/view -> http://docs/24/en/mod/forum/view
 RewriteCond %{REQUEST_URI} ^/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/)
-RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /24/$1$2 [R=301,L]
+RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /25/$1$2 [R=301,L]
 
 # Redirect language children to parents [if a wiki exists for the parent]
 # e.g. http://docs/19/es_es/mod/forum/view -> http://docs/19/es/mod/forum/view
