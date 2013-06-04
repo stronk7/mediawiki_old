@@ -51,7 +51,7 @@ class SkinMoodleDocsNew extends SkinTemplate {
                 moodle_output::add_browser_specific_styles($out);
 	}
 
-	function outputPage( OutputPage $out ) {
+	function outputPage( OutputPage $out = null ) {
                 moodle_output::prepare_output_page( $out );
 		SkinTemplate::outputPage( $out );
 	}

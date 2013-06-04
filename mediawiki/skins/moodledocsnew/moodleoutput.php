@@ -39,7 +39,7 @@ class moodle_output {
         $out->addStyle( 'moodledocsnew/fixes.IE55.css', 'screen', 'IE 5.5000' );
     }
 
-    public static function prepare_output_page(OutputPage $out) {
+    public static function prepare_output_page(OutputPage $out = null) {
         global $wgStylePath;
 
         if (function_exists('MungeEmail')) {
