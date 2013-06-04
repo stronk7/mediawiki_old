@@ -35,11 +35,18 @@ div#column-one {padding-top: 1.3em;}
 div#moodlesitelink {text-align: center;padding-top: 1em;}
 div#moodlesitelink img.logo {border:0;width:100px;height:30px;}
 div#content .navtrail {position:absolute;top:-6.2em;background-color:transparent;margin-bottom:0;}
+div#footer { margin: 0.5em; padding: 0.5em }
 /** Layout overrides - end **/
 
 /** General styles */
-h1, h2, h3, h4, h5, h6 {padding-top: 0em;margin-top: 1.5em;}
-h1 {border-bottom: 1px solid #ddd;}
+h1, h2, h3, h4, h5, h6 {
+    color: black;
+    background: none;
+    font-weight: normal;
+    margin: 1.5em 0em 0em;
+    padding: 0em 0em 0.17em;
+}
+h1 {border-bottom: 1px solid #ddd; font-size: 188%}
 h2 {font-size: 150%;border-bottom: 1px solid #ddd;}
 h3 {font-size: 120%;}
 h4 {font-size:105%;}
@@ -49,6 +56,9 @@ b, strong {color: #111;}
 p {line-height: 1.4em;}
 hr {color: #ddd;background-color: #ddd;}
 
+a { text-decoration: none; color: #002bb8; background: none; }
+a:active { color: #faa700; }
+a:hover { text-decoration: underline; }
 a:visited {color: #0063DC;}
 
 ul, ol, dd {line-height: 1.4em;}
@@ -56,6 +66,8 @@ fieldset {border: 1px solid #FFB53A;line-height: 1.4em;}
 legend {background: white;}
 code {font-size: 120%;line-height: 1.4em;}
 pre {border: 1px dashed #FFB53A;font-size: 120%;line-height: 1.4em;}
+textarea { width: 100%; padding: .1em; }
+
 /** General styles - end*/
 
 /** General portlet and sideblock styles **/
@@ -63,19 +75,26 @@ pre {border: 1px dashed #FFB53A;font-size: 120%;line-height: 1.4em;}
 .portlet,
 .sideblock {margin: 0 0 0.75em 0.75em;}
 .portlet h5,
-.sideblock .header {background: url("images/gradient.gif") top left;border: 1px solid #DDD;border-bottom: none;padding: 3px 1em 5px;display: block;font-weight: bold;font-size: 95%;margin-top: 0;height: 1em;}
+.sideblock .header {background: url("images/gradient.gif") top left;border: 1px solid #DDD;border-bottom: none;padding: 3px 1em 5px;display: block;font-weight: bold;font-size: 95%;margin-top: 0;height: 1em; text-transform: lowercase; white-space: nowrap; }
 .portlet .pBody,
 .sideblock .content {border: 1px solid #DDD;}
-.portlet ul {list-style-image: none;list-style-type: none;margin-left: 0.5em;}
+.portlet ul {list-style-image: none;list-style-type: none;margin: 0.3em; line-height: 1.5em; font-size: 95%; padding: 0; }
+.portlet li {
+    padding: 0;
+    margin: 0;
+}
+
 .pBody {font-size: 100%;}
 /** General portlet and sideblock styles - end **/
 
 /** Specific portlet styles **/
 #p-personal {top: 2em;width: 80%;margin-left: 20%;}
+#p-personal h5 {display: none;}
 #p-personal ul {margin-right: 1%;}
 
 #p-cactions {line-height: 1em;font-size: 100%;left: 3.3em;top: 11em;width: 72%;}
-#p-cactions ul {line-height: 1.8em;}
+#p-cactions h5 {display: none;}
+#p-cactions ul {margin: 0.8em; padding-left: 0px;}
 #p-cactions li a,
 #p-cactions li.selected a,
 #p-cactions li a:hover {background-color: transparent;text-decoration: none;text-transform: lowercase;}
@@ -106,7 +125,7 @@ p.note.orange {background:#FEA;}
 .small-info-right .new {color: #E90;}
 #siteNotice {padding: 0 .9em;}
 .error {color: red;font-size: larger;}
-#catlinks {border-left: 1em solid #EEE;border-top: 1px solid #EEE;}
+#catlinks { background: #F9F9F9; border: 1px solid #EEE; border-left: 1em solid #EEE; margin-top: 2em; padding: 0.5em;}
 .rowAlternate {background-color: #eeeee0;}
 .clearfix {display: block;}
 .accesshide {position:absolute;top:-100000px;left:10px;font-weight:normal;font-size:1em;}
@@ -121,6 +140,28 @@ table.nicetable th,
 table.nicetable td {border: 1px solid #999999;padding: 0.3em 0.5em;text-align: left;}
 table.nicetable th {background:#DDDDDD url(images/gradient.gif) repeat scroll left top;}
 
+code { background-color: #f9f9f9; }
+//pre { padding: 1em; border: 1px dashed #2f6fab; color: black; background-color: #f9f9f9; line-height: 1.1em; }
+pre { padding: 1em; }
+
+/** The main content area **/
+
+#siteSub { display: none; }
+
+/* Some space under the headers in the content area */
+#bodyContent h1, #bodyContent h2 { margin-bottom: .6em; }
+#bodyContent h3, #bodyContent h4, #bodyContent h5 { margin-bottom: .3em; }
+#firstHeading { margin-bottom: .1em; }
+
+/** Table of contents **/
+
+#toc, .toc, .mw-warning { border: 1px solid #aaa; background-color: #f9f9f9; padding: 5px; font-size: 95%; }
+#toc h2, .toc h2 { display: inline; border: none; padding: 0; font-size: 100%; font-weight: bold; }
+#toc #toctitle, .toc #toctitle, #toc .toctitle, .toc .toctitle { text-align: center; }
+#toc ul, .toc ul { list-style-type: none; list-style-image: none; margin-left: 0; padding-left: 0; text-align: left; }
+#toc ul ul, .toc ul ul { margin: 0 0 0 2em; }
+#toc .toctoggle, .toc .toctoggle { font-size: 94%; }
+
 /***********************************************
  * The following CSS is assumed to be unneeded *
  ***********************************************/
@@ -134,3 +175,4 @@ table.nicetable th {background:#DDDDDD url(images/gradient.gif) repeat scroll le
 #moodlemenu {clear:both;border-top: 1px solid #ffe39d;border-bottom: 1px solid #e4af5f;background-color: #ffe39d;background-image: url(images/sprite.png);background-repeat: repeat-x; background-position: 0 -24px;text-align:right; font-size: 0.75em;}
 #moodlemenu #global-search {float:none;margin-top:0; font-size: 0.7em;}
 #moodlemenu #moodle-custommenu {text-align:left;float:left;}
+.mcm-container {padding: 0px;}
