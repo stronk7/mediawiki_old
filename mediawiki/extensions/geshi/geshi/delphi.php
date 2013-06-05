@@ -2,15 +2,19 @@
 /*************************************************************************************
  * delphi.php
  * ----------
- * Author: Járja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
- * Copyright: (c) 2004 Járja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Author: Jï¿½rja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
+ * Copyright: (c) 2004 Jï¿½rja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
+ * Release Version: 1.0.8.11
  * Date Started: 2004/07/26
  *
  * Delphi (Object Pascal) language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2012/06/27 (1.0.8.11)
+ *   -  Added some keywords
+ *   -  fixed hex numbers and hex char literals (including WideChar)
+ *   -  Added support for FPC-Style generics
  * 2008/05/23 (1.0.7.22)
  *   -  Added description of extra language features (SF#1970248)
  * 2005/11/19 (1.0.3)
@@ -50,28 +54,29 @@ $language_data = array (
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array('(*' => '*)', '{' => '}'),
     //Compiler directives
-    'COMMENT_REGEXP' => array(2 => '/{\\$.*?}|\\(\\*\\$.*?\\*\\)/U'),
-    'CASE_KEYWORDS' => 0,
+    'COMMENT_REGEXP' => array(2 => '/\\{\\$.*?}|\\(\\*\\$.*?\\*\\)/U'),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'"),
     'ESCAPE_CHAR' => '',
+
     'KEYWORDS' => array(
         1 => array(
             'Abstract', 'And', 'Array', 'As', 'Asm', 'At', 'Begin', 'Case',
-            'Class', 'Const', 'Constructor', 'Contains', 'Destructor',
+            'Class', 'Const', 'Constructor', 'Contains', 'Default', 'delayed', 'Destructor',
             'DispInterface', 'Div', 'Do', 'DownTo', 'Else', 'End', 'Except',
-            'Export', 'Exports', 'External', 'File', 'Finalization', 'Finally',
-            'For', 'Function', 'Goto', 'If', 'Implementation', 'In', 'Inherited',
-            'Initialization', 'Inline', 'Interface', 'Is', 'Label', 'Library',
-            'Mod', 'Not', 'Object', 'Of', 'On', 'Or', 'Overload', 'Override',
+            'Export', 'Exports', 'External', 'File', 'Finalization', 'Finally', 'For',
+            'Function', 'Generic', 'Goto', 'If', 'Implementation', 'In', 'Inherited',
+            'Initialization', 'Inline', 'Interface', 'Is', 'Label', 'Library', 'Message',
+            'Mod', 'Nil', 'Not', 'Object', 'Of', 'On', 'Or', 'Overload', 'Override',
             'Package', 'Packed', 'Private', 'Procedure', 'Program', 'Property',
-            'Protected', 'Public', 'Published', 'Raise', 'Record', 'Register',
-            'Repeat', 'Requires', 'Resourcestring', 'Set', 'Shl', 'Shr', 'Then',
-            'ThreadVar', 'To', 'Try', 'Type', 'Unit', 'Until', 'Uses', 'Var',
-            'Virtual', 'While', 'With', 'Xor', 'assembler', 'cdecl', 'far',
-            'near', 'pascal', 'register', 'cdecl', 'safecall', 'stdcall', 'varargs'
+            'Protected', 'Public', 'Published', 'Read', 'Raise', 'Record', 'Register',
+            'Repeat', 'Requires', 'Resourcestring', 'Set', 'Shl', 'Shr', 'Specialize', 'Stored',
+            'Then', 'ThreadVar', 'To', 'Try', 'Type', 'Unit', 'Until', 'Uses', 'Var',
+            'Virtual', 'While', 'With', 'Write', 'Xor', 'assembler', 'far',
+            'near', 'pascal', 'cdecl', 'safecall', 'stdcall', 'varargs'
             ),
         2 => array(
-            'nil', 'false', 'self', 'true', 'var', 'type', 'const'
+            'false', 'self', 'true',
             ),
         3 => array(
             'Abs', 'AcquireExceptionObject', 'Addr', 'AnsiToUtf8', 'Append', 'ArcTan',
@@ -210,7 +215,7 @@ $language_data = array (
             ),
         ),
     'CASE_SENSITIVE' => array(
-        GESHI_COMMENTS => true,
+        GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => false,
@@ -250,7 +255,7 @@ $language_data = array (
             1 => 'color: #006600;'
             ),
         'REGEXPS' => array(
-            0 => 'color: #9ac;',
+            0 => 'color: #0000cc;',
             1 => 'color: #ff0000;'
             ),
         'SYMBOLS' => array(
@@ -274,16 +279,23 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Hex numbers
-        0 => '\$[0-9a-fA-F]+',
+        0 => '(?<!\#)\$[0-9a-fA-F]+(?!\w)',
         //Characters
-        1 => '\#\$?[0-9]{1,3}'
+        1 => '\#(?:\$[0-9a-fA-F]{1,4}|\d{1,5})'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         ),
-    'TAB_WIDTH' => 2
+    'TAB_WIDTH' => 2,
+    'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            3 => array(
+                'DISALLOWED_AFTER' => '(?=\s*[(;])'
+                )
+            )
+        )
 );
 
 ?>

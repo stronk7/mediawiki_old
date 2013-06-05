@@ -4,10 +4,10 @@
  * --------
  * Author: Moises Deniz
  * Copyright: (c) 2007 Moises Deniz
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.11
  * Date Started: 2007/03/21
  *
- * Ruby language file for GeSHi
+ * Ruby language file for GeSHi.
  *
  * CHANGES
  * -------
@@ -40,6 +40,10 @@ $language_data = array (
     'LANG_NAME' => 'Ruby',
     'COMMENT_SINGLE' => array(1 => "#"),
     'COMMENT_MULTI' => array("=begin" => "=end"),
+    'COMMENT_REGEXP' => array(
+        //Heredoc
+        4 => '/<<\s*?(\w+)\\n.*?\\n\\1(?![a-zA-Z0-9])/si',
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"', '`','\''),
     'ESCAPE_CHAR' => '\\',
@@ -50,7 +54,7 @@ $language_data = array (
                 'ensure', 'for', 'if', 'in', 'module', 'while',
                 'next', 'not', 'or', 'redo', 'rescue', 'yield',
                 'retry', 'super', 'then', 'undef', 'unless',
-                'until', 'when', 'BEGIN', 'END', 'include'
+                'until', 'when', 'include'
             ),
         2 => array(
                 '__FILE__', '__LINE__', 'false', 'nil', 'self', 'true',
@@ -120,10 +124,9 @@ $language_data = array (
                 'Zlib::NeedDict', 'Zlib::StreamEnd', 'Zlib::StreamError',
                 'Zlib::VersionError',
                 'Zlib::ZStream',
-                'Enumerable',
                 'HTML::Selector', 'HashWithIndifferentAccess', 'Inflector',
                 'Inflector::Inflections', 'Mime', 'Mime::Type',
-                'OCI8AutoRecover', 'Symbol', 'TimeZone', 'XmlSimple'
+                'OCI8AutoRecover', 'TimeZone', 'XmlSimple'
             ),
         ),
     'SYMBOLS' => array(
@@ -146,6 +149,7 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color:#008000; font-style:italic;',
+            4 => 'color: #cc0000; font-style: italic;',
             'MULTI' => 'color:#000080; font-style:italic;'
             ),
         'ESCAPE_CHAR' => array(
@@ -181,7 +185,8 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => ''
+        3 => '',
+        4 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
