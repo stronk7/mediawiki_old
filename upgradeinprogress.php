@@ -25,7 +25,7 @@ header("Cache-Control:no-cache,must-revalidate");//HTTP/1.1
 </head>
 <body>
   <p class="generaltext">
-    <img src="/moodle.gif" alt="Moodle"/>
+    <img src="/moodle-logo.png" alt="Moodle"/>
   </p>
   <p class="generaltext">
     docs.moodle.org upgrade in progress... we'll be back soon.
