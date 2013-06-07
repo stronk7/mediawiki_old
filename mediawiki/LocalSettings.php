@@ -525,6 +525,7 @@ $wgGroupPermissions['*']['createaccount'] = false;     ///Added by Eloy: 06/04/2
 # Use Moodle Authentication
 require_once( 'extensions/AuthMoodle.php' );
 $wgAuth = new AuthMoodle();
+$wgAuth->setAuthMoodleDBType('mysql');
 $wgAuth->setAuthMoodleTablePrefix('');
 $wgAuth->setAuthMoodleDBServer('moodleorg.cniy2xi0z9uu.us-east-1.rds.amazonaws.com');
 $wgAuth->setAuthMoodleDBName('moodle');

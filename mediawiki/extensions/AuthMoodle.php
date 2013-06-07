@@ -34,9 +34,10 @@ require_once('AuthPlugin.php');
 
 
 class AuthMoodle extends AuthPlugin {
-	
-	var $mAuthMoodleTablePrefix="bb_";
-	var $mUseSeparateAuthMoodleDB=false;
+
+	var $mAuthMoodleTablePrefix = '';
+	var $mUseSeparateAuthMoodleDB = true;
+	var $mAuthMoodleDBType;
 	var $mAuthMoodleDBServer;
 	var $mAuthMoodleDBName;
 	var $mAuthMoodleUser;
@@ -52,6 +53,10 @@ class AuthMoodle extends AuthPlugin {
 		$this->mAuthMoodleDBName=$wgDBname;
 		$this->mAuthMoodleUser=$wgDBuser;
 		$this->mAuthMoodlePassword=$wgDBpassword;
+	}
+
+	function setAuthMoodleDBType( $type ) {
+		$this->mAuthMoodleDBType = $type;
 	}
 
 	function setAuthMoodleTablePrefix ( $prefix ) {
@@ -96,10 +101,19 @@ class AuthMoodle extends AuthPlugin {
 		if( $this->mUseSeparateAuthMoodleDB ) {
 			if(! is_object($this->mAuthMoodleDBconn) ) {
 				$this->mAuthMoodleDBconn =
-					new Database($this->mAuthMoodleDBServer,
-								$this->mAuthMoodleUser,
-								$this->mAuthMoodlePassword, 
-								$this->mAuthMoodleDBName	); 
+					DatabaseBase::factory( $this->mAuthMoodleDBType,
+						array(
+							'host'        => $this->mAuthMoodleDBServer,
+							'user'        => $this->mAuthMoodleUser,
+							'password'    => $this->mAuthMoodlePassword,
+							'dbname'      => $this->mAuthMoodleDBName,
+							'tablePrefix' => $this->mAuthMoodleTablePrefix,
+						)
+					);
+				if ( is_null( $this->mAuthMoodleDBconn ) ) {
+					echo( "Error - can not connect to the authentication database!" );
+					die();
+				}
 			}
             $this->mAuthMoodleDBconn->query( 'SET NAMES utf8' );
 			return $this->mAuthMoodleDBconn;
