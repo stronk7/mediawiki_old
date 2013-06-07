@@ -522,6 +522,20 @@ $wgGroupPermissions['user']['move'] = false;  ///Added by Eloy (Helen request): 
 $wgGroupPermissions['*']['edit'] = false;     ///Added by Eloy (Helen request): 25/01/2006
 $wgGroupPermissions['*']['createaccount'] = false;     ///Added by Eloy: 06/04/2008 (prevent manual accounts)
 
+# Use the realusernames extension from Eloy's RELx_y_custom branch
+if ( file_exists( "$IP/extensions/realusernames/realusernames.php" ) ) {
+	require_once( "$IP/extensions/realusernames/realusernames.php" );
+    // Enable debug for the extension
+    // $wgDebugLogGroups['realusernames'] = '/tmp/realusernames.log';
+    // Control if we want link text to be replaced by real usernames.
+    $wgrealusernames_linktext = true;
+    // Control if we want link refs to be replaced by real usernames.
+    $wgrealusernames_linkref = true;
+    // Control if some roles (those having perms to "block" users) should
+    // be able to see the username together with the realname.
+    $wgrealusernames_append_username = true;
+}
+
 # Use Moodle Authentication
 require_once( 'extensions/AuthMoodle.php' );
 $wgAuth = new AuthMoodle();
