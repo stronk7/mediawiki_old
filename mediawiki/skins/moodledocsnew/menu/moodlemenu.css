@@ -1,0 +1,36 @@
+/** Basic element styling **/
+.mcm ul {list-style: none;margin:0;}
+.mcm ul li {display:inline-block;}
+.mcm ul li li {display:block;}
+.mcm a:link,
+.mcm a:visited,
+.mcm a:hover {color:#444; text-decoration: none;}
+
+/** Mechanics **/
+.mcm .mcm-submenu {display:none;position:absolute;top:100%;left:0;}
+.mcm .mcm-submenu .mcm-submenu {top:0;left:100%;}
+.mcm .mcm-item.with-children {position:relative;}
+.mcm .mcm-submenu .mcm-link {display:block;white-space: nowrap;}
+.mcm .mcm-link,
+.mcm .mcm-link-dropdown {display:inline-block;cursor:pointer;}
+.mcm.cssonly .mcm-item.with-children:hover > .mcm-submenu,
+.mcm.active-menu .mcm-item.active-item > .mcm-submenu {display:block;z-index:100;}
+
+/** Basic moodle.org styling **/
+.mcm .mcm-item {border:0 solid #FFB63C;border-right-width:1px;}
+.mcm .mcm-item .mcm-item {border-width:0;}
+.mcm .mcm-link {padding:0 10px;line-height:2em;display:inline-block;}
+.mcm .mcm-item.with-children > .mcm-link {padding-right:5px;}
+.mcm .mcm-link-dropdown {padding:0 5px;border-left:1px solid #FFE39D;font-size:70%;color:#555;line-height:2em;}
+.mcm .mcm-item.active-item .mcm-link-dropdown {color:#333;line-height:2.3em;}
+.mcm .mcm-submenu {background-color: #FFEFCA;border:1px solid;margin-left:-1px;border-color:#FFEFCA #FFB63C #FFB63C #FFE39D;}
+.mcm .mcm-submenu .mcm-link:hover {background-color:#FFF;}
+
+/* Advanced moodle.org styling **/
+.mcm .mcm-submenu {-moz-box-shadow: 5px 5px 5px #ccc;-webkit-box-shadow: 5px 5px 5px #ccc;box-shadow: 5px 5px 5px #ccc;}
+
+/** IE 6/7 corrections **/
+.ie6 .mcm ul li,
+.ie7 .mcm ul li {float:left;}
+.ie6 .mcm ul li li,
+.ie7 .mcm ul li li {float:none;}

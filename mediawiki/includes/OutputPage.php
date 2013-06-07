@@ -3091,6 +3091,10 @@ $templates
 			$wgDisableLangConversion, $wgCanonicalLanguageLinks,
 			$wgRightsPage, $wgRightsUrl;
 
+		// Moodle Docs hack - customize OpenSearch title
+		global $wgSitename, $mdocsver, $wgLanguageName;
+		// Moodle Docs hack - end
+
 		$tags = array();
 
 		$canonicalUrl = $this->mCanonicalUrl;
@@ -3204,7 +3208,10 @@ $templates
 			'rel' => 'search',
 			'type' => 'application/opensearchdescription+xml',
 			'href' => wfScript( 'opensearch_desc' ),
-			'title' => $this->msg( 'opensearch-desc' )->inContentLanguage()->text(),
+			// Moodle Docs hack - customize OpenSearch title
+			//'title' => $this->msg( 'opensearch-desc' )->inContentLanguage()->text(),
+			'title' => $wgSitename . ' ' . $mdocsver . ' (' . $wgLanguageName . ')',
+			// Moodle Docs hack - end
 		) );
 
 		if ( $wgEnableAPI ) {

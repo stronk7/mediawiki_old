@@ -1,0 +1,4 @@
+/** Skin moodledocsnew fixes for IE6 **/
+div#column-content div#content {margin-top:4.7em; margin-left:0.75em;}
+div#column-one {position:static;}
+.portlet {float:left;}

@@ -7,7 +7,7 @@ application/msword doc dot
 application/octet-stream bin dms lha lzh exe class so dll
 application/oda oda
 application/ogg ogx ogg ogm ogv oga spx
-application/pdf pdf
+application/pdf pdf ai
 application/postscript ai eps ps
 application/rdf+xml rdf
 application/smil smi smil

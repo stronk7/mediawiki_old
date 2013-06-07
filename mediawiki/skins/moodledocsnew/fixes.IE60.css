@@ -1,0 +1,9 @@
+/** Skin moodledocsnew fixes for IE6 **/
+#page {width: 100%;margin: 16px 0px 0px 0px;background: #FFF url(images/header_stripe_grad.jpg) no-repeat left top;}
+#p-cactions {top: 11.5em;}
+#p-Navigation h5.header {margin-top: 7.6em;}
+#p-personal {top: 2em;width: 100%;margin: 0;padding: 0;}
+
+div#column-content div#content {margin-top:4.7em; margin-left:0.75em;}
+div#column-one {position:static;}
+.portlet {float:left;}

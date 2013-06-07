@@ -54,7 +54,10 @@ print Xml::openElement( 'OpenSearchDescription',
 //
 // Behavior seems about the same between Firefox and IE 7/8 here.
 // 'Description' doesn't appear to be used by either.
-$fullName = wfMessage( 'opensearch-desc' )->inContentLanguage()->text();
+// Moodle Docs hack - customize OpenSearch title
+//$fullName = wfMessage( 'opensearch-desc' )->inContentLanguage()->text();
+$fullName = $wgSitename . ' ' . $mdocsver . ' (' . $wgLanguageName . ')';
+// Moodle Docs hack - end
 print Xml::element( 'ShortName', null, $fullName );
 print Xml::element( 'Description', null, $fullName );
 
