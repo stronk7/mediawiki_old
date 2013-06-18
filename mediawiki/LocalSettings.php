@@ -434,8 +434,13 @@ $wgScriptExtension  = ".php";
 ## For more information on customizing the URLs please see:
 ## http://www.mediawiki.org/wiki/Manual:Short_URL
 
+# Sender in e-mails from the e-mail notification system
 $wgEmergencyContact = "noreply@moodle.org";
 $wgPasswordSender = "noreply@docs.moodle.org";
+$wgPasswordSenderName = "MoodleDocs";
+
+# Use real name instead of username in e-mail "from" field
+$wgEnotifUseRealName = true;
 
 # Experimental charset support for MySQL 4.1/5.0.
 $wgDBmysql5 = false;
@@ -581,18 +586,11 @@ $wgUseDatabaseMessages = true;
 # Seconds the RecentChanges feeds will be cached
 $wgFeedCacheTimeout = 60;
 
-# RealNames stup starts here
-$wgAllowRealName=true; //The official switch
-
-# This are the five controling our userRealName hack, by disabling them
-# you'll get standard mediawiki behaviour
-$wgRealNamesEverywhere=true; //To replace all usernames by userrealnames
-$wgRealNamesPreventEdition=true; //To prevent manual edition of userrealnames
-$wgEmailPreventEdition=true; //To prevent manual edition of email addresses
-$wgSignaturesDisabled=true; //To disable signatures
-$wgEmailAdminName='MoodleDocs'; //By default mediawiki uses a harcoded 'WikiAdmin'
-$wgEnotifUseRealName=true; // To send editor real names on mailouts
-$wgPromoteEdition=true; //By default mediawiki doesn't show the edit tab for not-logged users. Enable it (redirecting to login) with this setting.
+# The following flag used to be used by the Eloy's custom patch but it is not available any more.
+# This could be eventually re-implemented if there is a strong demand for it.
+# By default mediawiki doesn't show the edit tab for not-logged users. Enable it (redirecting to login)
+# with this setting.
+// $wgPromoteEdition=true;
 
 # Enable AJAX search suggestions
 #$wgEnableMWSuggest = true;
@@ -618,4 +616,40 @@ $wgResourceLoaderValidateStaticJS = false;
 $wgAutoConfirmAge = 86400*3;
 $wgAutoConfirmCount = 1;
 
-?>
+// Hooks used at docs.moodle.org ///////////////////////////////////////////////
+
+$wgHooks['GetPreferences'][] = 'MoodleDocsHooks::onGetPreferences';
+
+/**
+ * Provides site specific hooks.
+ *
+ * This will eventually go into a separate extension, should it enlarge.
+ *
+ * @copyright 2013 David Mudrak <david@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class MoodleDocsHooks {
+
+	/**
+	 * Modify user preferences.
+	 *
+	 * @param User  $user User whose preferences are being modified.
+	 * @param array $preferences Preferences description array, to be fed to an {@link HTMLForm} object
+	 * @return bool
+	 */
+	public static function onGetPreferences( User $user, array &$preferences ) {
+
+		// Get rid of the misleading information that the e-mail can be used for password resets.
+		unset ( $preferences['emailaddress']['help-messages'] );
+
+		// Get rid of the whole 'User profile / Signature' section.
+		foreach ( $preferences as $prefname => $prefdesc ) {
+			if ( $prefdesc['section'] === 'personal/signature' ) {
+				unset ( $preferences[$prefname] );
+			}
+		}
+
+		// The hook has operated successfully.
+		return true;
+	}
+}
