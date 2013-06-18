@@ -455,5 +455,33 @@ class AuthMoodle extends AuthPlugin {
 		}
 	}
 
+	/**
+	 * Does this auth plugin allow the real name change at the preferences page?
+	 *
+	 * @see parent::allowPropChange()
+	 * @return bool
+	 */
+	public function allowRealNameChange() {
+		return false;
+	}
+
+	/**
+	 * Does this auth plugin allow the email change at the preferences page?
+	 *
+	 * @see parent::allowPropChange()
+	 * @return bool
+	 */
+	public function allowEmailChange() {
+		return false;
+	}
+
+	/**
+	 * Does this auth plugin allow the signature change at the preferences page?
+	 *
+	 * @see parent::allowPropChange()
+	 * @return bool
+	 */
+	public function allowNickChange() {
+		return false;
+	}
 }
-?>
