@@ -34,7 +34,11 @@ Get the list of all databases:
 	$ mysql -u {USER} -p{PASSWD} -h {HOST} -B -N -e "SELECT DISTINCT table_schema FROM information_schema.tables" | grep '.*docs_.*'
 
 Make sure all databases are migrated to InnoDB engine. Otherwise they do not work well in our
-multi-master cluster (Galera).
+multi-master cluster (Galera):
+
+	$ echo "SELECT concat('ALTER TABLE ',TABLE_NAME,' ENGINE=InnoDB;') FROM Information_schema.TABLES  WHERE ENGINE != 'InnoDB' AND TABLE_TYPE='BASE TABLE'  AND TABLE_SCHEMA='{DATABASENAME}';" | mysql -u {USER} -p{PASSWD} -h {HOST} > convert.sql
+	$ vi convert.sql # remove the first line
+	$ mysql -u {USER} -p{PASSWD} -h {HOST} {DATABASENAME} < convert.sql
 
 Upgrade the development wiki:
 
@@ -48,3 +52,5 @@ Upgrade all archive wikis (e.g. ar, be, cs, da etc):
 Upgrade all other wikis:
 
 	$ sudo -u apache php update.php --mdversion 20 --mdpath de | tee ~/update-20-de.log
+
+You should restart the memcache daemon now (I have not found any better way to invalidate its caches).
