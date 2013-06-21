@@ -13,7 +13,6 @@ lines:
 
 	RewriteCond %{REQUEST_URI} !^/upgradeinprogress.php
 	RewriteCond %{REQUEST_URI} !^/moodle.gif
-	RewriteCond %{REQUEST_URI} !^/invaders.swf
 	RewriteRule ^(.*) /upgradeinprogress.php [L]
 
 and comment out the following one:

@@ -16,7 +16,6 @@ ErrorDocument 403 "Access Forbidden"
 #RewriteCond %{HTTP_COOKIE} !^.*OpenSesame.*$ [NC]
 #RewriteCond %{REQUEST_URI} !^/upgradeinprogress.php
 #RewriteCond %{REQUEST_URI} !^/moodle-logo.png
-#RewriteCond %{REQUEST_URI} !^/invaders.swf
 #RewriteRule ^(.*) /upgradeinprogress.php [L]
 
 # Disable the below rule if you enable the ones above (maintenance mode)
