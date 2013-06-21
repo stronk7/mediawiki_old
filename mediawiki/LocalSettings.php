@@ -439,6 +439,9 @@ $wgEmergencyContact = "noreply@moodle.org";
 $wgPasswordSender = "noreply@docs.moodle.org";
 $wgPasswordSenderName = "MoodleDocs";
 
+# Hide the realname field from the preferences form
+$wgHiddenPrefs[] = 'realname';
+
 # Use real name instead of username in e-mail "from" field
 $wgEnotifUseRealName = true;
 
