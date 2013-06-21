@@ -33,8 +33,5 @@ header("Cache-Control:no-cache,must-revalidate");//HTTP/1.1
   <p class="generaltext">
     Sorry for the inconvenience.
   </p>
-  <p class="recommendation">
-    Not sure what to do?  Try <a href="/invaders.swf">this interesting utility</a>. Enjoy!
-  </p>
 </body>
 </html>
