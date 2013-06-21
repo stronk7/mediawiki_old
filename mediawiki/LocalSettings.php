@@ -46,7 +46,7 @@ if ( $wgCommandLineMode ) {
 # !
 # MySQL table options to use during installation or update
 #$wgDBTableOptions   = "TYPE=MyISAM"; // old MySQL 4 directive
-$wgDBTableOptions = "ENGINE=MyISAM, DEFAULT CHARSET=latin1"; // new MySQL 5 directive
+$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=latin1"; // new MySQL 5 directive
 $wgDBtransactions = false; // set to true for InnoDB
 $wgUseFileCache   = false; # Disable file cache for this wiki (disabled after migrating to new server (now using memcached). Eloy 20110414)
 
