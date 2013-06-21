@@ -13,6 +13,7 @@ ErrorDocument 403 "Access Forbidden"
 #RewriteCond %{REQUEST_URI} ^/dev($|/)
 #RewriteCond %{REMOTE_ADDR} !^192.168.100.10$
 #RewriteCond %{REMOTE_ADDR} !^203.59.94.230$
+#RewriteCond %{HTTP_COOKIE} !^.*OpenSesame.*$ [NC]
 #RewriteCond %{REQUEST_URI} !^/upgradeinprogress.php
 #RewriteCond %{REQUEST_URI} !^/moodle-logo.png
 #RewriteCond %{REQUEST_URI} !^/invaders.swf
