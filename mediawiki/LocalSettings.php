@@ -391,15 +391,15 @@ if ($mdocsver == 'archive') {
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
 
             // Disable old english wikis to repuce spam MDLSITE-2284.
-            switch ($mdocsver) {
-                case '19':
-                case '20':
-                case '21':
-                case '22':
-                case '23':
-                    $wgReadOnly = "This wiki has temporarily been set to read-only mode. Please contribute to the [[:en:Main page|Moodle Docs 2.5]] wiki instead.";
-                    break;
-            }
+            #switch ($mdocsver) {
+            #    case '19':
+            #    case '20':
+            #    case '21':
+            #    case '22':
+            #    case '23':
+            #        $wgReadOnly = "This wiki has temporarily been set to read-only mode. Please contribute to the [[:en:Main page|Moodle Docs 2.5]] wiki instead.";
+            #        break;
+            #}
 
         break;
 
@@ -526,9 +526,35 @@ if (!empty($mdocsver)) {
     $wgLogo = "/mediawiki/skins/moodledocsnew/images/version.{$mdocsver}.png";
 }
 
-$wgGroupPermissions['user']['move'] = false;  ///Added by Eloy (Helen request): 25/01/2006
-$wgGroupPermissions['*']['edit'] = false;     ///Added by Eloy (Helen request): 25/01/2006
-$wgGroupPermissions['*']['createaccount'] = false;     ///Added by Eloy: 06/04/2008 (prevent manual accounts)
+# Group permissions setup
+
+// Do not allow anonymous users to create manual account and edit pages.
+$wgGroupPermissions['*']['edit'] = false;
+$wgGroupPermissions['*']['createaccount'] = false;
+
+// Do not allow users to move stuff.
+$wgGroupPermissions['user']['movefile'] = false;
+$wgGroupPermissions['user']['move'] = false;
+$wgGroupPermissions['user']['move-subpages'] = false;
+$wgGroupPermissions['user']['move-rootuserpages'] = false;
+
+// Let only autoconfirmed users create new pages and upload files.
+$wgGroupPermissions['*']['createpage'] = false;
+$wgGroupPermissions['*']['createtalk'] = false;
+$wgGroupPermissions['*']['upload'] = false;
+
+$wgGroupPermissions['user']['createpage'] = false;
+$wgGroupPermissions['user']['createtalk'] = false;
+$wgGroupPermissions['user']['upload'] = false;
+
+$wgGroupPermissions['autoconfirmed']['createpage'] = true;
+$wgGroupPermissions['autoconfirmed']['createtalk'] = true;
+$wgGroupPermissions['autoconfirmed']['upload'] = true;
+
+// Do not let users use write API.
+$wgGroupPermissions['*']['writeapi'] = false;
+$wgGroupPermissions['user']['writeapi'] = false;
+$wgGroupPermissions['autoconfirmed']['writeapi'] = false;
 
 # Use the realusernames extension from Eloy's RELx_y_custom branch
 if ( file_exists( "$IP/extensions/realusernames/realusernames.php" ) ) {
@@ -615,8 +641,10 @@ $wgAllowExternalImagesFrom = array('http://tracker.moodle.org/', 'http://moodle.
 # See MDLSITE-1511 for more info
 $wgResourceLoaderValidateStaticJS = false;
 
-# Try and prevent spammers (MDLSITE-2282)
-$wgAutoConfirmAge = 86400*3;
+# Give users the implicit 'autoconfirmed' group membership after they edit something.
+# As described at MDLSITE-2282, the spamming pattern has been that they create new
+# pages. We are trying to require at least one edit now to see if it helps.
+$wgAutoConfirmAge = 0;
 $wgAutoConfirmCount = 1;
 
 // Hooks used at docs.moodle.org ///////////////////////////////////////////////
