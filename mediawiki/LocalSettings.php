@@ -551,11 +551,6 @@ $wgGroupPermissions['autoconfirmed']['createpage'] = true;
 $wgGroupPermissions['autoconfirmed']['createtalk'] = true;
 $wgGroupPermissions['autoconfirmed']['upload'] = true;
 
-// Do not let users use write API.
-$wgGroupPermissions['*']['writeapi'] = false;
-$wgGroupPermissions['user']['writeapi'] = false;
-$wgGroupPermissions['autoconfirmed']['writeapi'] = false;
-
 # Use the realusernames extension from Eloy's RELx_y_custom branch
 if ( file_exists( "$IP/extensions/realusernames/realusernames.php" ) ) {
 	require_once( "$IP/extensions/realusernames/realusernames.php" );
