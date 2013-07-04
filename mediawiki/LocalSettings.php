@@ -684,3 +684,11 @@ class MoodleDocsHooks {
 		return true;
 	}
 }
+
+// Keep the following at very bottom of this file.
+// You can easily amend settings defined in this file for your development machine
+// and/or a test server by creating the file MySettings.php where you override setup
+// performed here.
+if ( file_exists(__DIR__.'/MySettings.php' ) ) {
+	include(__DIR__.'/MySettings.php');
+}
