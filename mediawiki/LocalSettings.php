@@ -601,6 +601,9 @@ require_once('extensions/MediawikiPlayer/MediawikiPlayer.php');
 # Use multi-db interwiki links
 require_once('extensions/InterWiki/InterWiki.php');
 
+# Use Math extension for TeX syntax support
+require_once( "$IP/extensions/Math/Math.php" );
+
 # We don't enforce Capital links, images... in MoodleDocs (why?) 
 $wgCapitalLinks = false;
 
