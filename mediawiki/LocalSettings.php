@@ -242,12 +242,6 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'Slovenčina';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
-        case 'zh':
-            // This lang has been archived (Option 3)
-            $wgLanguageCode     = 'zh';
-            $wgLanguageName     = '中文';
-            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-        break;
         default:  // any unexpected input
             // Check to see if we were called from CLI
             if (php_sapi_name() === 'cli') {
@@ -275,7 +269,7 @@ if ($mdocsver == 'archive') {
             $mdocsinternal = '19';
 
             // only permitted langs
-            $permitted = array('ca','es','fi','fr','is','eu','hr','pt_br');
+            $permitted = array('ca','es','fi','fr','is','eu','hr','pt_br', 'zh');
             if (!in_array($callpath, $permitted)) {
                 $callpath = ''; // will 404
             }
@@ -401,6 +395,12 @@ if ($mdocsver == 'archive') {
             #        break;
             #}
 
+        break;
+
+        case 'zh':
+            $wgLanguageCode     = 'zh';
+            $wgLanguageName     = '中文';
+            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
 
         default:  // any unexpected input
