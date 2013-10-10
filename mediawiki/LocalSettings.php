@@ -570,10 +570,10 @@ require_once( 'extensions/AuthMoodle.php' );
 $wgAuth = new AuthMoodle();
 $wgAuth->setAuthMoodleDBType('mysql');
 $wgAuth->setAuthMoodleTablePrefix('');
-$wgAuth->setAuthMoodleDBServer('moodleorg.cniy2xi0z9uu.us-east-1.rds.amazonaws.com');
-$wgAuth->setAuthMoodleDBName('moodle');
-$wgAuth->setAuthMoodleUser('docs');
-$wgAuth->setAuthMoodlePassword('gnjfngjnhjgnhjg');
+$wgAuth->setAuthMoodleDBServer('db02.srv.in.moodle.com');
+$wgAuth->setAuthMoodleDBName('moodleorg');
+$wgAuth->setAuthMoodleUser('moodleorg');
+$wgAuth->setAuthMoodlePassword('shai7eiC5Hajooje9nei');
 $wgAuth->setAuthMoodleSalt('ngjfng8h5ntn58 yu8nuv8yhuvnhyuv6hyu8hu6y');
 $wgAuth->setAuthMoodleMnethostid(10);
 
