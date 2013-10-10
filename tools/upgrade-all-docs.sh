@@ -1,8 +1,13 @@
 #!/bin/bash
 
-TARGET=/var/www/vhosts/docs.moodle.org/upgradelogs/1.21.1
 DBUSER=docs
 DBPASSWD=bhfd674b34hfd
+APACHEUSER=apache
+
+MYFULLPATH=$(readlink -f "$0")
+MYDIR=$(dirname "$MYFULLPATH")
+BASEDIR=$(dirname "$MYDIR")
+TARGET=$BASEDIR/upgradelogs/$(date +%Y-%m-%d-%H-%M)
 
 DBS=$(mysql -u $DBUSER -p$DBPASSWD --skip-column-names --execute="SELECT GROUP_CONCAT(schema_name SEPARATOR ' ') FROM information_schema.schemata WHERE schema_name LIKE '%docs_%'" --batch)
 
@@ -64,8 +69,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
 		esac
 
-		cd /var/www/vhosts/docs.moodle.org/html/mediawiki/maintenance
-		sudo -u apache php update.php --mdversion $MDVERSION --mdpath $MDPATH --quick | tee $TARGET/$DB.log
+		mkdir -p $TARGET
+		cd $BASEDIR/mediawiki/maintenance
+		sudo -u $APACHEUSER php update.php --mdversion $MDVERSION --mdpath $MDPATH --quick | tee $TARGET/$DB.log
 	done
 fi
 
