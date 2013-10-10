@@ -46,7 +46,7 @@ class wptouchTemplate extends QuickTemplate {
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 		<?php $this->html('headlinks') ?>
 		<title><?php $this->text('pagetitle') ?></title>
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" href="/moodle-touch-icon.png" />
 		<link rel="stylesheet" href="<?php $this->text('stylepath') ?>/wptouch/css/main.css" type="text/css" media="screen" />
 		<style type="text/css">
 		/* Comment or deleted the follow section to enable
@@ -201,7 +201,7 @@ class wptouchTemplate extends QuickTemplate {
 
 <div id="headerbar">
 	<div id="headerbar-title">
-		<img id="logo-icon" src="/apple-touch-icon.png" alt="<?php $this->msg('sitetitle') ?>" />
+		<img id="logo-icon" src="/moodle-touch-icon.png" alt="<?php $this->msg('sitetitle') ?>" />
 		<a href="/"><?php $this->msg('sitetitle') ?></a>
 	</div>
 	<div id="headerbar-menu">
