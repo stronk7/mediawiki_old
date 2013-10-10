@@ -1,0 +1,52 @@
+This is the WPtouch skin for MediaWiki 1.18 and later.
+
+For a skin supporting an earlier version, please see http://www.memorydeleted.com/?p=210
+
+DIRECTIONS
+==========
+1. Unpack the contents of the tarball into the "skins" directory of your MediaWiki installation.
+
+2. Configure the top-left icon.
+	By default, the skin is referencing the default Web Clip image for any given web site.
+	If you have no idea what this means, Apple has documentation at the following URL:
+	http://developer.apple.com/library/IOs/#documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+
+	That said, the top-left icon can be modified by updating the following two lines of WPtouch.php as desired.
+	line 43:             <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	line 184:            <img id="logo-icon" src="/apple-touch-icon.png" alt="<?php $this->msg('sitetitle') ?>" />
+
+3. Enable the use of the skin automatically for mobile browsers.
+	In the LocalSettings.php file of your MediaWiki installation, you will need to update the $wgDefaultSkin value.
+
+	If it is the default value, the configuration lines will look something like this:
+
+		## Default skin: you can change the default skin. Use the internal symbolic
+		## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
+		$wgDefaultSkin = 'vector';
+
+	These lines can be updated to the following:
+		## Default skin: you can change the default skin. Use the internal symbolic
+		## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
+		if (preg_match("/(mobile|webos|opera mini)/i", $_SERVER['HTTP_USER_AGENT'])) {
+		    $wgDefaultSkin = 'wptouch';
+		} else {
+		    $wgDefaultSkin = 'vector';
+		}
+
+	In the example above, the WPtouch skin will be used for all mobile browsers
+	by default, and the Vector skin will be used for all other browsers.
+
+	If this information proves to be inaccurate, you may reference the following URL:
+	http://www.mediawiki.org/wiki/Simple_mobile_skin_auto_change
+
+4. Optional: Enable editing and other content actions.
+	WPtouch.php may be updated to allow for articles to be edited, watch, etc.
+	Simply update the section resembling the one below to enable the actions:
+
+		line 6:  // Set to "true" if you'd like the content actions enabled
+		line 7:  // Such as Edit, Discussion, History, Watch, etc.
+		line 8:  $Display_Actions = false;
+
+
+Good luck and enjoy!
+
