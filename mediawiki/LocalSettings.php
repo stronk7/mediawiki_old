@@ -187,11 +187,6 @@ if ($mdocsver == 'archive') {
             $wgLanguageName     = 'Čeština';
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
-        case 'da':
-            $wgLanguageCode     = 'da';
-            $wgLanguageName     = 'Dansk';
-            #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
-        break;
         case 'hu':
             $wgLanguageCode     = 'hu';
             $wgLanguageName     = 'Magyar';
