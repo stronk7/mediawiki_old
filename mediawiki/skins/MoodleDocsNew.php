@@ -104,10 +104,20 @@ class MoodleDocsNewTemplate extends QuickTemplate {
 
 		$this->html( 'headelement' );
 
-                echo '<div id="page">';
-                moodle_output::header();
-                moodle_output::menu($this->data['lang']);
-                moodle_output::navbar($this->data['scriptpath'], $this->data['title']);
+		// Check if the page provides custom navigation trail.
+		if (strpos($this->data['bodytext'], '<div class="navtrail">') === false) {
+			$displaydefaultnavbar = true;
+			$mainpagetitle = $this->translator->translate( 'mainpage' );
+		} else {
+			$displaydefaultnavbar = false;
+			$mainpagetitle = null;
+		}
+
+
+		echo '<div id="page">';
+		moodle_output::header();
+		moodle_output::menu($this->data['lang']);
+		moodle_output::navbar($this->data['scriptpath'], $this->data['title'], $displaydefaultnavbar, $mainpagetitle);
 
 ?><div id="globalWrapper">
 <div id="column-content"><div id="content"<?php $this->html("specialpageattributes") ?>>

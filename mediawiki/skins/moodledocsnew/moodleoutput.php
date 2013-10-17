@@ -113,18 +113,23 @@ class moodle_output {
         echo '</form>';
     }
 
-    public static function navbar($scriptpath, $title) {
-        global $wgLanguageName;
-        global $mdocsver;
+	/**
+	 * Displays the page's navigation bar.
+	 *
+	 * @param string $scriptpath
+	 * @param string $title page title
+	 * @param bool $displaydefaultnavbar
+	 * @param string $mainpagetitle
+	 */
+	public static function navbar($scriptpath, $title, $displaydefaultnavbar = true, $mainpagetitle = 'Main page') {
+
         self::area_start('navbar');
         echo '<div id="moodlenavbar" class="navbar clearfix" dir="LTR">';
         echo '<div class="breadcrumb"><h2 class="accesshide">You are here</h2>';
-        if (!preg_match('/^2\d$/', $mdocsver)) {
+        if ($displaydefaultnavbar) {
             echo '<ul>';
-            echo '<li class="first"><a href="http://moodle.org">Home</a></li>';
-            echo '<li class="first">&nbsp;<span class="arrow sep">&#x25BA;</span> <a href="/overview/">Moodle Docs</a></li>';
-            echo '<li class="first">&nbsp;<span class="arrow sep">&#x25BA;</span> <a href="'.htmlspecialchars($scriptpath).'/">'.$wgLanguageName.'</a></li>';
-            echo '<li class="first">&nbsp;<span class="arrow sep">&#x25BA;</span> '.$title.'</li>';
+            echo '<li class="first"><a href="'.htmlspecialchars( $scriptpath ).'/">'.htmlspecialchars( $mainpagetitle ).'</a></li>';
+            echo '<li>&nbsp;&#x25BA; '.$title.'</li>';
             echo '</ul>';
         }
         echo '</div>'; // breadcrumb
