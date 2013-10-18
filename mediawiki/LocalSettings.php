@@ -269,7 +269,7 @@ if ($mdocsver == 'archive') {
             $mdocsinternal = '19';
 
             // only permitted langs
-            $permitted = array('ca','es','fi','fr','is','eu','hr','pt_br', 'zh');
+            $permitted = array('es','fi','fr','is','eu','hr','pt_br', 'zh');
             if (!in_array($callpath, $permitted)) {
                 $callpath = ''; // will 404
             }
@@ -279,7 +279,7 @@ if ($mdocsver == 'archive') {
             $mdocsinternal = '20';
 
             // only permitted langs
-            $permitted = array('fr', 'ja');
+            $permitted = array('fr', 'ja', 'ca');
             if (!in_array($callpath, $permitted)) {
                 $callpath = ''; // will 404
             }
