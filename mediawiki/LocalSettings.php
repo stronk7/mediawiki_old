@@ -86,10 +86,13 @@ if (php_sapi_name() != 'cli') {
             $mdocsver = '23';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '24') {
             $mdocsver = '24';
-            # Disable this for email notifications:
-            #            $wgEnableEmail = false;
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '25') {
             $mdocsver = '25';
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '26') {
+            $mdocsver = '26';
+            $wgEnableEmail = false;
+			$wgEnotifWatchlist = false;
+			$wgEnotifUserTalk = false;
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
             $mdocsver = '2x';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
