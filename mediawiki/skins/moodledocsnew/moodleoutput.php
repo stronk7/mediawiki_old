@@ -23,6 +23,8 @@ class moodle_output {
         $out->addStyle( 'moodledocsnew/main.rtl.css', 'screen', '', 'rtl' );
         $out->addStyle( 'moodledocsnew/menu/moodlemenu.css', 'screen');
         $out->addStyle( 'moodledocsnew/menu/menuprint.css', 'print');
+		$out->addStyle( 'moodledocsnew/bootstrap.min.css' );
+		$out->addStyle( 'moodledocsnew/bootstrap-responsive.min.css' );
 
         // Include CSS specific to this docs version
         if (!empty($mdocsver) && preg_match('#^[a-zA-Z0-9\-_]+$#', $mdocsver)) {
