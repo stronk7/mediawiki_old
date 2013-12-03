@@ -643,6 +643,7 @@ $wgAutoConfirmCount = 1;
 // Hooks used at docs.moodle.org ///////////////////////////////////////////////
 
 $wgHooks['GetPreferences'][] = 'MoodleDocsHooks::onGetPreferences';
+$wgHooks['SiteNoticeAfter'][] = 'MoodleDocsHooks::onSiteNoticeAfter';
 
 /**
  * Provides site specific hooks.
@@ -674,6 +675,30 @@ class MoodleDocsHooks {
 		}
 
 		// The hook has operated successfully.
+		return true;
+	}
+
+	/**
+	 * Reparse the site notice in the context of the page
+	 *
+	 * This replaces the previously generated site notice (we use
+	 * MediaWiki:Sitenotice as the source) with a version that is parsed in the
+	 * context of the current page. This makes magic words like {{PAGENAME}}
+	 * hold the name of the displayed page instead of the Sitenotice page and
+	 * also prevent some caching issues.
+	 *
+	 * We use this feature to implement MDLSITE-2649
+	 *
+	 * @param string $siteNotice
+	 * @param string $skin
+	 * @return bool
+	 */
+	public static function onSiteNoticeAfter( &$siteNotice, $skin ) {
+
+		if (!empty($siteNotice) and ($siteNotice !== '-')) {
+			$siteNotice = $skin->getOutput()->parse( '{{MediaWiki:Sitenotice}}' );
+		}
+
 		return true;
 	}
 }
