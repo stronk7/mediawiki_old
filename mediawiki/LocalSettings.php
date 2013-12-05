@@ -699,6 +699,16 @@ class MoodleDocsHooks {
 			$siteNotice = $skin->getOutput()->parse( '{{MediaWiki:Sitenotice}}' );
 		}
 
+		// If you need to force a site notice in all wikis (such as to announce
+		// a scheduled maintenance), you can use something like
+		/*
+		$siteNotice .= '
+			<div style="background-color:#ffd3d9; font-size: large; padding: 1em; margin: 1em;">
+				Moodle docs will be put into the maintenance mode today at 23:00 UTC
+			</div>
+			';
+		*/
+
 		return true;
 	}
 }
