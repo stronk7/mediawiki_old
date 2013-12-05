@@ -45,8 +45,7 @@ if ( $wgCommandLineMode ) {
 # Some options have been moved to the top of this file so they can be overridden per wiki
 # !
 # MySQL table options to use during installation or update
-#$wgDBTableOptions   = "TYPE=MyISAM"; // old MySQL 4 directive
-$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=latin1"; // new MySQL 5 directive
+$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 $wgUseFileCache   = false; # Disable file cache for this wiki (disabled after migrating to new server (now using memcached). Eloy 20110414)
 
 ## For a detailed description of the following switches see
@@ -298,10 +297,6 @@ if ($mdocsver == 'archive') {
         case 'de':
             $wgLanguageCode     = 'de';
             $wgLanguageName     = 'Deutsch';
-            if ($mdocsinternal >= "20") {
-              /// 20docs_de is InnoDB with binary charset, 19docs_de is MyISAM with latin1 charset (set by default at the top of this file.)
-              $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
-            }
             #$wgReadOnly="We are upgrading MoodleDocs, please be patient. This wiki will be back in a few hours.";
         break;
 
@@ -369,7 +364,6 @@ if ($mdocsver == 'archive') {
             $wgUploadPath       = "$wgScriptPath/images_dev";
             $wgUploadDirectory  = "$IP/20images/images_dev";
             #$wgExtraNamespaces = array(100 => "Development", 101 => "Development_talk", 102 => "Obsolete");
-            $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
             #$wgReadOnly="We are upgrading Moodle Developer Docs, please be patient. This wiki will be back in a few hours.";
         break;
 
