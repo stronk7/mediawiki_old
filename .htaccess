@@ -27,6 +27,9 @@ RewriteCond %{REQUEST_URI} ^/$
 RewriteCond %{QUERY_STRING} ^lang=(.*)$
 RewriteRule ^(.*) /%1/ [R=301,L]
 
+# Redirect future /27/* to the latest /26/*
+RewriteRule ^27/(.*)$ /26/$1 [R=301,L]
+
 # Redirect the non-specified request to the actual English documentation
 # e.g. http://docs.moodle.org/-> http://docs.moodle.org/26/en/
 RewriteCond %{REQUEST_URI} ^/$
