@@ -27,6 +27,9 @@ RewriteCond %{REQUEST_URI} ^/$
 RewriteCond %{QUERY_STRING} ^lang=(.*)$
 RewriteRule ^(.*) /%1/ [R=301,L]
 
+# Redirect future /27/* to the latest /26/*
+RewriteRule ^27/(.*)$ /26/$1 [R=301,L]
+
 # Default lang and version is 24 english
 # e.g. http://docs/-> http://docs/24/en
 RewriteCond %{REQUEST_URI} ^/$
