@@ -21,14 +21,14 @@ header("Cache-Control:no-cache,must-revalidate");//HTTP/1.1
     }
   -->
   </style>
-  <title>docs.moodle.org - upgrade in progress...</title>
+  <title>docs.moodle.org maintenance in progress...</title>
 </head>
 <body>
   <p class="generaltext">
     <img src="/moodle-logo.png" alt="Moodle"/>
   </p>
   <p class="generaltext">
-    docs.moodle.org upgrade in progress... we'll be back soon.
+    docs.moodle.org maintenance in progress... we'll be back soon.
   </p>
   <p class="generaltext">
     Sorry for the inconvenience.
