@@ -559,7 +559,7 @@ require_once( 'extensions/AuthMoodle.php' );
 $wgAuth = new AuthMoodle();
 $wgAuth->setAuthMoodleDBType('mysql');
 $wgAuth->setAuthMoodleTablePrefix('');
-$wgAuth->setAuthMoodleDBServer('db02.srv.in.moodle.com');
+$wgAuth->setAuthMoodleDBServer('education-secondary.srv.in.moodle.com');
 $wgAuth->setAuthMoodleDBName('moodleorg');
 $wgAuth->setAuthMoodleUser('moodleorg');
 $wgAuth->setAuthMoodlePassword('shai7eiC5Hajooje9nei');
