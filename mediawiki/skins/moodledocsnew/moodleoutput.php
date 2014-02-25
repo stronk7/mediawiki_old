@@ -53,9 +53,9 @@ class moodle_output {
         global $wgStylePath;
         self::area_start('header');
         echo '<div id="moodlelogo">';
-        echo '<a href="http://moodle.org/">';
-        echo "<img class='logo' src='$wgStylePath/moodledocsnew/images/moodle-logo.gif'\ alt='moodlelogo' title='moodle.org' />";
-        echo '</a>';
+        //echo '<a href="http://moodle.org/">';
+        //echo "<img class='logo' src='$wgStylePath/moodledocsnew/images/moodle-logo.gif'\ alt='moodlelogo' title='moodle.org' />";
+        //echo '</a>';
         echo '</div>'; // .moodlelogo
         self::area_end();
     }

@@ -35,6 +35,7 @@ class SkinMoodleDocsNew extends SkinTemplate {
 		$out->addStyle( 'monobook/main.css', 'screen' );
 		// This is our CSS
                 moodle_output::add_primary_styles($out);
+		$out->addStyle( 'moodledocsnew/sitebar/sitebar.css', 'screen' );
 		if( $wgHandheldStyle ) {
 			// Currently in testing... try 'chick/main.css'
 			$out->addStyle( $wgHandheldStyle, 'handheld' );
@@ -113,6 +114,7 @@ class MoodleDocsNewTemplate extends QuickTemplate {
 			$mainpagetitle = null;
 		}
 
+		include(__DIR__.'/moodledocsnew/sitebar/sitebar.html');
 
 		echo '<div id="page">';
 		moodle_output::header();
