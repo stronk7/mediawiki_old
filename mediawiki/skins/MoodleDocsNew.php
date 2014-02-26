@@ -26,7 +26,7 @@ class SkinMoodleDocsNew extends SkinTemplate {
 		$template = 'MoodleDocsNewTemplate', $useHeadElement = true;
 
 	function setupSkinUserCss( OutputPage $out ) {
-		global $wgHandheldStyle;
+		global $wgHandheldStyle, $mdocsver;
 
 		parent::setupSkinUserCss( $out );
 
@@ -35,7 +35,13 @@ class SkinMoodleDocsNew extends SkinTemplate {
 		$out->addStyle( 'monobook/main.css', 'screen' );
 		// This is our CSS
                 moodle_output::add_primary_styles($out);
-		$out->addStyle( 'moodledocsnew/sitebar/sitebar.css', 'screen' );
+
+		if ( $mdocsver === 'dev' ) {
+			$out->addStyle( 'moodledocsnew/sitebar/sitebar-dev.css', 'screen' );
+		} else {
+			$out->addStyle( 'moodledocsnew/sitebar/sitebar-doc.css', 'screen' );
+		}
+
 		if( $wgHandheldStyle ) {
 			// Currently in testing... try 'chick/main.css'
 			$out->addStyle( $wgHandheldStyle, 'handheld' );

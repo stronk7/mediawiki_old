@@ -14,14 +14,13 @@
 @themeColorRed:                         #a62a3e;    // translation
 @themeColorRedOrange:                   #fb4b28;    // .net
 
-
 #moodlesitestopblackbar {
     position: relative;
     font-size: @fontSizeSmall;
     min-height: @sitebarHeight;
     background-color: lighten(black, 5%);
 
-    border-bottom: 5px solid @themeColorPurple;
+    border-bottom: 5px solid @thisSiteColor;
     box-shadow: 0 0 20px rgba(0,0,0,.75);
 
     .sitelogo {
@@ -76,7 +75,6 @@
 
             &.documentation {
                 a {
-					background-color: @themeColorPurple;
                     &:hover {
                         background-color: @themeColorPurple;
                     }
