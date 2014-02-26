@@ -1,10 +1,9 @@
-all : check compress
+all : check css
 
 check :
-	recess sitebar.less
+	recess sitebar-doc.less
+	recess sitebar-dev.less
 
-compress : compile
-	recess --compress sitebar-debug.css > sitebar.css
-
-compile :
-	recess --compile sitebar.less > sitebar-debug.css
+css :
+	recess --compile --compress sitebar-doc.less > sitebar-doc.css
+	recess --compile --compress sitebar-dev.less > sitebar-dev.css
