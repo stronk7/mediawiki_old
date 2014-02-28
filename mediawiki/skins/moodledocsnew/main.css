@@ -19,7 +19,7 @@
  *     div#moodlesitelink
  **/
 body {font-size: 100%;background: #FFF url(images/background_grd_1.jpg) repeat-x left top;font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
-div#page {width: 96%;margin: 16px auto;padding: 0;color: #444;background: #FFF url(images/header_stripe_grad.jpg) no-repeat left top;}
+div#page {width: 96%;margin: 16px auto;margin-top:56px;padding: 0;color: #444;background: #FFF url(images/header_stripe_grad.jpg) no-repeat left top;}
 div#moodlelogo {background: url(images/header_stripe_grad_2.jpg) no-repeat right top;padding:0 2em;height: 2.5em;border:0;}
 div#moodlelogo img.logo {border: 0;padding-top: 0.5em;}
 div#moodlenavbar {width: 100%;padding: 0;margin: 0;min-height: 2.1em;border-style: none;border-bottom: 0.1em solid #FFE39D;z-index: 0;background: #FFFCF6 url(images/navbar_bg.jpg) repeat-x left top;}
@@ -93,11 +93,11 @@ textarea { width: 100%; padding: .1em; }
 /** General portlet and sideblock styles - end **/
 
 /** Specific portlet styles **/
-#p-personal {top: 2em;width: 80%;margin-left: 20%;margin-top:45px;}
+#p-personal {top: 2em;width: 80%;margin-left: 20%;margin-top:40px;}
 #p-personal h5 {display: none;}
 #p-personal ul {margin-right: 1%;}
 
-#p-cactions {line-height: 1em;font-size: 100%;left: 3.3em;top: 11em;margin-top:45px;width: 72%;}
+#p-cactions {line-height: 1em;font-size: 100%;left: 3.3em;top: 11em;margin-top:43px;width: 72%;}
 #p-cactions h5 {display: none;}
 #p-cactions ul {margin: 0.8em; padding-left: 0px;}
 #p-cactions li a,
@@ -110,7 +110,7 @@ textarea { width: 100%; padding: .1em; }
 #p-cactions li.selected span.tab,
 #p-cactions li span.tab:hover {background: url("images/tab_active_li.gif") top left no-repeat;padding-top: 4px;padding-bottom: 0.1em;}
 
-#p-logo {top: 10em;height:40px;width:200px;left:auto;right:3%;margin-top:45px;}
+#p-logo {top: 10em;height:40px;width:200px;left:auto;right:3%;margin-top:40px;}
 #p-logo a,
 #p-logo a:hover {height:40px;width:200px;background-position: 100% 0 !important;}
 

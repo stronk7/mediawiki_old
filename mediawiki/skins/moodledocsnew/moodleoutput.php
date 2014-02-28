@@ -25,6 +25,7 @@ class moodle_output {
         $out->addStyle( 'moodledocsnew/menu/menuprint.css', 'print');
 		$out->addStyle( 'moodledocsnew/bootstrap.min.css' );
 		$out->addStyle( 'moodledocsnew/bootstrap-responsive.min.css' );
+		$out->addStyle( '//fonts.googleapis.com/css?family=Open+Sans:400,300&amp;subset=latin,cyrillic-ext,greek-ext,greek,vietnamese,latin-ext,cyrillic' );
 
         // Include CSS specific to this docs version
         if (!empty($mdocsver) && preg_match('#^[a-zA-Z0-9\-_]+$#', $mdocsver)) {

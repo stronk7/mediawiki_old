@@ -1,11 +1,6 @@
 // Sitebar related styling is kept in a separate LESS and CSS files so we are
 // able to generate the style to be used at another sites.
 
-@baseFontSize:  14px;
-@fontSizeSmall: @baseFontSize * 0.85;
-
-@sitebarHeight: 40px;
-
 @themeColorOrange:                      #f98012;    // .org
 @themeColorBlue:                        #4653b4;    // dev and  tracker
 @themeColorPurple:                      #6c336d;    // docs
@@ -14,30 +9,55 @@
 @themeColorRed:                         #a62a3e;    // translation
 @themeColorRedOrange:                   #fb4b28;    // .net
 
-#moodlesitestopblackbar {
-    position: relative;
-    font-size: @fontSizeSmall;
-    min-height: @sitebarHeight;
-    background-color: lighten(black, 5%);
+#moodlesitestopnavbar {
 
-    border-bottom: 5px solid @thisSiteColor;
+    // These are similar variables from bootstrap used for consistency but used is exclusive to sitebar only
+    @baseFontSize:                          14px;
+    @fontSizeSmall:                         @baseFontSize * 0.85;
+    @baseLineHeight:                        20px;
+    @sansFontFamily:                        "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    @navbarHeight:                          40px;
+    @navbarBackground:                      #1b1b1b;
+    @navbarLinkColor:                       #ffffff;
+    @navbarLinkBackgroundActive:            @themeColor;
+
+    position: fixed;
+	z-index: 1000;
+    right: 0;
+    left: 0;
+    top: 0;
+    font-family: @sansFontFamily;
+    font-size: @fontSizeSmall;
+    min-height: @navbarHeight;
+    background-color: @navbarBackground;
+    background-image: linear-gradient(to bottom, #222222, #111111);
+    border-bottom: 5px solid @themeColor;
     box-shadow: 0 0 20px rgba(0,0,0,.75);
 
+    .navbar-container {
+        position: relative;
+        max-width: 1680px;
+        margin: 0 auto;
+        padding-right: 20px;
+        padding-left: 20px;
+        display: block;
+    }
     .sitelogo {
         display: block;
         padding-top: 7px;
         padding-left: 20px;
         padding-right: 20px;
+        margin-left: -20px;
         position: absolute;
         top: 0;
-        width: 96px;
         img {
-            width: 96px;
+            height: 25px;
         }
     }
 
     ul {
-        padding: 0 10px;
+        padding: 0;
         margin: 0;
         float: right;
 
@@ -45,27 +65,28 @@
             list-style: none;
             display: inline-block;
             float: left;
-            line-height: @sitebarHeight / 2;
+            line-height: @baseLineHeight;
             a {
                 display: block;
-                padding:  (@sitebarHeight/4) 10px;
-                color: white;
+                padding: ((@navbarHeight - @baseLineHeight) / 2) 15px;
+                color: @navbarLinkColor;
+                text-decoration: none;
                 text-transform: uppercase;
                 text-shadow: none;
                 background-repeat: no-repeat;
+                background-position: center center;
                 &:hover {
-                    text-decoration: none;
                 }
             }
 
             &.home {
-                margin-left: 136px; // To make there space for the site logo
+                margin-left: 104px;
                 a {
                     background-image: url(/dev/skins/moodledocsnew/sitebar/pix/home.png);
-                    background-position: center center;
                     width: 20px;
+                    height: 20px;
                     > span {
-                        visibility: hidden;
+                        display: none;
                     }
                     &:hover {
                         background-color: @themeColorOrange;
@@ -132,10 +153,10 @@
             &.search {
                 a {
                     background-image: url(/dev/skins/moodledocsnew/sitebar/pix/search.png);
-                    background-position: center center;
                     width: 20px;
+                    height: 20px;
                     > span {
-                        visibility: hidden;
+                        display: none;
                     }
                     &:hover {
                         background-color: @themeColorOrange;
@@ -152,8 +173,26 @@
 }
 
 @media (max-width: 979px) {
-    #moodlesitestopblackbar {
-        margin: -5px; // Undo clean's behaviour to add padding:5px to our wrapper
+    #moodlesitestopnavbar {
+        // margin: -5px; // Undo clean's behaviour to add padding:5px to our wrapper
+        padding: 0;
+        .navbar-container {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        ul {
+            li {
+                a {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    #moodlesitestopnavbar {
         ul {
             li.documentation {
                 a {
@@ -173,32 +212,6 @@
                     .placeholder:after {
                         content:"Dev";
                     }
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 790px) {
-    #moodlesitestopblackbar {
-        .sitelogo {
-            padding-top: 15px;
-            padding-right: 10px;
-            width: 48px;
-            img {
-                width: 48px;
-				height: 12.5px;
-            }
-        }
-        ul {
-            padding: 0;
-            li {
-                &.home {
-                    margin-left: 80px;
-                }
-                a {
-                    padding-left: 4px;
-                    padding-right: 4px;
                 }
             }
         }
