@@ -97,16 +97,16 @@ textarea { width: 100%; padding: .1em; }
 #p-personal h5 {display: none;}
 #p-personal ul {margin-right: 1%;}
 
-#p-cactions {line-height: 1em;font-size: 100%;left: 3.3em;top: 11em;margin-top:43px;width: 72%;}
+#p-cactions {line-height: 1em;font-size: 100%;left: 3.3em;top: 11em;margin-top:30px;width: 72%;}
 #p-cactions h5 {display: none;}
 #p-cactions ul {margin: 0.8em; padding-left: 0px;}
 #p-cactions li a,
 #p-cactions li.selected a,
 #p-cactions li a:hover {background-color: transparent;text-decoration: none;text-transform: lowercase;}
-#p-cactions li {background: url("images/tab.gif") top right no-repeat;padding-top: 4px;padding-bottom: 0.2em;border: none;}
+#p-cactions li {background: url("images/tab.gif") top right no-repeat;padding-top: 4px;padding-bottom: 40px;border: none;}
 #p-cactions li span.tab {background: url("images/tab_li.gif") top left no-repeat;padding-top: 4px;padding-bottom: 0.1em;}
 #p-cactions li.selected,
-#p-cactions li:hover {background: url("images/tab_active.gif") top right no-repeat;padding-top: 4px;padding-bottom: 0.2em;border: none;}
+#p-cactions li:hover {background: url("images/tab_active.gif") top right no-repeat;padding-top: 4px;padding-bottom: 40px;border: none;}
 #p-cactions li.selected span.tab,
 #p-cactions li span.tab:hover {background: url("images/tab_active_li.gif") top left no-repeat;padding-top: 4px;padding-bottom: 0.1em;}
 
