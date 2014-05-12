@@ -1,0 +1,21 @@
+/** Special styles for the moodledocs 2.0 skin **/
+div.frontpagetotal {
+  max-width: 100em;
+  min-width: 27em;
+}
+
+div.frontpageblock {
+  padding: 20px;
+  width: 25em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+div.overviewlist {
+  width:15em;
+  margin:0px auto;
+  font-size: 1.2em;
+}
+div.overviewlist dd {
+  margin-bottom: 1em;
+}

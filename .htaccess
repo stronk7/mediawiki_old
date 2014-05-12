@@ -27,23 +27,23 @@ RewriteCond %{REQUEST_URI} ^/$
 RewriteCond %{QUERY_STRING} ^lang=(.*)$
 RewriteRule ^(.*) /%1/ [R=301,L]
 
-# Redirect future /27/* to the latest /26/*
-RewriteRule ^27/(.*)$ /26/$1 [R=301,L]
+# Redirect future /28/* to the latest /27/*
+RewriteRule ^28/(.*)$ /27/$1 [R=301,L]
 
 # Redirect the non-specified request to the actual English documentation
-# e.g. http://docs.moodle.org/-> http://docs.moodle.org/26/en/
+# e.g. http://docs.moodle.org/-> http://docs.moodle.org/27/en/
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*) /26/en/ [R=301,L]
+RewriteRule ^(.*) /27/en/ [R=301,L]
 
 # Add trailing / if missing, causing mediawiki to serve the native langs Main_Page
 RewriteRule ^(test|dev)$ /$1/
 RewriteRule ^archive/([a-z]{2}|pt_br)$ /archive/$1/
-RewriteRule ^(all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)$ /$1/$2/
+RewriteRule ^(all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)$ /$1/$2/
 
 # Redirect requests without the version specified to the actual version
-# e.g. http://docs.moodle.org/en/mod/forum/view -> http://docs.moodle.org/26/en/mod/forum/view
+# e.g. http://docs.moodle.org/en/mod/forum/view -> http://docs.moodle.org/27/en/mod/forum/view
 RewriteCond %{REQUEST_URI} ^/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/)
-RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /26/$1$2 [R=301,L]
+RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /27/$1$2 [R=301,L]
 
 # Redirect zh_cn and zh_tw to the common zh wiki (uncomment this once the wiki is up-to-date)
 #RewriteCond %{REQUEST_URI} ^/([0-9]{2})/(zh_cn|zh_tw)($|/)
@@ -51,19 +51,19 @@ RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el
 
 # Redirect language children to parents [if a wiki exists for the parent]
 # e.g. http://docs/19/es_es/mod/forum/view -> http://docs/19/es/mod/forum/view
-RewriteCond %{REQUEST_URI} ^(/all/|/2x/|/19/|/20/|/21/|/22/|/23/|/24/|/25/|/26/|/)([a-z]{2})_([a-z]{2}|kids)($|/)
-RewriteRule (^19/|^20/|^21/|^22/|^23/|^24/|^25/|^26/|^)(de_du|de_kids|en_us|en_kids|es_ar|es_es|es_mx|fr_ca)($|/(.*)) %1%2/$4 [R=301,L]
+RewriteCond %{REQUEST_URI} ^(/all/|/2x/|/19/|/20/|/21/|/22/|/23/|/24/|/25/|/26/|/27/|/)([a-z]{2})_([a-z]{2}|kids)($|/)
+RewriteRule (^19/|^20/|^21/|^22/|^23/|^24/|^25/|^26/|^27/|^)(de_du|de_kids|en_us|en_kids|es_ar|es_es|es_mx|fr_ca)($|/(.*)) %1%2/$4 [R=301,L]
 
 # If there is no better choice, redirect them to the relevant English docs
 # e.g.  http://docs.moodle.org/21/la/mod/forum/view -> http://docs.moodle.org/21/en/mod/forum/view
-RewriteCond %{REQUEST_URI} !^/(all|2x|19|20|21|22|23|24|25|26)/(ca|en|de|ja|es|fr|fi|is|eu|hr|pt_br)($|/)
-RewriteCond %{REQUEST_URI} ^/(all|2x|19|20|21|22|23|24|25|26)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)
-RewriteRule ^(all|2x|19|20|21|22|23|24|25|26)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /$1/en$3 [R=301,L]
+RewriteCond %{REQUEST_URI} !^/(all|2x|19|20|21|22|23|24|25|26|27)/(ca|en|de|ja|es|fr|fi|is|eu|hr|pt_br)($|/)
+RewriteCond %{REQUEST_URI} ^/(all|2x|19|20|21|22|23|24|25|26|27)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)
+RewriteRule ^(all|2x|19|20|21|22|23|24|25|26|27)/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /$1/en$3 [R=301,L]
 
 # Redirect japanese,french,catalan 2.x to 2x wiki [option 2 -ish]
 # e.g.  http://docs/22/ja/mod/forum/view -> http://docs/2x/ja/mod/forum/view
-RewriteCond %{REQUEST_URI} ^/(20|21|22|23|24|25|26)/(ja|fr|ca)($|/)
-RewriteRule ^(20|21|22|23|24|25|26)/(ja|fr|ca)($|/(.*))  /2x/$2$3 [R=301,L]
+RewriteCond %{REQUEST_URI} ^/(20|21|22|23|24|25|26|27)/(ja|fr|ca)($|/)
+RewriteRule ^(20|21|22|23|24|25|26|27)/(ja|fr|ca)($|/(.*))  /2x/$2$3 [R=301,L]
 
 # Redirect old catalan 'all' wiki to the 19 wiki
 RewriteCond %{REQUEST_URI} ^/all/ca($|/)
@@ -71,38 +71,38 @@ RewriteRule ^all/ca($|/(.*)) /19/ca$1 [R=301,L]
 
 # Redirect combined wikis to the 'all' version [option 1]
 # e.g. http://docs/22/es/mod/forum/view -> http://docs/19/es/mod/forum/view
-RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23|24|25|26)/(es|is|eu|fi|hr|pt_br)($|/)
-RewriteRule ^(19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)($|/(.*))  /all/$2$3 [R=301,L]
+RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23|24|25|26|27)/(es|is|eu|fi|hr|pt_br)($|/)
+RewriteRule ^(19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)($|/(.*))  /all/$2$3 [R=301,L]
 
 # Regex to catch /en/Development: namespace and redirect to /dev/
-RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23|24|25|26)/en/Development(:|_(talk:))(.*)
-RewriteRule ^(19|20|21|22|23|24|25|26)/en/Development(:|_(talk:))(.*) /dev/$3$4 [R=301,L,QSA]
+RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23|24|25|26|27)/en/Development(:|_(talk:))(.*)
+RewriteRule ^(19|20|21|22|23|24|25|26|27)/en/Development(:|_(talk:))(.*) /dev/$3$4 [R=301,L,QSA]
 # As above, but catches /en/index.php with query string title=Development: instead
 RewriteCond %{QUERY_STRING} ^(.*?)title=Development(:|_(talk:))(.*)
-RewriteRule ^(19|20|21|22|23|24|25|26)/en/index.php /dev/index.php?%1title=%3%4 [R=301,L]
+RewriteRule ^(19|20|21|22|23|24|25|26|27)/en/index.php /dev/index.php?%1title=%3%4 [R=301,L]
 
 # Regex to catch old skin urls
 RewriteRule ^([a-z]{2}|pt_br)/skins/(.*) /19/$1/skins/$2
 RewriteRule ^([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /mediawiki/19images/images_$2/$3 [L,QSA]
 
 # Regex to catch requests for wiki pages
-RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/skins/
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/images_([a-z]{2}|pt_br|test|dev)/
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/stylesheets/
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/(redirect|texvc|index|api).php
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/favicon.ico
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/robots.txt
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/opensearch_desc.php
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/config/
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/extensions/MediawikiPlayer/
-RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/load.php
-RewriteCond %{QUERY_STRING} ^$ [OR] RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/Special:Search
-RewriteRule ^(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/(.*) /mediawiki/index.php?title=$5 [L,QSA,S=1]
+RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/skins/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/images_([a-z]{2}|pt_br|test|dev)/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/stylesheets/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/(redirect|texvc|index|api).php
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/favicon.ico
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/robots.txt
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/opensearch_desc.php
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/config/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/extensions/MediawikiPlayer/
+RewriteCond %{REQUEST_URI} !^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/load.php
+RewriteCond %{QUERY_STRING} ^$ [OR] RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/Special:Search
+RewriteRule ^(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/(.*) /mediawiki/index.php?title=$5 [L,QSA,S=1]
 
 # Regex to catch requests for regular ver/langs images
-RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
-RewriteRule ^(19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /mediawiki/$1images/images_$2/$4 [L,QSA]
+RewriteCond %{REQUEST_URI} ^/(19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
+RewriteRule ^(19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /mediawiki/$1images/images_$2/$4 [L,QSA]
 
 # Regex to catch requests for 2x images
 RewriteCond %{REQUEST_URI} ^/2x/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/
@@ -117,5 +117,5 @@ RewriteRule ^(archive|all)/([a-z]{2}|pt_br)/images_([a-z]{2}|pt_br)/(.*) /mediaw
 
 
 # Regex to catch requests for all other urls like css, robots, favicon, errors etc..
-RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/
-RewriteRule ^(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26)/([a-z]{2}|pt_br)))/(.*) /mediawiki/$5 [L,QSA]
+RewriteCond %{REQUEST_URI} ^/(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/
+RewriteRule ^(test|dev|((archive|all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)))/(.*) /mediawiki/$5 [L,QSA]
