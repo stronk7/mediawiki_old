@@ -89,14 +89,11 @@ if (php_sapi_name() != 'cli') {
             $mdocsver = '25';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '26') {
 			$mdocsver = '26';
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '27') {
+			$mdocsver = '27';
 			//$wgEnableEmail = false;
 			//$wgEnotifWatchlist = false;
 			//$wgEnotifUserTalk = false;
-        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '27') {
-			$mdocsver = '27';
-			$wgEnableEmail = false;
-			$wgEnotifWatchlist = false;
-			$wgEnotifUserTalk = false;
 		}else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
             $mdocsver = '2x';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
@@ -108,7 +105,7 @@ if (php_sapi_name() != 'cli') {
             $wgReadOnly="This translation has been archived and is in Read-Only mode."; // Cant touch this! do do do do do
         }else {
              // default version to serve. this should always be the newest version (mod_rewrite handles the rest)
-            $mdocsver = '24';
+            $mdocsver = '27';
         }
 
         /// Try to determine requested lang or test|dev
