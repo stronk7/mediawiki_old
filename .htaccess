@@ -31,9 +31,9 @@ RewriteRule ^(.*) /%1/ [R=301,L]
 RewriteRule ^28/(.*)$ /27/$1 [R=301,L]
 
 # Redirect the non-specified request to the actual English documentation
-# e.g. http://docs.moodle.org/-> http://docs.moodle.org/26/en/
+# e.g. http://docs.moodle.org/-> http://docs.moodle.org/27/en/
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*) /26/en/ [R=301,L]
+RewriteRule ^(.*) /27/en/ [R=301,L]
 
 # Add trailing / if missing, causing mediawiki to serve the native langs Main_Page
 RewriteRule ^(test|dev)$ /$1/
@@ -41,9 +41,9 @@ RewriteRule ^archive/([a-z]{2}|pt_br)$ /archive/$1/
 RewriteRule ^(all|2x|19|20|21|22|23|24|25|26|27)/([a-z]{2}|pt_br)$ /$1/$2/
 
 # Redirect requests without the version specified to the actual version
-# e.g. http://docs.moodle.org/en/mod/forum/view -> http://docs.moodle.org/26/en/mod/forum/view
+# e.g. http://docs.moodle.org/en/mod/forum/view -> http://docs.moodle.org/27/en/mod/forum/view
 RewriteCond %{REQUEST_URI} ^/(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/)
-RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /26/$1$2 [R=301,L]
+RewriteRule ^(af|am|ar|ast|az|be|bg|bn|bs|ca|ckb|cs|cy|da|de|de_du|de_kids|dv|el|en|en_us|es|es_ar|es_es|es_mx|et|eu|fa|fi|fil|fj|fo|fr|fr_ca|ga|gd|gl|gu|he|hi|hr|hu|hy|id|is|it|ja|ka|kk|km|kn|ko|la|lo|lt|lv|mi_tn|mi_wwow|mk|ml|mn|mr|ms|ne|nl|nn|no|no_gr|oc_es|pl|pt|pt_br|rm_surs|ro|ru|si|sk|sl|sm|so|sq|sr|sr_cr|sr_cr_bo|sr_lt|sv|sv_fi|sw|ta|ta_lk|te|th|ti|tl|to|tr|tt|uk|ur|uz|vi|wo|zh_cn|zh_tw|zu|en_ar|ca_valencia|kl)($|/(.*))  /27/$1$2 [R=301,L]
 
 # Redirect zh_cn and zh_tw to the common zh wiki (uncomment this once the wiki is up-to-date)
 #RewriteCond %{REQUEST_URI} ^/([0-9]{2})/(zh_cn|zh_tw)($|/)
