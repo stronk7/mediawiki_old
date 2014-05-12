@@ -92,6 +92,11 @@ if (php_sapi_name() != 'cli') {
 			//$wgEnableEmail = false;
 			//$wgEnotifWatchlist = false;
 			//$wgEnotifUserTalk = false;
+        }else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '27') {
+			$mdocsver = '27';
+			$wgEnableEmail = false;
+			$wgEnotifWatchlist = false;
+			$wgEnotifUserTalk = false;
 		}else if (substr($_SERVER['REQUEST_URI'], 1, 2) === '2x') {
             $mdocsver = '2x';
         }else if (substr($_SERVER['REQUEST_URI'], 1, 3) === 'all') {
