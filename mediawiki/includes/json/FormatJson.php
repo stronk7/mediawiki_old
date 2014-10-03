@@ -55,6 +55,22 @@ class FormatJson {
 	const ALL_OK = 3;
 
 	/**
+	 * If set, treat json objects '{...}' as associative arrays. Without this option,
+	 * json objects will be converted to stdClass.
+	 * The value is set to 1 to be backward compatible with 'true' that was used before.
+	 *
+	 * @since 1.24
+	 */
+	const FORCE_ASSOC = 0x100;
+
+	/**
+	 * If set, attempts to fix invalid json.
+	 *
+	 * @since 1.24
+	 */
+	const TRY_FIXING = 0x200;
+
+	/**
 	 * Regex that matches whitespace inside empty arrays and objects.
 	 *
 	 * This doesn't affect regular strings inside the JSON because those can't
@@ -114,17 +130,87 @@ class FormatJson {
 	}
 
 	/**
-	 * Decodes a JSON string.
+	 * Decodes a JSON string. It is recommended to use FormatJson::parse(), which returns more comprehensive
+	 * result in case of an error, and has more parsing options.
 	 *
 	 * @param string $value The JSON string being decoded
 	 * @param bool $assoc When true, returned objects will be converted into associative arrays.
 	 *
 	 * @return mixed The value encoded in JSON in appropriate PHP type.
-	 * `null` is returned if the JSON cannot be decoded or if the encoded data is deeper than
-	 * the recursion limit.
+	 * `null` is returned if $value represented `null`, if $value could not be decoded,
+	 * or if the encoded data was deeper than the recursion limit.
+	 * Use FormatJson::parse() to distinguish between types of `null` and to get proper error code.
 	 */
 	public static function decode( $value, $assoc = false ) {
 		return json_decode( $value, $assoc );
+	}
+
+	/**
+	 * Decodes a JSON string.
+	 * Unlike FormatJson::decode(), if $value represents null value, it will be properly decoded as valid.
+	 *
+	 * @param string $value The JSON string being decoded
+	 * @param int $options A bit field that allows FORCE_ASSOC, TRY_FIXING
+	 * @return Status If valid JSON, the value is available in $result->getValue()
+	 */
+	public static function parse( $value, $options = 0 ) {
+		$assoc = ( $options & self::FORCE_ASSOC ) !== 0;
+		$result = json_decode( $value, $assoc );
+		$code = json_last_error();
+
+		if ( $code === JSON_ERROR_SYNTAX && ( $options & self::TRY_FIXING ) !== 0 ) {
+			// The most common error is the trailing comma in a list or an object.
+			// We cannot simply replace /,\s*[}\]]/ because it could be inside a string value.
+			// But we could use the fact that JSON does not allow multi-line string values,
+			// And remove trailing commas if they are et the end of a line.
+			// JSON only allows 4 control characters: [ \t\r\n].  So we must not use '\s' for matching.
+			// Regex match   ,]<any non-quote chars>\n   or   ,\n]   with optional spaces/tabs.
+			$count = 0;
+			$value =
+				preg_replace( '/,([ \t]*[}\]][^"\r\n]*([\r\n]|$)|[ \t]*[\r\n][ \t\r\n]*[}\]])/', '$1',
+					$value, - 1, $count );
+			if ( $count > 0 ) {
+				$result = json_decode( $value, $assoc );
+				if ( JSON_ERROR_NONE === json_last_error() ) {
+					// Report warning
+					$st = Status::newGood( $result );
+					$st->warning( wfMessage( 'json-warn-trailing-comma' )->numParams( $count ) );
+					return $st;
+				}
+			}
+		}
+
+		switch ( $code ) {
+			case JSON_ERROR_NONE:
+				return Status::newGood( $result );
+			default:
+				return Status::newFatal( wfMessage( 'json-error-unknown' )->numParams( $code ) );
+			case JSON_ERROR_DEPTH:
+				$msg = 'json-error-depth';
+				break;
+			case JSON_ERROR_STATE_MISMATCH:
+				$msg = 'json-error-state-mismatch';
+				break;
+			case JSON_ERROR_CTRL_CHAR:
+				$msg = 'json-error-ctrl-char';
+				break;
+			case JSON_ERROR_SYNTAX:
+				$msg = 'json-error-syntax';
+				break;
+			case JSON_ERROR_UTF8:
+				$msg = 'json-error-utf8';
+				break;
+			case JSON_ERROR_RECURSION:
+				$msg = 'json-error-recursion';
+				break;
+			case JSON_ERROR_INF_OR_NAN:
+				$msg = 'json-error-inf-or-nan';
+				break;
+			case JSON_ERROR_UNSUPPORTED_TYPE:
+				$msg = 'json-error-unsupported-type';
+				break;
+		}
+		return Status::newFatal( $msg );
 	}
 
 	/**
