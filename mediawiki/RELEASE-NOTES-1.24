@@ -1,6 +1,24 @@
 Security reminder: If you have PHP's register_globals option set, you must
 turn it off. MediaWiki will no longer work with it enabled.
 
+
+== MediaWiki 1.24.1 ==
+
+This is a security and maintenance release of the MediaWiki 1.24 branch.
+
+== Changes since 1.24.0 ==
+
+* (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML, which
+  could lead to xss. Permission to edit MediaWiki namespace is required to
+  exploit this.
+* (bug T77028) [SECURITY] Malicious site can bypass CORS restrictions in
+  $wgCrossSiteAJAXdomains in API calls if it only included an allowed domain as
+  part of its name.
+* (bug T74222) The original patch for T74222 was reverted as unnecessary.
+* Fixed a couple of entries in RELEASE-NOTES-1.24.
+* (bug T76168) OutputPage: Add accessors for some protected properties.
+* (bug T74834) Make 1.24 branch directly installable under PostgreSQL.
+
 == MediaWiki 1.24 ==
 
 MediaWiki 1.24.0 is the stable branch and is recommended for use in production.
@@ -504,9 +522,9 @@ changes to languages because of Bugzilla reports.
   meaning that JavaScript is no longer executed in these browser versions.
 * Browser support for Opera 11 lowered from Grade A to Grade C.
 * Removed IEFixes module which existed purely to provide support for MSIE versions
+  below 7 (conditionally loaded only for those browsers).
 * Deprecated SpecialPageFactory::getList() in favor of
   SpecialPageFactory::getNames()
-  below 7 (conditionally loaded only for those browsers).
 * Action::checkCanExecute() no longer has a return value.
 * Removed cleanupForIRC(), loadFromCurRow(), newFromCurRow(), notifyRC2UDP()
   and sendToUDP() from RecentChange.php. (deprecated since 1.22)
