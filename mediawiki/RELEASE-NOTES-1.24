@@ -1,6 +1,20 @@
 Security reminder: If you have PHP's register_globals option set, you must
 turn it off. MediaWiki will no longer work with it enabled.
 
+== MediaWiki 1.24.3 ==
+
+This is a security and maintenance release of the MediaWiki 1.24 branch.
+
+== Changes since 1.24.2 ==
+
+* (T94116) SECURITY: Compare API watchlist token in constant time
+* (T97391) SECURITY: Escape error message strings in thumb.php
+* (T106893) SECURITY: Don't leak autoblocked IP addresses on
+  Special:DeletedContributions
+* Update jQuery from v1.11.2 to v1.11.3.
+* (T102562) Fix InstantCommons parameters to handle the new HTTPS-only
+  policy of Wikimedia Commons.
+
 == MediaWiki 1.24.2 ==
 
 This is a security and maintenance release of the MediaWiki 1.24 branch.
@@ -245,6 +259,13 @@ release and submitting bug reports.
   to multiple Config instances.
 * Update CSSJanus to v1.1.0.
 * Added FormatJson::parse() returning status with result or localized error message
+* (T69525) You can now make MediaWiki speed up its thumbnail rendering by using
+  intermediary thumbnails. $wgThumbnailBuckets must be set to a list of target
+  thumbnail widths; when a new thumbnail needs to be rendered, MediaWiki will
+  find the smallest bucket smaller than the original but larger than the target
+  width + $wgThumbnailMinimumBucketDistance, and it will scale that thumbnail,
+  rather than the original, down to the target size at greater speed in return
+  for minor loss of fidelity.
 
 === Bug fixes in 1.24 ===
 * (bug 70686) More sensible behavior when special page aliases conflict
