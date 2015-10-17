@@ -75,7 +75,7 @@ $wgConfigRegistry = array(
  * Using single quotes is, therefore, important here.
  * @since 1.2
  */
-$wgVersion = '1.24.3';
+$wgVersion = '1.24.4';
 
 /**
  * Name of the site. It must be changed in LocalSettings.php
@@ -664,6 +664,14 @@ $wgCopyUploadAsyncTimeout = false;
  * will have a maximum of 500 kB.
  */
 $wgMaxUploadSize = 1024 * 1024 * 100; # 100MB
+
+/**
+ * Minimum upload chunk size, in bytes. When using chunked upload, non-final
+ * chunks smaller than this will be rejected. May be reduced based on the
+ * 'upload_max_filesize' or 'post_max_size' PHP settings.
+ * @since 1.26
+ */
+$wgMinUploadChunkSize = 1024; # 1KB
 
 /**
  * Point the upload navigation link to an external URL
@@ -4958,6 +4966,12 @@ $wgRateLimits = array(
 		'newbie' => null, // for each recent (autoconfirmed) account; overrides 'user'
 		'ip' => null, // for each anon and recent account
 		'subnet' => null, // ... within a /24 subnet in IPv4 or /64 in IPv6
+	),
+	'upload' => array(
+		'user' => null,
+		'newbie' => null,
+		'ip' => null,
+		'subnet' => null,
 	),
 	'move' => array(
 		'user' => null,
