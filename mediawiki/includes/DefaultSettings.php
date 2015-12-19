@@ -75,7 +75,7 @@ $wgConfigRegistry = array(
  * Using single quotes is, therefore, important here.
  * @since 1.2
  */
-$wgVersion = '1.24.4';
+$wgVersion = '1.24.5';
 
 /**
  * Name of the site. It must be changed in LocalSettings.php
@@ -4464,6 +4464,12 @@ $wgWhitelistReadRegexp = false;
  * address before being allowed to edit?
  */
 $wgEmailConfirmToEdit = false;
+
+/**
+ * Should MediaWiki attempt to protect user's privacy when doing redirects?
+ * Keep this true if access counts to articles are made public.
+ */
+$wgHideIdentifiableRedirects = true;
 
 /**
  * Permission keys given to users in each group.
